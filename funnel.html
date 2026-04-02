@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeroWerk - Wärmepumpe Anfrage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --green: #B7D900;
+            --schiefer: #1C2B36;
+            --nacht: #0A0A0A;
+            --bernstein: #E8A838;
+            --light-text: #FFFFFF;
+            --muted-text: #B0B0B0;
+            --card-bg: #232F3F;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--schiefer);
+            color: var(--light-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background-color: rgba(10, 10, 10, 0.5);
+            padding: 20px;
+            border-bottom: 1px solid rgba(183, 217, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            height: 50px;
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-family: 'Barlow', sans-serif;
+            color: var(--green);
+            font-size: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .back-link {
+            color: var(--muted-text);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--green);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* Left Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .benefit-statement {
+            font-family: 'Barlow', sans-serif;
+            font-size: 28px;
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--light-text);
+        }
+
+        .benefit-statement strong {
+            color: var(--green);
+        }
+
+        .trust-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background-color: rgba(183, 217, 0, 0.05);
+            border: 1px solid rgba(183, 217, 0, 0.2);
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .badge-icon {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(183, 217, 0, 0.1);
+            border-radius: 6px;
+            color: var(--green);
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        /* Right Content Area */
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .progress-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .progress-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--muted-text);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--green), #A8C900);
+            border-radius: 3px;
+            transition: width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            width: 0%;
+        }
+
+        .progress-text {
+            font-size: 13px;
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        /* Question Card */
+        .question-card {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(183, 217, 0, 0.15);
+            border-radius: 12px;
+            padding: 40px;
+            min-height: 450px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-title {
+            font-family: 'Barlow', sans-serif;
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.2;
+            color: var(--light-text);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .options-grid.two-col {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .option-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(183, 217, 0, 0.2);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .option-card:hover {
+            background-color: rgba(183, 217, 0, 0.1);
+            border-color: var(--green);
+            transform: translateX(4px);
+        }
+
+        .option-card.selected {
+            background-color: rgba(183, 217, 0, 0.15);
+            border-color: var(--green);
+        }
+
+        .option-icon {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--green);
+        }
+
+        /* Form Fields */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--light-text);
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"] {
+            padding: 12px 16px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(183, 217, 0, 0.2);
+            border-radius: 8px;
+            color: var(--light-text);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="tel"]:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(183, 217, 0, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: var(--muted-text);
+        }
+
+        /* Radio Groups */
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .radio-group input[type="radio"] {
+            cursor: pointer;
+            accent-color: var(--green);
+        }
+
+        /* Checkbox */
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            background-color: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            cursor: pointer;
+            accent-color: var(--green);
+            margin-top: 2px;
+        }
+
+        .checkbox-label {
+            font-size: 13px;
+            line-height: 1.5;
+            color: var(--muted-text);
+        }
+
+        .checkbox-label a {
+            color: var(--green);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .checkbox-label a:hover {
+            text-decoration: underline;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Barlow', sans-serif;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-primary {
+            background-color: var(--green);
+            color: var(--nacht);
+            width: 100%;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background-color: #A8C900;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(183, 217, 0, 0.2);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--green);
+            border: 2px solid var(--green);
+            width: 100%;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(183, 217, 0, 0.1);
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--muted-text);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            transition: color 0.3s ease;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .back-button:hover {
+            color: var(--green);
+        }
+
+        /* Thank You Page */
+        .thank-you-container {
+            text-align: center;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .checkmark-icon {
+            width: 80px;
+            height: 80px;
+            border: 3px solid var(--green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: var(--green);
+            animation: scaleIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .thank-you-title {
+            font-family: 'Barlow', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--light-text);
+        }
+
+        .thank-you-subtitle {
+            font-size: 16px;
+            color: var(--muted-text);
+            line-height: 1.6;
+            max-width: 500px;
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+            width: 100%;
+        }
+
+        .process-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(183, 217, 0, 0.1);
+            border: 2px solid var(--green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--green);
+        }
+
+        .step-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--light-text);
+        }
+
+        /* Hidden */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 20px;
+            }
+
+            .benefit-statement {
+                font-size: 22px;
+            }
+
+            .question-card {
+                padding: 28px;
+                min-height: auto;
+            }
+
+            .options-grid.two-col {
+                grid-template-columns: 1fr;
+            }
+
+            .process-steps {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .thank-you-title {
+                font-size: 24px;
+            }
+
+            .sidebar {
+                order: 2;
+            }
+
+            .content-area {
+                order: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .question-card {
+                padding: 20px;
+            }
+
+            .question-title {
+                font-size: 20px;
+            }
+
+            .option-card {
+                padding: 14px 16px;
+                font-size: 14px;
+            }
+
+            .badge {
+                padding: 12px;
+                font-size: 13px;
+            }
+
+            .btn {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">HeroWerk</div>
+            <a href="index.html" class="back-link">← Zurück zur Website</a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Left Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="benefit-statement">
+                Jetzt zur <strong>Wärmepumpe wechseln</strong> & bis zu <strong>70% Förderung sichern.</strong>
+            </div>
+            <div class="trust-badges">
+                <div class="badge">
+                    <div class="badge-icon">🏆</div>
+                    <div>Wolf Premiumpartner seit 2022</div>
+                </div>
+                <div class="badge">
+                    <div class="badge-icon">⚡</div>
+                    <div>Staatlich geprüfter SHK-Meisterbetrieb</div>
+                </div>
+                <div class="badge">
+                    <div class="badge-icon">⏱</div>
+                    <div>Installation in 6 Wochen</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Right Content Area -->
+        <div class="content-area">
+            <div class="progress-section">
+                <div class="progress-label">Fortschritt</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">0% geschafft</div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="question-card" id="questionCard">
+                <h2 class="question-title" id="questionTitle"></h2>
+                <div class="options-grid" id="optionsGrid"></div>
+            </div>
+
+            <!-- Thank You Page (hidden by default) -->
+            <div class="question-card hidden" id="thankYouPage">
+                <div class="thank-you-container">
+                    <div class="checkmark-icon">✓</div>
+                    <div class="thank-you-title">Vielen Dank für Ihre Anfrage!</div>
+                    <div class="thank-you-subtitle">
+                        Einer unserer Heizungsexperten wird sich schnellstmöglich bei Ihnen melden.
+                    </div>
+                    <div class="process-steps">
+                        <div class="process-step">
+                            <div class="step-number">1</div>
+                            <div class="step-label">Beratungstermin</div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">2</div>
+                            <div class="step-label">Festpreisangebot</div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">3</div>
+                            <div class="step-label">Installation</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back Button -->
+            <button class="back-button" id="backButton" style="display: none;">
+                ← Zurück
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // SVG Icons
+        const icons = {
+            gas: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c0-1.657.895-3.162 2.236-4 1.07-1.428 2.834-2 4.764-2 2.5 0 4.646 1.343 5.564 3M20 8c1.105 0 2 .895 2 2s-.895 2-2 2"/><path d="M8 14h8"/><path d="M6 18h12"/></svg>',
+            oil: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3"/><path d="M12 8v8"/><path d="M8 16h8"/><path d="M6 20h12"/><path d="M9 5l-2 2M15 5l2 2"/></svg>',
+            electric: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2l-2 4h3l-4 6h2l-6 10"/></svg>',
+            other: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>',
+            house: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+            duplex: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l4-3 4 3v3h1v-3l4-3 4 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 12v10M15 12v10"/></svg>',
+            rowhouse: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l3-2.5 3 2.5v11a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/><path d="M8 9l3-2.5 3 2.5v11a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1z"/><path d="M14 9l3-2.5 3 2.5v11a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z"/></svg>',
+            apartment: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>',
+            yes: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+            no: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+        };
+
+        // Funnel Steps Data
+        const funnelSteps = [
+            {
+                id: 'heating',
+                question: 'Wie heizen Sie aktuell?',
+                options: [
+                    { label: 'Gas', value: 'gas', icon: 'gas' },
+                    { label: 'Öl', value: 'oil', icon: 'oil' },
+                    { label: 'Strom', value: 'electric', icon: 'electric' },
+                    { label: 'Sonstiges / Weiß nicht', value: 'other', icon: 'other' }
+                ],
+                type: 'single-choice',
+                grid: 'default'
+            },
+            {
+                id: 'heatingAge',
+                question: 'Wie alt ist Ihre aktuelle Heizung?',
+                options: [
+                    { label: 'Unter 10 Jahre', value: 'under10' },
+                    { label: '10-15 Jahre', value: '10-15' },
+                    { label: '15-20 Jahre', value: '15-20' },
+                    { label: '20-25 Jahre', value: '20-25' },
+                    { label: 'Älter als 25 Jahre', value: 'over25' },
+                    { label: 'Weiß nicht', value: 'unknown' }
+                ],
+                type: 'single-choice',
+                grid: 'default'
+            },
+            {
+                id: 'buildingType',
+                question: 'Welcher Gebäudetyp?',
+                options: [
+                    { label: 'Einfamilienhaus', value: 'single-family', icon: 'house' },
+                    { label: 'Zweifamilienhaus', value: 'duplex', icon: 'duplex' },
+                    { label: 'Reihenhaus', value: 'rowhouse', icon: 'rowhouse' },
+                    { label: 'Mehrfamilienhaus', value: 'apartment', icon: 'apartment' }
+                ],
+                type: 'single-choice',
+                grid: 'two-col'
+            },
+            {
+                id: 'buildYear',
+                question: 'Baujahr des Gebäudes?',
+                options: [
+                    { label: 'Vor 1960', value: 'before1960' },
+                    { label: '1960-1979', value: '1960-1979' },
+                    { label: '1980-1999', value: '1980-1999' },
+                    { label: '2000-2015', value: '2000-2015' },
+                    { label: 'Nach 2015', value: 'after2015' }
+                ],
+                type: 'single-choice',
+                grid: 'default'
+            },
+            {
+                id: 'livingArea',
+                question: 'Wie groß ist die zu beheizende Wohnfläche?',
+                options: [
+                    { label: 'Unter 100 m²', value: 'under100' },
+                    { label: '100-150 m²', value: '100-150' },
+                    { label: '150-200 m²', value: '150-200' },
+                    { label: '200-250 m²', value: '200-250' },
+                    { label: 'Über 250 m²', value: 'over250' }
+                ],
+                type: 'single-choice',
+                grid: 'default'
+            },
+            {
+                id: 'ownership',
+                question: 'Sind Sie Eigentümer der Immobilie?',
+                options: [
+                    { label: 'Ja', value: 'yes', icon: 'yes' },
+                    { label: 'Nein', value: 'no', icon: 'no' }
+                ],
+                type: 'single-choice',
+                grid: 'two-col'
+            },
+            {
+                id: 'timeline',
+                question: 'Wann soll die neue Heizung installiert werden?',
+                options: [
+                    { label: 'So schnell wie möglich', value: 'asap' },
+                    { label: 'In 1-3 Monaten', value: '1-3months' },
+                    { label: 'In 3-6 Monaten', value: '3-6months' },
+                    { label: 'In 6-12 Monaten', value: '6-12months' },
+                    { label: 'Nur informieren', value: 'infoonly' }
+                ],
+                type: 'single-choice',
+                grid: 'default'
+            },
+            {
+                id: 'plz',
+                question: 'Postleitzahl der Installationsadresse',
+                type: 'input',
+                inputType: 'text',
+                placeholder: 'z.B. 30159',
+                pattern: '^[0-9]{5}$'
+            },
+            {
+                id: 'contact',
+                question: 'Fast geschafft! Ihre Kontaktdaten',
+                type: 'form',
+                fields: [
+                    { id: 'salutation', type: 'radio', label: 'Anrede', options: [{ label: 'Herr', value: 'mr' }, { label: 'Frau', value: 'mrs' }] },
+                    { id: 'firstName', type: 'text', label: 'Vorname', placeholder: 'Max' },
+                    { id: 'lastName', type: 'text', label: 'Nachname', placeholder: 'Mustermann' },
+                    { id: 'email', type: 'email', label: 'E-Mail', placeholder: 'max@example.com' },
+                    { id: 'phone', type: 'tel', label: 'Telefon', placeholder: '+49 511 ...' }
+                ],
+                checkbox: {
+                    id: 'privacy',
+                    label: 'Ich akzeptiere die <a href="#">Datenschutzerklärung</a> und die <a href="#">Nutzungsbedingungen</a>'
+                }
+            }
+        ];
+
+        // State
+        let currentStep = 0;
+        const answers = {};
+
+        // DOM Elements
+        const questionCard = document.getElementById('questionCard');
+        const thankYouPage = document.getElementById('thankYouPage');
+        const questionTitle = document.getElementById('questionTitle');
+        const optionsGrid = document.getElementById('optionsGrid');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const backButton = document.getElementById('backButton');
+
+        // Initialize
+        function init() {
+            renderStep();
+        }
+
+        // Render Current Step
+        function renderStep() {
+            const step = funnelSteps[currentStep];
+            const totalSteps = funnelSteps.length;
+            const progress = ((currentStep) / totalSteps) * 100;
+
+            // Update progress bar
+            progressFill.style.width = progress + '%';
+            progressText.textContent = Math.round(progress) + '% geschafft';
+
+            // Show/hide back button
+            if (currentStep === 0) {
+                backButton.style.display = 'none';
+            } else {
+                backButton.style.display = 'flex';
+            }
+
+            // Show thank you or question
+            if (currentStep === totalSteps) {
+                questionCard.classList.add('hidden');
+                thankYouPage.classList.remove('hidden');
+                backButton.style.display = 'flex';
+                return;
+            }
+
+            thankYouPage.classList.add('hidden');
+            questionCard.classList.remove('hidden');
+
+            // Render based on type
+            if (step.type === 'single-choice') {
+                renderSingleChoice(step);
+            } else if (step.type === 'input') {
+                renderInputField(step);
+            } else if (step.type === 'form') {
+                renderForm(step);
+            }
+        }
+
+        // Render Single Choice Options
+        function renderSingleChoice(step) {
+            questionTitle.textContent = step.question;
+            optionsGrid.innerHTML = '';
+            optionsGrid.className = 'options-grid';
+            if (step.grid === 'two-col') {
+                optionsGrid.classList.add('two-col');
+            }
+
+            step.options.forEach(option => {
+                const card = document.createElement('div');
+                card.className = 'option-card';
+                if (answers[step.id] === option.value) {
+                    card.classList.add('selected');
+                }
+
+                let content = '';
+                if (option.icon) {
+                    content = `<div class="option-icon">${icons[option.icon]}</div>`;
+                }
+                content += `<span>${option.label}</span>`;
+
+                card.innerHTML = content;
+                card.addEventListener('click', () => selectOption(step.id, option.value));
+                optionsGrid.appendChild(card);
+            });
+        }
+
+        // Render Input Field
+        function renderInputField(step) {
+            questionTitle.textContent = step.question;
+            optionsGrid.innerHTML = '';
+
+            const inputContainer = document.createElement('div');
+            inputContainer.style.display = 'flex';
+            inputContainer.style.gap = '12px';
+            inputContainer.style.marginTop = '30px';
+
+            const input = document.createElement('input');
+            input.type = step.inputType;
+            input.placeholder = step.placeholder;
+            if (step.pattern) input.pattern = step.pattern;
+            input.value = answers[step.id] || '';
+            input.style.flex = '1';
+
+            const button = document.createElement('button');
+            button.className = 'btn btn-primary';
+            button.textContent = 'Weiter';
+            button.addEventListener('click', () => {
+                if (step.pattern && !new RegExp(step.pattern).test(input.value)) {
+                    alert('Bitte geben Sie eine gültige 5-stellige Postleitzahl ein.');
+                    return;
+                }
+                answers[step.id] = input.value;
+                nextStep();
+            });
+
+            inputContainer.appendChild(input);
+            inputContainer.appendChild(button);
+            optionsGrid.appendChild(inputContainer);
+        }
+
+        // Render Form
+        function renderForm(step) {
+            questionTitle.textContent = step.question;
+            optionsGrid.innerHTML = '';
+
+            const form = document.createElement('form');
+
+            // Radio group
+            const radioField = step.fields.find(f => f.type === 'radio');
+            if (radioField) {
+                const group = document.createElement('div');
+                group.className = 'form-group';
+                const label = document.createElement('label');
+                label.textContent = radioField.label;
+                label.style.marginBottom = '12px';
+                group.appendChild(label);
+
+                const radioContainer = document.createElement('div');
+                radioContainer.className = 'radio-group';
+
+                radioField.options.forEach(option => {
+                    const radioLabel = document.createElement('label');
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = radioField.id;
+                    input.value = option.value;
+                    if (answers[radioField.id] === option.value) {
+                        input.checked = true;
+                    }
+                    radioLabel.appendChild(input);
+                    radioLabel.appendChild(document.createTextNode(option.label));
+                    radioContainer.appendChild(radioLabel);
+                });
+
+                group.appendChild(radioContainer);
+                form.appendChild(group);
+            }
+
+            // Text fields
+            const textFields = step.fields.filter(f => ['text', 'email', 'tel'].includes(f.type));
+            textFields.forEach(field => {
+                const group = document.createElement('div');
+                group.className = 'form-group';
+
+                const label = document.createElement('label');
+                label.htmlFor = field.id;
+                label.textContent = field.label;
+                group.appendChild(label);
+
+                const input = document.createElement('input');
+                input.type = field.type;
+                input.id = field.id;
+                input.placeholder = field.placeholder;
+                input.value = answers[field.id] || '';
+                group.appendChild(input);
+
+                form.appendChild(group);
+            });
+
+            // Checkbox
+            if (step.checkbox) {
+                const checkboxGroup = document.createElement('div');
+                checkboxGroup.className = 'checkbox-group';
+
+                const input = document.createElement('input');
+                input.type = 'checkbox';
+                input.id = step.checkbox.id;
+                input.checked = answers[step.checkbox.id] || false;
+                checkboxGroup.appendChild(input);
+
+                const label = document.createElement('label');
+                label.htmlFor = step.checkbox.id;
+                label.className = 'checkbox-label';
+                label.innerHTML = step.checkbox.label;
+                checkboxGroup.appendChild(label);
+
+                form.appendChild(checkboxGroup);
+            }
+
+            // Submit button
+            const buttonGroup = document.createElement('div');
+            buttonGroup.className = 'button-group';
+
+            const submitBtn = document.createElement('button');
+            submitBtn.type = 'button';
+            submitBtn.className = 'btn btn-primary';
+            submitBtn.textContent = 'Kostenloses Angebot anfordern';
+            submitBtn.addEventListener('click', () => submitForm(step, form));
+
+            buttonGroup.appendChild(submitBtn);
+            form.appendChild(buttonGroup);
+
+            optionsGrid.appendChild(form);
+        }
+
+        // Select Option
+        function selectOption(stepId, value) {
+            answers[stepId] = value;
+            nextStep();
+        }
+
+        // Submit Form
+        function submitForm(step, form) {
+            const inputs = form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="radio"]:checked');
+            const checkbox = form.querySelector('input[type="checkbox"]');
+
+            let valid = true;
+
+            // Validate fields
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    valid = false;
+                }
+            });
+
+            if (!checkbox || !checkbox.checked) {
+                valid = false;
+                alert('Bitte akzeptieren Sie die Datenschutzerklärung.');
+                return;
+            }
+
+            if (!valid) {
+                alert('Bitte füllen Sie alle Felder aus.');
+                return;
+            }
+
+            // Collect form data
+            form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="radio"]:checked, input[type="checkbox"]:checked').forEach(input => {
+                answers[input.id] = input.value;
+            });
+
+            // Log all collected data
+            console.log('Collected Data:', answers);
+
+            // Advance to thank you
+            nextStep();
+        }
+
+        // Next Step
+        function nextStep() {
+            currentStep++;
+            renderStep();
+        }
+
+        // Back Button
+        backButton.addEventListener('click', () => {
+            if (currentStep > 0) {
+                currentStep--;
+                renderStep();
+            }
+        });
+
+        // Start
+        init();
+    </script>
+</body>
+</html>
