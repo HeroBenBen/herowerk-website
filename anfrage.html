@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wärmepumpe Hannover — Kostenlos anfragen | HeroWerk</title>
+  <meta name="description" content="Jetzt kostenloses Angebot anfragen. HeroWerk Meisterbetrieb — Wärmepumpe in 6 Wochen, Förderung bis 70 %. Region Hannover.">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --green: #B7D900;
+      --green-dark: #9fbf00;
+      --schiefer: #1C2B36;
+      --bernstein: #E8A838;
+      --sand: #F4F1EA;
+      --white: #FFFFFF;
+      --g100: #F9FAFB;
+      --g200: #F3F4F6;
+      --g300: #D1D5DB;
+      --g400: #9CA3AF;
+      --g500: #6B7280;
+      --g700: #374151;
+      --g900: #111827;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--g100);
+      color: var(--g900);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3 { font-family: 'Barlow', sans-serif; font-weight: 800; line-height: 1.15; }
+
+    /* ══ HEADER ══ */
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--g300);
+      padding: 0 24px;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .header-inner {
+      max-width: 960px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .header-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .logo-mark {
+      width: 36px; height: 36px; background: var(--schiefer); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 13px;
+      color: var(--green); letter-spacing: 0.03em; flex-shrink: 0;
+    }
+    .logo-text {
+      font-family: 'Barlow', sans-serif; font-weight: 800;
+      font-size: 18px; color: var(--schiefer);
+    }
+    .header-phone {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 14px; font-weight: 600; color: var(--schiefer);
+      text-decoration: none;
+      border: 1.5px solid var(--g300); border-radius: 8px;
+      padding: 8px 16px;
+      transition: border-color 0.2s;
+    }
+    .header-phone:hover { border-color: var(--green); }
+    .header-phone svg { color: var(--green); }
+
+    /* ══ HERO (kompakt) ══ */
+    .lp-hero {
+      background: var(--schiefer);
+      padding: 48px 24px 40px;
+    }
+    .lp-hero-inner {
+      max-width: 960px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+    }
+    .lp-hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(183,217,0,0.12); border: 1px solid rgba(183,217,0,0.3);
+      color: var(--green); font-size: 12px; font-weight: 700;
+      padding: 6px 14px; border-radius: 100px; margin-bottom: 16px;
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .lp-hero h1 {
+      font-size: clamp(28px, 4vw, 40px); color: var(--white);
+      margin-bottom: 16px;
+    }
+    .lp-hero h1 span { color: var(--green); }
+    .lp-hero-sub {
+      color: #9CA3AF; font-size: 16px; line-height: 1.6; margin-bottom: 28px;
+    }
+    .lp-usps {
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .lp-usp {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; font-weight: 600; color: #D1D5DB;
+    }
+    .lp-usp-check {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(183,217,0,0.15);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .lp-usp-check svg { width: 11px; height: 11px; color: var(--green); }
+    .lp-hero-img-side {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .hero-stat-card {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px; padding: 20px 24px;
+    }
+    .hero-stat-value {
+      font-family: 'Barlow', sans-serif; font-weight: 800;
+      font-size: 32px; color: var(--green); line-height: 1;
+      margin-bottom: 4px;
+    }
+    .hero-stat-label { font-size: 13px; color: #9CA3AF; }
+    .hero-stat-sub { font-size: 12px; color: #6B7280; margin-top: 2px; }
+
+    /* ══ HAUPTBEREICH (Formular + Trust) ══ */
+    .lp-main {
+      max-width: 960px; margin: 0 auto;
+      padding: 48px 24px;
+      display: grid; grid-template-columns: 1fr 420px; gap: 48px; align-items: start;
+    }
+
+    /* ══ FORMULAR-KARTE ══ */
+    .form-card {
+      background: var(--white);
+      border: 1.5px solid var(--g300);
+      border-radius: 16px;
+      padding: 36px;
+      box-shadow: 0 8px 32px rgba(28,43,54,0.10);
+      order: 2;
+    }
+    .form-card-header {
+      margin-bottom: 28px;
+    }
+    .form-card-tag {
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--g500); margin-bottom: 8px;
+    }
+    .form-card-title {
+      font-size: 22px; color: var(--schiefer); margin-bottom: 8px;
+    }
+    .form-card-sub {
+      font-size: 14px; color: var(--g500); line-height: 1.5;
+    }
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block; font-size: 13px; font-weight: 600;
+      color: var(--schiefer); margin-bottom: 6px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: 11px 14px;
+      background: var(--g100); border: 1.5px solid var(--g300);
+      border-radius: 8px; font-size: 14px; font-family: 'Inter', sans-serif;
+      color: var(--g900);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--g400); }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none; border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(183,217,0,0.18);
+      background: var(--white);
+    }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-checkbox {
+      display: flex; gap: 10px; align-items: flex-start; margin-bottom: 20px;
+    }
+    .form-checkbox input { width: 18px; height: 18px; margin-top: 1px; cursor: pointer; accent-color: var(--green); flex-shrink: 0; }
+    .form-checkbox label { font-size: 12px; color: var(--g500); cursor: pointer; line-height: 1.5; }
+    .form-checkbox label a { color: var(--schiefer); }
+    .btn-submit {
+      width: 100%; padding: 15px;
+      background: var(--green); color: var(--schiefer);
+      border: none; border-radius: 8px;
+      font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 16px;
+      cursor: pointer; transition: background 0.2s, transform 0.1s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-submit:hover { background: var(--green-dark); }
+    .btn-submit:active { transform: scale(0.99); }
+    .form-success-msg {
+      display: none;
+      background: rgba(183,217,0,0.1); border: 2px solid var(--green);
+      border-radius: 12px; padding: 28px; text-align: center;
+    }
+    .form-success-msg.show { display: block; }
+    .form-success-msg h3 { color: var(--schiefer); font-size: 20px; margin-bottom: 8px; }
+    .form-success-msg p { color: var(--g500); font-size: 14px; }
+    .form-note {
+      text-align: center; font-size: 12px; color: var(--g400); margin-top: 12px;
+    }
+
+    /* ══ TRUST-SEITE ══ */
+    .trust-side { order: 1; }
+    .trust-side-title {
+      font-size: 13px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--g500); margin-bottom: 20px;
+    }
+    .trust-card {
+      background: var(--white); border: 1.5px solid var(--g300);
+      border-radius: 12px; margin-bottom: 12px; overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .trust-card:hover { border-color: rgba(183,217,0,0.5); }
+    .trust-card-inner {
+      display: flex; align-items: center; gap: 16px; padding: 16px 20px;
+    }
+    .trust-card-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 11px;
+      flex-shrink: 0; letter-spacing: 0.03em;
+    }
+    .tci-wolf { background: var(--schiefer); color: var(--green); }
+    .tci-vaillant { background: #CC0033; color: var(--white); font-size: 9px; }
+    .tci-shk { background: rgba(183,217,0,0.12); color: var(--schiefer); }
+    .tci-kfw { background: #006AB3; color: var(--white); font-size: 10px; }
+    .tci-proklima { background: #2E7D32; color: var(--white); font-size: 9px; }
+    .tci-guarantee { background: rgba(232,168,56,0.12); color: var(--bernstein); }
+    .trust-card-text h4 {
+      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700;
+      color: var(--schiefer); margin-bottom: 2px;
+    }
+    .trust-card-text p { font-size: 12px; color: var(--g500); line-height: 1.4; }
+
+    .trust-divider {
+      height: 1px; background: var(--g200); margin: 20px 0;
+    }
+
+    .response-promise {
+      background: rgba(183,217,0,0.08); border: 1.5px solid rgba(183,217,0,0.3);
+      border-radius: 12px; padding: 16px 20px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .response-promise svg { color: var(--green); flex-shrink: 0; }
+    .response-promise-text h4 { font-size: 14px; font-weight: 700; color: var(--schiefer); margin-bottom: 2px; }
+    .response-promise-text p { font-size: 12px; color: var(--g500); }
+
+    /* ══ FOOTER (minimal) ══ */
+    .lp-footer {
+      background: var(--schiefer); padding: 24px;
+      text-align: center;
+    }
+    .lp-footer p { font-size: 12px; color: #6B7280; }
+    .lp-footer a { color: #9CA3AF; text-decoration: none; transition: color 0.2s; }
+    .lp-footer a:hover { color: var(--green); }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 768px) {
+      .lp-hero-inner { grid-template-columns: 1fr; gap: 28px; }
+      .lp-hero-img-side { flex-direction: row; gap: 10px; }
+      .hero-stat-card { flex: 1; }
+      .lp-main { grid-template-columns: 1fr; gap: 32px; }
+      .trust-side { order: 2; }
+      .form-card { order: 1; }
+      .form-row { grid-template-columns: 1fr; }
+      .header-phone span { display: none; }
+    }
+    @media (max-width: 480px) {
+      .lp-hero { padding: 32px 16px; }
+      .form-card { padding: 24px 20px; }
+      .lp-main { padding: 32px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <a href="/" class="header-logo">
+        <!-- Light-Logo: schwarze Schrift + B7D900 Akzent (korrekt für weißen Header) -->
+        <!-- Wenn echtes Bild verfügbar: <img src="v4-Horizontal-claim-black-B7D900.png" alt="HeroWerk" style="height:36px;width:auto;"> -->
+        <div class="logo-mark">HW</div>
+        <span class="logo-text">Hero<span style="color:var(--schiefer);">Werk</span></span>
+      </a>
+      <a href="tel:+495119999999" class="header-phone">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.01 2.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+        <span>Jetzt anrufen</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- HERO (kompakt, dark) -->
+  <section class="lp-hero">
+    <div class="lp-hero-inner">
+      <div>
+        <div class="lp-hero-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Meisterbetrieb Region Hannover
+        </div>
+        <h1>Wärmepumpe anfragen.<br><span>Einfach. Schnell. Sicher.</span></h1>
+        <p class="lp-hero-sub">Kostenloses Angebot vom Meisterbetrieb — inkl. Baubarkeitsprüfung und Förderantrag. Wir melden uns innerhalb von 48 Stunden.</p>
+        <div class="lp-usps">
+          <div class="lp-usp">
+            <div class="lp-usp-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+            Transparente Richtpreise, verbindlich nach Vor-Ort-Check
+          </div>
+          <div class="lp-usp">
+            <div class="lp-usp-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+            Bis zu 70 % KfW-Förderung — Antrag inklusive
+          </div>
+          <div class="lp-usp">
+            <div class="lp-usp-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+            Wolf oder Vaillant — wir wählen die beste Lösung für dich
+          </div>
+          <div class="lp-usp">
+            <div class="lp-usp-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+            Fördervorschuss bis 21.000 € — kein Warten auf KfW-Auszahlung
+          </div>
+        </div>
+      </div>
+      <div class="lp-hero-img-side">
+        <div class="hero-stat-card">
+          <div class="hero-stat-value">70 %</div>
+          <div class="hero-stat-label">max. KfW-Förderung</div>
+          <div class="hero-stat-sub">KfW 458 + proKlima Region Hannover</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-value">6 Wo.</div>
+          <div class="hero-stat-label">Von Anfrage bis Installation</div>
+          <div class="hero-stat-sub">Durchschnittliche Projektlaufzeit</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-value">5 J.</div>
+          <div class="hero-stat-label">Garantie auf Installation</div>
+          <div class="hero-stat-sub">Gerät und Einbau aus einer Hand</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HAUPTBEREICH -->
+  <div class="lp-main">
+
+    <!-- TRUST LINKE SEITE -->
+    <div class="trust-side">
+      <div class="trust-side-title">Warum HeroWerk?</div>
+
+      <div class="trust-card">
+        <div class="trust-card-inner">
+          <div class="trust-card-icon tci-wolf">WOLF</div>
+          <div class="trust-card-text">
+            <h4>Wolf GmbH — Premiumpartner</h4>
+            <p>CHA-Serie mit R290-Kältemittel. Bewährt, effizient, förderfähig.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="trust-card">
+        <div class="trust-card-inner">
+          <div class="trust-card-icon tci-vaillant">VAI<br>LLANT</div>
+          <div class="trust-card-text">
+            <h4>Vaillant Group — Premiumpartner</h4>
+            <p>aroTHERM plus mit R290. Ideal für Sanierung und Neubau.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="trust-card">
+        <div class="trust-card-inner">
+          <div class="trust-card-icon tci-shk">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="trust-card-text">
+            <h4>SHK-Meisterbetrieb</h4>
+            <p>Eingetragener Fachbetrieb. Volle handwerksrechtliche Absicherung.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="trust-card">
+        <div class="trust-card-inner">
+          <div class="trust-card-icon tci-kfw">KfW</div>
+          <div class="trust-card-text">
+            <h4>KfW 458 — Förderantrag inklusive</h4>
+            <p>Wir stellen den Antrag für dich. Du unterschreibst, wir regeln den Rest.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="trust-card">
+        <div class="trust-card-inner">
+          <div class="trust-card-icon tci-proklima">pro<br>K</div>
+          <div class="trust-card-text">
+            <h4>proKlima-Fördergebiet</h4>
+            <p>Hannover, Langenhagen, Seelze, Laatzen, Hemmingen, Ronnenberg: +5 % on top.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="trust-card">
+        <div class="trust-card-inner">
+          <div class="trust-card-icon tci-guarantee">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div class="trust-card-text">
+            <h4>5 Jahre Garantie</h4>
+            <p>Auf Installation und Gerät. Ohne Wenn und Aber.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="trust-divider"></div>
+
+      <div class="response-promise">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div class="response-promise-text">
+          <h4>Rückmeldung innerhalb von 48 h</h4>
+          <p>Werktags Mo–Fr, 08:00–17:00 Uhr. Wir rufen dich an.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORMULAR RECHTE SEITE -->
+    <div class="form-card">
+      <div class="form-card-header">
+        <div class="form-card-tag">Kostenlos &amp; unverbindlich</div>
+        <h2 class="form-card-title">Jetzt Angebot anfragen</h2>
+        <p class="form-card-sub">Füll das Formular aus — wir prüfen deine Förderfähigkeit und melden uns innerhalb von 48 Stunden.</p>
+      </div>
+
+      <form id="lpForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Vorname *</label>
+            <input type="text" name="vorname" placeholder="Max" required>
+          </div>
+          <div class="form-group">
+            <label>Nachname *</label>
+            <input type="text" name="nachname" placeholder="Mustermann" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>E-Mail-Adresse *</label>
+          <input type="email" name="email" placeholder="max@beispiel.de" required>
+        </div>
+        <div class="form-group">
+          <label>Telefonnummer *</label>
+          <input type="tel" name="telefon" placeholder="0171 1234567" required>
+        </div>
+        <div class="form-group">
+          <label>PLZ &amp; Ort *</label>
+          <input type="text" name="ort" placeholder="30900 Wedemark" required>
+        </div>
+        <div class="form-group">
+          <label>Aktuelle Heizung</label>
+          <select name="heizung">
+            <option value="">Bitte wählen …</option>
+            <option>Gasheizung (Zentralheizung)</option>
+            <option>Gas-Etagenheizung</option>
+            <option>Ölheizung</option>
+            <option>Nachtspeicherheizung</option>
+            <option>Sonstige / Weiß nicht</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Wohnfläche (ca.)</label>
+          <select name="flaeche">
+            <option value="">Bitte wählen …</option>
+            <option>bis 100 m²</option>
+            <option>100–150 m²</option>
+            <option>150–200 m²</option>
+            <option>200–280 m²</option>
+            <option>über 280 m² / Mehrfamilienhaus</option>
+          </select>
+        </div>
+        <div class="form-checkbox">
+          <input type="checkbox" id="dsgvo" required>
+          <label for="dsgvo">Ich stimme der Verarbeitung meiner Daten gemäß der <a href="/datenschutz" target="_blank">Datenschutzerklärung</a> zu. Die Einwilligung kann jederzeit widerrufen werden.</label>
+        </div>
+        <button type="submit" class="btn-submit">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Kostenlose Anfrage senden
+        </button>
+        <p class="form-note">Unverbindlich · Kostenlos · Kein Spam</p>
+      </form>
+
+      <div class="form-success-msg" id="lpSuccess">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#B7D900" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:16px;"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <h3>Anfrage erhalten!</h3>
+        <p>Danke — wir melden uns innerhalb von 48 Stunden bei dir.<br>Schau gerne auch auf <a href="/" style="color:var(--schiefer);font-weight:600;">unsere Website</a> für mehr Infos.</p>
+      </div>
+    </div>
+
+  </div><!-- /lp-main -->
+
+  <!-- FOOTER -->
+  <footer class="lp-footer">
+    <p>
+      HeroWerk GmbH &middot; Meisterbetrieb für Wärmepumpen &middot; Region Hannover &nbsp;|&nbsp;
+      <a href="/impressum">Impressum</a> &nbsp;·&nbsp;
+      <a href="/datenschutz">Datenschutz</a> &nbsp;·&nbsp;
+      <a href="/">Zur Website</a>
+    </p>
+  </footer>
+
+  <script>
+    document.getElementById('lpForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const data = new FormData(this);
+      const payload = Object.fromEntries(data.entries());
+      console.log('Formular-Daten:', payload);
+      // TODO: Anbindung an HubSpot / Zapier / E-Mail-Weiterleitung
+      this.style.display = 'none';
+      document.getElementById('lpSuccess').classList.add('show');
+    });
+  </script>
+
+</body>
+</html>
