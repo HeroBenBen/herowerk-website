@@ -3,527 +3,1126 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wärmepumpe Hannover — Kostenlos anfragen | HeroWerk</title>
-  <meta name="description" content="Jetzt kostenloses Angebot anfragen. HeroWerk Meisterbetrieb — Wärmepumpe in 6 Wochen, Förderung bis 70 %. Region Hannover.">
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Kostenloses Angebot anfragen | HeroWerk Wärmepumpen Hannover</title>
+  <meta name="description" content="Jetzt Wärmepumpen-Angebot anfragen. HeroWerk Meisterbetrieb Hannover — bis zu 70 % Förderung, Installation in 6 Wochen.">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; height: 100%; }
 
     :root {
       --green: #B7D900;
       --green-dark: #9fbf00;
+      --green-light: #f3f9cc;
+      --green-mid: #e8f5a3;
       --schiefer: #1C2B36;
       --bernstein: #E8A838;
-      --sand: #F4F1EA;
+      --vaillant: #CC0033;
       --white: #FFFFFF;
-      --g100: #F9FAFB;
-      --g200: #F3F4F6;
+      --bg: #F7F9FB;
+      --g100: #F3F4F6;
+      --g200: #E5E7EB;
       --g300: #D1D5DB;
       --g400: #9CA3AF;
       --g500: #6B7280;
       --g700: #374151;
       --g900: #111827;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(28,43,54,0.10);
     }
 
     body {
       font-family: 'Inter', sans-serif;
-      background: var(--g100);
+      background: var(--bg);
       color: var(--g900);
       font-size: 16px;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      min-height: 100%;
     }
-    h1, h2, h3 { font-family: 'Barlow', sans-serif; font-weight: 800; line-height: 1.15; }
+    h1, h2, h3, h4 { font-family: 'Barlow', sans-serif; font-weight: 800; line-height: 1.2; }
 
-    /* ══ HEADER ══ */
-    header {
-      background: var(--white);
-      border-bottom: 1px solid var(--g300);
-      padding: 0 24px;
-      position: sticky; top: 0; z-index: 100;
+    /* ══════════════════════════════════════
+       LAYOUT: Zwei-Spalten (Links statisch, Rechts Funnel)
+    ══════════════════════════════════════ */
+    .funnel-layout {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      min-height: 100vh;
     }
-    .header-inner {
-      max-width: 960px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 64px;
-    }
-    .header-logo {
-      display: flex; align-items: center; gap: 10px;
-      text-decoration: none;
-    }
-    .logo-mark {
-      width: 36px; height: 36px; background: var(--schiefer); border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 13px;
-      color: var(--green); letter-spacing: 0.03em; flex-shrink: 0;
-    }
-    .logo-text {
-      font-family: 'Barlow', sans-serif; font-weight: 800;
-      font-size: 18px; color: var(--schiefer);
-    }
-    .header-phone {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 14px; font-weight: 600; color: var(--schiefer);
-      text-decoration: none;
-      border: 1.5px solid var(--g300); border-radius: 8px;
-      padding: 8px 16px;
-      transition: border-color 0.2s;
-    }
-    .header-phone:hover { border-color: var(--green); }
-    .header-phone svg { color: var(--green); }
 
-    /* ══ HERO (kompakt) ══ */
-    .lp-hero {
+    /* ══════════════════════════════════════
+       LINKE SPALTE — statischer Trust-Bereich
+    ══════════════════════════════════════ */
+    .trust-panel {
       background: var(--schiefer);
-      padding: 48px 24px 40px;
+      padding: 40px 36px;
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
     }
-    .lp-hero-inner {
-      max-width: 960px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+    .trust-logo a {
+      display: inline-block; text-decoration: none; margin-bottom: 40px;
     }
-    .lp-hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(183,217,0,0.12); border: 1px solid rgba(183,217,0,0.3);
-      color: var(--green); font-size: 12px; font-weight: 700;
-      padding: 6px 14px; border-radius: 100px; margin-bottom: 16px;
+    .trust-logo img {
+      height: 38px; width: auto;
+    }
+    .trust-logo-fallback {
+      font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 22px;
+      color: var(--white);
+    }
+    .trust-logo-fallback span { color: var(--green); }
+
+    .trust-headline {
+      font-size: clamp(22px, 2vw, 28px);
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .trust-headline em {
+      font-style: normal; color: var(--green);
+    }
+    .trust-sub {
+      font-size: 14px; color: rgba(255,255,255,0.55);
+      margin-bottom: 32px; line-height: 1.6;
+    }
+
+    /* USP-Liste */
+    .trust-usps { display: flex; flex-direction: column; gap: 14px; margin-bottom: 36px; }
+    .trust-usp {
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .trust-usp-icon {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(183,217,0,0.15);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .trust-usp-icon svg { color: var(--green); width: 14px; height: 14px; }
+    .trust-usp-text { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.5; }
+    .trust-usp-text strong { color: var(--white); }
+
+    /* Trennlinie */
+    .trust-divider {
+      height: 1px; background: rgba(255,255,255,0.1); margin: 20px 0;
+    }
+
+    /* Partner-Logos */
+    .trust-partner-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.35);
+      margin-bottom: 14px;
+    }
+    .trust-partners { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .partner-badge {
+      height: 34px; border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 12px;
+      font-family: 'Barlow', sans-serif; font-weight: 800;
+      font-size: 13px; letter-spacing: 0.03em;
+    }
+    .pb-wolf {
+      background: rgba(183,217,0,0.15);
+      border: 1px solid rgba(183,217,0,0.25);
+      color: var(--green);
+    }
+    .pb-vaillant {
+      background: rgba(204,0,51,0.15);
+      border: 1px solid rgba(204,0,51,0.3);
+      color: #ff4466;
+    }
+    .partner-img { height: 28px; width: auto; object-fit: contain; }
+
+    /* Rating */
+    .trust-rating {
+      margin-top: auto; padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .rating-stars { display: flex; gap: 3px; margin-bottom: 6px; }
+    .rating-stars svg { color: var(--bernstein); width: 16px; height: 16px; }
+    .rating-text { font-size: 12px; color: rgba(255,255,255,0.45); }
+    .rating-text strong { color: rgba(255,255,255,0.7); }
+
+    /* ══════════════════════════════════════
+       RECHTE SPALTE — Funnel
+    ══════════════════════════════════════ */
+    .funnel-panel {
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header der Funnel-Spalte */
+    .funnel-header {
+      padding: 20px 48px;
+      border-bottom: 1px solid var(--g200);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .funnel-header-logo {
+      display: none; /* nur auf Mobile sichtbar */
+    }
+    .funnel-step-counter {
+      font-size: 13px; color: var(--g400); font-weight: 500;
+    }
+    .funnel-close-link {
+      font-size: 13px; color: var(--g400);
+      text-decoration: none; display: flex; align-items: center; gap: 6px;
+    }
+    .funnel-close-link:hover { color: var(--g700); }
+
+    /* Fortschrittsbalken */
+    .progress-bar-wrap {
+      padding: 0 48px;
+      padding-top: 28px;
+    }
+    .progress-bar-top {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .progress-label {
+      font-size: 12px; font-weight: 700; color: var(--g400);
       text-transform: uppercase; letter-spacing: 0.08em;
     }
-    .lp-hero h1 {
-      font-size: clamp(28px, 4vw, 40px); color: var(--white);
-      margin-bottom: 16px;
+    .progress-percent {
+      font-size: 12px; font-weight: 700; color: var(--schiefer);
     }
-    .lp-hero h1 span { color: var(--green); }
-    .lp-hero-sub {
-      color: #9CA3AF; font-size: 16px; line-height: 1.6; margin-bottom: 28px;
+    .progress-bar-bg {
+      width: 100%; height: 6px; background: var(--g200);
+      border-radius: 100px; overflow: hidden;
     }
-    .lp-usps {
-      display: flex; flex-direction: column; gap: 10px;
-    }
-    .lp-usp {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 14px; font-weight: 600; color: #D1D5DB;
-    }
-    .lp-usp-check {
-      width: 20px; height: 20px; border-radius: 50%;
-      background: rgba(183,217,0,0.15);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .lp-usp-check svg { width: 11px; height: 11px; color: var(--green); }
-    .lp-hero-img-side {
-      display: flex; flex-direction: column; gap: 12px;
-    }
-    .hero-stat-card {
-      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 12px; padding: 20px 24px;
-    }
-    .hero-stat-value {
-      font-family: 'Barlow', sans-serif; font-weight: 800;
-      font-size: 32px; color: var(--green); line-height: 1;
-      margin-bottom: 4px;
-    }
-    .hero-stat-label { font-size: 13px; color: #9CA3AF; }
-    .hero-stat-sub { font-size: 12px; color: #6B7280; margin-top: 2px; }
-
-    /* ══ HAUPTBEREICH (Formular + Trust) ══ */
-    .lp-main {
-      max-width: 960px; margin: 0 auto;
-      padding: 48px 24px;
-      display: grid; grid-template-columns: 1fr 420px; gap: 48px; align-items: start;
+    .progress-bar-fill {
+      height: 100%; background: var(--green);
+      border-radius: 100px;
+      transition: width 0.4s cubic-bezier(.4,0,.2,1);
     }
 
-    /* ══ FORMULAR-KARTE ══ */
-    .form-card {
-      background: var(--white);
-      border: 1.5px solid var(--g300);
-      border-radius: 16px;
-      padding: 36px;
-      box-shadow: 0 8px 32px rgba(28,43,54,0.10);
-      order: 2;
+    /* Fragen-Container */
+    .funnel-content {
+      flex: 1;
+      padding: 40px 48px 32px;
+      display: flex;
+      flex-direction: column;
     }
-    .form-card-header {
+
+    /* Schritt (ein Schritt = .step) */
+    .step {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      animation: fadeIn 0.25s ease;
+    }
+    .step.active { display: flex; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateX(12px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .step-question {
+      font-size: clamp(20px, 2.5vw, 26px);
+      color: var(--schiefer);
+      margin-bottom: 6px;
+    }
+    .step-hint {
+      font-size: 14px; color: var(--g400);
       margin-bottom: 28px;
     }
-    .form-card-tag {
-      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
-      color: var(--g500); margin-bottom: 8px;
+
+    /* Antwort-Karten (große Klick-Karten) */
+    .answer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 28px;
     }
-    .form-card-title {
-      font-size: 22px; color: var(--schiefer); margin-bottom: 8px;
+    .answer-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .answer-grid.cols-1 { grid-template-columns: 1fr; }
+
+    .answer-card {
+      background: var(--bg);
+      border: 2px solid var(--g200);
+      border-radius: var(--radius);
+      padding: 20px 18px;
+      cursor: pointer;
+      transition: border-color 0.18s, background 0.18s, transform 0.12s;
+      display: flex; align-items: center; gap: 14px;
+      text-align: left;
+      -webkit-user-select: none; user-select: none;
     }
-    .form-card-sub {
-      font-size: 14px; color: var(--g500); line-height: 1.5;
+    .answer-card:hover {
+      border-color: var(--green);
+      background: var(--green-light);
+      transform: translateY(-1px);
     }
-    .form-group { margin-bottom: 18px; }
-    .form-group label {
+    .answer-card.selected {
+      border-color: var(--green);
+      background: var(--green-light);
+      box-shadow: 0 0 0 3px rgba(183,217,0,0.25);
+    }
+    .answer-card-icon {
+      font-size: 26px; flex-shrink: 0; line-height: 1;
+    }
+    .answer-card-text { flex: 1; }
+    .answer-card-label {
+      font-family: 'Barlow', sans-serif; font-weight: 700;
+      font-size: 15px; color: var(--schiefer); line-height: 1.3;
+    }
+    .answer-card-sub {
+      font-size: 12px; color: var(--g400); margin-top: 3px; line-height: 1.4;
+    }
+    .answer-card-check {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--green);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; opacity: 0; transition: opacity 0.15s;
+    }
+    .answer-card-check svg { color: var(--schiefer); width: 12px; height: 12px; }
+    .answer-card.selected .answer-card-check { opacity: 1; }
+
+    /* PLZ-Eingabe (Schritt 9) */
+    .plz-input-wrap {
+      max-width: 320px; margin-bottom: 24px;
+    }
+    .plz-input-label {
       display: block; font-size: 13px; font-weight: 600;
-      color: var(--schiefer); margin-bottom: 6px;
+      color: var(--g700); margin-bottom: 8px;
     }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%; padding: 11px 14px;
-      background: var(--g100); border: 1.5px solid var(--g300);
-      border-radius: 8px; font-size: 14px; font-family: 'Inter', sans-serif;
-      color: var(--g900);
+    .plz-input {
+      width: 100%; padding: 14px 18px;
+      font-size: 20px; font-family: 'Barlow', sans-serif; font-weight: 700;
+      color: var(--schiefer); letter-spacing: 0.05em;
+      background: var(--bg); border: 2px solid var(--g200);
+      border-radius: var(--radius); outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .form-group input::placeholder,
-    .form-group textarea::placeholder { color: var(--g400); }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      outline: none; border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(183,217,0,0.18);
+    .plz-input:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(183,217,0,0.2);
       background: var(--white);
     }
-    .form-group textarea { resize: vertical; min-height: 80px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .form-checkbox {
+    .plz-input::placeholder { color: var(--g300); }
+    .plz-error {
+      font-size: 12px; color: #dc2626; margin-top: 6px; display: none;
+    }
+
+    /* Kontaktdaten (Schritt 10) */
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+      margin-bottom: 20px;
+    }
+    .contact-grid.full { grid-template-columns: 1fr; }
+    .form-field { display: flex; flex-direction: column; gap: 6px; }
+    .form-field label {
+      font-size: 13px; font-weight: 600; color: var(--g700);
+    }
+    .form-field input {
+      padding: 12px 14px;
+      font-size: 15px; font-family: 'Inter', sans-serif;
+      color: var(--g900);
+      background: var(--bg); border: 2px solid var(--g200);
+      border-radius: 8px; outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-field input:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(183,217,0,0.2);
+      background: var(--white);
+    }
+    .form-field input::placeholder { color: var(--g400); }
+
+    /* Zusammenfassung im letzten Schritt */
+    .contact-preview {
+      background: var(--g100); border: 1px solid var(--g200);
+      border-radius: var(--radius); padding: 14px 18px;
+      margin-bottom: 20px; font-size: 13px; color: var(--g500);
+    }
+    .contact-preview strong { color: var(--schiefer); }
+
+    /* DSGVO */
+    .dsgvo-row {
       display: flex; gap: 10px; align-items: flex-start; margin-bottom: 20px;
     }
-    .form-checkbox input { width: 18px; height: 18px; margin-top: 1px; cursor: pointer; accent-color: var(--green); flex-shrink: 0; }
-    .form-checkbox label { font-size: 12px; color: var(--g500); cursor: pointer; line-height: 1.5; }
-    .form-checkbox label a { color: var(--schiefer); }
-    .btn-submit {
-      width: 100%; padding: 15px;
-      background: var(--green); color: var(--schiefer);
-      border: none; border-radius: 8px;
+    .dsgvo-row input {
+      width: 16px; height: 16px; margin-top: 2px;
+      cursor: pointer; accent-color: var(--green); flex-shrink: 0;
+    }
+    .dsgvo-row label { font-size: 12px; color: var(--g400); line-height: 1.5; }
+    .dsgvo-row a { color: var(--g500); }
+
+    /* Navigations-Buttons */
+    .step-nav {
+      display: flex; align-items: center; gap: 12px;
+      margin-top: auto; padding-top: 20px;
+      border-top: 1px solid var(--g200);
+    }
+    .btn-back {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 14px; font-weight: 600; color: var(--g500);
+      background: none; border: none; cursor: pointer; padding: 10px 0;
+      transition: color 0.15s;
+    }
+    .btn-back:hover { color: var(--schiefer); }
+    .btn-back svg { width: 16px; height: 16px; }
+    .btn-back:disabled { opacity: 0; pointer-events: none; }
+    .spacer { flex: 1; }
+    .btn-next {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--schiefer); color: var(--white);
       font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 16px;
-      cursor: pointer; transition: background 0.2s, transform 0.1s;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 13px 28px; border-radius: 10px; border: none; cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
     }
-    .btn-submit:hover { background: var(--green-dark); }
-    .btn-submit:active { transform: scale(0.99); }
-    .form-success-msg {
-      display: none;
-      background: rgba(183,217,0,0.1); border: 2px solid var(--green);
-      border-radius: 12px; padding: 28px; text-align: center;
+    .btn-next:hover { background: #253845; transform: translateY(-1px); }
+    .btn-next:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .btn-next svg { width: 18px; height: 18px; }
+    .btn-submit-final {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--green); color: var(--schiefer);
+      font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 17px;
+      padding: 15px 32px; border-radius: 10px; border: none; cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      box-shadow: 0 4px 18px rgba(183,217,0,0.35);
     }
-    .form-success-msg.show { display: block; }
-    .form-success-msg h3 { color: var(--schiefer); font-size: 20px; margin-bottom: 8px; }
-    .form-success-msg p { color: var(--g500); font-size: 14px; }
-    .form-note {
-      text-align: center; font-size: 12px; color: var(--g400); margin-top: 12px;
-    }
+    .btn-submit-final:hover { background: var(--green-dark); transform: translateY(-1px); }
 
-    /* ══ TRUST-SEITE ══ */
-    .trust-side { order: 1; }
-    .trust-side-title {
-      font-size: 13px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.1em; color: var(--g500); margin-bottom: 20px;
+    /* ══════════════════════════════════════
+       ERFOLGS-SEITE
+    ══════════════════════════════════════ */
+    .success-step {
+      display: none; flex-direction: column; align-items: center;
+      justify-content: center; flex: 1; text-align: center;
+      padding: 40px 32px;
+      animation: fadeIn 0.3s ease;
     }
-    .trust-card {
-      background: var(--white); border: 1.5px solid var(--g300);
-      border-radius: 12px; margin-bottom: 12px; overflow: hidden;
-      transition: border-color 0.2s;
-    }
-    .trust-card:hover { border-color: rgba(183,217,0,0.5); }
-    .trust-card-inner {
-      display: flex; align-items: center; gap: 16px; padding: 16px 20px;
-    }
-    .trust-card-icon {
-      width: 44px; height: 44px; border-radius: 10px;
+    .success-step.active { display: flex; }
+    .success-icon {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: var(--green-light); border: 3px solid var(--green);
       display: flex; align-items: center; justify-content: center;
-      font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 11px;
-      flex-shrink: 0; letter-spacing: 0.03em;
+      margin: 0 auto 24px;
     }
-    .tci-wolf { background: var(--schiefer); color: var(--green); }
-    .tci-vaillant { background: #CC0033; color: var(--white); font-size: 9px; }
-    .tci-shk { background: rgba(183,217,0,0.12); color: var(--schiefer); }
-    .tci-kfw { background: #006AB3; color: var(--white); font-size: 10px; }
-    .tci-proklima { background: #2E7D32; color: var(--white); font-size: 9px; }
-    .tci-guarantee { background: rgba(232,168,56,0.12); color: var(--bernstein); }
-    .trust-card-text h4 {
-      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700;
-      color: var(--schiefer); margin-bottom: 2px;
+    .success-icon svg { width: 36px; height: 36px; color: var(--green-dark); }
+    .success-step h2 { font-size: 28px; color: var(--schiefer); margin-bottom: 10px; }
+    .success-step p { font-size: 15px; color: var(--g500); max-width: 400px; line-height: 1.7; margin: 0 auto 28px; }
+    .success-detail {
+      background: var(--g100); border-radius: var(--radius);
+      padding: 20px 28px; font-size: 14px; color: var(--g500);
+      max-width: 380px; line-height: 1.7;
     }
-    .trust-card-text p { font-size: 12px; color: var(--g500); line-height: 1.4; }
+    .success-detail strong { color: var(--schiefer); }
 
-    .trust-divider {
-      height: 1px; background: var(--g200); margin: 20px 0;
+    /* ══════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .funnel-layout { grid-template-columns: 1fr; }
+      .trust-panel { display: none; }
+      .funnel-header-logo { display: block; }
+      .funnel-header { padding: 16px 24px; }
+      .progress-bar-wrap { padding: 20px 24px 0; }
+      .funnel-content { padding: 28px 24px 24px; }
+      .answer-grid.cols-3 { grid-template-columns: 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .step-nav { flex-wrap: wrap; }
     }
-
-    .response-promise {
-      background: rgba(183,217,0,0.08); border: 1.5px solid rgba(183,217,0,0.3);
-      border-radius: 12px; padding: 16px 20px;
-      display: flex; align-items: center; gap: 14px;
-    }
-    .response-promise svg { color: var(--green); flex-shrink: 0; }
-    .response-promise-text h4 { font-size: 14px; font-weight: 700; color: var(--schiefer); margin-bottom: 2px; }
-    .response-promise-text p { font-size: 12px; color: var(--g500); }
-
-    /* ══ FOOTER (minimal) ══ */
-    .lp-footer {
-      background: var(--schiefer); padding: 24px;
-      text-align: center;
-    }
-    .lp-footer p { font-size: 12px; color: #6B7280; }
-    .lp-footer a { color: #9CA3AF; text-decoration: none; transition: color 0.2s; }
-    .lp-footer a:hover { color: var(--green); }
-
-    /* ══ RESPONSIVE ══ */
-    @media (max-width: 768px) {
-      .lp-hero-inner { grid-template-columns: 1fr; gap: 28px; }
-      .lp-hero-img-side { flex-direction: row; gap: 10px; }
-      .hero-stat-card { flex: 1; }
-      .lp-main { grid-template-columns: 1fr; gap: 32px; }
-      .trust-side { order: 2; }
-      .form-card { order: 1; }
-      .form-row { grid-template-columns: 1fr; }
-      .header-phone span { display: none; }
-    }
-    @media (max-width: 480px) {
-      .lp-hero { padding: 32px 16px; }
-      .form-card { padding: 24px 20px; }
-      .lp-main { padding: 32px 16px; }
+    @media (max-width: 500px) {
+      .answer-grid { grid-template-columns: 1fr; }
+      .answer-grid.cols-3 { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="header-inner">
-      <a href="/" class="header-logo">
-        <!-- Light-Logo: schwarze Schrift + B7D900 Akzent (korrekt für weißen Header) -->
-        <!-- Wenn echtes Bild verfügbar: <img src="v4-Horizontal-claim-black-B7D900.png" alt="HeroWerk" style="height:36px;width:auto;"> -->
-        <div class="logo-mark">HW</div>
-        <span class="logo-text">Hero<span style="color:var(--schiefer);">Werk</span></span>
+<div class="funnel-layout">
+
+  <!-- ════════════════════════════════════
+       LINKE SPALTE — Trust-Panel
+  ════════════════════════════════════ -->
+  <aside class="trust-panel">
+
+    <div class="trust-logo">
+      <a href="/">
+        <img src="v4-Horizontal-claim-black-B7D900.png" alt="HeroWerk"
+          style="filter:brightness(0) invert(1);"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+        <span class="trust-logo-fallback" style="display:none;">Hero<span>Werk</span></span>
       </a>
-      <a href="tel:+495119999999" class="header-phone">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.01 2.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
-        <span>Jetzt anrufen</span>
-      </a>
-    </div>
-  </header>
-
-  <!-- HERO (kompakt, dark) -->
-  <section class="lp-hero">
-    <div class="lp-hero-inner">
-      <div>
-        <div class="lp-hero-badge">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          Meisterbetrieb Region Hannover
-        </div>
-        <h1>Wärmepumpe anfragen.<br><span>Einfach. Schnell. Sicher.</span></h1>
-        <p class="lp-hero-sub">Kostenloses Angebot vom Meisterbetrieb — inkl. Baubarkeitsprüfung und Förderantrag. Wir melden uns innerhalb von 48 Stunden.</p>
-        <div class="lp-usps">
-          <div class="lp-usp">
-            <div class="lp-usp-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-            Transparente Richtpreise, verbindlich nach Vor-Ort-Check
-          </div>
-          <div class="lp-usp">
-            <div class="lp-usp-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-            Bis zu 70 % KfW-Förderung — Antrag inklusive
-          </div>
-          <div class="lp-usp">
-            <div class="lp-usp-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-            Wolf oder Vaillant — wir wählen die beste Lösung für dich
-          </div>
-          <div class="lp-usp">
-            <div class="lp-usp-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-            Fördervorschuss bis 21.000 € — kein Warten auf KfW-Auszahlung
-          </div>
-        </div>
-      </div>
-      <div class="lp-hero-img-side">
-        <div class="hero-stat-card">
-          <div class="hero-stat-value">70 %</div>
-          <div class="hero-stat-label">max. KfW-Förderung</div>
-          <div class="hero-stat-sub">KfW 458 + proKlima Region Hannover</div>
-        </div>
-        <div class="hero-stat-card">
-          <div class="hero-stat-value">6 Wo.</div>
-          <div class="hero-stat-label">Von Anfrage bis Installation</div>
-          <div class="hero-stat-sub">Durchschnittliche Projektlaufzeit</div>
-        </div>
-        <div class="hero-stat-card">
-          <div class="hero-stat-value">5 J.</div>
-          <div class="hero-stat-label">Garantie auf Installation</div>
-          <div class="hero-stat-sub">Gerät und Einbau aus einer Hand</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- HAUPTBEREICH -->
-  <div class="lp-main">
-
-    <!-- TRUST LINKE SEITE -->
-    <div class="trust-side">
-      <div class="trust-side-title">Warum HeroWerk?</div>
-
-      <div class="trust-card">
-        <div class="trust-card-inner">
-          <div class="trust-card-icon tci-wolf">WOLF</div>
-          <div class="trust-card-text">
-            <h4>Wolf GmbH — Premiumpartner</h4>
-            <p>CHA-Serie mit R290-Kältemittel. Bewährt, effizient, förderfähig.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="trust-card">
-        <div class="trust-card-inner">
-          <div class="trust-card-icon tci-vaillant">VAI<br>LLANT</div>
-          <div class="trust-card-text">
-            <h4>Vaillant Group — Premiumpartner</h4>
-            <p>aroTHERM plus mit R290. Ideal für Sanierung und Neubau.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="trust-card">
-        <div class="trust-card-inner">
-          <div class="trust-card-icon tci-shk">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <div class="trust-card-text">
-            <h4>SHK-Meisterbetrieb</h4>
-            <p>Eingetragener Fachbetrieb. Volle handwerksrechtliche Absicherung.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="trust-card">
-        <div class="trust-card-inner">
-          <div class="trust-card-icon tci-kfw">KfW</div>
-          <div class="trust-card-text">
-            <h4>KfW 458 — Förderantrag inklusive</h4>
-            <p>Wir stellen den Antrag für dich. Du unterschreibst, wir regeln den Rest.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="trust-card">
-        <div class="trust-card-inner">
-          <div class="trust-card-icon tci-proklima">pro<br>K</div>
-          <div class="trust-card-text">
-            <h4>proKlima-Fördergebiet</h4>
-            <p>Hannover, Langenhagen, Seelze, Laatzen, Hemmingen, Ronnenberg: +5 % on top.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="trust-card">
-        <div class="trust-card-inner">
-          <div class="trust-card-icon tci-guarantee">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          </div>
-          <div class="trust-card-text">
-            <h4>5 Jahre Garantie</h4>
-            <p>Auf Installation und Gerät. Ohne Wenn und Aber.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="trust-divider"></div>
-
-      <div class="response-promise">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        <div class="response-promise-text">
-          <h4>Rückmeldung innerhalb von 48 h</h4>
-          <p>Werktags Mo–Fr, 08:00–17:00 Uhr. Wir rufen dich an.</p>
-        </div>
-      </div>
     </div>
 
-    <!-- FORMULAR RECHTE SEITE -->
-    <div class="form-card">
-      <div class="form-card-header">
-        <div class="form-card-tag">Kostenlos &amp; unverbindlich</div>
-        <h2 class="form-card-title">Jetzt Angebot anfragen</h2>
-        <p class="form-card-sub">Füll das Formular aus — wir prüfen deine Förderfähigkeit und melden uns innerhalb von 48 Stunden.</p>
-      </div>
-
-      <form id="lpForm">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Vorname *</label>
-            <input type="text" name="vorname" placeholder="Max" required>
-          </div>
-          <div class="form-group">
-            <label>Nachname *</label>
-            <input type="text" name="nachname" placeholder="Mustermann" required>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>E-Mail-Adresse *</label>
-          <input type="email" name="email" placeholder="max@beispiel.de" required>
-        </div>
-        <div class="form-group">
-          <label>Telefonnummer *</label>
-          <input type="tel" name="telefon" placeholder="0171 1234567" required>
-        </div>
-        <div class="form-group">
-          <label>PLZ &amp; Ort *</label>
-          <input type="text" name="ort" placeholder="30900 Wedemark" required>
-        </div>
-        <div class="form-group">
-          <label>Aktuelle Heizung</label>
-          <select name="heizung">
-            <option value="">Bitte wählen …</option>
-            <option>Gasheizung (Zentralheizung)</option>
-            <option>Gas-Etagenheizung</option>
-            <option>Ölheizung</option>
-            <option>Nachtspeicherheizung</option>
-            <option>Sonstige / Weiß nicht</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Wohnfläche (ca.)</label>
-          <select name="flaeche">
-            <option value="">Bitte wählen …</option>
-            <option>bis 100 m²</option>
-            <option>100–150 m²</option>
-            <option>150–200 m²</option>
-            <option>200–280 m²</option>
-            <option>über 280 m² / Mehrfamilienhaus</option>
-          </select>
-        </div>
-        <div class="form-checkbox">
-          <input type="checkbox" id="dsgvo" required>
-          <label for="dsgvo">Ich stimme der Verarbeitung meiner Daten gemäß der <a href="/datenschutz" target="_blank">Datenschutzerklärung</a> zu. Die Einwilligung kann jederzeit widerrufen werden.</label>
-        </div>
-        <button type="submit" class="btn-submit">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-          Kostenlose Anfrage senden
-        </button>
-        <p class="form-note">Unverbindlich · Kostenlos · Kein Spam</p>
-      </form>
-
-      <div class="form-success-msg" id="lpSuccess">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#B7D900" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:16px;"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        <h3>Anfrage erhalten!</h3>
-        <p>Danke — wir melden uns innerhalb von 48 Stunden bei dir.<br>Schau gerne auch auf <a href="/" style="color:var(--schiefer);font-weight:600;">unsere Website</a> für mehr Infos.</p>
-      </div>
-    </div>
-
-  </div><!-- /lp-main -->
-
-  <!-- FOOTER -->
-  <footer class="lp-footer">
-    <p>
-      HeroWerk GmbH &middot; Meisterbetrieb für Wärmepumpen &middot; Region Hannover &nbsp;|&nbsp;
-      <a href="/impressum">Impressum</a> &nbsp;·&nbsp;
-      <a href="/datenschutz">Datenschutz</a> &nbsp;·&nbsp;
-      <a href="/">Zur Website</a>
+    <h2 class="trust-headline">
+      Ihre <em>Wärmepumpe</em><br>aus Meisterhand.
+    </h2>
+    <p class="trust-sub">
+      In wenigen Schritten zum kostenlosen Angebot — wir prüfen Ihre Förderfähigkeit und melden uns innerhalb von 48 Stunden.
     </p>
-  </footer>
 
-  <script>
-    document.getElementById('lpForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const data = new FormData(this);
-      const payload = Object.fromEntries(data.entries());
-      console.log('Formular-Daten:', payload);
-      // TODO: Anbindung an HubSpot / Zapier / E-Mail-Weiterleitung
-      this.style.display = 'none';
-      document.getElementById('lpSuccess').classList.add('show');
-    });
-  </script>
+    <div class="trust-usps">
+      <div class="trust-usp">
+        <div class="trust-usp-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="trust-usp-text">
+          <strong>Bis zu 70 % KfW-Förderung</strong><br>
+          Antrag inklusive — wir regeln das komplett
+        </div>
+      </div>
+      <div class="trust-usp">
+        <div class="trust-usp-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="trust-usp-text">
+          <strong>6 Wochen von Anfrage bis Installation</strong><br>
+          Durchschnittliche Projektlaufzeit in der Region
+        </div>
+      </div>
+      <div class="trust-usp">
+        <div class="trust-usp-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="trust-usp-text">
+          <strong>Fördervorschuss bis 21.000 €</strong><br>
+          Kein Warten auf die KfW-Auszahlung
+        </div>
+      </div>
+      <div class="trust-usp">
+        <div class="trust-usp-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="trust-usp-text">
+          <strong>5 Jahre Garantie</strong><br>
+          Auf Gerät und Einbau — aus einer Hand
+        </div>
+      </div>
+    </div>
+
+    <div class="trust-divider"></div>
+
+    <div class="trust-partner-label">Unsere Premiumpartner</div>
+    <div class="trust-partners">
+      <!-- Wolf Logo -->
+      <img class="partner-img" src="Wolf.png" alt="Wolf GmbH"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <span class="partner-badge pb-wolf" style="display:none;">WOLF</span>
+
+      <!-- Vaillant Badge (kein Logo vorhanden) -->
+      <span class="partner-badge pb-vaillant">VAILLANT</span>
+
+      <!-- KfW -->
+      <span class="partner-badge" style="background:rgba(0,106,179,0.15);border:1px solid rgba(0,106,179,0.3);color:#3399cc;font-size:12px;">KfW 458</span>
+    </div>
+
+    <div class="trust-rating">
+      <div class="rating-stars">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div class="rating-text"><strong>SHK-Meisterbetrieb</strong> · Eingetragener Fachbetrieb · Region Hannover</div>
+    </div>
+
+  </aside>
+
+  <!-- ════════════════════════════════════
+       RECHTE SPALTE — Funnel
+  ════════════════════════════════════ -->
+  <main class="funnel-panel">
+
+    <!-- Header -->
+    <div class="funnel-header">
+      <div class="funnel-header-logo">
+        <img src="v4-Horizontal-claim-black-B7D900.png" alt="HeroWerk" style="height:32px;width:auto;"
+          onerror="this.style.display='none';">
+      </div>
+      <span class="funnel-step-counter" id="stepCounter">Schritt 1 von 9</span>
+      <a href="/" class="funnel-close-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        Abbrechen
+      </a>
+    </div>
+
+    <!-- Fortschrittsbalken -->
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-top">
+        <span class="progress-label">Ihr Angebot</span>
+        <span class="progress-percent" id="progressPercent">10 % geschafft</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progressFill" style="width:10%"></div>
+      </div>
+    </div>
+
+    <!-- ── Fragen-Inhalt ── -->
+    <div class="funnel-content">
+
+      <!-- ──────────── SCHRITT 1: Gebäudetyp ──────────── -->
+      <div class="step active" data-step="1">
+        <h2 class="step-question">Für welches Gebäude suchen Sie eine Wärmepumpe?</h2>
+        <p class="step-hint">Wählen Sie eine Option — wir leiten Sie direkt weiter.</p>
+        <div class="answer-grid">
+          <div class="answer-card" data-value="Einfamilienhaus" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon">🏡</div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">Einfamilienhaus</div>
+              <div class="answer-card-sub">Freistehendes Haus</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="Doppelhaushälfte" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon">🏘️</div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">Doppelhaushälfte</div>
+              <div class="answer-card-sub">Hälfte eines Doppelhauses</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="Reihenhaus" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon">🏠</div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">Reihenhaus</div>
+              <div class="answer-card-sub">End- oder Mittelhaus</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="Mehrfamilienhaus" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon">🏢</div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">Mehrfamilienhaus</div>
+              <div class="answer-card-sub">Ab 3 Wohneinheiten</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Zurück
+          </button>
+        </div>
+      </div>
+
+      <!-- ──────────── SCHRITT 2: Aktuelle Heizung ──────────── -->
+      <div class="step" data-step="2">
+        <h2 class="step-question">Wie heizen Sie aktuell?</h2>
+        <p class="step-hint">Für die Förderfähigkeit und technische Planung wichtig.</p>
+        <div class="answer-grid">
+          <div class="answer-card" data-value="Gasheizung" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon">🔥</div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">Gasheizung</div>
+              <div class="answer-card-sub">Zentralheizung oder Etage</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="Ölheizung" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon">🛢️</div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">Ölheizung</div>
+              <div class="answer-card-sub">Heizöl mit Tank</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="Nachtspeicher" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon">⚡</div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">Nachtspeicher</div>
+              <div class="answer-card-sub">Elektrische Heizung</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="Sonstige Heizung" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon">❓</div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">Sonstiges / Weiß nicht</div>
+              <div class="answer-card-sub">Pellets, Fernwärme o. ä.</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goBack()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Zurück
+          </button>
+        </div>
+      </div>
+
+      <!-- ──────────── SCHRITT 3: Alter der Heizung ──────────── -->
+      <div class="step" data-step="3">
+        <h2 class="step-question">Wie alt ist Ihre aktuelle Heizung?</h2>
+        <p class="step-hint">Ältere Anlagen haben oft höhere Förderansprüche.</p>
+        <div class="answer-grid cols-3">
+          <div class="answer-card" data-value="Unter 10 Jahre" onclick="selectAndAdvance(this)">
+            <div class="answer-card-text">
+              <div class="answer-card-label">Unter 10 Jahre</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="10–20 Jahre" onclick="selectAndAdvance(this)">
+            <div class="answer-card-text">
+              <div class="answer-card-label">10–20 Jahre</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="Über 20 Jahre" onclick="selectAndAdvance(this)">
+            <div class="answer-card-text">
+              <div class="answer-card-label">Über 20 Jahre</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="Heizungsalter unbekannt" onclick="selectAndAdvance(this)">
+            <div class="answer-card-text">
+              <div class="answer-card-label">Weiß ich nicht</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goBack()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Zurück
+          </button>
+        </div>
+      </div>
+
+      <!-- ──────────── SCHRITT 4: Baujahr ──────────── -->
+      <div class="step" data-step="4">
+        <h2 class="step-question">Wann wurde die Immobilie gebaut?</h2>
+        <p class="step-hint">Das Baujahr bestimmt den Dämmstandard und die optimale WP-Größe.</p>
+        <div class="answer-grid cols-3">
+          <div class="answer-card" data-value="Vor 1978" onclick="selectAndAdvance(this)">
+            <div class="answer-card-text">
+              <div class="answer-card-label">Vor 1978</div>
+              <div class="answer-card-sub">Altbau, oft ohne Dämmung</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="1978–1994" onclick="selectAndAdvance(this)">
+            <div class="answer-card-text">
+              <div class="answer-card-label">1978–1994</div>
+              <div class="answer-card-sub">Erste Wärmeschutzverordnung</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="1995–2009" onclick="selectAndAdvance(this)">
+            <div class="answer-card-text">
+              <div class="answer-card-label">1995–2009</div>
+              <div class="answer-card-sub">Wärmeschutz modernisiert</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="Ab 2010" onclick="selectAndAdvance(this)">
+            <div class="answer-card-text">
+              <div class="answer-card-label">Ab 2010</div>
+              <div class="answer-card-sub">EnEV / GEG-Standard</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="Neubau / im Bau" onclick="selectAndAdvance(this)">
+            <div class="answer-card-text">
+              <div class="answer-card-label">Neubau / im Bau</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goBack()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Zurück
+          </button>
+        </div>
+      </div>
+
+      <!-- ──────────── SCHRITT 5: Wohnfläche ──────────── -->
+      <div class="step" data-step="5">
+        <h2 class="step-question">Wie groß ist die zu beheizende Wohnfläche?</h2>
+        <p class="step-hint">Für die Heizlastberechnung und WP-Dimensionierung.</p>
+        <div class="answer-grid cols-3">
+          <div class="answer-card" data-value="Bis 100 m²" onclick="selectAndAdvance(this)">
+            <div class="answer-card-text"><div class="answer-card-label">Bis 100 m²</div></div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="100–150 m²" onclick="selectAndAdvance(this)">
+            <div class="answer-card-text"><div class="answer-card-label">100–150 m²</div></div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="150–200 m²" onclick="selectAndAdvance(this)">
+            <div class="answer-card-text"><div class="answer-card-label">150–200 m²</div></div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="200–280 m²" onclick="selectAndAdvance(this)">
+            <div class="answer-card-text"><div class="answer-card-label">200–280 m²</div></div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="Über 280 m²" onclick="selectAndAdvance(this)">
+            <div class="answer-card-text"><div class="answer-card-label">Über 280 m²</div><div class="answer-card-sub">Oder Mehrfamilienhaus</div></div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goBack()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Zurück
+          </button>
+        </div>
+      </div>
+
+      <!-- ──────────── SCHRITT 6: Heizsystem ──────────── -->
+      <div class="step" data-step="6">
+        <h2 class="step-question">Wie werden Ihre Räume beheizt?</h2>
+        <p class="step-hint">Fußbodenheizung ermöglicht niedrigere Vorlauftemperaturen und höhere Effizienz.</p>
+        <div class="answer-grid">
+          <div class="answer-card" data-value="Heizkörper" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon">🔧</div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">Heizkörper</div>
+              <div class="answer-card-sub">Klassische Radiatoren</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="Fußbodenheizung" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon">🌡️</div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">Fußbodenheizung</div>
+              <div class="answer-card-sub">Flächenheizung im Boden</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="Heizkörper und Fußbodenheizung" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon">✅</div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">Beides</div>
+              <div class="answer-card-sub">Gemischtes System</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="Sonstiges Heizsystem" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon">❓</div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">Sonstiges / Weiß nicht</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goBack()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Zurück
+          </button>
+        </div>
+      </div>
+
+      <!-- ──────────── SCHRITT 7: Eigentümer? ──────────── -->
+      <div class="step" data-step="7">
+        <h2 class="step-question">Sind Sie Eigentümer der Immobilie?</h2>
+        <p class="step-hint">Nur Eigentümer oder bevollmächtigte Personen können Förderanträge stellen.</p>
+        <div class="answer-grid">
+          <div class="answer-card" data-value="Eigentümer: Ja" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon">✅</div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">Ja, ich bin Eigentümer</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="Eigentümer: Nein / Mieter" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon">🏠</div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">Nein, ich bin Mieter</div>
+              <div class="answer-card-sub">Wir beraten Sie dennoch gerne</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goBack()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Zurück
+          </button>
+        </div>
+      </div>
+
+      <!-- ──────────── SCHRITT 8: Zeitplan ──────────── -->
+      <div class="step" data-step="8">
+        <h2 class="step-question">Wann soll die Wärmepumpe installiert werden?</h2>
+        <p class="step-hint">Für unsere Kapazitätsplanung und Ihre Förderantragsfrist.</p>
+        <div class="answer-grid">
+          <div class="answer-card" data-value="Sofort / so schnell wie möglich" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon">🚀</div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">Sofort</div>
+              <div class="answer-card-sub">So schnell wie möglich</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="In 1–3 Monaten" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon">📅</div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">In 1–3 Monaten</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="In 3–6 Monaten" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon">📆</div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">In 3–6 Monaten</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="Noch nicht sicher / später" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon">🤔</div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">Noch nicht sicher</div>
+              <div class="answer-card-sub">Ich informiere mich erst</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goBack()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Zurück
+          </button>
+        </div>
+      </div>
+
+      <!-- ──────────── SCHRITT 9: PLZ ──────────── -->
+      <div class="step" data-step="9">
+        <h2 class="step-question">In welcher PLZ befindet sich die Immobilie?</h2>
+        <p class="step-hint">Wir prüfen, ob Sie im proKlima-Fördergebiet liegen (+5 % extra).</p>
+        <div class="plz-input-wrap">
+          <label class="plz-input-label" for="plzInput">Postleitzahl</label>
+          <input type="text" id="plzInput" class="plz-input"
+            placeholder="z. B. 30900"
+            maxlength="5"
+            pattern="[0-9]{5}"
+            inputmode="numeric"
+            onkeyup="validatePlz(this)"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+          <div class="plz-error" id="plzError">Bitte eine gültige 5-stellige Postleitzahl eingeben.</div>
+        </div>
+        <div id="plzResult" style="display:none;" class="contact-preview" style="max-width:320px;">
+          <strong id="plzResultText"></strong>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goBack()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Zurück
+          </button>
+          <div class="spacer"></div>
+          <button class="btn-next" id="plzNextBtn" disabled onclick="goNext()">
+            Verfügbarkeit prüfen
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- ──────────── SCHRITT 10: Kontaktdaten (LETZTER SCHRITT) ──────────── -->
+      <div class="step" data-step="10">
+        <h2 class="step-question">Fast geschafft — jetzt Ihr Angebot sichern</h2>
+        <p class="step-hint">Wir erstellen Ihr persönliches Angebot auf Basis Ihrer Angaben.</p>
+
+        <!-- Zusammenfassung der eingegebenen PLZ -->
+        <div class="contact-preview" id="plzSummary" style="margin-bottom:20px;">
+          Ihr Standort: <strong id="plzSummaryText">—</strong> &nbsp;·&nbsp;
+          <span style="color:#2E7D32;font-weight:600;">✓ Wir sind in Ihrer Region aktiv</span>
+        </div>
+
+        <form id="contactForm" onsubmit="submitForm(event)">
+          <div class="contact-grid">
+            <div class="form-field">
+              <label for="vorname">Vorname *</label>
+              <input type="text" id="vorname" name="vorname" placeholder="Max" required autocomplete="given-name">
+            </div>
+            <div class="form-field">
+              <label for="nachname">Nachname *</label>
+              <input type="text" id="nachname" name="nachname" placeholder="Mustermann" required autocomplete="family-name">
+            </div>
+            <div class="form-field">
+              <label for="telefon">Telefonnummer *</label>
+              <input type="tel" id="telefon" name="telefon" placeholder="0511 / 123 456" required autocomplete="tel">
+            </div>
+            <div class="form-field">
+              <label for="email">E-Mail-Adresse *</label>
+              <input type="email" id="email" name="email" placeholder="max@beispiel.de" required autocomplete="email">
+            </div>
+          </div>
+
+          <div class="dsgvo-row">
+            <input type="checkbox" id="dsgvo" name="dsgvo" required>
+            <label for="dsgvo">
+              Ich stimme der Verarbeitung meiner Daten gemäß der <a href="/datenschutz" target="_blank">Datenschutzerklärung</a> zu und erteile meine Einwilligung zur Kontaktaufnahme. Die Einwilligung ist jederzeit widerrufbar.
+            </label>
+          </div>
+
+          <button type="submit" class="btn-submit-final">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Kostenloses Angebot erhalten
+          </button>
+        </form>
+
+        <div class="step-nav" style="border-top:none; padding-top:8px;">
+          <button class="btn-back" onclick="goBack()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            Zurück
+          </button>
+          <div class="spacer"></div>
+          <div style="font-size:11px;color:var(--g400);display:flex;align-items:center;gap:5px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            SSL-verschlüsselt · DSGVO-konform
+          </div>
+        </div>
+      </div>
+
+      <!-- ──────────── ERFOLG ──────────── -->
+      <div class="success-step" id="successStep">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <h2>Anfrage erhalten!</h2>
+        <p>
+          Danke, <strong id="successName"></strong>! Wir melden uns innerhalb von <strong>48 Stunden</strong> bei Ihnen — werktags Mo–Fr 08:00–17:00 Uhr.
+        </p>
+        <div class="success-detail">
+          <strong>Wie geht es weiter?</strong><br>
+          1. Wir rufen Sie an und klären offene Fragen<br>
+          2. Baubarkeitsprüfung vor Ort (kostenlos)<br>
+          3. Individuelles Angebot mit Förderberechnung<br>
+          4. Förderantrag stellen — wir übernehmen das
+        </div>
+      </div>
+
+    </div><!-- /funnel-content -->
+  </main>
+</div>
+
+<script>
+  // ── Zustand ──────────────────────────────────
+  let currentStep = 1;
+  const TOTAL_STEPS = 9; // ohne Erfolgs-Seite
+  const answers = {};
+
+  // Fortschritt-Prozentsatz pro Schritt
+  const progress = {
+    1: 10, 2: 22, 3: 33, 4: 44,
+    5: 55, 6: 66, 7: 77, 8: 88, 9: 94, 10: 99
+  };
+
+  // ── Schritt anzeigen ─────────────────────────
+  function showStep(n) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('successStep')?.classList.remove('active');
+
+    const target = document.querySelector(`.step[data-step="${n}"]`);
+    if (target) {
+      target.classList.add('active');
+      currentStep = n;
+      updateProgress(n);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── Fortschritt aktualisieren ─────────────────
+  function updateProgress(n) {
+    const pct = progress[n] || 10;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressPercent').textContent = pct + ' % geschafft';
+    document.getElementById('stepCounter').textContent =
+      `Schritt ${n} von ${TOTAL_STEPS}`;
+  }
+
+  // ── Karte auswählen + auto-advance ───────────
+  function selectAndAdvance(card) {
+    const step = card.closest('.step');
+    step.querySelectorAll('.answer-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+
+    const key = 'step' + currentStep;
+    answers[key] = card.dataset.value;
+
+    // Kleiner Delay für visuelles Feedback
+    setTimeout(() => {
+      if (currentStep < 10) {
+        goNext();
+      }
+    }, 220);
+  }
+
+  // ── Weiter ───────────────────────────────────
+  function goNext() {
+    if (currentStep === 9) {
+      // PLZ validieren
+      const plz = document.getElementById('plzInput').value;
+      if (!/^\d{5}$/.test(plz)) {
+        document.getElementById('plzError').style.display = 'block';
+        return;
+      }
+      answers['plz'] = plz;
+      // PLZ in Schritt 10 anzeigen
+      document.getElementById('plzSummaryText').textContent = plz;
+    }
+    showStep(currentStep + 1);
+  }
+
+  // ── Zurück ────────────────────────────────────
+  function goBack() {
+    if (currentStep > 1) {
+      showStep(currentStep - 1);
+    }
+  }
+
+  // ── PLZ Validierung ───────────────────────────
+  function validatePlz(input) {
+    const val = input.value;
+    const btn = document.getElementById('plzNextBtn');
+    const err = document.getElementById('plzError');
+    const result = document.getElementById('plzResult');
+
+    if (/^\d{5}$/.test(val)) {
+      btn.disabled = false;
+      err.style.display = 'none';
+      // proKlima-Gebiet: 30xxx, 31xxx
+      const proKlimaZips = ['300','301','302','303','304','305','306','307','308','309','310','311'];
+      const prefix3 = val.substring(0,3);
+      const isProKlima = proKlimaZips.includes(prefix3);
+      result.style.display = 'block';
+      document.getElementById('plzResultText').textContent =
+        isProKlima
+          ? '🎉 Sehr gut! Sie liegen im proKlima-Fördergebiet — bis zu 75 % Förderung möglich!'
+          : '✓ Wir sind in Ihrer Region aktiv.';
+      // Enter-Taste
+      document.getElementById('plzInput').onkeydown = (e) => {
+        if (e.key === 'Enter') goNext();
+      };
+    } else {
+      btn.disabled = true;
+      result.style.display = 'none';
+    }
+  }
+
+  // ── Formular absenden ────────────────────────
+  function submitForm(e) {
+    e.preventDefault();
+    const form = document.getElementById('contactForm');
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    // Alle Antworten zusammenführen
+    const payload = { ...answers, ...data };
+    console.log('HeroWerk Lead:', payload);
+
+    // TODO: HubSpot / Zapier Webhook-Anbindung hier einfügen
+    // fetch('https://hooks.zapier.com/...', { method:'POST', body: JSON.stringify(payload) });
+
+    // Erfolg anzeigen
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('successStep').classList.add('active');
+    document.getElementById('successName').textContent = data.vorname || '';
+    document.getElementById('progressFill').style.width = '100%';
+    document.getElementById('progressPercent').textContent = '100 % geschafft';
+    document.getElementById('stepCounter').textContent = 'Fertig!';
+  }
+</script>
 
 </body>
 </html>
