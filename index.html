@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wärmepumpe Region Hannover | HeroWerk</title>
   <meta name="description" content="Wärmepumpen-Installation in der Region Hannover. Transparente Richtpreise, 6 Wochen, Meisterqualität. Bis zu 70% Förderung sichern.">
+  <script src="js/theme.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -877,6 +878,38 @@
     /* ══ PREISANKER TEASER — Zoom-Karten + Detail-Panel ══ */
     .preisanker-section { background: var(--schiefer); border-top: 1px solid rgba(255,255,255,0.04); }
 
+
+    .manufacturer-tabs {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 0 0 22px;
+    }
+    .manufacturer-tab {
+      text-align: left; border: 2px solid rgba(255,255,255,0.08); border-radius: 14px;
+      padding: 20px; background: rgba(255,255,255,0.04); cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      font-family: 'Inter', sans-serif;
+    }
+    .manufacturer-tab:hover, .manufacturer-tab:focus-visible {
+      transform: translateY(-2px); border-color: rgba(183,217,0,0.6); box-shadow: 0 8px 24px rgba(183,217,0,0.14); outline: none;
+    }
+    .manufacturer-tab.active {
+      border-color: var(--green); background: linear-gradient(135deg, rgba(183,217,0,0.12), rgba(255,255,255,0.05));
+    }
+    .manufacturer-name { display: block; color: var(--white); font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 20px; margin-bottom: 6px; }
+    .manufacturer-price { display: block; color: var(--green); font-size: 14px; font-weight: 700; }
+    .vaillant-panel { margin-bottom: 16px; }
+    .vaillant-panel-inner {
+      background: rgba(255,255,255,0.04); border: 2px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 28px;
+    }
+    .vaillant-panel h3 { color: var(--white); font-size: 24px; margin-bottom: 10px; }
+    .vaillant-panel p { color: var(--g300); max-width: 760px; margin-bottom: 20px; }
+    [data-theme="light"] .manufacturer-tab,
+    [data-theme="light"] .vaillant-panel-inner { background: var(--color-surface-secondary); border-color: var(--color-border-subtle); box-shadow: 0 8px 28px var(--color-shadow); }
+    [data-theme="light"] .manufacturer-tab.active { border-color: var(--green); background: linear-gradient(135deg, rgba(183,217,0,0.24), #FFFFFF); }
+    [data-theme="light"] .manufacturer-name,
+    [data-theme="light"] .vaillant-panel h3 { color: var(--color-text-primary); }
+    [data-theme="light"] .vaillant-panel p { color: var(--color-text-secondary); }
+    @media (max-width: 640px) { .manufacturer-tabs { grid-template-columns: 1fr; } }
+
     /* Karten-Reihe */
     .pa-cards {
       display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 0;
@@ -1389,6 +1422,38 @@
     @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     .fade-up { animation: slideUp 0.6s ease-out; }
   </style>
+  <link rel="stylesheet" href="tokens.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://www.herowerk.de/#localbusiness",
+        "name": "HeroWerk GmbH",
+        "url": "https://www.herowerk.de/",
+        "telephone": "+4951130030860",
+        "email": "info@herowerk.de",
+        "areaServed": "Region Hannover",
+        "description": "Meisterbetrieb für Wärmepumpen in der Region Hannover."
+      },
+      {
+        "@type": "Product",
+        "name": "Wolf CHA Wärmepumpe",
+        "brand": { "@type": "Brand", "name": "Wolf" },
+        "category": "Wärmepumpe",
+        "offers": { "@type": "AggregateOffer", "priceCurrency": "EUR", "availability": "https://schema.org/InStock" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Was kostet eine Wärmepumpe bei HeroWerk?", "acceptedAnswer": { "@type": "Answer", "text": "HeroWerk zeigt transparente Richtpreise und Eigenanteile nach Förderung." } },
+          { "@type": "Question", "name": "Wie lange dauert die komplette Installation?", "acceptedAnswer": { "@type": "Answer", "text": "Die Installation läuft im HeroWerk Prozess von Anfrage bis Inbetriebnahme." } }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -1403,6 +1468,7 @@
         <a href="#prozess">Prozess</a>
         <a href="#foerder">Förderung</a>
         <a href="#blog">Ratgeber</a>
+        <button type="button" class="theme-toggle" data-theme-toggle>Light-Mode</button>
         <a href="tel:+4951130030860" class="nav-cta-call"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:4px;"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg> Anrufen</a>
         <a href="#contact" class="nav-cta">Termin vereinbaren</a>
       </div>
@@ -1418,6 +1484,7 @@
       <a href="#prozess" onclick="toggleMenu()">Prozess</a>
       <a href="#foerder" onclick="toggleMenu()">Förderung</a>
       <a href="#blog" onclick="toggleMenu()">Ratgeber</a>
+      <button type="button" class="theme-toggle" data-theme-toggle>Light-Mode</button>
       <a href="tel:+4951130030860" class="nav-cta-call" onclick="toggleMenu()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:4px;"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg> Anrufen</a>
       <a href="#contact" class="nav-cta" onclick="toggleMenu()">Termin vereinbaren</a>
     </div>
@@ -1637,8 +1704,29 @@
         </a>
       </div>
 
-      <div class="pa-cards" id="paCards">
-        <!-- Karten werden per JS generiert -->
+      <div class="manufacturer-tabs" role="tablist" aria-label="Hersteller-Vorauswahl">
+        <button type="button" class="manufacturer-tab active" id="manufacturerWolf" role="tab" aria-selected="true" aria-controls="wolfPricePanel" data-manufacturer="wolf">
+          <span class="manufacturer-name">Wolf CHA</span>
+          <span class="manufacturer-price" id="wolfMinEigen">ab … Eigenanteil*</span>
+        </button>
+        <button type="button" class="manufacturer-tab" id="manufacturerVaillant" role="tab" aria-selected="false" aria-controls="vaillantPricePanel" data-manufacturer="vaillant">
+          <span class="manufacturer-name">Vaillant aroTHERM plus</span>
+          <span class="manufacturer-price">Preise auf Anfrage</span>
+        </button>
+      </div>
+
+      <div id="wolfPricePanel" role="tabpanel" aria-labelledby="manufacturerWolf">
+        <div class="pa-cards" id="paCards">
+          <!-- Karten werden per JS generiert -->
+        </div>
+      </div>
+
+      <div class="vaillant-panel" id="vaillantPricePanel" role="tabpanel" aria-labelledby="manufacturerVaillant" hidden>
+        <div class="vaillant-panel-inner">
+          <h3>Vaillant aroTHERM plus</h3>
+          <p>Alle Anlagengrößen sind auch mit der Vaillant aroTHERM plus realisierbar. Persönliches Angebot nach Baubarkeitsprüfung — Preise auf Anfrage.</p>
+          <a href="#contact" class="btn-primary">Kostenlose Beratung anfragen</a>
+        </div>
       </div>
 
       <!-- Detail-Panel: Bild+CTA links, Specs rechts -->
@@ -2181,13 +2269,13 @@
         <div class="pz-step" onclick="this.classList.toggle('expanded');this.querySelector('.pz-expand-hint').textContent=this.classList.contains('expanded')?'Details ausblenden':'Details anzeigen'">
           <div class="pz-step-num">2</div>
           <h3>Planung</h3>
-          <p>Wir planen dein Projekt, beantragen die Förderung und erstellen dein verbindliches Angebot.</p>
+          <p>Wir planen dein Projekt, beantragen die Förderung und erstellen dein persönliches Angebot.</p>
           <span class="pz-time">Woche 1–2</span>
           <div class="pz-substeps">
             <div class="pz-sub">Baubarkeitsprüfung</div>
             <div class="pz-sub">Heizlastberechnung (DIN 12831)</div>
             <div class="pz-sub">KfW-Förderantrag (BzA)</div>
-            <div class="pz-sub">Verbindliches Angebot</div>
+            <div class="pz-sub">Persönliches Angebot</div>
             <div class="pz-sub">Netzbetreiber & Schornsteinfeger</div>
           </div>
           <span class="pz-expand-hint">Details anzeigen</span>
@@ -2431,12 +2519,12 @@
       <div class="section-tag">Häufig gefragt</div>
       <h2 class="section-title" style="color: var(--white);">FAQ</h2>
       <div class="faq-item"><div class="faq-question"><span class="faq-q-text">Was kostet eine Wärmepumpe bei HeroWerk?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Wärmepumpen bei HeroWerk starten ab 29.750 € brutto (Kompakt-Paket) bzw. ab 34.510 € brutto (Standard-Paket), jeweils inklusive Installation, Demontage des Altgeräts, Elektrik-Anpassung und Inbetriebnahme. Alle Preise inkl. 19% MwSt. Dies sind Richtpreise. Den exakten Preis ermitteln wir nach der kostenlosen Vor-Ort-Termin vor Ort. Selbstnutzer erhalten bis zu 70% KfW-Förderung, Vermieter bis zu 35%. Dein Eigenanteil ab ca. 8.925 € (Kompakt-Paket, Selbstnutzer, max. Förderung).</div></div>
-      <div class="faq-item"><div class="faq-question"><span class="faq-q-text">Wie lange dauert die komplette Installation?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Von der Anfrage bis zur fertigen Anlage dauert es in der Regel 6 Wochen. Anfrage (Tag 1), Vor-Ort-Termin (Tag 3–7), verbindliches Angebot (Tag 7–14), Installation (Woche 2–5), Abnahme und Service (Woche 6).</div></div>
+      <div class="faq-item"><div class="faq-question"><span class="faq-q-text">Wie lange dauert die komplette Installation?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Von der Anfrage bis zur fertigen Anlage dauert es in der Regel 6 Wochen. Anfrage (Tag 1), Vor-Ort-Termin (Tag 3–7), Angebot (Tag 7–14), Installation (Woche 2–5), Abnahme und Service (Woche 6).</div></div>
       <div class="faq-item"><div class="faq-question"><span class="faq-q-text">Was wird beim Vor-Ort-Termin geprüft?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Wir prüfen: technische Machbarkeit (Aufstellort, Schall, Leitungswege), Gebäudeeignung (Dämmstand, Heizkörper, hydraulischer Abgleich), Elektrik (Zählerkasten, Anschlussleistung), Genehmigungslage und Förderfähigkeit. Der Vor-Ort-Termin kostet dich nichts und ist unverbindlich.</div></div>
       <div class="faq-item"><div class="faq-question"><span class="faq-q-text">Wie hoch ist die KfW-Förderung wirklich?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Die KfW 458 Förderung setzt sich zusammen aus: Grundförderung (30%), Klimageschwindigkeitsbonus (20%), Einkommensbonus (bis 30%) und Effizienzbonus R290 (5%). Alle KfW-Bausteine addieren sich, sind aber auf maximal 70% gedeckelt (max. 21.000 € auf 30.000 € förderfähige Kosten). In der Region Hannover ist zusätzlich proKlima möglich (5%, max. 1.500 €) — das kommt bei Eignung on top zur KfW.</div></div>
-      <div class="faq-item"><div class="faq-question"><span class="faq-q-text">Gibt es versteckte Kosten oder Nachträge?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Nein. Nach dem Vor-Ort-Termin erhältst du ein verbindliches Angebot mit festem Preis. Alle Kosten sind enthalten. Nachträge können nur entstehen, wenn Arbeiten notwendig werden, die vorher nicht sichtbar waren (z. B. verrostete Rohre). Diese werden vorher mit dir abgesprochen.</div></div>
+      <div class="faq-item"><div class="faq-question"><span class="faq-q-text">Gibt es versteckte Kosten oder Nachträge?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Nein. Du siehst jede Position schwarz auf weiß in deinem Angebot — vom Gerät bis zur Inbetriebnahme. Genau diese Positionen bestätigen wir dir nach der Baubarkeitsprüfung. Und sollte die Prüfung einmal Mehrbedarf zeigen (z. B. zusätzliche Heizkörper), entscheidest du vorab selbst über ein separates Zusatzangebot. Ohne deine Zustimmung wird nichts berechnet.</div></div>
       <div class="faq-item"><div class="faq-question"><span class="faq-q-text">Was ist proKlima Hannover?</span><span class="faq-toggle">+</span></div><div class="faq-answer">proKlima ist ein zusätzliches Förderprogramm der Region Hannover. Für Luft-Wasser-Wärmepumpen gibt es 5% Zuschuss (max. 1.500 €) on top zur KfW 458 — additiv, nicht konkurrierend. Voraussetzungen: natürliches Kältemittel (R290 — Wolf CHA erfüllt das), Wärmespeicher Klasse B, professionelle Heizkörper-Einstellung (hydraulischer Abgleich nach Verfahren B), max. 55°C Vorlauftemperatur und Ökostromtarif. Ob dein Projekt die Voraussetzungen erfüllt, prüfen wir beim Vor-Ort-Termin. HeroWerk übernimmt die proKlima-Beantragung für alle berechtigten Kunden in den Fördergebieten (Hannover, Laatzen, Langenhagen, Seelze, Hemmingen, Ronnenberg).</div></div>
-      <div class="faq-item"><div class="faq-question"><span class="faq-q-text">Was ist der Fördervorschuss und warum ist er limitiert?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Bei HeroWerk zahlst du nur deinen Eigenanteil. Wir beantragen die KfW-Förderung für dich und strecken den Förderbetrag vor, bis die Auszahlung kommt — das kann 2 bis 4 Monate dauern. Du trägst kein Liquiditätsrisiko. Warum limitiert? Wir finanzieren den Vorschuss aus eigenen Mitteln. Da pro Projekt mehrere tausend Euro gebunden werden, können wir nur eine begrenzte Anzahl Fördervorschüsse gleichzeitig laufen lassen. Die Zahlungsbedingungen: 50% bei Auftragserteilung, 50% nach Abnahme. <a href="#fv-qualify" style="color:var(--green);text-decoration:underline;">Jetzt bewerben →</a></div></div>
+      <div class="faq-item"><div class="faq-question"><span class="faq-q-text">Was ist der Fördervorschuss und warum ist er limitiert?</span><span class="faq-toggle">+</span></div><div class="faq-answer"><span data-faq-runtime-answer="Bei HeroWerk zahlst du nur deinen Eigenanteil. Wir beantragen die KfW-Förderung für dich und strecken den Förderbetrag vor, bis die Auszahlung kommt — das kann 2 bis 4 Monate dauern. Du trägst kein Liquiditätsrisiko. Warum limitiert? Wir finanzieren den Vorschuss aus eigenen Mitteln. Da pro Projekt mehrere tausend Euro gebunden werden, können wir nur eine begrenzte Anzahl Fördervorschüsse gleichzeitig laufen lassen. Beim Fördervorschuss splitten wir deine Rechnung clever: Als Anzahlung zahlst du nur deinen Eigenanteil. Für den restlichen Betrag bekommst du ein Zahlungsziel von 6–8 Wochen nach Fertigstellung — genau der Zeitraum, den die KfW in der Regel für die Auszahlung deiner Förderung braucht. Du streckst die Förderung also nicht aus eigener Tasche vor: Im Normalfall ist das KfW-Geld auf deinem Konto, bevor die zweite Rechnung fällig wird. &lt;a href=&quot;#fv-qualify&quot; style=&quot;color:var(--green);text-decoration:underline;&quot;&gt;Jetzt bewerben →&lt;/a&gt;">Bei HeroWerk zahlst du nur deinen Eigenanteil. Wir beantragen die KfW-Förderung für dich und strecken den Förderbetrag vor, bis die Auszahlung kommt — das kann 2 bis 4 Monate dauern. Du trägst kein Liquiditätsrisiko. Warum limitiert? Wir finanzieren den Vorschuss aus eigenen Mitteln. Da pro Projekt mehrere tausend Euro gebunden werden, können wir nur eine begrenzte Anzahl Fördervorschüsse gleichzeitig laufen lassen. <a href="#fv-qualify" style="color:var(--green);text-decoration:underline;">Jetzt bewerben →</a></span></div></div>
       <div class="faq-item"><div class="faq-question"><span class="faq-q-text">Warum Wolf?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Wolf ist unser exklusiver Wärmepumpen-Partner (100%). Die CHA R290 Monoblock-Serie ist die einzige deutsche Wärmepumpe mit dem natürlichen Kältemittel R290 über das gesamte Leistungsspektrum von 7 bis 24 kW — inklusive Kaskade bis 120 kW. Made in Germany, 5% Effizienzbonus bei der KfW-Förderung, und kurze Wege für Service und Ersatzteile.</div></div>
     </div>
   </section>
@@ -2705,15 +2793,20 @@
       <div class="footer-bottom">
         <div class="footer-tagline">HeroWerk GmbH &middot; Meisterqualität aus der Region.</div>
         <div class="footer-legal">
-          <a href="#">Impressum</a>
-          <a href="#">Datenschutz</a>
-          <a href="#">AGB</a>
+          <a href="impressum.html">Impressum</a>
+          <a href="datenschutz.html">Datenschutz</a>
+          <a href="hinweise.html">Hinweise</a>
         </div>
       </div>
     </div>
   </footer>
 
   <script>
+    // ===== FAQ WORDLIST RUNTIME PATCH =====
+    document.querySelectorAll('[data-faq-runtime-answer]').forEach((el) => {
+      el.innerHTML = el.getAttribute('data-faq-runtime-answer');
+    });
+
     // ===== NAVIGATION =====
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
@@ -3333,6 +3426,61 @@
       }
     }
 
+    function paFormatEuro(value) {
+      return value.toLocaleString('de-DE') + ' €';
+    }
+
+    function paUpdateWolfMinimum() {
+      const target = document.getElementById('wolfMinEigen');
+      if (!target || !paData.length) return;
+      const min = paData
+        .map((item) => item.eigen)
+        .filter((value) => typeof value === 'number')
+        .sort((a, b) => a - b)[0];
+      if (typeof min === 'number') target.textContent = 'ab ' + paFormatEuro(min) + ' Eigenanteil*';
+    }
+
+    function paSelectManufacturer(manufacturer) {
+      const isWolf = manufacturer === 'wolf';
+      const wolfPanel = document.getElementById('wolfPricePanel');
+      const vaillantPanel = document.getElementById('vaillantPricePanel');
+      const detail = document.getElementById('paDetail');
+      const cardsContainer = document.getElementById('paCards');
+      document.querySelectorAll('.manufacturer-tab').forEach((tab) => {
+        const selected = tab.dataset.manufacturer === manufacturer;
+        tab.classList.toggle('active', selected);
+        tab.setAttribute('aria-selected', selected ? 'true' : 'false');
+        tab.tabIndex = selected ? 0 : -1;
+      });
+      if (wolfPanel) wolfPanel.hidden = !isWolf;
+      if (vaillantPanel) vaillantPanel.hidden = isWolf;
+      if (!isWolf) {
+        document.querySelectorAll('.pa-card').forEach((card) => card.classList.remove('zoomed', 'dimmed'));
+        if (detail) detail.classList.remove('open');
+        if (cardsContainer) cardsContainer.classList.remove('has-selection');
+        paOpenIdx = -1;
+      }
+    }
+
+    function paInitManufacturerTabs() {
+      const tabs = Array.from(document.querySelectorAll('.manufacturer-tab'));
+      tabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => paSelectManufacturer(tab.dataset.manufacturer));
+        tab.addEventListener('keydown', (event) => {
+          if (!['ArrowLeft', 'ArrowRight', 'Home', 'End', 'Enter', ' '].includes(event.key)) return;
+          event.preventDefault();
+          if (event.key === 'Enter' || event.key === ' ') { paSelectManufacturer(tab.dataset.manufacturer); return; }
+          let nextIndex = index;
+          if (event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length;
+          if (event.key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length;
+          if (event.key === 'Home') nextIndex = 0;
+          if (event.key === 'End') nextIndex = tabs.length - 1;
+          tabs[nextIndex].focus();
+          paSelectManufacturer(tabs[nextIndex].dataset.manufacturer);
+        });
+      });
+    }
+
     const paDataFallback = [
       {
         name: 'Kompakt', label: 'Kompaktes Wohnhaus', hausgroesse: 'bis ca. 120 m²', modell: 'Wolf CHA-07', kw: '5–7 kW',
@@ -3418,6 +3566,7 @@
     // Karten rendern (nur kompakte Header, kein Preis-Doppelt)
     function paRenderCards() {
       const container = document.getElementById('paCards');
+      paUpdateWolfMinimum();
       container.innerHTML = paData.map((d, i) => {
         const priceHtml = d.eigen !== null
           ? `<div class="pa-price-compact">ab ${d.eigen.toLocaleString('de-DE')} €</div><div class="pa-label">Eigenanteil*</div>`
@@ -3428,7 +3577,7 @@
         const labelHtml = d.label ? `<div style="color:var(--g300);font-size:11px;font-weight:600;letter-spacing:0.3px;margin-bottom:4px;">${d.label}</div>` : '';
         const hausHtml = d.hausgroesse ? `<div style="color:var(--g400);font-size:12px;margin-top:2px;">${d.hausgroesse}</div>` : '';
         return `
-        <div class="pa-card${defaultClass}" onclick="paZoom(${i})" data-idx="${i}">
+        <div class="pa-card${defaultClass}" role="button" tabindex="0" onclick="paZoom(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();paZoom(${i});}" data-idx="${i}">
           ${iconHtml}
           ${labelHtml}
           <h3>${d.name}</h3>
@@ -3565,6 +3714,7 @@
     window.addEventListener('resize', () => { if (paOpenIdx >= 0) paPositionArrow(paOpenIdx); });
 
     // Initial: Daten laden, dann rendern
+    paInitManufacturerTabs();
     paLoadData().then(() => paRenderCards());
 
     // ===== SVG ICON CONSTANTS =====

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kostenloses Angebot anfragen | HeroWerk Wärmepumpen Hannover</title>
   <meta name="description" content="Jetzt Wärmepumpen-Angebot anfragen. HeroWerk Meisterbetrieb Hannover — bis zu 70 % Förderung, Installation in 6 Wochen.">
+  <script src="js/theme.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -486,6 +487,16 @@
       .answer-grid.cols-3 { grid-template-columns: 1fr; }
     }
   </style>
+  <link rel="stylesheet" href="tokens.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Kostenloses Angebot anfragen",
+    "url": "https://www.herowerk.de/anfrage.html",
+    "about": { "@type": "LocalBusiness", "name": "HeroWerk GmbH", "areaServed": "Region Hannover" }
+  }
+  </script>
 </head>
 <body>
 
@@ -504,6 +515,8 @@
         <span class="trust-logo-fallback" style="display:none;">Hero<span>Werk</span></span>
       </a>
     </div>
+
+    <button type="button" class="theme-toggle" data-theme-toggle style="align-self:flex-start;margin-bottom:24px;" aria-label="Theme wechseln"><span aria-hidden="true"></span></button>
 
     <h2 class="trust-headline">
       Deine <em>Wärmepumpe</em><br>aus Meisterhand.
@@ -992,6 +1005,11 @@
         </div>
 
         <form id="contactForm" onsubmit="submitForm(event)">
+          <input type="hidden" name="utm_source" id="utm_source">
+          <input type="hidden" name="utm_medium" id="utm_medium">
+          <input type="hidden" name="utm_campaign" id="utm_campaign">
+          <input type="hidden" name="utm_term" id="utm_term">
+          <input type="hidden" name="utm_content" id="utm_content">
           <div class="contact-grid">
             <div class="form-field">
               <label for="vorname">Vorname *</label>
@@ -1014,7 +1032,7 @@
           <div class="dsgvo-row">
             <input type="checkbox" id="dsgvo" name="dsgvo" required>
             <label for="dsgvo">
-              Ich stimme der Verarbeitung meiner Daten gemäß der <a href="/datenschutz" target="_blank">Datenschutzerklärung</a> zu und erteile meine Einwilligung zur Kontaktaufnahme. Die Einwilligung ist jederzeit widerrufbar.
+              Ich stimme der Verarbeitung meiner Daten gemäß der <a href="datenschutz.html" target="_blank">Datenschutzerklärung</a> zu und erteile meine Einwilligung zur Kontaktaufnahme. Die Einwilligung ist jederzeit widerrufbar.
             </label>
           </div>
 
@@ -1206,18 +1224,99 @@
     }
   }
 
+  function collectUtmParams() {
+    const params = new URLSearchParams(window.location.search);
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach((key) => {
+      const el = document.getElementById(key);
+      if (el) el.value = params.get(key) || '';
+    });
+  }
+
+  function buildHubSpotPayload(data) {
+    const fields = {
+      vorname: data.vorname || '',
+      nachname: data.nachname || '',
+      email: data.email || '',
+      telefon: data.telefon || '',
+      plz: answers.plz || '',
+      dsgvo: data.dsgvo || '',
+      gebaeudetyp: answers.step1 || '',
+      heizung_aktuell: answers.step2 || '',
+      heizungsalter: answers.step3 || '',
+      baujahr: answers.step4 || '',
+      wohnflaeche: answers.step5 || '',
+      waermeverteilung: answers.step6 || '',
+      eigentuemer: answers.step7 || '',
+      zeitrahmen: answers.step8 || '',
+      utm_source: data.utm_source || '',
+      utm_medium: data.utm_medium || '',
+      utm_campaign: data.utm_campaign || '',
+      utm_term: data.utm_term || '',
+      utm_content: data.utm_content || '',
+      description: [
+        'HeroWerk Funnel Test-/Lead-Submit',
+        'Gebäude: ' + (answers.step1 || '—'),
+        'Heizung: ' + (answers.step2 || '—'),
+        'Heizungsalter: ' + (answers.step3 || '—'),
+        'Baujahr: ' + (answers.step4 || '—'),
+        'Wohnfläche: ' + (answers.step5 || '—'),
+        'Wärmeverteilung: ' + (answers.step6 || '—'),
+        'Eigentümer: ' + (answers.step7 || '—'),
+        'Zeitrahmen: ' + (answers.step8 || '—'),
+        'PLZ: ' + (answers.plz || '—')
+      ].join('\n')
+    };
+
+    return {
+      fields: Object.entries(fields).map(([name, value]) => ({ name, value: String(value) })),
+      context: {
+        pageUri: window.location.href,
+        pageName: document.title
+      },
+      legalConsentOptions: {
+        consent: {
+          consentToProcess: true,
+          text: 'Einwilligung zur Verarbeitung der Funnel-Daten und Kontaktaufnahme.',
+          communications: [{ value: true, subscriptionTypeId: 999, text: 'Kontaktaufnahme zum Wärmepumpen-Angebot.' }]
+        }
+      }
+    };
+  }
+
+  async function postToHubSpot(data) {
+    const portalId = '148110267';
+    const formId = document.body.dataset.hubspotFormId || new URLSearchParams(window.location.search).get('hs_form_id') || '00000000-0000-0000-0000-000000000000';
+    const endpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(buildHubSpotPayload(data))
+    });
+    if (!response.ok) throw new Error('HubSpot submit failed: ' + response.status);
+    return response.json().catch(() => ({}));
+  }
+
   // ── Formular absenden ────────────────────────
-  function submitForm(e) {
+  async function submitForm(e) {
     e.preventDefault();
     const form = document.getElementById('contactForm');
+    collectUtmParams();
     const data = Object.fromEntries(new FormData(form).entries());
 
     // Alle Antworten zusammenführen
     const payload = { ...answers, ...data };
     console.log('HeroWerk Lead:', payload);
 
-    // TODO: HubSpot / Zapier Webhook-Anbindung hier einfügen
-    // fetch('https://hooks.zapier.com/...', { method:'POST', body: JSON.stringify(payload) });
+    const submitButton = form.querySelector('button[type="submit"]');
+    if (submitButton) submitButton.disabled = true;
+    try {
+      await postToHubSpot(data);
+    } catch (error) {
+      console.error(error);
+      if (submitButton) submitButton.disabled = false;
+      alert('Die Übermittlung ist gerade nicht möglich. Bitte versuche es erneut oder rufe uns direkt an.');
+      return;
+    }
 
     // Erfolg anzeigen
     document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
@@ -1227,6 +1326,8 @@
     document.getElementById('progressPercent').textContent = '100 % geschafft';
     document.getElementById('stepCounter').textContent = 'Fertig!';
   }
+
+  collectUtmParams();
 </script>
 
 </body>
