@@ -15,7 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read     # checkout
-      deployments: read  # wait-for-vercel-preview liest Deployment-Status (Portal-403-Fix)
+      deployments: read    # wait-for-vercel-preview liest Deployment-Status (Portal-403-Fix)
+      pull-requests: read  # wait-for-vercel-preview: octokit.rest.pulls.get (action.js:261) für Head-SHA
     outputs:
       url: ${{ steps.vercel.outputs.url }}
     steps:
