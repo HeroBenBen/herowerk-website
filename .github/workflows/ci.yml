@@ -4,10 +4,18 @@ on:
     branches: [main, production]
     # production: der Release-PR main → production (T4-2) durchläuft dieselben 12 Gates
 
+# Least-Privilege-Token (T1-6b-Followup O2): expliziter Block ersetzt die Defaults.
+# Jobs mit Sonderbedarf (resolve-preview, secret-scan) haben Job-Level-Blöcke.
+permissions:
+  contents: read
+
 jobs:
   # Job 0 (Helper): Vercel-Preview-URL einmal ermitteln, als Output exportieren
   resolve-preview:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read     # checkout
+      deployments: read  # wait-for-vercel-preview liest Deployment-Status (Portal-403-Fix)
     outputs:
       url: ${{ steps.vercel.outputs.url }}
     steps:
@@ -70,6 +78,9 @@ jobs:
   # Job 5: Secret-Scanner (Gitleaks)
   secret-scan:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read       # checkout (fetch-depth 0)
+      pull-requests: read  # gitleaks: PR-Commit-Listing via GITHUB_TOKEN (Portal-403-Fix)
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
