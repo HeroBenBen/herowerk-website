@@ -1,0 +1,20 @@
+{
+  "name": "herowerk-website",
+  "private": true,
+  "scripts": {
+    "lint": "eslint . && prettier --check .",
+    "test:a11y": "playwright test --grep @a11y",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:visual": "playwright test --grep @visual",
+    "baseline:generate": "node scripts/content-fidelity-check.js --generate"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.53.2",
+    "@sentry/cli": "^2.43.0",
+    "@types/node": "^25.9.3",
+    "eslint": "^9.29.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "generated": "2026-06-11",
+  "rule": "section-id primär, H2-Fallback, FAQ separat; Fail bei >30% Wort-Abweichung",
+  "threshold": 0.3,
+  "pages": [
+    {
+      "file": "index.html",
+      "sections": [
+        {
+          "id": "class:hero",
+          "words": 106
+        },
+        {
+          "id": "fv",
+          "words": 78
+        },
+        {
+          "id": "preise",
+          "words": 151
+        },
+        {
+          "id": "wizard",
+          "words": 488
+        },
+        {
+          "id": "foerder",
+          "words": 276
+        },
+        {
+          "id": "compare",
+          "words": 195
+        },
+        {
+          "id": "prozess",
+          "words": 150
+        },
+        {
+          "id": "anfrage",
+          "words": 164
+        },
+        {
+          "id": "hf",
+          "words": 139
+        },
+        {
+          "id": "blog",
+          "words": 83
+        },
+        {
+          "id": "faq[1]",
+          "question": "Was kostet eine Wärmepumpe bei HeroWerk?",
+          "words": 71
+        },
+        {
+          "id": "faq[2]",
+          "question": "Wie lange dauert die komplette Installation?",
+          "words": 40
+        },
+        {
+          "id": "faq[3]",
+          "question": "Was wird beim Vor-Ort-Termin geprüft?",
+          "words": 33
+        },
+        {
+          "id": "faq[4]",
+          "question": "Wie hoch ist die KfW-Förderung wirklich?",
+          "words": 66
+        },
+        {
+          "id": "faq[5]",
+          "question": "Gibt es versteckte Kosten oder Nachträge?",
+          "words": 47
+        },
+        {
+          "id": "faq[6]",
+          "question": "Was ist proKlima Hannover?",
+          "words": 83
+        },
+        {
+          "id": "faq[7]",
+          "question": "Was ist der Fördervorschuss und warum ist er limitiert?",
+          "words": 83
+        },
+        {
+          "id": "faq[8]",
+          "question": "Warum Wolf?",
+          "words": 54
+        },
+        {
+          "id": "faq[frame]",
+          "words": 3
+        },
+        {
+          "id": "contact",
+          "words": 86
+        },
+        {
+          "id": "fv-qualify",
+          "words": 270
+        }
+      ]
+    },
+    {
+      "file": "anfrage.html",
+      "sections": [
+        {
+          "id": "h2-block[0]",
+          "words": 2
+        },
+        {
+          "id": "h2-block[1]",
+          "words": 88
+        },
+        {
+          "id": "h2-block[2]",
+          "words": 31
+        },
+        {
+          "id": "h2-block[3]",
+          "words": 31
+        },
+        {
+          "id": "h2-block[4]",
+          "words": 36
+        },
+        {
+          "id": "h2-block[5]",
+          "words": 36
+        },
+        {
+          "id": "h2-block[6]",
+          "words": 25
+        },
+        {
+          "id": "h2-block[7]",
+          "words": 28
+        },
+        {
+          "id": "h2-block[8]",
+          "words": 27
+        },
+        {
+          "id": "h2-block[9]",
+          "words": 31
+        },
+        {
+          "id": "h2-block[10]",
+          "words": 27
+        },
+        {
+          "id": "h2-block[11]",
+          "words": 63
+        },
+        {
+          "id": "h2-block[12]",
+          "words": 48
+        }
+      ]
+    }
+  ]
+}
