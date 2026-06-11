@@ -1,0 +1,26 @@
+name: HeroWerk Release (Sentry Source-Maps)
+on:
+  push:
+    branches: [production]
+
+jobs:
+  sentry-sourcemaps:
+    runs-on: ubuntu-latest
+    env:
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+    steps:
+      - name: Guard — Secret vorhanden?
+        id: guard
+        run: echo "ready=$([ -n "$SENTRY_AUTH_TOKEN" ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+        # Vor T3-3 Schritt A Punkt 4 ist das Secret leer → Upload wird sauber übersprungen
+      - uses: actions/checkout@v4
+        if: steps.guard.outputs.ready == 'true'
+      - uses: actions/setup-node@v4
+        if: steps.guard.outputs.ready == 'true'
+        with: { node-version: '20' }
+      - run: npm ci
+        if: steps.guard.outputs.ready == 'true'
+      - name: Upload Source-Maps zu Sentry
+        if: steps.guard.outputs.ready == 'true'
+        run: npx sentry-cli sourcemaps upload --org herowerk --project herowerk-website .
+        # SENTRY_AUTH_TOKEN setzt Benjamin einmalig als GitHub-Secret (T3-3 Schritt A Punkt 4)
