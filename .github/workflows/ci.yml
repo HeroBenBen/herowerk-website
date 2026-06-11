@@ -19,7 +19,7 @@ jobs:
     outputs:
       url: ${{ steps.vercel.outputs.url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Wait for Vercel Preview
         uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
         id: vercel
@@ -31,8 +31,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with: { node-version: '20' }
       - run: npm ci
       - run: npm run lint
@@ -45,9 +45,9 @@ jobs:
     strategy:
       matrix: { theme: [dark, light] }
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Lighthouse CI ${{ matrix.theme }}
-        uses: treosh/lighthouse-ci-action@v11
+        uses: treosh/lighthouse-ci-action@v12
         with:
           urls: ${{ needs.resolve-preview.outputs.url }}?theme=${{ matrix.theme }}
           configPath: ./lighthouserc.json
@@ -58,8 +58,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [lint, resolve-preview]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
       - run: npm ci
       - run: npx playwright install --with-deps
       - env: { PREVIEW_URL: '${{ needs.resolve-preview.outputs.url }}' }
@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [lint, resolve-preview]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: npm ci
       - env: { PREVIEW_URL: '${{ needs.resolve-preview.outputs.url }}' }
         run: npm run test:a11y  # Schwelle: 0 Errors auf allen Hauptseiten
@@ -82,9 +82,9 @@ jobs:
       contents: read       # checkout (fetch-depth 0)
       pull-requests: read  # gitleaks: PR-Commit-Listing via GITHUB_TOKEN (Portal-403-Fix)
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with: { fetch-depth: 0 }
-      - uses: gitleaks/gitleaks-action@v2
+      - uses: gitleaks/gitleaks-action@v3
         env: { GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
 
   # Job 6: Content-Fidelity-Check gegen v4-Baseline
@@ -92,7 +92,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: lint
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: node scripts/content-fidelity-check.js
         # Skript scannt Section-Wortzählung gegen baseline/v4-sections.json
         # Section-Regel: <section id> primär, H2-Fallback, FAQ separat
@@ -103,7 +103,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [lint, resolve-preview]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: node scripts/observatory-check.js ${{ needs.resolve-preview.outputs.url }}
         # Fail bei Mozilla-Observatory-Score < B
         # HINWEIS (Iteration 3): "unsafe-inline" temporär dokumentiert wegen
@@ -115,7 +115,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: lint
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: node scripts/hubspot-schema-check.js
         # Validiert Webhook-Payload gegen schemas/hubspot-property-schema.json
 
@@ -126,7 +126,7 @@ jobs:
     strategy:
       matrix: { theme: [dark, light] }
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: npm ci
       - run: npx playwright install --with-deps
       - env: { PREVIEW_URL: '${{ needs.resolve-preview.outputs.url }}' }
@@ -139,7 +139,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [lighthouse, resolve-preview]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: node scripts/seo-basics-check.js ${{ needs.resolve-preview.outputs.url }}
         # Prüft: sitemap.xml erreichbar, robots.txt existiert, Canonical pro Seite,
         # Open Graph Tags, Twitter Cards, Schema.org JSON-LD, Theme-Color Meta
@@ -149,7 +149,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [lighthouse, resolve-preview]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: node scripts/rich-results-check.js ${{ needs.resolve-preview.outputs.url }}
 
   # Job 12: Lead-only-Negativ-Gate (verhindert Vertragsabschluss-CTA)
@@ -158,7 +158,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: lint
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Forbidden CTA Pattern Check
         run: |
           # HARTE LINIE (Lead-only-Grundsatzentscheidung 09.06.2026): Das Gate verbietet NUR

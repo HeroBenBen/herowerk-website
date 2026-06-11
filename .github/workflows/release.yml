@@ -13,9 +13,9 @@ jobs:
         id: guard
         run: echo "ready=$([ -n "$SENTRY_AUTH_TOKEN" ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
         # Vor T3-3 Schritt A Punkt 4 ist das Secret leer → Upload wird sauber übersprungen
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         if: steps.guard.outputs.ready == 'true'
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         if: steps.guard.outputs.ready == 'true'
         with: { node-version: '20' }
       - run: npm ci
