@@ -215,25 +215,25 @@ body {
   }
 }
 
-/* WCAG AA contrast fixes for light-theme accent text and low-alpha trust labels. */
-[data-theme='light'] a:not(.btn-primary):not(.nav-cta):not(.pa-header-cta),
-[data-theme='light'] [style*='var(--green)'] {
-  color: #5f7200 !important;
-}
-
+/* WCAG AA contrast fixes without splitting the dark palette.
+   Default dark and explicit ?theme=dark use the same :root tokens; only light receives
+   theme-specific color overrides. */
 .trust-partner-label,
 .rating-text {
   color: var(--g400) !important;
 }
+.rating-text strong {
+  color: var(--g300) !important;
+}
 
-/* Fix-Runde 3: theme-separated contrast guards for axe color-contrast. */
-:root:not([data-theme='light']) .trust-sub,
-:root:not([data-theme='light']) .trust-usp-text,
-:root:not([data-theme='light']) .trust-partner-label,
-:root:not([data-theme='light']) .rating-text,
-:root:not([data-theme='light']) [style*='var(--g500)'],
-:root:not([data-theme='light']) [style*='var(--muted)'] {
-  color: #d1d5db !important;
+/* Light theme needs darker accent text on sand/white surfaces, but not on
+   chartreuse-filled controls where the existing slate text remains correct. */
+[data-theme='light'] a:not(.btn-primary):not(.nav-cta):not(.pa-header-cta),
+[data-theme='light']
+  [style*='var(--green)']:not([style*='background:var(--green)']):not(
+    [style*='background: var(--green)']
+  ) {
+  color: #5f7200 !important;
 }
 
 [data-theme='light'] .trust-sub,
@@ -247,6 +247,27 @@ body {
   color: #5a6470 !important;
 }
 
-:root:not([data-theme='light']) [style*='var(--green)'] {
-  color: #b7d900 !important;
+/* Anfrage/Funnel keeps its canonical light form panel in both themes. Scope the
+   greys to that panel so global dark tokens do not create pale text on white. */
+.funnel-panel {
+  --bg: #f7f9fb;
+  --white: #ffffff;
+  --g100: #f3f4f6;
+  --g200: #e5e7eb;
+  --g300: #6b7280;
+  --g400: #5a6470;
+  --g500: #5a6470;
+  --g700: #374151;
+  --g900: #111827;
+  --schiefer: #1c2b36;
+  --green-dark: #5f7200;
+}
+
+/* Hidden desktop trust rail: keep partner/rating chips AA-compliant when tested
+   at wider viewports, without changing the funnel copy. */
+.trust-panel .pb-vaillant {
+  color: #ff6f8a !important;
+}
+.trust-panel .partner-badge[style*='0,106,179'] {
+  color: #66b8e8 !important;
 }
