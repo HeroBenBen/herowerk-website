@@ -389,6 +389,22 @@ body {
   background-color: #ebe7dc !important;
 }
 
+/* Umbau-Iteration 2c: final light contrast fixes.
+   K1: .nav-links a / .mobile-menu a have higher specificity than .nav-cta.
+   K2: accent-green is AA on white/sand, but not on #EBE7DC surfaces. */
+[data-theme='light'] .nav-links a.nav-cta,
+[data-theme='light'] .mobile-menu a.nav-cta {
+  color: #1c2b36 !important;
+}
+
+[data-theme='light'] .preisanker-fv strong,
+[data-theme='light'] .preisanker-fv a,
+[data-theme='light'] .foerder-section .breakdown-item .pct,
+[data-theme='light'] .foerder-section .seg-toggle button.active,
+[data-theme='light'] .foerder-section [style*='var(--green)'] {
+  color: #1c2b36 !important;
+}
+
 [data-theme='light'] .hero-calc,
 [data-theme='light'] .qs-form,
 [data-theme='light'] .prozess-card,
