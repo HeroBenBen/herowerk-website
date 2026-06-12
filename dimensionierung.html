@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico" sizes="any" type="image/x-icon">
+  <meta name="theme-color" content="#0A0A0A">
+  <title>Wärmepumpen-Rechner: Größe & Ersparnis | HeroWerk</title>
+  <meta name="description" content="Wärmepumpen-Rechner für Größe, Verbrauch und Ersparnis in der Region Hannover.">
+  <link rel="canonical" href="https://www.herowerk.de/dimensionierung">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Wärmepumpen-Rechner: Größe & Ersparnis | HeroWerk">
+  <meta property="og:description" content="Wärmepumpen-Rechner für Größe, Verbrauch und Ersparnis in der Region Hannover.">
+  <meta property="og:url" content="https://www.herowerk.de/dimensionierung">
+  <meta property="og:image" content="https://www.herowerk.de/hero-paar-terrasse.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Wärmepumpen-Rechner: Größe & Ersparnis | HeroWerk">
+  <meta name="twitter:description" content="Wärmepumpen-Rechner für Größe, Verbrauch und Ersparnis in der Region Hannover.">
+  <meta name="twitter:image" content="https://www.herowerk.de/hero-paar-terrasse.png">
+  <script src="js/theme.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700;800&family=Inter:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700;800&family=Inter:wght@400;500;600;700&display=swap"></noscript>
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="preload" href="tokens.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="tokens.css"></noscript>
+</head>
+<body>
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="nav-inner">
+      <a href="/" style="display:inline-block;"><img src="herowerk-logo-stacked.png" alt="HeroWerk — Meisterbetrieb für Wärmepumpen" class="nav-logo" width="607" height="337" decoding="async"></a>
+      <div class="nav-links">
+        <a href="/" style="display:inline-flex;align-items:center;gap:5px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1V10"/></svg> Start</a>
+        <a href="/preise">Preise</a>
+        <a href="/dimensionierung">Dimensionierung</a>
+        <a href="/prozess">Prozess</a>
+        <a href="/foerderung">Förderung</a>
+        <a href="/ratgeber">Ratgeber</a>
+        <button type="button" class="theme-toggle" data-theme-toggle>Light-Mode</button>
+        <a href="tel:+4951130030860" class="nav-cta-call"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:4px;"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg> Anrufen</a>
+        <a href="/anfrage" class="nav-cta">Termin vereinbaren</a>
+      </div>
+      <button type="button" class="theme-toggle nav-theme-standalone" data-theme-toggle>Light-Mode</button>
+      <a href="tel:+4951130030860" class="mobile-phone-cta" aria-label="Anrufen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></a>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="/" onclick="toggleMenu()" style="display:inline-flex;align-items:center;gap:5px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1V10"/></svg> Start</a>
+      <a href="/preise" onclick="toggleMenu()">Preise</a>
+      <a href="/dimensionierung" onclick="toggleMenu()">Dimensionierung</a>
+      <a href="/prozess" onclick="toggleMenu()">Prozess</a>
+      <a href="/foerderung" onclick="toggleMenu()">Förderung</a>
+      <a href="/ratgeber" onclick="toggleMenu()">Ratgeber</a>
+      <button type="button" class="theme-toggle" data-theme-toggle>Light-Mode</button>
+      <a href="tel:+4951130030860" class="nav-cta-call" onclick="toggleMenu()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:4px;"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg> Anrufen</a>
+      <a href="/anfrage" class="nav-cta" onclick="toggleMenu()">Termin vereinbaren</a>
+    </div>
+  </nav>
+
+  <main id="main-content">
+
+<section class="wizard-section" id="wizard">
+    <div class="section-inner">
+      <div class="section-tag">In 60 Sekunden zur Empfehlung</div>
+      <h2 class="section-title" style="color: var(--white);">Welche Wärmepumpe passt zu deinem Haus?</h2>
+      <p class="section-lead">6 kurze Fragen. Keine Anmeldung. Sofort Ergebnis mit Richtpreis und geschätzter Förderung.</p>
+
+      <div class="wizard-container">
+        <div class="wizard-progress" id="wizProgress">
+          <div class="wizard-progress-bar active"></div>
+          <div class="wizard-progress-bar"></div>
+          <div class="wizard-progress-bar"></div>
+          <div class="wizard-progress-bar"></div>
+          <div class="wizard-progress-bar"></div>
+          <div class="wizard-progress-bar"></div>
+          <div class="wizard-progress-bar"></div>
+        </div>
+
+        <!-- Step 1: PLZ -->
+        <div class="wizard-step active" data-step="1">
+          <div class="wizard-question">Wie lautet deine Postleitzahl?</div>
+          <div class="wizard-hint">Wir prüfen Verfügbarkeit und regionale Fördermöglichkeiten.</div>
+          <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;">
+            <div style="flex:1;min-width:200px;max-width:320px;">
+              <input type="text" id="wzPlz" inputmode="numeric" maxlength="5" placeholder="z.B. 30900" style="width:100%;padding:16px 20px;font-size:24px;font-weight:700;font-family:'Barlow',sans-serif;background:var(--charcoal);border:2px solid var(--g500);border-radius:10px;color:var(--white);text-align:center;letter-spacing:4px;outline:none;transition:border-color 0.2s;" oninput="checkPlz(this)" onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--g500)'">
+              <div id="wzPlzResult" style="margin-top:10px;font-size:14px;min-height:22px;"></div>
+            </div>
+          </div>
+          <div id="wzPlzProklima" style="display:none;background:rgba(232,168,56,0.08);border:2px solid var(--bernstein);border-radius:12px;padding:20px 24px;margin-bottom:16px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+              <span style="background:var(--bernstein);color:var(--nacht);font-family:'Barlow',sans-serif;font-weight:800;font-size:13px;padding:5px 14px;border-radius:100px;text-transform:uppercase;letter-spacing:0.5px;">bis zu + 1.500 € möglich</span>
+              <span style="color:var(--bernstein);font-weight:700;font-size:15px;">proKlima-Fördergebiet</span>
+            </div>
+            <p style="font-size:14px;color:var(--white);margin:0;line-height:1.6;">Deine Gemeinde liegt im <strong style="color:var(--bernstein);">proKlima-Fördergebiet</strong>. Bei Erfüllung der Voraussetzungen sind zusätzlich 5% (max. 1.500 €) on top zur KfW-Förderung möglich. Wir prüfen die Eignung bei deinem Vor-Ort-Termin.</p>
+          </div>
+          <div class="wizard-nav"><div></div><button class="wizard-btn-next" onclick="wizNext()" id="wzPlzNext" disabled style="opacity:0.4;cursor:not-allowed;">Weiter</button></div>
+        </div>
+
+        <!-- Step 2: Gebäudetyp -->
+        <div class="wizard-step" data-step="2">
+          <div class="wizard-question">Was für ein Gebäude hast du?</div>
+          <div class="wizard-hint">Der Gebäudetyp bestimmt den Heizleistungsbedarf.</div>
+          <div class="wizard-options" id="wzGebaeude">
+            <div class="wizard-option" data-value="efh"><div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M6 24L24 8l18 16"/><path d="M10 22v18h28V22"/><rect x="19" y="30" width="10" height="10"/></svg></div><div class="opt-title">Einfamilienhaus</div><div class="opt-sub">Freistehend</div></div>
+            <div class="wizard-option" data-value="dhh"><div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M4 24L15 14l9 8 9-8 11 10"/><path d="M8 22v18h16V22"/><path d="M24 22v18h16V22"/><path d="M24 22v18" stroke-dasharray="3 2"/><rect x="13" y="30" width="6" height="10"/><rect x="29" y="30" width="6" height="10"/></svg></div><div class="opt-title">Doppelhaushälfte</div><div class="opt-sub">Geteilte Wand</div></div>
+            <div class="wizard-option" data-value="rh" id="wzRhOption"><div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M2 24L10 17l7 5 7-5 7 5 7-5 8 7"/><path d="M5 22v18h10V22"/><path d="M15 22v18h8V22"/><path d="M23 22v18h10V22"/><path d="M33 22v18h10V22"/><rect x="8" y="30" width="4" height="10"/><rect x="17" y="30" width="4" height="10"/><rect x="26" y="30" width="4" height="10"/><rect x="36" y="30" width="4" height="10"/></svg></div><div class="opt-title">Reihenhaus</div><div class="opt-sub">Mittel-/Endhaus</div></div>
+            <div class="wizard-option" data-value="zfh"><div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M6 22L24 8l18 14"/><path d="M10 20v22h28V20"/><path d="M10 31h28"/><rect x="18" y="34" width="12" height="8"/><rect x="18" y="22" width="12" height="7"/></svg></div><div class="opt-title">Zweifamilienhaus</div><div class="opt-sub">2 Wohneinheiten</div></div>
+            <div class="wizard-option" data-value="mfh"><div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M8 42V10h32v32"/><path d="M8 10L24 4l16 6"/><rect x="13" y="15" width="5" height="5"/><rect x="22" y="15" width="5" height="5"/><rect x="31" y="15" width="5" height="5"/><rect x="13" y="24" width="5" height="5"/><rect x="22" y="24" width="5" height="5"/><rect x="31" y="24" width="5" height="5"/><rect x="13" y="33" width="5" height="5"/><rect x="22" y="33" width="5" height="5"/><rect x="31" y="33" width="5" height="5"/></svg></div><div class="opt-title">Mehrfamilienhaus</div><div class="opt-sub">3+ Wohneinheiten</div></div>
+          </div>
+          <!-- Reihenhaus Unterfrage -->
+          <div id="wzRhSub" style="display:none;margin-top:16px;">
+            <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:10px;">Um welchen Reihenhaus-Typ handelt es sich?</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div class="wizard-option" data-value="rh-end" id="wzRhEnd" style="margin:0;">
+                <div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M6 24L16 15l8 6 8-6 10 9"/><path d="M10 22v18h12V22"/><path d="M22 22v18h10V22"/><path d="M32 22v18h6V22"/><rect x="14" y="30" width="5" height="10"/></svg></div>
+                <div class="opt-title">Endhaus</div>
+                <div class="opt-sub">Mindestens eine freie Seite</div>
+              </div>
+              <div class="wizard-option" data-value="rh-mitte" id="wzRhMitte" style="margin:0;">
+                <div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M2 24L10 17l7 5 7-5 7 5 7-5 8 7"/><path d="M5 22v18h10V22"/><path d="M15 22v18h8V22"/><path d="M23 22v18h10V22"/><path d="M33 22v18h10V22"/><rect x="17" y="30" width="4" height="10" fill="none" stroke-width="2"/></svg></div>
+                <div class="opt-title">Mittelhaus</div>
+                <div class="opt-sub">Beidseitig angebaut</div>
+              </div>
+            </div>
+          </div>
+          <!-- Reihen-Mittelhaus Absage -->
+          <div id="wzRhAbsage" style="display:none;margin-top:16px;background:rgba(232,168,56,0.08);border:2px solid var(--bernstein);border-radius:12px;padding:24px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--bernstein)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span style="color:var(--bernstein);font-weight:700;font-size:16px;">Aktuell leider nicht umsetzbar</span>
+            </div>
+            <p style="color:var(--white);font-size:14px;line-height:1.7;margin:0 0 12px 0;">Bei einem <strong>Reihen-Mittelhaus</strong> können wir derzeit leider keine Wärmepumpe installieren. Der Grund: Unsere Wärmepumpen (Wolf CHA, R290) benötigen bestimmte Mindestabstände zur Grundstücksgrenze — sowohl wegen der Abstandsflächenverordnung als auch wegen der Schallschutzanforderungen. Bei einem beidseitig angebauten Mittelhaus lassen sich diese Abstände in der Regel nicht einhalten.</p>
+            <p style="color:var(--g300);font-size:13px;line-height:1.6;margin:0 0 16px 0;">Sobald leisere Geräte oder Split-Varianten mit R290 verfügbar werden, erweitern wir unser Portfolio. Wir informieren dich gern, wenn sich hier etwas ändert.</p>
+            <p style="color:var(--white);font-size:14px;line-height:1.7;margin:0 0 16px 0;">Du interessierst dich für eine <strong>Klimaanlage</strong> oder <strong>Photovoltaikanlage</strong>? Dann melde dich trotzdem — wir beraten dich gern.</p>
+            <a href="/kontakt" class="btn-primary" onclick="if(typeof hbspt!=='undefined'){/* HubSpot: Mittelhaus + PV/Klima-Interesse */}" style="display:inline-flex;font-size:14px;padding:10px 24px;">Trotzdem Kontakt aufnehmen</a>
+            <span style="color:var(--g400);font-size:12px;margin-left:12px;">Klimaanlage, Photovoltaik oder Rückfragen</span>
+          </div>
+          <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()" id="wzStep2Next">Weiter</button></div>
+        </div>
+
+        <!-- Step 3: Baujahr -->
+        <div class="wizard-step" data-step="3">
+          <div class="wizard-question">Wann wurde dein Haus gebaut?</div>
+          <div class="wizard-hint">Das Baujahr beeinflusst den Dämmstandard und damit den Energiebedarf.</div>
+          <div class="wizard-options" id="wzBaujahr">
+            <div class="wizard-option" data-value="vor1978"><div class="opt-title">Vor 1978</div><div class="opt-sub">Meist ungedämmt, hoher Energiebedarf</div></div>
+            <div class="wizard-option" data-value="1978-1994"><div class="opt-title">1978 bis 1994</div><div class="opt-sub">Erste Dämmvorschriften, mittlerer Bedarf</div></div>
+            <div class="wizard-option" data-value="1995-2010"><div class="opt-title">1995 bis 2010</div><div class="opt-sub">Gute Dämmung, niedriger Bedarf</div></div>
+            <div class="wizard-option" data-value="nach2010"><div class="opt-title">Nach 2010</div><div class="opt-sub">Sehr gute Dämmung, geringster Bedarf</div></div>
+          </div>
+          <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
+        </div>
+
+        <!-- Step 4: Sanierung -->
+        <div class="wizard-step" data-step="4">
+          <div class="wizard-question">Wurde dein Haus nachträglich saniert?</div>
+          <div class="wizard-hint">Sanierte Altbauten brauchen deutlich weniger Heizleistung als unsanierte.</div>
+          <div class="wizard-options" id="wzSanierung">
+            <div class="wizard-option" data-value="nein"><div class="opt-title">Nein / Weiß ich nicht</div><div class="opt-sub">Originalzustand, keine wesentlichen Änderungen</div></div>
+            <div class="wizard-option" data-value="teilweise"><div class="opt-title">Teilweise saniert</div><div class="opt-sub">Z. B. neue Fenster oder Dach gedämmt</div></div>
+            <div class="wizard-option" data-value="umfassend"><div class="opt-title">Umfassend saniert</div><div class="opt-sub">Dach, Fassade und Fenster erneuert</div></div>
+          </div>
+          <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
+        </div>
+
+        <!-- Step 5: Wohnfläche -->
+        <div class="wizard-step" data-step="5">
+          <div class="wizard-question">Wie groß ist deine Wohnfläche?</div>
+          <div class="wizard-hint">Die beheizte Fläche bestimmt zusammen mit dem Dämmstandard die nötige Heizleistung.</div>
+          <div class="wizard-slider-group">
+            <label>Wohnfläche <span class="ws-val" id="wzFlaeVal">140 m²</span></label>
+            <input type="range" id="wzFlaeche" min="60" max="800" step="10" value="140">
+          </div>
+          <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
+        </div>
+
+        <!-- Step 6: Aktuelle Heizung -->
+        <div class="wizard-step" data-step="6">
+          <div class="wizard-question">Was heizt du aktuell?</div>
+          <div class="wizard-hint">Bestimmt den Klimageschwindigkeitsbonus (+20%) bei der Förderung.</div>
+          <div style="background:rgba(232,168,56,0.12);border-radius:10px;padding:14px 18px;margin-bottom:16px;">
+            <p style="font-size:13px;color:var(--white);margin:0 0 6px 0;"><strong style="color:var(--bernstein);">Was ist der Klimageschwindigkeitsbonus?</strong></p>
+            <p style="font-size:12px;color:var(--g300);margin:0 0 6px 0;">Ein Extra-Zuschuss der KfW von <strong>+20%</strong> für den Umstieg von fossilen Heizungen. Bei <strong>Gasheizungen</strong> gilt: nur wenn die Heizung <strong>mindestens 20 Jahre alt</strong> ist (tagesgenau). Öl, Nachtspeicher und Gas-Etagenheizungen bekommen den Bonus <em>unabhängig vom Alter</em>.</p>
+            <p style="font-size:11px;color:var(--g400);margin:0;"><strong>Tipp:</strong> Das Alter findest du auf dem Typenschild oder im letzten Wartungsprotokoll.</p>
+          </div>
+          <div class="wizard-options" id="wzHeizung">
+            <div class="wizard-option" data-value="gas-old"><div class="opt-title">Gasheizung</div><div class="opt-sub" style="font-size:11px;">20 Jahre oder älter</div><div class="opt-sub" style="color:var(--green);">+20% Klimabonus</div></div>
+            <div class="wizard-option" data-value="gas-new"><div class="opt-title">Gasheizung</div><div class="opt-sub" style="font-size:11px;">Jünger als 20 Jahre</div><div class="opt-sub" style="color:var(--g400);">Kein Klimabonus</div></div>
+            <div class="wizard-option" data-value="oel"><div class="opt-title">Ölheizung</div><div class="opt-sub" style="color:var(--green);">+20% Klimabonus</div><div class="opt-sub" style="font-size:10px;color:var(--g400);">Egal wie alt</div></div>
+            <div class="wizard-option" data-value="nachtspeicher"><div class="opt-title">Nachtspeicher</div><div class="opt-sub" style="color:var(--green);">+20% Klimabonus</div><div class="opt-sub" style="font-size:10px;color:var(--g400);">Egal wie alt</div></div>
+            <div class="wizard-option" data-value="gas-etage"><div class="opt-title">Gas-Etagenheizung</div><div class="opt-sub" style="font-size:10px;">Einzelne Gasthermen je Wohnung</div><div class="opt-sub" style="color:var(--green);">+20% Klimabonus</div></div>
+            <div class="wizard-option" data-value="sonstige"><div class="opt-title">Sonstige / Weiß nicht</div><div class="opt-sub" style="color:var(--g400);">Kein Klimabonus</div></div>
+          </div>
+          <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
+        </div>
+
+        <!-- Step 7: Verbrauch -->
+        <div class="wizard-step" data-step="7">
+          <div class="wizard-question">Kennst du deinen Jahresverbrauch?</div>
+          <div class="wizard-hint">Steht auf der letzten Jahresabrechnung. Wenn nicht, schätzen wir anhand deiner Angaben.</div>
+          <div class="wizard-options" id="wzVerbrauch">
+            <div class="wizard-option" data-value="known"><div class="opt-title">Ich kenne meinen Jahresverbrauch</div><div class="opt-sub">Eingabe in kWh, m³ oder Liter</div></div>
+            <div class="wizard-option" data-value="unknown"><div class="opt-title">Weiß ich nicht</div><div class="opt-sub">Wir schätzen anhand deiner Angaben</div></div>
+          </div>
+          <div id="wzVerbrauchInput" style="display:none; margin-top: 20px;">
+            <div style="display:flex;gap:8px;margin-bottom:16px;">
+              <button id="wzUnitKwh" onclick="wzSwitchUnit('kwh')" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--green);background:rgba(183,217,0,0.15);color:var(--green);font-weight:700;font-size:14px;cursor:pointer;">kWh</button>
+              <button id="wzUnitM3" onclick="wzSwitchUnit('m3')" style="flex:1;padding:12px;border-radius:8px;border:2px solid rgba(255,255,255,0.5);background:rgba(255,255,255,0.1);color:#fff;font-weight:600;font-size:14px;cursor:pointer;">m³ Gas</button>
+              <button id="wzUnitLiter" onclick="wzSwitchUnit('liter')" style="flex:1;padding:12px;border-radius:8px;border:2px solid rgba(255,255,255,0.5);background:rgba(255,255,255,0.1);color:#fff;font-weight:600;font-size:14px;cursor:pointer;">Liter Heizöl</button>
+            </div>
+            <div class="wizard-slider-group">
+              <label>Jahresverbrauch <span class="ws-val" id="wzVerbVal">18.000 kWh</span></label>
+              <input type="range" id="wzVerbrauchSlider" min="5000" max="120000" step="500" value="18000">
+              <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--g500);margin-top:4px;">
+                <span id="wzSliderMin">5.000 kWh</span>
+                <span id="wzSliderMax">120.000 kWh</span>
+              </div>
+            </div>
+            <div id="wzVerbrauchHinweis" style="font-size:12px;color:var(--g400);margin-top:8px;"></div>
+          </div>
+          <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizCalculate()">Ergebnis berechnen</button></div>
+        </div>
+
+        <!-- RESULT -->
+        <div class="wizard-result" id="wizResult">
+          <div class="section-tag">Deine Empfehlung</div>
+          <h2 style="color: var(--white); font-size: 24px; margin-bottom: 4px;" id="wizResultTitle">Standard ist die richtige Wahl für dein Haus</h2>
+          <p style="color: var(--g400); font-size:13px; margin-bottom: 20px;" id="wizResultSub"></p>
+
+          <div id="wizResultCards"></div>
+
+          <p style="color: var(--g500); font-size: 11px; margin-top: 12px; text-align:center;">Unverbindliche Ersteinschätzung. Die exakte Dimensionierung und den verbindlichen Preis erhältst du im Rahmen der Angebotserstellung.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3>HeroWerk</h3>
+          <p>Meisterbetrieb für Wärmepumpen in der Region Hannover.</p>
+          <p style="margin-top: 12px;">Premiumpartner:<br><strong style="color: var(--white);">Wolf GmbH &amp; Vaillant Group</strong></p>
+        </div>
+        <div class="footer-col">
+          <h3>Leistungen</h3>
+          <a href="/dimensionierung">Wärmepumpen-Beratung</a>
+          <a href="/foerderung">Förderrechner</a>
+          <a href="/preise">Richtpreise</a>
+          <a href="/ratgeber">HERO FRIENDS</a>
+        </div>
+        <div class="footer-col">
+          <h3>Unternehmen</h3>
+          <a href="/prozess">Unser Prozess</a>
+          <a href="/ratgeber">Ratgeber</a>
+          <a href="/ratgeber#faq">FAQ</a>
+          <a href="/kontakt">Kontakt</a>
+        </div>
+        <div class="footer-col">
+          <h3>Kontakt</h3>
+          <p>HeroWerk GmbH</p>
+          <p>Region Hannover</p>
+          <p>Tel: 0171 205 888 0</p>
+          <p>info@herowerk.de</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-tagline">HeroWerk GmbH &middot; Meisterqualität aus der Region.</div>
+        <div class="footer-legal">
+          <a href="/impressum">Impressum</a>
+          <a href="/datenschutz">Datenschutz</a>
+          <a href="/hinweise">Hinweise</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/site.js" defer></script>
+
+  <!-- MOBILE BOTTOM BAR -->
+  <div class="mobile-bottom-bar" role="navigation" aria-label="Mobile Schnellnavigation">
+    <a href="tel:+4951130030860" class="mob-bar-call">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      Anrufen
+    </a>
+    <a href="/anfrage" class="mob-bar-cta" onclick="document.getElementById('mobileMenu')?.classList.remove('open');">
+      Kostenlose Beratung
+    </a>
+  </div>
+
+</body>
+</html>

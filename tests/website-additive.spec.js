@@ -11,7 +11,7 @@ test('@smoke Theme-Toggle setzt Light- und Dark-Mode per URL/LocalStorage', asyn
 });
 
 test('@smoke Hersteller-Vorauswahl zeigt Wolf-Minimum und Vaillant-Panel', async ({ page }) => {
-  await page.goto('/?theme=dark');
+  await page.goto('/preise.html?theme=dark');
   await expect(page.locator('#wolfMinEigen')).toContainText('8.925');
   await page.locator('#manufacturerVaillant').click();
   await expect(page.locator('#vaillantPricePanel')).toBeVisible();
@@ -58,6 +58,12 @@ test('@smoke Funnel sendet HubSpot-Form-Payload mit UTM-Feldern (Mock)', async (
 for (const path of [
   '/?theme=dark',
   '/?theme=light',
+  '/preise.html?theme=dark',
+  '/dimensionierung.html?theme=light',
+  '/foerderung.html?theme=dark',
+  '/prozess.html?theme=light',
+  '/ratgeber.html?theme=dark',
+  '/kontakt.html?theme=light',
   '/impressum.html?theme=light',
   '/datenschutz.html?theme=dark',
   '/hinweise.html?theme=light',

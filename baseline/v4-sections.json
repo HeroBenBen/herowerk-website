@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-11",
+  "generated": "2026-06-12",
   "rule": "section-id primär, H2-Fallback, FAQ separat; Fail bei >30% Wort-Abweichung",
   "threshold": 0.3,
   "pages": [
@@ -9,39 +9,48 @@
         {
           "id": "class:hero",
           "words": 106
-        },
-        {
-          "id": "fv",
-          "words": 78
-        },
+        }
+      ]
+    },
+    {
+      "file": "preise.html",
+      "sections": [
         {
           "id": "preise",
-          "words": 151
-        },
+          "words": 186
+        }
+      ]
+    },
+    {
+      "file": "dimensionierung.html",
+      "sections": [
         {
           "id": "wizard",
           "words": 488
-        },
+        }
+      ]
+    },
+    {
+      "file": "foerderung.html",
+      "sections": [
         {
           "id": "foerder",
           "words": 276
-        },
-        {
-          "id": "compare",
-          "words": 195
-        },
+        }
+      ]
+    },
+    {
+      "file": "prozess.html",
+      "sections": [
         {
           "id": "prozess",
           "words": 150
-        },
-        {
-          "id": "anfrage",
-          "words": 164
-        },
-        {
-          "id": "hf",
-          "words": 139
-        },
+        }
+      ]
+    },
+    {
+      "file": "ratgeber.html",
+      "sections": [
         {
           "id": "blog",
           "words": 83
@@ -54,7 +63,7 @@
         {
           "id": "faq[2]",
           "question": "Wie lange dauert die komplette Installation?",
-          "words": 40
+          "words": 39
         },
         {
           "id": "faq[3]",
@@ -69,7 +78,7 @@
         {
           "id": "faq[5]",
           "question": "Gibt es versteckte Kosten oder Nachträge?",
-          "words": 47
+          "words": 59
         },
         {
           "id": "faq[6]",
@@ -79,7 +88,7 @@
         {
           "id": "faq[7]",
           "question": "Was ist der Fördervorschuss und warum ist er limitiert?",
-          "words": 83
+          "words": 75
         },
         {
           "id": "faq[8]",
@@ -89,14 +98,15 @@
         {
           "id": "faq[frame]",
           "words": 3
-        },
+        }
+      ]
+    },
+    {
+      "file": "kontakt.html",
+      "sections": [
         {
           "id": "contact",
           "words": 86
-        },
-        {
-          "id": "fv-qualify",
-          "words": 270
         }
       ]
     },

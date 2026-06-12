@@ -1,8 +1,16 @@
-// @smoke — Pipeline Abschnitt G Job 3. T1-6b-Minimal-Smoke:
-// Seiten laden, Kern-Elemente sichtbar. Voller Funnel-Smoke (10 Schritte +
-// HubSpot-Submit) kommt mit dem T2-Webhook-Anschluss.
+// @smoke — Pipeline Abschnitt G Job 3: Seiten laden, Kern-Elemente sichtbar.
 'use strict';
 const { test, expect } = require('@playwright/test');
+
+/** @type {Array<[string, RegExp]>} */
+const NAV_TARGETS = [
+  ['/preise', /Kosten|Preise/i],
+  ['/dimensionierung', /Rechner|Größe|Ersparnis/i],
+  ['/foerderung', /Förderung|KfW/i],
+  ['/prozess', /Ablauf|Wärmepumpe/i],
+  ['/ratgeber', /Ratgeber|FAQ/i],
+  ['/kontakt', /Kontakt|Termin/i],
+];
 
 test('@smoke Startseite lädt mit Hero und Navigation', async ({ page }) => {
   const resp = await page.goto('/');
@@ -11,8 +19,8 @@ test('@smoke Startseite lädt mit Hero und Navigation', async ({ page }) => {
   await expect(page.locator('section.hero')).toBeVisible();
 });
 
-test('@smoke FAQ-Sektion vorhanden (8 Fragen)', async ({ page }) => {
-  await page.goto('/');
+test('@smoke FAQ-Sektion auf Ratgeber vorhanden (8 Fragen)', async ({ page }) => {
+  await page.goto('/ratgeber.html');
   await expect(page.locator('#faq .faq-item')).toHaveCount(8);
 });
 
@@ -21,4 +29,15 @@ test('@smoke Funnel anfrage.html lädt, Schritt 1 aktiv', async ({ page }) => {
   expect(resp.status()).toBeLessThan(400);
   await expect(page.locator('.step.active')).toHaveCount(1);
   await expect(page.locator('#progressFill')).toBeAttached();
+});
+
+test('@smoke Navigation von Startseite auf Unterseiten und zurück', async ({ page }) => {
+  for (const [href, title] of NAV_TARGETS) {
+    await page.goto('/');
+    await page.locator(`.nav-links a[href="${href}"]`).first().click();
+    await expect(page).toHaveURL(new RegExp(`${href.replace('/', '\\/')}/?$`));
+    await expect(page).toHaveTitle(title);
+    await page.locator('.nav-links a[href="/"]').first().click();
+    await expect(page).toHaveURL(/\/$/);
+  }
 });

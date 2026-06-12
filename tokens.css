@@ -277,3 +277,45 @@ body {
 .trust-panel .partner-badge[style*='0,106,179'] {
   color: #66b8e8 !important;
 }
+
+/* Mehrseiten-Umbau: Light-Theme contrast repairs for existing v4 component classes. */
+[data-theme='light'] .faq-toggle,
+[data-theme='light'] .pa-card .pa-price-compact,
+[data-theme='light'] .pa-card .pa-modell,
+[data-theme='light'] .breakdown-item .pct,
+[data-theme='light'] .pz-step .pz-time,
+[data-theme='light'] .blog-card-tag,
+[data-theme='light'] .trust-item .check,
+[data-theme='light'] .hc-value.discount,
+[data-theme='light'] .hc-result-value {
+  color: #5f7200 !important;
+}
+
+[data-theme='light'] .hc-label,
+[data-theme='light'] .hc-result-label,
+[data-theme='light'] .qs-option.selected,
+[data-theme='light'] .pz-step-num,
+[data-theme='light'] .hf-step-num {
+  color: #1c2b36 !important;
+}
+
+[data-theme='light'] .hc-label-sub,
+[data-theme='light'] .hc-value .unit,
+[data-theme='light'] .hc-result-value .unit,
+[data-theme='light'] .pz-expand-hint,
+[data-theme='light'] .qs-option,
+[data-theme='light'] .qs-form-hint,
+[data-theme='light'] .pa-card .pa-kw,
+[data-theme='light'] .pa-card .pa-label,
+[data-theme='light'] .hf-step-text {
+  color: #5a6470 !important;
+}
+
+[data-theme='light'] .hero-calc,
+[data-theme='light'] .qs-form,
+[data-theme='light'] .prozess-card,
+[data-theme='light'] .pz-step,
+[data-theme='light'] .blog-card {
+  background: var(--color-surface-secondary) !important;
+  color: var(--color-text-primary) !important;
+}

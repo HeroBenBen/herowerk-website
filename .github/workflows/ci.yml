@@ -50,7 +50,10 @@ jobs:
       - name: Lighthouse CI ${{ matrix.theme }}
         uses: treosh/lighthouse-ci-action@v12
         with:
-          urls: ${{ needs.resolve-preview.outputs.url }}?theme=${{ matrix.theme }}
+          urls: |
+            ${{ needs.resolve-preview.outputs.url }}?theme=${{ matrix.theme }}
+            ${{ needs.resolve-preview.outputs.url }}/preise.html?theme=${{ matrix.theme }}
+            ${{ needs.resolve-preview.outputs.url }}/anfrage.html?theme=${{ matrix.theme }}
           configPath: ./lighthouserc.json
           uploadArtifacts: true
           runs: 3

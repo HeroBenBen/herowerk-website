@@ -1,16 +1,28 @@
 // @a11y — Pipeline Abschnitt G Job 4: axe-core, Schwelle 0 Errors
-// auf allen Hauptseiten.
+// auf allen Hauptseiten in beiden Themes.
 'use strict';
 const { test, expect } = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default;
 
-const PAGES = ['/', '/anfrage.html'];
+const PAGES = [
+  '/',
+  '/preise.html',
+  '/dimensionierung.html',
+  '/foerderung.html',
+  '/prozess.html',
+  '/ratgeber.html',
+  '/kontakt.html',
+  '/anfrage.html',
+];
+const THEMES = ['dark', 'light'];
 
 for (const path of PAGES) {
-  test(`@a11y axe-core 0 Violations auf ${path}`, async ({ page }) => {
-    await page.goto(path);
-    const results = await new AxeBuilder({ page }).analyze();
-    const summary = results.violations.map((v) => `${v.id} (${v.impact}): ${v.nodes.length}x`);
-    expect(summary, summary.join('\n')).toEqual([]);
-  });
+  for (const theme of THEMES) {
+    test(`@a11y axe-core 0 Violations auf ${path}?theme=${theme}`, async ({ page }) => {
+      await page.goto(`${path}?theme=${theme}`);
+      const results = await new AxeBuilder({ page }).analyze();
+      const summary = results.violations.map((v) => `${v.id} (${v.impact}): ${v.nodes.length}x`);
+      expect(summary, summary.join('\n')).toEqual([]);
+    });
+  }
 }
