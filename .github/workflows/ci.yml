@@ -73,6 +73,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - run: npm ci
+      - run: npx playwright install --with-deps
       - env: { PREVIEW_URL: '${{ needs.resolve-preview.outputs.url }}' }
         run: npm run test:a11y  # Schwelle: 0 Errors auf allen Hauptseiten
 
