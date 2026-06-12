@@ -16,7 +16,10 @@
   <meta name="twitter:description" content="Jetzt Wärmepumpen-Angebot anfragen. HeroWerk Meisterbetrieb Hannover — bis zu 70 % Förderung, Installation in 6 Wochen.">
   <meta name="twitter:image" content="https://www.herowerk.de/hero-fachpartner.png">
   <script src="js/theme.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap"></noscript>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; height: 100%; }
@@ -497,7 +500,8 @@
       .answer-grid.cols-3 { grid-template-columns: 1fr; }
     }
   </style>
-  <link rel="stylesheet" href="tokens.css">
+  <link rel="preload" href="tokens.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="tokens.css"></noscript>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -983,7 +987,7 @@
             pattern="[0-9]{5}"
             inputmode="numeric"
             onkeyup="validatePlz(this)"
-            oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+            oninput="this.value=this.value.replace(/[^0-9]/g,''); validatePlz(this)">
           <div class="plz-error" id="plzError">Bitte eine gültige 5-stellige Postleitzahl eingeben.</div>
         </div>
         <div id="plzResult" style="display:none;" class="contact-preview" style="max-width:320px;">

@@ -40,7 +40,7 @@
   --color-surface-tertiary: #ebe7dc;
   --color-text-primary: #1c2b36;
   --color-text-secondary: #5a6470;
-  --color-text-tertiary: #a0a6ad;
+  --color-text-tertiary: #5a6470;
   --color-accent-primary: #b7d900;
   --color-accent-primary-text: #1c2b36;
   --color-info: #e8a838;
@@ -199,4 +199,29 @@ body {
 .manufacturer-tab:focus-visible {
   outline: 3px solid rgba(183, 217, 0, 0.75);
   outline-offset: 4px;
+}
+
+.nav-theme-standalone {
+  display: none;
+}
+
+@media (max-width: 960px) {
+  .nav-theme-standalone {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: 8px;
+  }
+}
+
+/* WCAG AA contrast fixes for light-theme accent text and low-alpha trust labels. */
+[data-theme='light'] a:not(.btn-primary):not(.nav-cta):not(.pa-header-cta),
+[data-theme='light'] [style*='var(--green)'] {
+  color: #5f7200 !important;
+}
+
+.trust-partner-label,
+.rating-text {
+  color: var(--g400) !important;
 }
