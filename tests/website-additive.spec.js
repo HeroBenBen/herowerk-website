@@ -21,6 +21,7 @@ test('@smoke Hersteller-Vorauswahl zeigt Wolf-Minimum und Vaillant-Panel', async
 });
 
 test('@smoke Funnel sendet HubSpot-Form-Payload mit UTM-Feldern (Mock)', async ({ page }) => {
+  /** @type {{ fields: Array<{ name: string, value: string }> } | undefined} */
   let submitted;
   await page.route(
     'https://api.hsforms.com/submissions/v3/integration/submit/**',
@@ -41,6 +42,7 @@ test('@smoke Funnel sendet HubSpot-Form-Payload mit UTM-Feldern (Mock)', async (
   await page.locator('#dsgvo').check();
   await page.locator('.btn-submit-final').click();
   await expect(page.locator('#successStep')).toBeVisible();
+  if (!submitted) throw new Error('HubSpot mock submit was not captured');
   const fields = Object.fromEntries(submitted.fields.map((field) => [field.name, field.value]));
   expect(fields.vorname).toBe('Test');
   expect(fields.plz).toBe('30159');
