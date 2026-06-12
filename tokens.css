@@ -31,6 +31,7 @@
   --g600: #4b5563;
   --g700: #374151;
   --g900: #111827;
+  --trust-strip-sub-color: #5a6470;
 }
 
 [data-theme='light'] {
@@ -60,6 +61,7 @@
   --g900: #1c2b36;
   --bg: #f4f1ea;
   --shadow: 0 4px 24px var(--color-shadow);
+  --trust-strip-sub-color: #5a6470;
 }
 
 body {
@@ -161,6 +163,10 @@ body {
 }
 [data-theme='light'] [style*='var(--bernstein)'] {
   color: #1c2b36 !important;
+}
+
+.trust-strip-sub {
+  color: var(--trust-strip-sub-color) !important;
 }
 
 .theme-toggle {
