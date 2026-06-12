@@ -127,6 +127,7 @@ body {
 [data-theme='light'] h2,
 [data-theme='light'] h3,
 [data-theme='light'] h4,
+[data-theme='light'] .pa-card h2,
 [data-theme='light'] .pa-card h3,
 [data-theme='light'] .footer-col h2,
 [data-theme='light'] .footer-col h4,
@@ -328,6 +329,7 @@ body {
   color: #5a6470 !important;
 }
 
+[data-theme='light'] .pa-card h2,
 [data-theme='light'] .wizard-card h3,
 [data-theme='light'] .wr-card h3,
 [data-theme='light'] .compare-card h3,
@@ -337,6 +339,54 @@ body {
 [data-theme='light'] .form-success h2,
 [data-theme='light'] .form-success h4 {
   color: #1c2b36 !important;
+}
+
+/* Umbau-Iteration 2: text on chartreuse surfaces always uses slate per
+   LIGHT-MODE-SPEC; this prevents sand/green/grey text on accent-filled CTAs. */
+[data-theme='light'] .btn-primary,
+[data-theme='light'] .btn-primary *,
+[data-theme='light'] .nav-cta,
+[data-theme='light'] .nav-cta *,
+[data-theme='light'] .wizard-btn-next,
+[data-theme='light'] .wizard-btn-next *,
+[data-theme='light'] .form-submit,
+[data-theme='light'] .form-submit *,
+[data-theme='light'] .pa-header-cta,
+[data-theme='light'] .pa-header-cta *,
+[data-theme='light'] .pa-bottom-cta--beratung,
+[data-theme='light'] .pa-bottom-cta--beratung *,
+[data-theme='light'] .pa-bottom-cta--wizard,
+[data-theme='light'] .pa-bottom-cta--wizard * {
+  color: #1c2b36 !important;
+}
+[data-theme='light'] .pa-header-cta svg,
+[data-theme='light'] .pa-header-cta svg *,
+[data-theme='light'] .pa-bottom-cta svg,
+[data-theme='light'] .pa-bottom-cta svg *,
+[data-theme='light'] .btn-primary svg,
+[data-theme='light'] .btn-primary svg *,
+[data-theme='light'] .nav-cta svg,
+[data-theme='light'] .nav-cta svg * {
+  stroke: #1c2b36 !important;
+}
+
+[data-theme='light'] .contact-form .form-group label,
+[data-theme='light'] .contact-form .form-checkbox label,
+[data-theme='light'] .preisanker-fv,
+[data-theme='light'] .preisanker-fv *,
+[data-theme='light'] .seg-toggle button,
+[data-theme='light'] .seg-toggle button.active,
+[data-theme='light'] .wizard-hint,
+[data-theme='light'] .section-tag {
+  color: #1c2b36 !important;
+}
+
+[data-theme='light'] .seg-toggle,
+[data-theme='light'] .wizard-option,
+[data-theme='light'] .foerder-grid,
+[data-theme='light'] .foerder-result,
+[data-theme='light'] .preisanker-fv {
+  background-color: #ebe7dc !important;
 }
 
 [data-theme='light'] .hero-calc,

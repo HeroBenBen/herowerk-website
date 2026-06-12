@@ -1050,7 +1050,7 @@ function paRenderCards() {
         ? `<div style="color:var(--green);margin-bottom:8px;display:flex;justify-content:center;">${d.icon}</div>`
         : '';
       const labelHtml = d.label
-        ? `<div style="color:var(--g300);font-size:11px;font-weight:600;letter-spacing:0.3px;margin-bottom:4px;">${d.label}</div>`
+        ? `<div style="color:var(--g300);font-size:12px;font-weight:600;letter-spacing:0.3px;margin-bottom:4px;">${d.label}</div>`
         : '';
       const hausHtml = d.hausgroesse
         ? `<div style="color:var(--g400);font-size:12px;margin-top:2px;">${d.hausgroesse}</div>`
@@ -1059,7 +1059,7 @@ function paRenderCards() {
         <div class="pa-card${defaultClass}" role="button" tabindex="0" onclick="paZoom(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();paZoom(${i});}" data-idx="${i}">
           ${iconHtml}
           ${labelHtml}
-          <h3>${d.name}</h3>
+          <h2>${d.name}</h2>
           ${hausHtml}
           <div class="pa-modell">${d.modell}</div>
           <div class="pa-kw">${d.kw}</div>

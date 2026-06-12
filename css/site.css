@@ -2215,6 +2215,7 @@ section {
   animation-delay: 0.33s;
 }
 
+.pa-card h2,
 .pa-card h3 {
   color: var(--white);
   font-size: 16px;
@@ -2728,6 +2729,7 @@ section {
   .pa-card .pa-price-compact {
     font-size: 19px;
   }
+  .pa-card h2,
   .pa-card h3 {
     font-size: 14px;
   }
