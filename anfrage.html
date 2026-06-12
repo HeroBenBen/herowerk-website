@@ -520,6 +520,48 @@
       .answer-grid { grid-template-columns: 1fr; }
       .answer-grid.cols-3 { grid-template-columns: 1fr; }
     }
+    /* Iteration 3: full funnel theme coverage and stable sidebar scaling. */
+    .logo-light { display: none; }
+    [data-theme='light'] .logo-dark { display: none !important; }
+    [data-theme='light'] .logo-light { display: inline-block !important; }
+    [data-theme='light'] .trust-panel .logo-dark { display: inline-block !important; }
+    [data-theme='light'] .trust-panel .logo-light { display: none !important; }
+    .theme-toggle[data-theme-toggle] {
+      min-width: 120px; min-height: 36px; padding: 7px 12px; border-radius: 999px;
+      border: 1px solid rgba(183,217,0,0.35); background: rgba(183,217,0,0.10);
+      color: var(--green); font-weight: 700; font-size: 12px;
+    }
+    [data-theme='dark'] body { background: #0a0a0a; color: #ffffff; }
+    [data-theme='dark'] .funnel-panel { background: #0a0a0a; color: #ffffff; }
+    [data-theme='dark'] .funnel-header,
+    [data-theme='dark'] .progress-card,
+    [data-theme='dark'] .step-card,
+    [data-theme='dark'] .success-step {
+      background: #1c2b36; border-color: #2d3a47; color: #ffffff;
+    }
+    [data-theme='dark'] .step-question,
+    [data-theme='dark'] .answer-card-label,
+    [data-theme='dark'] .form-field label,
+    [data-theme='dark'] .success-step h2 { color: #ffffff; }
+    [data-theme='dark'] .step-hint,
+    [data-theme='dark'] .answer-card-sub,
+    [data-theme='dark'] .funnel-step-counter,
+    [data-theme='dark'] .success-detail { color: #d1d5db; }
+    [data-theme='dark'] .answer-card,
+    [data-theme='dark'] .form-field input,
+    [data-theme='dark'] .form-field select,
+    [data-theme='dark'] .form-field textarea {
+      background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); color: #ffffff;
+    }
+    [data-theme='dark'] .answer-card:hover,
+    [data-theme='dark'] .answer-card.selected { border-color: var(--green); }
+    [data-theme='dark'] .form-field input::placeholder { color: #a0a6ad; }
+    [data-theme='light'] .trust-headline em { color: #1c2b36; }
+    .partner-badge img { max-width: 72px; max-height: 24px; object-fit: contain; display: block; }
+    @media (max-width: 980px) {
+      .funnel-layout { grid-template-columns: minmax(280px, 360px) minmax(0, 1fr); }
+    }
+
   </style>
   <link rel="preload" href="tokens.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="tokens.css"></noscript>
@@ -544,9 +586,9 @@
 
     <div class="trust-logo">
       <a href="/">
-        <img src="herowerk-logo-stacked.png" alt="HeroWerk" width="607" height="337" decoding="async"
+        <img src="herowerk-logo-stacked.png" alt="HeroWerk" class="logo-dark" width="607" height="337" decoding="async"
           style="filter:brightness(0) invert(1);"
-          onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+          onerror="this.style.display='none';this.nextElementSibling.style.display='block';"><img src="herowerk-logo-stacked-light.png" alt="HeroWerk" class="logo-light" width="607" height="337" decoding="async">
         <span class="trust-logo-fallback" style="display:none;">Hero<span>Werk</span></span>
       </a>
     </div>
@@ -557,7 +599,7 @@
       Deine <em>Wärmepumpe</em><br>aus Meisterhand.
     </h2>
     <p class="trust-sub">
-      In wenigen Schritten zum kostenlosen Angebot — wir prüfen deine Förderfähigkeit und melden uns innerhalb von 48 Stunden.
+      In wenigen Schritten zum kostenlosen Angebot. Wir prüfen deine Förderfähigkeit und melden uns innerhalb von 48 Stunden.
     </p>
 
     <div class="trust-usps">
@@ -567,7 +609,7 @@
         </div>
         <div class="trust-usp-text">
           <strong>Bis zu 70 % KfW-Förderung</strong><br>
-          Antrag inklusive — wir regeln das komplett
+          Antrag inklusive. Wir regeln das komplett.
         </div>
       </div>
       <div class="trust-usp">
@@ -594,7 +636,7 @@
         </div>
         <div class="trust-usp-text">
           <strong>5 Jahre Garantie</strong><br>
-          Auf Gerät und Einbau — aus einer Hand
+          Auf Gerät und Einbau, aus einer Hand.
         </div>
       </div>
     </div>
@@ -604,13 +646,13 @@
     <div class="trust-partner-label">Unsere Premiumpartner</div>
     <div class="trust-partners">
       <!-- Wolf Partner -->
-      <span class="partner-badge pb-wolf">WOLF</span>
+      <span class="partner-badge pb-wolf"><img src="logo-wolf.svg" alt="Wolf GmbH" width="72" height="24" loading="lazy" decoding="async"></span>
 
       <!-- Vaillant Badge (kein Logo vorhanden) -->
-      <span class="partner-badge pb-vaillant">VAILLANT</span>
+      <span class="partner-badge pb-vaillant"><img src="logo-vaillant.svg" alt="Vaillant Group" width="72" height="24" loading="lazy" decoding="async"></span>
 
       <!-- KfW -->
-      <span class="partner-badge" style="background:rgba(0,106,179,0.15);border:1px solid rgba(0,106,179,0.3);color:#3399cc;font-size:12px;">KfW 458</span>
+      <span class="partner-badge"><img src="logo-kfw.svg" alt="KfW" width="72" height="24" loading="lazy" decoding="async"></span>
     </div>
 
     <div class="trust-rating">
@@ -635,8 +677,8 @@
     <!-- Header -->
     <div class="funnel-header">
       <div class="funnel-header-logo">
-        <img src="herowerk-logo-stacked.png" alt="HeroWerk" width="607" height="337" style="height:32px;width:auto;" decoding="async"
-          onerror="this.style.display='none';">
+        <img src="herowerk-logo-stacked.png" alt="HeroWerk" class="logo-dark" width="607" height="337" style="height:32px;width:auto;" decoding="async"
+          onerror="this.style.display='none';"><img src="herowerk-logo-stacked-light.png" alt="HeroWerk" class="logo-light" width="607" height="337" style="height:32px;width:auto;" decoding="async">
       </div>
       <span class="funnel-step-counter" id="stepCounter">Schritt 1 von 9</span>
       <a href="/" class="funnel-close-link">
@@ -662,7 +704,7 @@
       <!-- ──────────── SCHRITT 1: Gebäudetyp ──────────── -->
       <div class="step active" data-step="1">
         <h2 class="step-question">Für welches Gebäude suchst du eine Wärmepumpe?</h2>
-        <p class="step-hint">Wähle eine Option — wir leiten dich direkt weite.</p>
+        <p class="step-hint">Wähle eine Option. Wir leiten dich direkt weiter.</p>
         <div class="answer-grid">
           <div class="answer-card" data-value="Einfamilienhaus" onclick="selectAndAdvance(this)">
             <div class="answer-card-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><path d="M6 24L24 8l18 16"/><path d="M10 22v18h28V22"/><rect x="19" y="30" width="10" height="10"/></svg></div>
@@ -1029,7 +1071,7 @@
 
       <!-- ──────────── SCHRITT 10: Kontaktdaten (LETZTER SCHRITT) ──────────── -->
       <div class="step" data-step="10">
-        <h2 class="step-question">Fast geschafft — jetzt dein Angebot sichern</h2>
+        <h2 class="step-question">Fast geschafft. Jetzt dein Angebot sichern</h2>
         <p class="step-hint">Wir erstellen dein persönliches Angebot auf Basis deiner Angaben.</p>
 
         <!-- Zusammenfassung der eingegebenen PLZ -->
@@ -1096,14 +1138,14 @@
         </div>
         <h2>Anfrage erhalten!</h2>
         <p>
-          Danke, <strong id="successName"></strong>! Wir melden uns innerhalb von <strong>48 Stunden</strong> bei Ihnen — werktags Mo–Fr 08:00–17:00 Uhr.
+          Danke, <strong id="successName"></strong>! Wir melden uns innerhalb von <strong>48 Stunden</strong> bei dir. Werktags Mo–Fr 08:00–17:00 Uhr.
         </p>
         <div class="success-detail">
           <strong>Wie geht es weiter?</strong><br>
-          1. Wir rufen Sie an und klären offene Fragen<br>
+          1. Wir rufen dich an und klären offene Fragen<br>
           2. Baubarkeitsprüfung vor Ort (kostenlos)<br>
           3. Individuelles Angebot mit Förderberechnung<br>
-          4. Förderantrag stellen — wir übernehmen das
+          4. Förderantrag stellen. Wir übernehmen das
         </div>
       </div>
 

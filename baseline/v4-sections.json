@@ -8,7 +8,31 @@
       "sections": [
         {
           "id": "class:hero",
-          "words": 106
+          "words": 115
+        },
+        {
+          "id": "class:home-teaser-section",
+          "words": 14
+        },
+        {
+          "id": "class:home-teaser-section[2]",
+          "words": 23
+        },
+        {
+          "id": "class:home-teaser-section[3]",
+          "words": 19
+        },
+        {
+          "id": "class:home-teaser-section[4]",
+          "words": 15
+        },
+        {
+          "id": "class:home-teaser-section[5]",
+          "words": 30
+        },
+        {
+          "id": "class:home-teaser-section[6]",
+          "words": 10
         }
       ]
     },
@@ -17,7 +41,7 @@
       "sections": [
         {
           "id": "preise",
-          "words": 186
+          "words": 182
         }
       ]
     },
@@ -26,7 +50,7 @@
       "sections": [
         {
           "id": "wizard",
-          "words": 488
+          "words": 486
         }
       ]
     },
@@ -44,7 +68,7 @@
       "sections": [
         {
           "id": "prozess",
-          "words": 150
+          "words": 149
         }
       ]
     },
@@ -54,6 +78,10 @@
         {
           "id": "blog",
           "words": 83
+        },
+        {
+          "id": "friends",
+          "words": 137
         },
         {
           "id": "faq[1]",
@@ -73,27 +101,27 @@
         {
           "id": "faq[4]",
           "question": "Wie hoch ist die KfW-Förderung wirklich?",
-          "words": 66
+          "words": 65
         },
         {
           "id": "faq[5]",
           "question": "Gibt es versteckte Kosten oder Nachträge?",
-          "words": 59
+          "words": 58
         },
         {
           "id": "faq[6]",
           "question": "Was ist proKlima Hannover?",
-          "words": 83
+          "words": 81
         },
         {
           "id": "faq[7]",
           "question": "Was ist der Fördervorschuss und warum ist er limitiert?",
-          "words": 75
+          "words": 74
         },
         {
           "id": "faq[8]",
           "question": "Warum Wolf?",
-          "words": 54
+          "words": 53
         },
         {
           "id": "faq[frame]",
@@ -106,7 +134,7 @@
       "sections": [
         {
           "id": "contact",
-          "words": 86
+          "words": 85
         }
       ]
     },
@@ -119,11 +147,11 @@
         },
         {
           "id": "h2-block[1]",
-          "words": 88
+          "words": 81
         },
         {
           "id": "h2-block[2]",
-          "words": 31
+          "words": 30
         },
         {
           "id": "h2-block[3]",
@@ -159,11 +187,11 @@
         },
         {
           "id": "h2-block[11]",
-          "words": 63
+          "words": 62
         },
         {
           "id": "h2-block[12]",
-          "words": 48
+          "words": 46
         }
       ]
     }

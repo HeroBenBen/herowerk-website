@@ -50,6 +50,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
+    applyTheme(document.documentElement.getAttribute('data-theme') || initial, false);
     ensureAccessibleControls();
     document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
       button.addEventListener('click', () => {

@@ -448,3 +448,9 @@ body {
   background: var(--color-surface-secondary) !important;
   color: var(--color-text-primary) !important;
 }
+
+/* Iteration 3: Light headlines use slate consistently; chartreuse remains dark-only accent. */
+[data-theme='light'] .hero h1 .accent,
+[data-theme='light'] .trust-headline em {
+  color: #1c2b36 !important;
+}

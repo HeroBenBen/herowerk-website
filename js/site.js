@@ -168,7 +168,7 @@ function checkPlz(input) {
       SVG_CHECK +
       '<span style="color:var(--green);font-weight:600;">' +
       gemeindeLabel +
-      ' — wir sind für dich da' +
+      '. Wir sind für dich da' +
       (isProklima ? ' (proKlima möglich)' : '') +
       '</span>';
     proklimaEl.style.display = isProklima ? 'block' : 'none';
@@ -182,7 +182,7 @@ function checkPlz(input) {
       SVG_CHECK +
       '<span style="color:var(--g300);">Deine PLZ ' +
       val +
-      ' liegt möglicherweise in unserem Einzugsgebiet — wir prüfen die Verfügbarkeit</span>';
+      ' liegt möglicherweise in unserem Einzugsgebiet. Wir prüfen die Verfügbarkeit</span>';
     proklimaEl.style.display = 'none';
     wizData.gemeinde = 'sonstige';
     nextBtn.disabled = false;
@@ -707,7 +707,7 @@ function wizCalculate() {
             <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
               <div>
                 <div style="color:var(--white);font-family:'Barlow',sans-serif;font-weight:700;font-size:16px;">Weiter: Deine genaue Förderung berechnen</div>
-                <div style="color:var(--g400);font-size:13px;margin-top:2px;">Deine Daten werden automatisch übernommen — kein erneutes Eingeben</div>
+                <div style="color:var(--g400);font-size:13px;margin-top:2px;">Deine Daten werden automatisch übernommen. Kein erneutes Eingeben</div>
               </div>
               <div style="background:var(--green);color:var(--nacht);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -929,7 +929,7 @@ const paDataFallback = [
     kw: '9–12 kW',
     icon: '<svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 3L3 14h3v14h20V14h3L16 3z"/><rect x="12" y="18" width="8" height="10"/></svg>',
     img: 'cha-neubau-dunkel.jpg',
-    desc: 'Der Klassiker — für die meisten Einfamilienhäuser',
+    desc: 'Der Klassiker. Für die meisten Einfamilienhäuser',
     preis: 34510,
     eigen: 13510,
     proklima: 12010,
@@ -1260,7 +1260,7 @@ function toggleHeizungsalter() {
         SVG_CHECK +
         '<span style="color:var(--green);">Ihre Gasheizung ist ' +
         alter +
-        ' Jahre alt — Sie erhalten den Klimageschwindigkeitsbonus (+20%).</span>';
+        ' Jahre alt. Du erhältst den Klimageschwindigkeitsbonus (+20%).</span>';
     } else {
       hinweis.innerHTML =
         SVG_WARN +
@@ -1450,7 +1450,7 @@ function calculateFoerder() {
     document.getElementById('effektivErklaerung').textContent =
       'KfW fördert max. ' +
       foerderCap.toLocaleString('de-DE') +
-      ' € — deine Investition liegt bei ' +
+      ' €. Deine Investition liegt bei ' +
       preis.toLocaleString('de-DE') +
       ' €. Die Differenz trägst du selbst.';
   } else {
@@ -1574,7 +1574,7 @@ function calculateFoerder() {
       '<span style="flex-shrink:0;color:var(--bernstein);"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="4" width="20" height="24" rx="1"/><rect x="10" y="8" width="4" height="3"/><rect x="18" y="8" width="4" height="3"/><rect x="10" y="14" width="4" height="3"/><rect x="18" y="14" width="4" height="3"/><rect x="10" y="20" width="4" height="3"/><rect x="18" y="20" width="4" height="3"/><rect x="13" y="25" width="6" height="3"/></svg></span>' +
       '<div>' +
       '<div style="color:var(--bernstein);font-weight:700;font-size:14px;margin-bottom:6px;">Eigentümergemeinschaft (WEG)?</div>' +
-      '<div style="color:var(--g300);font-size:13px;line-height:1.6;margin-bottom:12px;">Bei einer WEG beantragt jeder Eigentümer individuell — mit seinem persönlichen Fördersatz. Selbstnutzer können bis zu 70% erhalten, Vermieter bis zu 35%. Die obige Berechnung zeigt eine vereinfachte Gesamtschätzung. Für die genaue Aufteilung beraten wir dich kostenlos.</div>' +
+      '<div style="color:var(--g300);font-size:13px;line-height:1.6;margin-bottom:12px;">Bei einer WEG beantragt jeder Eigentümer individuell. Mit seinem persönlichen Fördersatz. Selbstnutzer können bis zu 70% erhalten, Vermieter bis zu 35%. Die obige Berechnung zeigt eine vereinfachte Gesamtschätzung. Für die genaue Aufteilung beraten wir dich kostenlos.</div>' +
       '<a href="/kontakt" class="btn-primary" style="font-size:14px;padding:10px 24px;" onclick="' +
       "if(document.getElementById('nachricht')){document.getElementById('nachricht').value='WEG-Förderberatung für '+we+' Wohneinheiten';}" +
       '">Kostenlose WEG-Förderberatung anfragen</a>' +
@@ -1642,7 +1642,7 @@ function calculateAmort() {
   const amortEl = document.getElementById('amortJahre');
   if (ersparnis <= 0 || amortJahre > 25) {
     amortEl.innerHTML =
-      '<span style="font-size:16px;color:var(--g400);">Daten unvollständig — bitte Verbrauch und Energiepreis prüfen</span>';
+      '<span style="font-size:16px;color:var(--g400);">Daten unvollständig. Bitte Verbrauch und Energiepreis prüfen</span>';
   } else {
     amortEl.textContent = 'ca. ' + amortJahre.toFixed(1) + ' Jahre';
   }
@@ -1819,13 +1819,13 @@ function fvqToggleHeizalter() {
         SVG_CHECK +
         '<span style="color:var(--green);">Gasheizung ' +
         alter +
-        ' Jahre alt — Klimageschwindigkeitsbonus (+20%) anwendbar.</span>';
+        ' Jahre alt. Klimageschwindigkeitsbonus (+20%) anwendbar.</span>';
     } else {
       hinweis.innerHTML =
         SVG_WARN +
         '<span style="color:var(--amber);">Gasheizung ' +
         alter +
-        ' Jahre alt — Klimageschwindigkeitsbonus erst ab 20 Jahren.</span>';
+        ' Jahre alt. Klimageschwindigkeitsbonus erst ab 20 Jahren.</span>';
     }
   } else if (heizung === 'oel' || heizung === 'nachtspeicher' || heizung === 'gas-etage') {
     gruppe.style.display = 'none';

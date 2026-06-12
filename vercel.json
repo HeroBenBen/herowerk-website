@@ -34,5 +34,12 @@
       ]
     }
   ],
-  "cleanUrls": true
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/funnel",
+      "destination": "/anfrage",
+      "permanent": true
+    }
+  ]
 }

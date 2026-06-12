@@ -3409,3 +3409,151 @@ footer {
 .fade-up {
   animation: slideUp 0.6s ease-out;
 }
+
+/* Iteration 3 GF-Sichtrunde: shared visual fixes without new component vocabulary. */
+.logo-light {
+  display: none;
+}
+[data-theme='light'] .logo-dark {
+  display: none !important;
+}
+[data-theme='light'] .logo-light {
+  display: inline-block !important;
+}
+
+.hc-fv-highlight {
+  background: #e8a838 !important;
+  border-color: #e8a838 !important;
+  color: #1c2b36 !important;
+  box-shadow: 0 14px 32px rgba(232, 168, 56, 0.24);
+}
+.hc-fv-badge,
+.hc-fv-badge svg,
+.hc-fv-text,
+.hc-fv-text strong {
+  color: #1c2b36 !important;
+}
+
+.home-teaser-section {
+  background: var(--nacht);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.home-teaser-section.home-teaser-alt {
+  background: var(--schiefer);
+}
+.home-teaser-section.home-teaser-fv {
+  background: linear-gradient(135deg, rgba(232, 168, 56, 0.18), rgba(28, 43, 54, 0.96));
+}
+.home-teaser-inner {
+  max-width: 860px;
+}
+.home-teaser-inner .btn-primary {
+  margin-top: 10px;
+}
+[data-theme='light'] .home-teaser-section,
+[data-theme='light'] .home-teaser-section.home-teaser-alt {
+  background: var(--color-surface-primary) !important;
+}
+[data-theme='light'] .home-teaser-section.home-teaser-fv {
+  background: var(--color-surface-tertiary) !important;
+}
+[data-theme='light'] .hero h1 .accent,
+[data-theme='light'] .trust-headline em {
+  color: #1c2b36 !important;
+}
+.partner-logo {
+  width: 96px;
+  height: 32px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Preise: tables and detail panel alignment. */
+.pa-specs td:last-child {
+  padding-right: 16px;
+}
+.pa-detail-cta {
+  padding-left: 16px;
+}
+.pa-card.dimmed {
+  opacity: 0.72;
+  background: rgba(28, 43, 54, 0.52);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+[data-theme='light'] .pa-card.dimmed {
+  background: rgba(255, 255, 255, 0.48) !important;
+  border-color: rgba(221, 216, 204, 0.78) !important;
+}
+
+/* Förderung light: restore separated form/result surfaces. */
+[data-theme='light'] .foerder-grid,
+[data-theme='light'] .foerder-result {
+  background: #ffffff !important;
+  border: 1px solid #ddd8cc !important;
+  box-shadow: 0 8px 28px rgba(28, 43, 54, 0.1);
+}
+[data-theme='light'] .foerder-section input,
+[data-theme='light'] .foerder-section select,
+[data-theme='light'] .foerder-section textarea {
+  background: #ffffff !important;
+  border: 1px solid #ddd8cc !important;
+  color: #1c2b36 !important;
+}
+
+/* Dimensionierung: shared grid width and light card surface. */
+.wizard-section .section-inner,
+.wizard-container {
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+}
+[data-theme='light'] .wizard-container {
+  background: #ffffff !important;
+  border: 1px solid #ddd8cc !important;
+  box-shadow: 0 8px 28px rgba(28, 43, 54, 0.1);
+}
+
+/* Kontakt: dark theme must cover the complete page, not only the title bar. */
+[data-theme='dark'] .contact {
+  background: var(--nacht) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+[data-theme='dark'] .contact .section-title,
+[data-theme='dark'] .contact-form .form-success h2,
+[data-theme='dark'] .contact-form .form-success h4 {
+  color: var(--white) !important;
+}
+[data-theme='dark'] .contact .section-lead,
+[data-theme='dark'] .contact-form .form-checkbox label,
+[data-theme='dark'] .contact-form .form-success p {
+  color: var(--g300) !important;
+}
+[data-theme='dark'] .contact-form {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  box-shadow: none !important;
+}
+[data-theme='dark'] .contact-form .form-group label {
+  color: var(--white) !important;
+}
+[data-theme='dark'] .contact-form .form-group input,
+[data-theme='dark'] .contact-form .form-group textarea,
+[data-theme='dark'] .contact-form .form-group select {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: var(--white) !important;
+}
+
+/* Ratgeber light card separation and FAQ breathing room. */
+[data-theme='light'] .blog-card {
+  background: #ffffff !important;
+  border: 1px solid #ddd8cc !important;
+  box-shadow: 0 8px 28px rgba(28, 43, 54, 0.1);
+}
+.faq-question,
+.faq-answer {
+  padding-left: 20px;
+  padding-right: 20px;
+}
