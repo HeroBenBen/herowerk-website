@@ -553,7 +553,7 @@ nav.scrolled {
 /* Fußnote */
 .hc-footnote {
   padding: 12px 24px 16px;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--g500);
   line-height: 1.5;
 }
@@ -607,7 +607,7 @@ nav.scrolled {
     font-size: 13px;
   }
   .hc-label-sub {
-    font-size: 11px;
+    font-size: 12px;
   }
   .hc-value {
     font-size: 18px;
@@ -630,7 +630,7 @@ nav.scrolled {
   }
   .hc-footnote {
     padding: 10px 18px 14px;
-    font-size: 9px;
+    font-size: 12px;
   }
 }
 
@@ -782,7 +782,7 @@ nav.scrolled {
 .ref-wp {
   display: inline-block;
   margin-top: 8px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--green);
   background: rgba(183, 217, 0, 0.1);
@@ -996,7 +996,7 @@ section {
 }
 .fv-badge-note {
   color: var(--g400);
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.4;
   margin-top: 12px;
 }
@@ -1022,7 +1022,7 @@ section {
 }
 .fv-slot-label {
   color: var(--g400);
-  font-size: 11px;
+  font-size: 12px;
   margin-top: 10px;
   text-align: center;
 }
@@ -1450,7 +1450,7 @@ section {
   color: var(--nacht);
   padding: 4px 12px;
   border-radius: 4px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   margin-bottom: 12px;
@@ -2222,7 +2222,7 @@ section {
 }
 .pa-card .pa-modell {
   color: var(--green);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
 }
 .pa-card .pa-kw {
@@ -2238,7 +2238,7 @@ section {
 }
 .pa-card .pa-label {
   color: var(--g400);
-  font-size: 11px;
+  font-size: 12px;
   margin-top: 2px;
 }
 
@@ -2442,7 +2442,7 @@ section {
 .pa-specs td:first-child {
   color: var(--g400);
   white-space: nowrap;
-  font-size: 11px;
+  font-size: 12px;
 }
 .pa-specs td:last-child {
   color: var(--white);
@@ -2557,7 +2557,7 @@ section {
 .preisanker-disclaimer {
   text-align: center;
   color: var(--g400);
-  font-size: 11px;
+  font-size: 12px;
   max-width: 700px;
   margin: 16px auto 20px;
   line-height: 1.5;
@@ -2732,14 +2732,14 @@ section {
     font-size: 14px;
   }
   .pa-card .pa-modell {
-    font-size: 10px;
+    font-size: 12px;
   }
   .pa-card .pa-kw {
-    font-size: 11px;
+    font-size: 12px;
     margin: 2px 0 6px;
   }
   .pa-card .pa-label {
-    font-size: 10px;
+    font-size: 12px;
   }
   .pa-detail-inner {
     grid-template-columns: 1fr;
@@ -2909,7 +2909,7 @@ section {
 }
 .blog-card-tag {
   color: var(--green);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -3099,6 +3099,7 @@ section {
 .form-success.show {
   display: block;
 }
+.form-success h2,
 .form-success h4 {
   color: var(--green);
   font-size: 18px;
@@ -3185,14 +3186,14 @@ section {
   background: #1c2b36;
   color: #b7d900;
   font-family: 'Barlow', sans-serif;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.05em;
 }
 .badge-vaillant {
   background: #cc0033;
   color: #ffffff;
   font-family: 'Barlow', sans-serif;
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.03em;
 }
 .badge-shk {
@@ -3203,14 +3204,14 @@ section {
   background: #006ab3;
   color: #ffffff;
   font-family: 'Barlow', sans-serif;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.05em;
 }
 .badge-proklima {
   background: #2e7d32;
   color: #ffffff;
   font-family: 'Barlow', sans-serif;
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.03em;
 }
 .trust-strip-sub {
@@ -3279,6 +3280,7 @@ section {
   background: rgba(183, 217, 0, 0.12) !important;
   border-color: var(--green) !important;
 }
+.contact-form .form-success h2,
 .contact-form .form-success h4 {
   color: var(--schiefer) !important;
 }
@@ -3305,7 +3307,7 @@ footer {
   gap: 40px;
   margin-bottom: 40px;
 }
-.footer-col h3 {
+.footer-col h2 {
   color: var(--white);
   font-size: 14px;
   font-weight: 700;

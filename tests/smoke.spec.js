@@ -34,10 +34,10 @@ test('@smoke Funnel anfrage.html lädt, Schritt 1 aktiv', async ({ page }) => {
 test('@smoke Navigation von Startseite auf Unterseiten und zurück', async ({ page }) => {
   for (const [href, title] of NAV_TARGETS) {
     await page.goto('/');
-    await page.locator(`.nav-links a[href="${href}"]`).first().click();
+    await page.locator(`.pa-card[href="${href}"]`).first().click();
     await expect(page).toHaveURL(new RegExp(`${href.replace('/', '\\/')}/?$`));
     await expect(page).toHaveTitle(title);
-    await page.locator('.nav-links a[href="/"]').first().click();
+    await page.locator('a:has(.nav-logo)').first().click();
     await expect(page).toHaveURL(/\/$/);
   }
 });

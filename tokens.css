@@ -128,6 +128,7 @@ body {
 [data-theme='light'] h3,
 [data-theme='light'] h4,
 [data-theme='light'] .pa-card h3,
+[data-theme='light'] .footer-col h2,
 [data-theme='light'] .footer-col h4,
 [data-theme='light'] .trust-headline,
 [data-theme='light'] .trust-usp-text strong,
@@ -279,13 +280,29 @@ body {
 }
 
 /* Mehrseiten-Umbau: Light-Theme contrast repairs for existing v4 component classes. */
-[data-theme='light'] .faq-toggle,
+[data-theme='light'] .hero-badge,
+[data-theme='light'] .hero h1 .accent,
+[data-theme='light'] .trust-item .check,
+[data-theme='light'] .usp-icon,
+[data-theme='light'] .ref-wp,
+[data-theme='light'] .wr-card .wr-price,
+[data-theme='light'] .foerder-result .fr-satz,
+[data-theme='light'] .breakdown-item .pct,
+[data-theme='light'] .seg-toggle button.active,
+[data-theme='light'] .cc-highlight .cc-hl-label,
+[data-theme='light'] .cc-highlight .cc-hl-val,
+[data-theme='light'] .qs-reward span,
+[data-theme='light'] .manufacturer-price,
 [data-theme='light'] .pa-card .pa-price-compact,
 [data-theme='light'] .pa-card .pa-modell,
-[data-theme='light'] .breakdown-item .pct,
+[data-theme='light'] .pa-specs-sub,
+[data-theme='light'] .pa-detail-cta .pa-big-price,
+[data-theme='light'] .preisanker-fv strong,
 [data-theme='light'] .pz-step .pz-time,
 [data-theme='light'] .blog-card-tag,
-[data-theme='light'] .trust-item .check,
+[data-theme='light'] .blog-card .blog-link,
+[data-theme='light'] .faq-toggle,
+[data-theme='light'] .form-success h4,
 [data-theme='light'] .hc-value.discount,
 [data-theme='light'] .hc-result-value {
   color: #5f7200 !important;
@@ -309,6 +326,17 @@ body {
 [data-theme='light'] .pa-card .pa-label,
 [data-theme='light'] .hf-step-text {
   color: #5a6470 !important;
+}
+
+[data-theme='light'] .wizard-card h3,
+[data-theme='light'] .wr-card h3,
+[data-theme='light'] .compare-card h3,
+[data-theme='light'] .blog-card h3,
+[data-theme='light'] .foerder-result .fr-row .fr-val,
+[data-theme='light'] .cc-result-row .cc-val,
+[data-theme='light'] .form-success h2,
+[data-theme='light'] .form-success h4 {
+  color: #1c2b36 !important;
 }
 
 [data-theme='light'] .hero-calc,

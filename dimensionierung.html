@@ -66,7 +66,7 @@
 <section class="wizard-section" id="wizard">
     <div class="section-inner">
       <div class="section-tag">In 60 Sekunden zur Empfehlung</div>
-      <h2 class="section-title" style="color: var(--white);">Welche Wärmepumpe passt zu deinem Haus?</h2>
+      <h1 class="section-title" style="color: var(--white);">Welche Wärmepumpe passt zu deinem Haus?</h1>
       <p class="section-lead">6 kurze Fragen. Keine Anmeldung. Sofort Ergebnis mit Richtpreis und geschätzter Förderung.</p>
 
       <div class="wizard-container">
@@ -185,14 +185,14 @@
           <div style="background:rgba(232,168,56,0.12);border-radius:10px;padding:14px 18px;margin-bottom:16px;">
             <p style="font-size:13px;color:var(--white);margin:0 0 6px 0;"><strong style="color:var(--bernstein);">Was ist der Klimageschwindigkeitsbonus?</strong></p>
             <p style="font-size:12px;color:var(--g300);margin:0 0 6px 0;">Ein Extra-Zuschuss der KfW von <strong>+20%</strong> für den Umstieg von fossilen Heizungen. Bei <strong>Gasheizungen</strong> gilt: nur wenn die Heizung <strong>mindestens 20 Jahre alt</strong> ist (tagesgenau). Öl, Nachtspeicher und Gas-Etagenheizungen bekommen den Bonus <em>unabhängig vom Alter</em>.</p>
-            <p style="font-size:11px;color:var(--g400);margin:0;"><strong>Tipp:</strong> Das Alter findest du auf dem Typenschild oder im letzten Wartungsprotokoll.</p>
+            <p style="font-size:12px;color:var(--g400);margin:0;"><strong>Tipp:</strong> Das Alter findest du auf dem Typenschild oder im letzten Wartungsprotokoll.</p>
           </div>
           <div class="wizard-options" id="wzHeizung">
-            <div class="wizard-option" data-value="gas-old"><div class="opt-title">Gasheizung</div><div class="opt-sub" style="font-size:11px;">20 Jahre oder älter</div><div class="opt-sub" style="color:var(--green);">+20% Klimabonus</div></div>
-            <div class="wizard-option" data-value="gas-new"><div class="opt-title">Gasheizung</div><div class="opt-sub" style="font-size:11px;">Jünger als 20 Jahre</div><div class="opt-sub" style="color:var(--g400);">Kein Klimabonus</div></div>
-            <div class="wizard-option" data-value="oel"><div class="opt-title">Ölheizung</div><div class="opt-sub" style="color:var(--green);">+20% Klimabonus</div><div class="opt-sub" style="font-size:10px;color:var(--g400);">Egal wie alt</div></div>
-            <div class="wizard-option" data-value="nachtspeicher"><div class="opt-title">Nachtspeicher</div><div class="opt-sub" style="color:var(--green);">+20% Klimabonus</div><div class="opt-sub" style="font-size:10px;color:var(--g400);">Egal wie alt</div></div>
-            <div class="wizard-option" data-value="gas-etage"><div class="opt-title">Gas-Etagenheizung</div><div class="opt-sub" style="font-size:10px;">Einzelne Gasthermen je Wohnung</div><div class="opt-sub" style="color:var(--green);">+20% Klimabonus</div></div>
+            <div class="wizard-option" data-value="gas-old"><div class="opt-title">Gasheizung</div><div class="opt-sub" style="font-size:12px;">20 Jahre oder älter</div><div class="opt-sub" style="color:var(--green);">+20% Klimabonus</div></div>
+            <div class="wizard-option" data-value="gas-new"><div class="opt-title">Gasheizung</div><div class="opt-sub" style="font-size:12px;">Jünger als 20 Jahre</div><div class="opt-sub" style="color:var(--g400);">Kein Klimabonus</div></div>
+            <div class="wizard-option" data-value="oel"><div class="opt-title">Ölheizung</div><div class="opt-sub" style="color:var(--green);">+20% Klimabonus</div><div class="opt-sub" style="font-size:12px;color:var(--g400);">Egal wie alt</div></div>
+            <div class="wizard-option" data-value="nachtspeicher"><div class="opt-title">Nachtspeicher</div><div class="opt-sub" style="color:var(--green);">+20% Klimabonus</div><div class="opt-sub" style="font-size:12px;color:var(--g400);">Egal wie alt</div></div>
+            <div class="wizard-option" data-value="gas-etage"><div class="opt-title">Gas-Etagenheizung</div><div class="opt-sub" style="font-size:12px;">Einzelne Gasthermen je Wohnung</div><div class="opt-sub" style="color:var(--green);">+20% Klimabonus</div></div>
             <div class="wizard-option" data-value="sonstige"><div class="opt-title">Sonstige / Weiß nicht</div><div class="opt-sub" style="color:var(--g400);">Kein Klimabonus</div></div>
           </div>
           <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
@@ -215,7 +215,7 @@
             <div class="wizard-slider-group">
               <label>Jahresverbrauch <span class="ws-val" id="wzVerbVal">18.000 kWh</span></label>
               <input type="range" id="wzVerbrauchSlider" min="5000" max="120000" step="500" value="18000">
-              <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--g500);margin-top:4px;">
+              <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--g500);margin-top:4px;">
                 <span id="wzSliderMin">5.000 kWh</span>
                 <span id="wzSliderMax">120.000 kWh</span>
               </div>
@@ -233,7 +233,7 @@
 
           <div id="wizResultCards"></div>
 
-          <p style="color: var(--g500); font-size: 11px; margin-top: 12px; text-align:center;">Unverbindliche Ersteinschätzung. Die exakte Dimensionierung und den verbindlichen Preis erhältst du im Rahmen der Angebotserstellung.</p>
+          <p style="color: var(--g500); font-size: 12px; margin-top: 12px; text-align:center;">Unverbindliche Ersteinschätzung. Die exakte Dimensionierung und den verbindlichen Preis erhältst du im Rahmen der Angebotserstellung.</p>
         </div>
       </div>
     </div>
@@ -245,26 +245,26 @@
     <div class="footer-inner">
       <div class="footer-grid">
         <div class="footer-col">
-          <h3>HeroWerk</h3>
+          <h2>HeroWerk</h2>
           <p>Meisterbetrieb für Wärmepumpen in der Region Hannover.</p>
           <p style="margin-top: 12px;">Premiumpartner:<br><strong style="color: var(--white);">Wolf GmbH &amp; Vaillant Group</strong></p>
         </div>
         <div class="footer-col">
-          <h3>Leistungen</h3>
+          <h2>Leistungen</h2>
           <a href="/dimensionierung">Wärmepumpen-Beratung</a>
           <a href="/foerderung">Förderrechner</a>
           <a href="/preise">Richtpreise</a>
           <a href="/ratgeber">HERO FRIENDS</a>
         </div>
         <div class="footer-col">
-          <h3>Unternehmen</h3>
+          <h2>Unternehmen</h2>
           <a href="/prozess">Unser Prozess</a>
           <a href="/ratgeber">Ratgeber</a>
           <a href="/ratgeber#faq">FAQ</a>
           <a href="/kontakt">Kontakt</a>
         </div>
         <div class="footer-col">
-          <h3>Kontakt</h3>
+          <h2>Kontakt</h2>
           <p>HeroWerk GmbH</p>
           <p>Region Hannover</p>
           <p>Tel: 0171 205 888 0</p>
