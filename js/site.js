@@ -1056,7 +1056,7 @@ function paRenderCards() {
         ? `<div style="color:var(--g400);font-size:12px;margin-top:2px;">${d.hausgroesse}</div>`
         : '';
       return `
-        <div class="pa-card${defaultClass}" role="button" tabindex="0" onclick="paZoom(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();paZoom(${i});}" data-idx="${i}">
+        <div class="pa-card pa-visible${defaultClass}" role="button" tabindex="0" onclick="paZoom(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();paZoom(${i});}" data-idx="${i}">
           ${iconHtml}
           ${labelHtml}
           <h2>${d.name}</h2>

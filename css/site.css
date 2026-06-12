@@ -45,6 +45,11 @@ h4 {
   line-height: 1.15;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 /* ══ INLINE SVG ICON SYSTEM ══ */
 .ico {
   display: inline-flex;
@@ -1249,6 +1254,8 @@ section {
   padding: 40px;
   border: 1px solid rgba(183, 217, 0, 0.15);
   position: relative;
+  max-width: 760px;
+  margin: 0 auto;
 }
 .wizard-progress {
   display: flex;
@@ -1351,7 +1358,7 @@ section {
 }
 
 .wizard-slider-group {
-  max-width: 500px;
+  max-width: 100%;
 }
 .wizard-slider-group label {
   display: flex;
@@ -1386,8 +1393,10 @@ section {
 
 .wizard-nav {
   display: flex;
-  justify-content: space-between;
-  margin-top: 32px;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
 }
 .wizard-btn-back {
   background: transparent;
@@ -1485,6 +1494,13 @@ section {
   text-align: left;
   line-height: 1.7;
 }
+@media (max-width: 768px) {
+  .wizard-container {
+    max-width: none;
+    padding: 24px;
+  }
+}
+
 @media (max-width: 768px) {
   .wizard-result-cards {
     grid-template-columns: 1fr;
@@ -3108,6 +3124,23 @@ section {
   margin-bottom: 8px;
 }
 
+/* Contact-Layout: desktop image follows the form column height without distortion. */
+.contact-layout {
+  align-items: stretch !important;
+}
+.contact-image {
+  display: flex;
+  min-height: 0;
+  height: 100%;
+}
+.contact-image img {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
 /* Contact-Layout responsive */
 @media (max-width: 768px) {
   .contact-layout {
@@ -3117,6 +3150,7 @@ section {
     max-height: 280px;
   }
   .contact-image img {
+    height: 280px;
     max-height: 280px;
     object-fit: cover;
   }
