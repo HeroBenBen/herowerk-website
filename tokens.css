@@ -405,6 +405,41 @@ body {
   color: #1c2b36 !important;
 }
 
+/* Umbau-Iteration 2d: exact axe-rest nodes.
+   F1: contact inputs kept dark-mode white text on light fields.
+   F2: these three links/spans sit on #EBE7DC where #5F7200 is just below AA. */
+[data-theme='light'] .contact-form input,
+[data-theme='light'] .contact-form select,
+[data-theme='light'] .contact-form textarea {
+  color: #1c2b36 !important;
+}
+[data-theme='light'] .contact-form input::placeholder,
+[data-theme='light'] .contact-form textarea::placeholder {
+  color: #5a6470 !important;
+}
+
+[data-theme='light'] .preisanker-fv span > a[href$='anfrage'],
+[data-theme='light'] #heizungsalterHinweis > span,
+[data-theme='light'] #wpKostenPaket > a {
+  color: #1c2b36 !important;
+}
+[data-theme='light'] .preisanker-fv span > a[href$='anfrage'],
+[data-theme='light'] #wpKostenPaket > a {
+  text-decoration: underline !important;
+}
+
+/* Umbau-Iteration 2e: final exact E1 node.
+   The generic light [style*='var(--green)'] rule above has higher specificity than
+   the previous .preisanker-fv link override, so this selector includes the inline
+   green style and exact funnel href to win the cascade on the #EBE7DC chip. */
+[data-theme='light']
+  .preisanker-fv
+  span
+  > a[href='/anfrage'][href$='anfrage'][style*='var(--green)'] {
+  color: #1c2b36 !important;
+  text-decoration: underline !important;
+}
+
 [data-theme='light'] .hero-calc,
 [data-theme='light'] .qs-form,
 [data-theme='light'] .prozess-card,
