@@ -4,8 +4,8 @@
   --color-surface-secondary: #1c2b36;
   --color-surface-tertiary: #2d3a47;
   --color-text-primary: #ffffff;
-  --color-text-secondary: #9a9a9a;
-  --color-text-tertiary: #5a5a5a;
+  --color-text-secondary: #d1d5db;
+  --color-text-tertiary: #a0a6ad;
   --color-accent-primary: #b7d900;
   --color-accent-primary-text: #1c2b36;
   --color-info: #e8a838;
@@ -150,7 +150,7 @@ body {
 [data-theme='light'] .hero-badge,
 [data-theme='light'] .section-tag,
 [data-theme='light'] .pa-modell {
-  color: #6e8300 !important;
+  color: #5f7200 !important;
 }
 [data-theme='light'] .btn-primary:hover,
 [data-theme='light'] .nav-cta:hover,
@@ -224,4 +224,29 @@ body {
 .trust-partner-label,
 .rating-text {
   color: var(--g400) !important;
+}
+
+/* Fix-Runde 3: theme-separated contrast guards for axe color-contrast. */
+:root:not([data-theme='light']) .trust-sub,
+:root:not([data-theme='light']) .trust-usp-text,
+:root:not([data-theme='light']) .trust-partner-label,
+:root:not([data-theme='light']) .rating-text,
+:root:not([data-theme='light']) [style*='var(--g500)'],
+:root:not([data-theme='light']) [style*='var(--muted)'] {
+  color: #d1d5db !important;
+}
+
+[data-theme='light'] .trust-sub,
+[data-theme='light'] .trust-usp-text,
+[data-theme='light'] .trust-partner-label,
+[data-theme='light'] .rating-text,
+[data-theme='light'] [style*='var(--g300)'],
+[data-theme='light'] [style*='var(--g400)'],
+[data-theme='light'] [style*='var(--g500)'],
+[data-theme='light'] [style*='var(--muted)'] {
+  color: #5a6470 !important;
+}
+
+:root:not([data-theme='light']) [style*='var(--green)'] {
+  color: #b7d900 !important;
 }

@@ -53,6 +53,7 @@ jobs:
           urls: ${{ needs.resolve-preview.outputs.url }}?theme=${{ matrix.theme }}
           configPath: ./lighthouserc.json
           uploadArtifacts: true
+          runs: 3
 
   # Job 3: Playwright Smoke-Tests
   playwright-smoke:

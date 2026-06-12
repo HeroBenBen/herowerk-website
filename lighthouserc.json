@@ -170,7 +170,11 @@
         ],
         "categories:seo": "warn"
       },
-      "seoPreviewNoindexComment": "GF-Entscheid 2026-06-12: Vercel-Preview setzt x-robots-tag:noindex; is-crawlable/categories:seo deshalb warn. Siehe 04_Marketing_Vertrieb/Website/WebDev2/_Klaerungen/2026-06-12_SEO-Gate-Preview-noindex-Entscheid_HERO.md. Harte SEO-Einzelaudits bleiben error."
+      "seoPreviewNoindexComment": "GF-Entscheid 2026-06-12: Vercel-Preview setzt x-robots-tag:noindex; is-crawlable/categories:seo deshalb warn. Siehe 04_Marketing_Vertrieb/Website/WebDev2/_Klaerungen/2026-06-12_SEO-Gate-Preview-noindex-Entscheid_HERO.md. Harte SEO-Einzelaudits bleiben error.",
+      "medianRunsComment": "Fix-Runde 3: numberOfRuns=3 nutzt den Median, weil einzelne Lighthouse-Läufe auf kalter Vercel-Preview ca. ±0,05 schwanken; Schwellen bleiben unverändert hart."
+    },
+    "collect": {
+      "numberOfRuns": 3
     }
   }
 }
