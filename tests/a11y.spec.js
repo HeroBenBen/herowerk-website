@@ -19,7 +19,9 @@ const THEMES = ['dark', 'light'];
 for (const path of PAGES) {
   for (const theme of THEMES) {
     test(`@a11y axe-core 0 Violations auf ${path}?theme=${theme}`, async ({ page }) => {
-      await page.goto(`${path}?theme=${theme}`);
+      await page.goto(`${path}?theme=${theme}`, { waitUntil: 'networkidle' });
+      await page.evaluate('document.fonts.ready');
+      await page.waitForTimeout(250);
       const results = await new AxeBuilder({ page }).analyze();
       const summary = results.violations.map((v) => `${v.id} (${v.impact}): ${v.nodes.length}x`);
       expect(summary, summary.join('\n')).toEqual([]);
