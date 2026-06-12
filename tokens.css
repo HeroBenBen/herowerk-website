@@ -25,9 +25,9 @@
   --muted: var(--color-text-secondary);
   --white: var(--color-text-primary);
   --g200: #e5e7eb;
-  --g300: #d1d5db;
-  --g400: #9ca3af;
-  --g500: #6b7280;
+  --g300: #e5e7eb;
+  --g400: #d1d5db;
+  --g500: #a0a6ad;
   --g600: #4b5563;
   --g700: #374151;
   --g900: #111827;
@@ -187,4 +187,16 @@ body {
   color: #1c2b36;
   background: #b7d900;
   border-color: #8faa00;
+}
+
+:focus-visible {
+  outline: 3px solid rgba(183, 217, 0, 0.65);
+  outline-offset: 3px;
+}
+
+.answer-card:focus-visible,
+.pa-card:focus-visible,
+.manufacturer-tab:focus-visible {
+  outline: 3px solid rgba(183, 217, 0, 0.75);
+  outline-offset: 4px;
 }

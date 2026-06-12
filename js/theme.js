@@ -24,7 +24,33 @@
 
   applyTheme(initial, allowed.includes(fromUrl));
 
+  function ensureAccessibleControls() {
+    document.querySelectorAll('select, textarea, input:not([type="hidden"])').forEach((control) => {
+      if (control.getAttribute('aria-label') || control.getAttribute('aria-labelledby')) return;
+      if (control.id && document.querySelector(`label[for="${CSS.escape(control.id)}"]`)) return;
+      const label = control
+        .closest('.form-group, .ws-field, .cc-input-group, .alter-panel, .contact-field')
+        ?.querySelector('label');
+      const text = label?.textContent?.trim().replace(/\s+/g, ' ');
+      control.setAttribute(
+        'aria-label',
+        text || control.getAttribute('placeholder') || control.id || 'Eingabefeld'
+      );
+    });
+
+    document.querySelectorAll('.answer-card').forEach((card) => {
+      if (!card.hasAttribute('role')) card.setAttribute('role', 'button');
+      if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex', '0');
+      card.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        card.click();
+      });
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
+    ensureAccessibleControls();
     document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
       button.addEventListener('click', () => {
         const current = document.documentElement.getAttribute('data-theme') || 'dark';
