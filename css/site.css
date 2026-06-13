@@ -3557,3 +3557,10 @@ footer {
   padding-left: 20px;
   padding-right: 20px;
 }
+
+/* Iteration 3b: exact dark-mode axe rest node. */
+[data-theme='dark'] .contact .section-tag {
+  color: #d1d5db !important;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
