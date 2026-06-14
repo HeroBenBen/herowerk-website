@@ -31,7 +31,7 @@
   --g600: #4b5563;
   --g700: #374151;
   --g900: #111827;
-  --trust-strip-sub-color: #5a6470;
+  --trust-strip-sub-color: var(--color-text-secondary);
 }
 
 [data-theme='light'] {
@@ -51,6 +51,7 @@
   --color-border-strong: #1c2b36;
   --color-shadow: rgba(28, 43, 54, 0.15);
   --green-dark: #8faa00;
+  --color-accent-on-light: #5f7200;
   --sand: #f4f1ea;
   --g200: #ddd8cc;
   --g300: #5a6470;
@@ -61,7 +62,7 @@
   --g900: #1c2b36;
   --bg: #f4f1ea;
   --shadow: 0 4px 24px var(--color-shadow);
-  --trust-strip-sub-color: #5a6470;
+  --trust-strip-sub-color: var(--color-text-secondary);
 }
 
 body {
@@ -98,24 +99,21 @@ body {
 [data-theme='light'] .foerder-section,
 [data-theme='light'] .prozess,
 [data-theme='light'] .quickstart-section,
-[data-theme='light'] .blog-section {
-  background: var(--color-surface-secondary) !important;
-}
+[data-theme='light'] .blog-section,
 [data-theme='light'] .fv-banner,
 [data-theme='light'] .hero-friends,
 [data-theme='light'] .contact {
-  background: var(--color-surface-tertiary) !important;
+  background: var(--color-surface-primary) !important;
 }
 [data-theme='light'] .pa-card,
-[data-theme='light'] .wizard-card,
-[data-theme='light'] .step-card,
-[data-theme='light'] .faq-item,
+[data-theme='light'] .blog-card,
+[data-theme='light'] .foerder-grid,
+[data-theme='light'] .foerder-result,
+[data-theme='light'] .wizard-container,
 [data-theme='light'] .contact-form,
-[data-theme='light'] .qs-form,
-[data-theme='light'] .answer-card,
-[data-theme='light'] .funnel-card {
+[data-theme='light'] .qs-form {
   background: var(--color-surface-secondary) !important;
-  border-color: var(--color-border-subtle) !important;
+  border: 1px solid var(--color-border-subtle) !important;
   box-shadow: 0 8px 28px var(--color-shadow);
 }
 [data-theme='light'] .pa-detail-inner,
@@ -154,7 +152,7 @@ body {
 [data-theme='light'] .hero-badge,
 [data-theme='light'] .section-tag,
 [data-theme='light'] .pa-modell {
-  color: #5f7200 !important;
+  color: var(--color-accent-on-light) !important;
 }
 [data-theme='light'] .btn-primary:hover,
 [data-theme='light'] .nav-cta:hover,
@@ -164,7 +162,7 @@ body {
   filter: brightness(0.94);
 }
 [data-theme='light'] [style*='var(--bernstein)'] {
-  color: #1c2b36 !important;
+  color: var(--color-text-primary) !important;
 }
 
 .trust-strip-sub {
@@ -192,9 +190,9 @@ body {
   outline-offset: 2px;
 }
 [data-theme='light'] .theme-toggle {
-  color: #1c2b36;
-  background: #b7d900;
-  border-color: #8faa00;
+  color: var(--color-text-primary);
+  background: var(--green);
+  border-color: var(--green-dark);
 }
 
 :focus-visible {
@@ -241,7 +239,7 @@ body {
   [style*='var(--green)']:not([style*='background:var(--green)']):not(
     [style*='background: var(--green)']
   ) {
-  color: #5f7200 !important;
+  color: var(--color-accent-on-light) !important;
 }
 
 [data-theme='light'] .trust-sub,
@@ -252,7 +250,7 @@ body {
 [data-theme='light'] [style*='var(--g400)'],
 [data-theme='light'] [style*='var(--g500)'],
 [data-theme='light'] [style*='var(--muted)'] {
-  color: #5a6470 !important;
+  color: var(--color-text-secondary) !important;
 }
 
 /* Anfrage/Funnel keeps its canonical light form panel in both themes. Scope the
@@ -306,7 +304,7 @@ body {
 [data-theme='light'] .form-success h4,
 [data-theme='light'] .hc-value.discount,
 [data-theme='light'] .hc-result-value {
-  color: #5f7200 !important;
+  color: var(--color-accent-on-light) !important;
 }
 
 [data-theme='light'] .hc-label,
@@ -314,7 +312,7 @@ body {
 [data-theme='light'] .qs-option.selected,
 [data-theme='light'] .pz-step-num,
 [data-theme='light'] .hf-step-num {
-  color: #1c2b36 !important;
+  color: var(--color-text-primary) !important;
 }
 
 [data-theme='light'] .hc-label-sub,
@@ -326,7 +324,16 @@ body {
 [data-theme='light'] .pa-card .pa-kw,
 [data-theme='light'] .pa-card .pa-label,
 [data-theme='light'] .hf-step-text {
-  color: #5a6470 !important;
+  color: var(--color-text-secondary) !important;
+}
+
+[data-theme='light'] .pa-card.dimmed .pa-modell {
+  color: var(--color-accent-on-light) !important;
+}
+[data-theme='light'] .pa-card.dimmed .pa-kw,
+[data-theme='light'] .pa-card.dimmed .pa-label,
+[data-theme='light'] .pa-card.dimmed div {
+  color: var(--color-text-secondary) !important;
 }
 
 [data-theme='light'] .pa-card h2,
@@ -338,7 +345,7 @@ body {
 [data-theme='light'] .cc-result-row .cc-val,
 [data-theme='light'] .form-success h2,
 [data-theme='light'] .form-success h4 {
-  color: #1c2b36 !important;
+  color: var(--color-text-primary) !important;
 }
 
 /* Umbau-Iteration 2: text on chartreuse surfaces always uses slate per
@@ -357,7 +364,7 @@ body {
 [data-theme='light'] .pa-bottom-cta--beratung *,
 [data-theme='light'] .pa-bottom-cta--wizard,
 [data-theme='light'] .pa-bottom-cta--wizard * {
-  color: #1c2b36 !important;
+  color: var(--color-text-primary) !important;
 }
 [data-theme='light'] .pa-header-cta svg,
 [data-theme='light'] .pa-header-cta svg *,
@@ -367,7 +374,7 @@ body {
 [data-theme='light'] .btn-primary svg *,
 [data-theme='light'] .nav-cta svg,
 [data-theme='light'] .nav-cta svg * {
-  stroke: #1c2b36 !important;
+  stroke: var(--color-text-primary) !important;
 }
 
 [data-theme='light'] .contact-form .form-group label,
@@ -378,15 +385,13 @@ body {
 [data-theme='light'] .seg-toggle button.active,
 [data-theme='light'] .wizard-hint,
 [data-theme='light'] .section-tag {
-  color: #1c2b36 !important;
+  color: var(--color-text-primary) !important;
 }
 
 [data-theme='light'] .seg-toggle,
 [data-theme='light'] .wizard-option,
-[data-theme='light'] .foerder-grid,
-[data-theme='light'] .foerder-result,
 [data-theme='light'] .preisanker-fv {
-  background-color: #ebe7dc !important;
+  background-color: var(--color-surface-tertiary) !important;
 }
 
 /* Umbau-Iteration 2c: final light contrast fixes.
@@ -394,7 +399,7 @@ body {
    K2: accent-green is AA on white/sand, but not on #EBE7DC surfaces. */
 [data-theme='light'] .nav-links a.nav-cta,
 [data-theme='light'] .mobile-menu a.nav-cta {
-  color: #1c2b36 !important;
+  color: var(--color-text-primary) !important;
 }
 
 [data-theme='light'] .preisanker-fv strong,
@@ -402,7 +407,7 @@ body {
 [data-theme='light'] .foerder-section .breakdown-item .pct,
 [data-theme='light'] .foerder-section .seg-toggle button.active,
 [data-theme='light'] .foerder-section [style*='var(--green)'] {
-  color: #1c2b36 !important;
+  color: var(--color-text-primary) !important;
 }
 
 /* Umbau-Iteration 2d: exact axe-rest nodes.
@@ -411,17 +416,17 @@ body {
 [data-theme='light'] .contact-form input,
 [data-theme='light'] .contact-form select,
 [data-theme='light'] .contact-form textarea {
-  color: #1c2b36 !important;
+  color: var(--color-text-primary) !important;
 }
 [data-theme='light'] .contact-form input::placeholder,
 [data-theme='light'] .contact-form textarea::placeholder {
-  color: #5a6470 !important;
+  color: var(--color-text-secondary) !important;
 }
 
 [data-theme='light'] .preisanker-fv span > a[href$='anfrage'],
 [data-theme='light'] #heizungsalterHinweis > span,
 [data-theme='light'] #wpKostenPaket > a {
-  color: #1c2b36 !important;
+  color: var(--color-text-primary) !important;
 }
 [data-theme='light'] .preisanker-fv span > a[href$='anfrage'],
 [data-theme='light'] #wpKostenPaket > a {
@@ -436,7 +441,7 @@ body {
   .preisanker-fv
   span
   > a[href='/anfrage'][href$='anfrage'][style*='var(--green)'] {
-  color: #1c2b36 !important;
+  color: var(--color-text-primary) !important;
   text-decoration: underline !important;
 }
 
@@ -452,5 +457,5 @@ body {
 /* Iteration 3: Light headlines use slate consistently; chartreuse remains dark-only accent. */
 [data-theme='light'] .hero h1 .accent,
 [data-theme='light'] .trust-headline em {
-  color: #1c2b36 !important;
+  color: var(--color-text-primary) !important;
 }

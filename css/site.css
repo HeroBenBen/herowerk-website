@@ -2155,7 +2155,7 @@ section {
 }
 [data-theme='light'] .manufacturer-tab.active {
   border-color: var(--green);
-  background: linear-gradient(135deg, rgba(183, 217, 0, 0.24), #ffffff);
+  background: linear-gradient(135deg, rgba(183, 217, 0, 0.24), var(--color-surface-secondary));
 }
 [data-theme='light'] .manufacturer-name,
 [data-theme='light'] .vaillant-panel h3 {
@@ -3158,10 +3158,16 @@ section {
 
 /* ══ TRUST STREIFEN (hell) ══ */
 .trust-strip {
-  background: #ffffff;
   padding: 36px 24px;
   border-top: 3px solid var(--green);
-  border-bottom: 1px solid #e5e7eb;
+}
+[data-theme='light'] .trust-strip {
+  background: var(--color-surface-primary);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+[data-theme='dark'] .trust-strip {
+  background: var(--color-surface-secondary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 .trust-strip-inner {
   max-width: 1100px;
@@ -3177,7 +3183,7 @@ section {
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #6b7280;
+  color: var(--color-text-secondary);
 }
 .trust-logos {
   display: flex;
@@ -3455,11 +3461,11 @@ footer {
   background: var(--color-surface-primary) !important;
 }
 [data-theme='light'] .home-teaser-section.home-teaser-fv {
-  background: var(--color-surface-tertiary) !important;
+  background: var(--color-surface-primary) !important;
 }
 [data-theme='light'] .hero h1 .accent,
 [data-theme='light'] .trust-headline em {
-  color: #1c2b36 !important;
+  color: var(--color-text-primary) !important;
 }
 .partner-logo {
   width: 96px;
@@ -3483,23 +3489,17 @@ footer {
   -webkit-backdrop-filter: blur(10px);
 }
 [data-theme='light'] .pa-card.dimmed {
-  background: rgba(255, 255, 255, 0.48) !important;
-  border-color: rgba(221, 216, 204, 0.78) !important;
+  background: color-mix(in srgb, var(--color-surface-secondary) 48%, transparent) !important;
+  border-color: var(--color-border-subtle) !important;
 }
 
-/* Förderung light: restore separated form/result surfaces. */
-[data-theme='light'] .foerder-grid,
-[data-theme='light'] .foerder-result {
-  background: #ffffff !important;
-  border: 1px solid #ddd8cc !important;
-  box-shadow: 0 8px 28px rgba(28, 43, 54, 0.1);
-}
+/* Förderung light: input fields stay white inside unified light cards. */
 [data-theme='light'] .foerder-section input,
 [data-theme='light'] .foerder-section select,
 [data-theme='light'] .foerder-section textarea {
-  background: #ffffff !important;
-  border: 1px solid #ddd8cc !important;
-  color: #1c2b36 !important;
+  background: var(--color-surface-secondary) !important;
+  border: 1px solid var(--color-border-subtle) !important;
+  color: var(--color-text-primary) !important;
 }
 
 /* Dimensionierung: shared grid width and light card surface. */
@@ -3508,11 +3508,6 @@ footer {
   max-width: 1120px;
   margin-left: auto;
   margin-right: auto;
-}
-[data-theme='light'] .wizard-container {
-  background: #ffffff !important;
-  border: 1px solid #ddd8cc !important;
-  box-shadow: 0 8px 28px rgba(28, 43, 54, 0.1);
 }
 
 /* Kontakt: dark theme must cover the complete page, not only the title bar. */
@@ -3546,12 +3541,7 @@ footer {
   color: var(--white) !important;
 }
 
-/* Ratgeber light card separation and FAQ breathing room. */
-[data-theme='light'] .blog-card {
-  background: #ffffff !important;
-  border: 1px solid #ddd8cc !important;
-  box-shadow: 0 8px 28px rgba(28, 43, 54, 0.1);
-}
+/* Ratgeber FAQ breathing room. */
 .faq-question,
 .faq-answer {
   padding-left: 20px;
