@@ -1258,13 +1258,13 @@ function toggleHeizungsalter() {
     if (alter >= 20) {
       hinweis.innerHTML =
         SVG_CHECK +
-        '<span style="color:var(--green);">Ihre Gasheizung ist ' +
+        '<span style="color:var(--green);">Deine Gasheizung ist ' +
         alter +
         ' Jahre alt. Du erhältst den Klimageschwindigkeitsbonus (+20%).</span>';
     } else {
       hinweis.innerHTML =
         SVG_WARN +
-        '<span style="color:var(--amber);">Ihre Gasheizung ist erst ' +
+        '<span style="color:var(--amber);">Deine Gasheizung ist erst ' +
         alter +
         ' Jahre alt. Der Klimageschwindigkeitsbonus (+20%) gilt erst ab 20 Jahren.</span>';
     }
