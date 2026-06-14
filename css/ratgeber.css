@@ -1,0 +1,102 @@
+/* ===== Ratgeber-Artikel: Prosa-Layout =====
+   Nur von den Ratgeber-Artikelseiten geladen. Nutzt die globalen Theme-Tokens
+   (var(--white)/--green/--g300/--g400/--g600/--bernstein), damit Light-Mode mitläuft. */
+
+.ratgeber-article {
+  max-width: 760px;
+  margin: 0 auto;
+  color: var(--g300);
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+.ratgeber-article h2 {
+  font-family: 'Barlow', sans-serif;
+  color: var(--white);
+  font-size: 26px;
+  line-height: 1.25;
+  margin: 44px 0 14px;
+}
+
+.ratgeber-article h3 {
+  font-family: 'Barlow', sans-serif;
+  color: var(--white);
+  font-size: 20px;
+  margin: 28px 0 10px;
+}
+
+.ratgeber-article p {
+  margin: 0 0 18px;
+}
+
+.ratgeber-article ul {
+  margin: 0 0 20px;
+  padding-left: 22px;
+}
+
+.ratgeber-article li {
+  margin: 0 0 9px;
+}
+
+.ratgeber-article strong {
+  color: var(--white);
+}
+
+.ratgeber-article a {
+  color: var(--green);
+  text-decoration: underline;
+}
+
+.ratgeber-article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0 26px;
+  font-size: 15px;
+}
+
+.ratgeber-article th,
+.ratgeber-article td {
+  text-align: left;
+  padding: 11px 13px;
+  border-bottom: 1px solid var(--g600);
+  vertical-align: top;
+}
+
+.ratgeber-article th {
+  color: var(--white);
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.ratgeber-article blockquote {
+  margin: 0 0 22px;
+  padding: 16px 20px;
+  background: rgba(183, 217, 0, 0.06);
+  border-left: 3px solid var(--green);
+  border-radius: 0 8px 8px 0;
+}
+
+.ratgeber-article blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.ratgeber-article .ra-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 30px 0 10px;
+}
+
+.ratgeber-article .ra-stand {
+  margin-top: 36px;
+  padding-top: 16px;
+  border-top: 1px solid var(--g600);
+  font-size: 13px;
+  color: var(--g400);
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .ratgeber-article { font-size: 16px; }
+  .ratgeber-article h2 { font-size: 22px; }
+}
