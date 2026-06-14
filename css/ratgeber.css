@@ -2,6 +2,16 @@
    Nur von den Ratgeber-Artikelseiten geladen. Nutzt die globalen Theme-Tokens
    (var(--white)/--green/--g300/--g400/--g600/--bernstein), damit Light-Mode mitläuft. */
 
+/* Artikel-Hero ist ein <article>-Element und trifft den globalen
+   section{padding:100px 24px}-Selektor nicht. Padding hier nachziehen,
+   damit die H1 unter der fixierten Nav freisteht. */
+article.section {
+  padding: 100px 24px;
+}
+@media (max-width: 768px) {
+  article.section { padding: 88px 20px 48px; }
+}
+
 .ratgeber-article {
   max-width: 760px;
   margin: 0 auto;
@@ -42,7 +52,9 @@
   color: var(--white);
 }
 
-.ratgeber-article a {
+/* Nur echte Textlinks einfärben. btn-primary behält seine dunkle
+   Schrift auf grünem Grund (sonst grün-auf-grün = unlesbar). */
+.ratgeber-article a:not(.btn-primary) {
   color: var(--green);
   text-decoration: underline;
 }
