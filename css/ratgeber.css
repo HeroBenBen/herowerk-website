@@ -135,3 +135,15 @@ article.section + section.faq .section-inner {
     -webkit-overflow-scrolling: touch;
   }
 }
+
+/* Foerder-Rechner (nur auf foerderung.html, die ratgeber.css laedt): die 1fr-Grid-
+   Spalte schrumpfte auf dem Handy nicht unter die Inhalts-Mindestbreite des
+   breitesten Selects/Panels und sprengte die Seite (~20px Ueberlauf). min-width:0
+   erlaubt Grid-Kindern und Formularfeldern, auf die Containerbreite zu schrumpfen. */
+@media (max-width: 768px) {
+  .foerder-grid > *,
+  .foerder-inputs-grid > *,
+  .fi-group select {
+    min-width: 0;
+  }
+}
