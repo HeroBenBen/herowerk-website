@@ -3554,3 +3554,180 @@ footer {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.15) !important;
 }
+
+/* Iteration 6 Design: Light-mode refinement, translated from dark-mode design language. */
+[data-theme='light'] .pa-card,
+[data-theme='light'] .blog-card,
+[data-theme='light'] .foerder-grid,
+[data-theme='light'] .foerder-result,
+[data-theme='light'] .wizard-container,
+[data-theme='light'] .contact-form,
+[data-theme='light'] .qs-form,
+[data-theme='light'] .hero-calc {
+  border: 1px solid rgba(28, 43, 54, 0.06) !important;
+  box-shadow:
+    0 1px 3px rgba(28, 43, 54, 0.05),
+    0 10px 30px rgba(28, 43, 54, 0.07) !important;
+}
+
+[data-theme='light'] .wizard-slider-group input[type='range'],
+[data-theme='light'] .cc-input-group input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 5px;
+  background: transparent;
+  accent-color: var(--color-accent-primary);
+}
+[data-theme='light'] .wizard-slider-group input[type='range']::-webkit-slider-runnable-track,
+[data-theme='light'] .cc-input-group input[type='range']::-webkit-slider-runnable-track {
+  height: 5px;
+  background: color-mix(in srgb, var(--color-text-secondary) 88%, var(--color-surface-secondary));
+  border-radius: 999px;
+}
+[data-theme='light'] .wizard-slider-group input[type='range']::-moz-range-track,
+[data-theme='light'] .cc-input-group input[type='range']::-moz-range-track {
+  height: 5px;
+  background: color-mix(in srgb, var(--color-text-secondary) 88%, var(--color-surface-secondary));
+  border-radius: 999px;
+}
+[data-theme='light'] .wizard-slider-group input[type='range']::-webkit-slider-thumb,
+[data-theme='light'] .cc-input-group input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: -7.5px;
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-text-secondary);
+  border-radius: 50%;
+  box-shadow:
+    0 2px 8px rgba(28, 43, 54, 0.16),
+    0 0 0 5px rgba(183, 217, 0, 0.16);
+  cursor: pointer;
+}
+[data-theme='light'] .wizard-slider-group input[type='range']::-moz-range-thumb,
+[data-theme='light'] .cc-input-group input[type='range']::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-text-secondary);
+  border-radius: 50%;
+  box-shadow:
+    0 2px 8px rgba(28, 43, 54, 0.16),
+    0 0 0 5px rgba(183, 217, 0, 0.16);
+  cursor: pointer;
+}
+[data-theme='light'] .wizard-slider-group input[type='range']:focus-visible,
+[data-theme='light'] .cc-input-group input[type='range']:focus-visible {
+  outline: 2px solid var(--color-text-primary);
+  outline-offset: 5px;
+}
+
+[data-theme='light'] .btn-ghost,
+[data-theme='light'] .wizard-btn-back {
+  background: transparent;
+  border: 1px solid rgba(28, 43, 54, 0.52);
+  color: var(--color-text-primary);
+  box-shadow: none;
+}
+[data-theme='light'] .btn-ghost:hover,
+[data-theme='light'] .wizard-btn-back:hover {
+  background: rgba(28, 43, 54, 0.04);
+  border-color: var(--color-text-primary);
+  color: var(--color-text-primary);
+}
+[data-theme='light'] .btn-ghost:active,
+[data-theme='light'] .wizard-btn-back:active {
+  background: rgba(28, 43, 54, 0.07);
+}
+[data-theme='light'] .btn-ghost:focus-visible,
+[data-theme='light'] .wizard-btn-back:focus-visible {
+  outline: 2px solid var(--color-text-primary);
+  outline-offset: 3px;
+}
+
+[data-theme='light'] #effektivSatzBox,
+[data-theme='light'] .wr-card,
+[data-theme='light'] .cc-result {
+  background: #f6f3ec !important;
+  border: 1px solid rgba(28, 43, 54, 0.06) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    0 8px 22px rgba(28, 43, 54, 0.06);
+}
+[data-theme='light'] .hc-result {
+  background: rgba(183, 217, 0, 0.07) !important;
+  border: 0 !important;
+  border-top: 2px solid var(--color-accent-primary) !important;
+  box-shadow: 0 8px 22px rgba(28, 43, 54, 0.06);
+}
+[data-theme='light'] .wr-card.recommended {
+  background: rgba(183, 217, 0, 0.07) !important;
+  border: 1px solid rgba(28, 43, 54, 0.06) !important;
+  box-shadow:
+    inset 0 2px 0 var(--color-accent-primary),
+    0 10px 28px rgba(28, 43, 54, 0.08);
+}
+
+html[data-theme='light'] .foerder-result .fr-satz,
+html[data-theme='light'] .hc-result-value,
+html[data-theme='light'] .hc-value,
+html[data-theme='light'] .manufacturer-price,
+html[data-theme='light'] .pa-detail-cta .pa-big-price {
+  color: var(--color-text-primary) !important;
+}
+
+[data-theme='light'] #foerderBreakdown .breakdown-item {
+  border-bottom: 1px solid rgba(28, 43, 54, 0.1);
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+[data-theme='light'] #foerderBreakdown .breakdown-item:last-child {
+  border-bottom: 0;
+}
+[data-theme='light'] #foerderBreakdown .breakdown-item[style*='border-top'] {
+  border-top-color: rgba(28, 43, 54, 0.45) !important;
+}
+
+[data-theme='light'] .seg-toggle {
+  background: rgba(28, 43, 54, 0.04) !important;
+  border: 1px solid rgba(28, 43, 54, 0.08);
+  box-shadow: inset 0 1px 2px rgba(28, 43, 54, 0.04);
+}
+[data-theme='light'] .seg-toggle button {
+  color: var(--color-text-secondary) !important;
+}
+[data-theme='light'] .seg-toggle button.active {
+  background: var(--color-surface-secondary) !important;
+  color: var(--color-text-primary) !important;
+  box-shadow:
+    0 1px 3px rgba(28, 43, 54, 0.08),
+    0 6px 18px rgba(28, 43, 54, 0.08);
+}
+[data-theme='light'] .cc-input-group select,
+[data-theme='light'] .cc-input-group input[type='number'],
+[data-theme='light'] .contact-form .form-group input,
+[data-theme='light'] .contact-form .form-group textarea,
+[data-theme='light'] .contact-form .form-group select {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: 1px solid rgba(28, 43, 54, 0.18) !important;
+  color: var(--color-text-primary) !important;
+  box-shadow: inset 0 1px 2px rgba(28, 43, 54, 0.04);
+}
+[data-theme='light'] .cc-input-group select:focus,
+[data-theme='light'] .cc-input-group input:focus,
+[data-theme='light'] .contact-form .form-group input:focus,
+[data-theme='light'] .contact-form .form-group textarea:focus,
+[data-theme='light'] .contact-form .form-group select:focus {
+  border-color: var(--color-text-primary) !important;
+  box-shadow:
+    0 0 0 3px rgba(183, 217, 0, 0.28),
+    inset 0 1px 2px rgba(28, 43, 54, 0.04) !important;
+}
+
+html[data-theme='light'] .hero-badge,
+html[data-theme='light'] .section-tag {
+  background: rgba(183, 217, 0, 0.16) !important;
+  border: 1px solid rgba(28, 43, 54, 0.08) !important;
+  color: #4f6000 !important;
+  box-shadow: 0 4px 14px rgba(28, 43, 54, 0.06);
+}
