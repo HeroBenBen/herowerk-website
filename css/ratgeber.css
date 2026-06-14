@@ -12,6 +12,20 @@ article.section {
   article.section { padding: 88px 20px 48px; }
 }
 
+/* Hero-Inhalt (.section-tag/.section-title/.section-lead) liegt in der globalen
+   .section-inner (max-width 1100px). Der Fliesstext .ratgeber-article ist aber
+   760px zentriert, dadurch fluchtet die linke Kante von Ueberschrift und Body
+   nicht (170px Versatz). Inner auf dieselbe 760px-Spalte begrenzen, damit
+   Hero und Body EINE durchgehende Fluchtlinie teilen.
+   Zweiter Selektor: die FAQ-Sektion folgt direkt auf den Artikel und ist global
+   1100px breit und wird ebenfalls auf 760px gezogen, damit "Haeufige Fragen" mit dem
+   Artikel fluchtet. Per Sibling-Selektor nur auf Artikelseiten, NICHT auf der
+   Foerderseite (deren FAQ folgt keinem <article class="section"> und bleibt breit). */
+article.section > .section-inner,
+article.section + section.faq .section-inner {
+  max-width: 760px;
+}
+
 .ratgeber-article {
   max-width: 760px;
   margin: 0 auto;
@@ -111,4 +125,13 @@ article.section {
 @media (max-width: 768px) {
   .ratgeber-article { font-size: 16px; }
   .ratgeber-article h2 { font-size: 22px; }
+  /* Breite Tabellen (lange Komposita wie "Klimageschwindigkeitsbonus") wuerden
+     auf dem Handy aus der Spalte brechen und horizontalen Seiten-Scroll
+     ausloesen. Tabelle als eigenen horizontal scrollbaren Block kapseln,
+     statt das ganze Layout zu sprengen. */
+  .ratgeber-article table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
