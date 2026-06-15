@@ -144,6 +144,51 @@ const proklimaGemeindenPlz = [
   'ronnenberg',
 ];
 
+function pruefePlz(raw) {
+  const val = String(raw || '')
+    .replace(/\D/g, '')
+    .slice(0, 5);
+  if (val.length < 5) return { status: 'unvollstaendig', val };
+  const gemeinde = plzMap[val];
+  if (gemeinde) {
+    const label = gemeinde.charAt(0).toUpperCase() + gemeinde.slice(1);
+    return proklimaGemeindenPlz.includes(gemeinde)
+      ? { status: 'proklima', val, gemeinde, label }
+      : { status: 'region', val, gemeinde, label };
+  }
+  if (val.startsWith('3') || val.startsWith('29') || val.startsWith('31')) {
+    return { status: 'erweitert', val };
+  }
+  return { status: 'aussen', val };
+}
+
+function renderPlzFeedback(result) {
+  if (result.status === 'proklima')
+    return {
+      text:
+        '✓ ' +
+        result.label +
+        ', wir sind für dich da. proKlima-Fördergebiet, bis zu 5 % (max. 1.500 €) extra möglich.',
+      cls: 'is-ok',
+    };
+  if (result.status === 'region')
+    return { text: '✓ ' + result.label + ', wir sind für dich da.', cls: 'is-ok' };
+  if (result.status === 'erweitert')
+    return {
+      text:
+        '✓ PLZ ' +
+        result.val +
+        ' liegt möglicherweise in unserem Einzugsgebiet, wir prüfen die Verfügbarkeit.',
+      cls: 'is-neutral',
+    };
+  if (result.status === 'aussen')
+    return {
+      text: 'Diese PLZ liegt außerhalb unseres Einzugsgebiets (Region Hannover).',
+      cls: 'is-warn',
+    };
+  return { text: '', cls: '' };
+}
+
 function checkPlz(input) {
   const val = input.value.replace(/\D/g, '').slice(0, 5);
   input.value = val;
@@ -2007,6 +2052,23 @@ if (document.getElementById('fvqHeizung')) fvqToggleHeizalter();
   const container = document.getElementById('paCards');
   if (container) observer.observe(container);
 })();
+
+// ===== STARTSEITEN PLZ FEEDBACK =====
+document.addEventListener('DOMContentLoaded', () => {
+  const input = document.getElementById('entryPlz');
+  const feedback = document.getElementById('entryPlzFeedback');
+  if (!input || !feedback || typeof pruefePlz !== 'function') return;
+
+  const update = () => {
+    input.value = input.value.replace(/\D/g, '').slice(0, 5);
+    const rendered = renderPlzFeedback(pruefePlz(input.value));
+    feedback.textContent = rendered.text;
+    feedback.className = 'entry-plz-feedback' + (rendered.cls ? ' ' + rendered.cls : '');
+  };
+
+  input.addEventListener('input', update);
+  input.closest('form')?.addEventListener('submit', update);
+});
 
 // ===== ANFRAGE PREFILL AUS STARTSEITEN PLZ =====
 document.addEventListener('DOMContentLoaded', () => {

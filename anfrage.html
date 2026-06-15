@@ -132,40 +132,23 @@
     }
     .trust-partners { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
     .partner-badge {
-      height: 34px; border-radius: 7px;
+      height: 38px; border-radius: 9px;
       display: flex; align-items: center; justify-content: center;
       padding: 0 12px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(255,255,255,0.72);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.14);
       font-family: 'Barlow', sans-serif; font-weight: 800;
       font-size: 13px; letter-spacing: 0.03em;
-    }
-    .pb-wolf {
-      background: rgba(183,217,0,0.15);
-      border: 1px solid rgba(183,217,0,0.25);
-      color: var(--green);
-    }
-    .pb-vaillant {
-      background: rgba(204,0,51,0.15);
-      border: 1px solid rgba(204,0,51,0.3);
-      color: #ff4466;
     }
     /* Umbau-Iteration 2e: light-only final contrast nodes. */
     [data-theme='light'] .trust-headline em {
       color: #5f7200;
     }
-    [data-theme='light'] .partner-badge.pb-wolf {
-      background: #1c2b36;
-      border-color: rgba(183,217,0,0.35);
-      color: var(--green);
-    }
-    [data-theme='light'] .partner-badge.pb-vaillant {
-      background: #1c2b36;
-      border-color: rgba(255,111,138,0.45);
-      color: #ff6f8a;
-    }
-    [data-theme='light'] .trust-partners .partner-badge:nth-child(3) {
-      background: #1c2b36 !important;
-      border-color: rgba(102,184,232,0.45) !important;
-      color: #66b8e8 !important;
+    [data-theme='light'] .partner-badge {
+      background: rgba(255,255,255,0.96);
+      border-color: rgba(28,43,54,0.12);
+      box-shadow: 0 6px 18px rgba(28,43,54,0.10);
     }
 
     .partner-img { height: 28px; width: auto; object-fit: contain; }
@@ -302,8 +285,8 @@
       transition: background 0.2s;
     }
     .answer-card-icon svg {
-      width: 44px; height: 44px; stroke: var(--g500);
-      stroke-width: 1.5; fill: none; transition: stroke 0.2s;
+      width: 32px; height: 32px; stroke: var(--g500);
+      fill: none; transition: stroke 0.2s;
     }
     .answer-card:hover .answer-card-icon { background: rgba(183,217,0,0.14); }
     .answer-card:hover .answer-card-icon svg { stroke: var(--schiefer); }
@@ -442,29 +425,30 @@
 
     /* Navigations-Buttons */
     .step-nav {
-      display: flex; align-items: center; gap: 12px;
-      margin-top: auto; padding-top: 20px;
+      display: flex; align-items: center; gap: 14px;
+      margin-top: auto; padding-top: 24px;
       border-top: 1px solid var(--g200);
     }
     .btn-back {
-      display: flex; align-items: center; gap: 6px;
-      font-size: 14px; font-weight: 600; color: var(--g500);
-      background: none; border: none; cursor: pointer; padding: 10px 0;
-      transition: color 0.15s;
+      display: flex; align-items: center; gap: 8px;
+      font-family: 'Barlow', sans-serif; font-size: 16px; font-weight: 800; color: var(--schiefer);
+      background: var(--g100); border: 1px solid var(--g200); border-radius: 10px; cursor: pointer; padding: 14px 22px;
+      transition: color 0.15s, background 0.15s, transform 0.1s;
     }
-    .btn-back:hover { color: var(--schiefer); }
-    .btn-back svg { width: 16px; height: 16px; }
+    .btn-back:hover { background: var(--g200); transform: translateY(-1px); }
+    .btn-back svg { width: 18px; height: 18px; }
     .btn-back:disabled { opacity: 0; pointer-events: none; }
     .spacer { flex: 1; }
     .btn-next {
       display: flex; align-items: center; gap: 8px;
-      background: var(--schiefer); color: var(--white);
-      font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 16px;
-      padding: 13px 28px; border-radius: 10px; border: none; cursor: pointer;
+      background: var(--green); color: var(--schiefer);
+      font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 17px;
+      padding: 15px 32px; border-radius: 10px; border: none; cursor: pointer;
       transition: background 0.15s, transform 0.1s;
+      box-shadow: 0 4px 18px rgba(183,217,0,0.35);
     }
-    .btn-next:hover { background: #253845; transform: translateY(-1px); }
-    .btn-next:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .btn-next:hover { background: #c8e600; transform: translateY(-1px); }
+    .btn-next:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
     .btn-next svg { width: 18px; height: 18px; }
     .btn-submit-final {
       display: flex; align-items: center; gap: 8px;
@@ -848,6 +832,7 @@
         <p class="step-hint">Das Baujahr bestimmt den Dämmstandard und die optimale WP-Größe.</p>
         <div class="answer-grid cols-3">
           <div class="answer-card" data-value="Vor 1978" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l18 0"/><path d="M4 21v-11l2.5 -4.5l5.5 -2.5l5.5 2.5l2.5 4.5v11"/><path d="M10 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M9 21v-5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v5"/></svg></div>
             <div class="answer-card-text">
               <div class="answer-card-label">Vor 1978</div>
               <div class="answer-card-sub">Altbau, oft ohne Dämmung</div>
@@ -855,6 +840,7 @@
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
           <div class="answer-card" data-value="1978–1994" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M10 12h4v4h-4l0 -4"/></svg></div>
             <div class="answer-card-text">
               <div class="answer-card-label">1978–1994</div>
               <div class="answer-card-sub">Erste Wärmeschutzverordnung</div>
@@ -862,6 +848,7 @@
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
           <div class="answer-card" data-value="1995–2009" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l18 0"/><path d="M9 8l1 0"/><path d="M9 12l1 0"/><path d="M9 16l1 0"/><path d="M14 8l1 0"/><path d="M14 12l1 0"/><path d="M14 16l1 0"/><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16"/></svg></div>
             <div class="answer-card-text">
               <div class="answer-card-label">1995–2009</div>
               <div class="answer-card-sub">Wärmeschutz modernisiert</div>
@@ -869,6 +856,7 @@
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
           <div class="answer-card" data-value="Ab 2010" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l18 0"/><path d="M5 21v-14l8 -4v18"/><path d="M19 21v-10l-6 -4"/><path d="M9 9l0 .01"/><path d="M9 12l0 .01"/><path d="M9 15l0 .01"/><path d="M9 18l0 .01"/></svg></div>
             <div class="answer-card-text">
               <div class="answer-card-label">Ab 2010</div>
               <div class="answer-card-sub">EnEV / GEG-Standard</div>
@@ -876,6 +864,7 @@
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
           <div class="answer-card" data-value="Neubau / im Bau" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21h6"/><path d="M9 21v-18l-6 6h18"/><path d="M9 3l10 6"/><path d="M17 9v4a2 2 0 1 1 -2 2"/></svg></div>
             <div class="answer-card-text">
               <div class="answer-card-label">Neubau / im Bau</div>
             </div>
@@ -930,7 +919,7 @@
         <p class="step-hint">Fußbodenheizung ermöglicht niedrigere Vorlauftemperaturen und höhere Effizienz.</p>
         <div class="answer-grid">
           <div class="answer-card" data-value="Heizkörper" onclick="selectAndAdvance(this)">
-            <div class="answer-card-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="12" width="36" height="24" rx="3"/><line x1="12" y1="12" x2="12" y2="36"/><line x1="18" y1="12" x2="18" y2="36"/><line x1="24" y1="12" x2="24" y2="36"/><line x1="30" y1="12" x2="30" y2="36"/><line x1="36" y1="12" x2="36" y2="36"/><path d="M10 36v5"/><path d="M38 36v5"/><path d="M4 18h2"/><path d="M42 18h2"/></svg></div>
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 8c2-3-2-3 0-6"/><path d="M15.5 8c2-3-2-3 0-6"/><path d="M6 10h.01"/><path d="M6 14h.01"/><path d="M10 16v-4"/><path d="M14 16v-4"/><path d="M18 16v-4"/><path d="M20 6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3"/><path d="M5 20v2"/><path d="M19 20v2"/></svg></div>
             <div class="answer-card-text">
               <div class="answer-card-label">Heizkörper</div>
               <div class="answer-card-sub">Plattenheizkörper / Wandgerät</div>
@@ -938,7 +927,7 @@
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
           <div class="answer-card" data-value="Fußbodenheizung" onclick="selectAndAdvance(this)">
-            <div class="answer-card-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="40" x2="43" y2="40"/><path d="M8 32c0-5 4-5 8-5h16c4 0 8 0 8-5s-4-5-8-5H16c-4 0-8 0-8 5s4 5 8 5"/><path d="M8 32v4"/><path d="M40 22v-8"/><path d="M12 12h24"/></svg></div>
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12q2.5 2 5 0t5 0 5 0 5 0"/><path d="M2 19q2.5 2 5 0t5 0 5 0 5 0"/><path d="M2 5q2.5 2 5 0t5 0 5 0 5 0"/></svg></div>
             <div class="answer-card-text">
               <div class="answer-card-label">Fußbodenheizung</div>
               <div class="answer-card-sub">Flächenheizung im Boden</div>
@@ -946,7 +935,7 @@
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
           <div class="answer-card" data-value="Heizkörper und Fußbodenheizung" onclick="selectAndAdvance(this)">
-            <div class="answer-card-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="18" height="20" rx="2"/><line x1="11" y1="8" x2="11" y2="28"/><line x1="17" y1="8" x2="17" y2="28"/><path d="M8 28v5"/><path d="M20 28v5"/><line x1="27" y1="38" x2="43" y2="38"/><path d="M28 31c0-3 3-3 6-3h4c3 0 5-1 5-4s-2-4-5-4h-6c-3 0-5 1-5 4"/></svg></div>
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></svg></div>
             <div class="answer-card-text">
               <div class="answer-card-label">Beides</div>
               <div class="answer-card-sub">Gemischtes System</div>
@@ -954,7 +943,7 @@
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
           <div class="answer-card" data-value="Sonstiges Heizsystem" onclick="selectAndAdvance(this)">
-            <div class="answer-card-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="18"/><path d="M18 19a6 6 0 1 1 9 5.2c-2 1.2-3 2.5-3 4.8"/><line x1="24" y1="35" x2="24" y2="35.5"/></svg></div>
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></div>
             <div class="answer-card-text">
               <div class="answer-card-label">Sonstiges / Weiß nicht</div>
             </div>
@@ -1159,15 +1148,38 @@
 
 <script>
   // ── Zustand ──────────────────────────────────
-  let currentStep = 1;
-  const TOTAL_STEPS = 9; // ohne Erfolgs-Seite
+  const stepOrder = [9,1,2,3,4,5,6,7,8,10];
+  let currentStep = stepOrder[0];
+  const TOTAL_STEPS = stepOrder.length;
   const answers = {};
 
+  const plzMap = {'30159':'hannover','30161':'hannover','30163':'hannover','30165':'hannover','30167':'hannover','30169':'hannover','30171':'hannover','30173':'hannover','30175':'hannover','30177':'hannover','30179':'hannover','30419':'hannover','30449':'hannover','30451':'hannover','30453':'hannover','30455':'hannover','30457':'hannover','30459':'hannover','30519':'hannover','30521':'hannover','30539':'hannover','30559':'hannover','30625':'hannover','30627':'hannover','30629':'hannover','30655':'hannover','30657':'hannover','30659':'hannover','30669':'hannover','30851':'langenhagen','30853':'langenhagen','30855':'langenhagen','30926':'seelze','30880':'laatzen','30966':'hemmingen','30952':'ronnenberg','30900':'wedemark','30938':'burgwedel','30916':'isernhagen','30823':'garbsen','30826':'garbsen','30827':'garbsen','31275':'lehrte','31311':'uetze','30974':'wennigsen','30890':'barsinghausen','30989':'gehrden','31832':'springe','30982':'pattensen','31319':'sehnde','31535':'neustadt','31515':'wunstorf','31547':'rehburg-loccum','31542':'bad-nenndorf','31552':'rodenberg','31553':'sachsenhagen','31559':'hohnhorst','31867':'lauenau','31863':'coppenbrügge','31848':'bad-münder','31785':'hameln','31787':'hameln','31789':'hameln','31840':'hessisch-oldendorf','31675':'bückeburg','31655':'stadthagen','31683':'obernkirchen','31688':'nienstädt','31691':'helpsen','31694':'niedernwöhren','31699':'beckedorf','29221':'celle','29223':'celle','29225':'celle','29227':'celle','29229':'celle','31303':'burgdorf','31234':'edemissen','31226':'peine','31228':'peine','31246':'ilsede','31241':'ilsede','31249':'hohenhameln','31171':'nordstemmen','31174':'schellerten','31177':'harsum','31180':'giesen','31185':'söhlde','31061':'alfeld','31073':'grünenplan','31008':'elze','31028':'gronau','31020':'salzhemmendorf'};
+  const proklimaGemeinden = ['hannover','langenhagen','seelze','laatzen','hemmingen','ronnenberg'];
+  function pruefePlz(raw){
+    const val = String(raw||'').replace(/\D/g,'').slice(0,5);
+    if (val.length < 5) return {status:'unvollstaendig', val};
+    const gemeinde = plzMap[val];
+    if (gemeinde){
+      const label = gemeinde.charAt(0).toUpperCase()+gemeinde.slice(1);
+      return proklimaGemeinden.includes(gemeinde) ? {status:'proklima', val, gemeinde, label} : {status:'region', val, gemeinde, label};
+    }
+    if (val.startsWith('3') || val.startsWith('29') || val.startsWith('31')) return {status:'erweitert', val};
+    return {status:'aussen', val};
+  }
+  function plzFeedback(result) {
+    if (result.status === 'proklima') return '✓ ' + result.label + ', wir sind für dich da. proKlima-Fördergebiet, bis zu 5 % (max. 1.500 €) extra möglich.';
+    if (result.status === 'region') return '✓ ' + result.label + ', wir sind für dich da.';
+    if (result.status === 'erweitert') return '✓ PLZ ' + result.val + ' liegt möglicherweise in unserem Einzugsgebiet, wir prüfen die Verfügbarkeit.';
+    if (result.status === 'aussen') return 'Diese PLZ liegt außerhalb unseres Einzugsgebiets (Region Hannover).';
+    return '';
+  }
+
+
   // Fortschritt-Prozentsatz pro Schritt
-  const progress = {
-    1: 10, 2: 22, 3: 33, 4: 44,
-    5: 55, 6: 66, 7: 77, 8: 88, 9: 94, 10: 99
-  };
+  const progress = {};
+  stepOrder.forEach((step, index) => {
+    progress[step] = Math.round(((index + 1) / TOTAL_STEPS) * 99);
+  });
 
   // ── Schritt anzeigen ─────────────────────────
   function showStep(n) {
@@ -1188,8 +1200,9 @@
     const pct = progress[n] || 10;
     document.getElementById('progressFill').style.width = pct + '%';
     document.getElementById('progressPercent').textContent = pct + ' % geschafft';
+    const position = stepOrder.indexOf(n) + 1;
     document.getElementById('stepCounter').textContent =
-      `Schritt ${n} von ${TOTAL_STEPS}`;
+      `Schritt ${position} von ${TOTAL_STEPS}`;
   }
 
   // ── Karte auswählen + auto-advance ───────────
@@ -1203,7 +1216,7 @@
 
     // Kleiner Delay für visuelles Feedback
     setTimeout(() => {
-      if (currentStep < 10) {
+      if (stepOrder.indexOf(currentStep) < TOTAL_STEPS - 1) {
         goNext();
       }
     }, 220);
@@ -1213,22 +1226,24 @@
   function goNext() {
     if (currentStep === 9) {
       // PLZ validieren
-      const plz = document.getElementById('plzInput').value;
-      if (!/^\d{5}$/.test(plz)) {
+      const input = document.getElementById('plzInput');
+      const result = validatePlz(input);
+      if (!result || result.status === 'unvollstaendig' || result.status === 'aussen') {
         document.getElementById('plzError').style.display = 'block';
         return;
       }
-      answers['plz'] = plz;
-      // PLZ in Schritt 10 anzeigen
-      document.getElementById('plzSummaryText').textContent = plz;
+      answers['plz'] = result.val;
+      document.getElementById('plzSummaryText').textContent = result.val;
     }
-    showStep(currentStep + 1);
+    const index = stepOrder.indexOf(currentStep);
+    if (index < TOTAL_STEPS - 1) showStep(stepOrder[index + 1]);
   }
 
   // ── Zurück ────────────────────────────────────
   function goBack() {
-    if (currentStep > 1) {
-      showStep(currentStep - 1);
+    const index = stepOrder.indexOf(currentStep);
+    if (index > 0) {
+      showStep(stepOrder[index - 1]);
     }
   }
 
@@ -1278,29 +1293,47 @@
 
   // ── PLZ Validierung ───────────────────────────
   function validatePlz(input) {
-    const val = input.value;
+    input.value = input.value.replace(/[^0-9]/g, '').slice(0, 5);
+    const resultData = pruefePlz(input.value);
     const btn = document.getElementById('plzNextBtn');
     const err = document.getElementById('plzError');
     const result = document.getElementById('plzResult');
+    const resultText = document.getElementById('plzResultText');
 
-    if (/^\d{5}$/.test(val)) {
-      btn.disabled = false;
-      err.style.display = 'none';
-      // proKlima-Gebiet: nur Hannover-Stadt-Kerngebiet (30001–30679)
-      const plzNum = parseInt(val, 10);
-      const isProKlima = plzNum >= 30001 && plzNum <= 30679;
-      result.style.display = 'block';
-      document.getElementById('plzResultText').textContent =
-        isProKlima
-          ? '\u2713 Sehr gut! Du liegst im proKlima-Fördergebiet \u2014 bis zu 75\u00a0% Förderung möglich!'
-          : '\u2713 Wir sind in deiner Region aktiv.';
-      // Enter-Taste
-      document.getElementById('plzInput').onkeydown = (e) => {
-        if (e.key === 'Enter') goNext();
-      };
-    } else {
+    if (resultData.status === 'unvollstaendig') {
       btn.disabled = true;
       result.style.display = 'none';
+      err.style.display = 'none';
+      return resultData;
+    }
+
+    result.style.display = 'block';
+    resultText.textContent = plzFeedback(resultData);
+    resultText.style.color = resultData.status === 'aussen' ? 'var(--bernstein)' : (resultData.status === 'erweitert' ? 'var(--g500)' : 'var(--green)');
+    btn.disabled = resultData.status === 'aussen';
+    err.style.display = resultData.status === 'aussen' ? 'block' : 'none';
+
+    if (resultData.status !== 'aussen') {
+      answers.plz = resultData.val;
+      document.getElementById('plzSummaryText').textContent = resultData.val;
+    }
+
+    document.getElementById('plzInput').onkeydown = (e) => {
+      if (e.key === 'Enter') goNext();
+    };
+    return resultData;
+  }
+
+  function prefillPlzFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const input = document.getElementById('plzInput');
+    const val = String(params.get('plz') || '').replace(/\D/g, '').slice(0, 5);
+    if (!input || val.length !== 5) return;
+    input.value = val;
+    const result = validatePlz(input);
+    if (result && result.status !== 'unvollstaendig' && result.status !== 'aussen') {
+      answers.plz = result.val;
+      document.getElementById('plzSummaryText').textContent = result.val;
     }
   }
 
@@ -1408,6 +1441,8 @@
   }
 
   collectUtmParams();
+  showStep(stepOrder[0]);
+  prefillPlzFromUrl();
 </script>
 
 </body>

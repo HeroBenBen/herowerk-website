@@ -204,8 +204,9 @@
         <p class="section-lead">6 kurze Fragen, keine Anmeldung, sofort Richtpreis und geschätzte Förderung.</p>
         <form class="entry-plz" action="/anfrage" method="get" novalidate>
           <label for="entryPlz" class="sr-only">Postleitzahl</label>
-          <input id="entryPlz" name="plz" type="text" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{5}" maxlength="5" placeholder="Deine PLZ" required>
+          <input id="entryPlz" name="plz" type="text" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{5}" maxlength="5" placeholder="Deine PLZ" required aria-describedby="entryPlzFeedback">
           <button type="submit" class="btn-primary">Jetzt starten →</button>
+          <div id="entryPlzFeedback" class="entry-plz-feedback" aria-live="polite"></div>
         </form>
         <a href="/dimensionierung" class="home-feature-link">Oder den vollen Rechner öffnen</a>
       </div>
