@@ -42,6 +42,10 @@
         {
           "id": "preise",
           "words": 185
+        },
+        {
+          "id": "class:detail-final-cta",
+          "words": 21
         }
       ]
     },
@@ -51,6 +55,10 @@
         {
           "id": "wizard",
           "words": 489
+        },
+        {
+          "id": "class:detail-final-cta",
+          "words": 21
         }
       ]
     },
@@ -83,6 +91,10 @@
         {
           "id": "faq[frame]",
           "words": 4
+        },
+        {
+          "id": "class:detail-final-cta",
+          "words": 21
         }
       ]
     },
@@ -92,6 +104,10 @@
         {
           "id": "prozess",
           "words": 155
+        },
+        {
+          "id": "class:detail-final-cta",
+          "words": 21
         }
       ]
     },
@@ -149,6 +165,10 @@
         {
           "id": "faq[frame]",
           "words": 3
+        },
+        {
+          "id": "class:detail-final-cta",
+          "words": 21
         }
       ]
     },
@@ -194,7 +214,7 @@
         },
         {
           "id": "h2-block[7]",
-          "words": 28
+          "words": 29
         },
         {
           "id": "h2-block[8]",
@@ -206,7 +226,7 @@
         },
         {
           "id": "h2-block[10]",
-          "words": 27
+          "words": 26
         },
         {
           "id": "h2-block[11]",
