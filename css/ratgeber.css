@@ -9,7 +9,9 @@ article.section {
   padding: 100px 24px;
 }
 @media (max-width: 768px) {
-  article.section { padding: 88px 20px 48px; }
+  article.section {
+    padding: 88px 20px 48px;
+  }
 }
 
 /* Hero-Inhalt (.section-tag/.section-title/.section-lead) liegt in der globalen
@@ -123,8 +125,12 @@ article.section + section.faq .section-inner {
 }
 
 @media (max-width: 768px) {
-  .ratgeber-article { font-size: 16px; }
-  .ratgeber-article h2 { font-size: 22px; }
+  .ratgeber-article {
+    font-size: 16px;
+  }
+  .ratgeber-article h2 {
+    font-size: 22px;
+  }
   /* Breite Tabellen (lange Komposita wie "Klimageschwindigkeitsbonus") wuerden
      auf dem Handy aus der Spalte brechen und horizontalen Seiten-Scroll
      ausloesen. Tabelle als eigenen horizontal scrollbaren Block kapseln,
