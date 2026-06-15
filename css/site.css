@@ -3846,8 +3846,11 @@ html[data-theme='light'] .section-tag {
   margin: 26px 0 14px;
 }
 .entry-plz input {
-  min-width: 0;
-  flex: 1;
+  /* min-width/basis sichert Platz für 5 Ziffern + Placeholder "Deine PLZ";
+     ohne dies kollabiert das Feld im Flex-Row-Layout auf ~34px (Placeholder
+     und Eingabe abgeschnitten) */
+  min-width: 14ch;
+  flex: 1 1 14ch;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.08);

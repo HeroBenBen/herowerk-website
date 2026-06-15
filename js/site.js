@@ -1354,9 +1354,14 @@ function setKostenModus(modus) {
 
 // --- Selbstnutzung: Optionen dynamisch an WE-Anzahl anpassen ---
 function updateSelbstnutzungOptionen() {
-  const we = parseInt(document.getElementById('wohneinheiten').value);
+  const weEl = document.getElementById('wohneinheiten');
   const sel = document.getElementById('selbstnutzung');
   const label = document.getElementById('selbstnutzungLabel');
+  // Förderrechner-Elemente existieren nicht auf jeder Seite (z. B. Startseite).
+  // Ohne diesen Guard wirft der initiale Top-Level-Aufruf eine TypeError und
+  // bricht die restliche site.js-Ausführung ab (u. a. die Startseiten-PLZ-Bindung).
+  if (!weEl || !sel || !label) return;
+  const we = parseInt(weEl.value);
   const currentVal = sel.value;
 
   if (we <= 1) {
@@ -1641,11 +1646,16 @@ document.getElementById('gemeinde')?.addEventListener('change', function () {
   calculateFoerder();
 });
 document.getElementById('foerderWpTyp')?.addEventListener('change', calculateFoerder);
-// Initialer Aufruf
-updateSelbstnutzungOptionen();
-updateProklimaOptin();
-toggleProklimaHinweis();
-toggleHeizungsalter();
+// Initialer Aufruf — nur wenn der Förderrechner auf dieser Seite vorhanden ist.
+// Die folgenden Funktionen lesen .value direkter Förderrechner-Elemente; auf
+// Seiten ohne Rechner (z. B. Startseite) würde der Top-Level-Aufruf sonst eine
+// TypeError werfen und die restliche site.js-Ausführung abbrechen.
+if (document.getElementById('wohneinheiten')) {
+  updateSelbstnutzungOptionen();
+  updateProklimaOptin();
+  toggleProklimaHinweis();
+  toggleHeizungsalter();
+}
 
 // ===== AMORTISATIONSRECHNER =====
 function calculateAmort() {
@@ -2054,10 +2064,16 @@ if (document.getElementById('fvqHeizung')) fvqToggleHeizalter();
 })();
 
 // ===== STARTSEITEN PLZ FEEDBACK =====
-document.addEventListener('DOMContentLoaded', () => {
+// site.js wird mit defer geladen, der DOM ist bei Top-Level-Ausführung also bereit.
+// Bindung daher direkt ausführen (mit readyState-Fallback, falls die Datei je ohne
+// defer eingebunden wird) und idempotent halten, damit ein Doppelaufruf nicht zwei
+// Input-Listener anhängt.
+function initEntryPlzFeedback() {
   const input = document.getElementById('entryPlz');
   const feedback = document.getElementById('entryPlzFeedback');
   if (!input || !feedback || typeof pruefePlz !== 'function') return;
+  if (input.dataset.plzBound === '1') return; // idempotent
+  input.dataset.plzBound = '1';
 
   const update = () => {
     input.value = input.value.replace(/\D/g, '').slice(0, 5);
@@ -2068,7 +2084,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   input.addEventListener('input', update);
   input.closest('form')?.addEventListener('submit', update);
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initEntryPlzFeedback);
+} else {
+  initEntryPlzFeedback();
+}
 
 // ===== ANFRAGE PREFILL AUS STARTSEITEN PLZ =====
 document.addEventListener('DOMContentLoaded', () => {
