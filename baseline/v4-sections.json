@@ -11,28 +11,28 @@
           "words": 118
         },
         {
-          "id": "class:home-teaser-section",
-          "words": 14
+          "id": "foerdervorschuss",
+          "words": 54
         },
         {
-          "id": "class:home-teaser-section[2]",
-          "words": 23
+          "id": "schnellstart",
+          "words": 26
         },
         {
-          "id": "class:home-teaser-section[3]",
+          "id": "foerderung-start",
           "words": 19
         },
         {
-          "id": "class:home-teaser-section[4]",
-          "words": 15
+          "id": "preise-start",
+          "words": 16
         },
         {
-          "id": "class:home-teaser-section[5]",
+          "id": "prozess-start",
           "words": 30
         },
         {
-          "id": "class:home-teaser-section[6]",
-          "words": 10
+          "id": "ratgeber-start",
+          "words": 20
         }
       ]
     },
@@ -157,7 +157,7 @@
       "sections": [
         {
           "id": "contact",
-          "words": 85
+          "words": 55
         }
       ]
     },
@@ -210,7 +210,7 @@
         },
         {
           "id": "h2-block[11]",
-          "words": 62
+          "words": 63
         },
         {
           "id": "h2-block[12]",

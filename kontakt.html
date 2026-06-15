@@ -26,7 +26,7 @@
   <link rel="preload" href="tokens.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="tokens.css"></noscript>
 </head>
-<body>
+<body data-hubspot-portal-id="148110267" data-hubspot-contact-form-id="00000000-0000-0000-0000-000000000000">
   <!-- NAVIGATION -->
   <nav>
     <div class="nav-inner">
@@ -69,61 +69,35 @@
 
 <section class="contact" id="contact">
     <div class="section-inner">
-      <div class="section-tag">Jetzt starten</div>
-      <h1 class="section-title" style="color: var(--white);">Kostenlose Beratung & Angebot sichern</h1>
-      <p class="section-lead">Unverbindlich. Innerhalb von 48 Stunden melden wir uns bei dir.</p>
+      <div class="section-tag">Kontakt</div>
+      <h1 class="section-title" style="color: var(--white);">Schreib uns</h1>
+      <p class="section-lead">Wir melden uns innerhalb von 48 Stunden.</p>
       <div class="contact-layout" style="display:grid;grid-template-columns:1fr 1.2fr;gap:40px;align-items:stretch;">
-        <!-- Trust-Bild -->
         <div class="contact-image" style="border-radius:16px;overflow:hidden;position:relative;">
-          <img src="hero-fachpartner.png" alt="HeroWerk Fachpartnerin mit zufriedenem Kunden bei der Wolf CHA Wärmepumpe" width="3000" height="2000" style="width:100%;height:100%;display:block;border-radius:16px;object-fit:cover;" loading="lazy" decoding="async">
+          <img src="hero-fachpartner.png" alt="HeroWerk Fachpartnerin im Gespräch mit einem Kunden bei einer Wolf CHA Wärmepumpe" width="3000" height="2000" style="width:100%;height:100%;display:block;border-radius:16px;object-fit:cover;" loading="lazy" decoding="async">
           <div style="position:absolute;bottom:0;left:0;right:0;padding:20px 24px;background:linear-gradient(transparent, rgba(28,43,54,0.95));border-radius:0 0 16px 16px;">
-            <div style="color:var(--green);font-weight:700;font-size:14px;">Persönliche Beratung</div>
+            <div style="color:var(--green);font-weight:700;font-size:14px;">Persönliche Nachricht</div>
             <div style="color:var(--g300);font-size:13px;margin-top:4px;">Unser Team ist für dich da. Vor Ort in der Region Hannover.</div>
           </div>
         </div>
-        <!-- Formular -->
         <div>
-      <form class="contact-form" id="contactForm">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-          <div class="form-group"><label>Vorname</label><input type="text" name="vorname" placeholder="Max" required></div>
-          <div class="form-group"><label>Nachname</label><input type="text" name="nachname" placeholder="Mustermann" required></div>
-        </div>
-        <div class="form-group"><label>E-Mail</label><input type="email" name="email" placeholder="max@beispiel.de" required></div>
-        <div class="form-group"><label>Telefon</label><input type="tel" name="telefon" placeholder="0171 1234567"></div>
-        <div class="form-group"><label>Straße & Hausnummer</label><input type="text" name="adresse" placeholder="Musterstraße 12"></div>
-        <div class="form-group"><label>PLZ & Ort</label><input type="text" name="ort" placeholder="30900 Wedemark"></div>
-        <div class="form-group">
-          <label>Aktuelle Heizung</label>
-          <select name="heizung"><option>Gasheizung (Zentralheizung)</option><option>Gas-Etagenheizung</option><option>Ölheizung</option><option>Nachtspeicherheizung</option><option>Sonstige</option></select>
-        </div>
-        <div class="form-group">
-          <label>Interesse an</label>
-          <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:6px;">
-            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--g300);font-size:14px;font-weight:400;">
-              <input type="checkbox" name="interesse" value="waermepumpe" checked style="accent-color:var(--green);width:18px;height:18px;cursor:pointer;"> Wärmepumpe
-            </label>
-            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--g300);font-size:14px;font-weight:400;">
-              <input type="checkbox" name="interesse" value="klimaanlage" style="accent-color:var(--green);width:18px;height:18px;cursor:pointer;"> Klimaanlage
-            </label>
-            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--g300);font-size:14px;font-weight:400;">
-              <input type="checkbox" name="interesse" value="photovoltaik" style="accent-color:var(--green);width:18px;height:18px;cursor:pointer;"> Photovoltaik
-            </label>
-          </div>
-        </div>
-        <div class="form-group"><label>Empfohlen von (optional)</label><input type="text" name="empfehlung" placeholder="Name des Empfehlers"></div>
-        <div class="form-group"><label>Nachricht (optional)</label><textarea id="nachricht" name="nachricht" placeholder="Beschreibe dein Projekt..."></textarea></div>
+      <form class="contact-form" id="kontaktForm" data-hubspot-form-id="00000000-0000-0000-0000-000000000000" data-mailto="info@herowerk.de">
+        <div class="form-group"><label for="kontaktName">Name</label><input id="kontaktName" type="text" name="name" placeholder="Max Mustermann" required></div>
+        <div class="form-group"><label for="kontaktEmail">E-Mail</label><input id="kontaktEmail" type="email" name="email" placeholder="max@beispiel.de" required></div>
+        <div class="form-group"><label for="kontaktTelefon">Telefon optional</label><input id="kontaktTelefon" type="tel" name="telefon" placeholder="0171 1234567"></div>
+        <div class="form-group"><label for="kontaktNachricht">Nachricht</label><textarea id="kontaktNachricht" name="nachricht" placeholder="Wobei können wir helfen?" required></textarea></div>
         <div class="form-checkbox">
-          <input type="checkbox" id="dsgvo" required>
-          <label for="dsgvo">Ich stimme der Verarbeitung meiner Daten gemäß der Datenschutzerklärung zu.</label>
+          <input type="checkbox" id="kontaktDsgvo" name="dsgvo" value="zugestimmt" required>
+          <label for="kontaktDsgvo">Ich stimme der Verarbeitung meiner Daten gemäß der Datenschutzerklärung zu.</label>
         </div>
-        <button type="submit" class="form-submit">Anfrage senden</button>
+        <button type="submit" class="form-submit">Nachricht senden</button>
       </form>
-      <div class="form-success" id="formSuccess">
-        <h2>Danke, <span id="successName"></span>!</h2>
-        <p style="color: var(--g300);">Wir haben deine Anfrage erhalten und melden uns innerhalb von 48 Stunden.</p>
+      <div class="form-success" id="kontaktFormSuccess" role="status" aria-live="polite">
+        <h2>Danke, <span id="kontaktSuccessName"></span>!</h2>
+        <p style="color: var(--g300);">Wir haben deine Nachricht erhalten und melden uns innerhalb von 48 Stunden.</p>
       </div>
-        </div><!-- /Formular-Spalte -->
-      </div><!-- /contact-layout -->
+        </div>
+      </div>
     </div>
   </section>
   </main>

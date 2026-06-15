@@ -1772,13 +1772,61 @@ document.querySelectorAll('.faq-question').forEach((question) => {
   });
 });
 
-// ===== CONTACT FORM =====
-document.getElementById('contactForm')?.addEventListener('submit', (e) => {
+// ===== KONTAKT NACHRICHTENFORMULAR =====
+document.getElementById('kontaktForm')?.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const vorname = document.querySelector('input[name="vorname"]').value;
-  document.getElementById('successName').textContent = vorname;
-  document.getElementById('contactForm').style.display = 'none';
-  document.getElementById('formSuccess').classList.add('show');
+  const form = e.currentTarget;
+  const submitButton = form.querySelector('button[type="submit"]');
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
+  const portalId = document.body.dataset.hubspotPortalId || '148110267';
+  const formId =
+    form.dataset.hubspotFormId ||
+    document.body.dataset.hubspotContactFormId ||
+    '00000000-0000-0000-0000-000000000000';
+  const endpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
+  const payload = {
+    fields: Object.entries(data)
+      .filter(([name]) => name !== 'dsgvo')
+      .map(([name, value]) => ({ name, value: String(value) })),
+    context: { pageUri: window.location.href, pageName: document.title },
+    legalConsentOptions: {
+      consent: {
+        consentToProcess: true,
+        text: 'Einwilligung zur Verarbeitung der Kontaktdaten und Kontaktaufnahme.',
+      },
+    },
+  };
+
+  if (submitButton) {
+    submitButton.disabled = true;
+    submitButton.textContent = 'Wird gesendet...';
+  }
+
+  try {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!response.ok) throw new Error('HubSpot submit failed: ' + response.status);
+    document.getElementById('kontaktSuccessName').textContent =
+      (data.name || '').split(' ')[0] || 'dir';
+    form.style.display = 'none';
+    document.getElementById('kontaktFormSuccess').classList.add('show');
+  } catch (error) {
+    // Fallback, falls die HubSpot Mapping CI oder eine fehlende Live Form ID den API Submit blockiert.
+    const subject = encodeURIComponent('Nachricht über herowerk.de');
+    const body = encodeURIComponent(
+      `Name: ${data.name || ''}\nE-Mail: ${data.email || ''}\nTelefon: ${data.telefon || ''}\n\nNachricht:\n${data.nachricht || ''}`
+    );
+    window.location.href = `mailto:${form.dataset.mailto || 'info@herowerk.de'}?subject=${subject}&body=${body}`;
+  } finally {
+    if (submitButton) {
+      submitButton.disabled = false;
+      submitButton.textContent = 'Nachricht senden';
+    }
+  }
 });
 
 // ===== FÖRDERVORSCHUSS QUALIFIZIERUNGS-WIZARD =====
@@ -1959,3 +2007,14 @@ if (document.getElementById('fvqHeizung')) fvqToggleHeizalter();
   const container = document.getElementById('paCards');
   if (container) observer.observe(container);
 })();
+
+// ===== ANFRAGE PREFILL AUS STARTSEITEN PLZ =====
+document.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const plz = params.get('plz');
+  const plzInput = document.getElementById('plzInput');
+  if (plzInput && /^\d{5}$/.test(plz || '')) {
+    plzInput.value = plz;
+    plzInput.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+});

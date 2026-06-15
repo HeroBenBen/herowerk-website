@@ -95,7 +95,7 @@
         <p class="hero-sub">Meisterbetrieb aus der Region. Förderung bis 70 %. In 6 Wochen installiert.</p>
         <div class="hero-ctas">
           <a href="/foerderung" class="btn-primary">Förderung berechnen →</a>
-          <a href="/kontakt" class="btn-ghost">Kostenlose Beratung</a>
+          <a href="/anfrage" class="btn-ghost">Kostenlose Beratung</a>
         </div>
         <div class="hero-trust">
           <span class="trust-item"><span class="check">✓</span> Wolf &amp; Vaillant Premiumpartner</span>
@@ -173,48 +173,93 @@
   </div>
 
 
-  <section class="home-teaser-section section home-teaser-fv">
-    <div class="section-inner home-teaser-inner">
-      <div class="section-tag">Fördervorschuss</div>
-      <h2 class="section-title">Wir schießen die Förderung vor.</h2>
-      <p class="section-lead">Du zahlst nur deinen Eigenanteil.</p>
-      <a href="/anfrage" class="btn-primary">Verfügbarkeit prüfen →</a>
+  <section class="fv-banner" id="foerdervorschuss">
+    <div class="fv-inner">
+      <div class="fv-content">
+        <span class="fv-tag">Fördervorschuss</span>
+        <h2>Wir strecken deine Förderung vor.<br><span class="accent">Du zahlst nur deinen Eigenanteil.</span></h2>
+        <p class="fv-sub">Bis zu 21.000 Euro KfW-Förderung. Wir finanzieren sie vor, damit du nicht monatelang auf die Auszahlung wartest. Ohne eigenen Kredit, ohne Zinsen.</p>
+        <a href="/anfrage" class="btn-primary">Platz sichern →</a>
+      </div>
+      <aside class="fv-badge-box" aria-label="Fördervorschuss Kontingent">
+        <div class="fv-count">12</div>
+        <div class="fv-slots" aria-hidden="true"><span class="fv-slot taken"></span><span class="fv-slot taken"></span><span class="fv-slot taken"></span><span class="fv-slot taken"></span><span class="fv-slot taken"></span><span class="fv-slot"></span><span class="fv-slot"></span><span class="fv-slot"></span><span class="fv-slot"></span><span class="fv-slot"></span><span class="fv-slot"></span><span class="fv-slot"></span></div>
+        <div class="fv-slot-label"><strong>5 von 12</strong> belegt · 7 frei</div>
+        <div class="fv-badge-note">Limitiert, wir finanzieren aus eigenen Mitteln. Verfügbar ab Q3 2026.</div>
+      </aside>
     </div>
   </section>
 
-  <section class="home-teaser-section section home-teaser-alt">
-    <div class="section-inner home-teaser-inner">
-      <div class="section-tag">Dimensionierung</div>
-      <h2 class="section-title">Welche Wärmepumpe passt zu deinem Haus?</h2>
-      <p class="section-lead">6 kurze Fragen. Keine Anmeldung. Sofort Ergebnis mit Richtpreis und geschätzter Förderung.</p>
-      <a href="/dimensionierung" class="btn-primary">Jetzt Bedarf ermitteln →</a>
+  <section class="home-feature section home-feature-entry home-feature-alt" id="schnellstart">
+    <div class="section-inner home-feature-inner">
+      <div class="home-feature-media">
+        <picture>
+          <source type="image/webp" srcset="cha-komfort-neubau-800.webp 800w, cha-komfort-neubau-1600.webp 1600w" sizes="(max-width: 860px) 100vw, 50vw">
+          <img src="cha-komfort-neubau-800.webp" alt="Modernes Wohnzimmer mit komfortabler Wärmepumpe" width="1600" height="1067" loading="lazy" decoding="async">
+        </picture>
+      </div>
+      <div class="home-feature-body">
+        <div class="section-tag">Dimensionierung</div>
+        <h2 class="section-title">Welche Wärmepumpe passt zu deinem Haus?</h2>
+        <p class="section-lead">6 kurze Fragen, keine Anmeldung, sofort Richtpreis und geschätzte Förderung.</p>
+        <form class="entry-plz" action="/anfrage" method="get" novalidate>
+          <label for="entryPlz" class="sr-only">Postleitzahl</label>
+          <input id="entryPlz" name="plz" type="text" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{5}" maxlength="5" placeholder="Deine PLZ" required>
+          <button type="submit" class="btn-primary">Jetzt starten →</button>
+        </form>
+        <a href="/dimensionierung" class="home-feature-link">Oder den vollen Rechner öffnen</a>
+      </div>
     </div>
   </section>
 
-  <section class="home-teaser-section section">
-    <div class="section-inner home-teaser-inner">
-      <div class="section-tag">Förderung</div>
-      <h2 class="section-title">Deine Förderung in 10 Sekunden</h2>
-      <p class="section-lead">KfW 458 + proKlima Region Hannover. Berechne deinen individuellen Fördersatz.</p>
-      <a href="/foerderung" class="btn-primary">Förderung berechnen →</a>
+  <section class="home-feature section" id="foerderung-start">
+    <div class="section-inner home-feature-inner media-left">
+      <div class="home-feature-media">
+        <picture>
+          <source type="image/webp" srcset="paar-winter-balkon-800.webp 800w, paar-winter-balkon-1600.webp 1600w" sizes="(max-width: 860px) 100vw, 50vw">
+          <img src="paar-winter-balkon-800.webp" alt="Paar auf dem Balkon im Winter mit Blick auf ein warmes Zuhause" width="1600" height="1067" loading="lazy" decoding="async">
+        </picture>
+      </div>
+      <div class="home-feature-body home-feature-amber">
+        <div class="section-tag">Förderung</div>
+        <h2 class="section-title">Deine Förderung in 10 Sekunden</h2>
+        <p class="section-lead">KfW 458 und proKlima Region Hannover. Berechne deinen individuellen Fördersatz.</p>
+        <a href="/foerderung" class="btn-primary">Förderung berechnen →</a>
+      </div>
     </div>
   </section>
 
-  <section class="home-teaser-section section home-teaser-alt">
-    <div class="section-inner home-teaser-inner">
-      <div class="section-tag">Dein Eigenanteil</div>
-      <h2 class="section-title">Was zahlst du wirklich?</h2>
-      <p class="section-lead">Preise zeigen deinen Eigenanteil nach Förderung.</p>
-      <a href="/preise" class="btn-primary">Preise ansehen →</a>
+  <section class="home-feature section home-feature-alt" id="preise-start">
+    <div class="section-inner home-feature-inner media-right">
+      <div class="home-feature-media">
+        <picture>
+          <source type="image/webp" srcset="cha-mfh-saniert-800.webp 800w, cha-mfh-saniert-1600.webp 1600w" sizes="(max-width: 860px) 100vw, 50vw">
+          <img src="cha-mfh-saniert-800.webp" alt="Saniertes Mehrfamilienhaus mit Wärmepumpe" width="1600" height="1067" loading="lazy" decoding="async">
+        </picture>
+      </div>
+      <div class="home-feature-body">
+        <div class="section-tag">Dein Eigenanteil</div>
+        <h2 class="section-title">Was zahlst du wirklich?</h2>
+        <p class="section-lead">Unsere Richtpreise zeigen deinen Eigenanteil nach Förderung.</p>
+        <a href="/preise" class="btn-primary">Preise ansehen →</a>
+      </div>
     </div>
   </section>
 
-  <section class="home-teaser-section section">
-    <div class="section-inner home-teaser-inner">
-      <div class="section-tag">Ablauf</div>
-      <h2 class="section-title">4 Schritte. Den Rest machen wir.</h2>
-      <p class="section-lead">Du kümmerst dich um das Wesentliche. Wir um alles andere. Von der Anfrage bis zur fertigen Anlage in 6 Wochen.</p>
-      <a href="/prozess" class="btn-primary">Unser Prozess →</a>
+  <section class="home-feature section" id="prozess-start">
+    <div class="section-inner home-feature-inner media-left">
+      <div class="home-feature-media">
+        <picture>
+          <source type="image/webp" srcset="hero-service-800.webp 800w, hero-service-1600.webp 1600w" sizes="(max-width: 860px) 100vw, 50vw">
+          <img src="hero-service-800.webp" alt="HeroWerk Fachteam beim Service vor Ort" width="1600" height="1067" loading="lazy" decoding="async">
+        </picture>
+      </div>
+      <div class="home-feature-body">
+        <div class="section-tag">Ablauf</div>
+        <h2 class="section-title">4 Schritte. Den Rest machen wir.</h2>
+        <p class="section-lead">Du kümmerst dich um das Wesentliche, wir um alles andere. Von der Anfrage bis zur fertigen Anlage in 6 Wochen.</p>
+        <a href="/prozess" class="btn-primary">Unser Prozess →</a>
+      </div>
     </div>
   </section>
 
@@ -249,11 +294,20 @@
   </div>
 
 
-  <section class="home-teaser-section section home-teaser-alt">
-    <div class="section-inner home-teaser-inner">
-      <div class="section-tag">Ratgeber</div>
-      <h2 class="section-title">Wissen rund um Wärmepumpe & Förderung</h2>
-      <a href="/ratgeber" class="btn-primary">Zum Ratgeber →</a>
+  <section class="home-feature section home-feature-alt" id="ratgeber-start">
+    <div class="section-inner home-feature-inner media-right">
+      <div class="home-feature-media">
+        <picture>
+          <source type="image/webp" srcset="cha-neubau-dunkel-800.webp 800w, cha-neubau-dunkel-1600.webp 1600w" sizes="(max-width: 860px) 100vw, 50vw">
+          <img src="cha-neubau-dunkel-800.webp" alt="Neubau mit moderner Wärmepumpe in ruhiger Abendstimmung" width="1600" height="1067" loading="lazy" decoding="async">
+        </picture>
+      </div>
+      <div class="home-feature-body">
+        <div class="section-tag">Ratgeber</div>
+        <h2 class="section-title">Wissen rund um Wärmepumpe und Förderung</h2>
+        <p class="section-lead">Verständliche Antworten für Planung, Förderung und Alltag mit deiner Wärmepumpe.</p>
+        <a href="/ratgeber" class="btn-primary">Zum Ratgeber →</a>
+      </div>
     </div>
   </section>
 
