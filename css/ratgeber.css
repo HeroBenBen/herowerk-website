@@ -75,6 +75,14 @@ article.section + section.faq .section-inner {
   text-decoration: underline;
 }
 
+.ratgeber-article .table-scroll {
+  margin: 8px 0 26px;
+}
+
+.ratgeber-article .table-scroll table {
+  margin: 0;
+}
+
 .ratgeber-article table {
   width: 100%;
   border-collapse: collapse;
@@ -135,8 +143,7 @@ article.section + section.faq .section-inner {
      auf dem Handy aus der Spalte brechen und horizontalen Seiten-Scroll
      ausloesen. Tabelle als eigenen horizontal scrollbaren Block kapseln,
      statt das ganze Layout zu sprengen. */
-  .ratgeber-article table {
-    display: block;
+  .ratgeber-article .table-scroll {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }

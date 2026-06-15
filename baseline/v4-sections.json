@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-12",
+  "generated": "2026-06-15",
   "rule": "section-id primär, H2-Fallback, FAQ separat; Fail bei >30% Wort-Abweichung",
   "threshold": 0.3,
   "pages": [
@@ -8,7 +8,7 @@
       "sections": [
         {
           "id": "class:hero",
-          "words": 115
+          "words": 118
         },
         {
           "id": "class:home-teaser-section",
@@ -41,7 +41,7 @@
       "sections": [
         {
           "id": "preise",
-          "words": 182
+          "words": 185
         }
       ]
     },
@@ -50,7 +50,7 @@
       "sections": [
         {
           "id": "wizard",
-          "words": 486
+          "words": 489
         }
       ]
     },
@@ -59,7 +59,30 @@
       "sections": [
         {
           "id": "foerder",
-          "words": 276
+          "words": 279
+        },
+        {
+          "id": "class:section",
+          "words": 333
+        },
+        {
+          "id": "faq[1]",
+          "question": "Muss ich die Förderung selbst beantragen?",
+          "words": 38
+        },
+        {
+          "id": "faq[2]",
+          "question": "Sinkt die Förderung wirklich?",
+          "words": 38
+        },
+        {
+          "id": "faq[3]",
+          "question": "Bekomme ich die Förderung auch im Altbau?",
+          "words": 38
+        },
+        {
+          "id": "faq[frame]",
+          "words": 4
         }
       ]
     },
@@ -68,7 +91,7 @@
       "sections": [
         {
           "id": "prozess",
-          "words": 149
+          "words": 155
         }
       ]
     },
@@ -77,7 +100,7 @@
       "sections": [
         {
           "id": "blog",
-          "words": 83
+          "words": 147
         },
         {
           "id": "friends",

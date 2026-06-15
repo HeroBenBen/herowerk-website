@@ -108,7 +108,7 @@ nav.scrolled {
 }
 .nav-links {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   align-items: center;
 }
 .nav-links a {
@@ -1173,6 +1173,12 @@ section {
   opacity: 1;
   margin-top: 14px;
 }
+.pz-step:hover .pz-substeps,
+.pz-step:focus-within .pz-substeps {
+  max-height: 300px;
+  opacity: 1;
+  margin-top: 14px;
+}
 .pz-sub {
   display: flex;
   align-items: center;
@@ -1320,6 +1326,15 @@ section {
   cursor: pointer;
   transition: all 0.2s;
   text-align: center;
+}
+
+#wzHeizung .wizard-option {
+  display: flex;
+  flex-direction: column;
+}
+#wzHeizung .opt-bonus {
+  margin-top: auto;
+  padding-top: 6px;
 }
 .wizard-option:hover {
   border-color: rgba(183, 217, 0, 0.4);
