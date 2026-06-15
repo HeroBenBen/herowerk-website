@@ -31,14 +31,14 @@ test('@smoke Funnel sendet HubSpot-Form-Payload mit UTM-Feldern (Mock)', async (
     }
   );
   await page.goto('/anfrage.html?utm_source=playwright&utm_medium=smoke&utm_campaign=t1-11');
+  await page.locator('#plzInput').fill('30159');
+  await page.locator('#plzNextBtn').click();
   await page.locator('.step[data-step="1"] .answer-card').first().click();
   await page.locator('.step[data-step="2"] .answer-card').first().click();
   await page.locator('#alterSelectUngefaehr').selectOption('20 Jahre oder älter');
   await page.locator('#alterNextBtn').click();
   for (let step = 4; step <= 8; step += 1)
     await page.locator(`.step[data-step="${step}"] .answer-card`).first().click();
-  await page.locator('#plzInput').fill('30159');
-  await page.locator('#plzNextBtn').click();
   await page.locator('#vorname').fill('Test');
   await page.locator('#nachname').fill('Lead');
   await page.locator('#telefon').fill('+49 511 0000000');
