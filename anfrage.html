@@ -378,6 +378,26 @@
     .plz-error {
       font-size: 12px; color: #dc2626; margin-top: 6px; display: none;
     }
+    .plz-result-text.plz-proklima,
+    .plz-result-text.plz-region {
+      color: var(--green);
+    }
+    .plz-result-text.plz-erweitert {
+      color: var(--g500);
+    }
+    .plz-result-text.plz-aussen {
+      color: var(--bernstein);
+    }
+    [data-theme='light'] .plz-result-text.plz-proklima,
+    [data-theme='light'] .plz-result-text.plz-region {
+      color: #4f6000;
+    }
+    [data-theme='light'] .plz-result-text.plz-erweitert {
+      color: #475569;
+    }
+    [data-theme='light'] .plz-result-text.plz-aussen {
+      color: #7c4a03;
+    }
 
     /* Kontaktdaten (Schritt 10) */
     .contact-grid {
@@ -1311,7 +1331,7 @@
 
     result.style.display = 'block';
     resultText.textContent = plzFeedback(resultData);
-    resultText.style.color = resultData.status === 'aussen' ? 'var(--bernstein)' : (resultData.status === 'erweitert' ? 'var(--g500)' : 'var(--green)');
+    resultText.className = 'plz-result-text plz-' + resultData.status;
     btn.disabled = resultData.status === 'aussen';
     err.style.display = resultData.status === 'aussen' ? 'block' : 'none';
 
