@@ -535,13 +535,13 @@
       border: 1px solid rgba(183,217,0,0.35); background: rgba(183,217,0,0.10);
       color: var(--green); font-weight: 700; font-size: 12px;
     }
-    [data-theme='dark'] body { background: #0a0a0a; color: #ffffff; }
-    [data-theme='dark'] .funnel-panel { background: #0a0a0a; color: #ffffff; }
+    [data-theme='dark'] body { background: #1c2b36; color: #ffffff; }
+    [data-theme='dark'] .funnel-panel { background: #1c2b36; color: #ffffff; }
     [data-theme='dark'] .funnel-header,
     [data-theme='dark'] .progress-card,
     [data-theme='dark'] .step-card,
     [data-theme='dark'] .success-step {
-      background: #1c2b36; border-color: #2d3a47; color: #ffffff;
+      background: #22323e; border-color: rgba(255,255,255,0.10); color: #ffffff;
     }
     [data-theme='dark'] .step-question,
     [data-theme='dark'] .answer-card-label,
@@ -557,9 +557,51 @@
     [data-theme='dark'] .form-field textarea {
       background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); color: #ffffff;
     }
+    [data-theme='dark'] .plz-input,
+    [data-theme='dark'] .alter-select,
+    [data-theme='dark'] .alter-baujahr-input {
+      background-color: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); color: #ffffff;
+    }
+    [data-theme='dark'] .plz-input:focus,
+    [data-theme='dark'] .alter-select:focus,
+    [data-theme='dark'] .alter-baujahr-input:focus {
+      border-color: var(--green); box-shadow: 0 0 0 3px rgba(183,217,0,0.2);
+    }
+    [data-theme='dark'] .alter-select {
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23d1d5db' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    }
     [data-theme='dark'] .answer-card:hover,
     [data-theme='dark'] .answer-card.selected { border-color: var(--green); }
-    [data-theme='dark'] .form-field input::placeholder { color: #a0a6ad; }
+    [data-theme='dark'] .answer-card-icon { background: rgba(255,255,255,0.06); }
+    [data-theme='dark'] .answer-card-icon svg { stroke: #d1d5db; }
+    [data-theme='dark'] .answer-card:hover .answer-card-icon,
+    [data-theme='dark'] .answer-card.selected .answer-card-icon { background: rgba(183,217,0,0.22); }
+    [data-theme='dark'] .answer-card:hover .answer-card-icon svg,
+    [data-theme='dark'] .answer-card.selected .answer-card-icon svg { stroke: #ffffff; }
+    [data-theme='dark'] .form-field input::placeholder,
+    [data-theme='dark'] .plz-input::placeholder,
+    [data-theme='dark'] .alter-baujahr-input::placeholder { color: #a0a6ad; }
+    [data-theme='dark'] #plzResult {
+      background: rgba(183,217,0,0.05); border: 1px solid rgba(183,217,0,0.2);
+    }
+    [data-theme='dark'] .plz-result-text.plz-erweitert { color: #d1d5db; }
+    [data-theme='dark'] .contact-preview:not(#plzResult),
+    [data-theme='dark'] .alter-result,
+    [data-theme='dark'] .success-detail {
+      background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.10); color: #d1d5db;
+    }
+    [data-theme='dark'] .contact-preview strong,
+    [data-theme='dark'] .alter-result strong,
+    [data-theme='dark'] .success-detail strong { color: #ffffff; }
+    [data-theme='dark'] #plzSummary span[style*='2E7D32'] { color:#b7d900 !important; }
+    [data-theme='dark'] .btn-back {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); color: #ffffff;
+    }
+    [data-theme='dark'] .btn-back:hover { background: rgba(255,255,255,0.10); }
+    [data-theme='dark'] .alter-toggle-wrap { border-color: rgba(255,255,255,0.15); }
+    [data-theme='dark'] .alter-toggle-btn { background: rgba(255,255,255,0.06); color: #d1d5db; }
+    [data-theme='dark'] .alter-toggle-btn.active { background: rgba(183,217,0,0.18); color: #ffffff; }
+    [data-theme='dark'] .success-icon { background: rgba(183,217,0,0.15); border: 3px solid var(--green); }
     /* Iteration 3b: exact dark-mode axe rest nodes. */
     [data-theme='dark'] .funnel-close-link,
     [data-theme='dark'] .progress-label { color: #d1d5db; }
