@@ -1,0 +1,201 @@
+name: HeroWerk CI Pipeline (12 Hard-Gates)
+on:
+  pull_request:
+    branches: [main, production]
+    # production: der Release-PR main → production (T4-2) durchläuft dieselben 12 Gates
+
+# Least-Privilege-Token (T1-6b-Followup O2): expliziter Block ersetzt die Defaults.
+# Jobs mit Sonderbedarf (resolve-preview, secret-scan) haben Job-Level-Blöcke.
+permissions:
+  contents: read
+
+jobs:
+  # Job 0 (Helper): Vercel-Preview-URL einmal ermitteln, als Output exportieren
+  resolve-preview:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read     # checkout
+      deployments: read    # bash-Polling-Step liest Deployment-Status für die Preview-URL
+      pull-requests: read  # beibehalten für PR-Kontext/Head-SHA im resolve-preview-Job
+    outputs:
+      url: ${{ steps.vercel.outputs.url }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Wait for Vercel Preview
+        id: vercel
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          for i in $(seq 1 60); do
+            DEP=$(gh api "repos/${{ github.repository }}/deployments?sha=$HEAD_SHA&environment=Preview&per_page=5" --jq '.[0].id' 2>/dev/null || true)
+            if [ -n "$DEP" ] && [ "$DEP" != "null" ]; then
+              URL=$(gh api "repos/${{ github.repository }}/deployments/$DEP/statuses" --jq '[.[] | select(.state=="success" and .environment_url != null)][0].environment_url' 2>/dev/null || true)
+              if [ -n "$URL" ] && [ "$URL" != "null" ]; then
+                CODE=$(curl -s -o /dev/null -w "%{http_code}" "$URL" || true)
+                if [ "$CODE" = "200" ]; then
+                  echo "url=$URL" >> "$GITHUB_OUTPUT"
+                  echo "Preview bereit: $URL"
+                  exit 0
+                fi
+              fi
+            fi
+            sleep 10
+          done
+          echo "::error::Timeout (600 s): keine erreichbare Vercel-Preview-URL für $HEAD_SHA"
+          exit 1
+
+  # Job 1: Lint + Type-Check
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: '20' }
+      - run: npm ci
+      - run: npm run lint
+      - run: npx tsc --noEmit  # JSDoc-Type-Check via tsconfig.json mit allowJs+checkJs
+
+  # Job 2: Lighthouse-CI (Mobile + Desktop, beide Themes)
+  lighthouse:
+    runs-on: ubuntu-latest
+    needs: [lint, resolve-preview]
+    strategy:
+      matrix: { theme: [dark, light] }
+    steps:
+      - uses: actions/checkout@v5
+      - name: Lighthouse CI ${{ matrix.theme }}
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            ${{ needs.resolve-preview.outputs.url }}?theme=${{ matrix.theme }}
+            ${{ needs.resolve-preview.outputs.url }}/preise.html?theme=${{ matrix.theme }}
+            ${{ needs.resolve-preview.outputs.url }}/anfrage.html?theme=${{ matrix.theme }}
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true
+          runs: 3
+
+  # Job 3: Playwright Smoke-Tests
+  playwright-smoke:
+    runs-on: ubuntu-latest
+    needs: [lint, resolve-preview]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+      - run: npm ci
+      - run: npx playwright install --with-deps
+      - env: { PREVIEW_URL: '${{ needs.resolve-preview.outputs.url }}' }
+        run: npx playwright test --grep "@smoke"
+
+  # Job 4: axe-core Accessibility
+  axe-accessibility:
+    runs-on: ubuntu-latest
+    needs: [lint, resolve-preview]
+    steps:
+      - uses: actions/checkout@v5
+      - run: npm ci
+      - run: npx playwright install --with-deps
+      - env: { PREVIEW_URL: '${{ needs.resolve-preview.outputs.url }}' }
+        run: npm run test:a11y  # Schwelle: 0 Errors auf allen Hauptseiten
+
+  # Job 5: Secret-Scanner (Gitleaks)
+  secret-scan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read       # checkout (fetch-depth 0)
+      pull-requests: read  # gitleaks: PR-Commit-Listing via GITHUB_TOKEN (Portal-403-Fix)
+    steps:
+      - uses: actions/checkout@v5
+        with: { fetch-depth: 0 }
+      - uses: gitleaks/gitleaks-action@v3
+        env: { GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
+
+  # Job 6: Content-Fidelity-Check gegen v4-Baseline
+  content-fidelity:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v5
+      - run: node scripts/content-fidelity-check.js
+        # Skript scannt Section-Wortzählung gegen baseline/v4-sections.json
+        # Section-Regel: <section id> primär, H2-Fallback, FAQ separat
+        # Fail bei > 30% Abweichung pro Section (Stand-Schwelle, in T1-6b ratifiziert)
+
+  # Job 7: CSP/Headers-Test (Mozilla Observatory)
+  csp-headers:
+    runs-on: ubuntu-latest
+    needs: [lint, resolve-preview]
+    steps:
+      - uses: actions/checkout@v5
+      - run: node scripts/observatory-check.js ${{ needs.resolve-preview.outputs.url }}
+        # Fail bei Mozilla-Observatory-Score < B
+        # HINWEIS (Iteration 3): "unsafe-inline" temporär dokumentiert wegen
+        # bestehender Inline-Scripts in dashboard.html und index.html.
+        # Separater CSP-Sprint nach Live für Nonce-Refactoring.
+
+  # Job 8: HubSpot-Property-Mapping-Test (Schema-Validierung)
+  hubspot-mapping:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v5
+      - run: node scripts/hubspot-schema-check.js
+        # Validiert Webhook-Payload gegen schemas/hubspot-property-schema.json
+
+  # Job 9: Visual-Regression (Playwright Visual)
+  visual-regression:
+    runs-on: ubuntu-latest
+    needs: [lint, resolve-preview]
+    strategy:
+      matrix: { theme: [dark, light] }
+    steps:
+      - uses: actions/checkout@v5
+      - run: npm ci
+      - run: npx playwright install --with-deps
+      - env: { PREVIEW_URL: '${{ needs.resolve-preview.outputs.url }}' }
+        run: npx playwright test --grep "@visual" -- --theme=${{ matrix.theme }}
+        # Toleranz: 5% Pixel-Diff. Baseline-Update via /baseline-update-Label am PR
+        # (Benjamin setzt Label, Github-Action akzeptiert dann den neuen Screenshot)
+
+  # Job 10: SEO-Basics-Check
+  seo-basics:
+    runs-on: ubuntu-latest
+    needs: [lighthouse, resolve-preview]
+    steps:
+      - uses: actions/checkout@v5
+      - run: node scripts/seo-basics-check.js ${{ needs.resolve-preview.outputs.url }}
+        # Prüft: sitemap.xml erreichbar, robots.txt existiert, Canonical pro Seite,
+        # Open Graph Tags, Twitter Cards, Schema.org JSON-LD, Theme-Color Meta
+
+  # Job 11: Schema.org-Validator (Google Rich Results)
+  schema-validation:
+    runs-on: ubuntu-latest
+    needs: [lighthouse, resolve-preview]
+    steps:
+      - uses: actions/checkout@v5
+      - run: node scripts/rich-results-check.js ${{ needs.resolve-preview.outputs.url }}
+
+  # Job 12: Lead-only-Negativ-Gate (verhindert Vertragsabschluss-CTA)
+  # Codex-Iteration-3-Finding 6 — Pattern erweitert
+  lead-only-gate:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v5
+      - name: Forbidden CTA Pattern Check
+        run: |
+          # HARTE LINIE (Lead-only-Grundsatzentscheidung 09.06.2026): Das Gate verbietet NUR
+          # Formulierungen, die einen Online-Vertragsabschluss auslösen oder dazu auffordern.
+          #
+          # TON-/STIL-WORDING ("verbindlicher Preis", "Festpreis", "verbindliches Angebot",
+          # "Angebot sichern", "Termin verbindlich", "Fördervorschuss sichern", "Auftragserteilung"
+          # als Prozessbeschreibung) ist seit Iteration 4 BEWUSST NICHT im Gate: werbliche
+          # Risiko-Kalibrierung ist Geschäftsführer-Entscheidung und wird editorial in T1-11
+          # entschieden (GF-Entscheidung 10.06.2026). Pattern-Erweiterung nur mit Benjamin-GO.
+          # Codex-Mini-Check-Fix 2: + jetzt bestellen/bezahlen, Bestellung abschließen, Angebot annehmen, Vertrag unterzeichnen
+          FORBIDDEN="beauftragen|Auftrag erteilen|Auftrag bestätigen|verbindlich (bestellen|buchen|kaufen)|Vertrag (abschließen|schließen|unterzeichnen)|jetzt (kaufen|bestellen|bezahlen)|kostenpflichtig bestellen|zahlungspflichtig|Reservierung abschließen|Bestellung abschließen|Angebot annehmen"
+          if grep -rEi "$FORBIDDEN" --include="*.html" --include="*.js" .; then
+            echo "::error::Lead-only-Negativ-Gate verletzt: Vertragsabschluss-CTA gefunden"
+            exit 1
+          fi
+          echo "Lead-only-Negativ-Gate: OK"

@@ -1,0 +1,242 @@
+{
+  "generated": "2026-06-15",
+  "rule": "section-id primär, H2-Fallback, FAQ separat; Fail bei >30% Wort-Abweichung",
+  "threshold": 0.3,
+  "pages": [
+    {
+      "file": "index.html",
+      "sections": [
+        {
+          "id": "class:hero",
+          "words": 118
+        },
+        {
+          "id": "foerdervorschuss",
+          "words": 54
+        },
+        {
+          "id": "schnellstart",
+          "words": 26
+        },
+        {
+          "id": "foerderung-start",
+          "words": 19
+        },
+        {
+          "id": "preise-start",
+          "words": 16
+        },
+        {
+          "id": "prozess-start",
+          "words": 30
+        },
+        {
+          "id": "ratgeber-start",
+          "words": 20
+        }
+      ]
+    },
+    {
+      "file": "preise.html",
+      "sections": [
+        {
+          "id": "preise",
+          "words": 185
+        },
+        {
+          "id": "class:detail-final-cta",
+          "words": 21
+        }
+      ]
+    },
+    {
+      "file": "dimensionierung.html",
+      "sections": [
+        {
+          "id": "wizard",
+          "words": 489
+        },
+        {
+          "id": "class:detail-final-cta",
+          "words": 21
+        }
+      ]
+    },
+    {
+      "file": "foerderung.html",
+      "sections": [
+        {
+          "id": "foerder",
+          "words": 279
+        },
+        {
+          "id": "class:section",
+          "words": 333
+        },
+        {
+          "id": "faq[1]",
+          "question": "Muss ich die Förderung selbst beantragen?",
+          "words": 38
+        },
+        {
+          "id": "faq[2]",
+          "question": "Sinkt die Förderung wirklich?",
+          "words": 38
+        },
+        {
+          "id": "faq[3]",
+          "question": "Bekomme ich die Förderung auch im Altbau?",
+          "words": 38
+        },
+        {
+          "id": "faq[frame]",
+          "words": 4
+        },
+        {
+          "id": "class:detail-final-cta",
+          "words": 21
+        }
+      ]
+    },
+    {
+      "file": "prozess.html",
+      "sections": [
+        {
+          "id": "prozess",
+          "words": 155
+        },
+        {
+          "id": "class:detail-final-cta",
+          "words": 21
+        }
+      ]
+    },
+    {
+      "file": "ratgeber.html",
+      "sections": [
+        {
+          "id": "blog",
+          "words": 147
+        },
+        {
+          "id": "friends",
+          "words": 137
+        },
+        {
+          "id": "faq[1]",
+          "question": "Was kostet eine Wärmepumpe bei HeroWerk?",
+          "words": 71
+        },
+        {
+          "id": "faq[2]",
+          "question": "Wie lange dauert die komplette Installation?",
+          "words": 39
+        },
+        {
+          "id": "faq[3]",
+          "question": "Was wird beim Vor-Ort-Termin geprüft?",
+          "words": 33
+        },
+        {
+          "id": "faq[4]",
+          "question": "Wie hoch ist die KfW-Förderung wirklich?",
+          "words": 65
+        },
+        {
+          "id": "faq[5]",
+          "question": "Gibt es versteckte Kosten oder Nachträge?",
+          "words": 58
+        },
+        {
+          "id": "faq[6]",
+          "question": "Was ist proKlima Hannover?",
+          "words": 81
+        },
+        {
+          "id": "faq[7]",
+          "question": "Was ist der Fördervorschuss und warum ist er limitiert?",
+          "words": 74
+        },
+        {
+          "id": "faq[8]",
+          "question": "Warum Wolf?",
+          "words": 53
+        },
+        {
+          "id": "faq[frame]",
+          "words": 3
+        },
+        {
+          "id": "class:detail-final-cta",
+          "words": 21
+        }
+      ]
+    },
+    {
+      "file": "kontakt.html",
+      "sections": [
+        {
+          "id": "contact",
+          "words": 55
+        }
+      ]
+    },
+    {
+      "file": "anfrage.html",
+      "sections": [
+        {
+          "id": "h2-block[0]",
+          "words": 2
+        },
+        {
+          "id": "h2-block[1]",
+          "words": 81
+        },
+        {
+          "id": "h2-block[2]",
+          "words": 30
+        },
+        {
+          "id": "h2-block[3]",
+          "words": 31
+        },
+        {
+          "id": "h2-block[4]",
+          "words": 36
+        },
+        {
+          "id": "h2-block[5]",
+          "words": 36
+        },
+        {
+          "id": "h2-block[6]",
+          "words": 25
+        },
+        {
+          "id": "h2-block[7]",
+          "words": 29
+        },
+        {
+          "id": "h2-block[8]",
+          "words": 27
+        },
+        {
+          "id": "h2-block[9]",
+          "words": 31
+        },
+        {
+          "id": "h2-block[10]",
+          "words": 26
+        },
+        {
+          "id": "h2-block[11]",
+          "words": 63
+        },
+        {
+          "id": "h2-block[12]",
+          "words": 46
+        }
+      ]
+    }
+  ]
+}

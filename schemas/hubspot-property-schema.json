@@ -1,0 +1,28 @@
+{
+  "$comment": "HubSpot-Webhook-Payload-Schema (Funnel anfrage.html → HubSpot, Portal 148110267). Felder aus dem 10-Schritt-Funnel; UTM-Hidden-Fields kommen mit T2-Webhook-Anschluss. Schwelle Job 8: Payload muss validieren.",
+  "type": "object",
+  "required": ["vorname", "nachname", "email", "telefon", "plz", "dsgvo"],
+  "properties": {
+    "vorname": { "type": "string" },
+    "nachname": { "type": "string" },
+    "email": { "type": "string", "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" },
+    "telefon": { "type": "string" },
+    "plz": { "type": "string", "pattern": "^30[0-9]{3}$" },
+    "dsgvo": { "type": "string", "enum": ["on", "true"] },
+    "description": { "type": "string" },
+    "gebaeudetyp": { "type": "string" },
+    "baujahr": { "type": "string" },
+    "wohnflaeche": { "type": "string" },
+    "heizung_aktuell": { "type": "string" },
+    "heizungsalter": { "type": "string" },
+    "warmwasser": { "type": "string" },
+    "daemmung": { "type": "string" },
+    "eigentuemer": { "type": "string" },
+    "zeitrahmen": { "type": "string" },
+    "utm_source": { "type": "string" },
+    "utm_medium": { "type": "string" },
+    "utm_campaign": { "type": "string" },
+    "utm_term": { "type": "string" },
+    "utm_content": { "type": "string" }
+  }
+}

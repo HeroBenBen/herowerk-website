@@ -1,0 +1,13 @@
+{
+  "$comment": "Beispiel-Payload (Test-Submit, KEIN echter Lead). Spiegelform des Funnel-Submits aus anfrage.html; UTM-Felder ab T2.",
+  "vorname": "Test",
+  "nachname": "Lead",
+  "email": "test@example.com",
+  "telefon": "+49 511 0000000",
+  "plz": "30159",
+  "dsgvo": "on",
+  "description": "T1-6b Schema-Testpayload",
+  "gebaeudetyp": "Einfamilienhaus",
+  "heizung_aktuell": "Gastherme",
+  "utm_source": "test"
+}

@@ -1,0 +1,8 @@
+# Canonical Bestand + Workflows (T1-6a final) werden NICHT umformatiert
+*.html
+*.json
+.github/
+node_modules/
+baseline/
+schemas/
+package-lock.json
