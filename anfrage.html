@@ -257,11 +257,12 @@
     /* Antwort-Karten (große Klick-Karten) */
     .answer-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
+      max-width: 560px;
       gap: 12px;
       margin-bottom: 28px;
     }
-    .answer-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .answer-grid.cols-3 { grid-template-columns: 1fr; }
     .answer-grid.cols-1 { grid-template-columns: 1fr; }
 
     .answer-card {
@@ -275,6 +276,7 @@
       text-align: left;
       -webkit-user-select: none; user-select: none;
     }
+    .answer-card:has(.answer-card-icon) { min-height: 104px; }
     .answer-card:hover {
       border-color: var(--green);
       background: var(--green-light);
@@ -524,7 +526,6 @@
       .funnel-header { padding: 16px 24px; }
       .progress-bar-wrap { padding: 20px 24px 0; }
       .funnel-content { padding: 28px 24px 24px; }
-      .answer-grid.cols-3 { grid-template-columns: 1fr 1fr; }
       .contact-grid { grid-template-columns: 1fr; }
       .step-nav { grid-template-columns: 1fr 1fr; }
     }
