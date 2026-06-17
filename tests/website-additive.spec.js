@@ -31,6 +31,9 @@ test('@smoke Funnel sendet HubSpot-Form-Payload mit UTM-Feldern (Mock)', async (
     }
   );
   await page.goto('/anfrage.html?utm_source=playwright&utm_medium=smoke&utm_campaign=t1-11');
+  // Neuer erster Schritt: Interesse-Tor. Waermepumpe waehlen + weiter (volle WP-Strecke).
+  await page.locator('.step[data-step="0"] .answer-card[data-value="Wärmepumpe"]').click();
+  await page.locator('#interesseNextBtn').click();
   await page.locator('#plzInput').fill('30159');
   await page.locator('#plzNextBtn').click();
   await page.locator('.step[data-step="1"] .answer-card').first().click();
@@ -53,6 +56,7 @@ test('@smoke Funnel sendet HubSpot-Form-Payload mit UTM-Feldern (Mock)', async (
   expect(fields.utm_source).toBe('playwright');
   expect(fields.utm_medium).toBe('smoke');
   expect(fields.utm_campaign).toBe('t1-11');
+  expect(fields.interesse).toBe('Wärmepumpe');
 });
 
 for (const path of [
