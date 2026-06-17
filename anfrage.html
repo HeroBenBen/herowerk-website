@@ -281,9 +281,9 @@
       transform: translateY(-1px);
     }
     .answer-card.selected {
-      border-color: var(--green);
-      background: var(--green-light);
-      box-shadow: 0 0 0 3px rgba(183,217,0,0.25);
+      border-color: var(--schiefer);
+      background: #eef6b8;
+      box-shadow: 0 0 0 4px rgba(33,48,53,0.18), inset 4px 0 0 var(--green);
     }
     .answer-card-icon {
       flex-shrink: 0; width: 60px; height: 60px;
@@ -577,8 +577,12 @@
     [data-theme='dark'] .alter-select {
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23d1d5db' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
     }
-    [data-theme='dark'] .answer-card:hover,
-    [data-theme='dark'] .answer-card.selected { border-color: var(--green); }
+    [data-theme='dark'] .answer-card:hover { border-color: var(--green); }
+    [data-theme='dark'] .answer-card.selected {
+      border-color: #ffffff;
+      background: rgba(183,217,0,0.18);
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.24), inset 4px 0 0 var(--green);
+    }
     [data-theme='dark'] .answer-card-icon { background: rgba(255,255,255,0.06); }
     [data-theme='dark'] .answer-card-icon svg { stroke: #d1d5db; }
     [data-theme='dark'] .answer-card:hover .answer-card-icon,
@@ -654,15 +658,15 @@
 
     <button type="button" class="theme-toggle" data-theme-toggle style="align-self:flex-start;margin-bottom:24px;" aria-label="Theme wechseln"><span aria-hidden="true"></span></button>
 
-    <h2 class="trust-headline">
+    <h2 class="trust-headline" id="trustHeadline">
       Deine <em>Wärmepumpe</em><br>aus Meisterhand.
     </h2>
-    <p class="trust-sub">
+    <p class="trust-sub" id="trustSub">
       In wenigen Schritten zum kostenlosen Angebot. Wir prüfen deine Förderfähigkeit und melden uns innerhalb von 48 Stunden.
     </p>
 
     <div class="trust-usps">
-      <div class="trust-usp">
+      <div class="trust-usp" id="trustUspFoerderung">
         <div class="trust-usp-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
@@ -680,7 +684,7 @@
           Durchschnittliche Projektlaufzeit in der Region
         </div>
       </div>
-      <div class="trust-usp">
+      <div class="trust-usp" id="trustUspVorschuss">
         <div class="trust-usp-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
@@ -711,8 +715,8 @@
       <span class="partner-badge pb-vaillant"><img src="logo-vaillant.svg" alt="Vaillant Group" width="72" height="24" loading="lazy" decoding="async"></span>
 
       <!-- KfW -->
-      <span class="partner-badge"><img src="logo-kfw.svg" alt="KfW" width="72" height="24" loading="lazy" decoding="async"></span>
-      <span class="partner-badge"><img src="logo-proklima.svg" alt="proKlima Hannover" width="72" height="24" loading="lazy" decoding="async"></span>
+      <span class="partner-badge" id="partnerKfw"><img src="logo-kfw.svg" alt="KfW" width="72" height="24" loading="lazy" decoding="async"></span>
+      <span class="partner-badge" id="partnerProklima"><img src="logo-proklima.svg" alt="proKlima Hannover" width="72" height="24" loading="lazy" decoding="async"></span>
     </div>
 
     <div class="trust-rating">
@@ -740,7 +744,7 @@
         <img src="herowerk-logo-stacked.png" alt="HeroWerk" class="logo-dark" width="607" height="337" style="height:32px;width:auto;" decoding="async"
           onerror="this.style.display='none';"><img src="herowerk-logo-stacked-light.png" alt="HeroWerk" class="logo-light" width="607" height="337" style="height:32px;width:auto;" decoding="async">
       </div>
-      <span class="funnel-step-counter" id="stepCounter">Schritt 1 von 9</span>
+      <span class="funnel-step-counter" id="stepCounter">Schritt 1 von 11</span>
       <a href="/" class="funnel-close-link">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         Abbrechen
@@ -761,9 +765,106 @@
     <!-- ── Fragen-Inhalt ── -->
     <div class="funnel-content">
 
+      <!-- ──────────── SCHRITT 0: Interesse ──────────── -->
+      <div class="step active" data-step="0">
+        <h2 class="step-question">Wofür interessierst du dich?</h2>
+        <p class="step-hint">Mehrfachauswahl möglich. Tippe alles an, was passt.</p>
+        <div class="answer-grid cols-1">
+          <div class="answer-card" data-value="Wärmepumpe" onclick="toggleInteresse(this)">
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(0.023592,0.000000,0.000000,-0.023592,-18.668141,68.794766)">
+    <path vector-effect="non-scaling-stroke" d="M 1692.8125 2133.671875 L 907.03125 2133.671875 C 889.921875 2133.671875 876.054688 2147.578125 876.054688 2164.6875 L 876.054688 2720.039062 C 876.054688 2737.148438 889.921875 2751.015625 907.03125 2751.015625 L 1692.8125 2751.015625 C 1709.921875 2751.015625 1723.789062 2737.148438 1723.789062 2720.039062 L 1723.789062 2164.6875 C 1723.789062 2147.578125 1709.921875 2133.671875 1692.8125 2133.671875 Z M 1692.8125 2133.671875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 960.078125 2442.34375 C 960.078125 2561.679688 1056.796875 2658.398438 1176.132812 2658.398438 C 1295.429688 2658.398438 1392.1875 2561.679688 1392.1875 2442.34375 C 1392.1875 2323.046875 1295.429688 2226.289062 1176.132812 2226.289062 C 1056.796875 2226.289062 960.078125 2323.046875 960.078125 2442.34375 Z M 960.078125 2442.34375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1177.34375 2483.984375 C 1185.703125 2533.90625 1207.5 2607.539062 1262.265625 2579.648438 C 1362.1875 2528.789062 1350.117188 2363.710938 1311.054688 2400.507812 C 1279.609375 2430.117188 1265.039062 2464.21875 1215.429688 2456.210938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1211.5625 2420.46875 C 1250.625 2388.28125 1303.515625 2332.578125 1251.953125 2299.0625 C 1157.929688 2237.96875 1021.015625 2330.976562 1072.421875 2346.40625 C 1113.789062 2358.828125 1150.585938 2354.414062 1168.476562 2401.367188 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1139.414062 2422.578125 C 1092.03125 2404.84375 1017.34375 2386.914062 1014.140625 2448.28125 C 1008.242188 2560.273438 1157.1875 2632.34375 1144.882812 2580.117188 C 1134.960938 2538.085938 1112.734375 2508.4375 1144.453125 2469.453125 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1134.453125 2442.34375 C 1134.453125 2465.351562 1153.125 2484.023438 1176.132812 2484.023438 C 1199.140625 2484.023438 1217.773438 2465.351562 1217.773438 2442.34375 C 1217.773438 2419.335938 1199.140625 2400.664062 1176.132812 2400.664062 C 1153.125 2400.664062 1134.453125 2419.335938 1134.453125 2442.34375 Z M 1134.453125 2442.34375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1618.125 2633.632812 L 1468.515625 2633.632812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1618.125 2564.882812 L 1468.515625 2564.882812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1618.125 2496.09375 L 1468.515625 2496.09375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1618.125 2427.34375 L 1468.515625 2427.34375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1618.125 2358.59375 L 1468.515625 2358.59375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1468.515625 2226.289062 L 1504.648438 2226.289062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1581.992188 2226.289062 L 1618.125 2226.289062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1064.882812 2133.671875 L 1064.882812 2063.671875 L 994.882812 2063.671875 L 994.882812 2133.671875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 945.3125 2063.671875 L 1111.015625 2063.671875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1608.398438 2133.671875 L 1608.398438 2063.671875 L 1538.398438 2063.671875 L 1538.398438 2133.671875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1488.828125 2063.671875 L 1654.53125 2063.671875 "/>
+  </g>
+</svg></div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">Wärmepumpe</div>
+              <div class="answer-card-sub">Heizen mit Umweltwärme + bis zu 70 % Förderung</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="Photovoltaik" onclick="toggleInteresse(this)">
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(0.026128,0.000000,0.000000,-0.026128,-60.575015,40.326699)">
+    <path vector-effect="non-scaling-stroke" d="M 2963.789062 1027.304688 C 3030.390625 1047.8125 3078.789062 1109.765625 3078.789062 1183.085938 C 3078.789062 1273.085938 3005.859375 1346.054688 2915.859375 1346.054688 C 2825.859375 1346.054688 2752.890625 1273.085938 2752.890625 1183.085938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 3014.726562 861.953125 L 2400.546875 861.953125 L 2499.414062 1183.085938 L 2915.859375 1183.085938 Z M 3014.726562 861.953125 "/>
+    <path vector-effect="non-scaling-stroke" d="M 2450 1022.5 L 2965.273438 1022.5 "/>
+    <path vector-effect="non-scaling-stroke" d="M 2605.273438 861.953125 L 2638.242188 1183.085938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 2810 861.953125 L 2777.03125 1183.085938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 2394.960938 702.8125 L 3014.726562 702.8125 "/>
+    <path vector-effect="non-scaling-stroke" d="M 2636.132812 702.8125 L 2665.351562 861.953125 "/>
+    <path vector-effect="non-scaling-stroke" d="M 2749.921875 861.953125 L 2779.140625 702.8125 "/>
+    <path vector-effect="non-scaling-stroke" d="M 2915.859375 1405.78125 L 2915.859375 1465.507812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 2722.96875 1294.414062 L 2671.25 1324.296875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 3108.710938 1071.71875 L 3160.429688 1041.875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 3108.710938 1294.414062 L 3160.429688 1324.296875 "/>
+  </g>
+</svg></div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">Photovoltaik</div>
+              <div class="answer-card-sub">Eigenen Solarstrom erzeugen</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="Klimaanlage" onclick="toggleInteresse(this)">
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(0.018617,0.000000,0.000000,-0.018617,-100.423097,31.908370)">
+    <path vector-effect="non-scaling-stroke" d="M 6043.59375 882.851562 C 6043.59375 882.851562 6078.867188 855.585938 6043.59375 800.859375 C 6008.320312 746.171875 6043.59375 718.90625 6043.59375 718.90625 "/>
+    <path vector-effect="non-scaling-stroke" d="M 5927.265625 882.851562 C 5927.265625 882.851562 5962.539062 855.585938 5927.265625 800.859375 C 5891.992188 746.171875 5927.265625 718.90625 5927.265625 718.90625 "/>
+    <path vector-effect="non-scaling-stroke" d="M 5810.898438 882.851562 C 5810.898438 882.851562 5846.171875 855.585938 5810.898438 800.859375 C 5775.625 746.171875 5810.898438 718.90625 5810.898438 718.90625 "/>
+    <path vector-effect="non-scaling-stroke" d="M 5710.351562 1038.554688 L 6193.046875 1038.554688 "/>
+    <path vector-effect="non-scaling-stroke" d="M 6401.757812 1009.921875 C 6401.757812 990.273438 6385.820312 974.335938 6366.171875 974.335938 L 5537.265625 974.335938 C 5517.578125 974.335938 5501.640625 990.273438 5501.640625 1009.921875 L 5501.640625 1212.578125 C 5501.640625 1259.375 5539.609375 1297.34375 5586.40625 1297.34375 L 6222.539062 1297.34375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 6282.304688 974.335938 L 6282.304688 1044.960938 C 6282.304688 1076.914062 6256.445312 1102.773438 6224.492188 1102.773438 L 5678.90625 1102.773438 C 5646.992188 1102.773438 5621.132812 1076.914062 5621.132812 1044.960938 L 5621.132812 974.335938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 5775.664062 1203.398438 C 5775.664062 1204.21875 5774.960938 1204.882812 5774.140625 1204.882812 C 5773.320312 1204.882812 5772.65625 1204.21875 5772.65625 1203.398438 C 5772.65625 1202.539062 5773.320312 1201.875 5774.140625 1201.875 C 5774.960938 1201.875 5775.664062 1202.539062 5775.664062 1203.398438 Z M 5775.664062 1203.398438 "/>
+    <path vector-effect="non-scaling-stroke" d="M 5829.726562 1203.398438 C 5829.726562 1204.21875 5829.023438 1204.882812 5828.203125 1204.882812 C 5827.382812 1204.882812 5826.71875 1204.21875 5826.71875 1203.398438 C 5826.71875 1202.539062 5827.382812 1201.875 5828.203125 1201.875 C 5829.023438 1201.875 5829.726562 1202.539062 5829.726562 1203.398438 Z M 5829.726562 1203.398438 "/>
+    <path vector-effect="non-scaling-stroke" d="M 5621.132812 1203.398438 L 5723.085938 1203.398438 "/>
+    <path vector-effect="non-scaling-stroke" d="M 6474.960938 1374.804688 L 6425.976562 1325.507812 L 6376.992188 1374.804688 "/>
+    <path vector-effect="non-scaling-stroke" d="M 6339.414062 1353.203125 L 6357.460938 1286.171875 L 6290.429688 1268.164062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 6290.429688 1225.078125 L 6357.460938 1207.03125 L 6339.414062 1140.039062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 6376.992188 1118.398438 L 6425.976562 1167.695312 L 6475 1118.710938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 6512.539062 1140.039062 L 6494.53125 1207.03125 L 6561.523438 1225.078125 "/>
+    <path vector-effect="non-scaling-stroke" d="M 6561.289062 1268.164062 L 6494.296875 1286.171875 L 6512.304688 1353.203125 "/>
+    <path vector-effect="non-scaling-stroke" d="M 6425.976562 1419.84375 L 6425.976562 1246.601562 "/>
+    <path vector-effect="non-scaling-stroke" d="M 6276.015625 1333.085938 L 6425.976562 1246.601562 "/>
+    <path vector-effect="non-scaling-stroke" d="M 6276.015625 1160.15625 L 6425.976562 1246.601562 "/>
+    <path vector-effect="non-scaling-stroke" d="M 6425.976562 1073.359375 L 6425.976562 1246.601562 "/>
+    <path vector-effect="non-scaling-stroke" d="M 6575.9375 1160.15625 L 6425.976562 1246.601562 "/>
+    <path vector-effect="non-scaling-stroke" d="M 6575.9375 1333.085938 L 6425.976562 1246.601562 "/>
+  </g>
+</svg></div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">Klimaanlage</div>
+              <div class="answer-card-sub">Kühlen im Sommer, heizen im Übergang</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+        </div>
+        <div class="step-nav">
+          <button class="btn-next" id="interesseNextBtn" disabled onclick="applyInteresseRouting()">
+            Weiter
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+
       <!-- ──────────── SCHRITT 1: Gebäudetyp ──────────── -->
-      <div class="step active" data-step="1">
-        <h2 class="step-question">Für welches Gebäude suchst du eine Wärmepumpe?</h2>
+      <div class="step" data-step="1">
+        <h2 class="step-question" id="step1Question">Für welches Gebäude suchst du eine Wärmepumpe?</h2>
         <p class="step-hint">Wähle eine Option. Wir leiten dich direkt weiter.</p>
         <div class="answer-grid">
           <div class="answer-card" data-value="Einfamilienhaus" onclick="selectAndAdvance(this)">
@@ -990,15 +1091,47 @@
         <p class="step-hint">Fußbodenheizung ermöglicht niedrigere Vorlauftemperaturen und höhere Effizienz.</p>
         <div class="answer-grid">
           <div class="answer-card" data-value="Heizkörper" onclick="selectAndAdvance(this)">
-            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 8c2-3-2-3 0-6"/><path d="M15.5 8c2-3-2-3 0-6"/><path d="M6 10h.01"/><path d="M6 14h.01"/><path d="M10 16v-4"/><path d="M14 16v-4"/><path d="M18 16v-4"/><path d="M20 6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3"/><path d="M5 20v2"/><path d="M19 20v2"/></svg></div>
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(0.018704,0.000000,0.000000,-0.018704,-12.313582,105.007964)">
+    <path vector-effect="non-scaling-stroke" d="M 1669.179688 4649.492188 L 930.664062 4649.492188 C 903.046875 4649.492188 880.664062 4671.914062 880.664062 4699.492188 L 880.664062 5122.5 C 880.664062 5150.117188 903.046875 5172.5 930.664062 5172.5 L 1669.179688 5172.5 C 1696.796875 5172.5 1719.179688 5150.117188 1719.179688 5122.5 L 1719.179688 4699.492188 C 1719.179688 4671.914062 1696.796875 4649.492188 1669.179688 4649.492188 Z M 1669.179688 4649.492188 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1000.46875 5090.859375 L 1000.46875 4766.875 C 1000.46875 4747.539062 1016.132812 4731.875 1035.46875 4731.875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1120.234375 5090.859375 L 1120.234375 4766.875 C 1120.234375 4747.539062 1135.898438 4731.875 1155.234375 4731.875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1240.039062 5090.859375 L 1240.039062 4766.875 C 1240.039062 4747.539062 1255.703125 4731.875 1275.039062 4731.875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1359.804688 5090.859375 L 1359.804688 4766.875 C 1359.804688 4747.539062 1375.46875 4731.875 1394.804688 4731.875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1479.609375 5090.859375 L 1479.609375 4766.875 C 1479.609375 4747.539062 1495.273438 4731.875 1514.609375 4731.875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1599.375 5090.859375 L 1599.375 4766.875 C 1599.375 4747.539062 1615.078125 4731.875 1634.375 4731.875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 880.664062 4705.039062 L 810.664062 4705.039062 L 810.664062 4773.945312 L 880.664062 4773.945312 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1719.179688 4773.945312 L 1789.179688 4773.945312 L 1789.179688 4705.039062 L 1719.179688 4705.039062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 880.664062 5060.859375 L 855.664062 5060.859375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1744.179688 5060.859375 L 1719.179688 5060.859375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 845.664062 4705.039062 L 845.664062 4577.539062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1754.179688 4705.039062 L 1754.179688 4577.539062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 765.273438 4577.539062 L 1834.570312 4577.539062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1384.335938 5367.773438 C 1384.335938 5367.773438 1409.960938 5347.96875 1384.335938 5308.28125 C 1358.75 5268.59375 1384.335938 5248.789062 1384.335938 5248.789062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1299.921875 5367.773438 C 1299.921875 5367.773438 1325.507812 5347.96875 1299.921875 5308.28125 C 1274.335938 5268.59375 1299.921875 5248.789062 1299.921875 5248.789062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1215.507812 5367.773438 C 1215.507812 5367.773438 1241.09375 5347.96875 1215.507812 5308.28125 C 1189.882812 5268.59375 1215.507812 5248.789062 1215.507812 5248.789062 "/>
+  </g>
+</svg></div>
             <div class="answer-card-text">
               <div class="answer-card-label">Heizkörper</div>
-              <div class="answer-card-sub">Plattenheizkörper / Wandgerät</div>
             </div>
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
           <div class="answer-card" data-value="Fußbodenheizung" onclick="selectAndAdvance(this)">
-            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12q2.5 2 5 0t5 0 5 0 5 0"/><path d="M2 19q2.5 2 5 0t5 0 5 0 5 0"/><path d="M2 5q2.5 2 5 0t5 0 5 0 5 0"/></svg></div>
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(0.019309,0.000000,0.000000,-0.019309,-13.100317,81.688490)">
+    <path vector-effect="non-scaling-stroke" d="M 1338.476562 3591.640625 L 1540.039062 3475.273438 C 1562.109375 3462.539062 1562.109375 3441.835938 1540.039062 3429.0625 C 1517.890625 3416.328125 1482.070312 3416.328125 1459.960938 3429.0625 L 1139.84375 3613.90625 C 1117.773438 3626.640625 1081.914062 3626.640625 1059.84375 3613.90625 C 1037.734375 3601.132812 1037.734375 3580.46875 1059.84375 3567.695312 L 1379.960938 3382.851562 C 1402.03125 3370.117188 1402.03125 3349.414062 1379.960938 3336.640625 C 1357.851562 3323.90625 1322.03125 3323.90625 1299.921875 3336.640625 L 979.804688 3521.484375 C 957.695312 3534.257812 921.875 3534.257812 899.765625 3521.484375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1319.335938 3652.1875 L 996.367188 3465.703125 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1451.796875 3609.179688 L 1099.84375 3405.976562 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1569.101562 3557.382812 L 1203.359375 3346.210938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1738.828125 3567.109375 L 1817.8125 3521.484375 L 1299.921875 3222.460938 L 782.03125 3521.484375 L 1080.3125 3693.710938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1817.8125 3696.757812 L 1299.921875 3995.742188 L 925.117188 3779.375 L 925.117188 3695.3125 C 925.117188 3695.3125 1281.210938 3731.640625 1647.65625 3514.453125 L 1817.8125 3612.695312 Z M 1817.8125 3696.757812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1647.65625 3598.515625 L 1647.65625 3514.453125 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1299.921875 3741.289062 C 1406.367188 3714.414062 1526.445312 3670.3125 1647.65625 3598.515625 L 1817.8125 3696.757812 L 1299.921875 3995.742188 L 925.117188 3779.375 C 925.117188 3779.375 997.34375 3786.71875 1110.234375 3774.960938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1180.15625 3765.820312 C 1193.007812 3763.789062 1206.210938 3761.484375 1219.765625 3758.945312 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1817.8125 3696.757812 L 1817.8125 3612.695312 "/>
+  </g>
+</svg></div>
             <div class="answer-card-text">
               <div class="answer-card-label">Fußbodenheizung</div>
               <div class="answer-card-sub">Flächenheizung im Boden</div>
@@ -1006,7 +1139,40 @@
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
           <div class="answer-card" data-value="Heizkörper und Fußbodenheizung" onclick="selectAndAdvance(this)">
-            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M12 3v18"/></svg></div>
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="translate(12,6.2) scale(0.56) translate(-12.0002,-13.8256)">
+    <g transform="matrix(0.018704,0,0,-0.018704,-12.313582,105.007964)">
+      <path vector-effect="non-scaling-stroke" d="M 1669.179688 4649.492188 L 930.664062 4649.492188 C 903.046875 4649.492188 880.664062 4671.914062 880.664062 4699.492188 L 880.664062 5122.5 C 880.664062 5150.117188 903.046875 5172.5 930.664062 5172.5 L 1669.179688 5172.5 C 1696.796875 5172.5 1719.179688 5150.117188 1719.179688 5122.5 L 1719.179688 4699.492188 C 1719.179688 4671.914062 1696.796875 4649.492188 1669.179688 4649.492188 Z M 1669.179688 4649.492188 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1000.46875 5090.859375 L 1000.46875 4766.875 C 1000.46875 4747.539062 1016.132812 4731.875 1035.46875 4731.875 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1120.234375 5090.859375 L 1120.234375 4766.875 C 1120.234375 4747.539062 1135.898438 4731.875 1155.234375 4731.875 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1240.039062 5090.859375 L 1240.039062 4766.875 C 1240.039062 4747.539062 1255.703125 4731.875 1275.039062 4731.875 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1359.804688 5090.859375 L 1359.804688 4766.875 C 1359.804688 4747.539062 1375.46875 4731.875 1394.804688 4731.875 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1479.609375 5090.859375 L 1479.609375 4766.875 C 1479.609375 4747.539062 1495.273438 4731.875 1514.609375 4731.875 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1599.375 5090.859375 L 1599.375 4766.875 C 1599.375 4747.539062 1615.078125 4731.875 1634.375 4731.875 "/>
+      <path vector-effect="non-scaling-stroke" d="M 880.664062 4705.039062 L 810.664062 4705.039062 L 810.664062 4773.945312 L 880.664062 4773.945312 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1719.179688 4773.945312 L 1789.179688 4773.945312 L 1789.179688 4705.039062 L 1719.179688 4705.039062 "/>
+      <path vector-effect="non-scaling-stroke" d="M 880.664062 5060.859375 L 855.664062 5060.859375 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1744.179688 5060.859375 L 1719.179688 5060.859375 "/>
+      <path vector-effect="non-scaling-stroke" d="M 845.664062 4705.039062 L 845.664062 4577.539062 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1754.179688 4705.039062 L 1754.179688 4577.539062 "/>
+      <path vector-effect="non-scaling-stroke" d="M 765.273438 4577.539062 L 1834.570312 4577.539062 "/>
+    </g>
+  </g>
+  <g transform="translate(12,16.4) scale(0.5) translate(-11.9999,-12.0003)">
+    <g transform="matrix(0.019309,0,0,-0.019309,-13.100317,81.688490)">
+      <path vector-effect="non-scaling-stroke" d="M 1338.476562 3591.640625 L 1540.039062 3475.273438 C 1562.109375 3462.539062 1562.109375 3441.835938 1540.039062 3429.0625 C 1517.890625 3416.328125 1482.070312 3416.328125 1459.960938 3429.0625 L 1139.84375 3613.90625 C 1117.773438 3626.640625 1081.914062 3626.640625 1059.84375 3613.90625 C 1037.734375 3601.132812 1037.734375 3580.46875 1059.84375 3567.695312 L 1379.960938 3382.851562 C 1402.03125 3370.117188 1402.03125 3349.414062 1379.960938 3336.640625 C 1357.851562 3323.90625 1322.03125 3323.90625 1299.921875 3336.640625 L 979.804688 3521.484375 C 957.695312 3534.257812 921.875 3534.257812 899.765625 3521.484375 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1319.335938 3652.1875 L 996.367188 3465.703125 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1451.796875 3609.179688 L 1099.84375 3405.976562 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1569.101562 3557.382812 L 1203.359375 3346.210938 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1738.828125 3567.109375 L 1817.8125 3521.484375 L 1299.921875 3222.460938 L 782.03125 3521.484375 L 1080.3125 3693.710938 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1817.8125 3696.757812 L 1299.921875 3995.742188 L 925.117188 3779.375 L 925.117188 3695.3125 C 925.117188 3695.3125 1281.210938 3731.640625 1647.65625 3514.453125 L 1817.8125 3612.695312 Z M 1817.8125 3696.757812 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1647.65625 3598.515625 L 1647.65625 3514.453125 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1299.921875 3741.289062 C 1406.367188 3714.414062 1526.445312 3670.3125 1647.65625 3598.515625 L 1817.8125 3696.757812 L 1299.921875 3995.742188 L 925.117188 3779.375 C 925.117188 3779.375 997.34375 3786.71875 1110.234375 3774.960938 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1180.15625 3765.820312 C 1193.007812 3763.789062 1206.210938 3761.484375 1219.765625 3758.945312 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1817.8125 3696.757812 L 1817.8125 3612.695312 "/>
+    </g>
+  </g>
+</svg></div>
             <div class="answer-card-text">
               <div class="answer-card-label">Beides</div>
               <div class="answer-card-sub">Heizkörper und Fußbodenheizung</div>
@@ -1032,17 +1198,39 @@
       <!-- ──────────── SCHRITT 7: Eigentümer? ──────────── -->
       <div class="step" data-step="7">
         <h2 class="step-question">Bist du Eigentümer der Immobilie?</h2>
-        <p class="step-hint">Nur Eigentümer oder bevollmächtigte Personen können Förderanträge stellen.</p>
+        <p class="step-hint" id="step7Hint">Nur Eigentümer oder bevollmächtigte Personen können Förderanträge stellen.</p>
         <div class="answer-grid">
           <div class="answer-card" data-value="Eigentümer: Ja" onclick="selectAndAdvance(this)">
-            <div class="answer-card-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="16" r="8"/><path d="M8 42c0-8.8 7.2-16 16-16s16 7.2 16 16"/><polyline points="20 32 24 36 34 26"/></svg></div>
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(0.008341,0.000000,0.000000,-0.008341,-143.032418,137.139445)">
+    <path vector-effect="non-scaling-stroke" d="M 18971.289062 14961.210938 L 18971.289062 15587.382812 L 18472.1875 15587.382812 L 18472.1875 16086.484375 L 17388.59375 16086.484375 L 17388.59375 13920.585938 L 18971.289062 13920.585938 L 18971.289062 14510.3125 "/>
+    <path vector-effect="non-scaling-stroke" d="M 18472.1875 16086.484375 L 18971.289062 15587.382812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 17690.3125 15308.203125 L 18431.484375 15308.203125 "/>
+    <path vector-effect="non-scaling-stroke" d="M 17690.3125 15051.289062 L 18090.3125 15051.289062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 17690.3125 14794.492188 L 18431.484375 14794.492188 "/>
+    <path vector-effect="non-scaling-stroke" d="M 17665.78125 14188.515625 L 17919.296875 14462.304688 L 17919.296875 14188.515625 L 18066.992188 14322.695312 C 18069.492188 14325 18072.8125 14322.5 18072.8125 14318.28125 L 18072.8125 14166.914062 L 18253.398438 14166.914062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 18736.210938 14275.117188 L 18402.5 14166.914062 L 18510.703125 14500.585938 L 19525.898438 15515.78125 C 19561.09375 15550.898438 19618.085938 15550.898438 19653.203125 15515.78125 L 19751.40625 15417.617188 C 19786.484375 15382.5 19786.484375 15325.507812 19751.40625 15290.3125 Z M 18736.210938 14275.117188 "/>
+    <path vector-effect="non-scaling-stroke" d="M 19588.789062 15127.8125 L 19236.210938 15480.507812 L 18829.609375 15073.90625 "/>
+  </g>
+</svg></div>
             <div class="answer-card-text">
               <div class="answer-card-label">Ja, ich bin Eigentümer</div>
             </div>
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
           <div class="answer-card" data-value="Eigentümer: Nein / Mieter" onclick="selectAndAdvance(this)">
-            <div class="answer-card-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><path d="M6 24L24 8l18 16"/><path d="M10 22v18h28V22"/><rect x="19" y="30" width="10" height="10"/><path d="M20 12h-4a2 2 0 00-2 2v4"/></svg></div>
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(0.006945,0.000000,0.000000,-0.006945,-48.325705,115.447373)">
+    <path vector-effect="non-scaling-stroke" d="M 8856.71875 14852.5 L 9501.5625 14204.882812 L 9749.101562 14248.710938 L 9792.890625 14496.289062 L 9066.875 15222.304688 C 9142.304688 15410.898438 9103.671875 15634.414062 8950.976562 15787.109375 C 8746.5625 15991.484375 8415.15625 15991.484375 8210.742188 15787.109375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 7985.234375 14459.101562 L 7985.234375 14708.203125 C 7785.3125 14793.90625 7645.273438 14992.382812 7645.273438 15223.710938 C 7645.273438 15533.28125 7896.25 15784.296875 8205.859375 15784.296875 C 8515.429688 15784.296875 8766.40625 15533.28125 8766.40625 15223.710938 C 8766.40625 14992.382812 8626.367188 14793.90625 8426.484375 14708.203125 L 8426.484375 13608.710938 L 8205.859375 13454.414062 L 7985.234375 13608.710938 L 7985.234375 13805.585938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 7985.234375 13805.585938 L 8029.023438 13881.015625 L 7983.554688 13958.203125 L 7985.234375 14071.09375 L 8029.023438 14146.484375 L 7983.554688 14223.710938 L 7985.234375 14306.601562 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8245.742188 14399.101562 L 8245.742188 14508.085938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8245.742188 14668.203125 L 8245.742188 14687.1875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8245.742188 13799.6875 L 8245.742188 14241.484375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8113.554688 15367.304688 C 8113.554688 15316.40625 8154.882812 15275 8205.859375 15275 C 8256.835938 15275 8298.164062 15316.40625 8298.164062 15367.304688 C 8298.164062 15418.28125 8256.835938 15459.609375 8205.859375 15459.609375 C 8154.882812 15459.609375 8113.554688 15418.28125 8113.554688 15367.304688 Z M 8113.554688 15367.304688 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8547.65625 15939.414062 C 8512.421875 16077.617188 8415.625 16195.390625 8280.585938 16255.117188 C 8102.03125 16333.984375 7893.359375 16295 7755.3125 16156.914062 C 7617.304688 16018.90625 7578.320312 15810.3125 7657.1875 15631.71875 C 7736.09375 15453.203125 7916.601562 15341.484375 8111.5625 15350.507812 "/>
+  </g>
+</svg></div>
             <div class="answer-card-text">
               <div class="answer-card-label">Nein, ich bin Mieter</div>
               <div class="answer-card-sub">Wir beraten dich dennoch gerne</div>
@@ -1060,11 +1248,22 @@
 
       <!-- ──────────── SCHRITT 8: Zeitplan ──────────── -->
       <div class="step" data-step="8">
-        <h2 class="step-question">Wann soll die Wärmepumpe installiert werden?</h2>
-        <p class="step-hint">Für unsere Kapazitätsplanung und deine Förderantragsfrist.</p>
+        <h2 class="step-question" id="step8Question">Wann soll die Wärmepumpe installiert werden?</h2>
+        <p class="step-hint" id="step8Hint">Für unsere Kapazitätsplanung und deine Förderantragsfrist.</p>
         <div class="answer-grid">
           <div class="answer-card" data-value="Sofort / so schnell wie möglich" onclick="selectAndAdvance(this)">
-            <div class="answer-card-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="18"/><polyline points="24 14 24 24 32 28"/><path d="M38 10l4-4m-28 0l-4-4"/></svg></div>
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(0.007843,0.000000,0.000000,-0.007843,-15.742647,130.289522)">
+    <path vector-effect="non-scaling-stroke" d="M 2262.1875 15081.914062 C 2262.1875 15786.015625 2833.007812 16356.914062 3537.1875 16356.914062 C 4241.328125 16356.914062 4812.1875 15786.015625 4812.1875 15081.914062 C 4812.1875 14377.695312 4241.328125 13806.914062 3537.1875 13806.914062 C 2833.007812 13806.914062 2262.1875 14377.695312 2262.1875 15081.914062 Z M 2262.1875 15081.914062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 3537.1875 16090.390625 L 3537.1875 15186.914062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 3611.40625 15007.617188 L 3987.734375 14631.289062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 3432.1875 15081.914062 C 3432.1875 15139.804688 3479.179688 15186.914062 3537.1875 15186.914062 C 3595.15625 15186.914062 3642.1875 15139.804688 3642.1875 15081.914062 C 3642.1875 15023.90625 3595.15625 14976.914062 3537.1875 14976.914062 C 3479.179688 14976.914062 3432.1875 15023.90625 3432.1875 15081.914062 Z M 3432.1875 15081.914062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 3537.1875 16356.914062 L 3537.1875 16274.101562 "/>
+    <path vector-effect="non-scaling-stroke" d="M 3537.1875 13889.609375 L 3537.1875 13806.914062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4812.1875 15081.914062 L 4729.375 15081.914062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 2344.960938 15081.914062 L 2262.1875 15081.914062 "/>
+  </g>
+</svg></div>
             <div class="answer-card-text">
               <div class="answer-card-label">Sofort</div>
               <div class="answer-card-sub">So schnell wie möglich</div>
@@ -1072,14 +1271,52 @@
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
           <div class="answer-card" data-value="In 1–3 Monaten" onclick="selectAndAdvance(this)">
-            <div class="answer-card-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="10" width="36" height="32" rx="3"/><line x1="6" y1="20" x2="42" y2="20"/><line x1="16" y1="6" x2="16" y2="14"/><line x1="32" y1="6" x2="32" y2="14"/><line x1="14" y1="28" x2="18" y2="28"/><line x1="22" y1="28" x2="26" y2="28"/></svg></div>
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(0.009018,0.000000,0.000000,-0.009018,-62.802036,110.145056)">
+    <path vector-effect="non-scaling-stroke" d="M 7656.289062 11759.101562 L 7370.507812 11759.101562 C 7287.65625 11759.101562 7220.507812 11691.914062 7220.507812 11609.101562 L 7220.507812 9924.804688 C 7220.507812 9841.953125 7287.65625 9774.804688 7370.507812 9774.804688 L 9219.765625 9774.804688 C 9302.617188 9774.804688 9369.765625 9841.953125 9369.765625 9924.804688 L 9369.765625 11609.101562 C 9369.765625 11691.914062 9302.617188 11759.101562 9219.765625 11759.101562 L 9114.023438 11759.101562 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8724.023438 11759.101562 L 8046.289062 11759.101562 "/>
+    <path vector-effect="non-scaling-stroke" d="M 7761.289062 11426.484375 C 7703.28125 11426.484375 7656.289062 11473.515625 7656.289062 11531.484375 L 7656.289062 11887.695312 C 7656.289062 11945.703125 7703.28125 11992.695312 7761.289062 11992.695312 C 7819.257812 11992.695312 7866.289062 11945.703125 7866.289062 11887.695312 L 7866.289062 11531.484375 C 7866.289062 11473.515625 7819.257812 11426.484375 7761.289062 11426.484375 Z M 7761.289062 11426.484375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8829.023438 11426.484375 C 8771.015625 11426.484375 8724.023438 11473.515625 8724.023438 11531.484375 L 8724.023438 11887.695312 C 8724.023438 11945.703125 8771.015625 11992.695312 8829.023438 11992.695312 C 8886.992188 11992.695312 8934.023438 11945.703125 8934.023438 11887.695312 L 8934.023438 11531.484375 C 8934.023438 11473.515625 8886.992188 11426.484375 8829.023438 11426.484375 Z M 8829.023438 11426.484375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 7450.3125 11155.585938 L 9139.960938 11155.585938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 7659.53125 10487.890625 L 7803.828125 10487.890625 "/>
+    <path vector-effect="non-scaling-stroke" d="M 7659.53125 10183.398438 L 7803.828125 10183.398438 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8036.25 10792.5 L 8180.546875 10792.5 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8036.25 10487.890625 L 8180.546875 10487.890625 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8036.25 10183.398438 L 8180.546875 10183.398438 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8412.96875 10792.5 L 8557.304688 10792.5 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8412.96875 10487.890625 L 8557.304688 10487.890625 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8412.96875 10183.398438 L 8557.304688 10183.398438 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8789.6875 10792.5 L 8934.023438 10792.5 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8789.6875 10487.890625 L 8934.023438 10487.890625 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8789.6875 10183.398438 L 8934.023438 10183.398438 "/>
+  </g>
+</svg></div>
             <div class="answer-card-text">
               <div class="answer-card-label">In 1–3 Monaten</div>
             </div>
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
           <div class="answer-card" data-value="In 3–6 Monaten" onclick="selectAndAdvance(this)">
-            <div class="answer-card-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="10" width="36" height="32" rx="3"/><line x1="6" y1="20" x2="42" y2="20"/><line x1="16" y1="6" x2="16" y2="14"/><line x1="32" y1="6" x2="32" y2="14"/><line x1="14" y1="28" x2="18" y2="28"/><line x1="22" y1="28" x2="26" y2="28"/><line x1="30" y1="28" x2="34" y2="28"/><line x1="14" y1="35" x2="18" y2="35"/></svg></div>
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(0.009018,0.000000,0.000000,-0.009018,-62.802036,110.145056)">
+    <path vector-effect="non-scaling-stroke" d="M 7656.289062 11759.101562 L 7370.507812 11759.101562 C 7287.65625 11759.101562 7220.507812 11691.914062 7220.507812 11609.101562 L 7220.507812 9924.804688 C 7220.507812 9841.953125 7287.65625 9774.804688 7370.507812 9774.804688 L 9219.765625 9774.804688 C 9302.617188 9774.804688 9369.765625 9841.953125 9369.765625 9924.804688 L 9369.765625 11609.101562 C 9369.765625 11691.914062 9302.617188 11759.101562 9219.765625 11759.101562 L 9114.023438 11759.101562 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8724.023438 11759.101562 L 8046.289062 11759.101562 "/>
+    <path vector-effect="non-scaling-stroke" d="M 7761.289062 11426.484375 C 7703.28125 11426.484375 7656.289062 11473.515625 7656.289062 11531.484375 L 7656.289062 11887.695312 C 7656.289062 11945.703125 7703.28125 11992.695312 7761.289062 11992.695312 C 7819.257812 11992.695312 7866.289062 11945.703125 7866.289062 11887.695312 L 7866.289062 11531.484375 C 7866.289062 11473.515625 7819.257812 11426.484375 7761.289062 11426.484375 Z M 7761.289062 11426.484375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8829.023438 11426.484375 C 8771.015625 11426.484375 8724.023438 11473.515625 8724.023438 11531.484375 L 8724.023438 11887.695312 C 8724.023438 11945.703125 8771.015625 11992.695312 8829.023438 11992.695312 C 8886.992188 11992.695312 8934.023438 11945.703125 8934.023438 11887.695312 L 8934.023438 11531.484375 C 8934.023438 11473.515625 8886.992188 11426.484375 8829.023438 11426.484375 Z M 8829.023438 11426.484375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 7450.3125 11155.585938 L 9139.960938 11155.585938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 7659.53125 10487.890625 L 7803.828125 10487.890625 "/>
+    <path vector-effect="non-scaling-stroke" d="M 7659.53125 10183.398438 L 7803.828125 10183.398438 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8036.25 10792.5 L 8180.546875 10792.5 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8036.25 10487.890625 L 8180.546875 10487.890625 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8036.25 10183.398438 L 8180.546875 10183.398438 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8412.96875 10792.5 L 8557.304688 10792.5 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8412.96875 10487.890625 L 8557.304688 10487.890625 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8412.96875 10183.398438 L 8557.304688 10183.398438 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8789.6875 10792.5 L 8934.023438 10792.5 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8789.6875 10487.890625 L 8934.023438 10487.890625 "/>
+    <path vector-effect="non-scaling-stroke" d="M 8789.6875 10183.398438 L 8934.023438 10183.398438 "/>
+  </g>
+</svg></div>
             <div class="answer-card-text">
               <div class="answer-card-label">In 3–6 Monaten</div>
             </div>
@@ -1105,7 +1342,7 @@
       <!-- ──────────── SCHRITT 9: PLZ ──────────── -->
       <div class="step" data-step="9">
         <h2 class="step-question">In welcher PLZ befindet sich deine Immobilie?</h2>
-        <p class="step-hint">Wir prüfen, ob du im proKlima-Fördergebiet liegst (+5 % extra).</p>
+        <p class="step-hint" id="plzHint">Wir prüfen, ob du im proKlima-Fördergebiet liegst (+5 % extra).</p>
         <div class="plz-input-wrap">
           <label class="plz-input-label" for="plzInput">Postleitzahl</label>
           <input type="text" id="plzInput" class="plz-input"
@@ -1206,8 +1443,8 @@
           <strong>Wie geht es weiter?</strong><br>
           1. Wir rufen dich an und klären offene Fragen<br>
           2. Baubarkeitsprüfung vor Ort (kostenlos)<br>
-          3. Individuelles Angebot mit Förderberechnung<br>
-          4. Förderantrag stellen. Wir übernehmen das
+          <span id="successLine3">3. Individuelles Angebot mit Förderberechnung</span><br>
+          <span id="successLine4">4. Förderantrag stellen. Wir übernehmen das</span>
         </div>
       </div>
 
@@ -1217,10 +1454,10 @@
 
 <script>
   // ── Zustand ──────────────────────────────────
-  const stepOrder = [9,1,2,3,4,5,6,7,8,10];
+  let stepOrder = [0,9,1,2,3,4,5,6,7,8,10];
   let currentStep = stepOrder[0];
-  const TOTAL_STEPS = stepOrder.length;
-  const answers = {};
+  const answers = { interesse: [] };
+  window.__wpPfad = true;
 
   const plzMap = {'30159':'hannover','30161':'hannover','30163':'hannover','30165':'hannover','30167':'hannover','30169':'hannover','30171':'hannover','30173':'hannover','30175':'hannover','30177':'hannover','30179':'hannover','30419':'hannover','30449':'hannover','30451':'hannover','30453':'hannover','30455':'hannover','30457':'hannover','30459':'hannover','30519':'hannover','30521':'hannover','30539':'hannover','30559':'hannover','30625':'hannover','30627':'hannover','30629':'hannover','30655':'hannover','30657':'hannover','30659':'hannover','30669':'hannover','30851':'langenhagen','30853':'langenhagen','30855':'langenhagen','30926':'seelze','30880':'laatzen','30966':'hemmingen','30952':'ronnenberg','30900':'wedemark','30938':'burgwedel','30916':'isernhagen','30823':'garbsen','30826':'garbsen','30827':'garbsen','31275':'lehrte','31311':'uetze','30974':'wennigsen','30890':'barsinghausen','30989':'gehrden','31832':'springe','30982':'pattensen','31319':'sehnde','31535':'neustadt','31515':'wunstorf','31547':'rehburg-loccum','31542':'bad-nenndorf','31552':'rodenberg','31553':'sachsenhagen','31559':'hohnhorst','31867':'lauenau','31863':'coppenbrügge','31848':'bad-münder','31785':'hameln','31787':'hameln','31789':'hameln','31840':'hessisch-oldendorf','31675':'bückeburg','31655':'stadthagen','31683':'obernkirchen','31688':'nienstädt','31691':'helpsen','31694':'niedernwöhren','31699':'beckedorf','29221':'celle','29223':'celle','29225':'celle','29227':'celle','29229':'celle','31303':'burgdorf','31234':'edemissen','31226':'peine','31228':'peine','31246':'ilsede','31241':'ilsede','31249':'hohenhameln','31171':'nordstemmen','31174':'schellerten','31177':'harsum','31180':'giesen','31185':'söhlde','31061':'alfeld','31073':'grünenplan','31008':'elze','31028':'gronau','31020':'salzhemmendorf'};
   const proklimaGemeinden = ['hannover','langenhagen','seelze','laatzen','hemmingen','ronnenberg'];
@@ -1236,7 +1473,7 @@
     return {status:'aussen', val};
   }
   function plzFeedback(result) {
-    if (result.status === 'proklima') return '✓ ' + result.label + ', wir sind für dich da. proKlima-Fördergebiet, bis zu 5 % (max. 1.500 €) extra möglich.';
+    if (result.status === 'proklima' && window.__wpPfad !== false) return '✓ ' + result.label + ', wir sind für dich da. proKlima-Fördergebiet, bis zu 5 % (max. 1.500 €) extra möglich.';
     if (result.status === 'region') return '✓ ' + result.label + ', wir sind für dich da.';
     if (result.status === 'erweitert') return '✓ PLZ ' + result.val + ' liegt möglicherweise in unserem Einzugsgebiet, wir prüfen die Verfügbarkeit.';
     if (result.status === 'aussen') return 'Diese PLZ liegt außerhalb unseres Einzugsgebiets (Region Hannover).';
@@ -1246,9 +1483,66 @@
 
   // Fortschritt-Prozentsatz pro Schritt
   const progress = {};
-  stepOrder.forEach((step, index) => {
-    progress[step] = Math.round(((index + 1) / TOTAL_STEPS) * 99);
-  });
+  function recomputeProgress() {
+    Object.keys(progress).forEach((key) => delete progress[key]);
+    stepOrder.forEach((step, index) => {
+      progress[step] = Math.round(((index + 1) / stepOrder.length) * 99);
+    });
+  }
+
+  function toggleInteresse(card) {
+    card.classList.toggle('selected');
+    answers.interesse = Array.from(document.querySelectorAll('.step[data-step="0"] .answer-card.selected'))
+      .map((selectedCard) => selectedCard.dataset.value);
+    document.getElementById('interesseNextBtn').disabled = answers.interesse.length === 0;
+  }
+
+  function applyR17PfadContent() {
+    const isWp = window.__wpPfad !== false;
+    const setText = (id, wpText, neutralText) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = isWp ? wpText : neutralText;
+    };
+    const setHtml = (id, wpHtml, neutralHtml) => {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = isWp ? wpHtml : neutralHtml;
+    };
+    ['trustUspFoerderung', 'trustUspVorschuss', 'partnerKfw', 'partnerProklima'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = isWp ? '' : 'none';
+    });
+    setHtml('trustHeadline', 'Deine <em>Wärmepumpe</em><br>aus Meisterhand.', 'Deine Lösung<br>aus Meisterhand.');
+    setText('trustSub', 'In wenigen Schritten zum kostenlosen Angebot. Wir prüfen deine Förderfähigkeit und melden uns innerhalb von 48 Stunden.', 'In wenigen Schritten zu deinem kostenlosen Angebot. Wir melden uns innerhalb von 48 Stunden.');
+    setText('plzHint', 'Wir prüfen, ob du im proKlima-Fördergebiet liegst (+5 % extra).', 'Wir prüfen, ob wir in deiner Region für dich da sind.');
+    setText('step1Question', 'Für welches Gebäude suchst du eine Wärmepumpe?', 'Für welches Gebäude suchst du eine Lösung?');
+    setText('step7Hint', 'Nur Eigentümer oder bevollmächtigte Personen können Förderanträge stellen.', 'Wir beraten Eigentümer und Mieter gleichermaßen.');
+    setText('step8Question', 'Wann soll die Wärmepumpe installiert werden?', 'Wann soll es losgehen?');
+    setText('step8Hint', 'Für unsere Kapazitätsplanung und deine Förderantragsfrist.', 'Für unsere Kapazitätsplanung.');
+    setText('successLine3', '3. Individuelles Angebot mit Förderberechnung', '3. Individuelles Angebot');
+    setText('successLine4', '4. Förderantrag stellen. Wir übernehmen das', '4. Auf Wunsch Beratung zu passenden Förderungen');
+    const plzInput = document.getElementById('plzInput');
+    if (plzInput && plzInput.value) validatePlz(plzInput);
+  }
+
+  function applyInteresseRouting() {
+    const interesse = answers.interesse || [];
+    if (interesse.includes('Wärmepumpe')) {
+      stepOrder = [0,9,1,2,3,4,5,6,7,8,10];
+    } else if (interesse.includes('Photovoltaik')) {
+      stepOrder = [0,9,1,7,8,10];
+    } else {
+      stepOrder = [0,9,10];
+    }
+    window.__wpPfad = interesse.includes('Wärmepumpe');
+    Object.keys(answers).forEach((key) => {
+      if (key === 'interesse' || key === 'plz') return;
+      const match = key.match(/^step(\d+)$/);
+      if (match && !stepOrder.includes(Number(match[1]))) delete answers[key];
+    });
+    recomputeProgress();
+    applyR17PfadContent();
+    goNext();
+  }
 
   // ── Schritt anzeigen ─────────────────────────
   function showStep(n) {
@@ -1259,6 +1553,22 @@
     if (target) {
       target.classList.add('active');
       currentStep = n;
+      target.querySelectorAll('.answer-card').forEach((card) => card.classList.remove('selected'));
+      if (n === 0) {
+        const selectedInteresse = answers.interesse || [];
+        target.querySelectorAll('.answer-card').forEach((card) => {
+          if (selectedInteresse.includes(card.dataset.value)) card.classList.add('selected');
+        });
+        const interesseBtn = document.getElementById('interesseNextBtn');
+        if (interesseBtn) interesseBtn.disabled = selectedInteresse.length === 0;
+      } else {
+        const selectedValue = answers['step' + n];
+        if (selectedValue) {
+          const selectedCard = Array.from(target.querySelectorAll('.answer-card'))
+            .find((card) => card.dataset.value === selectedValue);
+          if (selectedCard) selectedCard.classList.add('selected');
+        }
+      }
       updateProgress(n);
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1271,7 +1581,7 @@
     document.getElementById('progressPercent').textContent = pct + ' % geschafft';
     const position = stepOrder.indexOf(n) + 1;
     document.getElementById('stepCounter').textContent =
-      `Schritt ${position} von ${TOTAL_STEPS}`;
+      `Schritt ${position} von ${stepOrder.length}`;
   }
 
   // ── Karte auswählen + auto-advance ───────────
@@ -1285,7 +1595,7 @@
 
     // Kleiner Delay für visuelles Feedback
     setTimeout(() => {
-      if (stepOrder.indexOf(currentStep) < TOTAL_STEPS - 1) {
+      if (stepOrder.indexOf(currentStep) < stepOrder.length - 1) {
         goNext();
       }
     }, 220);
@@ -1305,7 +1615,7 @@
       document.getElementById('plzSummaryText').textContent = result.val;
     }
     const index = stepOrder.indexOf(currentStep);
-    if (index < TOTAL_STEPS - 1) showStep(stepOrder[index + 1]);
+    if (index < stepOrder.length - 1) showStep(stepOrder[index + 1]);
   }
 
   // ── Zurück ────────────────────────────────────
@@ -1423,6 +1733,7 @@
       email: data.email || '',
       telefon: data.telefon || '',
       plz: answers.plz || '',
+      interesse: (answers.interesse || []).join(';'),
       dsgvo: data.dsgvo || '',
       gebaeudetyp: answers.step1 || '',
       heizung_aktuell: answers.step2 || '',
@@ -1439,6 +1750,7 @@
       utm_content: data.utm_content || '',
       description: [
         'HeroWerk Funnel Test-/Lead-Submit',
+        'Interesse: ' + ((answers.interesse || []).join(', ') || 'nicht angegeben'),
         'Gebäude: ' + (answers.step1 || 'nicht angegeben'),
         'Heizung: ' + (answers.step2 || 'nicht angegeben'),
         'Heizungsalter: ' + (answers.step3 || 'nicht angegeben'),
@@ -1512,6 +1824,8 @@
   }
 
   collectUtmParams();
+  recomputeProgress();
+  applyR17PfadContent();
   showStep(stepOrder[0]);
   prefillPlzFromUrl();
 </script>

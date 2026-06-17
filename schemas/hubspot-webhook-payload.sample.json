@@ -9,5 +9,6 @@
   "description": "T1-6b Schema-Testpayload",
   "gebaeudetyp": "Einfamilienhaus",
   "heizung_aktuell": "Gastherme",
-  "utm_source": "test"
+  "utm_source": "test",
+  "interesse": "Wärmepumpe;Photovoltaik"
 }
