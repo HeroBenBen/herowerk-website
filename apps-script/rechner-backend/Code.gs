@@ -166,6 +166,10 @@ function writeKeyValueDoc_(ss, name, rows) {
   const sh = ss.getSheetByName(name) || ss.insertSheet(name);
   sh.clear();
   sh.getRange(1, 1, 1, 5).setValues([['schluessel', 'wert', 'einheit', 'bedeutung', 'quelle']]);
+  // Wert-Spalte (B) zwingend als reine Zahl formatieren: verhindert, dass eine (geerbte)
+  // Datums-Formatierung dazu fuehrt, dass getValues() ein Date liefert (-> 1899/1900 statt
+  // z. B. 1.0 / 60 / 4.2). Textwerte wie proklima_gemeinden bleiben davon unberuehrt.
+  sh.getRange(2, 2, rows.length, 1).setNumberFormat('0.############');
   sh.getRange(2, 1, rows.length, 5).setValues(rows);
   sh.setFrozenRows(1);
 }
