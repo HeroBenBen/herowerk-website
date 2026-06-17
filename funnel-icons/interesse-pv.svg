@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(0.026128,0.000000,0.000000,-0.026128,-60.575015,40.326699)">
+    <path vector-effect="non-scaling-stroke" d="M 2963.789062 1027.304688 C 3030.390625 1047.8125 3078.789062 1109.765625 3078.789062 1183.085938 C 3078.789062 1273.085938 3005.859375 1346.054688 2915.859375 1346.054688 C 2825.859375 1346.054688 2752.890625 1273.085938 2752.890625 1183.085938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 3014.726562 861.953125 L 2400.546875 861.953125 L 2499.414062 1183.085938 L 2915.859375 1183.085938 Z M 3014.726562 861.953125 "/>
+    <path vector-effect="non-scaling-stroke" d="M 2450 1022.5 L 2965.273438 1022.5 "/>
+    <path vector-effect="non-scaling-stroke" d="M 2605.273438 861.953125 L 2638.242188 1183.085938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 2810 861.953125 L 2777.03125 1183.085938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 2394.960938 702.8125 L 3014.726562 702.8125 "/>
+    <path vector-effect="non-scaling-stroke" d="M 2636.132812 702.8125 L 2665.351562 861.953125 "/>
+    <path vector-effect="non-scaling-stroke" d="M 2749.921875 861.953125 L 2779.140625 702.8125 "/>
+    <path vector-effect="non-scaling-stroke" d="M 2915.859375 1405.78125 L 2915.859375 1465.507812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 2722.96875 1294.414062 L 2671.25 1324.296875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 3108.710938 1071.71875 L 3160.429688 1041.875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 3108.710938 1294.414062 L 3160.429688 1324.296875 "/>
+  </g>
+</svg>
