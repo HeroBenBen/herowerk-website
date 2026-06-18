@@ -6,3 +6,7 @@ node_modules/
 baseline/
 schemas/
 package-lock.json
+# Apps-Script-Rechner-Backend: byte-genau verifizierter Spiegel des Codes, der im
+# standalone Apps-Script-Projekt laeuft (Port von js/site.js, Tier-4 2026-06-17).
+# NICHT umformatieren -> Repo-Kopie bleibt identisch zum deployten/verifizierten Stand.
+apps-script/
