@@ -24,6 +24,7 @@ function doGet(e) {
     if (!isAllowedOrigin_(params)) return json_({ error: true, message: 'origin_not_allowed' });
     if (action === 'dimensionierung') return json_(dimensionierung_(params));
     if (action === 'foerderung') return json_(foerderung_(params));
+    if (action === 'preise') return json_(preise_(params));
     return json_(health_());
   } catch (err) {
     return json_({ error: true, message: err && err.message ? err.message : String(err), service: SERVICE_NAME, ready: false });
@@ -273,6 +274,37 @@ function getPrices_(marke) {
   const out = {};
   for (let i = 1; i < values.length; i++) if (values[i][0]) out[String(values[i][0]).toLowerCase()] = num_(values[i][4], 0);
   return out;
+}
+
+// Preis-Tafel-Quelle (Single Source): liest Preise_Wolf/Preise_Vaillant live.
+// Spalten: Klasse | Modell | Hausgroesse | kW | Endpreis_brutto | Eigenanteil | proKlima_Eigenanteil.
+// Eigenanteil = Brutto - KfW-Zuschuss (max. 70 %); proklima = zusaetzlich - proKlima.
+// Zeilen ohne Brutto (PLATZHALTER, z. B. Vaillant) werden uebersprungen.
+function readPriceTable_(name) {
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const sh = ss.getSheetByName(name);
+  if (!sh) return [];
+  const values = sh.getDataRange().getValues();
+  const out = [];
+  for (let i = 1; i < values.length; i++) {
+    const r = values[i];
+    if (!r[0]) continue;
+    const brutto = num_(r[4], 0);
+    if (brutto <= 0) continue;
+    out.push({
+      klasse: String(r[0]).toLowerCase(),
+      modell: String(r[1] || ''),
+      hausgroesse: String(r[2] || ''),
+      kw: String(r[3] || ''),
+      brutto: brutto,
+      eigen: num_(r[5], 0),
+      proklima: num_(r[6], 0)
+    });
+  }
+  return out;
+}
+function preise_(p) {
+  return { wolf: readPriceTable_('Preise_Wolf'), vaillant: readPriceTable_('Preise_Vaillant') };
 }
 function isAllowedOrigin_(p) {
   const origin = String(p.origin || p.originToken || 'https://herowerk.de');
