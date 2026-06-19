@@ -574,14 +574,16 @@ function renderWizServerResult(data) {
   document.getElementById('wizResultSub').textContent =
     `Überschlägige Schätzung für ${heizLabel} · Jahresarbeitszahl ${formatKw(data.jaz)} · verbindliche Auslegung im Vor-Ort-Termin.`;
   document.getElementById('wizResultCards').innerHTML = `
-    <div class="wiz-result-grid">
-      ${renderBrandCard('wolf', 'Wolf', data.marken?.wolf, data.bedarf)}
-      ${renderBrandCard('vaillant', 'Vaillant', data.marken?.vaillant, data.bedarf)}
-    </div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;">
-      <button class="btn-ghost" onclick="wizReset()" style="flex:1;min-width:150px;cursor:pointer;">← Neu berechnen</button>
-      <a href="/kontakt" class="btn-primary" style="flex:1.5;min-width:220px;text-align:center;">Jetzt kostenlos beraten lassen</a>
-      <button class="btn-ghost" onclick="wizToFoerder()" style="flex:1.2;min-width:210px;cursor:pointer;">Weiter zur Förderung →</button>
+    <div class="foerder-grid wiz-result-shell">
+      <div class="wiz-result-grid">
+        ${renderBrandCard('wolf', 'Wolf', data.marken?.wolf, data.bedarf)}
+        ${renderBrandCard('vaillant', 'Vaillant', data.marken?.vaillant, data.bedarf)}
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;">
+        <button class="btn-ghost" onclick="wizReset()" style="flex:1;min-width:150px;cursor:pointer;">← Neu berechnen</button>
+        <a href="/kontakt" class="btn-primary" style="flex:1.5;min-width:220px;text-align:center;">Jetzt kostenlos beraten lassen</a>
+        <button class="btn-ghost" onclick="wizToFoerder()" style="flex:1.2;min-width:210px;cursor:pointer;">Weiter zur Förderung →</button>
+      </div>
     </div>`;
 }
 

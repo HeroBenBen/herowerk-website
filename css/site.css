@@ -1235,7 +1235,7 @@ section {
 
 /* ══ WIZARD (Dimensionierungsrechner) ══ */
 .wizard-section {
-  background: var(--nacht);
+  background: var(--schiefer);
   position: relative;
   overflow: hidden;
 }
@@ -4075,4 +4075,13 @@ html[data-theme='light'] .section-tag {
 .wiz-brand-satz {
   text-align: center;
   margin-bottom: 14px;
+}
+.wiz-result-shell {
+  display: block;
+  padding: 24px;
+}
+@media (max-width: 560px) {
+  .wiz-result-shell {
+    padding: 16px;
+  }
 }
