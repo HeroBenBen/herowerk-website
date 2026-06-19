@@ -749,18 +749,47 @@ function wizToFoerder() {
 
 // ===== PREISANKER: Expand/Collapse-Karten mit Tech-Specs =====
 // Produktdaten — Inline-Fallback für lokale Entwicklung (file://)
-// → Bei WordPress-Umzug wird dieser Block durch serverseitige API ersetzt
-// → Canonical Source: produkte_HERO.json (bei Änderungen BEIDE Stellen aktualisieren)
+// Preise = Single Source: live aus dem Sheet über den Rechner-Server (action=preise).
+// Präsentation (Specs/Bilder/Modell/Icons) bleibt statisch in paDataFallback; nur die
+// Preisfelder (preis/eigen/proklima/info) werden mit Live-Werten überschrieben.
+// PA_KLASSEN muss in der Reihenfolge zu paDataFallback passen (Kompakt..Kaskade = s..xxl).
 let paData = [];
+const PA_KLASSEN = ['s', 'm', 'l', 'xl', 'xxl'];
 
 async function paLoadData() {
+  paData = paDataFallback.map((d) => ({
+    ...d,
+    preis: null,
+    eigen: null,
+    proklima: null,
+    info: 'Preis auf Anfrage — den genauen Richtpreis nennen wir im Vor-Ort-Termin.',
+  }));
   try {
-    const response = await fetch('produkte_HERO.json');
+    const response = await fetch(RECHNER_API + '?action=preise&origin=https://herowerk.de');
     if (!response.ok) throw new Error(response.status);
-    paData = await response.json();
+    const data = await response.json();
+    const byKlasse = {};
+    const bruttoMap = {};
+    ((data && data.wolf) || []).forEach((row) => {
+      byKlasse[row.klasse] = row;
+      bruttoMap[row.klasse] = row.brutto;
+    });
+    if (typeof window !== 'undefined') window.HW_PREISE_BRUTTO = bruttoMap;
+    paData.forEach((d, i) => {
+      const row = byKlasse[PA_KLASSEN[i]];
+      if (!row) return;
+      d.preis = row.brutto;
+      d.eigen = row.eigen;
+      d.proklima = row.proklima > 0 && row.proklima !== row.eigen ? row.proklima : null;
+      d.info =
+        'Richtpreis: ab ' +
+        row.brutto.toLocaleString('de-DE') +
+        ' € brutto · KfW: bis -' +
+        (row.brutto - row.eigen).toLocaleString('de-DE') +
+        ' €';
+    });
   } catch (e) {
-    console.info('fetch() nicht verfügbar (file://), nutze Inline-Fallback');
-    paData = paDataFallback;
+    console.info('Live-Preise nicht verfügbar, zeige "auf Anfrage"', e);
   }
 }
 
@@ -1438,7 +1467,10 @@ function calculateAmort() {
     parseInt(document.getElementById('verbrauch').value) || defaultVerbrauch[heizung];
   const energiepreis =
     parseFloat(document.getElementById('energiepreis').value) || defaultPreise[heizung];
-  const wpPreise = { s: 29750, m: 34510, l: 45220, xl: 57120, xxl: 82223 }; // Brutto inkl. 19% MwSt
+  const wpPreise = Object.assign(
+    { s: 29568, m: 33721, l: 44541, xl: 54246, xxl: 89419 },
+    (typeof window !== 'undefined' && window.HW_PREISE_BRUTTO) || {}
+  ); // Brutto inkl. 19% MwSt — live aus Sheet (action=preise); Werte = Sheet-Stand als Backstop
   const preis = wpPreise[document.getElementById('amortWp').value];
   const foerderSatz = parseInt(document.getElementById('amortFoerder').value) / 100;
   const foerderBetrag = Math.round(Math.min(preis, 30000) * foerderSatz);
@@ -1750,7 +1782,10 @@ function fvqSubmit() {
     wpTyp = 'l';
   else if (gebaeude === 'mfh') wpTyp = 'xl';
 
-  const preise = { s: 29750, m: 34510, l: 45220, xl: 57120, xxl: 82223 };
+  const preise = Object.assign(
+    { s: 29568, m: 33721, l: 44541, xl: 54246, xxl: 89419 },
+    (typeof window !== 'undefined' && window.HW_PREISE_BRUTTO) || {}
+  );
   const preis = preise[wpTyp];
 
   // Fördersatz berechnen
