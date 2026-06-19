@@ -22,10 +22,16 @@ const wizData = {
   sanierung: 'nein',
   flaeche: 140,
   heizung: '',
+  heizsystem: 'heizkoerper',
+  warmwasser: 'ja',
   verbrauchKnown: false,
   verbrauch: 0,
 };
 let wizStep = 1;
+const RECHNER_API = 'https://script.google.com/macros/s/AKfycbwsvoC0ZBtpZq8WY_hNS-BPN1gcTK5G1JAMfxSc5FpjWxQ2SbRLI9VqCnX8SRLO4meF/exec';
+let wizServerResult = null;
+let wizSelectedMarke = 'wolf';
+let foerderMarke = 'wolf';
 
 // PLZ → Gemeinde Mapping (Region Hannover)
 const plzMap = {
@@ -458,6 +464,8 @@ function wizNext() {
     wizData.sanierung = currentStep.querySelector('.selected')?.dataset.value || 'nein';
   if (stepNum === 5) wizData.flaeche = parseInt(document.getElementById('wzFlaeche').value);
   if (stepNum === 6) wizData.heizung = currentStep.querySelector('.selected')?.dataset.value || '';
+  if (stepNum === 7) wizData.heizsystem = currentStep.querySelector('.selected')?.dataset.value || 'heizkoerper';
+  if (stepNum === 8) wizData.warmwasser = currentStep.querySelector('.selected')?.dataset.value || 'ja';
 
   // Next step
   currentStep.classList.remove('active');
@@ -488,149 +496,18 @@ function updateWizProgress() {
   });
 }
 
-function wizCalculate() {
-  // Save step 7 data
-  const step7 = document.querySelector('.wizard-step[data-step="7"]');
-  const verbSel = step7.querySelector('.wizard-options .selected');
+async function wizCalculate() {
+  const step9 = document.querySelector('.wizard-step[data-step="9"]');
+  const verbSel = step9.querySelector('.wizard-options .selected');
   if (!verbSel) {
-    step7.querySelector('.wizard-options').style.outline = '2px solid #E53935';
-    setTimeout(() => (step7.querySelector('.wizard-options').style.outline = 'none'), 2000);
+    step9.querySelector('.wizard-options').style.outline = '2px solid #E53935';
+    setTimeout(() => (step9.querySelector('.wizard-options').style.outline = 'none'), 2000);
     return;
   }
+
   wizData.verbrauchKnown = verbSel.dataset.value === 'known';
-  // Verbrauch immer in kWh speichern — bei Liter/m³-Eingabe umrechnen
-  let rawVerbrauch = parseInt(document.getElementById('wzVerbrauchSlider').value) || 0;
-  if (wzUnit === 'liter') rawVerbrauch = rawVerbrauch * OEL_FAKTOR;
-  if (wzUnit === 'm3') rawVerbrauch = rawVerbrauch * GAS_FAKTOR;
-  wizData.verbrauch = wizData.verbrauchKnown ? rawVerbrauch : 0;
+  wizData.verbrauch = wizData.verbrauchKnown ? parseInt(document.getElementById('wzVerbrauchSlider').value) || 0 : 0;
 
-  // Calculate
-  const flaeche = wizData.flaeche;
-  const baujahr = wizData.baujahr;
-  const gebaeude = wizData.gebaeude;
-  const sanierung = wizData.sanierung;
-
-  // Spezifischer Energiebedarf nach Baujahr (kWh/m²)
-  const spezBedarf = { vor1978: 180, '1978-1994': 140, '1995-2010': 100, nach2010: 60 };
-  const gebaeudeF = { efh: 1.0, dhh: 0.9, rh: 0.85, 'rh-end': 0.85, zfh: 1.15, mfh: 1.3 };
-
-  // Sanierungsfaktor: reduziert den spez. Bedarf bei nachträglicher Sanierung
-  // "teilweise" = 1 Stufe besser, "umfassend" = 2 Stufen besser
-  const bedarfStufen = ['vor1978', '1978-1994', '1995-2010', 'nach2010'];
-  let effBaujahr = baujahr;
-  if (sanierung === 'teilweise') {
-    const idx = bedarfStufen.indexOf(baujahr);
-    if (idx >= 0 && idx < bedarfStufen.length - 1) effBaujahr = bedarfStufen[idx + 1];
-  } else if (sanierung === 'umfassend') {
-    const idx = bedarfStufen.indexOf(baujahr);
-    if (idx >= 0) effBaujahr = bedarfStufen[Math.min(idx + 2, bedarfStufen.length - 1)];
-  }
-
-  const bedarf = wizData.verbrauchKnown
-    ? wizData.verbrauch
-    : Math.round(flaeche * (spezBedarf[effBaujahr] || 140) * (gebaeudeF[gebaeude] || 1.0));
-
-  // JAZ nach effektivem Dämmstandard (konservativ)
-  const jazMap = { vor1978: 3.0, '1978-1994': 3.3, '1995-2010': 3.8, nach2010: 4.2 };
-  const jaz = jazMap[effBaujahr] || 3.5;
-
-  // Heizleistung = Bedarf / (Heizstunden * Volllaststunden-Faktor)
-  const heizleistung = bedarf / 2000; // Vereinfachung: 2000 Volllaststunden
-
-  // WP-Empfehlung (5 Segmente: S/M/L/XL/XXL)
-  let empfehlung, empIndex;
-  if (heizleistung <= 7) {
-    empfehlung = 's';
-    empIndex = 0;
-  } else if (heizleistung <= 14) {
-    empfehlung = 'm';
-    empIndex = 1;
-  } else if (heizleistung <= 18) {
-    empfehlung = 'l';
-    empIndex = 2;
-  } else if (heizleistung <= 24) {
-    empfehlung = 'xl';
-    empIndex = 3;
-  } else {
-    empfehlung = 'xxl';
-    empIndex = 4;
-  }
-
-  // Fördersatz berechnen (Wizard: Selbstnutzer-Annahme, 1 WE)
-  let foerderSatz = 30 + 5; // Grund + Effizienz R290
-  if (['gas-old', 'oel', 'nachtspeicher', 'gas-etage'].includes(wizData.heizung)) foerderSatz += 20; // Klimabonus (Selbstnutzer)
-  // proKlima 2026: NUR Hannover, Langenhagen, Seelze, Laatzen, Hemmingen, Ronnenberg
-  // Luft-Wasser-WP: 5% der förderfähigen Kosten, max. 1.500 € (EFH/ZFH) — Richtlinie 2026 S.18
-  const proklimaGemeinden = [
-    'hannover',
-    'seelze',
-    'langenhagen',
-    'laatzen',
-    'hemmingen',
-    'ronnenberg',
-  ];
-  foerderSatz = Math.min(foerderSatz, 70);
-
-  // Result cards
-  const wpTypes = [
-    {
-      key: 's',
-      name: 'Kompakt',
-      modell: 'Wolf CHA-07',
-      kw: '5–7 kW',
-      preis: 29750,
-      desc: 'Für gut gedämmte Einfamilienhäuser mit niedrigem Wärmebedarf.',
-    },
-    {
-      key: 'm',
-      name: 'Standard',
-      modell: 'Wolf CHA-10',
-      kw: '9–12 kW',
-      preis: 34510,
-      desc: 'Der Klassiker für Ein- und Zweifamilienhäuser.',
-    },
-    {
-      key: 'l',
-      name: 'Komfort',
-      modell: 'Wolf CHA-16/20',
-      kw: '14–16 kW',
-      preis: 45220,
-      desc: 'Für größere Häuser und höheren Wärmebedarf.',
-    },
-    {
-      key: 'xl',
-      name: 'Premium',
-      modell: 'Wolf CHA-20/24',
-      kw: '18–22 kW',
-      preis: 57120,
-      desc: 'Zweifamilienhäuser und kleine Mehrfamilienhäuser. Individuelle Planung.',
-    },
-    {
-      key: 'xxl',
-      name: 'Kaskade',
-      modell: '2× Wolf CHA-16',
-      kw: '2× 16 kW (32 kW)',
-      preis: 82223,
-      desc: 'Referenz: 6 WE MFH mit 2er-Kaskade. Individuelle Planung.*',
-    },
-  ];
-
-  const baujLabels = {
-    vor1978: 'vor 1978',
-    '1978-1994': '1978–1994',
-    '1995-2010': '1995–2010',
-    nach2010: 'nach 2010',
-  };
-  const heizLabels = {
-    'gas-old': 'Gasheizung (≥20 Jahre)',
-    'gas-new': 'Gasheizung (<20 Jahre)',
-    'gas-etage': 'Gas-Etagenheizung',
-    oel: 'Ölheizung',
-    nachtspeicher: 'Nachtspeicher',
-    sonstige: 'Sonstige',
-  };
-
-  // Hide steps, show result
   document.querySelectorAll('.wizard-step').forEach((s) => s.classList.remove('active'));
   document.querySelectorAll('.wizard-progress-bar').forEach((b) => {
     b.classList.remove('active');
@@ -639,132 +516,88 @@ function wizCalculate() {
 
   const result = document.getElementById('wizResult');
   result.classList.add('active');
-  document.getElementById('wizResultTitle').textContent =
-    wpTypes[empIndex].name + ' ist die richtige Wahl für dein Haus';
-  const sanLabels = {
-    nein: '',
-    teilweise: ', teilweise saniert',
-    umfassend: ', umfassend saniert',
-  };
-  document.getElementById('wizResultSub').textContent =
-    flaeche +
-    ' m², Baujahr ' +
-    (baujLabels[baujahr] || baujahr) +
-    (sanLabels[sanierung] || '') +
-    ', ' +
-    (heizLabels[wizData.heizung] || '') +
-    ', ca. ' +
-    bedarf.toLocaleString('de-DE') +
-    ' kWh/Jahr, Jahresarbeitszahl ' +
-    jaz.toFixed(1);
+  document.getElementById('wizResultTitle').textContent = 'Wir berechnen deine Empfehlung';
+  document.getElementById('wizResultSub').textContent = 'Die Berechnung läuft serverseitig mit den aktuellen Katalogdaten.';
+  document.getElementById('wizResultCards').innerHTML = '<div style="border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:24px;color:var(--g300);text-align:center;">Einen Moment bitte...</div>';
 
-  // Nur die empfohlene Maschine — Bild links, Info+Preis+CTA rechts
-  const wp = wpTypes[empIndex];
-  const isMehrfach = gebaeude === 'zfh' || gebaeude === 'mfh';
-  const isKaskade = empfehlung === 'xxl';
+  const params = new URLSearchParams({
+    action: 'dimensionierung',
+    flaeche: String(wizData.flaeche),
+    baujahr: wizData.baujahr,
+    gebaeude: wizData.gebaeude,
+    sanierung: wizData.sanierung,
+    warmwasser: wizData.warmwasser,
+    heizsystem: wizData.heizsystem,
+    verbrauchKnown: wizData.verbrauchKnown ? 'known' : 'unknown',
+    verbrauch: String(wizData.verbrauch),
+    einheit: wzUnit,
+    origin: 'https://herowerk.de',
+  });
 
-  let priceBlock = '';
-  if (isKaskade) {
-    // Kaskade: 6-WE MFH Referenz (1 WE selbst + 5 WE vermietet)
-    // Förderfähig: 1. WE 30k + 5× 15k = 105k (Brutto 82.223 < Cap)
-    const foerderWE1 = Math.round(30000 * (foerderSatz / 100)); // Selbstnutzer
-    const satzVermietetK = Math.min(35, 30 + 5); // Vermieter: Grund 30% + Effizienz 5%, KEIN Klimabonus
-    const foerderWE26 = Math.round(5 * 15000 * (satzVermietetK / 100)); // 5 vermietete WE
-    const foerderGesamtK = foerderWE1 + foerderWE26;
-    const eigenK = Math.max(0, wp.preis - foerderGesamtK);
-    priceBlock = `
-          <div style="margin:16px 0;">
-            <div style="color:var(--green);font-size:32px;font-weight:800;line-height:1;">ab ${eigenK.toLocaleString('de-DE')} €</div>
-            <div style="color:var(--g400);font-size:13px;margin-top:4px;">Eigenanteil (Ref. 6 WE: 1 selbst, 5 vermietet)*</div>
-          </div>
-          <div style="color:var(--g500);font-size:11px;margin-bottom:16px;">
-            Richtpreis: ab ${wp.preis.toLocaleString('de-DE')} € brutto · KfW: -${foerderGesamtK.toLocaleString('de-DE')} €
-          </div>
-          <div style="color:var(--bernstein);font-size:11px;font-style:italic;margin-bottom:8px;padding:8px;background:rgba(232,168,56,0.08);border-radius:6px;">
-            * Referenz: 6 WE MFH, 2× Wolf CHA-16 Kaskade. Förderung bei MFH stark abhängig von WE-Anzahl und Eigentümerstruktur. Individuelle Planung erforderlich.
-          </div>`;
-  } else if (isMehrfach) {
-    // ZFH/MFH (nicht Kaskade): 2-WE-Kalkulation (Szenario B: 1 Selbstnutzer + 1 vermietet)
-    const foerderFaehig = 30000 + 15000; // 1. WE 30k + 2. WE 15k
-    const proWE = foerderFaehig / 2;
-    const zuschussSelbst = Math.round(proWE * (foerderSatz / 100));
-    const satzVermietet = Math.min(35, 30 + 5);
-    const zuschussVermietet = Math.round(proWE * (satzVermietet / 100));
-    const foerderGesamt = zuschussSelbst + zuschussVermietet;
-    const proklimaWiz = proklimaGemeinden.includes(wizData.gemeinde)
-      ? Math.min(Math.round(foerderFaehig * 0.05), 1500)
-      : 0;
-    const eigen = Math.max(0, wp.preis - foerderGesamt - proklimaWiz);
-    const proklimaLine =
-      proklimaWiz > 0
-        ? `<div style="color:var(--bernstein);font-size:12px;">+ proKlima: -${proklimaWiz.toLocaleString('de-DE')} €</div>`
-        : '';
-    priceBlock = `
-          <div style="margin:16px 0;">
-            <div style="color:var(--green);font-size:32px;font-weight:800;line-height:1;">ab ${eigen.toLocaleString('de-DE')} €</div>
-            <div style="color:var(--g400);font-size:13px;margin-top:4px;">Eigenanteil nach Förderung (2 WE: 1 selbst, 1 vermietet)</div>
-          </div>
-          <div style="color:var(--g500);font-size:11px;margin-bottom:16px;">
-            Richtpreis: ab ${wp.preis.toLocaleString('de-DE')} € brutto · KfW: -${foerderGesamt.toLocaleString('de-DE')} €
-            ${proklimaLine}
-          </div>
-          <div style="color:var(--g500);font-size:11px;font-style:italic;margin-bottom:8px;">
-            Kalkulation: 1 WE Selbstnutzung (${foerderSatz}%), 1 WE vermietet (${satzVermietet}%). Deine genaue Förderung berechnen wir im nächsten Schritt.
-          </div>`;
-  } else {
-    // EFH/DHH/RH: Standard 1-WE-Kalkulation
-    const foerderBasis = Math.min(wp.preis, 30000);
-    const foerder = Math.round(foerderBasis * (foerderSatz / 100));
-    const proklimaWiz = proklimaGemeinden.includes(wizData.gemeinde)
-      ? Math.min(Math.round(foerderBasis * 0.05), 1500)
-      : 0;
-    const eigen = Math.max(0, wp.preis - foerder - proklimaWiz);
-    const proklimaLine =
-      proklimaWiz > 0
-        ? `<div style="color:var(--bernstein);font-size:12px;">+ proKlima: -${proklimaWiz.toLocaleString('de-DE')} €</div>`
-        : '';
-    priceBlock = `
-          <div style="margin:16px 0;">
-            <div style="color:var(--green);font-size:32px;font-weight:800;line-height:1;">ab ${eigen.toLocaleString('de-DE')} €</div>
-            <div style="color:var(--g400);font-size:13px;margin-top:4px;">Eigenanteil nach ${foerderSatz}% Förderung</div>
-          </div>
-          <div style="color:var(--g500);font-size:11px;margin-bottom:16px;">
-            Richtpreis: ab ${wp.preis.toLocaleString('de-DE')} € brutto · KfW: -${foerder.toLocaleString('de-DE')} €
-            ${proklimaLine}
-          </div>`;
+  try {
+    const response = await fetch(RECHNER_API + '?' + params.toString());
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    const data = await response.json();
+    if (data.error) throw new Error(data.message || 'server_error');
+    wizServerResult = data;
+    wizSelectedMarke = data.marken?.wolf?.deckt ? 'wolf' : data.marken?.vaillant?.deckt ? 'vaillant' : 'wolf';
+    renderWizServerResult(data);
+  } catch (err) {
+    console.error('Dimensionierung nicht verfügbar', err);
+    document.getElementById('wizResultTitle').textContent = 'Berechnung gerade nicht verfügbar';
+    document.getElementById('wizResultSub').textContent = 'Bitte frage eine Beratung an. Wir prüfen die passende Wärmepumpe persönlich.';
+    document.getElementById('wizResultCards').innerHTML = `
+      <div style="border:2px solid rgba(232,168,56,0.35);border-radius:16px;padding:24px;background:rgba(232,168,56,0.08);">
+        <h3 style="color:var(--white);margin:0 0 8px;">Berechnung gerade nicht verfügbar</h3>
+        <p style="color:var(--g300);margin:0 0 16px;">Bitte Beratung anfragen. Wir melden uns mit einer individuellen Einschätzung.</p>
+        <a href="/anfrage" class="btn-primary">Beratung anfragen</a>
+      </div>`;
   }
-
-  const cardHTML = `
-      <div class="wiz-result-grid" style="display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:center;border:2px solid var(--green);border-radius:16px;padding:24px;background:rgba(183,217,0,0.04);">
-        <div style="text-align:center;">
-          <img src="${wp.img || 'cha-sanierung.jpg'}" alt="${wp.modell}" width="2500" height="2500" style="width:100%;max-width:180px;height:auto;display:block;margin:0 auto;border-radius:10px;background:rgba(255,255,255,0.05);padding:8px;" loading="lazy" decoding="async" onerror="this.style.display='none'">
-        </div>
-        <div>
-          <div style="color:var(--green);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;">Unsere Empfehlung</div>
-          <h3 style="color:var(--white);font-size:22px;margin:4px 0 2px;">${wp.name} <span style="color:var(--green);font-size:14px;font-weight:600;">${wp.modell}</span></h3>
-          <div style="color:var(--g400);font-size:13px;">${wp.kw} · ${wp.desc}</div>
-          ${priceBlock}
-          <div style="display:flex;gap:10px;flex-wrap:wrap;">
-            <button class="btn-ghost" onclick="wizReset()" style="cursor:pointer;padding:12px 20px;">Neu berechnen</button>
-            <a href="/kontakt" class="btn-primary" style="flex:1;min-width:200px;text-align:center;">Jetzt kostenlos beraten lassen</a>
-          </div>
-          <div style="margin-top:16px;background:rgba(183,217,0,0.06);border:2px solid rgba(183,217,0,0.25);border-radius:14px;padding:16px 20px;cursor:pointer;" onclick="wizToFoerder()">
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-              <div>
-                <div style="color:var(--white);font-family:'Barlow',sans-serif;font-weight:700;font-size:16px;">Weiter: Deine genaue Förderung berechnen</div>
-                <div style="color:var(--g400);font-size:13px;margin-top:2px;">Deine Daten werden automatisch übernommen. Kein erneutes Eingeben</div>
-              </div>
-              <div style="background:var(--green);color:var(--nacht);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <style>@media(max-width:640px){.wiz-result-grid{grid-template-columns:1fr!important;}.wiz-result-grid>div:first-child img{max-width:140px!important;}}</style>`;
-
-  document.getElementById('wizResultCards').innerHTML = cardHTML;
 }
+
+function renderWizServerResult(data) {
+  const heizLabel = data.heizsystem === 'fussboden' ? 'Fußbodenheizung' : 'Heizkörper';
+  document.getElementById('wizResultTitle').textContent = `Ihr geschätzter Bedarf: ${formatKw(data.bedarf)} kW · ${heizLabel}`;
+  document.getElementById('wizResultSub').textContent = `Überschlägige Schätzung, verbindliche Auslegung im Vor-Ort-Termin. Jahresarbeitszahl ${Number(data.jaz || 0).toFixed(1)}.`;
+  document.getElementById('wizResultCards').innerHTML = `
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;">
+      ${renderBrandCard('wolf', 'Wolf', data.marken?.wolf, data.bedarf)}
+      ${renderBrandCard('vaillant', 'Vaillant', data.marken?.vaillant, data.bedarf)}
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;">
+      <button class="btn-ghost" onclick="wizReset()" style="cursor:pointer;padding:12px 20px;">Neu berechnen</button>
+      <a href="/kontakt" class="btn-primary" style="flex:1;min-width:200px;text-align:center;">Jetzt kostenlos beraten lassen</a>
+    </div>
+    <div style="margin-top:16px;background:rgba(183,217,0,0.06);border:2px solid rgba(183,217,0,0.25);border-radius:14px;padding:16px 20px;cursor:pointer;" onclick="wizToFoerder()">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <div><div style="color:var(--white);font-family:'Barlow',sans-serif;font-weight:700;font-size:16px;">Weiter: Deine genaue Förderung berechnen</div><div style="color:var(--g400);font-size:13px;margin-top:2px;">Die ausgewählte Marke wird automatisch übernommen.</div></div>
+        <div style="background:var(--green);color:var(--nacht);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">→</div>
+      </div>
+    </div>`;
+}
+
+function renderBrandCard(key, label, brand, bedarf) {
+  const selected = wizSelectedMarke === key;
+  const badge = brand?.vorlaeufig ? '<span style="border:1px solid var(--bernstein);color:var(--bernstein);border-radius:999px;padding:3px 8px;font-size:11px;font-weight:700;">vorläufig</span>' : '';
+  if (!brand || !brand.deckt) {
+    return `<button type="button" onclick="wizSelectMarke('${key}')" style="text-align:left;border:2px solid ${selected ? 'var(--green)' : 'rgba(255,255,255,0.14)'};border-radius:16px;padding:20px;background:rgba(255,255,255,0.04);cursor:pointer;"><div style="display:flex;justify-content:space-between;gap:8px;"><h3 style="color:var(--white);margin:0;">${label}</h3>${badge}</div><p style="color:var(--g300);margin:14px 0 0;">Individuelle Planung</p></button>`;
+  }
+  return `<button type="button" onclick="wizSelectMarke('${key}')" style="text-align:left;border:2px solid ${selected ? 'var(--green)' : 'rgba(255,255,255,0.14)'};border-radius:16px;padding:20px;background:${selected ? 'rgba(183,217,0,0.06)' : 'rgba(255,255,255,0.04)'};cursor:pointer;">
+    <div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start;"><h3 style="color:var(--white);margin:0;">${label}</h3>${badge}</div>
+    <div style="color:var(--green);font-weight:800;font-size:20px;margin-top:10px;">${brand.modell}</div>
+    <div style="color:var(--g300);margin-top:8px;">✓ deckt ${formatKw(bedarf)} kW${brand.kaskade ? ' · Kaskade' : ''}</div>
+    <div style="color:var(--g400);font-size:13px;margin-top:14px;">Richtpreis brutto</div><div style="color:var(--white);font-weight:800;">${formatEuro(brand.brutto)}</div>
+    <div style="color:var(--g400);font-size:13px;margin-top:10px;">Eigenanteil geschätzt</div><div style="color:var(--green);font-weight:800;font-size:24px;">${formatEuro(brand.eigenanteil)}</div>
+  </button>`;
+}
+
+function wizSelectMarke(key) {
+  wizSelectedMarke = key;
+  if (wizServerResult) renderWizServerResult(wizServerResult);
+}
+
+function formatEuro(value) { return Math.round(Number(value) || 0).toLocaleString('de-DE') + ' €'; }
+function formatKw(value) { return Number(value || 0).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }); }
 
 function wizReset() {
   document.getElementById('wizResult').classList.remove('active');
@@ -780,39 +613,22 @@ function wizReset() {
 
 // ===== WIZARD → FÖRDERRECHNER: Datenübernahme =====
 function wizToFoerder() {
-  // 1. WP-Typ übertragen (empfohlenes Paket → Dropdown)
-  const wpKeyMap = ['s', 'm', 'l', 'xl', 'xxl'];
-  const wpTypes2 = [{ key: 's' }, { key: 'm' }, { key: 'l' }, { key: 'xl' }, { key: 'xxl' }];
-  // empIndex aus dem Wizard-Result ermitteln (über den Titel)
-  const titleEl = document.getElementById('wizResultTitle');
-  const titleText = titleEl ? titleEl.textContent : '';
-  let empKey = 'm'; // Fallback Standard
-  if (titleText.includes('Kompakt')) empKey = 's';
-  else if (titleText.includes('Standard')) empKey = 'm';
-  else if (titleText.includes('Komfort')) empKey = 'l';
-  else if (titleText.includes('Premium')) empKey = 'xl';
-  else if (titleText.includes('Kaskade')) empKey = 'xxl';
+  const selected = wizServerResult?.marken?.[wizSelectedMarke];
+  foerderMarke = wizSelectedMarke || 'wolf';
 
-  // Paket-Modus aktivieren und Wert setzen
-  setKostenModus('paket');
+  setKostenModus('manuell');
   const wpSelect = document.getElementById('foerderWpTyp');
-  if (wpSelect) wpSelect.value = empKey;
+  if (wpSelect) wpSelect.value = 'm';
+  const kostenInput = document.getElementById('wpKostenInput');
+  if (kostenInput && selected?.brutto) kostenInput.value = Math.round(selected.brutto);
 
-  // 2. Gemeinde übertragen (PLZ → Gemeinde-Mapping nutzen)
   const gemeindeSelect = document.getElementById('gemeinde');
   if (gemeindeSelect && wizData.gemeinde) {
-    // Versuche exakten Match
     const gemeindeVal = wizData.gemeinde.toLowerCase();
-    const options = Array.from(gemeindeSelect.options);
-    const match = options.find((o) => o.value === gemeindeVal);
-    if (match) {
-      gemeindeSelect.value = gemeindeVal;
-    } else {
-      gemeindeSelect.value = 'sonstige';
-    }
+    const match = Array.from(gemeindeSelect.options).find((o) => o.value === gemeindeVal);
+    gemeindeSelect.value = match ? gemeindeVal : 'sonstige';
   }
 
-  // 3. Heizungstyp übertragen
   const heizungSelect = document.getElementById('heizung');
   if (heizungSelect && wizData.heizung) {
     const heizMap = {
@@ -824,37 +640,32 @@ function wizToFoerder() {
       sonstige: 'sonstige',
     };
     heizungSelect.value = heizMap[wizData.heizung] || 'gas';
-    toggleHeizungsalter(); // Zeigt/verbirgt Heizungsalter je nach Typ
+    toggleHeizungsalter();
   }
 
-  // 4. Heizungsalter übertragen
   if (wizData.heizung === 'gas-old') {
     setAlterModus('alter');
     const alterSelect = document.getElementById('heizungAlterSelect');
-    if (alterSelect) alterSelect.value = '20'; // 20 Jahre oder älter
+    if (alterSelect) alterSelect.value = '20';
   } else if (wizData.heizung === 'gas-new') {
     setAlterModus('alter');
     const alterSelect = document.getElementById('heizungAlterSelect');
-    if (alterSelect) alterSelect.value = '15'; // 10-19 Jahre
+    if (alterSelect) alterSelect.value = '15';
   }
 
-  // 5. Gebäudetyp → Wohneinheiten
   const weSelect = document.getElementById('wohneinheiten');
   if (weSelect && wizData.gebaeude) {
     const weMap = { efh: '1', dhh: '1', dh: '1', rh: '1', 'rh-end': '1', zfh: '2', mfh: '5' };
     weSelect.value = weMap[wizData.gebaeude] || '1';
   }
 
-  // 6. Selbstnutzung (Wizard geht von Selbstnutzer aus)
   const snSelect = document.getElementById('selbstnutzung');
   if (snSelect) snSelect.value = '1';
 
-  // Events triggern
   if (typeof updateSelbstnutzungOptionen === 'function') updateSelbstnutzungOptionen();
   if (typeof updateProklimaOptin === 'function') updateProklimaOptin();
   if (typeof calculateFoerder === 'function') calculateFoerder();
 
-  // Zum Förderrechner scrollen
   const foerderSection = document.getElementById('foerder');
   if (foerderSection) foerderSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
   else window.location.href = '/foerderung';
@@ -1340,9 +1151,6 @@ function setKostenModus(modus) {
     manuellDiv.style.display = 'block';
     btns[0].classList.remove('active');
     btns[1].classList.add('active');
-    // Aktuellen Paketwert als Startwert
-    const wpTyp = document.getElementById('foerderWpTyp').value;
-    document.getElementById('wpKostenInput').value = wpPreiseBrutto[wpTyp];
   } else {
     paketDiv.style.display = 'block';
     manuellDiv.style.display = 'none';
@@ -1404,114 +1212,73 @@ function toggleProklimaHinweis() {
   document.getElementById('proklimaHinweis').style.display = val === 'ja' ? 'block' : 'none';
 }
 
-// Brutto-Preise (netto × 1,19 — PAngV-konform)
-const wpPreiseBrutto = { s: 29750, m: 34510, l: 45220, xl: 57120, xxl: 82223 };
-
-// Förderfähige Kosten GESAMT nach Wohneinheiten (KfW 458)
-// 1. WE = 30.000€, 2.–6. WE = je 15.000€, ab 7. WE = je 8.000€
-function foerderFaehigeKostenGesamt(we) {
-  if (we <= 1) return 30000;
-  if (we <= 6) return 30000 + (we - 1) * 15000;
-  return 30000 + 5 * 15000 + (we - 6) * 8000;
-}
-
-function calculateFoerder() {
-  const we = parseInt(document.getElementById('wohneinheiten').value);
-  const selbstWE = parseInt(document.getElementById('selbstnutzung').value); // 0 oder 1
+async function calculateFoerder() {
+  const weEl = document.getElementById('wohneinheiten');
+  if (!weEl) return;
+  const we = parseInt(weEl.value);
+  const selbstWE = parseInt(document.getElementById('selbstnutzung').value);
   const heizung = document.getElementById('heizung').value;
   const einkommen = document.getElementById('einkommen').value;
   const gemeinde = document.getElementById('gemeinde').value;
-
-  // --- Preis: Paket oder manuell ---
-  let preis;
-  if (wpKostenModus === 'manuell') {
-    preis = parseInt(document.getElementById('wpKostenInput').value) || 34510;
-  } else {
-    const wpTyp = document.getElementById('foerderWpTyp').value;
-    preis = wpPreiseBrutto[wpTyp];
-  }
-
-  // --- Fördersatz für selbstgenutzte WE (bis 70%) ---
-  let satzSelbst = 30; // Grundförderung
-  // Klimageschwindigkeitsbonus (+20%):
-  // Öl, Nachtspeicher, Gas-Etagenheizung, Kohle → immer
-  // Gas-Zentralheizung → NUR wenn ≥20 Jahre alt
-  let klimaBonus = false;
-  if (heizung === 'oel' || heizung === 'nachtspeicher' || heizung === 'gas-etage') {
-    klimaBonus = true;
-  } else if (heizung === 'gas') {
-    const alter = getHeizungsalter();
-    klimaBonus = alter >= 20;
-  }
-  if (selbstWE > 0 && klimaBonus) satzSelbst += 20; // Klimabonus
-  if (einkommen === 'unter40') satzSelbst += 30; // Einkommensbonus
-  satzSelbst += 5; // Effizienzbonus R290
-  satzSelbst = Math.min(satzSelbst, 70);
-
-  // --- Fördersatz für vermietete/nicht-selbstgenutzte WE (max 35%) ---
-  let satzVermietet = 30 + 5; // Grund + Effizienz
-  satzVermietet = Math.min(satzVermietet, 35);
-
-  // --- Förderfähige Kosten gleichmäßig auf alle WE aufteilen ---
-  const foerderFaehigGesamt = foerderFaehigeKostenGesamt(we);
-  const foerderProWE = foerderFaehigGesamt / we;
-  // Gedeckelt auf tatsächliche Kosten pro WE
-  const kostenProWE = Math.min(foerderProWE, preis / we);
-
-  // --- Zuschuss pro WE-Typ berechnen ---
-  const vermieteteWE = we - selbstWE;
-  const zuschussSelbst = selbstWE > 0 ? Math.round(kostenProWE * (satzSelbst / 100)) : 0;
-  const zuschussVermietet =
-    vermieteteWE > 0 ? Math.round(kostenProWE * (satzVermietet / 100) * vermieteteWE) : 0;
-  const zuschussGesamt = zuschussSelbst + zuschussVermietet;
-
-  // --- proKlima 2026 (additiv zu KfW, NICHT Teil der 70%-Deckelung) ---
-  // Nur wenn Gemeinde im Fördergebiet UND Kunde opt-in gewählt hat
+  const wpTyp = document.getElementById('foerderWpTyp').value;
+  const preisManuell = wpKostenModus === 'manuell' ? (parseInt(document.getElementById('wpKostenInput').value) || '') : '';
   const proklimaOptinVal = document.getElementById('proklimaOptin').value;
-  const istProklimaGemeinde = proklimaGemeinden.includes(gemeinde);
-  let proklimaZuschuss =
-    istProklimaGemeinde && proklimaOptinVal === 'ja'
-      ? Math.min(Math.round(foerderFaehigGesamt * 0.05), 1500)
-      : 0;
 
-  const eigenanteil = Math.max(0, preis - zuschussGesamt - proklimaZuschuss);
+  document.getElementById('foerderSatzKfw').textContent = '...';
+  document.getElementById('frPreis').textContent = 'wird berechnet';
+  document.getElementById('frZuschuss').textContent = '...';
+  document.getElementById('frEigen').textContent = 'wird berechnet';
 
-  // --- KfW-Fördersatz (auf förderfähige Kosten, was der Kunde aus der Werbung kennt) ---
-  const kfwSatz = selbstWE > 0 ? satzSelbst : satzVermietet;
+  const params = new URLSearchParams({
+    action: 'foerderung',
+    we: String(we),
+    selbstWE: String(selbstWE),
+    heizung,
+    einkommen,
+    gemeinde,
+    marke: foerderMarke || 'wolf',
+    wpTyp,
+    preisManuell: String(preisManuell),
+    heizungsalter: String(getHeizungsalter()),
+    proklimaOptin: proklimaOptinVal,
+    origin: 'https://herowerk.de',
+  });
 
-  // --- Effektiver Gesamtfördersatz (auf tatsächliche Investition) ---
-  const gesamtZuschuss = zuschussGesamt + proklimaZuschuss;
-  const effektivSatz = preis > 0 ? Math.round((gesamtZuschuss / preis) * 100) : 0;
+  let data;
+  try {
+    const response = await fetch(RECHNER_API + '?' + params.toString());
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    data = await response.json();
+    if (data.error) throw new Error(data.message || 'server_error');
+  } catch (err) {
+    console.error('Förderberechnung nicht verfügbar', err);
+    document.getElementById('foerderBreakdown').innerHTML = '<div style="border:1px solid rgba(232,168,56,0.35);border-radius:12px;padding:14px;color:var(--g300);">Berechnung gerade nicht verfügbar. Bitte Beratung anfragen.</div>';
+    document.getElementById('effektivSatzBox').style.display = 'none';
+    return;
+  }
 
-  // --- UI aktualisieren ---
+  const preis = Number(data.preis) || 0;
+  const gesamtZuschuss = Number(data.zuschussGesamt || 0) + Number(data.proklimaZuschuss || 0);
+  const kfwSatz = Number(data.kfwSatz) || 0;
+  const effektivSatz = Number(data.effektivSatz) || 0;
+
   document.getElementById('foerderSatzKfw').textContent = kfwSatz + '%';
   document.getElementById('frPreis').textContent = 'ab ' + preis.toLocaleString('de-DE') + ' €';
-  document.getElementById('frZuschuss').textContent =
-    '-' + Math.round(gesamtZuschuss).toLocaleString('de-DE') + ' €';
-  document.getElementById('frEigen').textContent =
-    'ab ' + Math.round(eigenanteil).toLocaleString('de-DE') + ' €';
+  document.getElementById('frZuschuss').textContent = '-' + Math.round(gesamtZuschuss).toLocaleString('de-DE') + ' €';
+  document.getElementById('frEigen').textContent = 'ab ' + Math.round(Number(data.eigenanteil) || 0).toLocaleString('de-DE') + ' €';
 
-  // Effektiv-Box nur anzeigen, wenn Sätze abweichen (= Investition > förderfähige Kosten)
   const effektivBox = document.getElementById('effektivSatzBox');
   if (effektivSatz < kfwSatz) {
     effektivBox.style.display = 'block';
     document.getElementById('foerderSatzEffektiv').textContent = effektivSatz + '%';
-    const foerderCap = foerderFaehigeKostenGesamt(we);
-    document.getElementById('effektivErklaerung').textContent =
-      'KfW fördert max. ' +
-      foerderCap.toLocaleString('de-DE') +
-      ' €. Deine Investition liegt bei ' +
-      preis.toLocaleString('de-DE') +
-      ' €. Die Differenz trägst du selbst.';
+    document.getElementById('effektivErklaerung').textContent = 'Die serverseitige Berechnung berücksichtigt förderfähige Kosten, Investitionssumme und Wohneinheiten.';
   } else {
     effektivBox.style.display = 'none';
   }
 
-  // --- Selbstnutzung-Dropdown: immer sichtbar (auch Vermieter von EFH möglich) ---
   const selbstGroup = document.getElementById('selbstnutzungGroup');
   selbstGroup.style.display = '';
 
-  // --- Einkommen: nur bei Selbstnutzung relevant ---
   const einkommenGroup = document.getElementById('einkommenGroup');
   if (selbstWE === 0) {
     einkommenGroup.style.opacity = '0.4';
@@ -1521,114 +1288,28 @@ function calculateFoerder() {
     document.getElementById('einkommen').disabled = false;
   }
 
-  // --- Breakdown ---
   const breakdown = document.getElementById('foerderBreakdown');
   let html = '';
-
-  // Bausteine anzeigen
-  html +=
-    '<div class="breakdown-item"><span>Grundförderung</span><span class="pct">30%</span></div>';
-  if (selbstWE > 0 && klimaBonus) {
-    html +=
-      '<div class="breakdown-item"><span>Klimageschwindigkeitsbonus <span style="color:var(--g400);font-size:11px;">(selbst bewohnt)</span></span><span class="pct">+20%</span></div>';
+  (data.bausteine || []).forEach((baustein) => {
+    html += '<div class="breakdown-item"><span>' + baustein + '</span><span class="pct">✓</span></div>';
+  });
+  html += '<div class="breakdown-item" style="border-top:1px solid rgba(255,255,255,0.15);padding-top:8px;margin-top:8px;"><span style="font-weight:700;color:var(--white);">KfW-Zuschuss gesamt</span><span class="pct" style="font-size:16px;">' + Math.round(Number(data.zuschussGesamt) || 0).toLocaleString('de-DE') + ' €</span></div>';
+  if (Number(data.proklimaZuschuss) > 0) {
+    html += '<div class="breakdown-item" style="margin-top:8px;"><span style="color:var(--green);">proKlima Zuschuss</span><span class="pct" style="color:var(--green);">' + Number(data.proklimaZuschuss).toLocaleString('de-DE') + ' €</span></div>';
+  } else if (proklimaGemeinden.includes(gemeinde) && proklimaOptinVal === 'nein') {
+    html += '<div class="breakdown-item" style="margin-top:8px;"><span style="color:var(--g400);">proKlima: nicht eingerechnet</span><span class="pct" style="color:var(--g400);">0 €</span></div>';
+  } else if (!proklimaGemeinden.includes(gemeinde)) {
+    html += '<div class="breakdown-item" style="margin-top:8px;"><span style="color:var(--g400);">proKlima: nicht im Fördergebiet</span><span class="pct" style="color:var(--g400);">0 €</span></div>';
   }
-  if (selbstWE > 0 && einkommen === 'unter40') {
-    html +=
-      '<div class="breakdown-item"><span>Einkommensbonus <span style="color:var(--g400);font-size:11px;">(selbst bewohnt)</span></span><span class="pct">+30%</span></div>';
+  if (data.vorlaeufig) {
+    html += '<div style="margin-top:10px;color:var(--bernstein);font-size:13px;">Vaillant-Ergebnis vorläufig, verbindliche Prüfung im Vor-Ort-Termin.</div>';
   }
-  html +=
-    '<div class="breakdown-item"><span>Effizienzbonus (R290)</span><span class="pct">+5%</span></div>';
-
-  // Separator + WE-Aufteilung
-  html +=
-    '<div class="breakdown-item" style="border-top:1px solid rgba(255,255,255,0.15);padding-top:8px;margin-top:8px;">';
-  if (we === 1 && selbstWE === 1) {
-    html +=
-      '<span style="font-weight:700;color:var(--white);">Fördersatz (1 Wohneinheit, selbst bewohnt)</span><span class="pct" style="font-size:16px;">' +
-      satzSelbst +
-      '%</span>';
-  } else {
-    html +=
-      '<span style="font-weight:700;color:var(--white);">Effektiver Gesamtfördersatz</span><span class="pct" style="font-size:16px;">~' +
-      effektivSatz +
-      '%</span>';
-  }
-  html += '</div>';
-
-  // Detail-Aufteilung bei Mehrfamilienhaus
-  if (we > 1) {
-    html +=
-      '<div style="margin-top:8px;padding:10px;background:rgba(255,255,255,0.05);border-radius:8px;font-size:13px;">';
-    html +=
-      '<div style="color:var(--g300);margin-bottom:6px;">Förderfähige Kosten: ' +
-      foerderFaehigGesamt.toLocaleString('de-DE') +
-      ' € ÷ ' +
-      we +
-      ' Wohneinheiten = ' +
-      Math.round(foerderProWE).toLocaleString('de-DE') +
-      ' € je Wohneinheit</div>';
-    if (selbstWE > 0) {
-      html +=
-        '<div style="color:var(--green);">' +
-        SVG_CHECK_SM +
-        ' 1 Wohneinheit selbst bewohnt: ' +
-        Math.round(kostenProWE).toLocaleString('de-DE') +
-        ' € × ' +
-        satzSelbst +
-        '% = ' +
-        zuschussSelbst.toLocaleString('de-DE') +
-        ' €</div>';
-    }
-    if (vermieteteWE > 0) {
-      html +=
-        '<div style="color:var(--g300);">' +
-        vermieteteWE +
-        ' Wohneinheit(en) vermietet: ' +
-        Math.round(kostenProWE).toLocaleString('de-DE') +
-        ' € × ' +
-        satzVermietet +
-        '% × ' +
-        vermieteteWE +
-        ' = ' +
-        zuschussVermietet.toLocaleString('de-DE') +
-        ' €</div>';
-    }
-    html +=
-      '<div style="color:var(--white);font-weight:700;margin-top:6px;">KfW-Zuschuss gesamt: ' +
-      zuschussGesamt.toLocaleString('de-DE') +
-      ' €</div>';
-    html += '</div>';
-  }
-
-  if (proklimaZuschuss > 0) {
-    html +=
-      '<div class="breakdown-item" style="margin-top:8px;"><span style="color:var(--green);">+ proKlima Zuschuss (5%, max. 1.500 €)</span><span class="pct" style="color:var(--green);">' +
-      proklimaZuschuss.toLocaleString('de-DE') +
-      ' €</span></div>';
-  } else if (istProklimaGemeinde && proklimaOptinVal === 'nein') {
-    html +=
-      '<div class="breakdown-item" style="margin-top:8px;"><span style="color:var(--g400);">proKlima: nicht eingerechnet</span><span class="pct" style="color:var(--g400);">0 €</span></div>';
-  } else if (!istProklimaGemeinde) {
-    html +=
-      '<div class="breakdown-item" style="margin-top:8px;"><span style="color:var(--g400);">proKlima: nicht im Fördergebiet</span><span class="pct" style="color:var(--g400);">0 €</span></div>';
-  }
-
   breakdown.innerHTML = html;
 
-  // --- WEG-Hinweis ab 3 WE ---
   const wegBox = document.getElementById('wegHinweis');
   if (we >= 3) {
     wegBox.style.display = 'block';
-    wegBox.innerHTML =
-      '<div style="display:flex;align-items:flex-start;gap:12px;">' +
-      '<span style="flex-shrink:0;color:var(--bernstein);"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="4" width="20" height="24" rx="1"/><rect x="10" y="8" width="4" height="3"/><rect x="18" y="8" width="4" height="3"/><rect x="10" y="14" width="4" height="3"/><rect x="18" y="14" width="4" height="3"/><rect x="10" y="20" width="4" height="3"/><rect x="18" y="20" width="4" height="3"/><rect x="13" y="25" width="6" height="3"/></svg></span>' +
-      '<div>' +
-      '<div style="color:var(--bernstein);font-weight:700;font-size:14px;margin-bottom:6px;">Eigentümergemeinschaft (WEG)?</div>' +
-      '<div style="color:var(--g300);font-size:13px;line-height:1.6;margin-bottom:12px;">Bei einer WEG beantragt jeder Eigentümer individuell. Mit seinem persönlichen Fördersatz. Selbstnutzer können bis zu 70% erhalten, Vermieter bis zu 35%. Die obige Berechnung zeigt eine vereinfachte Gesamtschätzung. Für die genaue Aufteilung beraten wir dich kostenlos.</div>' +
-      '<a href="/kontakt" class="btn-primary" style="font-size:14px;padding:10px 24px;" onclick="' +
-      "if(document.getElementById('nachricht')){document.getElementById('nachricht').value='WEG-Förderberatung für '+we+' Wohneinheiten';}" +
-      '">Kostenlose WEG-Förderberatung anfragen</a>' +
-      '</div></div>';
+    wegBox.innerHTML = '<div style="color:var(--g300);font-size:13px;line-height:1.6;">Bei einer WEG beantragt jeder Eigentümer individuell. Für die genaue Aufteilung beraten wir dich kostenlos.</div>';
   } else {
     wegBox.style.display = 'none';
     wegBox.innerHTML = '';

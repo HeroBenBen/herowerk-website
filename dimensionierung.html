@@ -71,11 +71,13 @@
     <div class="section-inner">
       <div class="section-tag">In 60 Sekunden zur Empfehlung</div>
       <h1 class="section-title" style="color: var(--white);">Welche Wärmepumpe passt zu deinem Haus?</h1>
-      <p class="section-lead">6 kurze Fragen. Keine Anmeldung. Sofort Ergebnis mit Richtpreis und geschätzter Förderung.</p>
+      <p class="section-lead">8 kurze Fragen. Keine Anmeldung. Sofort Ergebnis mit Richtpreis und geschätzter Förderung.</p>
 
       <div class="wizard-container">
         <div class="wizard-progress" id="wizProgress">
           <div class="wizard-progress-bar active"></div>
+          <div class="wizard-progress-bar"></div>
+          <div class="wizard-progress-bar"></div>
           <div class="wizard-progress-bar"></div>
           <div class="wizard-progress-bar"></div>
           <div class="wizard-progress-bar"></div>
@@ -202,8 +204,30 @@
           <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
         </div>
 
-        <!-- Step 7: Verbrauch -->
+        <!-- Step 7: Heizsystem -->
         <div class="wizard-step" data-step="7">
+          <div class="wizard-question">Wie wird heute geheizt?</div>
+          <div class="wizard-hint">Das beeinflusst die passende Vorlauftemperatur und damit die Geräteauswahl.</div>
+          <div class="wizard-options" id="wzHeizsystem">
+            <div class="wizard-option selected" data-value="heizkoerper"><div class="opt-title">Heizkörper</div><div class="opt-sub">Auslegung über W55</div></div>
+            <div class="wizard-option" data-value="fussboden"><div class="opt-title">Fußbodenheizung</div><div class="opt-sub">Auslegung über W35</div></div>
+          </div>
+          <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
+        </div>
+
+        <!-- Step 8: Warmwasser -->
+        <div class="wizard-step" data-step="8">
+          <div class="wizard-question">Soll die Wärmepumpe auch das Warmwasser machen?</div>
+          <div class="wizard-hint">Bei Ja rechnen wir serverseitig mit einem Warmwasser-Zuschlag.</div>
+          <div class="wizard-options" id="wzWarmwasser">
+            <div class="wizard-option selected" data-value="ja"><div class="opt-title">Ja</div><div class="opt-sub">Heizung und Warmwasser über Wärmepumpe</div></div>
+            <div class="wizard-option" data-value="nein"><div class="opt-title">Nein</div><div class="opt-sub">Nur Raumheizung</div></div>
+          </div>
+          <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
+        </div>
+
+        <!-- Step 9: Verbrauch -->
+        <div class="wizard-step" data-step="9">
           <div class="wizard-question">Kennst du deinen Jahresverbrauch?</div>
           <div class="wizard-hint">Steht auf der letzten Jahresabrechnung. Wenn nicht, schätzen wir anhand deiner Angaben.</div>
           <div class="wizard-options" id="wzVerbrauch">

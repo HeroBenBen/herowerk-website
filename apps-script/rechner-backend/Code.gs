@@ -36,72 +36,66 @@ function health_() {
 }
 
 function dimensionierung_(p) {
-  const d = getAllParameters_().dimensionierung;
-  const prices = getPrices_('wolf');
+  const all = getAllParameters_();
+  const d = all.dimensionierung;
+  const f = all.foerder;
   const flaeche = num_(p.flaeche, 0);
   const baujahr = String(p.baujahr || '1978-1994');
   const gebaeude = String(p.gebaeude || 'efh');
   const sanierung = String(p.sanierung || 'nein');
+  const warmwasser = String(p.warmwasser || 'ja').toLowerCase();
+  const heizsystem = String(p.heizsystem || 'heizkoerper').toLowerCase();
   const verbrauchKnown = String(p.verbrauchKnown || '').toLowerCase() === 'known' || String(p.verbrauchKnown || '').toLowerCase() === 'true' || String(p.verbrauchKnown || '').toLowerCase() === 'ja';
-  let verbrauch = int_(p.verbrauch, 0);
+  let verbrauch = num_(p.verbrauch, 0);
   const einheit = String(p.einheit || 'kwh').toLowerCase();
   if (einheit === 'liter') verbrauch *= getNum_(d, 'oel_faktor', 10);
   if (einheit === 'm3') verbrauch *= getNum_(d, 'gas_faktor', 10);
 
   const bedarfStufen = ['vor1978', '1978-1994', '1995-2010', 'nach2010'];
   let effBaujahr = baujahr;
-  if (sanierung === 'teilweise') {
-    const idx = bedarfStufen.indexOf(baujahr);
-    if (idx >= 0 && idx < bedarfStufen.length - 1) effBaujahr = bedarfStufen[idx + 1];
-  } else if (sanierung === 'umfassend') {
-    const idx = bedarfStufen.indexOf(baujahr);
-    if (idx >= 0) effBaujahr = bedarfStufen[Math.min(idx + 2, bedarfStufen.length - 1)];
-  }
+  const idx = bedarfStufen.indexOf(baujahr);
+  if (sanierung === 'teilweise' && idx >= 0) effBaujahr = bedarfStufen[Math.min(idx + 1, bedarfStufen.length - 1)];
+  if (sanierung === 'umfassend' && idx >= 0) effBaujahr = bedarfStufen[Math.min(idx + 2, bedarfStufen.length - 1)];
 
-  const bedarf = verbrauchKnown ? verbrauch : Math.round(flaeche * getNum_(d, 'spez_bedarf_' + key_(effBaujahr), 140) * getNum_(d, 'gebaeudef_' + key_(gebaeude), 1.0));
+  const bedarfKwh = verbrauchKnown ? verbrauch : Math.round(flaeche * getNum_(d, 'spez_bedarf_' + key_(effBaujahr), 140) * getNum_(d, 'gebaeudef_' + key_(gebaeude), 1.0));
+  const heizlast = bedarfKwh / getNum_(d, 'volllaststunden', 1800);
+  const auslegung = round1_(warmwasser === 'ja' ? heizlast * getNum_(d, 'ww_zuschlag_faktor', 1.10) : heizlast);
   const jaz = getNum_(d, 'jaz_' + key_(effBaujahr), 3.5);
-  const heizleistung = bedarf / getNum_(d, 'volllaststunden', 2000);
-  let empfehlung, empIndex;
-  if (heizleistung <= getNum_(d, 'kw_schwelle_s_max', 7)) { empfehlung = 's'; empIndex = 0; }
-  else if (heizleistung <= getNum_(d, 'kw_schwelle_m_max', 14)) { empfehlung = 'm'; empIndex = 1; }
-  else if (heizleistung <= getNum_(d, 'kw_schwelle_l_max', 18)) { empfehlung = 'l'; empIndex = 2; }
-  else if (heizleistung <= getNum_(d, 'kw_schwelle_xl_max', 24)) { empfehlung = 'xl'; empIndex = 3; }
-  else { empfehlung = 'xxl'; empIndex = 4; }
 
-  const preisBlock = wizardPreisblock_(p, gebaeude, empfehlung, prices[empfehlung] || 0);
-  return Object.assign({ empfehlung, empIndex, bedarf, heizleistung, jaz, effBaujahr }, preisBlock);
+  const marken = {};
+  ['wolf', 'vaillant'].forEach(function (marke) {
+    const match = matchCatalog_(marke, auslegung, heizsystem);
+    marken[marke] = match ? catalogResult_(match, f) : { deckt: false };
+  });
+
+  return { bedarf: auslegung, heizlast: round1_(heizlast), jaz: jaz, heizsystem: heizsystem, warmwasser: warmwasser, marken: marken };
 }
 
-function wizardPreisblock_(p, gebaeude, wpTyp, preis) {
-  const f = getAllParameters_().foerder;
-  let foerderSatz = getNum_(f, 'grundfoerderung_pct', 30) + getNum_(f, 'effizienzbonus_pct', 5);
-  const heizung = String(p.heizung || 'sonstige');
-  if (['gas-old', 'oel', 'nachtspeicher', 'gas-etage'].indexOf(heizung) >= 0) foerderSatz += getNum_(f, 'klimabonus_pct', 20);
-  foerderSatz = Math.min(foerderSatz, getNum_(f, 'deckel_selbst_pct', 70));
-  const gemeinde = String(p.gemeinde || '').toLowerCase();
-  const proGemeinden = String(f.proklima_gemeinden || '').split(',').map(function (x) { return x.trim(); });
-  const isMehrfach = gebaeude === 'zfh' || gebaeude === 'mfh';
-  const isKaskade = wpTyp === 'xxl';
-  let zuschuss = 0, proklima = 0;
-  if (isKaskade) {
-    const foerderWE1 = Math.round(getNum_(f, 'foerderfaehig_we1', 30000) * (foerderSatz / 100));
-    const satzVermietetK = Math.min(getNum_(f, 'deckel_vermietet_pct', 35), getNum_(f, 'grundfoerderung_pct', 30) + getNum_(f, 'effizienzbonus_pct', 5));
-    const foerderWE26 = Math.round(5 * getNum_(f, 'foerderfaehig_we2bis6', 15000) * (satzVermietetK / 100));
-    zuschuss = foerderWE1 + foerderWE26;
-  } else if (isMehrfach) {
-    const foerderFaehig = getNum_(f, 'foerderfaehig_we1', 30000) + getNum_(f, 'foerderfaehig_we2bis6', 15000);
-    const proWE = foerderFaehig / 2;
-    const zuschussSelbst = Math.round(proWE * (foerderSatz / 100));
-    const satzVermietet = Math.min(getNum_(f, 'deckel_vermietet_pct', 35), getNum_(f, 'grundfoerderung_pct', 30) + getNum_(f, 'effizienzbonus_pct', 5));
-    const zuschussVermietet = Math.round(proWE * (satzVermietet / 100));
-    zuschuss = zuschussSelbst + zuschussVermietet;
-    proklima = proGemeinden.indexOf(gemeinde) >= 0 ? Math.min(Math.round(foerderFaehig * getNum_(f, 'proklima_pct', 5) / 100), getNum_(f, 'proklima_max_eur', 1500)) : 0;
-  } else {
-    const foerderBasis = Math.min(preis, getNum_(f, 'foerderfaehig_we1', 30000));
-    zuschuss = Math.round(foerderBasis * (foerderSatz / 100));
-    proklima = proGemeinden.indexOf(gemeinde) >= 0 ? Math.min(Math.round(foerderBasis * getNum_(f, 'proklima_pct', 5) / 100), getNum_(f, 'proklima_max_eur', 1500)) : 0;
-  }
-  return { preis, zuschuss, proklima, eigenanteil: Math.max(0, preis - zuschuss - proklima) };
+function matchCatalog_(marke, auslegung, heizsystem) {
+  const candidates = getCatalog_().filter(function (item) {
+    const grenze = heizsystem === 'heizkoerper' ? item.grenzeW55 : item.grenzeW35;
+    return item.marke === marke && grenze >= auslegung;
+  });
+  candidates.sort(function (a, b) {
+    const ga = heizsystem === 'heizkoerper' ? a.grenzeW55 : a.grenzeW35;
+    const gb = heizsystem === 'heizkoerper' ? b.grenzeW55 : b.grenzeW35;
+    return ga - gb;
+  });
+  return candidates[0] || null;
+}
+
+function catalogResult_(item, f) {
+  const ff = Math.min(item.brutto, getNum_(f, 'foerderfaehig_we1', 30000));
+  const zuschuss = Math.round(ff * getNum_(f, 'deckel_selbst_pct', 70) / 100);
+  const proklima = Math.min(Math.round(ff * getNum_(f, 'proklima_pct', 5) / 100), getNum_(f, 'proklima_max_eur', 1500));
+  return {
+    deckt: true,
+    modell: item.modell,
+    kaskade: item.kaskade,
+    brutto: item.brutto,
+    eigenanteil: Math.max(0, item.brutto - zuschuss - proklima),
+    vorlaeufig: String(item.stand || '').toLowerCase() !== 'belegt'
+  };
 }
 
 function foerderung_(p) {
@@ -112,7 +106,6 @@ function foerderung_(p) {
   const einkommen = String(p.einkommen || 'ueber40');
   const gemeinde = String(p.gemeinde || '').toLowerCase();
   const marke = String(p.marke || 'wolf').toLowerCase();
-  if (marke === 'vaillant') return { error: true, message: 'vaillant_noch_nicht_verfuegbar' };
   const prices = getPrices_(marke);
   const wpTyp = String(p.wpTyp || 'm').toLowerCase();
   const preis = p.preisManuell !== undefined && p.preisManuell !== '' ? int_(p.preisManuell, 34510) : (prices[wpTyp] || 34510);
@@ -121,7 +114,7 @@ function foerderung_(p) {
   if (heizung === 'oel' || heizung === 'nachtspeicher' || heizung === 'gas-etage') klimaBonus = true;
   else if (heizung === 'gas') klimaBonus = int_(p.heizungsalter, 20) >= getNum_(f, 'gas_klimabonus_min_alter', 20);
   if (selbstWE > 0 && klimaBonus) satzSelbst += getNum_(f, 'klimabonus_pct', 20);
-  if (einkommen === 'unter40') satzSelbst += getNum_(f, 'einkommensbonus_pct', 30);
+  if (selbstWE > 0 && einkommen === 'unter40') satzSelbst += getNum_(f, 'einkommensbonus_pct', 30);
   satzSelbst += getNum_(f, 'effizienzbonus_pct', 5);
   satzSelbst = Math.min(satzSelbst, getNum_(f, 'deckel_selbst_pct', 70));
   const satzVermietet = Math.min(getNum_(f, 'deckel_vermietet_pct', 35), getNum_(f, 'grundfoerderung_pct', 30) + getNum_(f, 'effizienzbonus_pct', 5));
@@ -141,7 +134,9 @@ function foerderung_(p) {
   if (selbstWE > 0 && klimaBonus) bausteine.splice(1, 0, 'Klimageschwindigkeitsbonus +20%');
   if (selbstWE > 0 && einkommen === 'unter40') bausteine.splice(1, 0, 'Einkommensbonus +30%');
   if (proklimaZuschuss > 0) bausteine.push('proKlima Zuschuss ' + proklimaZuschuss + ' €');
-  return { kfwSatz, zuschussGesamt, proklimaZuschuss, eigenanteil, effektivSatz, preis, klimaBonus, bausteine };
+  const out = { kfwSatz: kfwSatz, zuschussGesamt: zuschussGesamt, proklimaZuschuss: proklimaZuschuss, eigenanteil: eigenanteil, effektivSatz: effektivSatz, preis: preis, klimaBonus: klimaBonus, bausteine: bausteine };
+  if (marke === 'vaillant') out.vorlaeufig = true;
+  return out;
 }
 
 function foerderFaehigeKostenGesamt_(we, f) {
@@ -151,6 +146,7 @@ function foerderFaehigeKostenGesamt_(we, f) {
 }
 
 function setupSheets() {
+  // NICHT AUSFÜHREN: überschreibt die fertige v4-Tab-Struktur. Nur Erstbefüllung.
   const ss = SpreadsheetApp.openById(SHEET_ID);
   writeKeyValueDoc_(ss, 'Förder_Parameter', FOERDER_ROWS_());
   writeKeyValueDoc_(ss, 'Dimensionierung', DIMENSION_ROWS_());
@@ -160,6 +156,7 @@ function setupSheets() {
   writePreiseFromKalkulation_(ss, 'Preise_Vaillant', 'Kalkulation_Vaillant', VAILLANT_PRODUCTS_());
   writeStatus_(ss);
   CacheService.getScriptCache().remove('params:v1');
+  CacheService.getScriptCache().remove('catalog:v1');
 }
 
 function writeKeyValueDoc_(ss, name, rows) {
@@ -225,6 +222,32 @@ function writeStatus_(ss) {
   ]);
 }
 
+
+function getCatalog_() {
+  const cache = CacheService.getScriptCache();
+  const cached = cache.get('catalog:v1');
+  if (cached) return JSON.parse(cached);
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const sh = ss.getSheetByName('Geräte_Katalog');
+  if (!sh) throw new Error('missing_tab_Geräte_Katalog');
+  const values = sh.getRange('A9:M18').getValues();
+  const out = [];
+  values.forEach(function (row) {
+    if (!row[0] || !row[1]) return;
+    out.push({
+      marke: String(row[0]).toLowerCase(),
+      modell: String(row[1]),
+      kaskade: String(row[2]).toUpperCase() === 'J',
+      grenzeW35: num_(row[7], 0),
+      grenzeW55: num_(row[8], 0),
+      brutto: num_(row[10], 0),
+      stand: String(row[11] || '')
+    });
+  });
+  cache.put('catalog:v1', JSON.stringify(out), CACHE_TTL_SECONDS);
+  return out;
+}
+
 function getAllParameters_() {
   const cache = CacheService.getScriptCache();
   const cached = cache.get('params:v1');
@@ -260,13 +283,14 @@ function json_(obj) { return ContentService.createTextOutput(JSON.stringify(obj)
 function num_(v, fallback) { if (typeof v === 'number') return v; const n = parseFloat(String(v || '').replace(/\./g, '').replace(',', '.')); return isNaN(n) ? fallback : n; }
 function int_(v, fallback) { const n = parseInt(String(v || '').replace(/\./g, ''), 10); return isNaN(n) ? fallback : n; }
 function getNum_(map, key, fallback) { return num_(map[key], fallback); }
+function round1_(v) { return Math.round(v * 10) / 10; }
 function key_(s) { return String(s).replace(/-/g, '_'); }
 
 function FOERDER_ROWS_() { return [
   ['grundfoerderung_pct',30,'%', 'KfW-Grundförderung','ADR-04 Anhang A / js/site.js calculateFoerder'], ['klimabonus_pct',20,'%', 'Klimageschwindigkeitsbonus','ADR-04 Anhang A'], ['einkommensbonus_pct',30,'%', 'Einkommensbonus bis Einkommensgrenze','ADR-04 Anhang A'], ['effizienzbonus_pct',5,'%', 'Effizienzbonus R290','ADR-04 Anhang A'], ['deckel_selbst_pct',70,'%', 'Maximaler Satz Selbstnutzer','ADR-04 Anhang A'], ['deckel_vermietet_pct',35,'%', 'Maximaler Satz vermietet','ADR-04 Anhang A'], ['gas_klimabonus_min_alter',20,'Jahre', 'Mindestalter Gas-Zentralheizung für Klimabonus','js/site.js getHeizungsalter/calculateFoerder'], ['einkommensgrenze_eur',40000,'EUR', 'Grenze Einkommensbonus','ADR-04 Anhang A'], ['foerderfaehig_we1',30000,'EUR', 'Förderfähige Kosten 1. WE','js/site.js foerderFaehigeKostenGesamt'], ['foerderfaehig_we2bis6',15000,'EUR/WE', 'Förderfähige Kosten 2.–6. WE','js/site.js foerderFaehigeKostenGesamt'], ['foerderfaehig_we7plus',8000,'EUR/WE', 'Förderfähige Kosten ab 7. WE','js/site.js foerderFaehigeKostenGesamt'], ['proklima_pct',5,'%', 'proKlima-Satz','ADR-04 Anhang A'], ['proklima_max_eur',1500,'EUR', 'proKlima-Höchstbetrag','ADR-04 Anhang A'], ['proklima_gemeinden','hannover,seelze,langenhagen,laatzen,hemmingen,ronnenberg','CSV', 'proKlima-Fördergebiet','ADR-04 Anhang A']
 ]; }
 function DIMENSION_ROWS_() { return [
-  ['spez_bedarf_vor1978',180,'kWh/m²a','spezifischer Bedarf vor 1978','js/site.js wizCalculate'], ['spez_bedarf_1978_1994',140,'kWh/m²a','spezifischer Bedarf 1978–1994','js/site.js wizCalculate'], ['spez_bedarf_1995_2010',100,'kWh/m²a','spezifischer Bedarf 1995–2010','js/site.js wizCalculate'], ['spez_bedarf_nach2010',60,'kWh/m²a','spezifischer Bedarf nach 2010','js/site.js wizCalculate'], ['gebaeudef_efh',1.0,'Faktor','Gebäudefaktor EFH','js/site.js wizCalculate'], ['gebaeudef_dhh',0.9,'Faktor','Gebäudefaktor DHH','js/site.js wizCalculate'], ['gebaeudef_rh',0.85,'Faktor','Gebäudefaktor RH','js/site.js wizCalculate'], ['gebaeudef_rh_end',0.85,'Faktor','Gebäudefaktor Reihenendhaus','js/site.js wizCalculate'], ['gebaeudef_zfh',1.15,'Faktor','Gebäudefaktor ZFH','js/site.js wizCalculate'], ['gebaeudef_mfh',1.3,'Faktor','Gebäudefaktor MFH','js/site.js wizCalculate'], ['jaz_vor1978',3.0,'JAZ','JAZ vor 1978','js/site.js wizCalculate'], ['jaz_1978_1994',3.3,'JAZ','JAZ 1978–1994','js/site.js wizCalculate'], ['jaz_1995_2010',3.8,'JAZ','JAZ 1995–2010','js/site.js wizCalculate'], ['jaz_nach2010',4.2,'JAZ','JAZ nach 2010','js/site.js wizCalculate'], ['volllaststunden',2000,'h/a','Volllaststunden-Faktor','js/site.js wizCalculate'], ['kw_schwelle_s_max',7,'kW','Grenze Klasse S','js/site.js wizCalculate'], ['kw_schwelle_m_max',14,'kW','Grenze Klasse M','js/site.js wizCalculate'], ['kw_schwelle_l_max',18,'kW','Grenze Klasse L','js/site.js wizCalculate'], ['kw_schwelle_xl_max',24,'kW','Grenze Klasse XL','js/site.js wizCalculate'], ['oel_faktor',10,'kWh/L','Umrechnung Heizöl','js/site.js OEL_FAKTOR'], ['gas_faktor',10,'kWh/m³','Umrechnung Gas','js/site.js GAS_FAKTOR']
+  ['spez_bedarf_vor1978',180,'kWh/m²a','spezifischer Bedarf vor 1978','js/site.js wizCalculate'], ['spez_bedarf_1978_1994',140,'kWh/m²a','spezifischer Bedarf 1978–1994','js/site.js wizCalculate'], ['spez_bedarf_1995_2010',100,'kWh/m²a','spezifischer Bedarf 1995–2010','js/site.js wizCalculate'], ['spez_bedarf_nach2010',60,'kWh/m²a','spezifischer Bedarf nach 2010','js/site.js wizCalculate'], ['gebaeudef_efh',1.0,'Faktor','Gebäudefaktor EFH','js/site.js wizCalculate'], ['gebaeudef_dhh',0.9,'Faktor','Gebäudefaktor DHH','js/site.js wizCalculate'], ['gebaeudef_rh',0.85,'Faktor','Gebäudefaktor RH','js/site.js wizCalculate'], ['gebaeudef_rh_end',0.85,'Faktor','Gebäudefaktor Reihenendhaus','js/site.js wizCalculate'], ['gebaeudef_zfh',0.95,'Faktor','Gebäudefaktor ZFH','js/site.js wizCalculate'], ['gebaeudef_mfh',0.85,'Faktor','Gebäudefaktor MFH','js/site.js wizCalculate'], ['jaz_vor1978',3.0,'JAZ','JAZ vor 1978','js/site.js wizCalculate'], ['jaz_1978_1994',3.3,'JAZ','JAZ 1978–1994','js/site.js wizCalculate'], ['jaz_1995_2010',3.8,'JAZ','JAZ 1995–2010','js/site.js wizCalculate'], ['jaz_nach2010',4.2,'JAZ','JAZ nach 2010','js/site.js wizCalculate'], ['volllaststunden',1800,'h/a','Volllaststunden-Faktor','js/site.js wizCalculate'], ['ww_zuschlag_faktor',1.10,'Faktor','Warmwasser-Zuschlag Wärmepumpe','js/site.js wizCalculate'], ['oel_faktor',10,'kWh/L','Umrechnung Heizöl','js/site.js OEL_FAKTOR'], ['gas_faktor',10,'kWh/m³','Umrechnung Gas','js/site.js GAS_FAKTOR']
 ]; }
 function WOLF_PRODUCTS_() { return [{klasse:'s',modell:'Wolf CHA-07',hausgroesse:'bis ca. 120 m²',kw:'5–7 kW'},{klasse:'m',modell:'Wolf CHA-10',hausgroesse:'ca. 120–180 m²',kw:'9–12 kW'},{klasse:'l',modell:'Wolf CHA-16/20',hausgroesse:'ca. 180–280 m²',kw:'14–16 kW'},{klasse:'xl',modell:'Wolf CHA-20/24',hausgroesse:'ab 250 m² / 2 WE',kw:'18–24 kW'},{klasse:'xxl',modell:'2× Wolf CHA-16',hausgroesse:'Ref. 6 WE MFH',kw:'2× 16 kW (32 kW)'}]; }
 function VAILLANT_PRODUCTS_() { return [{klasse:'s',modell:'',hausgroesse:'',kw:''},{klasse:'m',modell:'',hausgroesse:'',kw:''},{klasse:'l',modell:'',hausgroesse:'',kw:''},{klasse:'xl',modell:'',hausgroesse:'',kw:''},{klasse:'xxl',modell:'',hausgroesse:'',kw:''}]; }
