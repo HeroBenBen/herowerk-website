@@ -39,7 +39,6 @@ function health_() {
 function dimensionierung_(p) {
   const all = getAllParameters_();
   const d = all.dimensionierung;
-  const f = all.foerder;
   const flaeche = num_(p.flaeche, 0);
   const baujahr = String(p.baujahr || '1978-1994');
   const gebaeude = String(p.gebaeude || 'efh');
@@ -66,7 +65,7 @@ function dimensionierung_(p) {
   const marken = {};
   ['wolf', 'vaillant'].forEach(function (marke) {
     const match = matchCatalog_(marke, auslegung, heizsystem);
-    marken[marke] = match ? catalogResult_(match, f) : { deckt: false };
+    marken[marke] = match ? catalogResult_(match, getPriceTableCached_(marke)) : { deckt: false };
   });
 
   return { bedarf: auslegung, heizlast: round1_(heizlast), jaz: jaz, heizsystem: heizsystem, warmwasser: warmwasser, marken: marken };
@@ -85,16 +84,21 @@ function matchCatalog_(marke, auslegung, heizsystem) {
   return candidates[0] || null;
 }
 
-function catalogResult_(item, f) {
-  const ff = Math.min(item.brutto, getNum_(f, 'foerderfaehig_we1', 30000));
-  const zuschuss = Math.round(ff * getNum_(f, 'deckel_selbst_pct', 70) / 100);
-  const proklima = Math.min(Math.round(ff * getNum_(f, 'proklima_pct', 5) / 100), getNum_(f, 'proklima_max_eur', 1500));
+function catalogResult_(item, priceRows) {
+  // Eigenanteil = Single Source aus der Preis-Tafel (Preise_Wolf/Preise_Vaillant), gematcht per
+  // Brutto -> Rechner zeigt EXAKT denselben Eigenanteil wie die Preistafel, fuer JEDES Segment
+  // (auch XL/XXL mit gemischter WE-Foerderung). eigenanteil = ohne proKlima (Hauptwert,
+  // standortunabhaengig); eigenanteilProklima = mit proKlima (nur als 'moeglich'-Hinweis, < eigen).
+  const pr = (priceRows || []).filter(function (r) { return r.brutto === item.brutto; })[0];
+  const eigen = pr ? pr.eigen : Math.max(0, item.brutto - Math.round(Math.min(item.brutto, 30000) * 0.70));
+  const eigenProklima = pr && pr.proklima > 0 && pr.proklima < pr.eigen ? pr.proklima : null;
   return {
     deckt: true,
     modell: item.modell,
     kaskade: item.kaskade,
     brutto: item.brutto,
-    eigenanteil: Math.max(0, item.brutto - zuschuss - proklima),
+    eigenanteil: eigen,
+    eigenanteilProklima: eigenProklima,
     vorlaeufig: String(item.stand || '').toLowerCase() !== 'belegt'
   };
 }
@@ -302,6 +306,15 @@ function readPriceTable_(name) {
     });
   }
   return out;
+}
+function getPriceTableCached_(marke) {
+  const cache = CacheService.getScriptCache();
+  const key = 'pricetable:' + (marke === 'vaillant' ? 'vaillant' : 'wolf');
+  const cached = cache.get(key);
+  if (cached) return JSON.parse(cached);
+  const rows = readPriceTable_(marke === 'vaillant' ? 'Preise_Vaillant' : 'Preise_Wolf');
+  cache.put(key, JSON.stringify(rows), CACHE_TTL_SECONDS);
+  return rows;
 }
 function preise_(p) {
   return { wolf: readPriceTable_('Preise_Wolf'), vaillant: readPriceTable_('Preise_Vaillant') };

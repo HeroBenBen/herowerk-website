@@ -584,6 +584,7 @@ function renderWizServerResult(data) {
         <a href="/kontakt" class="btn-primary" style="flex:1.5;min-width:220px;text-align:center;">Jetzt kostenlos beraten lassen</a>
         <button class="btn-ghost" onclick="wizToFoerder()" style="flex:1.2;min-width:210px;cursor:pointer;">Weiter zur Förderung →</button>
       </div>
+      <div style="margin-top:14px;font-size:12px;line-height:1.5;color:var(--g400);">* Eigenanteil für selbstnutzende Eigentümer bei max. KfW-Förderung (70 %): Grund 30 % + Klima 20 % + Einkommen 30 % + Effizienz 5 %. proKlima (5 %, max. 1.500 €) nur im Fördergebiet. Brutto inkl. MwSt. Verbindlicher Preis nach Vor-Ort-Termin.</div>
     </div>`;
 }
 
@@ -613,7 +614,8 @@ function renderBrandCard(key, label, brand, bedarf) {
   }
   return `<button type="button" class="${cls}" onclick="wizSelectMarke('${key}')" style="text-align:left;font:inherit;">
     ${head}
-    <div class="wiz-brand-satz"><div class="fr-satz" style="font-size:40px;">${formatEuro(brand.eigenanteil)}</div><div class="fr-label" style="margin-bottom:0;">geschätzter Eigenanteil</div></div>
+    <div class="wiz-brand-satz"><div class="fr-satz" style="font-size:40px;">${formatEuro(brand.eigenanteil)}</div><div class="fr-label" style="margin-bottom:0;">geschätzter Eigenanteil nach max. Förderung (70 %)*</div></div>
+    ${brand.eigenanteilProklima ? `<div class="wiz-brand-proklima" style="margin:6px 0 2px;font-size:13px;color:var(--green);">proKlima möglich: ab ${formatEuro(brand.eigenanteilProklima)}</div>` : ''}
     <div class="fr-row"><span>Empfohlenes Modell</span><span class="fr-val">${brand.modell}</span></div>
     <div class="fr-row"><span>Deckt deinen Bedarf</span><span class="fr-val">${formatKw(bedarf)} kW${brand.kaskade ? ' · Kaskade' : ''} ✓</span></div>
     <div class="fr-row"><span>Brutto-Richtpreis</span><span class="fr-val">${formatEuro(brand.brutto)}</span></div>
@@ -646,16 +648,18 @@ function wizDemo() {
     marken: {
       wolf: {
         deckt: true,
-        modell: 'CHA-Monoblock 10',
+        modell: 'Wolf CHA-10',
         brutto: 33721,
-        eigenanteil: 15174,
+        eigenanteil: 12721,
+        eigenanteilProklima: 11221,
         kaskade: false,
       },
       vaillant: {
         deckt: true,
-        modell: 'VWL 105/6 A',
+        modell: 'Vaillant VWL 105/8.1 A',
         brutto: 40276,
-        eigenanteil: 18124,
+        eigenanteil: 19276,
+        eigenanteilProklima: 17776,
         kaskade: false,
       },
     },
