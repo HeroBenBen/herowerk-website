@@ -28,7 +28,8 @@ const wizData = {
   verbrauch: 0,
 };
 let wizStep = 1;
-const RECHNER_API = 'https://script.google.com/macros/s/AKfycbwsvoC0ZBtpZq8WY_hNS-BPN1gcTK5G1JAMfxSc5FpjWxQ2SbRLI9VqCnX8SRLO4meF/exec';
+const RECHNER_API =
+  'https://script.google.com/macros/s/AKfycbwsvoC0ZBtpZq8WY_hNS-BPN1gcTK5G1JAMfxSc5FpjWxQ2SbRLI9VqCnX8SRLO4meF/exec';
 let wizServerResult = null;
 let wizSelectedMarke = 'wolf';
 let foerderMarke = 'wolf';
@@ -464,8 +465,10 @@ function wizNext() {
     wizData.sanierung = currentStep.querySelector('.selected')?.dataset.value || 'nein';
   if (stepNum === 5) wizData.flaeche = parseInt(document.getElementById('wzFlaeche').value);
   if (stepNum === 6) wizData.heizung = currentStep.querySelector('.selected')?.dataset.value || '';
-  if (stepNum === 7) wizData.heizsystem = currentStep.querySelector('.selected')?.dataset.value || 'heizkoerper';
-  if (stepNum === 8) wizData.warmwasser = currentStep.querySelector('.selected')?.dataset.value || 'ja';
+  if (stepNum === 7)
+    wizData.heizsystem = currentStep.querySelector('.selected')?.dataset.value || 'heizkoerper';
+  if (stepNum === 8)
+    wizData.warmwasser = currentStep.querySelector('.selected')?.dataset.value || 'ja';
 
   // Next step
   currentStep.classList.remove('active');
@@ -506,7 +509,9 @@ async function wizCalculate() {
   }
 
   wizData.verbrauchKnown = verbSel.dataset.value === 'known';
-  wizData.verbrauch = wizData.verbrauchKnown ? parseInt(document.getElementById('wzVerbrauchSlider').value) || 0 : 0;
+  wizData.verbrauch = wizData.verbrauchKnown
+    ? parseInt(document.getElementById('wzVerbrauchSlider').value) || 0
+    : 0;
 
   document.querySelectorAll('.wizard-step').forEach((s) => s.classList.remove('active'));
   document.querySelectorAll('.wizard-progress-bar').forEach((b) => {
@@ -517,8 +522,10 @@ async function wizCalculate() {
   const result = document.getElementById('wizResult');
   result.classList.add('active');
   document.getElementById('wizResultTitle').textContent = 'Wir berechnen deine Empfehlung';
-  document.getElementById('wizResultSub').textContent = 'Die Berechnung läuft serverseitig mit den aktuellen Katalogdaten.';
-  document.getElementById('wizResultCards').innerHTML = '<div style="border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:24px;color:var(--g300);text-align:center;">Einen Moment bitte...</div>';
+  document.getElementById('wizResultSub').textContent =
+    'Die Berechnung läuft serverseitig mit den aktuellen Katalogdaten.';
+  document.getElementById('wizResultCards').innerHTML =
+    '<div style="border:1px solid rgba(255,255,255,0.15);border-radius:16px;padding:24px;color:var(--g300);text-align:center;">Einen Moment bitte...</div>';
 
   const params = new URLSearchParams({
     action: 'dimensionierung',
@@ -540,12 +547,17 @@ async function wizCalculate() {
     const data = await response.json();
     if (data.error) throw new Error(data.message || 'server_error');
     wizServerResult = data;
-    wizSelectedMarke = data.marken?.wolf?.deckt ? 'wolf' : data.marken?.vaillant?.deckt ? 'vaillant' : 'wolf';
+    wizSelectedMarke = data.marken?.wolf?.deckt
+      ? 'wolf'
+      : data.marken?.vaillant?.deckt
+        ? 'vaillant'
+        : 'wolf';
     renderWizServerResult(data);
   } catch (err) {
     console.error('Dimensionierung nicht verfügbar', err);
     document.getElementById('wizResultTitle').textContent = 'Berechnung gerade nicht verfügbar';
-    document.getElementById('wizResultSub').textContent = 'Bitte frage eine Beratung an. Wir prüfen die passende Wärmepumpe persönlich.';
+    document.getElementById('wizResultSub').textContent =
+      'Bitte frage eine Beratung an. Wir prüfen die passende Wärmepumpe persönlich.';
     document.getElementById('wizResultCards').innerHTML = `
       <div style="border:2px solid rgba(232,168,56,0.35);border-radius:16px;padding:24px;background:rgba(232,168,56,0.08);">
         <h3 style="color:var(--white);margin:0 0 8px;">Berechnung gerade nicht verfügbar</h3>
@@ -557,37 +569,52 @@ async function wizCalculate() {
 
 function renderWizServerResult(data) {
   const heizLabel = data.heizsystem === 'fussboden' ? 'Fußbodenheizung' : 'Heizkörper';
-  document.getElementById('wizResultTitle').textContent = `Ihr geschätzter Bedarf: ${formatKw(data.bedarf)} kW · ${heizLabel}`;
-  document.getElementById('wizResultSub').textContent = `Überschlägige Schätzung, verbindliche Auslegung im Vor-Ort-Termin. Jahresarbeitszahl ${Number(data.jaz || 0).toFixed(1)}.`;
+  document.getElementById('wizResultTitle').textContent =
+    `Deine Wärmepumpe für ${formatKw(data.bedarf)} kW Bedarf`;
+  document.getElementById('wizResultSub').textContent =
+    `Überschlägige Schätzung für ${heizLabel} · Jahresarbeitszahl ${formatKw(data.jaz)} · verbindliche Auslegung im Vor-Ort-Termin.`;
   document.getElementById('wizResultCards').innerHTML = `
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;">
+    <div class="wiz-result-grid">
       ${renderBrandCard('wolf', 'Wolf', data.marken?.wolf, data.bedarf)}
       ${renderBrandCard('vaillant', 'Vaillant', data.marken?.vaillant, data.bedarf)}
     </div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;">
-      <button class="btn-ghost" onclick="wizReset()" style="cursor:pointer;padding:12px 20px;">Neu berechnen</button>
-      <a href="/kontakt" class="btn-primary" style="flex:1;min-width:200px;text-align:center;">Jetzt kostenlos beraten lassen</a>
-    </div>
-    <div style="margin-top:16px;background:rgba(183,217,0,0.06);border:2px solid rgba(183,217,0,0.25);border-radius:14px;padding:16px 20px;cursor:pointer;" onclick="wizToFoerder()">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-        <div><div style="color:var(--white);font-family:'Barlow',sans-serif;font-weight:700;font-size:16px;">Weiter: Deine genaue Förderung berechnen</div><div style="color:var(--g400);font-size:13px;margin-top:2px;">Die ausgewählte Marke wird automatisch übernommen.</div></div>
-        <div style="background:var(--green);color:var(--nacht);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">→</div>
-      </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;">
+      <button class="btn-ghost" onclick="wizReset()" style="flex:1;min-width:150px;cursor:pointer;">← Neu berechnen</button>
+      <a href="/kontakt" class="btn-primary" style="flex:1.5;min-width:220px;text-align:center;">Jetzt kostenlos beraten lassen</a>
+      <button class="btn-ghost" onclick="wizToFoerder()" style="flex:1.2;min-width:210px;cursor:pointer;">Weiter zur Förderung →</button>
     </div>`;
+}
+
+// Marken-Logo fuer die Ergebnis-Panels. Wolf wird inline gerendert, damit der
+// Schriftzug per Theme umschlaegt (currentColor = --color-text-primary: weiss auf
+// dunkel, Schiefer auf hell); der rote Punkt bleibt fix. Vaillant traegt seine
+// Farben selbst und kann als Datei geladen werden.
+function brandLogo(key, label) {
+  if (key === 'wolf') {
+    return `<span class="wiz-brand-logo" role="img" aria-label="Wolf"><svg width="73" height="22" viewBox="0 0 174 52.6" aria-hidden="true" focusable="false"><polygon fill="currentColor" points="62.2,0 50.1,52.6 102.7,52.6 114.8,0"/><polygon fill="currentColor" points="134.3,5.4 117.4,5.4 107.8,47 133.5,47 136.8,32.8 128,32.8"/><polygon fill="currentColor" points="171.1,18 174,5.4 146.8,5.4 137.2,47 154.1,47 157,34.4 167.3,34.4 170,22.5 159.7,22.5 160.8,18"/><polygon fill="currentColor" points="42.6,5.4 39.2,20.6 35.7,5.4 21.2,5.4 17.8,20.6 14.3,5.4 0,5.4 9.4,47 24.3,47 28.1,30 31.9,47 47.6,47 57,5.4"/><circle fill="#E10000" cx="82.3" cy="26.3" r="22.7"/></svg></span>`;
+  }
+  return `<span class="wiz-brand-logo"><img src="/logo-${key}.svg" alt="${label}" style="height:22px;width:auto;display:block;"></span>`;
 }
 
 function renderBrandCard(key, label, brand, bedarf) {
   const selected = wizSelectedMarke === key;
-  const badge = brand?.vorlaeufig ? '<span style="border:1px solid var(--bernstein);color:var(--bernstein);border-radius:999px;padding:3px 8px;font-size:11px;font-weight:700;">vorläufig</span>' : '';
+  const cls = 'foerder-result wiz-brand-panel' + (selected ? ' wiz-selected' : '');
+  const badge = selected ? '<span class="wiz-brand-badge">✓ Ausgewählt</span>' : '';
+  const head = `<div class="wiz-brand-head">${brandLogo(key, label)}${badge}</div>`;
   if (!brand || !brand.deckt) {
-    return `<button type="button" onclick="wizSelectMarke('${key}')" style="text-align:left;border:2px solid ${selected ? 'var(--green)' : 'rgba(255,255,255,0.14)'};border-radius:16px;padding:20px;background:rgba(255,255,255,0.04);cursor:pointer;"><div style="display:flex;justify-content:space-between;gap:8px;"><h3 style="color:var(--white);margin:0;">${label}</h3>${badge}</div><p style="color:var(--g300);margin:14px 0 0;">Individuelle Planung</p></button>`;
+    return `<button type="button" class="${cls}" onclick="wizSelectMarke('${key}')" style="text-align:left;font:inherit;">
+      ${head}
+      <div class="wiz-brand-satz"><div class="fr-satz" style="font-size:24px;line-height:1.2;">Individuelle Planung</div></div>
+      <div class="fr-row"><span>Dein Bedarf</span><span class="fr-val">${formatKw(bedarf)} kW</span></div>
+      <div class="fr-row"><span>Auslegung</span><span class="fr-val">im Vor-Ort-Termin</span></div>
+    </button>`;
   }
-  return `<button type="button" onclick="wizSelectMarke('${key}')" style="text-align:left;border:2px solid ${selected ? 'var(--green)' : 'rgba(255,255,255,0.14)'};border-radius:16px;padding:20px;background:${selected ? 'rgba(183,217,0,0.06)' : 'rgba(255,255,255,0.04)'};cursor:pointer;">
-    <div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start;"><h3 style="color:var(--white);margin:0;">${label}</h3>${badge}</div>
-    <div style="color:var(--green);font-weight:800;font-size:20px;margin-top:10px;">${brand.modell}</div>
-    <div style="color:var(--g300);margin-top:8px;">✓ deckt ${formatKw(bedarf)} kW${brand.kaskade ? ' · Kaskade' : ''}</div>
-    <div style="color:var(--g400);font-size:13px;margin-top:14px;">Richtpreis brutto</div><div style="color:var(--white);font-weight:800;">${formatEuro(brand.brutto)}</div>
-    <div style="color:var(--g400);font-size:13px;margin-top:10px;">Eigenanteil geschätzt</div><div style="color:var(--green);font-weight:800;font-size:24px;">${formatEuro(brand.eigenanteil)}</div>
+  return `<button type="button" class="${cls}" onclick="wizSelectMarke('${key}')" style="text-align:left;font:inherit;">
+    ${head}
+    <div class="wiz-brand-satz"><div class="fr-satz" style="font-size:40px;">${formatEuro(brand.eigenanteil)}</div><div class="fr-label" style="margin-bottom:0;">geschätzter Eigenanteil</div></div>
+    <div class="fr-row"><span>Empfohlenes Modell</span><span class="fr-val">${brand.modell}</span></div>
+    <div class="fr-row"><span>Deckt deinen Bedarf</span><span class="fr-val">${formatKw(bedarf)} kW${brand.kaskade ? ' · Kaskade' : ''} ✓</span></div>
+    <div class="fr-row"><span>Brutto-Richtpreis</span><span class="fr-val">${formatEuro(brand.brutto)}</span></div>
   </button>`;
 }
 
@@ -596,8 +623,55 @@ function wizSelectMarke(key) {
   if (wizServerResult) renderWizServerResult(wizServerResult);
 }
 
-function formatEuro(value) { return Math.round(Number(value) || 0).toLocaleString('de-DE') + ' €'; }
-function formatKw(value) { return Number(value || 0).toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }); }
+function formatEuro(value) {
+  return Math.round(Number(value) || 0).toLocaleString('de-DE') + ' €';
+}
+function formatKw(value) {
+  return Number(value || 0).toLocaleString('de-DE', {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1,
+  });
+}
+
+// Optik-Vorschau ohne Backend: rendert das Ergebnis mit Beispielwerten.
+// Aktiv NUR auf Vercel-Preview-Hosts via ?demo — niemals auf herowerk.de.
+function wizDemo() {
+  if (!document.getElementById('wizResult')) return;
+  const demoData = {
+    bedarf: 9.2,
+    jaz: 3.8,
+    heizsystem: 'heizkoerper',
+    marken: {
+      wolf: {
+        deckt: true,
+        modell: 'CHA-Monoblock 10',
+        brutto: 33721,
+        eigenanteil: 15174,
+        kaskade: false,
+      },
+      vaillant: {
+        deckt: true,
+        modell: 'VWL 105/6 A',
+        brutto: 40276,
+        eigenanteil: 18124,
+        kaskade: false,
+      },
+    },
+  };
+  wizServerResult = demoData;
+  wizSelectedMarke = 'wolf';
+  document.querySelectorAll('.wizard-step').forEach((s) => s.classList.remove('active'));
+  document.getElementById('wizResult').classList.add('active');
+  renderWizServerResult(demoData);
+}
+if (
+  typeof location !== 'undefined' &&
+  location.search.indexOf('demo') !== -1 &&
+  /\.vercel\.app$/.test(location.hostname)
+) {
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wizDemo);
+  else wizDemo();
+}
 
 function wizReset() {
   document.getElementById('wizResult').classList.remove('active');
@@ -1221,7 +1295,10 @@ async function calculateFoerder() {
   const einkommen = document.getElementById('einkommen').value;
   const gemeinde = document.getElementById('gemeinde').value;
   const wpTyp = document.getElementById('foerderWpTyp').value;
-  const preisManuell = wpKostenModus === 'manuell' ? (parseInt(document.getElementById('wpKostenInput').value) || '') : '';
+  const preisManuell =
+    wpKostenModus === 'manuell'
+      ? parseInt(document.getElementById('wpKostenInput').value) || ''
+      : '';
   const proklimaOptinVal = document.getElementById('proklimaOptin').value;
 
   document.getElementById('foerderSatzKfw').textContent = '...';
@@ -1252,7 +1329,8 @@ async function calculateFoerder() {
     if (data.error) throw new Error(data.message || 'server_error');
   } catch (err) {
     console.error('Förderberechnung nicht verfügbar', err);
-    document.getElementById('foerderBreakdown').innerHTML = '<div style="border:1px solid rgba(232,168,56,0.35);border-radius:12px;padding:14px;color:var(--g300);">Berechnung gerade nicht verfügbar. Bitte Beratung anfragen.</div>';
+    document.getElementById('foerderBreakdown').innerHTML =
+      '<div style="border:1px solid rgba(232,168,56,0.35);border-radius:12px;padding:14px;color:var(--g300);">Berechnung gerade nicht verfügbar. Bitte Beratung anfragen.</div>';
     document.getElementById('effektivSatzBox').style.display = 'none';
     return;
   }
@@ -1264,14 +1342,17 @@ async function calculateFoerder() {
 
   document.getElementById('foerderSatzKfw').textContent = kfwSatz + '%';
   document.getElementById('frPreis').textContent = 'ab ' + preis.toLocaleString('de-DE') + ' €';
-  document.getElementById('frZuschuss').textContent = '-' + Math.round(gesamtZuschuss).toLocaleString('de-DE') + ' €';
-  document.getElementById('frEigen').textContent = 'ab ' + Math.round(Number(data.eigenanteil) || 0).toLocaleString('de-DE') + ' €';
+  document.getElementById('frZuschuss').textContent =
+    '-' + Math.round(gesamtZuschuss).toLocaleString('de-DE') + ' €';
+  document.getElementById('frEigen').textContent =
+    'ab ' + Math.round(Number(data.eigenanteil) || 0).toLocaleString('de-DE') + ' €';
 
   const effektivBox = document.getElementById('effektivSatzBox');
   if (effektivSatz < kfwSatz) {
     effektivBox.style.display = 'block';
     document.getElementById('foerderSatzEffektiv').textContent = effektivSatz + '%';
-    document.getElementById('effektivErklaerung').textContent = 'Die serverseitige Berechnung berücksichtigt förderfähige Kosten, Investitionssumme und Wohneinheiten.';
+    document.getElementById('effektivErklaerung').textContent =
+      'Die serverseitige Berechnung berücksichtigt förderfähige Kosten, Investitionssumme und Wohneinheiten.';
   } else {
     effektivBox.style.display = 'none';
   }
@@ -1291,25 +1372,32 @@ async function calculateFoerder() {
   const breakdown = document.getElementById('foerderBreakdown');
   let html = '';
   (data.bausteine || []).forEach((baustein) => {
-    html += '<div class="breakdown-item"><span>' + baustein + '</span><span class="pct">✓</span></div>';
+    html +=
+      '<div class="breakdown-item"><span>' + baustein + '</span><span class="pct">✓</span></div>';
   });
-  html += '<div class="breakdown-item" style="border-top:1px solid rgba(255,255,255,0.15);padding-top:8px;margin-top:8px;"><span style="font-weight:700;color:var(--white);">KfW-Zuschuss gesamt</span><span class="pct" style="font-size:16px;">' + Math.round(Number(data.zuschussGesamt) || 0).toLocaleString('de-DE') + ' €</span></div>';
+  html +=
+    '<div class="breakdown-item" style="border-top:1px solid rgba(255,255,255,0.15);padding-top:8px;margin-top:8px;"><span style="font-weight:700;color:var(--white);">KfW-Zuschuss gesamt</span><span class="pct" style="font-size:16px;">' +
+    Math.round(Number(data.zuschussGesamt) || 0).toLocaleString('de-DE') +
+    ' €</span></div>';
   if (Number(data.proklimaZuschuss) > 0) {
-    html += '<div class="breakdown-item" style="margin-top:8px;"><span style="color:var(--green);">proKlima Zuschuss</span><span class="pct" style="color:var(--green);">' + Number(data.proklimaZuschuss).toLocaleString('de-DE') + ' €</span></div>';
+    html +=
+      '<div class="breakdown-item" style="margin-top:8px;"><span style="color:var(--green);">proKlima Zuschuss</span><span class="pct" style="color:var(--green);">' +
+      Number(data.proklimaZuschuss).toLocaleString('de-DE') +
+      ' €</span></div>';
   } else if (proklimaGemeinden.includes(gemeinde) && proklimaOptinVal === 'nein') {
-    html += '<div class="breakdown-item" style="margin-top:8px;"><span style="color:var(--g400);">proKlima: nicht eingerechnet</span><span class="pct" style="color:var(--g400);">0 €</span></div>';
+    html +=
+      '<div class="breakdown-item" style="margin-top:8px;"><span style="color:var(--g400);">proKlima: nicht eingerechnet</span><span class="pct" style="color:var(--g400);">0 €</span></div>';
   } else if (!proklimaGemeinden.includes(gemeinde)) {
-    html += '<div class="breakdown-item" style="margin-top:8px;"><span style="color:var(--g400);">proKlima: nicht im Fördergebiet</span><span class="pct" style="color:var(--g400);">0 €</span></div>';
-  }
-  if (data.vorlaeufig) {
-    html += '<div style="margin-top:10px;color:var(--bernstein);font-size:13px;">Vaillant-Ergebnis vorläufig, verbindliche Prüfung im Vor-Ort-Termin.</div>';
+    html +=
+      '<div class="breakdown-item" style="margin-top:8px;"><span style="color:var(--g400);">proKlima: nicht im Fördergebiet</span><span class="pct" style="color:var(--g400);">0 €</span></div>';
   }
   breakdown.innerHTML = html;
 
   const wegBox = document.getElementById('wegHinweis');
   if (we >= 3) {
     wegBox.style.display = 'block';
-    wegBox.innerHTML = '<div style="color:var(--g300);font-size:13px;line-height:1.6;">Bei einer WEG beantragt jeder Eigentümer individuell. Für die genaue Aufteilung beraten wir dich kostenlos.</div>';
+    wegBox.innerHTML =
+      '<div style="color:var(--g300);font-size:13px;line-height:1.6;">Bei einer WEG beantragt jeder Eigentümer individuell. Für die genaue Aufteilung beraten wir dich kostenlos.</div>';
   } else {
     wegBox.style.display = 'none';
     wegBox.innerHTML = '';

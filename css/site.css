@@ -4018,3 +4018,61 @@ html[data-theme='light'] .section-tag {
     transform: none !important;
   }
 }
+
+/* ===== Dimensionierungs-Rechner: Ergebnis im Foerderrechner-Design (C22, 2026-06-19) ===== */
+.wiz-result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 560px) {
+  .wiz-result-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.wiz-brand-panel {
+  padding: 20px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.wiz-brand-panel:hover {
+  border-color: var(--green);
+}
+.foerder-result.wiz-selected {
+  border: 2px solid var(--green) !important;
+}
+[data-theme='light'] .foerder-result.wiz-selected {
+  border: 2px solid var(--green) !important;
+}
+.wiz-brand-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
+  margin-bottom: 14px;
+}
+.wiz-brand-logo {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-text-primary);
+}
+.wiz-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--green);
+  color: var(--color-accent-primary-text);
+  border-radius: 999px;
+  padding: 3px 11px;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.wiz-brand-satz {
+  text-align: center;
+  margin-bottom: 14px;
+}
