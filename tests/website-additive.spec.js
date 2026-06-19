@@ -12,7 +12,10 @@ test('@smoke Theme-Toggle setzt Light- und Dark-Mode per URL/LocalStorage', asyn
 
 test('@smoke Hersteller-Vorauswahl zeigt Wolf-Minimum und Vaillant-Panel', async ({ page }) => {
   await page.goto('/preise.html?theme=dark');
-  await expect(page.locator('#wolfMinEigen')).toContainText('8.925');
+  // Drift-fest: prueft, dass die Live-Preis-Verdrahtung (action=preise, Single Source)
+  // einen echten Eigenanteil rendert — nicht den "ab … Eigenanteil*"-Platzhalter. Kein
+  // hartkodierter Sheet-Preis (der bei jeder Preisaenderung driftet).
+  await expect(page.locator('#wolfMinEigen')).toContainText(/ab [\d.]+ € Eigenanteil/);
   await page.locator('#manufacturerVaillant').click();
   await expect(page.locator('#vaillantPricePanel')).toBeVisible();
   await expect(page.locator('#vaillantPricePanel')).toContainText('Preise auf Anfrage');
