@@ -361,6 +361,41 @@ nav.scrolled {
   flex-wrap: wrap;
   margin-bottom: 32px;
 }
+/* Lade-Animation Rechner (foerderSatzKfw / frZuschuss): pulsierende Punkte statt statischem "..." */
+.calc-dots {
+  display: inline-flex;
+  gap: 0.28em;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.calc-dots i {
+  width: 0.2em;
+  height: 0.2em;
+  min-width: 7px;
+  min-height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.3;
+  animation: calcDots 1s infinite ease-in-out;
+}
+.calc-dots i:nth-child(2) {
+  animation-delay: 0.18s;
+}
+.calc-dots i:nth-child(3) {
+  animation-delay: 0.36s;
+}
+@keyframes calcDots {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-0.22em);
+  }
+}
 @keyframes btnShimmer {
   0% {
     left: -100%;

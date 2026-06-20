@@ -570,9 +570,9 @@ async function wizCalculate() {
 function renderWizServerResult(data) {
   const heizLabel = data.heizsystem === 'fussboden' ? 'Fußbodenheizung' : 'Heizkörper';
   document.getElementById('wizResultTitle').textContent =
-    `Deine Wärmepumpe für ${formatKw(data.bedarf)} kW Bedarf`;
+    `Deine Wärmepumpe für ca. ${formatKw(data.bedarf)} kW Bedarf`;
   document.getElementById('wizResultSub').textContent =
-    `Überschlägige Schätzung für ${heizLabel} · Jahresarbeitszahl ${formatKw(data.jaz)} · verbindliche Auslegung im Vor-Ort-Termin.`;
+    `Unverbindliche Ersteinschätzung auf Basis einer vereinfachten Überschlagsrechnung · ${heizLabel} · ca. Jahresarbeitszahl ${formatKw(data.jaz)} · verbindliche Auslegung im Vor-Ort-Termin.`;
   document.getElementById('wizResultCards').innerHTML = `
     <div class="foerder-grid wiz-result-shell">
       <div class="wiz-result-grid">
@@ -614,11 +614,11 @@ function renderBrandCard(key, label, brand, bedarf) {
   }
   return `<button type="button" class="${cls}" onclick="wizSelectMarke('${key}')" style="text-align:left;font:inherit;">
     ${head}
-    <div class="wiz-brand-satz"><div class="fr-satz" style="font-size:40px;">${formatEuro(brand.eigenanteil)}</div><div class="fr-label" style="margin-bottom:0;">geschätzter Eigenanteil nach max. Förderung (70 %)*</div></div>
+    <div class="wiz-brand-satz"><div class="fr-satz" style="font-size:40px;">ab ${formatEuro(brand.eigenanteil)}</div><div class="fr-label" style="margin-bottom:0;">geschätzter Eigenanteil nach max. Förderung (70 %)*</div></div>
     ${brand.eigenanteilProklima ? `<div class="wiz-brand-proklima" style="margin:6px 0 2px;font-size:13px;color:var(--green);">proKlima möglich: ab ${formatEuro(brand.eigenanteilProklima)}</div>` : ''}
     <div class="fr-row"><span>Empfohlenes Modell</span><span class="fr-val">${brand.modell}</span></div>
     <div class="fr-row"><span>Deckt deinen Bedarf</span><span class="fr-val">${formatKw(bedarf)} kW${brand.kaskade ? ' · Kaskade' : ''} ✓</span></div>
-    <div class="fr-row"><span>Brutto-Richtpreis</span><span class="fr-val">${formatEuro(brand.brutto)}</span></div>
+    <div class="fr-row"><span>Brutto-Richtpreis vor Förderung</span><span class="fr-val">ab ${formatEuro(brand.brutto)}</span></div>
   </button>`;
 }
 
@@ -1336,9 +1336,11 @@ async function calculateFoerder() {
       : '';
   const proklimaOptinVal = document.getElementById('proklimaOptin').value;
 
-  document.getElementById('foerderSatzKfw').textContent = '...';
+  const calcDots =
+    '<span class="calc-dots" role="status" aria-label="wird berechnet"><i></i><i></i><i></i></span>';
+  document.getElementById('foerderSatzKfw').innerHTML = calcDots;
   document.getElementById('frPreis').textContent = 'wird berechnet';
-  document.getElementById('frZuschuss').textContent = '...';
+  document.getElementById('frZuschuss').innerHTML = calcDots;
   document.getElementById('frEigen').textContent = 'wird berechnet';
 
   const params = new URLSearchParams({
