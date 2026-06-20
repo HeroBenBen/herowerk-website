@@ -1732,14 +1732,16 @@
   }
 
   function buildHubSpotPayload(data) {
+    // HubSpot-Mapping: Kernfelder auf Standard-Properties (firstname/lastname/phone/zip),
+    // Funnel-Antworten auf die HeroWerk-Custom-Properties. Genau die 14 Felder des
+    // HubSpot-Formulars 023b1ead-7bcd-4eba-ba72-dd1038728721 (Consent via UI-Checkbox).
     const fields = {
-      vorname: data.vorname || '',
-      nachname: data.nachname || '',
+      firstname: data.vorname || '',
+      lastname: data.nachname || '',
       email: data.email || '',
-      telefon: data.telefon || '',
-      plz: answers.plz || '',
+      phone: data.telefon || '',
+      zip: answers.plz || '',
       interesse: (answers.interesse || []).join(';'),
-      dsgvo: data.dsgvo || '',
       gebaeudetyp: answers.step1 || '',
       heizung_aktuell: answers.step2 || '',
       heizungsalter: answers.step3 || '',
@@ -1747,46 +1749,23 @@
       wohnflaeche: answers.step5 || '',
       waermeverteilung: answers.step6 || '',
       eigentuemer: answers.step7 || '',
-      zeitrahmen: answers.step8 || '',
-      utm_source: data.utm_source || '',
-      utm_medium: data.utm_medium || '',
-      utm_campaign: data.utm_campaign || '',
-      utm_term: data.utm_term || '',
-      utm_content: data.utm_content || '',
-      description: [
-        'HeroWerk Funnel Test-/Lead-Submit',
-        'Interesse: ' + ((answers.interesse || []).join(', ') || 'nicht angegeben'),
-        'Gebäude: ' + (answers.step1 || 'nicht angegeben'),
-        'Heizung: ' + (answers.step2 || 'nicht angegeben'),
-        'Heizungsalter: ' + (answers.step3 || 'nicht angegeben'),
-        'Baujahr: ' + (answers.step4 || 'nicht angegeben'),
-        'Wohnfläche: ' + (answers.step5 || 'nicht angegeben'),
-        'Wärmeverteilung: ' + (answers.step6 || 'nicht angegeben'),
-        'Eigentümer: ' + (answers.step7 || 'nicht angegeben'),
-        'Zeitrahmen: ' + (answers.step8 || 'nicht angegeben'),
-        'PLZ: ' + (answers.plz || 'nicht angegeben')
-      ].join('\n')
+      zeitrahmen: answers.step8 || ''
     };
 
     return {
-      fields: Object.entries(fields).map(([name, value]) => ({ name, value: String(value) })),
+      fields: Object.entries(fields)
+        .filter(([, value]) => value !== '' && value != null)
+        .map(([name, value]) => ({ name, value: String(value) })),
       context: {
         pageUri: window.location.href,
         pageName: document.title
-      },
-      legalConsentOptions: {
-        consent: {
-          consentToProcess: true,
-          text: 'Einwilligung zur Verarbeitung der Funnel-Daten und Kontaktaufnahme.',
-          communications: [{ value: true, subscriptionTypeId: 999, text: 'Kontaktaufnahme zum Wärmepumpen-Angebot.' }]
-        }
       }
     };
   }
 
   async function postToHubSpot(data) {
     const portalId = '148110267';
-    const formId = document.body.dataset.hubspotFormId || new URLSearchParams(window.location.search).get('hs_form_id') || '00000000-0000-0000-0000-000000000000';
+    const formId = document.body.dataset.hubspotFormId || new URLSearchParams(window.location.search).get('hs_form_id') || '023b1ead-7bcd-4eba-ba72-dd1038728721';
     const endpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
     const response = await fetch(endpoint, {
       method: 'POST',
@@ -1815,7 +1794,12 @@
     } catch (error) {
       console.error(error);
       if (submitButton) submitButton.disabled = false;
-      alert('Die Übermittlung ist gerade nicht möglich. Bitte versuche es erneut oder rufe uns direkt an.');
+      // Fallback: Lead nie still verlieren — per E-Mail an HeroWerk, falls HubSpot kurz klemmt.
+      const subject = encodeURIComponent('Wärmepumpen-Anfrage über herowerk.de');
+      const mailBody = encodeURIComponent(
+        `Name: ${data.vorname || ''} ${data.nachname || ''}\nE-Mail: ${data.email || ''}\nTelefon: ${data.telefon || ''}\nPLZ: ${answers.plz || ''}\nInteresse: ${(answers.interesse || []).join(', ')}\n\n(Automatischer Fallback – die Online-Übermittlung war kurz nicht verfügbar.)`
+      );
+      window.location.href = `mailto:info@herowerk.de?subject=${subject}&body=${mailBody}`;
       return;
     }
 
