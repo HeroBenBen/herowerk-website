@@ -254,8 +254,9 @@ function checkPlz(input) {
 
 // Option selection + Auto-Advance
 // Steps that auto-advance on click (no input fields needed):
-// Step 2 (Gebäude, except Reihenhaus), Step 3 (Baujahr), Step 4 (Sanierung), Step 6 (Heizung), Step 7 (Heizsystem)
-const autoAdvanceSteps = [2, 3, 4, 6, 7];
+// Step 2 (Gebäude, except Reihenhaus), Step 3 (Baujahr), Step 4 (Sanierung), Step 6 (Heizung), Step 7 (Heizsystem), Step 8 (Warmwasser)
+// Step 9 (Verbrauch) bleibt manuell: "Ich kenne meinen Verbrauch" blendet ein Eingabefeld ein.
+const autoAdvanceSteps = [2, 3, 4, 6, 7, 8];
 
 document.querySelectorAll('.wizard-options').forEach((group) => {
   group.querySelectorAll('.wizard-option').forEach((opt) => {

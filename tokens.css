@@ -131,6 +131,21 @@ body {
     0 16px 38px var(--color-shadow),
     0 4px 10px var(--color-shadow) !important;
 }
+/* Ergebnis-Buttons (GF-Screenshot 2026-06-21): klar als Button erkennbar, erhaben auf der
+   Sand-Wanne. Aeussere Ghost-Buttons (Neu berechnen / Weiter zur Foerderung) weiss; gruener
+   Primaer-CTA behaelt Farbe, bekommt Tiefe. Scoped auf .wiz-result-shell (nur Wizard-Ergebnis). */
+[data-theme='light'] .wiz-result-shell .btn-ghost {
+  background: var(--color-surface-secondary) !important;
+  border: 1px solid var(--color-border-subtle) !important;
+  box-shadow:
+    0 6px 18px var(--color-shadow),
+    0 1px 3px var(--color-shadow) !important;
+}
+[data-theme='light'] .wiz-result-shell .btn-primary {
+  box-shadow:
+    0 6px 18px var(--color-shadow),
+    0 1px 3px var(--color-shadow) !important;
+}
 [data-theme='light'] .pa-detail-inner,
 [data-theme='light'] .pa-detail-arrow {
   background: var(--color-surface-secondary);
