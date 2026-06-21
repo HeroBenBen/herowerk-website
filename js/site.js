@@ -514,6 +514,22 @@ async function wizCalculate() {
     ? parseInt(document.getElementById('wzVerbrauchSlider').value) || 0
     : 0;
 
+  // Lead-Prefill für die abgespeckte Leadstrecke (/anfrage) stagen — überlebt auch den
+  // Umweg über /foerderung; wird einmalig auf /anfrage konsumiert.
+  try {
+    sessionStorage.setItem(
+      'hwLeadPrefill',
+      JSON.stringify({
+        gebaeude: wizData.gebaeude || null,
+        heizung: wizData.heizung || null,
+        baujahr: wizData.baujahr || null,
+        flaeche: wizData.flaeche || null,
+        heizsystem: wizData.heizsystem || null,
+        plz: (document.getElementById('wzPlz')?.value || '').replace(/\D/g, '').slice(0, 5) || null,
+      })
+    );
+  } catch (e) {}
+
   document.querySelectorAll('.wizard-step').forEach((s) => s.classList.remove('active'));
   document.querySelectorAll('.wizard-progress-bar').forEach((b) => {
     b.classList.remove('active');

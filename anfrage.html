@@ -1819,10 +1819,125 @@
     document.getElementById('stepCounter').textContent = 'Fertig!';
   }
 
+  // ── Lead-Handoff aus dem Dimensionierungs-Assistent (abgespeckte Leadstrecke) ──
+  // Übernimmt die Wizard-Antworten, überspringt die schon beantworteten Schritte und
+  // zeigt nur noch die offenen (Heizungsalter, Eigentümer, Zeitpunkt, Kontakt).
+  function showLeadHandoffBanner() {
+    if (document.getElementById('leadHandoffBanner')) return;
+    const parts = [answers.step1, answers.step2, answers.step4, answers.step5, answers.step6, answers.plz].filter(
+      Boolean,
+    );
+    const firstStep = document.querySelector('.step');
+    if (!firstStep || !firstStep.parentElement) return;
+    const banner = document.createElement('div');
+    banner.id = 'leadHandoffBanner';
+    banner.style.cssText =
+      'background:rgba(183,217,0,0.12);border:1px solid rgba(183,217,0,0.45);border-radius:10px;padding:12px 16px;margin-bottom:18px;font-size:14px;line-height:1.5;';
+    banner.innerHTML =
+      '<strong>Aus deiner Berechnung übernommen.</strong> Nur noch wenige Angaben bis zu deinem Angebot.' +
+      (parts.length ? '<br><span style="opacity:0.8;font-size:13px;">' + parts.join(' · ') + '</span>' : '');
+    firstStep.parentElement.insertBefore(banner, firstStep);
+  }
+
+  function applyLeadHandoff() {
+    let raw = null;
+    try {
+      raw = sessionStorage.getItem('hwLeadPrefill');
+    } catch (e) {
+      return false;
+    }
+    if (!raw) return false;
+    try {
+      sessionStorage.removeItem('hwLeadPrefill');
+    } catch (e) {}
+    let d = null;
+    try {
+      d = JSON.parse(raw);
+    } catch (e) {
+      return false;
+    }
+    if (!d) return false;
+
+    answers.interesse = ['Wärmepumpe'];
+    const gebMap = {
+      efh: 'Einfamilienhaus',
+      dhh: 'Doppelhaushälfte',
+      dh: 'Doppelhaushälfte',
+      rh: 'Reihenhaus',
+      'rh-end': 'Reihenhaus',
+      mfh: 'Mehrfamilienhaus',
+    };
+    const heizMap = {
+      'gas-old': 'Gasheizung',
+      'gas-new': 'Gasheizung',
+      'gas-etage': 'Gasheizung',
+      oel: 'Ölheizung',
+      nachtspeicher: 'Nachtspeicher',
+      sonstige: 'Sonstige Heizung',
+    };
+    const bauMap = {
+      vor1978: 'Vor 1978',
+      '1978-1994': '1978–1994',
+      '1995-2010': '1995–2009',
+      nach2010: 'Ab 2010',
+    };
+    const heizsysMap = { heizkoerper: 'Heizkörper', fussboden: 'Fußbodenheizung' };
+    const flaecheBucket = (n) => {
+      n = Number(n) || 0;
+      if (!n) return null;
+      if (n < 100) return 'Bis 100 m²';
+      if (n < 150) return '100–150 m²';
+      if (n < 200) return '150–200 m²';
+      if (n <= 280) return '200–280 m²';
+      return 'Über 280 m²';
+    };
+
+    if (d.gebaeude && gebMap[d.gebaeude]) answers.step1 = gebMap[d.gebaeude];
+    if (d.heizung && heizMap[d.heizung]) answers.step2 = heizMap[d.heizung];
+    if (d.baujahr && bauMap[d.baujahr]) answers.step4 = bauMap[d.baujahr];
+    const fb = flaecheBucket(d.flaeche);
+    if (fb) answers.step5 = fb;
+    if (d.heizsystem && heizsysMap[d.heizsystem]) answers.step6 = heizsysMap[d.heizsystem];
+
+    let plzApplied = false;
+    if (d.plz && /^\d{5}$/.test(d.plz)) {
+      const plzInput = document.getElementById('plzInput');
+      if (plzInput) {
+        plzInput.value = d.plz;
+        try {
+          validatePlz(plzInput);
+        } catch (e) {}
+      }
+      if (!answers.plz) answers.plz = d.plz;
+      plzApplied = true;
+    }
+
+    window.__wpPfad = true;
+    applyR17PfadContent();
+
+    const full = [0, 9, 1, 2, 3, 4, 5, 6, 7, 8, 10];
+    const prefilled = new Set([0]);
+    if (plzApplied) prefilled.add(9);
+    if (answers.step1) prefilled.add(1);
+    if (answers.step2) prefilled.add(2);
+    if (answers.step4) prefilled.add(4);
+    if (answers.step5) prefilled.add(5);
+    if (answers.step6) prefilled.add(6);
+    stepOrder = full.filter((s) => !prefilled.has(s));
+    if (!stepOrder.length) stepOrder = [10];
+    recomputeProgress();
+
+    showLeadHandoffBanner();
+    showStep(stepOrder[0]);
+    return true;
+  }
+
   collectUtmParams();
-  recomputeProgress();
-  applyR17PfadContent();
-  showStep(stepOrder[0]);
+  if (!applyLeadHandoff()) {
+    recomputeProgress();
+    applyR17PfadContent();
+    showStep(stepOrder[0]);
+  }
   prefillPlzFromUrl();
 </script>
 
