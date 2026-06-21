@@ -116,14 +116,20 @@ body {
   border: 1px solid var(--color-border-subtle) !important;
   box-shadow: 0 8px 28px var(--color-shadow);
 }
-/* Dimensionierungs-Empfehlungskarten (.wiz-brand-panel, renderBrandCard): sandfarbene
-   erhabene Kacheln (GF-Wunsch 2026-06-21, Screenshot). NUR die Wizard-Ergebnis-Karten -
-   der Foerderrechner teilt .foerder-result, aber ohne .wiz-brand-panel -> bleibt unberuehrt. */
-[data-theme='light'] .wiz-brand-panel {
+/* Dimensionierungs-Ergebnis (GF-Screenshot 2026-06-21): weisse Marken-Karten (Element 3)
+   auf sandfarbener Wanne (.wiz-result-shell, Element 2), im unveraenderten weissen
+   Seiten-Panel (.wizard-container, Element 1 - bleibt). Mehr Tiefe ueber staerkeren
+   Karten-Schatten. Scoped: Foerderrechner (.foerder-result/.foerder-grid OHNE .wiz-*)
+   + /preise (.pa-card) bleiben unberuehrt. */
+[data-theme='light'] .wiz-result-shell {
   background: var(--color-surface-primary) !important;
+  box-shadow: none;
+}
+[data-theme='light'] .wiz-brand-panel {
+  background: var(--color-surface-secondary) !important;
   box-shadow:
-    0 12px 32px var(--color-shadow),
-    0 2px 6px var(--color-shadow) !important;
+    0 16px 38px var(--color-shadow),
+    0 4px 10px var(--color-shadow) !important;
 }
 [data-theme='light'] .pa-detail-inner,
 [data-theme='light'] .pa-detail-arrow {
