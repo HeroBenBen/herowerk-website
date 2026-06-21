@@ -10,15 +10,17 @@ test('@smoke Theme-Toggle setzt Light- und Dark-Mode per URL/LocalStorage', asyn
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
 });
 
-test('@smoke Hersteller-Vorauswahl zeigt Wolf-Minimum und Vaillant-Panel', async ({ page }) => {
+test('@smoke Hersteller-Vorauswahl zeigt Wolf- und Vaillant-Karten im gemeinsamen Panel', async ({
+  page,
+}) => {
   await page.goto('/preise.html?theme=dark');
   // Drift-fest: prueft, dass die Live-Preis-Verdrahtung (action=preise, Single Source)
   // einen echten Eigenanteil rendert — nicht den "ab … Eigenanteil*"-Platzhalter. Kein
   // hartkodierter Sheet-Preis (der bei jeder Preisaenderung driftet).
   await expect(page.locator('#wolfMinEigen')).toContainText(/ab [\d.]+ € Eigenanteil/);
   await page.locator('#manufacturerVaillant').click();
-  await expect(page.locator('#vaillantPricePanel')).toBeVisible();
-  await expect(page.locator('#vaillantPricePanel')).toContainText('Preise auf Anfrage');
+  await expect(page.locator('#paCards .pa-card')).toHaveCount(5);
+  await expect(page.locator('#paCards')).toContainText('Vaillant aroTHERM plus');
   await page.locator('#manufacturerWolf').click();
   await expect(page.locator('#paCards .pa-card')).toHaveCount(5);
 });

@@ -758,40 +758,66 @@ function wizToFoerder() {
 // Preisfelder (preis/eigen/proklima/info) werden mit Live-Werten überschrieben.
 // PA_KLASSEN muss in der Reihenfolge zu paDataFallback passen (Kompakt..Kaskade = s..xxl).
 let paData = [];
+let paPrices = { wolf: [], vaillant: [] };
 const PA_KLASSEN = ['s', 'm', 'l', 'xl', 'xxl'];
 
-async function paLoadData() {
-  paData = paDataFallback.map((d) => ({
+function paCloneFallback(data) {
+  return data.map((d) => ({
     ...d,
-    preis: null,
-    eigen: null,
-    proklima: null,
-    info: 'Preis auf Anfrage — den genauen Richtpreis nennen wir im Vor-Ort-Termin.',
+    specs: d.specs.map((spec) => [...spec]),
   }));
+}
+
+function paRowsByKlasse(rows) {
+  return (rows || []).reduce((acc, row) => {
+    if (row && row.klasse) acc[row.klasse] = row;
+    return acc;
+  }, {});
+}
+
+function paApplyBrand(brand) {
+  const selectedBrand = brand === 'vaillant' ? 'vaillant' : 'wolf';
+  const fallback = selectedBrand === 'vaillant' ? paDataFallbackVaillant : paDataFallback;
+  const byKlasse = paRowsByKlasse(paPrices[selectedBrand]);
+  paData = paCloneFallback(fallback);
+  paData.forEach((d, i) => {
+    const row = byKlasse[PA_KLASSEN[i]];
+    if (!row) {
+      d.preis = null;
+      d.eigen = null;
+      d.proklima = null;
+      d.info = 'Preis auf Anfrage — den genauen Richtpreis nennen wir im Vor-Ort-Termin.';
+      return;
+    }
+    d.preis = row.brutto;
+    d.eigen = row.eigen;
+    d.proklima = row.proklima > 0 && row.proklima !== row.eigen ? row.proklima : null;
+    d.info =
+      'Richtpreis: ab ' +
+      row.brutto.toLocaleString('de-DE') +
+      ' € brutto · KfW: bis -' +
+      (row.brutto - row.eigen).toLocaleString('de-DE') +
+      ' €';
+  });
+  paUpdateMinimum(selectedBrand);
+}
+
+async function paLoadData() {
+  paApplyBrand('wolf');
   try {
     const response = await fetch(RECHNER_API + '?action=preise&origin=https://herowerk.de');
     if (!response.ok) throw new Error(response.status);
     const data = await response.json();
-    const byKlasse = {};
+    paPrices = {
+      wolf: (data && data.wolf) || [],
+      vaillant: (data && data.vaillant) || [],
+    };
     const bruttoMap = {};
-    ((data && data.wolf) || []).forEach((row) => {
-      byKlasse[row.klasse] = row;
+    paPrices.wolf.forEach((row) => {
       bruttoMap[row.klasse] = row.brutto;
     });
     if (typeof window !== 'undefined') window.HW_PREISE_BRUTTO = bruttoMap;
-    paData.forEach((d, i) => {
-      const row = byKlasse[PA_KLASSEN[i]];
-      if (!row) return;
-      d.preis = row.brutto;
-      d.eigen = row.eigen;
-      d.proklima = row.proklima > 0 && row.proklima !== row.eigen ? row.proklima : null;
-      d.info =
-        'Richtpreis: ab ' +
-        row.brutto.toLocaleString('de-DE') +
-        ' € brutto · KfW: bis -' +
-        (row.brutto - row.eigen).toLocaleString('de-DE') +
-        ' €';
-    });
+    paApplyBrand('wolf');
   } catch (e) {
     console.info('Live-Preise nicht verfügbar, zeige "auf Anfrage"', e);
   }
@@ -801,8 +827,9 @@ function paFormatEuro(value) {
   return value.toLocaleString('de-DE') + ' €';
 }
 
-function paUpdateWolfMinimum() {
-  const target = document.getElementById('wolfMinEigen');
+function paUpdateMinimum(brand) {
+  const targetId = brand === 'vaillant' ? 'vaillantMinEigen' : 'wolfMinEigen';
+  const target = document.getElementById(targetId);
   if (!target || !paData.length) return;
   const min = paData
     .map((item) => item.eigen)
@@ -812,27 +839,23 @@ function paUpdateWolfMinimum() {
 }
 
 function paSelectManufacturer(manufacturer) {
-  const isWolf = manufacturer === 'wolf';
-  const wolfPanel = document.getElementById('wolfPricePanel');
-  const vaillantPanel = document.getElementById('vaillantPricePanel');
+  const selectedManufacturer = manufacturer === 'vaillant' ? 'vaillant' : 'wolf';
   const detail = document.getElementById('paDetail');
   const cardsContainer = document.getElementById('paCards');
   document.querySelectorAll('.manufacturer-tab').forEach((tab) => {
-    const selected = tab.dataset.manufacturer === manufacturer;
+    const selected = tab.dataset.manufacturer === selectedManufacturer;
     tab.classList.toggle('active', selected);
     tab.setAttribute('aria-selected', selected ? 'true' : 'false');
     tab.tabIndex = selected ? 0 : -1;
   });
-  if (wolfPanel) wolfPanel.hidden = !isWolf;
-  if (vaillantPanel) vaillantPanel.hidden = isWolf;
-  if (!isWolf) {
-    document
-      .querySelectorAll('.pa-card')
-      .forEach((card) => card.classList.remove('zoomed', 'dimmed'));
-    if (detail) detail.classList.remove('open');
-    if (cardsContainer) cardsContainer.classList.remove('has-selection');
-    paOpenIdx = -1;
-  }
+  paApplyBrand(selectedManufacturer);
+  paRenderCards();
+  document
+    .querySelectorAll('.pa-card')
+    .forEach((card) => card.classList.remove('zoomed', 'dimmed'));
+  if (detail) detail.classList.remove('open');
+  if (cardsContainer) cardsContainer.classList.remove('has-selection');
+  paOpenIdx = -1;
 }
 
 function paInitManufacturerTabs() {
@@ -998,10 +1021,133 @@ const paDataFallback = [
   },
 ];
 
+const paDataFallbackVaillant = [
+  {
+    name: 'Kompakt',
+    label: 'Kompaktes Wohnhaus',
+    hausgroesse: 'bis ca. 80 m²',
+    modell: 'Vaillant aroTHERM plus VWL 55/8.1 A',
+    kw: '5,6 kW',
+    icon: paDataFallback[0].icon,
+    img: 'vwl-s-m.jpg',
+    desc: 'Kompaktes Haus mit moderatem Wärmebedarf',
+    specs: [
+      ['Heizleistung A-7/W35', '5,59 kW (COP 2,67)'],
+      ['Heizleistung (Pdesignh)', '6 kW'],
+      ['Kältemittel', 'R290 (Propan, natürlich)'],
+      ['Bauart', 'Monoblock (Außenaufstellung)'],
+      ['Vorlauftemp.', 'bis 75 °C'],
+      ['Schallleistung außen', '44 dB(A)'],
+      ['Effizienzklasse (35 / 55 °C)', 'A+++ / A++'],
+      ['ηs (35 / 55 °C)', '177 % / 143 %'],
+      ['JAZ Heizkörper¹', '3,72'],
+      ['JAZ Fußbodenheizung¹', '4,41'],
+      ['Abmessung (BxTxH)', '1.100 × 450 × 765 mm'],
+      ['Hersteller', 'Vaillant Group'],
+    ],
+  },
+  {
+    name: 'Standard',
+    label: 'Einfamilienhaus',
+    hausgroesse: 'ca. 80–100 m²',
+    modell: 'Vaillant aroTHERM plus VWL 75/8.1 A',
+    kw: '6,9 kW',
+    icon: paDataFallback[1].icon,
+    img: 'vwl-s-m.jpg',
+    desc: 'Der Klassiker für viele Einfamilienhäuser',
+    specs: [
+      ['Heizleistung A-7/W35', '6,94 kW (COP 2,94)'],
+      ['Heizleistung (Pdesignh)', '7 kW'],
+      ['Kältemittel', 'R290 (Propan, natürlich)'],
+      ['Bauart', 'Monoblock (Außenaufstellung)'],
+      ['Vorlauftemp.', 'bis 75 °C'],
+      ['Schallleistung außen', '47 dB(A)'],
+      ['Effizienzklasse (35 / 55 °C)', 'A+++ / A++'],
+      ['ηs (35 / 55 °C)', '181 % / 142 %'],
+      ['JAZ Heizkörper¹', '3,76'],
+      ['JAZ Fußbodenheizung¹', '4,45'],
+      ['Abmessung (BxTxH)', '1.100 × 450 × 965 mm'],
+      ['Hersteller', 'Vaillant Group'],
+    ],
+  },
+  {
+    name: 'Komfort',
+    label: 'Großzügiges Zuhause',
+    hausgroesse: 'ca. 100–150 m²',
+    modell: 'Vaillant aroTHERM plus VWL 105/8.1 A',
+    kw: '10,6 kW',
+    icon: paDataFallback[2].icon,
+    img: 'vwl-l.jpg',
+    desc: 'Für größere Häuser mit höherem Wärmebedarf',
+    specs: [
+      ['Heizleistung A-7/W35', '10,58 kW (COP 3,01)'],
+      ['Heizleistung (Pdesignh)', '11 kW'],
+      ['Kältemittel', 'R290 (Propan, natürlich)'],
+      ['Bauart', 'Monoblock (Außenaufstellung)'],
+      ['Vorlauftemp.', 'bis 75 °C'],
+      ['Schallleistung außen', '50 dB(A)'],
+      ['Effizienzklasse (35 / 55 °C)', 'A+++ / A+++'],
+      ['ηs (35 / 55 °C)', '198 % / 151 %'],
+      ['JAZ Heizkörper¹', '4,03'],
+      ['JAZ Fußbodenheizung¹', '4,77'],
+      ['Abmessung (BxTxH)', '1.100 × 450 × 1.480 mm'],
+      ['Hersteller', 'Vaillant Group'],
+    ],
+  },
+  {
+    name: 'Premium',
+    label: 'Großes Zuhause',
+    hausgroesse: 'ca. 150–175 m²',
+    modell: 'Vaillant aroTHERM plus VWL 125/8.1 A',
+    kw: '12,1 kW',
+    icon: paDataFallback[3].icon,
+    img: 'vwl-xl.jpg',
+    desc: 'Großes Einfamilienhaus mit hohem Bedarf',
+    specs: [
+      ['Heizleistung A-7/W35', '12,14 kW (COP 2,72)'],
+      ['Heizleistung (Pdesignh)', '12 kW'],
+      ['Kältemittel', 'R290 (Propan, natürlich)'],
+      ['Bauart', 'Monoblock (Außenaufstellung)'],
+      ['Vorlauftemp.', 'bis 75 °C'],
+      ['Schallleistung außen', '50 dB(A)'],
+      ['Effizienzklasse (35 / 55 °C)', 'A+++ / A+++'],
+      ['ηs (35 / 55 °C)', '198 % / 151 %'],
+      ['JAZ Heizkörper¹', '4,05'],
+      ['JAZ Fußbodenheizung¹', '4,80'],
+      ['Abmessung (BxTxH)', '1.100 × 450 × 1.480 mm'],
+      ['Hersteller', 'Vaillant Group'],
+    ],
+  },
+  {
+    name: 'Kaskade',
+    label: 'Mehrfamilienhaus & Gewerbe',
+    hausgroesse: 'ab ca. 175 m² / MFH',
+    modell: '2× Vaillant VWL 125/8.1 A',
+    kw: '2× 12 kW (≈24 kW)',
+    imgPos: 'center 70%',
+    icon: paDataFallback[4].icon,
+    img: 'vwl-xxl.jpg',
+    desc: 'Mehrfamilienhaus mit 2er-Kaskade*',
+    specs: [
+      ['Heizleistung', '≈24 kW (2 Geräte)'],
+      ['Kältemittel', 'R290 (Propan, natürlich)'],
+      ['Bauart', 'Kaskade (2 Außengeräte)'],
+      ['Vorlauftemp.', 'bis 75 °C'],
+      ['Effizienzklasse', 'A+++ (systemabhängig)'],
+      ['JAZ Heizkörper¹', '4,05'],
+      ['JAZ Fußbodenheizung¹', '4,80'],
+      ['Schallleistung außen', '50 dB(A)/Gerät'],
+      ['Hersteller', 'Vaillant Group'],
+    ],
+  },
+];
+
 // Karten rendern (nur kompakte Header, kein Preis-Doppelt)
 function paRenderCards() {
   const container = document.getElementById('paCards');
-  paUpdateWolfMinimum();
+  paUpdateMinimum(
+    document.querySelector('.manufacturer-tab.active')?.dataset.manufacturer || 'wolf'
+  );
   if (!container) return;
   container.innerHTML = paData
     .map((d, i) => {
@@ -1059,7 +1205,11 @@ function paUpdateDetail(d) {
       contextHint = `<div style="color:var(--g500);font-size:11px;font-style:italic;margin-top:6px;">Kalkulation: 1 WE Selbstnutzung, 1 WE vermietet. Beide WE selbstgenutzt → niedrigerer Eigenanteil.</div>`;
     } else if (isMfhCard) {
       preSub = 'Eigenanteil (6 WE: 1 selbst, 5 vermietet)*';
-      contextHint = `<div style="color:var(--bernstein);font-size:11px;font-style:italic;margin-top:6px;padding:8px;background:rgba(232,168,56,0.08);border-radius:6px;">* Referenzkonfiguration: 6 WE MFH, 2× Wolf CHA-16 Kaskade. Förderung bei MFH stark abhängig von Anzahl der Wohneinheiten und Eigentümerstruktur. Individuelle Planung erforderlich.</div>`;
+      const isVaillantCard = d.modell && d.modell.includes('Vaillant');
+      const referenceText = isVaillantCard
+        ? 'Referenzkonfiguration: 2× Vaillant VWL 125/8.1 A Kaskade. Förderung bei MFH abhängig von Wohneinheiten/Eigentümerstruktur.'
+        : 'Referenzkonfiguration: 6 WE MFH, 2× Wolf CHA-16 Kaskade. Förderung bei MFH stark abhängig von Anzahl der Wohneinheiten und Eigentümerstruktur. Individuelle Planung erforderlich.';
+      contextHint = `<div style="color:var(--bernstein);font-size:11px;font-style:italic;margin-top:6px;padding:8px;background:rgba(232,168,56,0.08);border-radius:6px;">* ${referenceText}</div>`;
     }
     cta.innerHTML = `
           <div class="pa-big-price">ab ${d.eigen.toLocaleString('de-DE')} €</div>
@@ -1167,7 +1317,10 @@ window.addEventListener('resize', () => {
 
 // Initial: Daten laden, dann rendern
 paInitManufacturerTabs();
-paLoadData().then(() => paRenderCards());
+paLoadData().then(() => {
+  paApplyBrand('wolf');
+  paRenderCards();
+});
 
 // ===== SVG ICON CONSTANTS =====
 const SVG_CHECK =
