@@ -1647,17 +1647,28 @@ document.getElementById('kontaktForm')?.addEventListener('submit', async (e) => 
   const formId =
     form.dataset.hubspotFormId ||
     document.body.dataset.hubspotContactFormId ||
-    '00000000-0000-0000-0000-000000000000';
+    'f4662e0a-f6fd-412f-9cc6-bd3273aee7a0';
   const endpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
+  // Kontaktformular -> Standard-Properties: Name in firstname/lastname splitten,
+  // telefon -> phone, nachricht -> nachricht. Genau die Felder des HubSpot-Kontaktformulars.
+  const nameParts = (data.name || '').trim().split(/\s+/);
+  const kontaktFields = {
+    firstname: nameParts.shift() || '',
+    lastname: nameParts.join(' '),
+    email: data.email || '',
+    phone: data.telefon || '',
+    nachricht: data.nachricht || '',
+  };
   const payload = {
-    fields: Object.entries(data)
-      .filter(([name]) => name !== 'dsgvo')
+    fields: Object.entries(kontaktFields)
+      .filter(([, value]) => value !== '' && value != null)
       .map(([name, value]) => ({ name, value: String(value) })),
     context: { pageUri: window.location.href, pageName: document.title },
     legalConsentOptions: {
       consent: {
         consentToProcess: true,
-        text: 'Einwilligung zur Verarbeitung der Kontaktdaten und Kontaktaufnahme.',
+        text: 'Ich stimme der Verarbeitung meiner Daten gemäß der Datenschutzerklärung zu und erteile meine Einwilligung zur Kontaktaufnahme. Die Einwilligung ist jederzeit widerrufbar.',
+        communications: [],
       },
     },
   };
