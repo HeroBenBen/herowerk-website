@@ -2241,11 +2241,12 @@ section {
 
 /* Karte */
 .pa-card {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 14px;
   padding: 22px 14px;
   text-align: center;
   border: 2px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
   cursor: pointer;
   transition:
     transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
