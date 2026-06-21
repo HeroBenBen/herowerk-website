@@ -589,7 +589,7 @@ function renderWizServerResult(data) {
   document.getElementById('wizResultTitle').textContent =
     `Deine Wärmepumpe für ca. ${formatKw(data.bedarf)} kW Bedarf`;
   document.getElementById('wizResultSub').textContent =
-    `Unverbindliche Ersteinschätzung auf Basis einer vereinfachten Überschlagsrechnung · ${heizLabel} · ca. Jahresarbeitszahl ${formatKw(data.jaz)} · verbindliche Auslegung im Vor-Ort-Termin.`;
+    `Unverbindliche Ersteinschätzung auf Basis einer vereinfachten Überschlagsrechnung – keine Heizlastberechnung nach DIN EN 12831. ${heizLabel} · ca. Jahresarbeitszahl ${formatKw(data.jaz)} · die genaue Auslegung nach Norm machen wir beim Vor-Ort-Termin.`;
   document.getElementById('wizResultCards').innerHTML = `
     <div class="foerder-grid wiz-result-shell">
       <div class="wiz-result-grid">
