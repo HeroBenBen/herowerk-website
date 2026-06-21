@@ -698,6 +698,20 @@ function wizToFoerder() {
   // nicht vorhanden, direkt dorthin navigieren — sonst lief die Vorbefüllung ins Leere und
   // der Button wirkte "nicht verlinkt" (Navigation am Funktionsende wurde nie erreicht).
   if (!document.getElementById('foerder')) {
+    // Werte für die Förderrechner-Seite mitnehmen -> dort Vorbefüllung nach dem Laden.
+    try {
+      const sel = wizServerResult?.marken?.[wizSelectedMarke];
+      sessionStorage.setItem(
+        'hwFoerderPrefill',
+        JSON.stringify({
+          marke: wizSelectedMarke || 'wolf',
+          brutto: sel?.brutto || null,
+          gemeinde: wizData.gemeinde || null,
+          heizung: wizData.heizung || null,
+          gebaeude: wizData.gebaeude || null,
+        })
+      );
+    } catch (e) {}
     window.location.href = '/foerderung';
     return;
   }
@@ -2086,3 +2100,39 @@ document.addEventListener('DOMContentLoaded', () => {
     plzInput.dispatchEvent(new Event('input', { bubbles: true }));
   }
 });
+
+// ===== FÖRDERRECHNER-VORBEFÜLLUNG AUS DIMENSIONIERUNGS-ASSISTENT =====
+// "Weiter zur Förderung" speichert die Wizard-Werte in sessionStorage und navigiert nach
+// /foerderung. Hier rekonstruieren wir die nötigen Globals und nutzen die bestehende
+// wizToFoerder-Logik (#foerder existiert auf der Förderseite -> kein Redirect).
+function hwApplyFoerderHandoff() {
+  if (!document.getElementById('foerder')) return;
+  let raw = null;
+  try {
+    raw = sessionStorage.getItem('hwFoerderPrefill');
+  } catch (e) {
+    return;
+  }
+  if (!raw) return;
+  try {
+    sessionStorage.removeItem('hwFoerderPrefill');
+  } catch (e) {}
+  let d = null;
+  try {
+    d = JSON.parse(raw);
+  } catch (e) {
+    return;
+  }
+  if (!d) return;
+  wizSelectedMarke = d.marke || 'wolf';
+  if (d.gemeinde) wizData.gemeinde = d.gemeinde;
+  if (d.heizung) wizData.heizung = d.heizung;
+  if (d.gebaeude) wizData.gebaeude = d.gebaeude;
+  wizServerResult = { marken: { [wizSelectedMarke]: { brutto: d.brutto } } };
+  wizToFoerder();
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', hwApplyFoerderHandoff);
+} else {
+  hwApplyFoerderHandoff();
+}
