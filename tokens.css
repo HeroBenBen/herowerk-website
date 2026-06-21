@@ -123,7 +123,7 @@ body {
    + /preise (.pa-card) bleiben unberuehrt. */
 [data-theme='light'] .wiz-result-shell {
   background: var(--color-surface-primary) !important;
-  box-shadow: none;
+  box-shadow: none !important;
 }
 [data-theme='light'] .wiz-brand-panel {
   background: var(--color-surface-secondary) !important;
