@@ -582,7 +582,7 @@ function renderWizServerResult(data) {
       </div>
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;">
         <button class="btn-ghost" onclick="wizReset()" style="flex:1;min-width:150px;cursor:pointer;">← Neu berechnen</button>
-        <a href="/kontakt" class="btn-primary" style="flex:1.5;min-width:220px;text-align:center;">Jetzt kostenlos beraten lassen</a>
+        <a href="/anfrage" class="btn-primary" style="flex:1.5;min-width:220px;text-align:center;">Jetzt kostenlos beraten lassen</a>
         <button class="btn-ghost" onclick="wizToFoerder()" style="flex:1.2;min-width:210px;cursor:pointer;">Weiter zur Förderung →</button>
       </div>
       <div style="margin-top:14px;font-size:12px;line-height:1.5;color:var(--g400);">* Eigenanteil für selbstnutzende Eigentümer bei max. KfW-Förderung (70 %): Grund 30 % + Klima 20 % + Einkommen 30 % + Effizienz 5 %. proKlima (5 %, max. 1.500 €) nur im Fördergebiet. Brutto inkl. MwSt. Verbindlicher Preis nach Vor-Ort-Termin.</div>
@@ -694,6 +694,13 @@ function wizReset() {
 
 // ===== WIZARD → FÖRDERRECHNER: Datenübernahme =====
 function wizToFoerder() {
+  // Förderrechner liegt auf /foerderung (auf dieser Seite nicht eingebettet). Ist er hier
+  // nicht vorhanden, direkt dorthin navigieren — sonst lief die Vorbefüllung ins Leere und
+  // der Button wirkte "nicht verlinkt" (Navigation am Funktionsende wurde nie erreicht).
+  if (!document.getElementById('foerder')) {
+    window.location.href = '/foerderung';
+    return;
+  }
   const selected = wizServerResult?.marken?.[wizSelectedMarke];
   foerderMarke = wizSelectedMarke || 'wolf';
 
