@@ -24,6 +24,7 @@ const wizData = {
   heizung: '',
   heizsystem: 'heizkoerper',
   warmwasser: 'ja',
+  personen: 3,
   verbrauchKnown: false,
   verbrauch: 0,
 };
@@ -286,6 +287,17 @@ document.querySelectorAll('.wizard-options').forEach((group) => {
         }
       }
 
+      // Warmwasser = Ja: Personenzahl erfragen (Steckergeraet-Logik) und Auto-Advance unterdruecken,
+      // bis der Kunde die Personenzahl gesetzt und "Weiter" geklickt hat. Bei "Nein" Block ausblenden.
+      const persBlock = document.getElementById('wzPersonen');
+      if (persBlock && group.id === 'wzWarmwasser') {
+        if (opt.dataset.value === 'ja') {
+          persBlock.style.display = 'block';
+          return; // nicht auto-advancen — Personenzahl + Weiter abwarten
+        }
+        persBlock.style.display = 'none';
+      }
+
       // Auto-Advance: determine which step this option belongs to
       const stepEl = opt.closest('.wizard-step');
       if (stepEl) {
@@ -327,6 +339,12 @@ document.querySelectorAll('.wizard-options').forEach((group) => {
 // Fläche slider
 document.getElementById('wzFlaeche')?.addEventListener('input', (e) => {
   document.getElementById('wzFlaeVal').textContent = e.target.value + ' m²';
+});
+
+// Personen slider (Warmwasser-Zuschlag, nur bei Warmwasser = Ja sichtbar)
+document.getElementById('wzPersonenSlider')?.addEventListener('input', (e) => {
+  document.getElementById('wzPersonenVal').textContent =
+    e.target.value + (e.target.value === '1' ? ' Person' : ' Personen');
 });
 
 // Verbrauch toggle
@@ -468,8 +486,11 @@ function wizNext() {
   if (stepNum === 6) wizData.heizung = currentStep.querySelector('.selected')?.dataset.value || '';
   if (stepNum === 7)
     wizData.heizsystem = currentStep.querySelector('.selected')?.dataset.value || 'heizkoerper';
-  if (stepNum === 8)
+  if (stepNum === 8) {
     wizData.warmwasser = currentStep.querySelector('.selected')?.dataset.value || 'ja';
+    wizData.personen =
+      parseInt(document.getElementById('wzPersonenSlider')?.value, 10) || wizData.personen;
+  }
 
   // Next step
   currentStep.classList.remove('active');
@@ -567,6 +588,8 @@ async function wizCalculate() {
     verbrauchKnown: wizData.verbrauchKnown ? 'known' : 'unknown',
     verbrauch: String(wizData.verbrauch),
     einheit: wzUnit,
+    plz: (document.getElementById('wzPlz')?.value || '').replace(/\D/g, '').slice(0, 5),
+    personen: String(wizData.warmwasser === 'ja' ? wizData.personen : 0),
     origin: 'https://herowerk.de',
   });
 
@@ -602,8 +625,19 @@ function renderWizServerResult(data) {
     `Deine Wärmepumpe für ca. ${formatKw(data.bedarf)} kW Bedarf`;
   document.getElementById('wizResultSub').textContent =
     `Unverbindliche Ersteinschätzung auf Basis einer vereinfachten Überschlagsrechnung – keine Heizlastberechnung nach DIN EN 12831. ${heizLabel} · ca. Jahresarbeitszahl ${formatKw(data.jaz)} · die genaue Auslegung nach Norm machen wir beim Vor-Ort-Termin.`;
+  // Transparenz: spezifische Heizlast (≈ W/m²) + welches Schätzverfahren griff (Verbrauch vs. Fläche).
+  // Felder kommen aus dem Backend (dimensionierung_); fehlen sie (alte /exec-Version), bleibt die Zeile leer.
+  const wm2 = data.spez_heizlast_wm2
+    ? `ca. <strong>${data.spez_heizlast_wm2} W/m²</strong> spezifische Heizlast`
+    : '';
+  const sep = wm2 && data.methode_hinweis ? ' · ' : '';
+  const methodLine =
+    wm2 || data.methode_hinweis
+      ? `<div class="wiz-result-method" style="font-size:13px;color:var(--g300);margin:0 0 16px;text-align:center;">${wm2}${sep}${data.methode_hinweis || ''}</div>`
+      : '';
   document.getElementById('wizResultCards').innerHTML = `
     <div class="foerder-grid wiz-result-shell">
+      ${methodLine}
       <div class="wiz-result-grid">
         ${renderBrandCard('wolf', 'Wolf', data.marken?.wolf, data.bedarf)}
         ${renderBrandCard('vaillant', 'Vaillant', data.marken?.vaillant, data.bedarf)}

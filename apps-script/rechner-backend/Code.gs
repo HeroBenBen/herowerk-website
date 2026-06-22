@@ -58,30 +58,81 @@ function dimensionierung_(p) {
   if (sanierung === 'umfassend' && idx >= 0) effBaujahr = bedarfStufen[Math.min(idx + 2, bedarfStufen.length - 1)];
 
   const bedarfKwh = verbrauchKnown ? verbrauch : Math.round(flaeche * getNum_(d, 'spez_bedarf_' + key_(effBaujahr), 140) * getNum_(d, 'gebaeudef_' + key_(gebaeude), 1.0));
+
+  // NAT (Normaußentemperatur) PLZ-scharf aus Klima_PLZ; Fallback '*'/A-11 (Großraum-konservativ).
+  const klima = getKlimaPlz_();
+  const plzKey = String(p.plz || '').replace(/\D/g, '').slice(0, 5);
+  const zone = klima[plzKey] || klima['*'] || { nat: -11, volllast: 1800 };
+
+  // Volllaststunden = fester Verbrauchs-Richtwert (Vollbenutzungsstunden = Jahresheizarbeit/Heizlast,
+  // DIN/VDI 4710); KEIN Klima-Hebel. Das Klima wirkt auf die Dimensionierung allein über die NAT
+  // (zone.nat → Geräte-Grenze über die Leistungskurve in matchCatalog_).
   const heizlast = bedarfKwh / getNum_(d, 'volllaststunden', 1800);
-  const auslegung = round1_(warmwasser === 'ja' ? heizlast * getNum_(d, 'ww_zuschlag_faktor', 1.10) : heizlast);
+
+  // Warmwasser: VDI 4645 personenbasiert (+0,25 kW × Personen) — WW skaliert mit Personen, nicht
+  // mit Heizlast. RAUS oberhalb der Standard-VWL-125-Klasse (heizlast > ww_max_heizlast_kw) →
+  // Brauchwasser-WP. Der Wizard sendet die Personenzahl (>=1) mit, sobald Warmwasser=ja gewählt ist;
+  // der frühere ×1,10-Fallback entfällt damit. Dimensioniert wird am Emitter-Vorlauf, nie wegen WW auf W55.
+  const personen = int_(p.personen, 0);
+  let wwZuschlag = 0;
+  if (warmwasser === 'ja' && heizlast <= getNum_(d, 'ww_max_heizlast_kw', 19.5)) {
+    wwZuschlag = personen * getNum_(d, 'ww_zuschlag_kw_pro_person', 0.25);
+  }
+  const auslegung = round1_(heizlast + wwZuschlag);
   const jaz = getNum_(d, 'jaz_' + key_(effBaujahr), 3.5);
 
   const marken = {};
   ['wolf', 'vaillant'].forEach(function (marke) {
-    const match = matchCatalog_(marke, auslegung, heizsystem);
+    const match = matchCatalog_(marke, auslegung, heizsystem, zone.nat);
     marken[marke] = match ? catalogResult_(match, getPriceTableCached_(marke)) : { deckt: false };
   });
 
-  return { bedarf: auslegung, heizlast: round1_(heizlast), jaz: jaz, heizsystem: heizsystem, warmwasser: warmwasser, marken: marken };
+  // Transparenz fürs Ergebnis: effektive spezifische Heizlast (W/m²) + welches Verfahren griff.
+  // Verfahrens-Mix: bekannter Jahresverbrauch → Verbrauchsmethode (im Bestand genauer, cci-dialog);
+  // sonst Flächen-Schätzung mit Sanierungs-Korrektur (effBaujahr-Shift, mildert die Hauptschwäche der
+  // Baualtersklassen-Methode). Reine Anzeige-Felder, KEINE Wirkung auf die Dimensionierung.
+  const spezHeizlastWm2 = flaeche > 0 ? Math.round(heizlast / flaeche * 1000) : null;
+  const methode = verbrauchKnown ? 'verbrauch' : 'flaeche';
+  const methodeHinweis = verbrauchKnown
+    ? 'aus deinem Jahresverbrauch'
+    : 'Flächen-Schätzung (Baujahr ' + baujahr + (sanierung !== 'nein' ? ', Sanierung berücksichtigt' : '') + ')';
+
+  return { bedarf: auslegung, heizlast: round1_(heizlast), spez_heizlast_wm2: spezHeizlastWm2, methode: methode, methode_hinweis: methodeHinweis, jaz: jaz, heizsystem: heizsystem, warmwasser: warmwasser, marken: marken };
 }
 
-function matchCatalog_(marke, auslegung, heizsystem) {
-  const candidates = getCatalog_().filter(function (item) {
-    const grenze = heizsystem === 'heizkoerper' ? item.grenzeW55 : item.grenzeW35;
-    return item.marke === marke && grenze >= auslegung;
-  });
-  candidates.sort(function (a, b) {
-    const ga = heizsystem === 'heizkoerper' ? a.grenzeW55 : a.grenzeW35;
-    const gb = heizsystem === 'heizkoerper' ? b.grenzeW55 : b.grenzeW35;
-    return ga - gb;
-  });
-  return candidates[0] || null;
+// Geräte-Auswahl: kleinste Maschine, deren Grenze (an der exakten PLZ-NAT, am Emitter-Vorlauf) die
+// Auslegung deckt. Toleranz (KASKADEN_TOLERANZ_KW) greift NUR an der Single↔Kaskade-Schwelle (Kurven-
+// Ablesegenauigkeit ±0,3–0,5 kW; keine 5%-Aufweichung).
+var KASKADEN_TOLERANZ_KW = 0.5;
+// Geräte-Grenze an der exakten Normaußentemperatur: linear interpoliert zwischen dem A-11-Stützpunkt
+// (grenze…, NAT -11 °C) und dem A-10-Stützpunkt (grenze…a10, NAT -10 °C). VDI 4645: Auslegung an der
+// exakten NAT, Leistungskurve interpoliert (nicht auf einen Nachbarpunkt gerundet). Wärmer als -10 °C →
+// A-10-Wert (keine Extrapolation über den wärmsten Messpunkt); kälter als -11 °C → A-11-Wert (Großraum-
+// konservativer Boden). Fehlt der A-10-Stützpunkt (Vaillant vorläufig, Spalte 0) → flach der A-11-Wert.
+function grenzeInterp_(grenzeA11, grenzeA10, nat) {
+  if (!grenzeA10) return grenzeA11;
+  var f = num_(nat, -11) + 11;             // Interpolationsfaktor: 0 bei -11 °C (A-11), 1 bei -10 °C (A-10)
+  if (f < 0) f = 0; else if (f > 1) f = 1; // clampen: keine Extrapolation über die Stützpunkte hinaus
+  return grenzeA11 + (grenzeA10 - grenzeA11) * f;
+}
+function matchCatalog_(marke, auslegung, heizsystem, nat) {
+  const grenzeOf = function (item) {
+    return heizsystem === 'heizkoerper'
+      ? grenzeInterp_(item.grenzeW55, item.grenzeW55a10, nat)
+      : grenzeInterp_(item.grenzeW35, item.grenzeW35a10, nat);
+  };
+  const items = getCatalog_()
+    .filter(function (item) { return item.marke === marke; })
+    .sort(function (a, b) { return grenzeOf(a) - grenzeOf(b); });
+  const strict = items.filter(function (item) { return grenzeOf(item) >= auslegung; });
+  const pick = strict[0] || null;
+  // Toleranz NUR an der Schwelle: wäre die kleinste deckende Lösung eine Kaskade, aber die größte
+  // Einzelmaschine deckt innerhalb ±Toleranz noch, dann Single bevorzugen (kein 89k-Kaskaden-Sprung).
+  if (pick && pick.kaskade) {
+    const single = items.filter(function (item) { return !item.kaskade && grenzeOf(item) + KASKADEN_TOLERANZ_KW >= auslegung; });
+    if (single.length) return single[single.length - 1];
+  }
+  return pick;
 }
 
 function catalogResult_(item, priceRows) {
@@ -235,7 +286,7 @@ function getCatalog_() {
   const ss = SpreadsheetApp.openById(SHEET_ID);
   const sh = ss.getSheetByName('Geräte_Katalog');
   if (!sh) throw new Error('missing_tab_Geräte_Katalog');
-  const values = sh.getRange('A9:M18').getValues();
+  const values = sh.getRange('A9:O18').getValues();
   const out = [];
   values.forEach(function (row) {
     if (!row[0] || !row[1]) return;
@@ -243,13 +294,36 @@ function getCatalog_() {
       marke: String(row[0]).toLowerCase(),
       modell: String(row[1]),
       kaskade: String(row[2]).toUpperCase() === 'J',
-      grenzeW35: num_(row[7], 0),
-      grenzeW55: num_(row[8], 0),
+      grenzeW35: num_(row[7], 0),     // H = Grenze W35 @A-11 (Großraum-konservativ)
+      grenzeW55: num_(row[8], 0),     // I = Grenze W55 @A-11
+      grenzeW35a10: num_(row[13], 0), // N = Grenze W35 @A-10 (Hannover Stadt; 0 => Fallback A-11)
+      grenzeW55a10: num_(row[14], 0), // O = Grenze W55 @A-10
       brutto: num_(row[10], 0),
       stand: String(row[11] || '')
     });
   });
   cache.put('catalog:v1', JSON.stringify(out), CACHE_TTL_SECONDS);
+  return out;
+}
+
+// PLZ-scharfe Normaußentemperatur (+ Volllaststunden) aus dem Tab Klima_PLZ.
+// Spalten: PLZ | Ort | NAT_C | Volllaststunden | Quelle. Zeile mit PLZ '*' = Default (unbekannte PLZ).
+function getKlimaPlz_() {
+  const cache = CacheService.getScriptCache();
+  const cached = cache.get('klimaplz:v1');
+  if (cached) return JSON.parse(cached);
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const sh = ss.getSheetByName('Klima_PLZ');
+  const out = {};
+  if (sh) {
+    const values = sh.getDataRange().getValues();
+    for (let i = 1; i < values.length; i++) {
+      const plz = String(values[i][0] || '').trim();
+      if (!plz) continue;
+      out[plz] = { nat: num_(values[i][2], -11), volllast: num_(values[i][3], 1800) };
+    }
+  }
+  cache.put('klimaplz:v1', JSON.stringify(out), CACHE_TTL_SECONDS);
   return out;
 }
 
