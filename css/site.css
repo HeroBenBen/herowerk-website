@@ -1708,16 +1708,19 @@ section {
 }
 .foerder-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
   gap: 40px;
   background: rgba(255, 255, 255, 0.03);
   border-radius: 16px;
   padding: 40px;
   border: 1px solid rgba(183, 217, 0, 0.1);
 }
+.foerder-grid > * {
+  min-width: 0;
+}
 .foerder-inputs-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
   gap: 16px;
 }
 .fi-group {
@@ -1731,6 +1734,8 @@ section {
   font-size: 13px;
 }
 .fi-group select {
+  width: 100%;
+  min-width: 0;
   padding: 10px 12px;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.15);
