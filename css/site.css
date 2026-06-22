@@ -276,9 +276,16 @@ nav.scrolled {
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
     animation: btnShimmer 2.5s ease-in-out infinite;
   }
-  /* Platz für Bottom Bar */
+  /* Platz für Bottom Bar — skaliert mit Notch-Sicherheitszone (statt fixem 76px) */
   body {
-    padding-bottom: 76px;
+    padding-bottom: calc(74px + max(10px, env(safe-area-inset-bottom)));
+  }
+  /* Funnel-Seiten (Rechner) haben eigene Navigation → redundanten fixen Banner ausblenden */
+  body.page-funnel .mobile-bottom-bar {
+    display: none;
+  }
+  body.page-funnel {
+    padding-bottom: 0;
   }
 }
 
