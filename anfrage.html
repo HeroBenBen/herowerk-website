@@ -258,7 +258,6 @@
     .answer-grid {
       display: grid;
       grid-template-columns: 1fr;
-      max-width: 560px;
       gap: 12px;
       margin-bottom: 28px;
     }
@@ -1824,7 +1823,7 @@
   // zeigt nur noch die offenen (Heizungsalter, Eigentümer, Zeitpunkt, Kontakt).
   function showLeadHandoffBanner() {
     if (document.getElementById('leadHandoffBanner')) return;
-    const parts = [answers.step1, answers.step2, answers.step4, answers.step5, answers.step6, answers.plz].filter(
+    const parts = [answers.step1, answers.step2, answers.step3, answers.step4, answers.step5, answers.step6, answers.plz].filter(
       Boolean,
     );
     const firstStep = document.querySelector('.step');
@@ -1898,6 +1897,7 @@
     const fb = flaecheBucket(d.flaeche);
     if (fb) answers.step5 = fb;
     if (d.heizsystem && heizsysMap[d.heizsystem]) answers.step6 = heizsysMap[d.heizsystem];
+    if (d.heizungsalter) answers.step3 = d.heizungsalter;
 
     let plzApplied = false;
     if (d.plz && /^\d{5}$/.test(d.plz)) {
@@ -1923,6 +1923,7 @@
     if (answers.step4) prefilled.add(4);
     if (answers.step5) prefilled.add(5);
     if (answers.step6) prefilled.add(6);
+    if (answers.step3) prefilled.add(3);
     stepOrder = full.filter((s) => !prefilled.has(s));
     if (!stepOrder.length) stepOrder = [10];
     recomputeProgress();

@@ -1391,6 +1391,18 @@ function getHeizungsalter() {
   }
 }
 
+// Foerderrechner -> Leadstrecke: Heizungsalter zusaetzlich in hwLeadPrefill mitgeben,
+// damit /anfrage es nicht erneut abfragt. Nur das Alter (saubere Zeichenkette) ergaenzen;
+// uebrige Felder (heizung/gebaeude/...) bleiben aus dem Rechner-Prefill (korrekte Keys).
+function hwStageFoerderLead() {
+  try {
+    const d = JSON.parse(sessionStorage.getItem('hwLeadPrefill') || '{}') || {};
+    const alter = typeof getHeizungsalter === 'function' ? getHeizungsalter() : null;
+    if (alter) d.heizungsalter = 'ca. ' + alter + ' Jahre';
+    sessionStorage.setItem('hwLeadPrefill', JSON.stringify(d));
+  } catch (e) {}
+}
+
 function setAlterModus(modus) {
   alterModus = modus;
   const alterDiv = document.getElementById('heizungsalterAlter');
