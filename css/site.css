@@ -3681,12 +3681,15 @@ footer {
   border-color: var(--color-border-subtle) !important;
 }
 
-/* Förderung light: input fields stay white inside unified light cards. */
+/* Förderung light: input fields stay white inside unified light cards.
+   AE-2-Politur: kraeftigerer Rahmen + dezenter Schatten, damit die weissen Felder
+   sich vom hellen Panel abheben (weiss-auf-weiss ging unter). */
 [data-theme='light'] .foerder-section input,
 [data-theme='light'] .foerder-section select,
 [data-theme='light'] .foerder-section textarea {
   background: var(--color-surface-secondary) !important;
-  border: 1px solid var(--color-border-subtle) !important;
+  border: 1px solid rgba(28, 43, 54, 0.22) !important;
+  box-shadow: 0 1px 2px rgba(28, 43, 54, 0.05) !important;
   color: var(--color-text-primary) !important;
 }
 
