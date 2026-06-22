@@ -738,7 +738,8 @@ function wizToFoerder() {
   const wpSelect = document.getElementById('foerderWpTyp');
   if (wpSelect) wpSelect.value = 'm';
   const kostenInput = document.getElementById('wpKostenInput');
-  if (kostenInput && selected?.brutto) kostenInput.value = Math.round(selected.brutto);
+  if (kostenInput && selected?.brutto)
+    kostenInput.value = Math.round(selected.brutto).toLocaleString('de-DE') + ' €';
 
   const gemeindeSelect = document.getElementById('gemeinde');
   if (gemeindeSelect && wizData.gemeinde) {
@@ -787,6 +788,13 @@ function wizToFoerder() {
   const foerderSection = document.getElementById('foerder');
   if (foerderSection) foerderSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
   else window.location.href = '/foerderung';
+}
+
+// Formatiert das Kosten-Eingabefeld als Eurowert (Tausenderpunkt + €). Der Parse-Pfad
+// (calculateFoerder) strippt alle Nicht-Ziffern, daher bleibt die Berechnung korrekt.
+function formatKostenInput(el) {
+  const n = parseInt((el.value || '').replace(/[^0-9]/g, ''), 10);
+  el.value = Number.isFinite(n) && n > 0 ? n.toLocaleString('de-DE') + ' €' : '';
 }
 
 // ===== PREISANKER: Expand/Collapse-Karten mit Tech-Specs =====
@@ -1523,7 +1531,10 @@ async function calculateFoerder() {
   const wpTyp = document.getElementById('foerderWpTyp').value;
   const preisManuell =
     wpKostenModus === 'manuell'
-      ? parseInt(document.getElementById('wpKostenInput').value) || ''
+      ? parseInt(
+          (document.getElementById('wpKostenInput').value || '').replace(/[^0-9]/g, ''),
+          10
+        ) || ''
       : '';
   const proklimaOptinVal = document.getElementById('proklimaOptin').value;
 
