@@ -265,55 +265,55 @@
     .answer-grid.cols-1 { grid-template-columns: 1fr; }
 
     .answer-card {
-      background: var(--bg);
-      border: 2px solid var(--g200);
-      border-radius: var(--radius);
-      padding: 20px 18px;
+      background: var(--color-surface-secondary);
+      border: 2px solid var(--color-border-subtle);
+      border-radius: 14px;
+      padding: 20px;
       cursor: pointer;
-      transition: border-color 0.18s, background 0.18s, transform 0.12s;
-      display: flex; align-items: center; gap: 14px;
+      transition: border-color 0.18s, background 0.18s, box-shadow 0.18s, transform 0.12s;
+      display: flex; align-items: center; gap: 16px;
       text-align: left;
       -webkit-user-select: none; user-select: none;
     }
     .answer-card:has(.answer-card-icon) { min-height: 104px; }
     .answer-card:hover {
       border-color: var(--green);
-      background: var(--green-light);
-      transform: translateY(-1px);
+      background: var(--color-surface-secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--color-shadow);
     }
     .answer-card.selected {
-      border-color: var(--schiefer);
-      background: #eef6b8;
-      box-shadow: 0 0 0 4px rgba(33,48,53,0.18), inset 4px 0 0 var(--green);
+      border-color: var(--green);
+      background: rgba(183,217,0,0.12);
+      box-shadow: 0 0 0 3px rgba(183,217,0,0.28);
     }
     .answer-card-icon {
-      flex-shrink: 0; width: 60px; height: 60px;
+      flex-shrink: 0; width: 56px; height: 56px;
       display: flex; align-items: center; justify-content: center;
-      background: var(--g100); border-radius: 14px;
+      background: var(--color-surface-tertiary); border-radius: 14px;
       transition: background 0.2s;
     }
     .answer-card-icon svg {
-      width: 38px; height: 38px; stroke: var(--g500);
+      width: 32px; height: 32px; stroke: var(--color-text-secondary);
       fill: none; transition: stroke 0.2s;
     }
     .answer-card-icon svg * {
       stroke-width: 1.7;
       vector-effect: non-scaling-stroke;
     }
-    .answer-card:hover .answer-card-icon { background: rgba(183,217,0,0.14); }
-    .answer-card:hover .answer-card-icon svg { stroke: var(--schiefer); }
+    .answer-card:hover .answer-card-icon { background: rgba(183,217,0,0.18); }
+    .answer-card:hover .answer-card-icon svg { stroke: var(--color-text-primary); }
     .answer-card.selected .answer-card-icon {
-      background: rgba(183,217,0,0.22);
-      box-shadow: 0 0 0 1.5px rgba(183,217,0,0.5);
+      background: rgba(183,217,0,0.18);
     }
-    .answer-card.selected .answer-card-icon svg { stroke: var(--schiefer); }
+    .answer-card.selected .answer-card-icon svg { stroke: var(--color-text-primary); }
     .answer-card-text { flex: 1; }
     .answer-card-label {
       font-family: 'Barlow', sans-serif; font-weight: 700;
-      font-size: 15px; color: var(--schiefer); line-height: 1.3;
+      font-size: 15px; color: var(--color-text-primary); line-height: 1.3;
     }
     .answer-card-sub {
-      font-size: 12px; color: var(--g400); margin-top: 3px; line-height: 1.4;
+      font-size: 12px; color: var(--color-text-secondary); margin-top: 3px; line-height: 1.4;
     }
     .answer-card-check {
       width: 22px; height: 22px; border-radius: 50%;
@@ -321,7 +321,7 @@
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0; opacity: 0; transition: opacity 0.15s;
     }
-    .answer-card-check svg { color: var(--schiefer); width: 12px; height: 12px; }
+    .answer-card-check svg { color: var(--color-accent-primary-text); width: 12px; height: 12px; }
     .answer-card.selected .answer-card-check { opacity: 1; }
 
     /* ══════════ Heizungsalter Toggle (Schritt 3) ══════════ */
@@ -557,14 +557,11 @@
       background: #22323e; border-color: rgba(255,255,255,0.10); color: #ffffff;
     }
     [data-theme='dark'] .step-question,
-    [data-theme='dark'] .answer-card-label,
     [data-theme='dark'] .form-field label,
     [data-theme='dark'] .success-step h2 { color: #ffffff; }
     [data-theme='dark'] .step-hint,
-    [data-theme='dark'] .answer-card-sub,
     [data-theme='dark'] .funnel-step-counter,
     [data-theme='dark'] .success-detail { color: #d1d5db; }
-    [data-theme='dark'] .answer-card,
     [data-theme='dark'] .form-field input,
     [data-theme='dark'] .form-field select,
     [data-theme='dark'] .form-field textarea {
@@ -583,18 +580,22 @@
     [data-theme='dark'] .alter-select {
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23d1d5db' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
     }
-    [data-theme='dark'] .answer-card:hover { border-color: var(--green); }
-    [data-theme='dark'] .answer-card.selected {
-      border-color: #ffffff;
-      background: rgba(183,217,0,0.18);
-      box-shadow: 0 0 0 4px rgba(255,255,255,0.24), inset 4px 0 0 var(--green);
+    [data-theme='dark'] .answer-card:hover {
+      border-color: var(--green);
+      background: var(--color-surface-secondary);
+      box-shadow: 0 8px 24px var(--color-shadow);
     }
-    [data-theme='dark'] .answer-card-icon { background: rgba(255,255,255,0.06); }
-    [data-theme='dark'] .answer-card-icon svg { stroke: #d1d5db; }
+    [data-theme='dark'] .answer-card.selected {
+      border-color: var(--green);
+      background: rgba(183,217,0,0.12);
+      box-shadow: 0 0 0 3px rgba(183,217,0,0.28);
+    }
+    [data-theme='dark'] .answer-card-icon { background: var(--color-surface-tertiary); }
+    [data-theme='dark'] .answer-card-icon svg { stroke: var(--color-text-secondary); }
     [data-theme='dark'] .answer-card:hover .answer-card-icon,
-    [data-theme='dark'] .answer-card.selected .answer-card-icon { background: rgba(183,217,0,0.22); }
+    [data-theme='dark'] .answer-card.selected .answer-card-icon { background: rgba(183,217,0,0.18); }
     [data-theme='dark'] .answer-card:hover .answer-card-icon svg,
-    [data-theme='dark'] .answer-card.selected .answer-card-icon svg { stroke: #ffffff; }
+    [data-theme='dark'] .answer-card.selected .answer-card-icon svg { stroke: var(--color-text-primary); }
     [data-theme='dark'] .form-field input::placeholder,
     [data-theme='dark'] .plz-input::placeholder,
     [data-theme='dark'] .alter-baujahr-input::placeholder { color: #a0a6ad; }
