@@ -216,19 +216,28 @@
       <div class="intern">Intern · Konzept · nicht für Live</div>
       <h1>Eine Kachel für beide Strecken</h1>
       <p class="lead">
-        Das Beste aus beiden Welten: die <b style="color:var(--color-text-primary)">starke Kachelform der
-        Leadstrecke</b> (Icon-Plakette, Haken-Bestätigung, Hover-Tiefe, klarer Auswahl-Zustand) +
-        das <b style="color:var(--color-text-primary)">kräftige Grün-Farbkonzept des Rechners</b> — als EIN
-        System, das in zwei Layouts läuft. Breite gezügelt (max. 760&nbsp;px) und fluid-responsiv
-        (auto-fit, keine festen Geräte-Breakpunkte). Mit dem Hell/Dunkel-Schalter beide Modi prüfen,
-        Fenster zum Test schmaler/breiter ziehen.
+        Beide Strecken bekommen <b style="color:var(--color-text-primary)">eine gemeinsame Kachel</b>: die
+        kräftige Form der Leadstrecke (Icon-Plakette, Haken, Hover-Tiefe) + das starke Grün des Rechners.
+        <b style="color:var(--color-text-primary)">Das Aussehen ist überall gleich</b> — nur das Layout
+        wechselt je nach Frage. Hell/Dunkel oben rechts; Fenster schmal/breit ziehen zeigt das mitwachsende
+        Raster.
       </p>
+      <div style="border-left:3px solid var(--green);background:var(--color-surface-secondary);border-radius:0 10px 10px 0;padding:14px 16px;margin:8px 0 4px;font-size:13px;line-height:1.6;">
+        <div style="font-family:'Barlow',sans-serif;font-weight:800;color:var(--color-text-primary);margin-bottom:4px;">
+          Empfehlung (Konversion)
+        </div>
+        <b style="color:var(--color-text-primary)">Liste = Standard.</b> Sie führt am besten durch den
+        Funnel: am Handy große, volle Tipp-Flächen, eine klare Entscheidung pro Reihe, Platz für den
+        erklärenden Untertitel. <b style="color:var(--color-text-primary)">Grid = Sonderfall</b> nur für
+        kurze, bildhafte Auswahlen, die man auf einen Blick vergleicht (Gebäudetyp, Interesse WP/PV/Klima).
+        Deckt sich mit deiner Tendenz zu Layout B.
+      </div>
     </div>
     <button class="toggle" onclick="document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme')==='light'?'dark':'light')">Hell / Dunkel</button>
   </div>
 
-  <div class="grp">Layout A — Grid (kurze, icon-geführte Auswahl, z. B. Gebäudetyp)</div>
-  <div class="grpsub">Fluid: füllt 1 Spalte am Handy, 2–3 auf Tablet/Laptop, gedeckelt am Widescreen.</div>
+  <div class="grp">Sonderfall · Grid — kurze, bildhafte Auswahl (z. B. Gebäudetyp, Interesse)</div>
+  <div class="grpsub">Nur wo man Optionen auf einen Blick vergleicht. Wächst mit: 1 Spalte am Handy, 2–3 auf Tablet/Laptop, gedeckelt am Widescreen.</div>
   <div class="u-grid">
     <div class="u-card sel">
       <span class="u-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
@@ -249,8 +258,8 @@
     </div>
   </div>
 
-  <div class="grp">Layout B — Liste (beschreibende Auswahl, z. B. Zeithorizont)</div>
-  <div class="grpsub">Volle Breite, Icon links, Haken rechts — wie die Leadstrecke, jetzt mit Rechner-Grün.</div>
+  <div class="grp">Standard · Liste — alle beschreibenden Fragen (z. B. Zeithorizont)</div>
+  <div class="grpsub">Der konvergenzstärkere Normalfall: volle Breite, Icon links, Haken rechts — große Tipp-Fläche, eine Entscheidung pro Reihe.</div>
   <div class="u-stack">
     <div class="u-card sel">
       <span class="u-ico"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg></span>
@@ -269,12 +278,12 @@
     </div>
   </div>
 
-  <div class="grp">Was sich gegenüber heute ändert</div>
+  <div class="grp">Heute → Neu (und warum das besser ist)</div>
   <div class="note">
-    • <b>Form vereinheitlicht:</b> beide Strecken nutzen exakt diese Kachel (Plakette + Titel + Untertitel + Haken).<br />
-    • <b>Farbe vereinheitlicht:</b> ein Grün-System für Hover/Auswahl — auch im Hellmodus voll durchgezogen (heute auf der Leadstrecke schwächer).<br />
-    • <b>Breite gezügelt:</b> Rechner-Kachel von 1120&nbsp;px → 760&nbsp;px, damit es ein fokussierter Karten-Block wird statt einer breiten Fläche.<br />
-    • <b>Responsive sauber:</b> Grid mit <code>auto-fit</code> reflowt stufenlos über Handy / Tablet / Laptop / Widescreen — keine einzelnen festen Bildschirm-Stände mehr.
+    • <b>Form:</b> heute zwei verschiedene Kachel-Looks (Leadstrecke ≠ Rechner) → neu <b>eine</b> Kachel überall — wirkt wie aus einem Guss.<br />
+    • <b>Farbe:</b> heute auf der Leadstrecke (v. a. hell) blass → neu überall das kräftige Grün für Auswahl/Hover — man sieht sofort, was gewählt ist.<br />
+    • <b>Breite:</b> heute Rechner-Kachel sehr breit (1120&nbsp;px, wirkt flächig) → neu auf 760&nbsp;px gefasst — fokussierter Karten-Block.<br />
+    • <b>Geräte:</b> heute nur auf bestimmten Bildschirmen sauber → neu wächst stufenlos mit (Handy → Tablet → Laptop → Widescreen).
   </div>
 
   <p class="foot">Intern, temporär — wird nach Abnahme/Umsetzung wieder entfernt. Nur Optik-Konzept; echte Inhalte/Logik unverändert.</p>
