@@ -1325,7 +1325,8 @@ section {
   animation: fadeIn 0.3s;
 }
 .wizard-step.active {
-  display: block;
+  display: flex;
+  flex-direction: column;
 }
 @keyframes fadeIn {
   from {
@@ -1335,6 +1336,13 @@ section {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Desktop/Tablet: Mindesthöhe je Schritt, damit der Wizard zwischen Fragen nicht springt */
+@media (min-width: 769px) {
+  .wizard-step {
+    min-height: 340px;
   }
 }
 
@@ -1365,13 +1373,35 @@ section {
   text-align: center;
 }
 
+/* "Aktuelle Heizung": horizontale, kompakte Icon-Karten (Icon links, Text rechts) */
+#wzHeizung {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
 #wzHeizung .wizard-option {
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: left;
+  gap: 14px;
+  padding: 16px;
+}
+#wzHeizung .wizard-option .opt-icon {
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+#wzHeizung .wizard-option .opt-body {
+  display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 #wzHeizung .opt-bonus {
-  margin-top: auto;
-  padding-top: 6px;
+  margin-top: 2px;
+  padding-top: 0;
+}
+@media (max-width: 768px) {
+  #wzHeizung {
+    grid-template-columns: 1fr;
+  }
 }
 .wizard-option:hover {
   border-color: rgba(183, 217, 0, 0.4);
@@ -1448,7 +1478,9 @@ section {
   justify-content: flex-start;
   align-items: center;
   gap: 12px;
-  margin-top: 24px;
+  /* Buttons an den unteren Rand des Schritts verankern (Höhen-Ruhe), min. 24px Abstand */
+  margin-top: auto;
+  padding-top: 24px;
 }
 .wizard-btn-back {
   background: transparent;
