@@ -27,6 +27,7 @@ div[id] {
   --g400: #9ca3af;
   --g500: #6b7280;
   --g200: #e5e7eb;
+  --g100: #f3f4f6;
 }
 
 body {
@@ -1382,21 +1383,53 @@ section {
   background: rgba(183, 217, 0, 0.1);
 }
 .wizard-option .opt-icon {
-  margin-bottom: 10px;
+  width: 60px;
+  height: 60px;
+  background: var(--g100);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+  transition: background 0.2s;
 }
 .wizard-option .opt-icon svg {
-  width: 44px;
-  height: 44px;
-  stroke: var(--g300);
-  stroke-width: 1.2;
+  width: 38px;
+  height: 38px;
+  stroke: var(--g500);
   fill: none;
   transition: stroke 0.2s;
 }
+.wizard-option .opt-icon svg * {
+  stroke-width: 1.7;
+  vector-effect: non-scaling-stroke;
+}
+.wizard-option:hover .opt-icon {
+  background: rgba(183, 217, 0, 0.14);
+}
 .wizard-option:hover .opt-icon svg {
-  stroke: var(--green);
+  stroke: var(--schiefer);
+}
+.wizard-option.selected .opt-icon {
+  background: rgba(183, 217, 0, 0.22);
+  box-shadow: 0 0 0 1.5px rgba(183, 217, 0, 0.5);
 }
 .wizard-option.selected .opt-icon svg {
-  stroke: var(--green);
+  stroke: var(--schiefer);
+}
+[data-theme='dark'] .wizard-option .opt-icon {
+  background: rgba(255, 255, 255, 0.06);
+}
+[data-theme='dark'] .wizard-option .opt-icon svg {
+  stroke: #d1d5db;
+}
+[data-theme='dark'] .wizard-option:hover .opt-icon,
+[data-theme='dark'] .wizard-option.selected .opt-icon {
+  background: rgba(183, 217, 0, 0.22);
+}
+[data-theme='dark'] .wizard-option:hover .opt-icon svg,
+[data-theme='dark'] .wizard-option.selected .opt-icon svg {
+  stroke: #ffffff;
 }
 .wizard-option .opt-title {
   color: var(--white);
