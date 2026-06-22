@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Kachel-Konzept (intern) — eine Kachel für beide Strecken</title>
+<link rel="stylesheet" href="/tokens.css" />
+<style>
+  body {
+    background: var(--color-surface-primary);
+    color: var(--color-text-secondary);
+    font-family: 'Inter', system-ui, sans-serif;
+    margin: 0;
+    padding: 28px;
+  }
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .intern {
+    font-family: 'Barlow', sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent-on-light, #8aa800);
+    margin-bottom: 6px;
+  }
+  h1 {
+    color: var(--color-text-primary);
+    font-size: 24px;
+    margin: 0 0 6px;
+  }
+  .lead {
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0 0 18px;
+  }
+  .grp {
+    color: var(--color-text-primary);
+    font-size: 17px;
+    font-weight: 700;
+    margin: 30px 0 4px;
+  }
+  .grpsub {
+    font-size: 13px;
+    margin: 0 0 14px;
+  }
+  .toggle {
+    background: var(--green);
+    color: var(--color-accent-primary-text);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  /* ===== Vorgeschlagene EINHEITS-Kachel ===== */
+  .u-card {
+    position: relative;
+    background: var(--color-surface-secondary);
+    border: 2px solid var(--color-border-subtle);
+    border-radius: 14px;
+    padding: 20px;
+    cursor: pointer;
+    transition:
+      border-color 0.18s,
+      background 0.18s,
+      transform 0.12s,
+      box-shadow 0.18s;
+  }
+  .u-card:hover {
+    border-color: var(--green);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--color-shadow);
+  }
+  .u-card.sel {
+    border-color: var(--green);
+    background: rgba(183, 217, 0, 0.12);
+    box-shadow: 0 0 0 3px rgba(183, 217, 0, 0.28);
+  }
+  .u-ico {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-surface-tertiary);
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .u-ico svg {
+    width: 32px;
+    height: 32px;
+    stroke: var(--color-text-secondary);
+    fill: none;
+    transition: stroke 0.2s;
+  }
+  .u-ico svg * {
+    stroke-width: 1.8;
+    vector-effect: non-scaling-stroke;
+  }
+  .u-card:hover .u-ico,
+  .u-card.sel .u-ico {
+    background: rgba(183, 217, 0, 0.18);
+  }
+  .u-card:hover .u-ico svg,
+  .u-card.sel .u-ico svg {
+    stroke: var(--color-text-primary);
+  }
+  .u-title {
+    display: block;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--color-text-primary);
+    line-height: 1.3;
+  }
+  .u-sub {
+    display: block;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-top: 3px;
+    line-height: 1.4;
+  }
+  .u-check {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .u-check svg {
+    width: 12px;
+    height: 12px;
+    stroke: var(--color-accent-primary-text);
+    fill: none;
+  }
+  .u-card.sel .u-check {
+    opacity: 1;
+  }
+
+  /* Layout A: Grid (kurze, icon-gefuehrte Auswahl) — fluid, auto-fit statt fixer Breakpoints */
+  .u-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px;
+  }
+  .u-grid .u-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+  }
+  .u-grid .u-check {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+  }
+
+  /* Layout B: Liste (beschreibende Auswahl) */
+  .u-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .u-stack .u-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+  .u-stack .u-text {
+    flex: 1;
+  }
+
+  .note {
+    background: var(--color-surface-secondary);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: 12px;
+    padding: 16px 18px;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 10px;
+  }
+  .note b {
+    color: var(--color-text-primary);
+  }
+  .foot {
+    font-size: 12px;
+    margin-top: 26px;
+    opacity: 0.8;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div>
+      <div class="intern">Intern · Konzept · nicht für Live</div>
+      <h1>Eine Kachel für beide Strecken</h1>
+      <p class="lead">
+        Das Beste aus beiden Welten: die <b style="color:var(--color-text-primary)">starke Kachelform der
+        Leadstrecke</b> (Icon-Plakette, Haken-Bestätigung, Hover-Tiefe, klarer Auswahl-Zustand) +
+        das <b style="color:var(--color-text-primary)">kräftige Grün-Farbkonzept des Rechners</b> — als EIN
+        System, das in zwei Layouts läuft. Breite gezügelt (max. 760&nbsp;px) und fluid-responsiv
+        (auto-fit, keine festen Geräte-Breakpunkte). Mit dem Hell/Dunkel-Schalter beide Modi prüfen,
+        Fenster zum Test schmaler/breiter ziehen.
+      </p>
+    </div>
+    <button class="toggle" onclick="document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme')==='light'?'dark':'light')">Hell / Dunkel</button>
+  </div>
+
+  <div class="grp">Layout A — Grid (kurze, icon-geführte Auswahl, z. B. Gebäudetyp)</div>
+  <div class="grpsub">Fluid: füllt 1 Spalte am Handy, 2–3 auf Tablet/Laptop, gedeckelt am Widescreen.</div>
+  <div class="u-grid">
+    <div class="u-card sel">
+      <span class="u-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
+      <span class="u-ico"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><path d="M6 24L24 8l18 16" /><path d="M10 22v18h28V22" /><rect x="19" y="30" width="10" height="10" /></svg></span>
+      <span><span class="u-title">Einfamilienhaus</span><span class="u-sub">Freistehend</span></span>
+    </div>
+    <div class="u-card">
+      <span class="u-ico"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><path d="M4 24L15 14l9 8 9-8 11 10" /><path d="M8 22v18h16V22" /><path d="M24 22v18h16V22" /><rect x="13" y="30" width="6" height="10" /><rect x="29" y="30" width="6" height="10" /></svg></span>
+      <span><span class="u-title">Doppelhaushälfte</span><span class="u-sub">Geteilte Wand</span></span>
+    </div>
+    <div class="u-card">
+      <span class="u-ico"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><path d="M2 24L10 17l7 5 7-5 7 5 7-5 8 7" /><path d="M5 22v18h10V22" /><path d="M15 22v18h8V22" /><path d="M23 22v18h10V22" /><path d="M33 22v18h10V22" /></svg></span>
+      <span><span class="u-title">Reihenhaus</span><span class="u-sub">Mittel-/Endhaus</span></span>
+    </div>
+    <div class="u-card">
+      <span class="u-ico"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><path d="M8 42V10h32v32" /><path d="M8 10L24 4l16 6" /><rect x="13" y="15" width="5" height="5" /><rect x="22" y="15" width="5" height="5" /><rect x="31" y="15" width="5" height="5" /><rect x="13" y="24" width="5" height="5" /><rect x="22" y="24" width="5" height="5" /><rect x="31" y="24" width="5" height="5" /></svg></span>
+      <span><span class="u-title">Mehrfamilienhaus</span><span class="u-sub">3+ Wohneinheiten</span></span>
+    </div>
+  </div>
+
+  <div class="grp">Layout B — Liste (beschreibende Auswahl, z. B. Zeithorizont)</div>
+  <div class="grpsub">Volle Breite, Icon links, Haken rechts — wie die Leadstrecke, jetzt mit Rechner-Grün.</div>
+  <div class="u-stack">
+    <div class="u-card sel">
+      <span class="u-ico"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg></span>
+      <span class="u-text"><span class="u-title">Sofort</span><span class="u-sub">So schnell wie möglich</span></span>
+      <span class="u-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
+    </div>
+    <div class="u-card">
+      <span class="u-ico"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="16" rx="2" /><path d="M4 9h16M8 3v4M16 3v4" /></svg></span>
+      <span class="u-text"><span class="u-title">In 1–3 Monaten</span><span class="u-sub">Konkrete Planung</span></span>
+      <span class="u-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
+    </div>
+    <div class="u-card">
+      <span class="u-ico"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M9.5 9.2a2.6 2.6 0 1 1 3.6 2.4c-.9.5-1.6 1-1.6 2.1" /><path d="M12 17h.01" /></svg></span>
+      <span class="u-text"><span class="u-title">Noch nicht sicher</span><span class="u-sub">Ich informiere mich erst</span></span>
+      <span class="u-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
+    </div>
+  </div>
+
+  <div class="grp">Was sich gegenüber heute ändert</div>
+  <div class="note">
+    • <b>Form vereinheitlicht:</b> beide Strecken nutzen exakt diese Kachel (Plakette + Titel + Untertitel + Haken).<br />
+    • <b>Farbe vereinheitlicht:</b> ein Grün-System für Hover/Auswahl — auch im Hellmodus voll durchgezogen (heute auf der Leadstrecke schwächer).<br />
+    • <b>Breite gezügelt:</b> Rechner-Kachel von 1120&nbsp;px → 760&nbsp;px, damit es ein fokussierter Karten-Block wird statt einer breiten Fläche.<br />
+    • <b>Responsive sauber:</b> Grid mit <code>auto-fit</code> reflowt stufenlos über Handy / Tablet / Laptop / Widescreen — keine einzelnen festen Bildschirm-Stände mehr.
+  </div>
+
+  <p class="foot">Intern, temporär — wird nach Abnahme/Umsetzung wieder entfernt. Nur Optik-Konzept; echte Inhalte/Logik unverändert.</p>
+</div>
+</body>
+</html>
