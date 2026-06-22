@@ -478,6 +478,7 @@ function wizNext() {
     nextStep.classList.add('active');
     wizStep = stepNum + 1;
     updateWizProgress();
+    wizScrollToTop();
   }
 }
 
@@ -489,6 +490,7 @@ function wizBack() {
     document.querySelector(`.wizard-step[data-step="${stepNum - 1}"]`).classList.add('active');
     wizStep = stepNum - 1;
     updateWizProgress();
+    wizScrollToTop();
   }
 }
 
@@ -498,6 +500,15 @@ function updateWizProgress() {
     if (i + 1 === wizStep) bar.classList.add('active');
     if (i + 1 < wizStep) bar.classList.add('done');
   });
+}
+
+// Beim Schritt-/Ergebnis-Wechsel den Wizard-Anfang an den oberen Rand holen,
+// damit auf dem Handy Frage+Optionen (bzw. die Empfehlung) sofort sichtbar sind
+// und der Kunde nicht erst hochscrollen muss. scroll-margin-top:80px (css) haelt
+// die fixe Navigation frei.
+function wizScrollToTop(id = 'wizProgress') {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 async function wizCalculate() {
@@ -538,6 +549,7 @@ async function wizCalculate() {
 
   const result = document.getElementById('wizResult');
   result.classList.add('active');
+  wizScrollToTop('wizResult');
   document.getElementById('wizResultTitle').textContent = 'Wir berechnen deine Empfehlung';
   document.getElementById('wizResultSub').textContent =
     'Die Berechnung läuft serverseitig mit den aktuellen Katalogdaten.';
