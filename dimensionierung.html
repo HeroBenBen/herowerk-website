@@ -73,7 +73,7 @@
       <h1 class="section-title" style="color: var(--white);">Welche Wärmepumpe passt zu deinem Haus?</h1>
       <p class="section-lead">8 kurze Fragen. Keine Anmeldung. Sofort Ergebnis mit Richtpreis und geschätzter Förderung.</p>
 
-      <div class="wizard-container">
+      <div class="wizard-container" id="wizCard">
         <div class="wizard-progress" id="wizProgress">
           <div class="wizard-progress-bar active"></div>
           <div class="wizard-progress-bar"></div>
@@ -91,8 +91,8 @@
           <div class="wizard-question">Wie lautet deine Postleitzahl?</div>
           <div class="wizard-hint">Wir prüfen Verfügbarkeit und regionale Fördermöglichkeiten.</div>
           <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;">
-            <div style="flex:1;min-width:200px;max-width:320px;">
-              <input type="text" id="wzPlz" inputmode="numeric" maxlength="5" placeholder="z.B. 30900" style="width:100%;padding:16px 20px;font-size:24px;font-weight:700;font-family:'Barlow',sans-serif;background:var(--charcoal);border:2px solid var(--g500);border-radius:10px;color:var(--white);text-align:center;letter-spacing:4px;outline:none;transition:border-color 0.2s;" oninput="checkPlz(this)" onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--g500)'">
+            <div style="width:100%;">
+              <input type="text" id="wzPlz" inputmode="numeric" maxlength="5" placeholder="z.B. 30900" style="width:100%;padding:16px 20px;font-size:24px;font-weight:700;font-family:'Barlow',sans-serif;background:var(--charcoal);border:2px solid var(--g500);border-radius:10px;color:var(--white);text-align:center;letter-spacing:4px;outline:none;transition:border-color 0.2s;" oninput="checkPlz(this)" onkeydown="if(event.key==='Enter'){event.preventDefault();var b=document.getElementById('wzPlzNext');if(b&&!b.disabled)wizNext();}" onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--g500)'">
               <div id="wzPlzResult" style="margin-top:10px;font-size:14px;min-height:22px;"></div>
             </div>
           </div>

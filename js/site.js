@@ -506,7 +506,7 @@ function updateWizProgress() {
 // damit auf dem Handy Frage+Optionen (bzw. die Empfehlung) sofort sichtbar sind
 // und der Kunde nicht erst hochscrollen muss. scroll-margin-top:80px (css) haelt
 // die fixe Navigation frei.
-function wizScrollToTop(id = 'wizProgress') {
+function wizScrollToTop(id = 'wizCard') {
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -549,7 +549,7 @@ async function wizCalculate() {
 
   const result = document.getElementById('wizResult');
   result.classList.add('active');
-  wizScrollToTop('wizResult');
+  wizScrollToTop();
   document.getElementById('wizResultTitle').textContent = 'Wir berechnen deine Empfehlung';
   document.getElementById('wizResultSub').textContent =
     'Die Berechnung läuft serverseitig mit den aktuellen Katalogdaten.';
@@ -716,8 +716,8 @@ function wizReset() {
   wizData.sanierung = 'nein';
   wizStep = 1;
   updateWizProgress();
-  // Zum Wizard-Anfang scrollen
-  document.getElementById('wizProgress').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Zum Wizard-Anfang scrollen (Kachel-Oberkante)
+  wizScrollToTop();
 }
 
 // ===== WIZARD → FÖRDERRECHNER: Datenübernahme =====
@@ -798,7 +798,9 @@ function wizToFoerder() {
   if (typeof calculateFoerder === 'function') calculateFoerder();
 
   const foerderSection = document.getElementById('foerder');
-  if (foerderSection) foerderSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Beim Wechsel in den Förderrechner oben auf der Seite starten (neues Thema von Anfang an
+  // erfassen), nicht zum Ergebnis-Abschnitt nach unten springen. (GF 22.06.)
+  if (foerderSection) window.scrollTo({ top: 0, behavior: 'auto' });
   else window.location.href = '/foerderung';
 }
 

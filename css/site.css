@@ -1307,6 +1307,11 @@ section {
   max-width: 760px;
   margin: 0 auto;
 }
+/* Beim Schritt-Wechsel die Kachel-Oberkante klar unter der fixen Nav anlegen (GF 22.06.).
+   ID-Selektor, damit er die globale div[id]-Regel (80px) sicher überschreibt. */
+#wizCard {
+  scroll-margin-top: 96px;
+}
 .wizard-progress {
   display: flex;
   gap: 4px;
