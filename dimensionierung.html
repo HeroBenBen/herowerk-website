@@ -153,10 +153,10 @@
           <div class="wizard-question">Wann wurde dein Haus gebaut?</div>
           <div class="wizard-hint">Das Baujahr beeinflusst den Dämmstandard und damit den Energiebedarf.</div>
           <div class="wizard-options" id="wzBaujahr">
-            <div class="wizard-option" data-value="vor1978"><div class="opt-title">Vor 1978</div><div class="opt-sub">Meist ungedämmt, hoher Energiebedarf</div></div>
-            <div class="wizard-option" data-value="1978-1994"><div class="opt-title">1978 bis 1994</div><div class="opt-sub">Erste Dämmvorschriften, mittlerer Bedarf</div></div>
-            <div class="wizard-option" data-value="1995-2010"><div class="opt-title">1995 bis 2010</div><div class="opt-sub">Gute Dämmung, niedriger Bedarf</div></div>
-            <div class="wizard-option" data-value="nach2010"><div class="opt-title">Nach 2010</div><div class="opt-sub">Sehr gute Dämmung, geringster Bedarf</div></div>
+            <div class="wizard-option" data-value="vor1978"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l18 0"/><path d="M4 21v-11l2.5 -4.5l5.5 -2.5l5.5 2.5l2.5 4.5v11"/><path d="M10 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M9 21v-5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v5"/></svg></div><div class="opt-title">Vor 1978</div><div class="opt-sub">Meist ungedämmt, hoher Energiebedarf</div></div>
+            <div class="wizard-option" data-value="1978-1994"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M10 12h4v4h-4l0 -4"/></svg></div><div class="opt-title">1978 bis 1994</div><div class="opt-sub">Erste Dämmvorschriften, mittlerer Bedarf</div></div>
+            <div class="wizard-option" data-value="1995-2010"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l18 0"/><path d="M9 8l1 0"/><path d="M9 12l1 0"/><path d="M9 16l1 0"/><path d="M14 8l1 0"/><path d="M14 12l1 0"/><path d="M14 16l1 0"/><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16"/></svg></div><div class="opt-title">1995 bis 2010</div><div class="opt-sub">Gute Dämmung, niedriger Bedarf</div></div>
+            <div class="wizard-option" data-value="nach2010"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l18 0"/><path d="M5 21v-14l8 -4v18"/><path d="M19 21v-10l-6 -4"/><path d="M9 9l0 .01"/><path d="M9 12l0 .01"/><path d="M9 15l0 .01"/><path d="M9 18l0 .01"/></svg></div><div class="opt-title">Nach 2010</div><div class="opt-sub">Sehr gute Dämmung, geringster Bedarf</div></div>
           </div>
           <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
         </div>
@@ -209,9 +209,75 @@
           <div class="wizard-question">Wie wird heute geheizt?</div>
           <div class="wizard-hint">Das beeinflusst die passende Vorlauftemperatur und damit die Geräteauswahl.</div>
           <div class="wizard-options" id="wzHeizsystem">
-            <div class="wizard-option" data-value="heizkoerper"><div class="opt-title">Heizkörper</div></div>
-            <div class="wizard-option" data-value="fussboden"><div class="opt-title">Fußbodenheizung</div></div>
-            <div class="wizard-option" data-value="heizkoerper"><div class="opt-title">Heizkörper und Fußbodenheizung</div></div>
+            <div class="wizard-option" data-value="heizkoerper"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(0.018704,0.000000,0.000000,-0.018704,-12.313582,105.007964)">
+    <path vector-effect="non-scaling-stroke" d="M 1669.179688 4649.492188 L 930.664062 4649.492188 C 903.046875 4649.492188 880.664062 4671.914062 880.664062 4699.492188 L 880.664062 5122.5 C 880.664062 5150.117188 903.046875 5172.5 930.664062 5172.5 L 1669.179688 5172.5 C 1696.796875 5172.5 1719.179688 5150.117188 1719.179688 5122.5 L 1719.179688 4699.492188 C 1719.179688 4671.914062 1696.796875 4649.492188 1669.179688 4649.492188 Z M 1669.179688 4649.492188 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1000.46875 5090.859375 L 1000.46875 4766.875 C 1000.46875 4747.539062 1016.132812 4731.875 1035.46875 4731.875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1120.234375 5090.859375 L 1120.234375 4766.875 C 1120.234375 4747.539062 1135.898438 4731.875 1155.234375 4731.875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1240.039062 5090.859375 L 1240.039062 4766.875 C 1240.039062 4747.539062 1255.703125 4731.875 1275.039062 4731.875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1359.804688 5090.859375 L 1359.804688 4766.875 C 1359.804688 4747.539062 1375.46875 4731.875 1394.804688 4731.875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1479.609375 5090.859375 L 1479.609375 4766.875 C 1479.609375 4747.539062 1495.273438 4731.875 1514.609375 4731.875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1599.375 5090.859375 L 1599.375 4766.875 C 1599.375 4747.539062 1615.078125 4731.875 1634.375 4731.875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 880.664062 4705.039062 L 810.664062 4705.039062 L 810.664062 4773.945312 L 880.664062 4773.945312 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1719.179688 4773.945312 L 1789.179688 4773.945312 L 1789.179688 4705.039062 L 1719.179688 4705.039062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 880.664062 5060.859375 L 855.664062 5060.859375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1744.179688 5060.859375 L 1719.179688 5060.859375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 845.664062 4705.039062 L 845.664062 4577.539062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1754.179688 4705.039062 L 1754.179688 4577.539062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 765.273438 4577.539062 L 1834.570312 4577.539062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1384.335938 5367.773438 C 1384.335938 5367.773438 1409.960938 5347.96875 1384.335938 5308.28125 C 1358.75 5268.59375 1384.335938 5248.789062 1384.335938 5248.789062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1299.921875 5367.773438 C 1299.921875 5367.773438 1325.507812 5347.96875 1299.921875 5308.28125 C 1274.335938 5268.59375 1299.921875 5248.789062 1299.921875 5248.789062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1215.507812 5367.773438 C 1215.507812 5367.773438 1241.09375 5347.96875 1215.507812 5308.28125 C 1189.882812 5268.59375 1215.507812 5248.789062 1215.507812 5248.789062 "/>
+  </g>
+</svg></div><div class="opt-title">Heizkörper</div></div>
+            <div class="wizard-option" data-value="fussboden"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(0.019309,0.000000,0.000000,-0.019309,-13.100317,81.688490)">
+    <path vector-effect="non-scaling-stroke" d="M 1338.476562 3591.640625 L 1540.039062 3475.273438 C 1562.109375 3462.539062 1562.109375 3441.835938 1540.039062 3429.0625 C 1517.890625 3416.328125 1482.070312 3416.328125 1459.960938 3429.0625 L 1139.84375 3613.90625 C 1117.773438 3626.640625 1081.914062 3626.640625 1059.84375 3613.90625 C 1037.734375 3601.132812 1037.734375 3580.46875 1059.84375 3567.695312 L 1379.960938 3382.851562 C 1402.03125 3370.117188 1402.03125 3349.414062 1379.960938 3336.640625 C 1357.851562 3323.90625 1322.03125 3323.90625 1299.921875 3336.640625 L 979.804688 3521.484375 C 957.695312 3534.257812 921.875 3534.257812 899.765625 3521.484375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1319.335938 3652.1875 L 996.367188 3465.703125 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1451.796875 3609.179688 L 1099.84375 3405.976562 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1569.101562 3557.382812 L 1203.359375 3346.210938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1738.828125 3567.109375 L 1817.8125 3521.484375 L 1299.921875 3222.460938 L 782.03125 3521.484375 L 1080.3125 3693.710938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1817.8125 3696.757812 L 1299.921875 3995.742188 L 925.117188 3779.375 L 925.117188 3695.3125 C 925.117188 3695.3125 1281.210938 3731.640625 1647.65625 3514.453125 L 1817.8125 3612.695312 Z M 1817.8125 3696.757812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1647.65625 3598.515625 L 1647.65625 3514.453125 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1299.921875 3741.289062 C 1406.367188 3714.414062 1526.445312 3670.3125 1647.65625 3598.515625 L 1817.8125 3696.757812 L 1299.921875 3995.742188 L 925.117188 3779.375 C 925.117188 3779.375 997.34375 3786.71875 1110.234375 3774.960938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1180.15625 3765.820312 C 1193.007812 3763.789062 1206.210938 3761.484375 1219.765625 3758.945312 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1817.8125 3696.757812 L 1817.8125 3612.695312 "/>
+  </g>
+</svg></div><div class="opt-title">Fußbodenheizung</div></div>
+            <div class="wizard-option" data-value="heizkoerper"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="translate(12,6.2) scale(0.56) translate(-12.0002,-13.8256)">
+    <g transform="matrix(0.018704,0,0,-0.018704,-12.313582,105.007964)">
+      <path vector-effect="non-scaling-stroke" d="M 1669.179688 4649.492188 L 930.664062 4649.492188 C 903.046875 4649.492188 880.664062 4671.914062 880.664062 4699.492188 L 880.664062 5122.5 C 880.664062 5150.117188 903.046875 5172.5 930.664062 5172.5 L 1669.179688 5172.5 C 1696.796875 5172.5 1719.179688 5150.117188 1719.179688 5122.5 L 1719.179688 4699.492188 C 1719.179688 4671.914062 1696.796875 4649.492188 1669.179688 4649.492188 Z M 1669.179688 4649.492188 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1000.46875 5090.859375 L 1000.46875 4766.875 C 1000.46875 4747.539062 1016.132812 4731.875 1035.46875 4731.875 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1120.234375 5090.859375 L 1120.234375 4766.875 C 1120.234375 4747.539062 1135.898438 4731.875 1155.234375 4731.875 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1240.039062 5090.859375 L 1240.039062 4766.875 C 1240.039062 4747.539062 1255.703125 4731.875 1275.039062 4731.875 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1359.804688 5090.859375 L 1359.804688 4766.875 C 1359.804688 4747.539062 1375.46875 4731.875 1394.804688 4731.875 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1479.609375 5090.859375 L 1479.609375 4766.875 C 1479.609375 4747.539062 1495.273438 4731.875 1514.609375 4731.875 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1599.375 5090.859375 L 1599.375 4766.875 C 1599.375 4747.539062 1615.078125 4731.875 1634.375 4731.875 "/>
+      <path vector-effect="non-scaling-stroke" d="M 880.664062 4705.039062 L 810.664062 4705.039062 L 810.664062 4773.945312 L 880.664062 4773.945312 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1719.179688 4773.945312 L 1789.179688 4773.945312 L 1789.179688 4705.039062 L 1719.179688 4705.039062 "/>
+      <path vector-effect="non-scaling-stroke" d="M 880.664062 5060.859375 L 855.664062 5060.859375 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1744.179688 5060.859375 L 1719.179688 5060.859375 "/>
+      <path vector-effect="non-scaling-stroke" d="M 845.664062 4705.039062 L 845.664062 4577.539062 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1754.179688 4705.039062 L 1754.179688 4577.539062 "/>
+      <path vector-effect="non-scaling-stroke" d="M 765.273438 4577.539062 L 1834.570312 4577.539062 "/>
+    </g>
+  </g>
+  <g transform="translate(12,16.4) scale(0.5) translate(-11.9999,-12.0003)">
+    <g transform="matrix(0.019309,0,0,-0.019309,-13.100317,81.688490)">
+      <path vector-effect="non-scaling-stroke" d="M 1338.476562 3591.640625 L 1540.039062 3475.273438 C 1562.109375 3462.539062 1562.109375 3441.835938 1540.039062 3429.0625 C 1517.890625 3416.328125 1482.070312 3416.328125 1459.960938 3429.0625 L 1139.84375 3613.90625 C 1117.773438 3626.640625 1081.914062 3626.640625 1059.84375 3613.90625 C 1037.734375 3601.132812 1037.734375 3580.46875 1059.84375 3567.695312 L 1379.960938 3382.851562 C 1402.03125 3370.117188 1402.03125 3349.414062 1379.960938 3336.640625 C 1357.851562 3323.90625 1322.03125 3323.90625 1299.921875 3336.640625 L 979.804688 3521.484375 C 957.695312 3534.257812 921.875 3534.257812 899.765625 3521.484375 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1319.335938 3652.1875 L 996.367188 3465.703125 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1451.796875 3609.179688 L 1099.84375 3405.976562 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1569.101562 3557.382812 L 1203.359375 3346.210938 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1738.828125 3567.109375 L 1817.8125 3521.484375 L 1299.921875 3222.460938 L 782.03125 3521.484375 L 1080.3125 3693.710938 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1817.8125 3696.757812 L 1299.921875 3995.742188 L 925.117188 3779.375 L 925.117188 3695.3125 C 925.117188 3695.3125 1281.210938 3731.640625 1647.65625 3514.453125 L 1817.8125 3612.695312 Z M 1817.8125 3696.757812 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1647.65625 3598.515625 L 1647.65625 3514.453125 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1299.921875 3741.289062 C 1406.367188 3714.414062 1526.445312 3670.3125 1647.65625 3598.515625 L 1817.8125 3696.757812 L 1299.921875 3995.742188 L 925.117188 3779.375 C 925.117188 3779.375 997.34375 3786.71875 1110.234375 3774.960938 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1180.15625 3765.820312 C 1193.007812 3763.789062 1206.210938 3761.484375 1219.765625 3758.945312 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1817.8125 3696.757812 L 1817.8125 3612.695312 "/>
+    </g>
+  </g>
+</svg></div><div class="opt-title">Heizkörper und Fußbodenheizung</div></div>
           </div>
           <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
         </div>
