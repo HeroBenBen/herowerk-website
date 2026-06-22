@@ -462,6 +462,8 @@
       margin-top: auto; padding-top: 24px;
       border-top: 1px solid var(--g200);
     }
+    /* Symmetrie (GF 22.06.): einzelner Button = volle Kachelbreite, nicht halb-links */
+    .step-nav:has(> button:only-child) { grid-template-columns: 1fr; }
     .btn-back {
       display: flex; align-items: center; justify-content: center; gap: 8px;
       width: 100%; min-height: 54px;

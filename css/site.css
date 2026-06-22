@@ -1481,42 +1481,60 @@ section {
 }
 
 .wizard-nav {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  /* Symmetrie (GF 22.06.): 1 Button = volle Breite, 2 = gleich geteilt. */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
   gap: 12px;
   /* Buttons an den unteren Rand des Schritts verankern (Höhen-Ruhe), min. 24px Abstand */
   margin-top: auto;
   padding-top: 24px;
 }
+.wizard-nav:has(> :only-child) {
+  grid-template-columns: 1fr;
+}
 .wizard-btn-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: transparent;
   border: 1px solid var(--g400);
   color: var(--g300);
-  padding: 12px 28px;
-  border-radius: 8px;
+  min-height: 54px;
+  padding: 14px 28px;
+  border-radius: 10px;
   font-size: 15px;
+  font-weight: 700;
   cursor: pointer;
   transition: 0.2s;
 }
 .wizard-btn-back:hover {
   border-color: var(--white);
   color: var(--white);
+  transform: translateY(-1px);
 }
 .wizard-btn-next {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: var(--green);
   color: var(--nacht);
-  padding: 12px 32px;
-  border-radius: 8px;
+  min-height: 54px;
+  padding: 14px 32px;
+  border-radius: 10px;
   font-family: 'Barlow', sans-serif;
   font-weight: 700;
   font-size: 16px;
   border: none;
   cursor: pointer;
   transition: 0.2s;
+  /* etwas mehr Tiefe (GF 22.06.) */
+  box-shadow: 0 4px 18px rgba(183, 217, 0, 0.3);
 }
 .wizard-btn-next:hover {
   background: var(--green-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(183, 217, 0, 0.42);
 }
 
 .wizard-result {
