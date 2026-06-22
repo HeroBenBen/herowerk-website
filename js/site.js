@@ -2128,6 +2128,18 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// ===== STARTSEITEN-PLZ -> DIMENSIONIERUNGS-WIZARD (Schritt 1) =====
+// Der Hero "Jetzt starten" fuehrt zum Rechner (/dimensionierung) und gibt die PLZ mit.
+// Wir nutzen die bestehende checkPlz-Logik (kein Duplikat): vorbefuellen + "Weiter" aktivieren.
+document.addEventListener('DOMContentLoaded', () => {
+  const wzPlz = document.getElementById('wzPlz');
+  if (!wzPlz || typeof checkPlz !== 'function') return;
+  const plz = (new URLSearchParams(window.location.search).get('plz') || '').replace(/[^0-9]/g, '');
+  if (plz.length !== 5) return;
+  wzPlz.value = plz;
+  checkPlz(wzPlz);
+});
+
 // ===== FÖRDERRECHNER-VORBEFÜLLUNG AUS DIMENSIONIERUNGS-ASSISTENT =====
 // "Weiter zur Förderung" speichert die Wizard-Werte in sessionStorage und navigiert nach
 // /foerderung. Hier rekonstruieren wir die nötigen Globals und nutzen die bestehende
