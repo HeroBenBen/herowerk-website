@@ -707,7 +707,7 @@ function renderBrandCard(key, label, brand, bedarf) {
     ${head}
     <div class="wiz-brand-satz"><div class="fr-satz" style="font-size:40px;">ab ${formatEuro(brand.eigenanteil)}</div><div class="fr-label" style="margin-bottom:0;">geschätzter Eigenanteil nach max. Förderung (70 %)*</div></div>
     ${brand.eigenanteilProklima ? `<div class="wiz-brand-proklima" style="margin:6px 0 2px;font-size:13px;color:var(--green);">proKlima möglich: ab ${formatEuro(brand.eigenanteilProklima)}</div>` : ''}
-    <div class="fr-row"><span>Empfohlenes Modell</span><span class="fr-val">${brand.modell}</span></div>
+    <div class="fr-row"><span>Empfohlenes Modell</span><span class="fr-val">${modellZweizeilig(brand.modell)}</span></div>
     <div class="fr-row"><span>Deckt deinen Bedarf</span><span class="fr-val">${formatKw(bedarf)} kW${brand.kaskade ? ' · Kaskade' : ''} ✓</span></div>
     <div class="fr-row"><span>Brutto-Richtpreis vor Förderung</span><span class="fr-val">ab ${formatEuro(brand.brutto)}</span></div>
   </button>`;
@@ -718,8 +718,21 @@ function wizSelectMarke(key) {
   if (wizServerResult) renderWizServerResult(wizServerResult);
 }
 
+function modellZweizeilig(m) {
+  var s = String(m == null ? '' : m).trim();
+  var match = s.match(/^(\d+\s*[×x]\s*)?(Wolf|Vaillant)\s+(.+)$/);
+  if (!match) return s;
+  return (
+    '<span style="display:block;">' +
+    (match[1] || '') +
+    match[2] +
+    '</span><span style="display:block;">' +
+    match[3] +
+    '</span>'
+  );
+}
 function formatEuro(value) {
-  return Math.round(Number(value) || 0).toLocaleString('de-DE') + ' €';
+  return Math.round(Number(value) || 0).toLocaleString('de-DE') + String.fromCharCode(160) + '€';
 }
 function formatKw(value) {
   return Number(value || 0).toLocaleString('de-DE', {
