@@ -276,9 +276,16 @@ nav.scrolled {
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
     animation: btnShimmer 2.5s ease-in-out infinite;
   }
-  /* Platz für Bottom Bar */
+  /* Platz für Bottom Bar — skaliert mit Notch-Sicherheitszone (statt fixem 76px) */
   body {
-    padding-bottom: 76px;
+    padding-bottom: calc(74px + max(10px, env(safe-area-inset-bottom)));
+  }
+  /* Funnel-Seiten (Rechner) haben eigene Navigation → redundanten fixen Banner ausblenden */
+  body.page-funnel .mobile-bottom-bar {
+    display: none;
+  }
+  body.page-funnel {
+    padding-bottom: 0;
   }
 }
 
@@ -360,6 +367,41 @@ nav.scrolled {
   gap: 12px;
   flex-wrap: wrap;
   margin-bottom: 32px;
+}
+/* Lade-Animation Rechner (foerderSatzKfw / frZuschuss): pulsierende Punkte statt statischem "..." */
+.calc-dots {
+  display: inline-flex;
+  gap: 0.28em;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.calc-dots i {
+  width: 0.2em;
+  height: 0.2em;
+  min-width: 7px;
+  min-height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.3;
+  animation: calcDots 1s infinite ease-in-out;
+}
+.calc-dots i:nth-child(2) {
+  animation-delay: 0.18s;
+}
+.calc-dots i:nth-child(3) {
+  animation-delay: 0.36s;
+}
+@keyframes calcDots {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-0.22em);
+  }
 }
 @keyframes btnShimmer {
   0% {
@@ -1235,7 +1277,7 @@ section {
 
 /* ══ WIZARD (Dimensionierungsrechner) ══ */
 .wizard-section {
-  background: var(--nacht);
+  background: var(--schiefer);
   position: relative;
   overflow: hidden;
 }
@@ -1265,6 +1307,11 @@ section {
   max-width: 760px;
   margin: 0 auto;
 }
+/* Beim Schritt-Wechsel die Kachel-Oberkante klar unter der fixen Nav anlegen (GF 22.06.).
+   ID-Selektor, damit er die globale div[id]-Regel (80px) sicher überschreibt. */
+#wizCard {
+  scroll-margin-top: 96px;
+}
 .wizard-progress {
   display: flex;
   gap: 4px;
@@ -1290,7 +1337,8 @@ section {
   animation: fadeIn 0.3s;
 }
 .wizard-step.active {
-  display: block;
+  display: flex;
+  flex-direction: column;
 }
 @keyframes fadeIn {
   from {
@@ -1300,6 +1348,13 @@ section {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Desktop/Tablet: Mindesthöhe je Schritt, damit der Wizard zwischen Fragen nicht springt */
+@media (min-width: 769px) {
+  .wizard-step {
+    min-height: 340px;
   }
 }
 
@@ -1316,62 +1371,183 @@ section {
 }
 
 .wizard-options {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 12px;
 }
 .wizard-option {
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(255, 255, 255, 0.12);
-  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  background: var(--color-surface-secondary);
+  border: 2px solid var(--color-border-subtle);
+  border-radius: 14px;
   padding: 20px;
   cursor: pointer;
-  transition: all 0.2s;
-  text-align: center;
+  transition:
+    border-color 0.18s,
+    background 0.18s,
+    box-shadow 0.18s,
+    transform 0.12s;
+  text-align: left;
 }
 
-#wzHeizung .wizard-option {
+.wizard-option .opt-body {
+  flex: 1;
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 #wzHeizung .opt-bonus {
-  margin-top: auto;
-  padding-top: 6px;
+  margin-top: 2px;
+  padding-top: 0;
 }
 .wizard-option:hover {
-  border-color: rgba(183, 217, 0, 0.4);
-  background: rgba(183, 217, 0, 0.05);
+  border-color: var(--green);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--color-shadow);
 }
 .wizard-option.selected {
   border-color: var(--green);
-  background: rgba(183, 217, 0, 0.1);
+  background: rgba(183, 217, 0, 0.12);
+  box-shadow: 0 0 0 3px rgba(183, 217, 0, 0.28);
 }
 .wizard-option .opt-icon {
-  margin-bottom: 10px;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: var(--color-surface-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s;
 }
 .wizard-option .opt-icon svg {
-  width: 44px;
-  height: 44px;
-  stroke: var(--g300);
+  width: 32px;
+  height: 32px;
+  stroke: var(--color-text-secondary);
   stroke-width: 1.2;
   fill: none;
   transition: stroke 0.2s;
 }
+.wizard-option:hover .opt-icon,
+.wizard-option.selected .opt-icon {
+  background: rgba(183, 217, 0, 0.18);
+}
 .wizard-option:hover .opt-icon svg {
-  stroke: var(--green);
+  stroke: var(--color-text-primary);
 }
 .wizard-option.selected .opt-icon svg {
-  stroke: var(--green);
+  stroke: var(--color-text-primary);
 }
 .wizard-option .opt-title {
-  color: var(--white);
+  color: var(--color-text-primary);
+  font-family: 'Barlow', sans-serif;
   font-weight: 700;
   font-size: 16px;
   margin-bottom: 4px;
 }
 .wizard-option .opt-sub {
-  color: var(--g400);
+  color: var(--color-text-secondary);
   font-size: 13px;
+}
+.wizard-option .opt-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.wizard-option .opt-check svg {
+  width: 12px;
+  height: 12px;
+  color: var(--color-accent-primary-text);
+  stroke: var(--color-accent-primary-text);
+}
+.wizard-option.selected .opt-check {
+  opacity: 1;
+}
+#wzRhEnd,
+#wzRhMitte {
+  display: block;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: none;
+  transform: none;
+}
+#wzRhEnd:hover,
+#wzRhMitte:hover {
+  border-color: rgba(183, 217, 0, 0.4);
+  background: rgba(183, 217, 0, 0.05);
+  box-shadow: none;
+  transform: none;
+}
+#wzRhEnd.selected,
+#wzRhMitte.selected {
+  border-color: var(--green);
+  background: rgba(183, 217, 0, 0.1);
+  box-shadow: none;
+}
+#wzRhEnd .opt-icon,
+#wzRhMitte .opt-icon {
+  width: auto;
+  height: auto;
+  margin-bottom: 10px;
+  border-radius: 0;
+  background: transparent;
+  display: block;
+}
+#wzRhEnd .opt-icon svg,
+#wzRhMitte .opt-icon svg {
+  width: 44px;
+  height: 44px;
+  stroke: var(--g300);
+}
+#wzRhEnd:hover .opt-icon,
+#wzRhMitte:hover .opt-icon,
+#wzRhEnd.selected .opt-icon,
+#wzRhMitte.selected .opt-icon {
+  background: transparent;
+}
+#wzRhEnd:hover .opt-icon svg,
+#wzRhMitte:hover .opt-icon svg,
+#wzRhEnd.selected .opt-icon svg,
+#wzRhMitte.selected .opt-icon svg {
+  stroke: var(--green);
+}
+
+/* AE-D: Personenzahl als kompakte Auswahl-Karten (Step 8, Warmwasser = Ja).
+   Gleiches .wizard-option-Muster wie #wzRhEnd, nur mehrspaltiges Zahlen-Raster.
+   Festes 3-Spalten-Grid (kein auto-fit -> kein Ueberpacken bei voller Breite). */
+.wz-person-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.wizard-option.wz-person {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 16px 12px;
+  text-align: center;
+}
+.wizard-option.wz-person .opt-title {
+  font-size: 24px;
+  margin-bottom: 0;
+}
+.wizard-option.wz-person .opt-sub {
+  font-size: 12px;
 }
 
 .wizard-slider-group {
@@ -1409,40 +1585,60 @@ section {
 }
 
 .wizard-nav {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  /* Symmetrie (GF 22.06.): 1 Button = volle Breite, 2 = gleich geteilt. */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
   gap: 12px;
-  margin-top: 24px;
+  /* Buttons an den unteren Rand des Schritts verankern (Höhen-Ruhe), min. 24px Abstand */
+  margin-top: auto;
+  padding-top: 24px;
+}
+.wizard-nav:has(> :only-child) {
+  grid-template-columns: 1fr;
 }
 .wizard-btn-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: transparent;
   border: 1px solid var(--g400);
   color: var(--g300);
-  padding: 12px 28px;
-  border-radius: 8px;
+  min-height: 54px;
+  padding: 14px 28px;
+  border-radius: 10px;
   font-size: 15px;
+  font-weight: 700;
   cursor: pointer;
   transition: 0.2s;
 }
 .wizard-btn-back:hover {
   border-color: var(--white);
   color: var(--white);
+  transform: translateY(-1px);
 }
 .wizard-btn-next {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: var(--green);
   color: var(--nacht);
-  padding: 12px 32px;
-  border-radius: 8px;
+  min-height: 54px;
+  padding: 14px 32px;
+  border-radius: 10px;
   font-family: 'Barlow', sans-serif;
   font-weight: 700;
   font-size: 16px;
   border: none;
   cursor: pointer;
   transition: 0.2s;
+  /* etwas mehr Tiefe (GF 22.06.) */
+  box-shadow: 0 4px 18px rgba(183, 217, 0, 0.3);
 }
 .wizard-btn-next:hover {
   background: var(--green-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(183, 217, 0, 0.42);
 }
 
 .wizard-result {
@@ -1536,16 +1732,19 @@ section {
 }
 .foerder-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr));
   gap: 40px;
   background: rgba(255, 255, 255, 0.03);
   border-radius: 16px;
   padding: 40px;
   border: 1px solid rgba(183, 217, 0, 0.1);
 }
+.foerder-grid > * {
+  min-width: 0;
+}
 .foerder-inputs-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
 }
 .fi-group {
@@ -1559,6 +1758,8 @@ section {
   font-size: 13px;
 }
 .fi-group select {
+  width: 100%;
+  min-width: 0;
   padding: 10px 12px;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -1629,8 +1830,8 @@ section {
 }
 .seg-toggle button {
   flex: 1;
-  padding: 8px 20px;
-  font-size: 14px;
+  padding: 8px 10px;
+  font-size: 13px;
   font-weight: 700;
   border: none;
   cursor: pointer;
@@ -3504,18 +3705,20 @@ footer {
   border-color: var(--color-border-subtle) !important;
 }
 
-/* Förderung light: input fields stay white inside unified light cards. */
+/* Förderung light: input fields stay white inside unified light cards.
+   AE-2-Politur: kraeftigerer Rahmen + dezenter Schatten, damit die weissen Felder
+   sich vom hellen Panel abheben (weiss-auf-weiss ging unter). */
 [data-theme='light'] .foerder-section input,
 [data-theme='light'] .foerder-section select,
 [data-theme='light'] .foerder-section textarea {
   background: var(--color-surface-secondary) !important;
-  border: 1px solid var(--color-border-subtle) !important;
+  border: 1px solid rgba(28, 43, 54, 0.4) !important;
+  box-shadow: 0 2px 5px rgba(28, 43, 54, 0.1) !important;
   color: var(--color-text-primary) !important;
 }
 
 /* Dimensionierung: shared grid width and light card surface. */
-.wizard-section .section-inner,
-.wizard-container {
+.wizard-section .section-inner {
   max-width: 1120px;
   margin-left: auto;
   margin-right: auto;
@@ -3665,6 +3868,24 @@ footer {
     inset 0 1px 0 rgba(255, 255, 255, 0.72),
     0 8px 22px rgba(28, 43, 54, 0.06);
 }
+
+/* ── AE-2-Politur ③: Foerderrechner-Ergebnispanel — Panel = Sand, Effektiv-Box = Weiss (GF-ratifiziert 2026-06-22/23).
+   SCOPED auf .foerder-section, damit die mit dem Dimensionierungsrechner GETEILTE .foerder-result
+   (.wiz-brand-panel/.wiz-selected, js/site.js) unberuehrt bleibt. Theme-sicher (Dark = dunkle Entsprechung). ── */
+/* Dark: warme Sand-Entsprechung statt Gruen-Tint */
+.foerder-section .foerder-result {
+  background: rgba(240, 233, 218, 0.05) !important;
+}
+/* Dark: hellere "weisse" Box, hebt sich vom Panel ab */
+.foerder-section #effektivSatzBox {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+[data-theme='light'] .foerder-section .foerder-result {
+  background: var(--sand) !important; /* Light: Sand #f4f1ea */
+}
+[data-theme='light'] .foerder-section #effektivSatzBox {
+  background: #ffffff !important; /* Light: Weiss */
+}
 [data-theme='light'] .hc-result {
   background: rgba(183, 217, 0, 0.07) !important;
   border: 0 !important;
@@ -3703,6 +3924,15 @@ html[data-theme='light'] .pa-detail-cta .pa-big-price {
   background: rgba(28, 43, 54, 0.04) !important;
   border: 1px solid rgba(28, 43, 54, 0.08);
   box-shadow: inset 0 1px 2px rgba(28, 43, 54, 0.04);
+}
+[data-theme='light'] .wizard-option:not(#wzRhEnd):not(#wzRhMitte) {
+  background-color: var(--color-surface-secondary) !important;
+}
+/* AE-D: Slider-Wert (.ws-val) ist im Dark lime (--green), auf hellem Karton aber nur ~1,6:1.
+   Im Light den etablierten Akzent-auf-Hell-Satz nutzen (#4f6000 = 6,99:1), wie .fr-satz/.hc-result-value.
+   Geteilt ueber alle verbleibenden Slider (Flaeche, Verbrauch) - gleiche, korrekte Behandlung. */
+[data-theme='light'] .wizard-slider-group label .ws-val {
+  color: var(--color-accent-on-light);
 }
 [data-theme='light'] .seg-toggle button {
   color: var(--color-text-secondary) !important;
@@ -4016,5 +4246,72 @@ html[data-theme='light'] .section-tag {
     animation: none !important;
     transition: none !important;
     transform: none !important;
+  }
+}
+
+/* ===== Dimensionierungs-Rechner: Ergebnis im Foerderrechner-Design (C22, 2026-06-19) ===== */
+.wiz-result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 560px) {
+  .wiz-result-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.wiz-brand-panel {
+  padding: 20px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.wiz-brand-panel:hover {
+  border-color: var(--green);
+}
+.foerder-result.wiz-selected {
+  border: 2px solid var(--green) !important;
+}
+[data-theme='light'] .foerder-result.wiz-selected {
+  border: 2px solid var(--green) !important;
+}
+.wiz-brand-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
+  margin-bottom: 14px;
+}
+.wiz-brand-logo {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-text-primary);
+}
+.wiz-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--green);
+  color: var(--color-accent-primary-text);
+  border-radius: 999px;
+  padding: 3px 11px;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.wiz-brand-satz {
+  text-align: center;
+  margin-bottom: 14px;
+}
+.wiz-result-shell {
+  display: block;
+  padding: 24px;
+}
+@media (max-width: 560px) {
+  .wiz-result-shell {
+    padding: 16px;
   }
 }

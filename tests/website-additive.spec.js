@@ -10,17 +10,22 @@ test('@smoke Theme-Toggle setzt Light- und Dark-Mode per URL/LocalStorage', asyn
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
 });
 
-test('@smoke Hersteller-Vorauswahl zeigt Wolf-Minimum und Vaillant-Panel', async ({ page }) => {
+test('@smoke Hersteller-Vorauswahl zeigt Wolf- und Vaillant-Karten im gemeinsamen Panel', async ({
+  page,
+}) => {
   await page.goto('/preise.html?theme=dark');
-  await expect(page.locator('#wolfMinEigen')).toContainText('8.925');
+  // Drift-fest: prueft, dass die Live-Preis-Verdrahtung (action=preise, Single Source)
+  // einen echten Eigenanteil rendert — nicht den "ab … Eigenanteil*"-Platzhalter. Kein
+  // hartkodierter Sheet-Preis (der bei jeder Preisaenderung driftet).
+  await expect(page.locator('#wolfMinEigen')).toContainText(/ab [\d.]+ € Eigenanteil/);
   await page.locator('#manufacturerVaillant').click();
-  await expect(page.locator('#vaillantPricePanel')).toBeVisible();
-  await expect(page.locator('#vaillantPricePanel')).toContainText('Preise auf Anfrage');
+  await expect(page.locator('#paCards .pa-card')).toHaveCount(5);
+  await expect(page.locator('#paCards')).toContainText('Vaillant aroTHERM plus');
   await page.locator('#manufacturerWolf').click();
   await expect(page.locator('#paCards .pa-card')).toHaveCount(5);
 });
 
-test('@smoke Funnel sendet HubSpot-Form-Payload mit UTM-Feldern (Mock)', async ({ page }) => {
+test('@smoke Funnel sendet HubSpot-Form-Payload (Standard-Properties, Mock)', async ({ page }) => {
   /** @type {{ fields: Array<{ name: string, value: string }> } | undefined} */
   let submitted;
   await page.route(
@@ -51,12 +56,17 @@ test('@smoke Funnel sendet HubSpot-Form-Payload mit UTM-Feldern (Mock)', async (
   await expect(page.locator('#successStep')).toBeVisible();
   if (!submitted) throw new Error('HubSpot mock submit was not captured');
   const fields = Object.fromEntries(submitted.fields.map((field) => [field.name, field.value]));
-  expect(fields.vorname).toBe('Test');
-  expect(fields.plz).toBe('30159');
-  expect(fields.utm_source).toBe('playwright');
-  expect(fields.utm_medium).toBe('smoke');
-  expect(fields.utm_campaign).toBe('t1-11');
+  // Ist-Mapping (C24-Lead-Fix): der Funnel sendet HubSpot-Standard-Properties
+  // firstname/zip (nicht die alten Formularnamen vorname/plz).
+  expect(fields.firstname).toBe('Test');
+  expect(fields.zip).toBe('30159');
   expect(fields.interesse).toBe('Wärmepumpe');
+  // UTM-Lead-Attribution bewusst ZURÜCKGESTELLT (Benjamin-Entscheid 2026-06-21, Option A):
+  // Das HubSpot-Funnel-Formular 023b1ead… hat keine utm_*-Properties, daher sendet
+  // buildHubSpotPayload() KEINE UTM-Felder (Tracking-Strang nicht live; vgl. URL-Query oben,
+  // die bewusst NICHT in den Payload durchgereicht wird). Attribution kommt später nativ mit
+  // Sales Hub Pro. Backlog: utm_*-Property-Setup im Formular + Payload, DANN Asserts wieder
+  // aufnehmen. Bis dahin KEINE utm_*-Asserts (sonst CI-Drift wie vor C26).
 });
 
 for (const path of [

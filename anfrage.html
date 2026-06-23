@@ -258,7 +258,6 @@
     .answer-grid {
       display: grid;
       grid-template-columns: 1fr;
-      max-width: 560px;
       gap: 12px;
       margin-bottom: 28px;
     }
@@ -266,55 +265,55 @@
     .answer-grid.cols-1 { grid-template-columns: 1fr; }
 
     .answer-card {
-      background: var(--bg);
-      border: 2px solid var(--g200);
-      border-radius: var(--radius);
-      padding: 20px 18px;
+      background: var(--color-surface-secondary);
+      border: 2px solid var(--color-border-subtle);
+      border-radius: 14px;
+      padding: 20px;
       cursor: pointer;
-      transition: border-color 0.18s, background 0.18s, transform 0.12s;
-      display: flex; align-items: center; gap: 14px;
+      transition: border-color 0.18s, background 0.18s, box-shadow 0.18s, transform 0.12s;
+      display: flex; align-items: center; gap: 16px;
       text-align: left;
       -webkit-user-select: none; user-select: none;
     }
     .answer-card:has(.answer-card-icon) { min-height: 104px; }
     .answer-card:hover {
       border-color: var(--green);
-      background: var(--green-light);
-      transform: translateY(-1px);
+      background: var(--color-surface-secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--color-shadow);
     }
     .answer-card.selected {
-      border-color: var(--schiefer);
-      background: #eef6b8;
-      box-shadow: 0 0 0 4px rgba(33,48,53,0.18), inset 4px 0 0 var(--green);
+      border-color: var(--green);
+      background: rgba(183,217,0,0.12);
+      box-shadow: 0 0 0 3px rgba(183,217,0,0.28);
     }
     .answer-card-icon {
-      flex-shrink: 0; width: 60px; height: 60px;
+      flex-shrink: 0; width: clamp(80px, 22vw, 112px); height: clamp(80px, 22vw, 112px);
       display: flex; align-items: center; justify-content: center;
-      background: var(--g100); border-radius: 14px;
+      background: var(--color-surface-tertiary); border-radius: 18px;
       transition: background 0.2s;
     }
     .answer-card-icon svg {
-      width: 38px; height: 38px; stroke: var(--g500);
+      width: clamp(50px, 14vw, 70px); height: clamp(50px, 14vw, 70px); stroke: var(--color-text-secondary);
       fill: none; transition: stroke 0.2s;
     }
     .answer-card-icon svg * {
       stroke-width: 1.7;
       vector-effect: non-scaling-stroke;
     }
-    .answer-card:hover .answer-card-icon { background: rgba(183,217,0,0.14); }
-    .answer-card:hover .answer-card-icon svg { stroke: var(--schiefer); }
+    .answer-card:hover .answer-card-icon { background: rgba(183,217,0,0.18); }
+    .answer-card:hover .answer-card-icon svg { stroke: var(--color-text-primary); }
     .answer-card.selected .answer-card-icon {
-      background: rgba(183,217,0,0.22);
-      box-shadow: 0 0 0 1.5px rgba(183,217,0,0.5);
+      background: rgba(183,217,0,0.18);
     }
-    .answer-card.selected .answer-card-icon svg { stroke: var(--schiefer); }
+    .answer-card.selected .answer-card-icon svg { stroke: var(--color-text-primary); }
     .answer-card-text { flex: 1; }
     .answer-card-label {
       font-family: 'Barlow', sans-serif; font-weight: 700;
-      font-size: 15px; color: var(--schiefer); line-height: 1.3;
+      font-size: 15px; color: var(--color-text-primary); line-height: 1.3;
     }
     .answer-card-sub {
-      font-size: 12px; color: var(--g400); margin-top: 3px; line-height: 1.4;
+      font-size: 12px; color: var(--color-text-secondary); margin-top: 3px; line-height: 1.4;
     }
     .answer-card-check {
       width: 22px; height: 22px; border-radius: 50%;
@@ -322,7 +321,7 @@
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0; opacity: 0; transition: opacity 0.15s;
     }
-    .answer-card-check svg { color: var(--schiefer); width: 12px; height: 12px; }
+    .answer-card-check svg { color: var(--color-accent-primary-text); width: 12px; height: 12px; }
     .answer-card.selected .answer-card-check { opacity: 1; }
 
     /* ══════════ Heizungsalter Toggle (Schritt 3) ══════════ */
@@ -463,6 +462,8 @@
       margin-top: auto; padding-top: 24px;
       border-top: 1px solid var(--g200);
     }
+    /* Symmetrie (GF 22.06.): einzelner Button = volle Kachelbreite, nicht halb-links */
+    .step-nav:has(> button:only-child) { grid-template-columns: 1fr; }
     .btn-back {
       display: flex; align-items: center; justify-content: center; gap: 8px;
       width: 100%; min-height: 54px;
@@ -556,14 +557,11 @@
       background: #22323e; border-color: rgba(255,255,255,0.10); color: #ffffff;
     }
     [data-theme='dark'] .step-question,
-    [data-theme='dark'] .answer-card-label,
     [data-theme='dark'] .form-field label,
     [data-theme='dark'] .success-step h2 { color: #ffffff; }
     [data-theme='dark'] .step-hint,
-    [data-theme='dark'] .answer-card-sub,
     [data-theme='dark'] .funnel-step-counter,
     [data-theme='dark'] .success-detail { color: #d1d5db; }
-    [data-theme='dark'] .answer-card,
     [data-theme='dark'] .form-field input,
     [data-theme='dark'] .form-field select,
     [data-theme='dark'] .form-field textarea {
@@ -582,18 +580,22 @@
     [data-theme='dark'] .alter-select {
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23d1d5db' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
     }
-    [data-theme='dark'] .answer-card:hover { border-color: var(--green); }
-    [data-theme='dark'] .answer-card.selected {
-      border-color: #ffffff;
-      background: rgba(183,217,0,0.18);
-      box-shadow: 0 0 0 4px rgba(255,255,255,0.24), inset 4px 0 0 var(--green);
+    [data-theme='dark'] .answer-card:hover {
+      border-color: var(--green);
+      background: var(--color-surface-secondary);
+      box-shadow: 0 8px 24px var(--color-shadow);
     }
-    [data-theme='dark'] .answer-card-icon { background: rgba(255,255,255,0.06); }
-    [data-theme='dark'] .answer-card-icon svg { stroke: #d1d5db; }
+    [data-theme='dark'] .answer-card.selected {
+      border-color: var(--green);
+      background: rgba(183,217,0,0.12);
+      box-shadow: 0 0 0 3px rgba(183,217,0,0.28);
+    }
+    [data-theme='dark'] .answer-card-icon { background: var(--color-surface-tertiary); }
+    [data-theme='dark'] .answer-card-icon svg { stroke: var(--color-text-secondary); }
     [data-theme='dark'] .answer-card:hover .answer-card-icon,
-    [data-theme='dark'] .answer-card.selected .answer-card-icon { background: rgba(183,217,0,0.22); }
+    [data-theme='dark'] .answer-card.selected .answer-card-icon { background: rgba(183,217,0,0.18); }
     [data-theme='dark'] .answer-card:hover .answer-card-icon svg,
-    [data-theme='dark'] .answer-card.selected .answer-card-icon svg { stroke: #ffffff; }
+    [data-theme='dark'] .answer-card.selected .answer-card-icon svg { stroke: var(--color-text-primary); }
     [data-theme='dark'] .form-field input::placeholder,
     [data-theme='dark'] .plz-input::placeholder,
     [data-theme='dark'] .alter-baujahr-input::placeholder { color: #a0a6ad; }
@@ -776,7 +778,7 @@
         <p class="step-hint">Mehrfachauswahl möglich. Tippe alles an, was passt.</p>
         <div class="answer-grid cols-1">
           <div class="answer-card" data-value="Wärmepumpe" onclick="toggleInteresse(this)">
-            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <g transform="matrix(0.023592,0.000000,0.000000,-0.023592,-18.668141,68.794766)">
     <path vector-effect="non-scaling-stroke" d="M 1692.8125 2133.671875 L 907.03125 2133.671875 C 889.921875 2133.671875 876.054688 2147.578125 876.054688 2164.6875 L 876.054688 2720.039062 C 876.054688 2737.148438 889.921875 2751.015625 907.03125 2751.015625 L 1692.8125 2751.015625 C 1709.921875 2751.015625 1723.789062 2737.148438 1723.789062 2720.039062 L 1723.789062 2164.6875 C 1723.789062 2147.578125 1709.921875 2133.671875 1692.8125 2133.671875 Z M 1692.8125 2133.671875 "/>
     <path vector-effect="non-scaling-stroke" d="M 960.078125 2442.34375 C 960.078125 2561.679688 1056.796875 2658.398438 1176.132812 2658.398438 C 1295.429688 2658.398438 1392.1875 2561.679688 1392.1875 2442.34375 C 1392.1875 2323.046875 1295.429688 2226.289062 1176.132812 2226.289062 C 1056.796875 2226.289062 960.078125 2323.046875 960.078125 2442.34375 Z M 960.078125 2442.34375 "/>
@@ -804,7 +806,7 @@
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
           <div class="answer-card" data-value="Photovoltaik" onclick="toggleInteresse(this)">
-            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <g transform="matrix(0.026128,0.000000,0.000000,-0.026128,-60.575015,40.326699)">
     <path vector-effect="non-scaling-stroke" d="M 2963.789062 1027.304688 C 3030.390625 1047.8125 3078.789062 1109.765625 3078.789062 1183.085938 C 3078.789062 1273.085938 3005.859375 1346.054688 2915.859375 1346.054688 C 2825.859375 1346.054688 2752.890625 1273.085938 2752.890625 1183.085938 "/>
     <path vector-effect="non-scaling-stroke" d="M 3014.726562 861.953125 L 2400.546875 861.953125 L 2499.414062 1183.085938 L 2915.859375 1183.085938 Z M 3014.726562 861.953125 "/>
@@ -827,7 +829,7 @@
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
           <div class="answer-card" data-value="Klimaanlage" onclick="toggleInteresse(this)">
-            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <g transform="matrix(0.018617,0.000000,0.000000,-0.018617,-100.423097,31.908370)">
     <path vector-effect="non-scaling-stroke" d="M 6043.59375 882.851562 C 6043.59375 882.851562 6078.867188 855.585938 6043.59375 800.859375 C 6008.320312 746.171875 6043.59375 718.90625 6043.59375 718.90625 "/>
     <path vector-effect="non-scaling-stroke" d="M 5927.265625 882.851562 C 5927.265625 882.851562 5962.539062 855.585938 5927.265625 800.859375 C 5891.992188 746.171875 5927.265625 718.90625 5927.265625 718.90625 "/>
@@ -1096,7 +1098,7 @@
         <p class="step-hint">Fußbodenheizung ermöglicht niedrigere Vorlauftemperaturen und höhere Effizienz.</p>
         <div class="answer-grid">
           <div class="answer-card" data-value="Heizkörper" onclick="selectAndAdvance(this)">
-            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <g transform="matrix(0.018704,0.000000,0.000000,-0.018704,-12.313582,105.007964)">
     <path vector-effect="non-scaling-stroke" d="M 1669.179688 4649.492188 L 930.664062 4649.492188 C 903.046875 4649.492188 880.664062 4671.914062 880.664062 4699.492188 L 880.664062 5122.5 C 880.664062 5150.117188 903.046875 5172.5 930.664062 5172.5 L 1669.179688 5172.5 C 1696.796875 5172.5 1719.179688 5150.117188 1719.179688 5122.5 L 1719.179688 4699.492188 C 1719.179688 4671.914062 1696.796875 4649.492188 1669.179688 4649.492188 Z M 1669.179688 4649.492188 "/>
     <path vector-effect="non-scaling-stroke" d="M 1000.46875 5090.859375 L 1000.46875 4766.875 C 1000.46875 4747.539062 1016.132812 4731.875 1035.46875 4731.875 "/>
@@ -1123,7 +1125,7 @@
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
           <div class="answer-card" data-value="Fußbodenheizung" onclick="selectAndAdvance(this)">
-            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <g transform="matrix(0.019309,0.000000,0.000000,-0.019309,-13.100317,81.688490)">
     <path vector-effect="non-scaling-stroke" d="M 1338.476562 3591.640625 L 1540.039062 3475.273438 C 1562.109375 3462.539062 1562.109375 3441.835938 1540.039062 3429.0625 C 1517.890625 3416.328125 1482.070312 3416.328125 1459.960938 3429.0625 L 1139.84375 3613.90625 C 1117.773438 3626.640625 1081.914062 3626.640625 1059.84375 3613.90625 C 1037.734375 3601.132812 1037.734375 3580.46875 1059.84375 3567.695312 L 1379.960938 3382.851562 C 1402.03125 3370.117188 1402.03125 3349.414062 1379.960938 3336.640625 C 1357.851562 3323.90625 1322.03125 3323.90625 1299.921875 3336.640625 L 979.804688 3521.484375 C 957.695312 3534.257812 921.875 3534.257812 899.765625 3521.484375 "/>
     <path vector-effect="non-scaling-stroke" d="M 1319.335938 3652.1875 L 996.367188 3465.703125 "/>
@@ -1206,7 +1208,7 @@
         <p class="step-hint" id="step7Hint">Nur Eigentümer oder bevollmächtigte Personen können Förderanträge stellen.</p>
         <div class="answer-grid">
           <div class="answer-card" data-value="Eigentümer: Ja" onclick="selectAndAdvance(this)">
-            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <g transform="matrix(0.008341,0.000000,0.000000,-0.008341,-143.032418,137.139445)">
     <path vector-effect="non-scaling-stroke" d="M 18971.289062 14961.210938 L 18971.289062 15587.382812 L 18472.1875 15587.382812 L 18472.1875 16086.484375 L 17388.59375 16086.484375 L 17388.59375 13920.585938 L 18971.289062 13920.585938 L 18971.289062 14510.3125 "/>
     <path vector-effect="non-scaling-stroke" d="M 18472.1875 16086.484375 L 18971.289062 15587.382812 "/>
@@ -1224,7 +1226,7 @@
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
           <div class="answer-card" data-value="Eigentümer: Nein / Mieter" onclick="selectAndAdvance(this)">
-            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <g transform="matrix(0.006945,0.000000,0.000000,-0.006945,-48.325705,115.447373)">
     <path vector-effect="non-scaling-stroke" d="M 8856.71875 14852.5 L 9501.5625 14204.882812 L 9749.101562 14248.710938 L 9792.890625 14496.289062 L 9066.875 15222.304688 C 9142.304688 15410.898438 9103.671875 15634.414062 8950.976562 15787.109375 C 8746.5625 15991.484375 8415.15625 15991.484375 8210.742188 15787.109375 "/>
     <path vector-effect="non-scaling-stroke" d="M 7985.234375 14459.101562 L 7985.234375 14708.203125 C 7785.3125 14793.90625 7645.273438 14992.382812 7645.273438 15223.710938 C 7645.273438 15533.28125 7896.25 15784.296875 8205.859375 15784.296875 C 8515.429688 15784.296875 8766.40625 15533.28125 8766.40625 15223.710938 C 8766.40625 14992.382812 8626.367188 14793.90625 8426.484375 14708.203125 L 8426.484375 13608.710938 L 8205.859375 13454.414062 L 7985.234375 13608.710938 L 7985.234375 13805.585938 "/>
@@ -1257,7 +1259,7 @@
         <p class="step-hint" id="step8Hint">Für unsere Kapazitätsplanung und deine Förderantragsfrist.</p>
         <div class="answer-grid">
           <div class="answer-card" data-value="Sofort / so schnell wie möglich" onclick="selectAndAdvance(this)">
-            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <g transform="matrix(0.007843,0.000000,0.000000,-0.007843,-15.742647,130.289522)">
     <path vector-effect="non-scaling-stroke" d="M 2262.1875 15081.914062 C 2262.1875 15786.015625 2833.007812 16356.914062 3537.1875 16356.914062 C 4241.328125 16356.914062 4812.1875 15786.015625 4812.1875 15081.914062 C 4812.1875 14377.695312 4241.328125 13806.914062 3537.1875 13806.914062 C 2833.007812 13806.914062 2262.1875 14377.695312 2262.1875 15081.914062 Z M 2262.1875 15081.914062 "/>
     <path vector-effect="non-scaling-stroke" d="M 3537.1875 16090.390625 L 3537.1875 15186.914062 "/>
@@ -1276,7 +1278,7 @@
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
           <div class="answer-card" data-value="In 1–3 Monaten" onclick="selectAndAdvance(this)">
-            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <g transform="matrix(0.009018,0.000000,0.000000,-0.009018,-62.802036,110.145056)">
     <path vector-effect="non-scaling-stroke" d="M 7656.289062 11759.101562 L 7370.507812 11759.101562 C 7287.65625 11759.101562 7220.507812 11691.914062 7220.507812 11609.101562 L 7220.507812 9924.804688 C 7220.507812 9841.953125 7287.65625 9774.804688 7370.507812 9774.804688 L 9219.765625 9774.804688 C 9302.617188 9774.804688 9369.765625 9841.953125 9369.765625 9924.804688 L 9369.765625 11609.101562 C 9369.765625 11691.914062 9302.617188 11759.101562 9219.765625 11759.101562 L 9114.023438 11759.101562 "/>
     <path vector-effect="non-scaling-stroke" d="M 8724.023438 11759.101562 L 8046.289062 11759.101562 "/>
@@ -1302,7 +1304,7 @@
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
           <div class="answer-card" data-value="In 3–6 Monaten" onclick="selectAndAdvance(this)">
-            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <g transform="matrix(0.009018,0.000000,0.000000,-0.009018,-62.802036,110.145056)">
     <path vector-effect="non-scaling-stroke" d="M 7656.289062 11759.101562 L 7370.507812 11759.101562 C 7287.65625 11759.101562 7220.507812 11691.914062 7220.507812 11609.101562 L 7220.507812 9924.804688 C 7220.507812 9841.953125 7287.65625 9774.804688 7370.507812 9774.804688 L 9219.765625 9774.804688 C 9302.617188 9774.804688 9369.765625 9841.953125 9369.765625 9924.804688 L 9369.765625 11609.101562 C 9369.765625 11691.914062 9302.617188 11759.101562 9219.765625 11759.101562 L 9114.023438 11759.101562 "/>
     <path vector-effect="non-scaling-stroke" d="M 8724.023438 11759.101562 L 8046.289062 11759.101562 "/>
@@ -1732,14 +1734,16 @@
   }
 
   function buildHubSpotPayload(data) {
+    // HubSpot-Mapping: Kernfelder auf Standard-Properties (firstname/lastname/phone/zip),
+    // Funnel-Antworten auf die HeroWerk-Custom-Properties. Genau die 14 Felder des
+    // HubSpot-Formulars 023b1ead-7bcd-4eba-ba72-dd1038728721 (Consent via UI-Checkbox).
     const fields = {
-      vorname: data.vorname || '',
-      nachname: data.nachname || '',
+      firstname: data.vorname || '',
+      lastname: data.nachname || '',
       email: data.email || '',
-      telefon: data.telefon || '',
-      plz: answers.plz || '',
+      phone: data.telefon || '',
+      zip: answers.plz || '',
       interesse: (answers.interesse || []).join(';'),
-      dsgvo: data.dsgvo || '',
       gebaeudetyp: answers.step1 || '',
       heizung_aktuell: answers.step2 || '',
       heizungsalter: answers.step3 || '',
@@ -1747,29 +1751,13 @@
       wohnflaeche: answers.step5 || '',
       waermeverteilung: answers.step6 || '',
       eigentuemer: answers.step7 || '',
-      zeitrahmen: answers.step8 || '',
-      utm_source: data.utm_source || '',
-      utm_medium: data.utm_medium || '',
-      utm_campaign: data.utm_campaign || '',
-      utm_term: data.utm_term || '',
-      utm_content: data.utm_content || '',
-      description: [
-        'HeroWerk Funnel Test-/Lead-Submit',
-        'Interesse: ' + ((answers.interesse || []).join(', ') || 'nicht angegeben'),
-        'Gebäude: ' + (answers.step1 || 'nicht angegeben'),
-        'Heizung: ' + (answers.step2 || 'nicht angegeben'),
-        'Heizungsalter: ' + (answers.step3 || 'nicht angegeben'),
-        'Baujahr: ' + (answers.step4 || 'nicht angegeben'),
-        'Wohnfläche: ' + (answers.step5 || 'nicht angegeben'),
-        'Wärmeverteilung: ' + (answers.step6 || 'nicht angegeben'),
-        'Eigentümer: ' + (answers.step7 || 'nicht angegeben'),
-        'Zeitrahmen: ' + (answers.step8 || 'nicht angegeben'),
-        'PLZ: ' + (answers.plz || 'nicht angegeben')
-      ].join('\n')
+      zeitrahmen: answers.step8 || ''
     };
 
     return {
-      fields: Object.entries(fields).map(([name, value]) => ({ name, value: String(value) })),
+      fields: Object.entries(fields)
+        .filter(([, value]) => value !== '' && value != null)
+        .map(([name, value]) => ({ name, value: String(value) })),
       context: {
         pageUri: window.location.href,
         pageName: document.title
@@ -1777,8 +1765,8 @@
       legalConsentOptions: {
         consent: {
           consentToProcess: true,
-          text: 'Einwilligung zur Verarbeitung der Funnel-Daten und Kontaktaufnahme.',
-          communications: [{ value: true, subscriptionTypeId: 999, text: 'Kontaktaufnahme zum Wärmepumpen-Angebot.' }]
+          text: 'Ich stimme der Verarbeitung meiner Daten gemäß der Datenschutzerklärung zu und erteile meine Einwilligung zur Kontaktaufnahme. Die Einwilligung ist jederzeit widerrufbar.',
+          communications: []
         }
       }
     };
@@ -1786,7 +1774,7 @@
 
   async function postToHubSpot(data) {
     const portalId = '148110267';
-    const formId = document.body.dataset.hubspotFormId || new URLSearchParams(window.location.search).get('hs_form_id') || '00000000-0000-0000-0000-000000000000';
+    const formId = document.body.dataset.hubspotFormId || new URLSearchParams(window.location.search).get('hs_form_id') || '023b1ead-7bcd-4eba-ba72-dd1038728721';
     const endpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
     const response = await fetch(endpoint, {
       method: 'POST',
@@ -1815,7 +1803,12 @@
     } catch (error) {
       console.error(error);
       if (submitButton) submitButton.disabled = false;
-      alert('Die Übermittlung ist gerade nicht möglich. Bitte versuche es erneut oder rufe uns direkt an.');
+      // Fallback: Lead nie still verlieren — per E-Mail an HeroWerk, falls HubSpot kurz klemmt.
+      const subject = encodeURIComponent('Wärmepumpen-Anfrage über herowerk.de');
+      const mailBody = encodeURIComponent(
+        `Name: ${data.vorname || ''} ${data.nachname || ''}\nE-Mail: ${data.email || ''}\nTelefon: ${data.telefon || ''}\nPLZ: ${answers.plz || ''}\nInteresse: ${(answers.interesse || []).join(', ')}\n\n(Automatischer Fallback – die Online-Übermittlung war kurz nicht verfügbar.)`
+      );
+      window.location.href = `mailto:info@herowerk.de?subject=${subject}&body=${mailBody}`;
       return;
     }
 
@@ -1828,10 +1821,127 @@
     document.getElementById('stepCounter').textContent = 'Fertig!';
   }
 
+  // ── Lead-Handoff aus dem Dimensionierungs-Assistent (abgespeckte Leadstrecke) ──
+  // Übernimmt die Wizard-Antworten, überspringt die schon beantworteten Schritte und
+  // zeigt nur noch die offenen (Heizungsalter, Eigentümer, Zeitpunkt, Kontakt).
+  function showLeadHandoffBanner() {
+    if (document.getElementById('leadHandoffBanner')) return;
+    const parts = [answers.step1, answers.step2, answers.step3, answers.step4, answers.step5, answers.step6, answers.plz].filter(
+      Boolean,
+    );
+    const firstStep = document.querySelector('.step');
+    if (!firstStep || !firstStep.parentElement) return;
+    const banner = document.createElement('div');
+    banner.id = 'leadHandoffBanner';
+    banner.style.cssText =
+      'background:rgba(183,217,0,0.12);border:1px solid rgba(183,217,0,0.45);border-radius:10px;padding:12px 16px;margin-bottom:18px;font-size:14px;line-height:1.5;';
+    banner.innerHTML =
+      '<strong>Aus deiner Berechnung übernommen.</strong> Nur noch wenige Angaben bis zu deinem Angebot.' +
+      (parts.length ? '<br><span style="opacity:0.8;font-size:13px;">' + parts.join(' · ') + '</span>' : '');
+    firstStep.parentElement.insertBefore(banner, firstStep);
+  }
+
+  function applyLeadHandoff() {
+    let raw = null;
+    try {
+      raw = sessionStorage.getItem('hwLeadPrefill');
+    } catch (e) {
+      return false;
+    }
+    if (!raw) return false;
+    try {
+      sessionStorage.removeItem('hwLeadPrefill');
+    } catch (e) {}
+    let d = null;
+    try {
+      d = JSON.parse(raw);
+    } catch (e) {
+      return false;
+    }
+    if (!d) return false;
+
+    answers.interesse = ['Wärmepumpe'];
+    const gebMap = {
+      efh: 'Einfamilienhaus',
+      dhh: 'Doppelhaushälfte',
+      dh: 'Doppelhaushälfte',
+      rh: 'Reihenhaus',
+      'rh-end': 'Reihenhaus',
+      mfh: 'Mehrfamilienhaus',
+    };
+    const heizMap = {
+      'gas-old': 'Gasheizung',
+      'gas-new': 'Gasheizung',
+      'gas-etage': 'Gasheizung',
+      oel: 'Ölheizung',
+      nachtspeicher: 'Nachtspeicher',
+      sonstige: 'Sonstige Heizung',
+    };
+    const bauMap = {
+      vor1978: 'Vor 1978',
+      '1978-1994': '1978–1994',
+      '1995-2010': '1995–2009',
+      nach2010: 'Ab 2010',
+    };
+    const heizsysMap = { heizkoerper: 'Heizkörper', fussboden: 'Fußbodenheizung' };
+    const flaecheBucket = (n) => {
+      n = Number(n) || 0;
+      if (!n) return null;
+      if (n < 100) return 'Bis 100 m²';
+      if (n < 150) return '100–150 m²';
+      if (n < 200) return '150–200 m²';
+      if (n <= 280) return '200–280 m²';
+      return 'Über 280 m²';
+    };
+
+    if (d.gebaeude && gebMap[d.gebaeude]) answers.step1 = gebMap[d.gebaeude];
+    if (d.heizung && heizMap[d.heizung]) answers.step2 = heizMap[d.heizung];
+    if (d.baujahr && bauMap[d.baujahr]) answers.step4 = bauMap[d.baujahr];
+    const fb = flaecheBucket(d.flaeche);
+    if (fb) answers.step5 = fb;
+    if (d.heizsystem && heizsysMap[d.heizsystem]) answers.step6 = heizsysMap[d.heizsystem];
+    if (d.heizungsalter) answers.step3 = d.heizungsalter;
+
+    let plzApplied = false;
+    if (d.plz && /^\d{5}$/.test(d.plz)) {
+      const plzInput = document.getElementById('plzInput');
+      if (plzInput) {
+        plzInput.value = d.plz;
+        try {
+          validatePlz(plzInput);
+        } catch (e) {}
+      }
+      if (!answers.plz) answers.plz = d.plz;
+      plzApplied = true;
+    }
+
+    window.__wpPfad = true;
+    applyR17PfadContent();
+
+    const full = [0, 9, 1, 2, 3, 4, 5, 6, 7, 8, 10];
+    const prefilled = new Set([0]);
+    if (plzApplied) prefilled.add(9);
+    if (answers.step1) prefilled.add(1);
+    if (answers.step2) prefilled.add(2);
+    if (answers.step4) prefilled.add(4);
+    if (answers.step5) prefilled.add(5);
+    if (answers.step6) prefilled.add(6);
+    if (answers.step3) prefilled.add(3);
+    stepOrder = full.filter((s) => !prefilled.has(s));
+    if (!stepOrder.length) stepOrder = [10];
+    recomputeProgress();
+
+    showLeadHandoffBanner();
+    showStep(stepOrder[0]);
+    return true;
+  }
+
   collectUtmParams();
-  recomputeProgress();
-  applyR17PfadContent();
-  showStep(stepOrder[0]);
+  if (!applyLeadHandoff()) {
+    recomputeProgress();
+    applyR17PfadContent();
+    showStep(stepOrder[0]);
+  }
   prefillPlzFromUrl();
 </script>
 

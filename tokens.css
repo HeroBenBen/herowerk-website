@@ -116,6 +116,36 @@ body {
   border: 1px solid var(--color-border-subtle) !important;
   box-shadow: 0 8px 28px var(--color-shadow);
 }
+/* Dimensionierungs-Ergebnis (GF-Screenshot 2026-06-21): weisse Marken-Karten (Element 3)
+   auf sandfarbener Wanne (.wiz-result-shell, Element 2), im unveraenderten weissen
+   Seiten-Panel (.wizard-container, Element 1 - bleibt). Mehr Tiefe ueber staerkeren
+   Karten-Schatten. Scoped: Foerderrechner (.foerder-result/.foerder-grid OHNE .wiz-*)
+   + /preise (.pa-card) bleiben unberuehrt. */
+[data-theme='light'] .wiz-result-shell {
+  background: var(--color-surface-primary) !important;
+  box-shadow: none !important;
+}
+[data-theme='light'] .wiz-brand-panel {
+  background: var(--color-surface-secondary) !important;
+  box-shadow:
+    0 16px 38px var(--color-shadow),
+    0 4px 10px var(--color-shadow) !important;
+}
+/* Ergebnis-Buttons (GF-Screenshot 2026-06-21): klar als Button erkennbar, erhaben auf der
+   Sand-Wanne. Aeussere Ghost-Buttons (Neu berechnen / Weiter zur Foerderung) weiss; gruener
+   Primaer-CTA behaelt Farbe, bekommt Tiefe. Scoped auf .wiz-result-shell (nur Wizard-Ergebnis). */
+[data-theme='light'] .wiz-result-shell .btn-ghost {
+  background: var(--color-surface-secondary) !important;
+  border: 1px solid var(--color-border-subtle) !important;
+  box-shadow:
+    0 6px 18px var(--color-shadow),
+    0 1px 3px var(--color-shadow) !important;
+}
+[data-theme='light'] .wiz-result-shell .btn-primary {
+  box-shadow:
+    0 6px 18px var(--color-shadow),
+    0 1px 3px var(--color-shadow) !important;
+}
 [data-theme='light'] .pa-detail-inner,
 [data-theme='light'] .pa-detail-arrow {
   background: var(--color-surface-secondary);

@@ -27,7 +27,7 @@
   <link rel="preload" href="tokens.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="tokens.css"></noscript>
 </head>
-<body>
+<body class="page-funnel">
   <!-- NAVIGATION -->
   <nav>
     <div class="nav-inner">
@@ -131,7 +131,7 @@
               <div id="heizungsalterHinweis" style="font-size:12px;margin-top:6px;color:var(--g400);"></div>
             </div>
             <div class="fi-group" id="einkommenGroup">
-              <label>Jahreseinkommen</label>
+              <label>Jahreseinkommen (nur zur Förderprüfung)</label>
               <select id="einkommen">
                 <option value="unter40">unter 40.000 €</option>
                 <option value="ueber40">über 40.000 €</option>
@@ -186,7 +186,7 @@
                 <a href="/dimensionierung" style="display:block;margin-top:8px;font-size:13px;color:var(--green);text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Nicht sicher? → Wärmepumpenbedarf in 60 Sekunden ermitteln</a>
               </div>
               <div id="wpKostenManuell" style="display:none;">
-                <input type="number" id="wpKostenInput" min="10000" max="200000" value="34510" step="100" placeholder="z.B. 35000" style="width:100%;padding:12px 16px;background:var(--charcoal);border:1px solid var(--g600);border-radius:10px;color:var(--white);font-size:16px;" oninput="calculateFoerder()">
+                <input type="text" inputmode="numeric" id="wpKostenInput" value="34.510 €" placeholder="z.B. 35.000 €" style="width:100%;padding:12px 16px;background:var(--charcoal);border:1px solid var(--g600);border-radius:10px;color:var(--white);font-size:16px;" oninput="calculateFoerder()" onblur="formatKostenInput(this)">
                 <div style="font-size:12px;color:var(--g400);margin-top:4px;">Gesamtkosten inkl. Installation und MwSt.</div>
               </div>
             </div>
@@ -212,7 +212,7 @@
           <div class="fr-row"><span>Brutto-Richtpreis</span><span class="fr-val" id="frPreis">ab 34.510 €</span></div>
           <div class="fr-row"><span>Dein Zuschuss</span><span class="fr-val" style="color: var(--green);" id="frZuschuss">-15.950 €</span></div>
           <div class="fr-row fr-total"><span style="font-weight:700; color: var(--white);">Dein Eigenanteil</span><span class="fr-val" style="font-size: 20px; color: var(--green);" id="frEigen">ab 13.050 €</span></div>
-          <div style="margin-top: 24px;"><a href="/anfrage" class="btn-primary" style="width: 100%; justify-content: center;">Jetzt Angebot anfordern</a></div>
+          <div style="margin-top: 24px;"><a href="/anfrage" class="btn-primary" style="width: 100%; justify-content: center;" onclick="hwStageFoerderLead()">Jetzt Angebot anfordern</a></div>
           <div style="color: var(--g400); font-size: 12px; margin-top: 12px;">KfW 458: Förderfähige Kosten je Wohneinheit (1. WE 30.000 €, 2.–6. je 15.000 €, ab 7. je 8.000 €). Klimabonus und Einkommensbonus nur für selbst bewohnte WE. proKlima: zusätzlich bis 1.500 € im Fördergebiet. Alle Preise brutto inkl. 19% MwSt. Unverbindliche Berechnung. Angaben ohne Gewähr.</div>
         </div>
       </div>
@@ -300,7 +300,7 @@
           <h2>Kontakt</h2>
           <p>HeroWerk GmbH</p>
           <p>Region Hannover</p>
-          <p>Tel: 0171 205 888 0</p>
+          <p>Tel: 0176 444 25 001</p>
           <p>info@herowerk.de</p>
         </div>
       </div>

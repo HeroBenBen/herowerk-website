@@ -26,7 +26,7 @@
   <link rel="preload" href="tokens.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="tokens.css"></noscript>
 </head>
-<body>
+<body class="page-funnel">
   <!-- NAVIGATION -->
   <nav>
     <div class="nav-inner">
@@ -71,11 +71,13 @@
     <div class="section-inner">
       <div class="section-tag">In 60 Sekunden zur Empfehlung</div>
       <h1 class="section-title" style="color: var(--white);">Welche Wärmepumpe passt zu deinem Haus?</h1>
-      <p class="section-lead">6 kurze Fragen. Keine Anmeldung. Sofort Ergebnis mit Richtpreis und geschätzter Förderung.</p>
+      <p class="section-lead">8 kurze Fragen. Keine Anmeldung. Sofort Ergebnis mit Richtpreis und geschätzter Förderung.</p>
 
-      <div class="wizard-container">
+      <div class="wizard-container" id="wizCard">
         <div class="wizard-progress" id="wizProgress">
           <div class="wizard-progress-bar active"></div>
+          <div class="wizard-progress-bar"></div>
+          <div class="wizard-progress-bar"></div>
           <div class="wizard-progress-bar"></div>
           <div class="wizard-progress-bar"></div>
           <div class="wizard-progress-bar"></div>
@@ -89,8 +91,8 @@
           <div class="wizard-question">Wie lautet deine Postleitzahl?</div>
           <div class="wizard-hint">Wir prüfen Verfügbarkeit und regionale Fördermöglichkeiten.</div>
           <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;">
-            <div style="flex:1;min-width:200px;max-width:320px;">
-              <input type="text" id="wzPlz" inputmode="numeric" maxlength="5" placeholder="z.B. 30900" style="width:100%;padding:16px 20px;font-size:24px;font-weight:700;font-family:'Barlow',sans-serif;background:var(--charcoal);border:2px solid var(--g500);border-radius:10px;color:var(--white);text-align:center;letter-spacing:4px;outline:none;transition:border-color 0.2s;" oninput="checkPlz(this)" onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--g500)'">
+            <div style="width:100%;">
+              <input type="text" id="wzPlz" inputmode="numeric" maxlength="5" placeholder="z.B. 30900" style="width:100%;padding:16px 20px;font-size:24px;font-weight:700;font-family:'Barlow',sans-serif;background:var(--charcoal);border:2px solid var(--g500);border-radius:10px;color:var(--white);text-align:center;letter-spacing:4px;outline:none;transition:border-color 0.2s;" oninput="checkPlz(this)" onkeydown="if(event.key==='Enter'){event.preventDefault();var b=document.getElementById('wzPlzNext');if(b&&!b.disabled)wizNext();}" onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--g500)'">
               <div id="wzPlzResult" style="margin-top:10px;font-size:14px;min-height:22px;"></div>
             </div>
           </div>
@@ -101,7 +103,7 @@
             </div>
             <p style="font-size:14px;color:var(--white);margin:0;line-height:1.6;">Deine Gemeinde liegt im <strong style="color:var(--bernstein);">proKlima-Fördergebiet</strong>. Bei Erfüllung der Voraussetzungen sind zusätzlich 5% (max. 1.500 €) on top zur KfW-Förderung möglich. Wir prüfen die Eignung bei deinem Vor-Ort-Termin.</p>
           </div>
-          <div class="wizard-nav"><div></div><button class="wizard-btn-next" onclick="wizNext()" id="wzPlzNext" disabled style="opacity:0.4;cursor:not-allowed;">Weiter</button></div>
+          <div class="wizard-nav"><button class="wizard-btn-next" onclick="wizNext()" id="wzPlzNext" disabled style="opacity:0.4;cursor:not-allowed;">Weiter</button></div>
         </div>
 
         <!-- Step 2: Gebäudetyp -->
@@ -109,11 +111,11 @@
           <div class="wizard-question">Was für ein Gebäude hast du?</div>
           <div class="wizard-hint">Der Gebäudetyp bestimmt den Heizleistungsbedarf.</div>
           <div class="wizard-options" id="wzGebaeude">
-            <div class="wizard-option" data-value="efh"><div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M6 24L24 8l18 16"/><path d="M10 22v18h28V22"/><rect x="19" y="30" width="10" height="10"/></svg></div><div class="opt-title">Einfamilienhaus</div><div class="opt-sub">Freistehend</div></div>
-            <div class="wizard-option" data-value="dhh"><div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M4 24L15 14l9 8 9-8 11 10"/><path d="M8 22v18h16V22"/><path d="M24 22v18h16V22"/><path d="M24 22v18" stroke-dasharray="3 2"/><rect x="13" y="30" width="6" height="10"/><rect x="29" y="30" width="6" height="10"/></svg></div><div class="opt-title">Doppelhaushälfte</div><div class="opt-sub">Geteilte Wand</div></div>
-            <div class="wizard-option" data-value="rh" id="wzRhOption"><div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M2 24L10 17l7 5 7-5 7 5 7-5 8 7"/><path d="M5 22v18h10V22"/><path d="M15 22v18h8V22"/><path d="M23 22v18h10V22"/><path d="M33 22v18h10V22"/><rect x="8" y="30" width="4" height="10"/><rect x="17" y="30" width="4" height="10"/><rect x="26" y="30" width="4" height="10"/><rect x="36" y="30" width="4" height="10"/></svg></div><div class="opt-title">Reihenhaus</div><div class="opt-sub">Mittel-/Endhaus</div></div>
-            <div class="wizard-option" data-value="zfh"><div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M6 22L24 8l18 14"/><path d="M10 20v22h28V20"/><path d="M10 31h28"/><rect x="18" y="34" width="12" height="8"/><rect x="18" y="22" width="12" height="7"/></svg></div><div class="opt-title">Zweifamilienhaus</div><div class="opt-sub">2 Wohneinheiten</div></div>
-            <div class="wizard-option" data-value="mfh"><div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M8 42V10h32v32"/><path d="M8 10L24 4l16 6"/><rect x="13" y="15" width="5" height="5"/><rect x="22" y="15" width="5" height="5"/><rect x="31" y="15" width="5" height="5"/><rect x="13" y="24" width="5" height="5"/><rect x="22" y="24" width="5" height="5"/><rect x="31" y="24" width="5" height="5"/><rect x="13" y="33" width="5" height="5"/><rect x="22" y="33" width="5" height="5"/><rect x="31" y="33" width="5" height="5"/></svg></div><div class="opt-title">Mehrfamilienhaus</div><div class="opt-sub">3+ Wohneinheiten</div></div>
+            <div class="wizard-option" data-value="efh"><div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M6 24L24 8l18 16"/><path d="M10 22v18h28V22"/><rect x="19" y="30" width="10" height="10"/></svg></div><span class="opt-body"><div class="opt-title">Einfamilienhaus</div><div class="opt-sub">Freistehend</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="dhh"><div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M4 24L15 14l9 8 9-8 11 10"/><path d="M8 22v18h16V22"/><path d="M24 22v18h16V22"/><path d="M24 22v18" stroke-dasharray="3 2"/><rect x="13" y="30" width="6" height="10"/><rect x="29" y="30" width="6" height="10"/></svg></div><span class="opt-body"><div class="opt-title">Doppelhaushälfte</div><div class="opt-sub">Geteilte Wand</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="rh" id="wzRhOption"><div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M2 24L10 17l7 5 7-5 7 5 7-5 8 7"/><path d="M5 22v18h10V22"/><path d="M15 22v18h8V22"/><path d="M23 22v18h10V22"/><path d="M33 22v18h10V22"/><rect x="8" y="30" width="4" height="10"/><rect x="17" y="30" width="4" height="10"/><rect x="26" y="30" width="4" height="10"/><rect x="36" y="30" width="4" height="10"/></svg></div><span class="opt-body"><div class="opt-title">Reihenhaus</div><div class="opt-sub">Mittel-/Endhaus</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="zfh"><div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M6 22L24 8l18 14"/><path d="M10 20v22h28V20"/><path d="M10 31h28"/><rect x="18" y="34" width="12" height="8"/><rect x="18" y="22" width="12" height="7"/></svg></div><span class="opt-body"><div class="opt-title">Zweifamilienhaus</div><div class="opt-sub">2 Wohneinheiten</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="mfh"><div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M8 42V10h32v32"/><path d="M8 10L24 4l16 6"/><rect x="13" y="15" width="5" height="5"/><rect x="22" y="15" width="5" height="5"/><rect x="31" y="15" width="5" height="5"/><rect x="13" y="24" width="5" height="5"/><rect x="22" y="24" width="5" height="5"/><rect x="31" y="24" width="5" height="5"/><rect x="13" y="33" width="5" height="5"/><rect x="22" y="33" width="5" height="5"/><rect x="31" y="33" width="5" height="5"/></svg></div><span class="opt-body"><div class="opt-title">Mehrfamilienhaus</div><div class="opt-sub">3+ Wohneinheiten</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
           </div>
           <!-- Reihenhaus Unterfrage -->
           <div id="wzRhSub" style="display:none;margin-top:16px;">
@@ -151,10 +153,10 @@
           <div class="wizard-question">Wann wurde dein Haus gebaut?</div>
           <div class="wizard-hint">Das Baujahr beeinflusst den Dämmstandard und damit den Energiebedarf.</div>
           <div class="wizard-options" id="wzBaujahr">
-            <div class="wizard-option" data-value="vor1978"><div class="opt-title">Vor 1978</div><div class="opt-sub">Meist ungedämmt, hoher Energiebedarf</div></div>
-            <div class="wizard-option" data-value="1978-1994"><div class="opt-title">1978 bis 1994</div><div class="opt-sub">Erste Dämmvorschriften, mittlerer Bedarf</div></div>
-            <div class="wizard-option" data-value="1995-2010"><div class="opt-title">1995 bis 2010</div><div class="opt-sub">Gute Dämmung, niedriger Bedarf</div></div>
-            <div class="wizard-option" data-value="nach2010"><div class="opt-title">Nach 2010</div><div class="opt-sub">Sehr gute Dämmung, geringster Bedarf</div></div>
+            <div class="wizard-option" data-value="vor1978"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path vector-effect="non-scaling-stroke" d="M3 21l18 0"/><path vector-effect="non-scaling-stroke" d="M4 21v-11l2.5 -4.5l5.5 -2.5l5.5 2.5l2.5 4.5v11"/><path vector-effect="non-scaling-stroke" d="M10 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path vector-effect="non-scaling-stroke" d="M9 21v-5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v5"/></svg></div><span class="opt-body"><div class="opt-title">Vor 1978</div><div class="opt-sub">Meist ungedämmt, hoher Energiebedarf</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="1978-1994"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path vector-effect="non-scaling-stroke" d="M5 12l-2 0l9 -9l9 9l-2 0"/><path vector-effect="non-scaling-stroke" d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path vector-effect="non-scaling-stroke" d="M10 12h4v4h-4l0 -4"/></svg></div><span class="opt-body"><div class="opt-title">1978 bis 1994</div><div class="opt-sub">Erste Dämmvorschriften, mittlerer Bedarf</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="1995-2010"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path vector-effect="non-scaling-stroke" d="M3 21l18 0"/><path vector-effect="non-scaling-stroke" d="M9 8l1 0"/><path vector-effect="non-scaling-stroke" d="M9 12l1 0"/><path vector-effect="non-scaling-stroke" d="M9 16l1 0"/><path vector-effect="non-scaling-stroke" d="M14 8l1 0"/><path vector-effect="non-scaling-stroke" d="M14 12l1 0"/><path vector-effect="non-scaling-stroke" d="M14 16l1 0"/><path vector-effect="non-scaling-stroke" d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16"/></svg></div><span class="opt-body"><div class="opt-title">1995 bis 2010</div><div class="opt-sub">Gute Dämmung, niedriger Bedarf</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="nach2010"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path vector-effect="non-scaling-stroke" d="M3 21l18 0"/><path vector-effect="non-scaling-stroke" d="M5 21v-14l8 -4v18"/><path vector-effect="non-scaling-stroke" d="M19 21v-10l-6 -4"/><path vector-effect="non-scaling-stroke" d="M9 9l0 .01"/><path vector-effect="non-scaling-stroke" d="M9 12l0 .01"/><path vector-effect="non-scaling-stroke" d="M9 15l0 .01"/><path vector-effect="non-scaling-stroke" d="M9 18l0 .01"/></svg></div><span class="opt-body"><div class="opt-title">Nach 2010</div><div class="opt-sub">Sehr gute Dämmung, geringster Bedarf</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
           </div>
           <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
         </div>
@@ -164,9 +166,9 @@
           <div class="wizard-question">Wurde dein Haus nachträglich saniert?</div>
           <div class="wizard-hint">Sanierte Altbauten brauchen deutlich weniger Heizleistung als unsanierte.</div>
           <div class="wizard-options" id="wzSanierung">
-            <div class="wizard-option" data-value="nein"><div class="opt-title">Nein / Weiß ich nicht</div><div class="opt-sub">Originalzustand, keine wesentlichen Änderungen</div></div>
-            <div class="wizard-option" data-value="teilweise"><div class="opt-title">Teilweise saniert</div><div class="opt-sub">Z. B. neue Fenster oder Dach gedämmt</div></div>
-            <div class="wizard-option" data-value="umfassend"><div class="opt-title">Umfassend saniert</div><div class="opt-sub">Dach, Fassade und Fenster erneuert</div></div>
+            <div class="wizard-option" data-value="nein"><span class="opt-body"><div class="opt-title">Nein / Weiß ich nicht</div><div class="opt-sub">Originalzustand, keine wesentlichen Änderungen</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="teilweise"><span class="opt-body"><div class="opt-title">Teilweise saniert</div><div class="opt-sub">Z. B. neue Fenster oder Dach gedämmt</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="umfassend"><span class="opt-body"><div class="opt-title">Umfassend saniert</div><div class="opt-sub">Dach, Fassade und Fenster erneuert</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
           </div>
           <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
         </div>
@@ -192,23 +194,125 @@
             <p style="font-size:12px;color:var(--g400);margin:0;"><strong>Tipp:</strong> Das Alter findest du auf dem Typenschild oder im letzten Wartungsprotokoll.</p>
           </div>
           <div class="wizard-options" id="wzHeizung">
-            <div class="wizard-option" data-value="gas-old"><div class="opt-title">Gasheizung</div><div class="opt-sub" style="font-size:12px;">20 Jahre oder älter</div><div class="opt-sub opt-bonus" style="color:var(--green);">+20% Klimabonus</div></div>
-            <div class="wizard-option" data-value="gas-new"><div class="opt-title">Gasheizung</div><div class="opt-sub" style="font-size:12px;">Jünger als 20 Jahre</div><div class="opt-sub opt-bonus" style="color:var(--g400);">Kein Klimabonus</div></div>
-            <div class="wizard-option" data-value="oel"><div class="opt-title">Ölheizung</div><div class="opt-sub" style="font-size:12px;color:var(--g400);">Egal wie alt</div><div class="opt-sub opt-bonus" style="color:var(--green);">+20% Klimabonus</div></div>
-            <div class="wizard-option" data-value="nachtspeicher"><div class="opt-title">Nachtspeicher</div><div class="opt-sub" style="font-size:12px;color:var(--g400);">Egal wie alt</div><div class="opt-sub opt-bonus" style="color:var(--green);">+20% Klimabonus</div></div>
-            <div class="wizard-option" data-value="gas-etage"><div class="opt-title">Gas-Etagenheizung</div><div class="opt-sub" style="font-size:12px;">Einzelne Gasthermen je Wohnung</div><div class="opt-sub opt-bonus" style="color:var(--green);">+20% Klimabonus</div></div>
-            <div class="wizard-option" data-value="sonstige"><div class="opt-title">Sonstige / Weiß nicht</div><div class="opt-sub opt-bonus" style="color:var(--g400);">Kein Klimabonus</div></div>
+            <div class="wizard-option" data-value="gas-old"><div class="opt-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><!-- Therme Gehäuse --><rect x="9" y="7" width="30" height="32" rx="3"/><rect x="13" y="11" width="13" height="9" rx="2"/><!-- Flamme --><path d="M18 20c0-2 1.5-3 1.5-5 .8 1.5 2.5 3 2.5 5"/><!-- Regler --><circle cx="33" cy="14" r="2.5"/><circle cx="33" cy="22" r="2.5"/><!-- Verbindungsrohre unten --><line x1="17" y1="39" x2="17" y2="43"/><line x1="31" y1="39" x2="31" y2="43"/><line x1="9" y1="39" x2="39" y2="39"/></svg></div><div class="opt-body"><div class="opt-title">Gasheizung</div><div class="opt-sub" style="font-size:12px;">20 Jahre oder älter</div><div class="opt-sub opt-bonus" style="color:var(--green);">+20% Klimabonus</div></div><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="gas-new"><div class="opt-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><!-- Therme Gehäuse --><rect x="9" y="7" width="30" height="32" rx="3"/><rect x="13" y="11" width="13" height="9" rx="2"/><!-- Flamme --><path d="M18 20c0-2 1.5-3 1.5-5 .8 1.5 2.5 3 2.5 5"/><!-- Regler --><circle cx="33" cy="14" r="2.5"/><circle cx="33" cy="22" r="2.5"/><!-- Verbindungsrohre unten --><line x1="17" y1="39" x2="17" y2="43"/><line x1="31" y1="39" x2="31" y2="43"/><line x1="9" y1="39" x2="39" y2="39"/></svg></div><div class="opt-body"><div class="opt-title">Gasheizung</div><div class="opt-sub" style="font-size:12px;">Jünger als 20 Jahre</div><div class="opt-sub opt-bonus" style="color:var(--g400);">Kein Klimabonus</div></div><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="oel"><div class="opt-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><!-- Öltank liegend --><rect x="5" y="16" width="38" height="22" rx="11"/><line x1="43" y1="27" x2="48" y2="27"/><!-- Füllstutzen oben --><rect x="19" y="10" width="6" height="7" rx="1"/><line x1="22" y1="10" x2="22" y2="7"/><!-- Öl-Tropfen Füllstand --><path d="M18 31c0-3 2-5 2-7 1 2 2 4 2 7a2 2 0 01-4 0z"/></svg></div><div class="opt-body"><div class="opt-title">Ölheizung</div><div class="opt-sub" style="font-size:12px;color:var(--g400);">Egal wie alt</div><div class="opt-sub opt-bonus" style="color:var(--green);">+20% Klimabonus</div></div><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="nachtspeicher"><div class="opt-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><polyline points="26 6 18 26 26 26 22 42 30 22 22 22 26 6"/></svg></div><div class="opt-body"><div class="opt-title">Nachtspeicher</div><div class="opt-sub" style="font-size:12px;color:var(--g400);">Egal wie alt</div><div class="opt-sub opt-bonus" style="color:var(--green);">+20% Klimabonus</div></div><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="gas-etage"><div class="opt-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><!-- Therme Gehäuse --><rect x="9" y="7" width="30" height="32" rx="3"/><rect x="13" y="11" width="13" height="9" rx="2"/><!-- Flamme --><path d="M18 20c0-2 1.5-3 1.5-5 .8 1.5 2.5 3 2.5 5"/><!-- Regler --><circle cx="33" cy="14" r="2.5"/><circle cx="33" cy="22" r="2.5"/><!-- Verbindungsrohre unten --><line x1="17" y1="39" x2="17" y2="43"/><line x1="31" y1="39" x2="31" y2="43"/><line x1="9" y1="39" x2="39" y2="39"/></svg></div><div class="opt-body"><div class="opt-title">Gas-Etagenheizung</div><div class="opt-sub" style="font-size:12px;">Einzelne Gasthermen je Wohnung</div><div class="opt-sub opt-bonus" style="color:var(--green);">+20% Klimabonus</div></div><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="sonstige"><div class="opt-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="18"/><path d="M18 19a6 6 0 1 1 9 5.2c-2 1.2-3 2.5-3 4.8"/><line x1="24" y1="35" x2="24" y2="35.5"/></svg></div><div class="opt-body"><div class="opt-title">Sonstige / Weiß nicht</div><div class="opt-sub opt-bonus" style="color:var(--g400);">Kein Klimabonus</div></div><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
           </div>
           <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
         </div>
 
-        <!-- Step 7: Verbrauch -->
+        <!-- Step 7: Heizsystem -->
         <div class="wizard-step" data-step="7">
+          <div class="wizard-question">Wie wird heute geheizt?</div>
+          <div class="wizard-hint">Das beeinflusst die passende Vorlauftemperatur und damit die Geräteauswahl.</div>
+          <div class="wizard-options" id="wzHeizsystem">
+            <div class="wizard-option" data-value="heizkoerper"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(0.018704,0.000000,0.000000,-0.018704,-12.313582,105.007964)">
+    <path vector-effect="non-scaling-stroke" d="M 1669.179688 4649.492188 L 930.664062 4649.492188 C 903.046875 4649.492188 880.664062 4671.914062 880.664062 4699.492188 L 880.664062 5122.5 C 880.664062 5150.117188 903.046875 5172.5 930.664062 5172.5 L 1669.179688 5172.5 C 1696.796875 5172.5 1719.179688 5150.117188 1719.179688 5122.5 L 1719.179688 4699.492188 C 1719.179688 4671.914062 1696.796875 4649.492188 1669.179688 4649.492188 Z M 1669.179688 4649.492188 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1000.46875 5090.859375 L 1000.46875 4766.875 C 1000.46875 4747.539062 1016.132812 4731.875 1035.46875 4731.875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1120.234375 5090.859375 L 1120.234375 4766.875 C 1120.234375 4747.539062 1135.898438 4731.875 1155.234375 4731.875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1240.039062 5090.859375 L 1240.039062 4766.875 C 1240.039062 4747.539062 1255.703125 4731.875 1275.039062 4731.875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1359.804688 5090.859375 L 1359.804688 4766.875 C 1359.804688 4747.539062 1375.46875 4731.875 1394.804688 4731.875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1479.609375 5090.859375 L 1479.609375 4766.875 C 1479.609375 4747.539062 1495.273438 4731.875 1514.609375 4731.875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1599.375 5090.859375 L 1599.375 4766.875 C 1599.375 4747.539062 1615.078125 4731.875 1634.375 4731.875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 880.664062 4705.039062 L 810.664062 4705.039062 L 810.664062 4773.945312 L 880.664062 4773.945312 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1719.179688 4773.945312 L 1789.179688 4773.945312 L 1789.179688 4705.039062 L 1719.179688 4705.039062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 880.664062 5060.859375 L 855.664062 5060.859375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1744.179688 5060.859375 L 1719.179688 5060.859375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 845.664062 4705.039062 L 845.664062 4577.539062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1754.179688 4705.039062 L 1754.179688 4577.539062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 765.273438 4577.539062 L 1834.570312 4577.539062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1384.335938 5367.773438 C 1384.335938 5367.773438 1409.960938 5347.96875 1384.335938 5308.28125 C 1358.75 5268.59375 1384.335938 5248.789062 1384.335938 5248.789062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1299.921875 5367.773438 C 1299.921875 5367.773438 1325.507812 5347.96875 1299.921875 5308.28125 C 1274.335938 5268.59375 1299.921875 5248.789062 1299.921875 5248.789062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1215.507812 5367.773438 C 1215.507812 5367.773438 1241.09375 5347.96875 1215.507812 5308.28125 C 1189.882812 5268.59375 1215.507812 5248.789062 1215.507812 5248.789062 "/>
+  </g>
+</svg></div><span class="opt-body"><div class="opt-title">Heizkörper</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="fussboden"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(0.019309,0.000000,0.000000,-0.019309,-13.100317,81.688490)">
+    <path vector-effect="non-scaling-stroke" d="M 1338.476562 3591.640625 L 1540.039062 3475.273438 C 1562.109375 3462.539062 1562.109375 3441.835938 1540.039062 3429.0625 C 1517.890625 3416.328125 1482.070312 3416.328125 1459.960938 3429.0625 L 1139.84375 3613.90625 C 1117.773438 3626.640625 1081.914062 3626.640625 1059.84375 3613.90625 C 1037.734375 3601.132812 1037.734375 3580.46875 1059.84375 3567.695312 L 1379.960938 3382.851562 C 1402.03125 3370.117188 1402.03125 3349.414062 1379.960938 3336.640625 C 1357.851562 3323.90625 1322.03125 3323.90625 1299.921875 3336.640625 L 979.804688 3521.484375 C 957.695312 3534.257812 921.875 3534.257812 899.765625 3521.484375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1319.335938 3652.1875 L 996.367188 3465.703125 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1451.796875 3609.179688 L 1099.84375 3405.976562 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1569.101562 3557.382812 L 1203.359375 3346.210938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1738.828125 3567.109375 L 1817.8125 3521.484375 L 1299.921875 3222.460938 L 782.03125 3521.484375 L 1080.3125 3693.710938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1817.8125 3696.757812 L 1299.921875 3995.742188 L 925.117188 3779.375 L 925.117188 3695.3125 C 925.117188 3695.3125 1281.210938 3731.640625 1647.65625 3514.453125 L 1817.8125 3612.695312 Z M 1817.8125 3696.757812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1647.65625 3598.515625 L 1647.65625 3514.453125 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1299.921875 3741.289062 C 1406.367188 3714.414062 1526.445312 3670.3125 1647.65625 3598.515625 L 1817.8125 3696.757812 L 1299.921875 3995.742188 L 925.117188 3779.375 C 925.117188 3779.375 997.34375 3786.71875 1110.234375 3774.960938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1180.15625 3765.820312 C 1193.007812 3763.789062 1206.210938 3761.484375 1219.765625 3758.945312 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1817.8125 3696.757812 L 1817.8125 3612.695312 "/>
+  </g>
+</svg></div><span class="opt-body"><div class="opt-title">Fußbodenheizung</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="heizkoerper"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="translate(12,6.2) scale(0.56) translate(-12.0002,-13.8256)">
+    <g transform="matrix(0.018704,0,0,-0.018704,-12.313582,105.007964)">
+      <path vector-effect="non-scaling-stroke" d="M 1669.179688 4649.492188 L 930.664062 4649.492188 C 903.046875 4649.492188 880.664062 4671.914062 880.664062 4699.492188 L 880.664062 5122.5 C 880.664062 5150.117188 903.046875 5172.5 930.664062 5172.5 L 1669.179688 5172.5 C 1696.796875 5172.5 1719.179688 5150.117188 1719.179688 5122.5 L 1719.179688 4699.492188 C 1719.179688 4671.914062 1696.796875 4649.492188 1669.179688 4649.492188 Z M 1669.179688 4649.492188 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1000.46875 5090.859375 L 1000.46875 4766.875 C 1000.46875 4747.539062 1016.132812 4731.875 1035.46875 4731.875 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1120.234375 5090.859375 L 1120.234375 4766.875 C 1120.234375 4747.539062 1135.898438 4731.875 1155.234375 4731.875 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1240.039062 5090.859375 L 1240.039062 4766.875 C 1240.039062 4747.539062 1255.703125 4731.875 1275.039062 4731.875 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1359.804688 5090.859375 L 1359.804688 4766.875 C 1359.804688 4747.539062 1375.46875 4731.875 1394.804688 4731.875 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1479.609375 5090.859375 L 1479.609375 4766.875 C 1479.609375 4747.539062 1495.273438 4731.875 1514.609375 4731.875 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1599.375 5090.859375 L 1599.375 4766.875 C 1599.375 4747.539062 1615.078125 4731.875 1634.375 4731.875 "/>
+      <path vector-effect="non-scaling-stroke" d="M 880.664062 4705.039062 L 810.664062 4705.039062 L 810.664062 4773.945312 L 880.664062 4773.945312 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1719.179688 4773.945312 L 1789.179688 4773.945312 L 1789.179688 4705.039062 L 1719.179688 4705.039062 "/>
+      <path vector-effect="non-scaling-stroke" d="M 880.664062 5060.859375 L 855.664062 5060.859375 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1744.179688 5060.859375 L 1719.179688 5060.859375 "/>
+      <path vector-effect="non-scaling-stroke" d="M 845.664062 4705.039062 L 845.664062 4577.539062 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1754.179688 4705.039062 L 1754.179688 4577.539062 "/>
+      <path vector-effect="non-scaling-stroke" d="M 765.273438 4577.539062 L 1834.570312 4577.539062 "/>
+    </g>
+  </g>
+  <g transform="translate(12,16.4) scale(0.5) translate(-11.9999,-12.0003)">
+    <g transform="matrix(0.019309,0,0,-0.019309,-13.100317,81.688490)">
+      <path vector-effect="non-scaling-stroke" d="M 1338.476562 3591.640625 L 1540.039062 3475.273438 C 1562.109375 3462.539062 1562.109375 3441.835938 1540.039062 3429.0625 C 1517.890625 3416.328125 1482.070312 3416.328125 1459.960938 3429.0625 L 1139.84375 3613.90625 C 1117.773438 3626.640625 1081.914062 3626.640625 1059.84375 3613.90625 C 1037.734375 3601.132812 1037.734375 3580.46875 1059.84375 3567.695312 L 1379.960938 3382.851562 C 1402.03125 3370.117188 1402.03125 3349.414062 1379.960938 3336.640625 C 1357.851562 3323.90625 1322.03125 3323.90625 1299.921875 3336.640625 L 979.804688 3521.484375 C 957.695312 3534.257812 921.875 3534.257812 899.765625 3521.484375 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1319.335938 3652.1875 L 996.367188 3465.703125 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1451.796875 3609.179688 L 1099.84375 3405.976562 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1569.101562 3557.382812 L 1203.359375 3346.210938 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1738.828125 3567.109375 L 1817.8125 3521.484375 L 1299.921875 3222.460938 L 782.03125 3521.484375 L 1080.3125 3693.710938 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1817.8125 3696.757812 L 1299.921875 3995.742188 L 925.117188 3779.375 L 925.117188 3695.3125 C 925.117188 3695.3125 1281.210938 3731.640625 1647.65625 3514.453125 L 1817.8125 3612.695312 Z M 1817.8125 3696.757812 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1647.65625 3598.515625 L 1647.65625 3514.453125 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1299.921875 3741.289062 C 1406.367188 3714.414062 1526.445312 3670.3125 1647.65625 3598.515625 L 1817.8125 3696.757812 L 1299.921875 3995.742188 L 925.117188 3779.375 C 925.117188 3779.375 997.34375 3786.71875 1110.234375 3774.960938 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1180.15625 3765.820312 C 1193.007812 3763.789062 1206.210938 3761.484375 1219.765625 3758.945312 "/>
+      <path vector-effect="non-scaling-stroke" d="M 1817.8125 3696.757812 L 1817.8125 3612.695312 "/>
+    </g>
+  </g>
+</svg></div><span class="opt-body"><div class="opt-title">Heizkörper und Fußbodenheizung</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+          </div>
+          <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
+        </div>
+
+        <!-- Step 8: Warmwasser -->
+        <div class="wizard-step" data-step="8">
+          <div class="wizard-question">Soll die Wärmepumpe auch das Warmwasser machen?</div>
+          <div class="wizard-hint">Bei Ja rechnen wir serverseitig mit einem Warmwasser-Zuschlag.</div>
+          <div class="wizard-options" id="wzWarmwasser">
+            <div class="wizard-option" data-value="ja"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><g transform="matrix(0.027484,0,0,-0.027484,-110.121960,73.168608)"><path vector-effect="non-scaling-stroke" d="M 4481.054688 2388.046875 L 4481.054688 2453.515625 C 4481.054688 2471.71875 4466.210938 2486.523438 4448.046875 2486.523438 L 4185.585938 2486.523438 "/><path vector-effect="non-scaling-stroke" d="M 4194.453125 2556.523438 L 4448.046875 2556.523438 C 4504.84375 2556.523438 4551.054688 2510.3125 4551.054688 2453.515625 L 4551.054688 2388.046875 "/><path vector-effect="non-scaling-stroke" d="M 4575.585938 2328.085938 L 4575.585938 2388.046875 L 4452.695312 2388.046875 L 4452.695312 2328.085938 "/><path vector-effect="non-scaling-stroke" d="M 4697.34375 2189.335938 L 4681.367188 2300.273438 C 4679.0625 2316.25 4665.390625 2328.085938 4649.257812 2328.085938 L 4379.0625 2328.085938 C 4362.929688 2328.085938 4349.21875 2316.25 4346.914062 2300.273438 L 4330.9375 2189.335938 "/><path vector-effect="non-scaling-stroke" d="M 4140.976562 2466.601562 C 4174.0625 2466.601562 4200.9375 2493.4375 4200.9375 2526.523438 L 4200.9375 2529.53125 C 4200.9375 2562.617188 4174.0625 2589.453125 4140.976562 2589.453125 Z M 4140.976562 2466.601562 "/><path vector-effect="non-scaling-stroke" d="M 4374.765625 2129.101562 L 4374.765625 2099.882812 "/><path vector-effect="non-scaling-stroke" d="M 4374.765625 2010.039062 L 4374.765625 1980.820312 "/><path vector-effect="non-scaling-stroke" d="M 4374.765625 1891.015625 L 4374.765625 1861.757812 "/><path vector-effect="non-scaling-stroke" d="M 4467.695312 2129.101562 L 4467.695312 2099.882812 "/><path vector-effect="non-scaling-stroke" d="M 4467.695312 2010.039062 L 4467.695312 1980.820312 "/><path vector-effect="non-scaling-stroke" d="M 4467.695312 1891.015625 L 4467.695312 1861.757812 "/><path vector-effect="non-scaling-stroke" d="M 4560.625 2129.101562 L 4560.625 2099.882812 "/><path vector-effect="non-scaling-stroke" d="M 4560.625 2010.039062 L 4560.625 1980.820312 "/><path vector-effect="non-scaling-stroke" d="M 4560.625 1891.015625 L 4560.625 1861.757812 "/><path vector-effect="non-scaling-stroke" d="M 4653.554688 2129.101562 L 4653.554688 2099.882812 "/><path vector-effect="non-scaling-stroke" d="M 4653.554688 2010.039062 L 4653.554688 1980.820312 "/><path vector-effect="non-scaling-stroke" d="M 4653.554688 1891.015625 L 4653.554688 1861.757812 "/><path vector-effect="non-scaling-stroke" d="M 4278.710938 2189.335938 L 4745.78125 2189.335938 "/><path vector-effect="non-scaling-stroke" d="M 4467.695312 2258.710938 L 4687.34375 2258.710938 "/></g></svg></div><span class="opt-body"><div class="opt-title">Ja</div><div class="opt-sub">Heizung und Warmwasser über Wärmepumpe</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="nein"><div class="opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect vector-effect="non-scaling-stroke" x="4" y="18" width="16" height="3" rx="1"/><path vector-effect="non-scaling-stroke" d="M8 15c-1.2 -1 -1.2 -2.5 0 -3.5s1.2 -2.5 0 -3.5"/><path vector-effect="non-scaling-stroke" d="M12 15c-1.2 -1 -1.2 -2.5 0 -3.5s1.2 -2.5 0 -3.5"/><path vector-effect="non-scaling-stroke" d="M16 15c-1.2 -1 -1.2 -2.5 0 -3.5s1.2 -2.5 0 -3.5"/></svg></div><span class="opt-body"><div class="opt-title">Nein</div><div class="opt-sub">Nur Raumheizung</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+          </div>
+          <!-- Warmwasser = Ja: Personenzahl als Auswahl-Karten (VDI 4645 - WW-Bedarf skaliert mit Personen, +0,25 kW/Person) -->
+          <div id="wzPersonen" style="display:none;margin-top:16px;">
+            <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:10px;">Wie viele Personen leben im Haushalt?</div>
+            <div class="wz-person-grid" id="wzPersonenOpts" role="group" aria-label="Personen im Haushalt">
+              <div class="wizard-option wz-person" data-value="1"><span class="opt-title">1</span><span class="opt-sub">Person</span></div>
+              <div class="wizard-option wz-person" data-value="2"><span class="opt-title">2</span><span class="opt-sub">Personen</span></div>
+              <div class="wizard-option wz-person" data-value="3"><span class="opt-title">3</span><span class="opt-sub">Personen</span></div>
+              <div class="wizard-option wz-person" data-value="4"><span class="opt-title">4</span><span class="opt-sub">Personen</span></div>
+              <div class="wizard-option wz-person" data-value="5"><span class="opt-title">5</span><span class="opt-sub">Personen</span></div>
+              <div class="wizard-option wz-person" data-value="6"><span class="opt-title">6+</span><span class="opt-sub">Personen</span></div>
+            </div>
+            <div style="font-size:12px;color:var(--g400);margin-top:8px;">Der Warmwasser-Bedarf richtet sich nach der Personenzahl, nicht nach der Wohnfläche.</div>
+          </div>
+          <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()" id="wzWwNext">Weiter</button></div>
+        </div>
+
+        <!-- Step 9: Verbrauch -->
+        <div class="wizard-step" data-step="9">
           <div class="wizard-question">Kennst du deinen Jahresverbrauch?</div>
           <div class="wizard-hint">Steht auf der letzten Jahresabrechnung. Wenn nicht, schätzen wir anhand deiner Angaben.</div>
           <div class="wizard-options" id="wzVerbrauch">
-            <div class="wizard-option" data-value="known"><div class="opt-title">Ich kenne meinen Jahresverbrauch</div><div class="opt-sub">Eingabe in kWh, m³ oder Liter</div></div>
-            <div class="wizard-option" data-value="unknown"><div class="opt-title">Weiß ich nicht</div><div class="opt-sub">Wir schätzen anhand deiner Angaben</div></div>
+            <div class="wizard-option" data-value="known"><span class="opt-body"><div class="opt-title">Ich kenne meinen Jahresverbrauch</div><div class="opt-sub">Eingabe in kWh, m³ oder Liter</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="unknown"><span class="opt-body"><div class="opt-title">Weiß ich nicht</div><div class="opt-sub">Wir schätzen anhand deiner Angaben</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
           </div>
           <div id="wzVerbrauchInput" style="display:none; margin-top: 20px;">
             <div style="display:flex;gap:8px;margin-bottom:16px;">
@@ -280,7 +384,7 @@
           <h2>Kontakt</h2>
           <p>HeroWerk GmbH</p>
           <p>Region Hannover</p>
-          <p>Tel: 0171 205 888 0</p>
+          <p>Tel: 0176 444 25 001</p>
           <p>info@herowerk.de</p>
         </div>
       </div>
