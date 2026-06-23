@@ -288,13 +288,13 @@
       box-shadow: 0 0 0 3px rgba(183,217,0,0.28);
     }
     .answer-card-icon {
-      flex-shrink: 0; width: 56px; height: 56px;
+      flex-shrink: 0; width: clamp(80px, 22vw, 112px); height: clamp(80px, 22vw, 112px);
       display: flex; align-items: center; justify-content: center;
-      background: var(--color-surface-tertiary); border-radius: 14px;
+      background: var(--color-surface-tertiary); border-radius: 18px;
       transition: background 0.2s;
     }
     .answer-card-icon svg {
-      width: 32px; height: 32px; stroke: var(--color-text-secondary);
+      width: clamp(50px, 14vw, 70px); height: clamp(50px, 14vw, 70px); stroke: var(--color-text-secondary);
       fill: none; transition: stroke 0.2s;
     }
     .answer-card-icon svg * {
