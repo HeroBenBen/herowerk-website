@@ -1526,6 +1526,30 @@ section {
   stroke: var(--green);
 }
 
+/* AE-D: Personenzahl als kompakte Auswahl-Karten (Step 8, Warmwasser = Ja).
+   Gleiches .wizard-option-Muster wie #wzRhEnd, nur mehrspaltiges Zahlen-Raster.
+   Festes 3-Spalten-Grid (kein auto-fit -> kein Ueberpacken bei voller Breite). */
+.wz-person-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.wizard-option.wz-person {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 16px 12px;
+  text-align: center;
+}
+.wizard-option.wz-person .opt-title {
+  font-size: 24px;
+  margin-bottom: 0;
+}
+.wizard-option.wz-person .opt-sub {
+  font-size: 12px;
+}
+
 .wizard-slider-group {
   max-width: 100%;
 }
@@ -3903,6 +3927,12 @@ html[data-theme='light'] .pa-detail-cta .pa-big-price {
 }
 [data-theme='light'] .wizard-option:not(#wzRhEnd):not(#wzRhMitte) {
   background-color: var(--color-surface-secondary) !important;
+}
+/* AE-D: Slider-Wert (.ws-val) ist im Dark lime (--green), auf hellem Karton aber nur ~1,6:1.
+   Im Light den etablierten Akzent-auf-Hell-Satz nutzen (#4f6000 = 6,99:1), wie .fr-satz/.hc-result-value.
+   Geteilt ueber alle verbleibenden Slider (Flaeche, Verbrauch) - gleiche, korrekte Behandlung. */
+[data-theme='light'] .wizard-slider-group label .ws-val {
+  color: var(--color-accent-on-light);
 }
 [data-theme='light'] .seg-toggle button {
   color: var(--color-text-secondary) !important;

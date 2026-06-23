@@ -287,15 +287,28 @@ document.querySelectorAll('.wizard-options').forEach((group) => {
         }
       }
 
-      // Warmwasser = Ja: Personenzahl erfragen (Steckergeraet-Logik) und Auto-Advance unterdruecken,
-      // bis der Kunde die Personenzahl gesetzt und "Weiter" geklickt hat. Bei "Nein" Block ausblenden.
+      // Warmwasser = Ja: Personenzahl als Pflicht-Auswahl erfragen und Auto-Advance unterdruecken,
+      // bis der Kunde eine Personenzahl-Karte gewaehlt hat (Muster wie #wzRhEnd). Bei "Nein" Block aus.
       const persBlock = document.getElementById('wzPersonen');
       if (persBlock && group.id === 'wzWarmwasser') {
+        const wwNext = document.getElementById('wzWwNext');
         if (opt.dataset.value === 'ja') {
           persBlock.style.display = 'block';
-          return; // nicht auto-advancen — Personenzahl + Weiter abwarten
+          // "Weiter" sperren, bis eine Personenzahl-Karte gewaehlt ist (kein Default 3).
+          const personGewaehlt = !!document.querySelector('#wzPersonenOpts .wz-person.selected');
+          if (wwNext) {
+            wwNext.disabled = !personGewaehlt;
+            wwNext.style.opacity = personGewaehlt ? '1' : '0.4';
+            wwNext.style.cursor = personGewaehlt ? 'pointer' : 'not-allowed';
+          }
+          return; // nicht auto-advancen — Personenzahl-Auswahl + Weiter abwarten
         }
         persBlock.style.display = 'none';
+        if (wwNext) {
+          wwNext.disabled = false;
+          wwNext.style.opacity = '1';
+          wwNext.style.cursor = 'pointer';
+        }
       }
 
       // Auto-Advance: determine which step this option belongs to
@@ -341,10 +354,24 @@ document.getElementById('wzFlaeche')?.addEventListener('input', (e) => {
   document.getElementById('wzFlaeVal').textContent = e.target.value + ' m²';
 });
 
-// Personen slider (Warmwasser-Zuschlag, nur bei Warmwasser = Ja sichtbar)
-document.getElementById('wzPersonenSlider')?.addEventListener('input', (e) => {
-  document.getElementById('wzPersonenVal').textContent =
-    e.target.value + (e.target.value === '1' ? ' Person' : ' Personen');
+// Personenzahl: Auswahl-Karten (ersetzt Slider, AE-D). Pflicht-Auswahl ohne Default;
+// erst nach Klick wird "Weiter" aktiv (Muster wie #wzRhEnd). Statischer Auswahl-Zustand
+// (kein Blinken, WCAG 2.3.1). scrollIntoView haelt Auswahl + "Weiter" sichtbar.
+document.querySelectorAll('#wzPersonenOpts .wz-person').forEach((card) => {
+  card.addEventListener('click', () => {
+    document
+      .querySelectorAll('#wzPersonenOpts .wz-person')
+      .forEach((c) => c.classList.remove('selected'));
+    card.classList.add('selected');
+    wizData.personen = parseInt(card.dataset.value, 10) || wizData.personen;
+    const wwNext = document.getElementById('wzWwNext');
+    if (wwNext) {
+      wwNext.disabled = false;
+      wwNext.style.opacity = '1';
+      wwNext.style.cursor = 'pointer';
+    }
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
 });
 
 // Verbrauch toggle
@@ -487,9 +514,10 @@ function wizNext() {
   if (stepNum === 7)
     wizData.heizsystem = currentStep.querySelector('.selected')?.dataset.value || 'heizkoerper';
   if (stepNum === 8) {
-    wizData.warmwasser = currentStep.querySelector('.selected')?.dataset.value || 'ja';
-    wizData.personen =
-      parseInt(document.getElementById('wzPersonenSlider')?.value, 10) || wizData.personen;
+    // Warmwasser nur aus der Ja/Nein-Gruppe lesen (Personenzahl-Karten sind eine zweite
+    // .selected-Gruppe im selben Schritt); personen wird beim Karten-Klick gesetzt.
+    wizData.warmwasser =
+      currentStep.querySelector('#wzWarmwasser .selected')?.dataset.value || 'ja';
   }
 
   // Next step
