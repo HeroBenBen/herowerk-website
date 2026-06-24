@@ -197,6 +197,18 @@ function renderPlzFeedback(result) {
   return { text: '', cls: '' };
 }
 
+function setWizardNextDisabled(button, disabled) {
+  if (!button) return;
+  button.disabled = disabled;
+  button.classList.toggle('is-disabled', disabled);
+}
+
+function showFoerderSlot(element, visible) {
+  if (!element) return;
+  element.classList.toggle('is-visible', visible);
+  element.setAttribute('aria-hidden', visible ? 'false' : 'true');
+}
+
 function checkPlz(input) {
   const val = input.value.replace(/\D/g, '').slice(0, 5);
   input.value = val;
@@ -207,9 +219,7 @@ function checkPlz(input) {
   if (val.length < 5) {
     resultEl.innerHTML = '';
     proklimaEl.style.display = 'none';
-    nextBtn.disabled = true;
-    nextBtn.style.opacity = '0.4';
-    nextBtn.style.cursor = 'not-allowed';
+    setWizardNextDisabled(nextBtn, true);
     return;
   }
 
@@ -226,9 +236,7 @@ function checkPlz(input) {
       '</span>';
     proklimaEl.style.display = isProklima ? 'block' : 'none';
     wizData.gemeinde = gemeinde;
-    nextBtn.disabled = false;
-    nextBtn.style.opacity = '1';
-    nextBtn.style.cursor = 'pointer';
+    setWizardNextDisabled(nextBtn, false);
   } else if (val.startsWith('3') || val.startsWith('29') || val.startsWith('31')) {
     // Erweitertes Einzugsgebiet — Verfügbarkeit prüfen
     resultEl.innerHTML =
@@ -238,18 +246,14 @@ function checkPlz(input) {
       ' liegt möglicherweise in unserem Einzugsgebiet. Wir prüfen die Verfügbarkeit</span>';
     proklimaEl.style.display = 'none';
     wizData.gemeinde = 'sonstige';
-    nextBtn.disabled = false;
-    nextBtn.style.opacity = '1';
-    nextBtn.style.cursor = 'pointer';
+    setWizardNextDisabled(nextBtn, false);
   } else {
     resultEl.innerHTML =
       SVG_WARN +
       '<span style="color:var(--bernstein);">Diese PLZ liegt außerhalb unseres Einzugsgebiets (Region Hannover).</span>';
     proklimaEl.style.display = 'none';
     wizData.gemeinde = '';
-    nextBtn.disabled = true;
-    nextBtn.style.opacity = '0.4';
-    nextBtn.style.cursor = 'not-allowed';
+    setWizardNextDisabled(nextBtn, true);
   }
 }
 
@@ -272,16 +276,12 @@ document.querySelectorAll('.wizard-options').forEach((group) => {
         if (opt.dataset.value === 'rh') {
           rhSub.style.display = 'block';
           rhAbsage.style.display = 'none';
-          step2Next.disabled = true;
-          step2Next.style.opacity = '0.4';
-          step2Next.style.cursor = 'not-allowed';
+          setWizardNextDisabled(step2Next, true);
           return; // Don't auto-advance — wait for sub-option
         } else {
           rhSub.style.display = 'none';
           rhAbsage.style.display = 'none';
-          step2Next.disabled = false;
-          step2Next.style.opacity = '1';
-          step2Next.style.cursor = 'pointer';
+          setWizardNextDisabled(step2Next, false);
           document.getElementById('wzRhEnd')?.classList.remove('selected');
           document.getElementById('wzRhMitte')?.classList.remove('selected');
         }
@@ -297,17 +297,13 @@ document.querySelectorAll('.wizard-options').forEach((group) => {
           // "Weiter" sperren, bis eine Personenzahl-Karte gewaehlt ist (kein Default 3).
           const personGewaehlt = !!document.querySelector('#wzPersonenOpts .wz-person.selected');
           if (wwNext) {
-            wwNext.disabled = !personGewaehlt;
-            wwNext.style.opacity = personGewaehlt ? '1' : '0.4';
-            wwNext.style.cursor = personGewaehlt ? 'pointer' : 'not-allowed';
+            setWizardNextDisabled(wwNext, !personGewaehlt);
           }
           return; // nicht auto-advancen — Personenzahl-Auswahl + Weiter abwarten
         }
         persBlock.style.display = 'none';
         if (wwNext) {
-          wwNext.disabled = false;
-          wwNext.style.opacity = '1';
-          wwNext.style.cursor = 'pointer';
+          setWizardNextDisabled(wwNext, false);
         }
       }
 
@@ -335,14 +331,10 @@ document.querySelectorAll('.wizard-options').forEach((group) => {
     const absage = document.getElementById('wzRhAbsage');
     if (id === 'wzRhMitte') {
       absage.style.display = 'block';
-      step2Next.disabled = true;
-      step2Next.style.opacity = '0.4';
-      step2Next.style.cursor = 'not-allowed';
+      setWizardNextDisabled(step2Next, true);
     } else {
       absage.style.display = 'none';
-      step2Next.disabled = false;
-      step2Next.style.opacity = '1';
-      step2Next.style.cursor = 'pointer';
+      setWizardNextDisabled(step2Next, false);
       // Auto-Advance after Endhaus selection
       setTimeout(() => wizNext(), 250);
     }
@@ -366,9 +358,7 @@ document.querySelectorAll('#wzPersonenOpts .wz-person').forEach((card) => {
     wizData.personen = parseInt(card.dataset.value, 10) || wizData.personen;
     const wwNext = document.getElementById('wzWwNext');
     if (wwNext) {
-      wwNext.disabled = false;
-      wwNext.style.opacity = '1';
-      wwNext.style.cursor = 'pointer';
+      setWizardNextDisabled(wwNext, false);
     }
     card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
@@ -652,7 +642,7 @@ function renderWizServerResult(data) {
   document.getElementById('wizResultTitle').textContent =
     `Deine Wärmepumpe für ca. ${formatKw(data.bedarf)} kW Bedarf`;
   document.getElementById('wizResultSub').textContent =
-    `Unverbindliche Ersteinschätzung auf Basis einer vereinfachten Überschlagsrechnung – keine Heizlastberechnung nach DIN EN 12831. ${heizLabel} · ca. Jahresarbeitszahl ${formatKw(data.jaz)} · die genaue Auslegung nach Norm machen wir beim Vor-Ort-Termin.`;
+    `Überschlägige Berechnung. Die exakte Dimensionierung erfolgt über das Hüllflächenverfahren und DIN EN 12831. ${heizLabel} · ca. Jahresarbeitszahl ${formatKw(data.jaz)}.`;
   // Transparenz: spezifische Heizlast (≈ W/m²) + welches Schätzverfahren griff (Verbrauch vs. Fläche).
   // Felder kommen aus dem Backend (dimensionierung_); fehlen sie (alte /exec-Version), bleibt die Zeile leer.
   const wm2 = data.spez_heizlast_wm2
@@ -674,6 +664,10 @@ function renderWizServerResult(data) {
         <button class="btn-ghost" onclick="wizReset()" style="flex:1;min-width:150px;cursor:pointer;">← Neu berechnen</button>
         <a href="/anfrage" class="btn-primary" style="flex:1.5;min-width:220px;text-align:center;">Jetzt kostenlos beraten lassen</a>
         <button class="btn-ghost" onclick="wizToFoerder()" style="flex:1.2;min-width:210px;cursor:pointer;">Weiter zur Förderung →</button>
+      </div>
+      <div class="wiz-din-note">
+        <strong>Überschlägige Berechnung. Die exakte Dimensionierung erfolgt über das Hüllflächenverfahren und DIN EN 12831.</strong>
+        <p>Dieser Rechner gibt dir eine erste Orientierung auf Basis deiner Gebäudedaten und unserer Erfahrungswerte. Die verbindliche Auslegung deiner Wärmepumpe ermitteln wir vor Ort nach dem Hüllflächenverfahren und der Heizlast-Norm DIN EN 12831. Das ist genauer als jede Faustformel und sorgt dafür, dass deine Anlage weder zu groß noch zu klein ausfällt. Diese normgerechte Berechnung verlangt auch die Förderung, wir liefern sie dir also ohnehin mit.</p>
       </div>
       <div style="margin-top:14px;font-size:12px;line-height:1.5;color:var(--g400);">* Eigenanteil für selbstnutzende Eigentümer bei max. KfW-Förderung (70 %): Grund 30 % + Klima 20 % + Einkommen 30 % + Effizienz 5 %. proKlima (5 %, max. 1.500 €) nur im Fördergebiet. Brutto inkl. MwSt. Verbindlicher Preis nach Vor-Ort-Termin.</div>
     </div>`;
@@ -1518,7 +1512,7 @@ function toggleHeizungsalter() {
 
   if (heizung === 'gas') {
     // Gas: Alter abfragen — Klimabonus nur bei ≥20 Jahre
-    gruppe.style.display = 'block';
+    showFoerderSlot(gruppe, true);
     const alter = getHeizungsalter();
     if (alter >= 20) {
       hinweis.innerHTML =
@@ -1534,10 +1528,10 @@ function toggleHeizungsalter() {
         ' Jahre alt. Der Klimageschwindigkeitsbonus (+20%) gilt erst ab 20 Jahren.</span>';
     }
   } else if (heizung === 'oel' || heizung === 'nachtspeicher' || heizung === 'gas-etage') {
-    gruppe.style.display = 'none';
+    showFoerderSlot(gruppe, false);
     hinweis.innerHTML = '';
   } else {
-    gruppe.style.display = 'none';
+    showFoerderSlot(gruppe, false);
     hinweis.innerHTML = '';
   }
   calculateFoerder();
@@ -1556,13 +1550,13 @@ function setKostenModus(modus) {
   const manuellDiv = document.getElementById('wpKostenManuell');
   const btns = document.getElementById('kostenToggle').querySelectorAll('button');
   if (modus === 'manuell') {
-    paketDiv.style.display = 'none';
-    manuellDiv.style.display = 'block';
+    showFoerderSlot(paketDiv, false);
+    showFoerderSlot(manuellDiv, true);
     btns[0].classList.remove('active');
     btns[1].classList.add('active');
   } else {
-    paketDiv.style.display = 'block';
-    manuellDiv.style.display = 'none';
+    showFoerderSlot(paketDiv, true);
+    showFoerderSlot(manuellDiv, false);
     btns[0].classList.add('active');
     btns[1].classList.remove('active');
   }
@@ -1671,7 +1665,7 @@ async function calculateFoerder() {
     console.error('Förderberechnung nicht verfügbar', err);
     document.getElementById('foerderBreakdown').innerHTML =
       '<div style="border:1px solid rgba(232,168,56,0.35);border-radius:12px;padding:14px;color:var(--g300);">Berechnung gerade nicht verfügbar. Bitte Beratung anfragen.</div>';
-    document.getElementById('effektivSatzBox').style.display = 'none';
+    showFoerderSlot(document.getElementById('effektivSatzBox'), false);
     return;
   }
 
@@ -1689,12 +1683,12 @@ async function calculateFoerder() {
 
   const effektivBox = document.getElementById('effektivSatzBox');
   if (effektivSatz < kfwSatz) {
-    effektivBox.style.display = 'block';
+    showFoerderSlot(effektivBox, true);
     document.getElementById('foerderSatzEffektiv').textContent = effektivSatz + '%';
     document.getElementById('effektivErklaerung').textContent =
       'Die serverseitige Berechnung berücksichtigt förderfähige Kosten, Investitionssumme und Wohneinheiten.';
   } else {
-    effektivBox.style.display = 'none';
+    showFoerderSlot(effektivBox, false);
   }
 
   const selbstGroup = document.getElementById('selbstnutzungGroup');
@@ -1735,11 +1729,11 @@ async function calculateFoerder() {
 
   const wegBox = document.getElementById('wegHinweis');
   if (we >= 3) {
-    wegBox.style.display = 'block';
+    showFoerderSlot(wegBox, true);
     wegBox.innerHTML =
       '<div style="color:var(--g300);font-size:13px;line-height:1.6;">Bei einer WEG beantragt jeder Eigentümer individuell. Für die genaue Aufteilung beraten wir dich kostenlos.</div>';
   } else {
-    wegBox.style.display = 'none';
+    showFoerderSlot(wegBox, false);
     wegBox.innerHTML = '';
   }
 }
