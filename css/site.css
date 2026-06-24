@@ -3338,29 +3338,26 @@ section {
 .guide-visual::after {
   display: none;
 }
-.guide-icon,
-.guide-icon-img {
+.blog-card-art .guide-icon,
+.blog-card-art .guide-icon-img {
   position: relative;
   z-index: 1;
   display: block;
-  width: min(68%, 158px);
-  height: auto;
-  max-height: 158px;
+  width: 148px;
+  height: 148px;
+  max-width: calc(100% - 36px);
   object-fit: contain;
 }
-.guide-icon {
+.blog-card-art .guide-icon {
   aspect-ratio: 1;
 }
 .guide-brand-logo {
   position: relative;
   z-index: 1;
   display: block;
-  width: min(72%, 164px);
-  max-height: 72px;
+  width: min(78%, 188px);
+  max-height: 82px;
   object-fit: contain;
-  padding: 10px 12px;
-  border-radius: 8px;
-  background: var(--white);
 }
 .guide-card-meta {
   display: flex;
@@ -3385,25 +3382,22 @@ section {
   z-index: 1;
   display: block;
   width: 100%;
-  max-width: 112px;
-  max-height: 36px;
+  max-width: 128px;
+  max-height: 42px;
   object-fit: contain;
-  padding: 6px 8px;
-  border-radius: 6px;
-  background: var(--white);
 }
 .guide-logo-row {
   position: relative;
   z-index: 1;
   display: grid;
-  width: min(72%, 164px);
-  gap: 8px;
+  width: min(78%, 188px);
+  gap: 14px;
   align-items: center;
   justify-items: center;
 }
 .guide-logo-row-large img {
-  max-width: 140px;
-  max-height: 46px;
+  max-width: 154px;
+  max-height: 52px;
 }
 .ratgeber-hub .blog-card-body {
   display: flex;
@@ -3522,6 +3516,11 @@ section {
   .blog-card-art {
     min-height: 178px;
   }
+  .blog-card-art .guide-icon,
+  .blog-card-art .guide-icon-img {
+    width: 132px;
+    height: 132px;
+  }
   .ratgeber-hub .blog-card-body {
     padding: 20px;
   }
@@ -3538,6 +3537,11 @@ section {
   }
   .blog-card-art {
     min-height: 154px;
+  }
+  .blog-card-art .guide-icon,
+  .blog-card-art .guide-icon-img {
+    width: 118px;
+    height: 118px;
   }
   .ratgeber-hub .blog-card h2 {
     font-size: 18px;
@@ -3581,7 +3585,17 @@ section {
 }
 [data-theme='light'] .guide-brand-logo,
 [data-theme='light'] .guide-logo-row img {
-  box-shadow: 0 8px 20px rgba(28, 43, 54, 0.08);
+  box-shadow: none;
+}
+[data-theme='light'] .guide-logo-kfw,
+[data-theme='light'] .guide-logo-proklima {
+  filter: none;
+}
+[data-theme='dark'] .guide-logo-kfw {
+  filter: brightness(0) invert(1);
+}
+[data-theme='dark'] .guide-logo-proklima {
+  filter: none;
 }
 [data-theme='light'] .ratgeber-side-panel {
   background: var(--color-surface-secondary);
