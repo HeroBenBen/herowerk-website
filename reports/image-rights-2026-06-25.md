@@ -10,6 +10,8 @@ Die WOLF-Bilder sind nicht gemeinfrei, aber nach der öffentlich zugänglichen W
 
 Die übrigen Stock-/Vaillant-nahen Bilder werden als iStock-lizenziert dokumentiert, gestützt auf Benjamins Bestätigung vom 2026-06-25 und den Drive-Quellordner `04_Marketing_Vertrieb/Website/SVG und iStock Bilder/iStock-2026-06-16/`. Für einen externen Legal-Audit sollten die konkrete iStock-Asset-ID und der Kauf-/Downloadbeleg je Live-Bild ergänzt werden.
 
+WOLF-YouTube-Videos dürfen nicht wie Bildmaterial behandelt oder als eigene Videodatei übernommen werden. Tragfähig ist nur die Einbettung öffentlicher, vom Rechteinhaber freigegebener Videos über den offiziellen YouTube-Player, idealerweise mit `youtube-nocookie.com` und vorgeschalteter Consent-/2-Klick-Lösung.
+
 ## Quellenlage
 
 ### WOLF Mediacenter
@@ -53,6 +55,37 @@ Interner Beleg:
 - Vorhandene iStock-Dateien im Drive u. a. `iStock-1648473214.jpg`, `iStock-2152174173.jpg`, `iStock-2274925416.jpg`, `iStock-2022836075.jpg`, `iStock-1648357260.jpg`, `iStock-2173505376.jpg`, `iStock-1437929864.jpg`, `iStock-2207035738.jpg`, `iStock-2180737770.jpg`
 
 Bewertung: Für Website-Werbung grundsätzlich tragfähig, sofern es keine `editorial use only`-Assets sind und die gekauften iStock-Asset-IDs zu den Live-Dateien gematcht werden. Dieser Match ist noch nicht vollständig im Repo dokumentiert.
+
+### WOLF-YouTube-Videos / Embedding
+
+Öffentliche Quellen:
+
+- YouTube Terms of Service: `https://www.youtube.com/t/terms`
+- YouTube-Hilfe zum Einbetten: `https://support.google.com/youtube/answer/171780?hl=de`
+- YouTube Required Minimum Functionality: `https://developers.google.com/youtube/terms/required-minimum-functionality`
+- Referenzseite mit WOLF-Video-Embeds: `https://www.waermepumpen-24.de/waermepumpe/wolf-cha-monoblock-rellingen-hamburg-pinneberg/`
+- Offizieller WOLF-YouTube-Kanal laut oEmbed-Rückgabe: `https://www.youtube.com/@WOLFDeutschland`
+
+Belegt am 2026-06-25:
+
+- YouTube erlaubt das Anzeigen von Videos über den einbettbaren YouTube-Player, solange die YouTube-Bedingungen und geltendes Recht eingehalten werden.
+- YouTube untersagt Download, Reproduktion, Änderung oder sonstige Nutzung von Content außerhalb der ausdrücklich erlaubten Service-Nutzung bzw. ohne separate Zustimmung.
+- Uploadende können die Einbettung deaktivieren. Wird ein Video nicht mehr eingebettet ausgeliefert, darf HeroWerk das nicht technisch umgehen.
+- Der erweiterte Datenschutzmodus nutzt `youtube-nocookie.com`, löst das Datenschutzthema aber nicht vollständig. Für Deutschland/EU ist vor dem iframe eine Consent-/2-Klick-Lösung die belastbare Linie.
+- YouTube-Player dürfen nicht durch Overlays, Frames oder UI-Elemente verdeckt oder verfälscht werden; der Player muss groß genug sein, um die Controls korrekt darzustellen.
+- Die Referenzseite bindet fünf WOLF-Videos per `youtube-nocookie.com/embed/...` ein. Das ist nur Praxisbeleg, keine eigene Rechtequelle.
+
+Technische oEmbed-Prüfung der fünf Referenzvideos:
+
+| Video-ID      | Titel                                                        | Autor laut YouTube-oEmbed | Status                | Auflage/Risiko                                  |
+| ------------- | ------------------------------------------------------------ | ------------------------- | --------------------- | ----------------------------------------------- |
+| `sDXV5hx4MUI` | WOLF CHA Monoblock Luft/Wasser-Wärmepumpe 16/20              | WOLF Heizung und Lüftung  | einbettbar per oEmbed | vor Go-live erneut prüfen; keine Dateiübernahme |
+| `2wF6vhvS3Q0` | CHA-Monoblock Luft/Wasser-Wärmepumpe - WOLF auf der ISH 2021 | WOLF Heizung und Lüftung  | einbettbar per oEmbed | vor Go-live erneut prüfen; keine Dateiübernahme |
+| `JM4iYzw5tEQ` | Die Lautstärke der Wärmepumpe                                | WOLF Heizung und Lüftung  | einbettbar per oEmbed | vor Go-live erneut prüfen; keine Dateiübernahme |
+| `7X3XOz2Jknc` | WOLF TV - Wärmepumpe im Bestand - Gebäude Bj. 1970           | WOLF Heizung und Lüftung  | einbettbar per oEmbed | vor Go-live erneut prüfen; keine Dateiübernahme |
+| `vRGO7xjAENk` | WOLF TV - Wärmepumpe im Bestand - Gebäude Bj. 1990           | WOLF Heizung und Lüftung  | einbettbar per oEmbed | vor Go-live erneut prüfen; keine Dateiübernahme |
+
+Bewertung: Für HeroWerk ist ein Embed-only-Einsatz tragfähig, wenn die Videos vom offiziellen WOLF-Kanal stammen, weiterhin einbettbar sind, über den YouTube-Player geladen werden und keine falsche WOLF-Partnerschaft suggeriert wird. Nicht tragfähig sind MP4-Download, Rehosting, eigene Videoausschnitte, verdeckte Player-Bestandteile, Autoplay ohne klaren Grund oder ein iframe-Laden vor Consent.
 
 ## Asset-Register
 
@@ -99,14 +132,16 @@ Bewertung: Für Website-Werbung grundsätzlich tragfähig, sofern es keine `edit
 
 ## Compliance-Entscheid für Go-live-Bildblock
 
-Controller-Einschätzung: **ready for Controller-Recheck mit zwei Auflagen**.
+Controller-Einschätzung: **ready for Controller-Recheck mit drei Auflagen**.
 
 1. WOLF-Bilder dürfen auf der Website bleiben, wenn die Mediacenter-Bedingungen eingehalten werden. Die Doku darf sie nicht als „gemeinfrei“ oder „bedingungslos free to use“ bezeichnen.
 2. iStock-/Stockbilder dürfen auf der Website bleiben, aber für eine belastbare Legal-Akte muss je Live-Datei der finale Kauf-/Downloadbeleg oder die iStock-Asset-ID ergänzt werden. Der Drive-Ordner und Benjamins Bestätigung reichen für den operativen Recheck, aber nicht für einen externen Rechte-Audit.
+3. WOLF-YouTube-Videos dürfen nur als offizieller YouTube-Embed eingebunden werden. Vor einer Umsetzung braucht die Website eine geprüfte Consent-/2-Klick-Mechanik; ohne diese Mechanik wäre ein sofort ladender YouTube-iframe für den deutschen Go-live nicht belastbar.
 
 Nicht Teil dieser Dokumentation:
 
 - kein Bildtausch
+- keine Video-Einbettung im Code
 - keine Prüfung von Print-/Fahrzeug-/Workwear-Nutzung
 - keine Production-Freigabe
 - keine Aussage zu zukünftigen physischen Werbeträgern; dafür braucht WOLF laut Bedingungen vorab schriftliche Zustimmung
@@ -115,6 +150,11 @@ Nicht Teil dieser Dokumentation:
 
 - WOLF Mediacenter: `https://mediacenter.wolf.eu/de-de`
 - WOLF Downloads/Nutzungsbedingungen: `https://mediacenter.wolf.eu/de-de/downloads/downloads`
+- WOLF YouTube-Kanal: `https://www.youtube.com/@WOLFDeutschland`
+- YouTube Terms of Service: `https://www.youtube.com/t/terms`
+- YouTube-Hilfe: Videos einbetten: `https://support.google.com/youtube/answer/171780?hl=de`
+- YouTube Required Minimum Functionality: `https://developers.google.com/youtube/terms/required-minimum-functionality`
+- Referenzseite WOLF CHA-Monoblock mit YouTube-Embeds: `https://www.waermepumpen-24.de/waermepumpe/wolf-cha-monoblock-rellingen-hamburg-pinneberg/`
 - iStock Lizenz-FAQ: `https://www.istockphoto.com/help/licenses`
 - iStock Content License Agreement: `https://www.istockphoto.com/legal/license-agreement`
 - Interne Vorprüfung: `04_Marketing_Vertrieb/Website/WebDev2/_Klaerungen/2026-06-13_Bild-Lizenz-Audit_HERO.md`
