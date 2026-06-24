@@ -3226,6 +3226,278 @@ section {
   }
 }
 
+/* Ratgeber hub: cluster layout, varied card motifs and sticky guidance rail. */
+.ratgeber-hub {
+  padding-top: 112px;
+}
+.ratgeber-hub .section-inner {
+  max-width: 1180px;
+}
+.ratgeber-intro {
+  max-width: 780px;
+  margin-bottom: 36px;
+}
+.ratgeber-hub .section-lead {
+  margin-bottom: 22px;
+}
+.ratgeber-topic-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.ratgeber-topic-row a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 8px 14px;
+  border: 1px solid rgba(183, 217, 0, 0.22);
+  border-radius: 8px;
+  color: var(--g200);
+  background: rgba(255, 255, 255, 0.04);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+}
+.ratgeber-topic-row a:hover {
+  color: var(--nacht);
+  background: var(--green);
+  border-color: var(--green);
+}
+.ratgeber-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 318px;
+  gap: 34px;
+  align-items: start;
+}
+.ratgeber-main {
+  display: grid;
+  gap: 34px;
+  min-width: 0;
+}
+.ratgeber-cluster {
+  display: grid;
+  gap: 16px;
+}
+.ratgeber-cluster-head {
+  max-width: 720px;
+}
+.ratgeber-cluster-head h2 {
+  color: var(--white);
+  font-size: clamp(23px, 2.5vw, 31px);
+  margin-bottom: 0;
+}
+.ratgeber-hub .blog-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.ratgeber-hub .blog-card {
+  display: grid;
+  grid-template-columns: 138px minmax(0, 1fr);
+  min-height: 188px;
+  border-radius: 10px;
+  cursor: default;
+}
+.ratgeber-hub .blog-card:hover {
+  transform: translateY(-3px);
+}
+.ratgeber-hub .blog-card-featured {
+  grid-template-columns: minmax(270px, 0.92fr) minmax(0, 1fr);
+  min-height: 258px;
+  background:
+    linear-gradient(135deg, rgba(183, 217, 0, 0.1), transparent 42%), rgba(255, 255, 255, 0.04);
+}
+.blog-card-art {
+  min-height: 100%;
+  background:
+    radial-gradient(circle at 28% 18%, rgba(232, 168, 56, 0.22), transparent 34%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(10, 10, 10, 0.12));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+.blog-card-art svg {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  display: block;
+}
+.blog-card-photo {
+  background-size: cover;
+  background-position: center;
+  padding: 0;
+}
+.ratgeber-hub .blog-card-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 20px;
+}
+.ratgeber-hub .blog-card h2 {
+  color: var(--white);
+  font-size: 19px;
+  margin-bottom: 8px;
+  font-weight: 800;
+}
+.ratgeber-hub .blog-card-featured h2 {
+  font-size: clamp(26px, 3vw, 36px);
+}
+.ratgeber-hub .blog-card p {
+  margin-bottom: 0;
+}
+.ratgeber-hub .blog-card .blog-link {
+  margin-top: auto;
+  padding-top: 16px;
+}
+.ratgeber-sidebar {
+  position: sticky;
+  top: 88px;
+  display: grid;
+  gap: 14px;
+}
+.ratgeber-side-panel {
+  border: 1px solid rgba(183, 217, 0, 0.12);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 20px;
+}
+.ratgeber-side-panel h2 {
+  color: var(--white);
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.ratgeber-side-panel p {
+  color: var(--g300);
+  font-size: 14px;
+  line-height: 1.55;
+  margin-bottom: 18px;
+}
+.ratgeber-lead-source {
+  background:
+    linear-gradient(155deg, rgba(183, 217, 0, 0.13), rgba(255, 255, 255, 0.035) 48%),
+    rgba(255, 255, 255, 0.04);
+}
+.ratgeber-lead-source .btn-primary {
+  width: 100%;
+  padding-left: 18px;
+  padding-right: 18px;
+  text-align: center;
+}
+.side-panel-tag {
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.ratgeber-side-nav,
+.ratgeber-next {
+  display: grid;
+}
+.ratgeber-side-nav a,
+.ratgeber-next a {
+  color: var(--g200);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px 0;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+}
+.ratgeber-side-nav a:hover,
+.ratgeber-next a:hover {
+  color: var(--green);
+}
+
+@media (max-width: 1020px) {
+  .ratgeber-layout {
+    grid-template-columns: 1fr;
+  }
+  .ratgeber-sidebar {
+    position: static;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 820px) {
+  .ratgeber-hub {
+    padding-top: 92px;
+  }
+  .ratgeber-hub .blog-grid,
+  .ratgeber-sidebar {
+    grid-template-columns: 1fr;
+  }
+  .ratgeber-hub .blog-card,
+  .ratgeber-hub .blog-card-featured {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .blog-card-art {
+    min-height: 178px;
+  }
+  .ratgeber-hub .blog-card-body {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 520px) {
+  .ratgeber-hub {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  .ratgeber-topic-row a {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+  .blog-card-art {
+    min-height: 154px;
+  }
+  .ratgeber-hub .blog-card h2 {
+    font-size: 18px;
+  }
+  .ratgeber-hub .blog-card-featured h2 {
+    font-size: 26px;
+  }
+}
+
+[data-theme='light'] .ratgeber-topic-row a {
+  color: var(--color-text-primary);
+  background: var(--color-surface-secondary);
+  border-color: rgba(28, 43, 54, 0.16);
+}
+[data-theme='light'] .ratgeber-topic-row a:hover {
+  color: var(--color-accent-primary-text);
+  background: var(--green);
+  border-color: var(--green);
+}
+[data-theme='light'] .ratgeber-hub .blog-card-featured {
+  background:
+    linear-gradient(135deg, rgba(183, 217, 0, 0.14), transparent 46%),
+    var(--color-surface-secondary) !important;
+}
+[data-theme='light'] .blog-card-art {
+  background:
+    radial-gradient(circle at 26% 18%, rgba(232, 168, 56, 0.18), transparent 34%),
+    linear-gradient(135deg, rgba(28, 43, 54, 0.08), rgba(255, 255, 255, 0.86));
+}
+[data-theme='light'] .ratgeber-side-panel {
+  background: var(--color-surface-secondary);
+  border-color: var(--color-border-subtle);
+  box-shadow: 0 10px 30px rgba(28, 43, 54, 0.07);
+}
+[data-theme='light'] .ratgeber-lead-source {
+  background:
+    linear-gradient(155deg, rgba(183, 217, 0, 0.18), rgba(255, 255, 255, 0.8) 52%),
+    var(--color-surface-secondary);
+}
+[data-theme='light'] .ratgeber-side-nav a,
+[data-theme='light'] .ratgeber-next a {
+  color: var(--color-text-primary);
+  border-top-color: var(--color-border-subtle);
+}
+[data-theme='light'] .ratgeber-side-panel p {
+  color: var(--color-text-secondary);
+}
+
 /* ══ FAQ ══ */
 .faq {
   background: var(--schiefer);
