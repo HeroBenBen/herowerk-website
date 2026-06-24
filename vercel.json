@@ -5,7 +5,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; form-action 'self' https://api.hsforms.com; connect-src 'self' https://api.hsforms.com https://*.hubspot.com https://*.hsforms.com https://vitals.vercel-insights.com https://script.google.com https://script.googleusercontent.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' https://*.vercel-insights.com; frame-src 'none'"
+          "value": "default-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; form-action 'self' https://api.hsforms.com; connect-src 'self' https://api.hsforms.com https://*.hubspot.com https://*.hsforms.com https://vitals.vercel-insights.com https://script.google.com https://script.googleusercontent.com; img-src 'self' data: https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://*.vercel-insights.com; frame-src 'none'"
         },
         {
           "key": "X-Content-Type-Options",

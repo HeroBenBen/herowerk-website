@@ -1,0 +1,13 @@
+# Gitleaks-Konfiguration HeroWerk-Website
+# Erweitert das Default-Ruleset und erlaubt die OEFFENTLICHEN HubSpot-Formular-GUIDs.
+# Eine HubSpot-Form-GUID steht im ausgelieferten Formular-HTML und ist KEIN Secret
+# (sie identifiziert nur das oeffentliche Formular im Portal 148110267).
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Oeffentliche HubSpot-Formular-GUIDs (kein Secret)"
+regexes = [
+  '''f4662e0a-f6fd-412f-9cc6-bd3273aee7a0''',
+  '''023b1ead-7bcd-4eba-ba72-dd1038728721''',
+]
