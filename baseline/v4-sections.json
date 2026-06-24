@@ -116,7 +116,17 @@
       "sections": [
         {
           "id": "blog",
-          "words": 147
+          "words": 147,
+          "mode": "card-hub",
+          "requiredCardHrefs": [
+            "/foerderung-jetzt-mitnehmen",
+            "/foerderung-hannover",
+            "/proklima-hannover",
+            "/waermepumpe-altbau",
+            "/gasheizung-tauschen-oder-reparieren",
+            "/baubarkeitspruefung",
+            "/waermepumpe-hannover"
+          ]
         },
         {
           "id": "friends",

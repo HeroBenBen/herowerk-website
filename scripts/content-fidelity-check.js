@@ -2,6 +2,8 @@
 // Job 6 — Content-Fidelity-Check gegen v4-Baseline (Pipeline Abschnitt G).
 // Section-Regel: <section id> primär, H2-Fallback, FAQ separat (pro faq-item).
 // Fail bei > 30% Wort-Abweichung pro Section oder fehlender Section.
+// Ausnahme: Card-Hubs wie ratgeber.html#blog prüfen Pflicht-Card-Links und Zielseiten,
+// erlauben aber additive neue Cards.
 // Modus --generate: erzeugt baseline/v4-sections.json aus den PAGES.
 // Quelle Website: index.html ist byte-identisch zu HeroWerk_Website_v4.html
 // (verifiziert Tag-1a-Report 2026-06-11).
@@ -30,8 +32,41 @@ function wordCount(html) {
   return text ? text.split(/\s+/).length : 0;
 }
 
+function attrValue(tag, name) {
+  const match = tag.match(new RegExp(`\\b${name}="([^"]*)"`));
+  return match ? match[1] : '';
+}
+
+function normalizeHref(href) {
+  const clean = href.split('#')[0].replace(/\.html$/, '');
+  return clean === '' ? '/' : clean;
+}
+
+function extractCardHrefs(html) {
+  return [...html.matchAll(/<a\b[^>]*>/gi)]
+    .filter((match) => /\bblog-link\b/.test(attrValue(match[0], 'class')))
+    .map((match) => normalizeHref(attrValue(match[0], 'href')))
+    .filter(Boolean);
+}
+
+function targetExists(href) {
+  if (!href.startsWith('/')) return false;
+  const target = href === '/' ? 'index.html' : `${href.slice(1)}.html`;
+  return fs.existsSync(path.join(ROOT, target));
+}
+
+function sectionPolicy(file, id, section) {
+  if (file === 'ratgeber.html' && id === 'blog') {
+    return {
+      mode: 'card-hub',
+      requiredCardHrefs: section.cardHrefs,
+    };
+  }
+  return {};
+}
+
 // Extrahiert <section ...id="x"...> ... </section> Blöcke (nicht-verschachtelt, v4-Struktur).
-function extractSections(html) {
+function extractSections(html, file = '') {
   const out = [];
   const seen = new Map();
   const uniq = (id) => {
@@ -69,7 +104,10 @@ function extractSections(html) {
       // FAQ-Rahmen (Titel etc.) ohne Items
       out.push({ id: 'faq[frame]', words: wordCount(inner.split('<div class="faq-item"')[0]) });
     } else {
-      out.push({ id, words: wordCount(inner) });
+      const section = { id, words: wordCount(inner), cardHrefs: extractCardHrefs(inner) };
+      const policy = sectionPolicy(file, id, section);
+      if (!section.cardHrefs.length) delete section.cardHrefs;
+      out.push({ ...section, ...policy });
     }
   }
   if (out.length > 0) return out;
@@ -86,8 +124,40 @@ function extractSections(html) {
 function scanPages() {
   return PAGES.map((file) => ({
     file,
-    sections: extractSections(fs.readFileSync(path.join(ROOT, file), 'utf8')),
+    sections: extractSections(fs.readFileSync(path.join(ROOT, file), 'utf8'), file),
   }));
+}
+
+function validateCardHub(basePage, baseSec, curSec, errors, warnings) {
+  const currentHrefs = curSec.cardHrefs || [];
+  const requiredHrefs = baseSec.requiredCardHrefs || [];
+  const currentSet = new Set(currentHrefs);
+  const duplicateHrefs = currentHrefs.filter((href, index) => currentHrefs.indexOf(href) !== index);
+
+  for (const href of requiredHrefs) {
+    if (!currentSet.has(href)) {
+      errors.push(`${basePage.file} → Section "${baseSec.id}": Pflicht-Card fehlt (${href})`);
+    }
+  }
+  for (const href of currentHrefs) {
+    if (!targetExists(href)) {
+      errors.push(
+        `${basePage.file} → Section "${baseSec.id}": Card-Link zeigt auf fehlende Seite (${href})`
+      );
+    }
+  }
+  for (const href of [...new Set(duplicateHrefs)]) {
+    errors.push(
+      `${basePage.file} → Section "${baseSec.id}": Card-Link doppelt vorhanden (${href})`
+    );
+  }
+
+  const newHrefs = currentHrefs.filter((href) => !requiredHrefs.includes(href));
+  if (newHrefs.length) {
+    warnings.push(
+      `${basePage.file} → Section "${baseSec.id}": ${newHrefs.length} neue Card(s) erlaubt (${newHrefs.join(', ')})`
+    );
+  }
 }
 
 if (process.argv.includes('--generate')) {
@@ -120,6 +190,10 @@ for (const basePage of baseline.pages) {
       errors.push(
         `${basePage.file} → Section "${baseSec.id}" fehlt (Baseline: ${baseSec.words} Wörter)`
       );
+      continue;
+    }
+    if (baseSec.mode === 'card-hub') {
+      validateCardHub(basePage, baseSec, curSec, errors, warnings);
       continue;
     }
     const dev = baseSec.words === 0 ? 0 : Math.abs(curSec.words - baseSec.words) / baseSec.words;
