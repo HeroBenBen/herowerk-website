@@ -3287,24 +3287,24 @@ section {
   margin-bottom: 0;
 }
 .ratgeber-hub .blog-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: 1fr;
+  gap: 18px;
 }
 .ratgeber-hub .blog-card {
+  position: relative;
   display: grid;
-  grid-template-columns: 138px minmax(0, 1fr);
-  min-height: 188px;
+  grid-template-columns: minmax(230px, 0.52fr) minmax(0, 1fr);
+  min-height: 226px;
   border-radius: 10px;
-  cursor: default;
+  cursor: pointer;
 }
 .ratgeber-hub .blog-card:hover {
   transform: translateY(-3px);
 }
 .ratgeber-hub .blog-card-featured {
-  grid-template-columns: minmax(270px, 0.92fr) minmax(0, 1fr);
-  min-height: 258px;
-  background:
-    linear-gradient(135deg, rgba(183, 217, 0, 0.1), transparent 42%), rgba(255, 255, 255, 0.04);
+  grid-template-columns: minmax(230px, 0.52fr) minmax(0, 1fr);
+  min-height: 226px;
+  background: rgba(255, 255, 255, 0.04);
 }
 .blog-card-art {
   min-height: 100%;
@@ -3335,18 +3335,15 @@ section {
   gap: 14px;
   overflow: hidden;
   color: var(--white);
-  background:
-    radial-gradient(circle at 20% 15%, rgba(183, 217, 0, 0.18), transparent 34%),
-    linear-gradient(145deg, #263b49, #13232d 72%);
+  background: #20323e;
 }
 .guide-visual::after {
   content: '';
   position: absolute;
-  inset: auto -24px -34px auto;
-  width: 96px;
-  height: 96px;
-  border: 1px solid rgba(183, 217, 0, 0.2);
+  inset: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 50%;
+  opacity: 0.55;
 }
 .guide-visual-label {
   color: var(--green);
@@ -3366,21 +3363,10 @@ section {
   letter-spacing: 0;
 }
 .blog-card-featured .guide-visual strong {
-  font-size: clamp(68px, 8vw, 96px);
+  font-size: clamp(46px, 5vw, 72px);
 }
 .guide-visual-bar {
-  position: relative;
-  z-index: 1;
-  display: block;
-  width: 100%;
-  height: 8px;
-  border-radius: 999px;
-  background: linear-gradient(
-    90deg,
-    var(--green) 0 56%,
-    var(--bernstein) 56% 78%,
-    rgba(255, 255, 255, 0.24) 78%
-  );
+  display: none;
 }
 .guide-visual-row {
   position: relative;
@@ -3442,12 +3428,12 @@ section {
 }
 .ratgeber-hub .blog-card h2 {
   color: var(--white);
-  font-size: 19px;
+  font-size: clamp(23px, 2.4vw, 30px);
   margin-bottom: 8px;
   font-weight: 800;
 }
 .ratgeber-hub .blog-card-featured h2 {
-  font-size: clamp(26px, 3vw, 36px);
+  font-size: clamp(23px, 2.4vw, 30px);
 }
 .ratgeber-hub .blog-card p {
   margin-bottom: 0;
@@ -3455,6 +3441,16 @@ section {
 .ratgeber-hub .blog-card .blog-link {
   margin-top: auto;
   padding-top: 16px;
+}
+.ratgeber-hub .blog-card .blog-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+.ratgeber-hub .blog-card:focus-within {
+  outline: 3px solid var(--green);
+  outline-offset: 4px;
 }
 .ratgeber-sidebar {
   position: sticky;
@@ -3577,20 +3573,20 @@ section {
   border-color: var(--green);
 }
 [data-theme='light'] .ratgeber-hub .blog-card-featured {
-  background:
-    linear-gradient(135deg, rgba(183, 217, 0, 0.14), transparent 46%),
-    var(--color-surface-secondary) !important;
+  background: var(--color-surface-secondary) !important;
 }
 [data-theme='light'] .blog-card-art {
-  background:
-    radial-gradient(circle at 26% 18%, rgba(232, 168, 56, 0.18), transparent 34%),
-    linear-gradient(135deg, rgba(28, 43, 54, 0.08), rgba(255, 255, 255, 0.86));
+  background: #f4f6ef;
 }
 [data-theme='light'] .guide-visual {
   color: var(--color-text-primary);
-  background:
-    radial-gradient(circle at 18% 14%, rgba(183, 217, 0, 0.2), transparent 34%),
-    linear-gradient(145deg, #ffffff, #eef0e8 72%);
+  background: #f4f6ef;
+}
+[data-theme='light'] .guide-visual::after {
+  border-color: rgba(28, 43, 54, 0.08);
+}
+[data-theme='light'] .guide-visual-label {
+  color: #4f6100;
 }
 [data-theme='light'] .guide-visual strong {
   color: var(--color-text-primary);
@@ -3602,6 +3598,7 @@ section {
 }
 [data-theme='light'] .guide-visual-check strong {
   color: var(--nacht);
+  background: #e0ecc0;
 }
 [data-theme='light'] .guide-visual > img,
 [data-theme='light'] .guide-logo-row img {
