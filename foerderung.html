@@ -31,7 +31,7 @@
       <div class="nav-links">
         <a href="/" style="display:inline-flex;align-items:center;gap:5px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1V10"/></svg> Startseite</a>
         <a href="/preise">Preise</a>
-        <a href="/dimensionierung">Rechner</a>
+        <a href="/rechner">Rechner</a>
         <a href="/prozess">Prozess</a>
         <a href="/foerderung">Förderung</a>
         <a href="/ratgeber">Ratgeber</a>
@@ -50,7 +50,7 @@
     <div class="mobile-menu" id="mobileMenu">
       <a href="/" onclick="toggleMenu()" style="display:inline-flex;align-items:center;gap:5px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1V10"/></svg> Startseite</a>
       <a href="/preise" onclick="toggleMenu()">Preise</a>
-      <a href="/dimensionierung" onclick="toggleMenu()">Rechner</a>
+      <a href="/rechner" onclick="toggleMenu()">Rechner</a>
       <a href="/prozess" onclick="toggleMenu()">Prozess</a>
       <a href="/foerderung" onclick="toggleMenu()">Förderung</a>
       <a href="/ratgeber" onclick="toggleMenu()">Ratgeber</a>
@@ -173,16 +173,25 @@
               </div>
               <div id="wpKostenPaket" class="foerder-toggle-slot is-visible">
                 <select id="foerderWpTyp">
-                  <option value="s">Kompakt (ab 29.750 € brutto)</option>
-                  <option value="m" selected>Standard (ab 34.510 € brutto)</option>
-                  <option value="l">Komfort (ab 45.220 € brutto)</option>
-                  <option value="xl">Premium (ab 57.120 € brutto)</option>
-                  <option value="xxl">Kaskade (ab 82.223 € brutto)*</option>
+                  <optgroup label="Wolf CHA">
+                    <option value="wolf:s" data-brand="wolf">Wolf CHA-07 · 5–7 kW · ab 29.568 € brutto</option>
+                    <option value="wolf:m" data-brand="wolf" selected>Wolf CHA-10 · 9–12 kW · ab 33.721 € brutto</option>
+                    <option value="wolf:l" data-brand="wolf">Wolf CHA-16/20 · 14–16 kW · ab 41.360 € brutto</option>
+                    <option value="wolf:xl" data-brand="wolf">Wolf CHA-20/24 · 18–24 kW · ab 48.972 € brutto</option>
+                    <option value="wolf:xxl" data-brand="wolf">2× Wolf CHA-16 · 32 kW · ab 89.419 € brutto</option>
+                  </optgroup>
+                  <optgroup label="Vaillant aroTHERM plus">
+                    <option value="vaillant:s" data-brand="vaillant">Vaillant VWL 55/8.1 A · ca. 5,6 kW · ab 28.963 € brutto</option>
+                    <option value="vaillant:m" data-brand="vaillant">Vaillant VWL 75/8.1 A · ca. 6,9 kW · ab 32.755 € brutto</option>
+                    <option value="vaillant:l" data-brand="vaillant">Vaillant VWL 105/8.1 A · ca. 10,6 kW · ab 40.276 € brutto</option>
+                    <option value="vaillant:xl" data-brand="vaillant">Vaillant VWL 125/8.1 A · ca. 12,1 kW · ab 46.159 € brutto</option>
+                    <option value="vaillant:xxl" data-brand="vaillant">2× Vaillant VWL 125/8.1 A · ca. 24 kW · ab 79.060 € brutto</option>
+                  </optgroup>
                 </select>
                 <a href="/dimensionierung" style="display:block;margin-top:8px;font-size:13px;color:var(--green);text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Nicht sicher? → Wärmepumpenbedarf in 60 Sekunden ermitteln</a>
               </div>
               <div id="wpKostenManuell" class="foerder-toggle-slot">
-                <input type="text" inputmode="numeric" id="wpKostenInput" value="34.510 €" placeholder="z.B. 35.000 €" style="width:100%;padding:12px 16px;background:var(--charcoal);border:1px solid var(--g600);border-radius:10px;color:var(--white);font-size:16px;" oninput="calculateFoerder()" onblur="formatKostenInput(this)">
+                <input type="text" inputmode="numeric" id="wpKostenInput" value="33.721 €" placeholder="z.B. 35.000 €" style="width:100%;padding:12px 16px;background:var(--charcoal);border:1px solid var(--g600);border-radius:10px;color:var(--white);font-size:16px;" oninput="calculateFoerder()" onblur="formatKostenInput(this)">
                 <div style="font-size:12px;color:var(--g400);margin-top:4px;">Gesamtkosten inkl. Installation und MwSt.</div>
               </div>
             </div>

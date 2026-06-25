@@ -25,6 +25,21 @@ test('@smoke Hersteller-Vorauswahl zeigt Wolf- und Vaillant-Karten im gemeinsame
   await expect(page.locator('#paCards .pa-card')).toHaveCount(5);
 });
 
+test('@smoke Förderrechner-Paketliste nutzt Wolf und Vaillant aus der Preisliste', async ({
+  page,
+}) => {
+  await page.goto('/foerderung.html?theme=dark');
+  await page.waitForLoadState('networkidle');
+  await expect(page.locator('#foerderWpTyp optgroup')).toHaveCount(2);
+  await expect(page.locator('#foerderWpTyp option')).toHaveCount(10);
+  await expect(page.locator('#foerderWpTyp')).toContainText('Vaillant VWL 75/8.1 A');
+  await page.selectOption('#foerderWpTyp', 'vaillant:m');
+  await expect(page.locator('#frPreis')).toHaveText(/32\.755/);
+  await expect(page.locator('#frEigen')).toHaveText(/11\.755/);
+  await page.locator('#kostenToggle button').filter({ hasText: 'Eigener Betrag' }).click();
+  await expect(page.locator('#wpKostenInput')).toHaveValue('32.755 €');
+});
+
 test('@smoke Funnel sendet HubSpot-Form-Payload (Standard-Properties, Mock)', async ({ page }) => {
   /** @type {{ fields: Array<{ name: string, value: string }> } | undefined} */
   let submitted;

@@ -7,6 +7,7 @@ const AxeBuilder = require('@axe-core/playwright').default;
 const PAGES = [
   '/',
   '/preise.html',
+  '/rechner.html',
   '/dimensionierung.html',
   '/foerderung.html',
   '/prozess.html',
