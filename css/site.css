@@ -4962,22 +4962,13 @@ html[data-theme='light'] .section-tag {
   -webkit-mask: url('/funnel-icons/interesse-wp.svg') center / contain no-repeat;
   mask: url('/funnel-icons/interesse-wp.svg') center / contain no-repeat;
 }
-.rechner-wp-unit-large {
-  width: 178px;
-  height: 178px;
-  left: 66%;
-  top: 38%;
-  opacity: 0.24;
-  transform: translate(-50%, -50%) scale(1.08);
-}
-.rechner-wp-unit-small {
-  width: 118px;
-  height: 118px;
-  left: 36%;
-  top: 64%;
-  opacity: 0.96;
+.rechner-wp-unit-single {
+  width: 130px;
+  height: 130px;
+  left: 50%;
+  top: 50%;
+  opacity: 1;
   transform: translate(-50%, -50%);
-  filter: drop-shadow(0 16px 18px rgba(0, 0, 0, 0.24));
 }
 .rechner-card-art.guide-visual-funding .guide-icon {
   width: 170px;
@@ -5168,17 +5159,9 @@ html[data-theme='light'] .section-tag {
   .rechner-card-art {
     min-height: 154px;
   }
-  .rechner-wp-unit-large {
-    width: 146px;
-    height: 146px;
-    left: 63%;
-    top: 39%;
-  }
-  .rechner-wp-unit-small {
-    width: 98px;
-    height: 98px;
-    left: 35%;
-    top: 64%;
+  .rechner-wp-unit-single {
+    width: 112px;
+    height: 112px;
   }
   .rechner-card-art.guide-visual-funding .guide-icon {
     width: 136px;
