@@ -74,10 +74,9 @@
         <div class="rechner-layout">
           <div class="rechner-main" aria-label="HeroWerk Rechnerübersicht">
             <a href="/dimensionierung" class="rechner-tool-card rechner-tool-card--primary" id="rechner-dimensionierung">
-              <div class="rechner-card-art blog-card-art guide-visual guide-visual-altbau" aria-hidden="true">
-                <svg class="guide-icon" viewBox="385 170 120 130" focusable="false">
-                  <image href="/ratgeber-icons-heating.svg" width="1000" height="600" />
-                </svg>
+              <div class="rechner-card-art blog-card-art guide-visual rechner-dimension-visual" aria-hidden="true">
+                <span class="rechner-wp-unit rechner-wp-unit-large"></span>
+                <span class="rechner-wp-unit rechner-wp-unit-small"></span>
               </div>
               <div class="rechner-card-body">
                 <div class="rechner-card-kicker">Größe & Gerät</div>
@@ -93,11 +92,10 @@
             </a>
 
             <a href="/foerderung" class="rechner-tool-card" id="rechner-foerderung">
-              <div class="rechner-card-art blog-card-art guide-visual guide-visual-stack" aria-hidden="true">
-                <span class="guide-logo-row guide-logo-row-large">
-                  <img class="guide-logo-kfw" src="logo-kfw.svg" alt="" loading="lazy" decoding="async" />
-                  <img class="guide-logo-proklima" src="logo-proklima.svg" alt="" loading="lazy" decoding="async" />
-                </span>
+              <div class="rechner-card-art blog-card-art guide-visual guide-visual-funding" aria-hidden="true">
+                <svg class="guide-icon" viewBox="640 1250 500 500" focusable="false">
+                  <image href="/ratgeber-icons-property.svg" width="3000" height="1800" />
+                </svg>
               </div>
               <div class="rechner-card-body">
                 <div class="rechner-card-kicker">Zuschuss & Eigenanteil</div>
@@ -113,9 +111,9 @@
             </a>
 
             <a href="/preise" class="rechner-tool-card" id="rechner-preise">
-              <div class="rechner-card-art blog-card-art guide-visual guide-visual-value" aria-hidden="true">
-                <svg class="guide-icon" viewBox="635 865 470 470" focusable="false">
-                  <image href="/ratgeber-icons-property.svg" width="3000" height="1800" />
+              <div class="rechner-card-art blog-card-art guide-visual guide-visual-cost" aria-hidden="true">
+                <svg class="guide-icon" viewBox="60 300 140 120" focusable="false">
+                  <image href="/ratgeber-icons-heating.svg" width="1000" height="600" />
                 </svg>
               </div>
               <div class="rechner-card-body">
@@ -134,9 +132,37 @@
             <div class="rechner-roadmap" aria-label="Geplante Rechner">
               <h2>Weitere Rechner sind vorbereitet</h2>
               <div class="rechner-roadmap-grid">
-                <div><strong>Verbrauch</strong><span>Strombedarf und Betriebskosten nach Gebäudetyp.</span></div>
-                <div><strong>Amortisation</strong><span>Vergleich zu fossiler Heizung mit Förderung und CO₂-Kosten.</span></div>
-                <div><strong>Schall</strong><span>Abstand, Gerät und Grundstückssituation als Vorprüfung.</span></div>
+                <article class="rechner-roadmap-card">
+                  <div class="rechner-roadmap-art blog-card-art guide-visual guide-visual-power" aria-hidden="true">
+                    <svg class="guide-icon" viewBox="560 165 120 130" focusable="false">
+                      <image href="/ratgeber-icons-sustainability.svg" width="1000" height="600" />
+                    </svg>
+                  </div>
+                  <div class="rechner-roadmap-body">
+                    <h3>Verbrauch</h3>
+                    <p>Strombedarf und Betriebskosten nach Gebäudetyp.</p>
+                  </div>
+                </article>
+                <article class="rechner-roadmap-card">
+                  <div class="rechner-roadmap-art blog-card-art guide-visual guide-visual-value" aria-hidden="true">
+                    <svg class="guide-icon" viewBox="635 865 470 470" focusable="false">
+                      <image href="/ratgeber-icons-property.svg" width="3000" height="1800" />
+                    </svg>
+                  </div>
+                  <div class="rechner-roadmap-body">
+                    <h3>Amortisation</h3>
+                    <p>Vergleich zu fossiler Heizung mit Förderung und CO₂-Kosten.</p>
+                  </div>
+                </article>
+                <article class="rechner-roadmap-card">
+                  <div class="rechner-roadmap-art blog-card-art guide-visual guide-visual-sound" aria-hidden="true">
+                    <img class="guide-icon-img" src="/funnel-icons/interesse-wp.svg" alt="" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="rechner-roadmap-body">
+                    <h3>Schall</h3>
+                    <p>Abstand, Gerät und Grundstückssituation als Vorprüfung.</p>
+                  </div>
+                </article>
               </div>
             </div>
 

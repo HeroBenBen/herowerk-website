@@ -4949,7 +4949,35 @@ html[data-theme='light'] .section-tag {
   background: rgba(183, 217, 0, 0.07);
 }
 .rechner-card-art {
+  position: relative;
   min-height: 100%;
+}
+.rechner-dimension-visual {
+  color: var(--white);
+}
+.rechner-wp-unit {
+  position: absolute;
+  display: block;
+  background: currentColor;
+  -webkit-mask: url('/funnel-icons/interesse-wp.svg') center / contain no-repeat;
+  mask: url('/funnel-icons/interesse-wp.svg') center / contain no-repeat;
+}
+.rechner-wp-unit-large {
+  width: 178px;
+  height: 178px;
+  left: 22%;
+  top: 50%;
+  opacity: 0.24;
+  transform: translate(-50%, -50%) scale(1.08);
+}
+.rechner-wp-unit-small {
+  width: 118px;
+  height: 118px;
+  left: 60%;
+  top: 56%;
+  opacity: 0.96;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 16px 18px rgba(0, 0, 0, 0.24));
 }
 .rechner-card-body {
   display: flex;
@@ -5008,20 +5036,39 @@ html[data-theme='light'] .section-tag {
 }
 .rechner-roadmap-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
+  gap: 12px;
 }
-.rechner-roadmap-grid div {
+.rechner-roadmap-card {
   display: grid;
-  gap: 6px;
-  padding: 16px;
+  grid-template-columns: minmax(142px, 0.32fr) minmax(0, 1fr);
+  min-height: 132px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.04);
 }
-.rechner-roadmap-grid strong {
-  color: var(--white);
+.rechner-roadmap-art {
+  min-height: 132px;
 }
-.rechner-roadmap-grid span {
+.rechner-roadmap-card .guide-icon,
+.rechner-roadmap-card .guide-icon-img {
+  width: 92px;
+  height: 92px;
+}
+.rechner-roadmap-body {
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 18px;
+}
+.rechner-roadmap-body h3 {
+  margin: 0;
+  color: var(--white);
+  font-size: 20px;
+}
+.rechner-roadmap-body p {
+  margin: 0;
   color: var(--g400);
   font-size: 14px;
   line-height: 1.5;
@@ -5049,6 +5096,9 @@ html[data-theme='light'] .section-tag {
   .rechner-card-art {
     min-height: 178px;
   }
+  .rechner-roadmap-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
   .rechner-card-body {
     padding: 20px;
   }
@@ -5061,6 +5111,14 @@ html[data-theme='light'] .section-tag {
   .rechner-card-art {
     min-height: 154px;
   }
+  .rechner-wp-unit-large {
+    width: 146px;
+    height: 146px;
+  }
+  .rechner-wp-unit-small {
+    width: 98px;
+    height: 98px;
+  }
   .rechner-tool-card h2 {
     font-size: 18px;
   }
@@ -5070,7 +5128,7 @@ html[data-theme='light'] .section-tag {
 }
 [data-theme='light'] .rechner-tool-card,
 [data-theme='light'] .rechner-roadmap,
-[data-theme='light'] .rechner-roadmap-grid div {
+[data-theme='light'] .rechner-roadmap-card {
   background: var(--surface);
   border-color: rgba(28, 43, 54, 0.12);
   box-shadow: 0 12px 30px rgba(28, 43, 54, 0.08);
@@ -5087,10 +5145,10 @@ html[data-theme='light'] .section-tag {
 }
 [data-theme='light'] .rechner-tool-card h2,
 [data-theme='light'] .rechner-roadmap h2,
-[data-theme='light'] .rechner-roadmap-grid strong {
+[data-theme='light'] .rechner-roadmap-body h3 {
   color: var(--nacht);
 }
 [data-theme='light'] .rechner-tool-card p,
-[data-theme='light'] .rechner-roadmap-grid span {
+[data-theme='light'] .rechner-roadmap-body p {
   color: var(--g700);
 }
