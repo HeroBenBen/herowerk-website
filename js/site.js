@@ -944,7 +944,8 @@ function foerderPackageRows(brand) {
 
 function foerderFormatPackageOption(row) {
   const brutto = Number(row.brutto) || 0;
-  return row.modell + ' · ' + row.kw + ' · ab ' + brutto.toLocaleString('de-DE') + ' € brutto';
+  const kw = String(row.kw || '').replace(/^ca\.\s*/i, '');
+  return row.modell + ' · ' + kw + ' · ' + brutto.toLocaleString('de-DE') + ' €';
 }
 
 function foerderRefreshPackageOptions() {
