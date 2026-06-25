@@ -4899,33 +4899,63 @@ html[data-theme='light'] .section-tag {
   background: var(--schiefer);
 }
 .rechner-hub .section-inner {
-  max-width: 1120px;
+  max-width: 1180px;
+}
+.rechner-intro {
+  max-width: 780px;
+  margin-bottom: 36px;
 }
 .rechner-hub .section-lead {
   color: var(--g200);
 }
-.rechner-grid {
+.rechner-layout {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-  margin: 34px 0 28px;
+  grid-template-columns: minmax(0, 1fr) 318px;
+  gap: 34px;
+  align-items: start;
 }
-.rechner-card {
-  display: flex;
-  min-height: 300px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
+.rechner-main {
+  display: grid;
   gap: 18px;
-  padding: 26px;
+  min-width: 0;
+}
+.rechner-tool-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(230px, 0.52fr) minmax(0, 1fr);
+  min-height: 226px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.04);
   box-shadow: 0 14px 36px rgba(0, 0, 0, 0.18);
+  color: inherit;
+  text-decoration: none;
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
-.rechner-card--primary {
+.rechner-tool-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(183, 217, 0, 0.32);
+}
+.rechner-tool-card:focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: 4px;
+}
+.rechner-tool-card--primary {
   border-color: rgba(183, 217, 0, 0.34);
   background: rgba(183, 217, 0, 0.07);
+}
+.rechner-card-art {
+  min-height: 100%;
+}
+.rechner-card-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 20px;
 }
 .rechner-card-kicker {
   color: var(--green);
@@ -4933,23 +4963,38 @@ html[data-theme='light'] .section-tag {
   font-weight: 800;
   letter-spacing: 0.4px;
   text-transform: uppercase;
+  margin-bottom: 8px;
 }
-.rechner-card h2,
+.rechner-tool-card h2,
 .rechner-roadmap h2 {
   color: var(--white);
 }
-.rechner-card h2 {
-  margin: 0;
-  font-size: 24px;
+.rechner-tool-card h2 {
+  margin: 0 0 8px;
+  font-size: clamp(23px, 2.4vw, 30px);
+  font-weight: 800;
 }
-.rechner-card p {
+.rechner-tool-card p {
+  margin-bottom: 0;
   color: var(--g300);
   font-size: 15px;
   line-height: 1.65;
 }
-.rechner-card .btn-primary {
-  width: 100%;
-  justify-content: center;
+.rechner-card-link {
+  margin-top: auto;
+  padding-top: 16px;
+  color: var(--green);
+  font-size: 14px;
+  font-weight: 800;
+}
+.rechner-card-link::after {
+  content: ' →';
+}
+.rechner-sidebar {
+  position: sticky;
+  top: 88px;
+  display: grid;
+  gap: 14px;
 }
 .rechner-roadmap {
   padding: 24px;
@@ -4981,38 +5026,71 @@ html[data-theme='light'] .section-tag {
   font-size: 14px;
   line-height: 1.5;
 }
-@media (max-width: 900px) {
-  .rechner-grid,
+@media (max-width: 1020px) {
+  .rechner-layout {
+    grid-template-columns: 1fr;
+  }
+  .rechner-sidebar {
+    position: static;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 820px) {
+  .rechner-hub {
+    padding-top: 92px;
+  }
+  .rechner-sidebar,
   .rechner-roadmap-grid {
     grid-template-columns: 1fr;
   }
-  .rechner-card {
-    min-height: 0;
+  .rechner-tool-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .rechner-card-art {
+    min-height: 178px;
+  }
+  .rechner-card-body {
+    padding: 20px;
+  }
+}
+@media (max-width: 520px) {
+  .rechner-hub {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  .rechner-card-art {
+    min-height: 154px;
+  }
+  .rechner-tool-card h2 {
+    font-size: 18px;
   }
 }
 [data-theme='light'] .rechner-hub {
   background: var(--sand);
 }
-[data-theme='light'] .rechner-card,
+[data-theme='light'] .rechner-tool-card,
 [data-theme='light'] .rechner-roadmap,
 [data-theme='light'] .rechner-roadmap-grid div {
   background: var(--surface);
   border-color: rgba(28, 43, 54, 0.12);
   box-shadow: 0 12px 30px rgba(28, 43, 54, 0.08);
 }
-[data-theme='light'] .rechner-card--primary {
+[data-theme='light'] .rechner-tool-card--primary {
   background: rgba(183, 217, 0, 0.12);
   border-color: rgba(79, 96, 0, 0.28);
 }
 [data-theme='light'] .rechner-card-kicker {
   color: var(--color-accent-on-light);
 }
-[data-theme='light'] .rechner-card h2,
+[data-theme='light'] .rechner-card-link {
+  color: var(--color-accent-on-light);
+}
+[data-theme='light'] .rechner-tool-card h2,
 [data-theme='light'] .rechner-roadmap h2,
 [data-theme='light'] .rechner-roadmap-grid strong {
   color: var(--nacht);
 }
-[data-theme='light'] .rechner-card p,
+[data-theme='light'] .rechner-tool-card p,
 [data-theme='light'] .rechner-roadmap-grid span {
   color: var(--g700);
 }

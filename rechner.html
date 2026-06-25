@@ -65,43 +65,104 @@
   <main id="main-content">
     <section class="rechner-hub section">
       <div class="section-inner">
-        <div class="section-tag">Rechner</div>
-        <h1 class="section-title" style="color:var(--white);">Der richtige Einstieg für dein Wärmepumpen-Projekt</h1>
-        <p class="section-lead">Wähle zuerst, was du wissen willst: passende Geräteklasse, Förderung oder Richtpreis. Die Ergebnisse sind erste Orientierung, das verbindliche Angebot kommt nach Prüfung deiner Gebäudedaten.</p>
-
-        <div class="rechner-grid" aria-label="HeroWerk Rechnerübersicht">
-          <article class="rechner-card rechner-card--primary">
-            <div class="rechner-card-kicker">Größe & Gerät</div>
-            <h2>Wärmepumpe dimensionieren</h2>
-            <p>Schätzt die Heizlast aus Gebäude, Fläche, Baujahr, Vorlauftemperatur und Warmwasser. Ergebnis: passende Wolf- und Vaillant-Geräteklasse mit Richtpreis.</p>
-            <a href="/dimensionierung" class="btn-primary">Dimensionierung starten</a>
-          </article>
-
-          <article class="rechner-card">
-            <div class="rechner-card-kicker">Zuschuss & Eigenanteil</div>
-            <h2>Förderung berechnen</h2>
-            <p>Berechnet KfW-Zuschuss, proKlima-Option, förderfähige Kosten je Wohneinheit und deinen rechnerischen Eigenanteil.</p>
-            <a href="/foerderung" class="btn-primary">Förderung berechnen</a>
-          </article>
-
-          <article class="rechner-card">
-            <div class="rechner-card-kicker">Richtpreise</div>
-            <h2>Preiskarten vergleichen</h2>
-            <p>Zeigt die aktuellen Richtpreise, Eigenanteile und technischen Eckdaten der HeroWerk-Referenzpakete für Wolf und Vaillant.</p>
-            <a href="/preise" class="btn-primary">Richtpreise ansehen</a>
-          </article>
+        <div class="rechner-intro">
+          <div class="section-tag">Rechner</div>
+          <h1 class="section-title" style="color:var(--white);">Der richtige Einstieg für dein Wärmepumpen-Projekt</h1>
+          <p class="section-lead">Wähle zuerst, was du wissen willst: passende Geräteklasse, Förderung oder Richtpreis. Die Ergebnisse sind erste Orientierung, das verbindliche Angebot kommt nach Prüfung deiner Gebäudedaten.</p>
         </div>
 
-        <div class="rechner-roadmap" aria-label="Geplante Rechner">
-          <h2>Weitere Rechner sind vorbereitet</h2>
-          <div class="rechner-roadmap-grid">
-            <div><strong>Verbrauch</strong><span>Strombedarf und Betriebskosten nach Gebäudetyp.</span></div>
-            <div><strong>Amortisation</strong><span>Vergleich zu fossiler Heizung mit Förderung und CO₂-Kosten.</span></div>
-            <div><strong>Schall</strong><span>Abstand, Gerät und Grundstückssituation als Vorprüfung.</span></div>
+        <div class="rechner-layout">
+          <div class="rechner-main" aria-label="HeroWerk Rechnerübersicht">
+            <a href="/dimensionierung" class="rechner-tool-card rechner-tool-card--primary" id="rechner-dimensionierung">
+              <div class="rechner-card-art blog-card-art guide-visual guide-visual-altbau" aria-hidden="true">
+                <svg class="guide-icon" viewBox="385 170 120 130" focusable="false">
+                  <image href="/ratgeber-icons-heating.svg" width="1000" height="600" />
+                </svg>
+              </div>
+              <div class="rechner-card-body">
+                <div class="rechner-card-kicker">Größe & Gerät</div>
+                <h2>Wärmepumpe dimensionieren</h2>
+                <p>Schätzt die Heizlast aus Gebäude, Fläche, Baujahr, Vorlauftemperatur und Warmwasser. Ergebnis: passende Wolf- und Vaillant-Geräteklasse mit Richtpreis.</p>
+                <div class="guide-card-meta">
+                  <span>Heizlast</span>
+                  <span>Gerät</span>
+                  <span>Richtpreis</span>
+                </div>
+                <span class="rechner-card-link">Dimensionierung starten</span>
+              </div>
+            </a>
+
+            <a href="/foerderung" class="rechner-tool-card" id="rechner-foerderung">
+              <div class="rechner-card-art blog-card-art guide-visual guide-visual-stack" aria-hidden="true">
+                <span class="guide-logo-row guide-logo-row-large">
+                  <img class="guide-logo-kfw" src="logo-kfw.svg" alt="" loading="lazy" decoding="async" />
+                  <img class="guide-logo-proklima" src="logo-proklima.svg" alt="" loading="lazy" decoding="async" />
+                </span>
+              </div>
+              <div class="rechner-card-body">
+                <div class="rechner-card-kicker">Zuschuss & Eigenanteil</div>
+                <h2>Förderung berechnen</h2>
+                <p>Berechnet KfW-Zuschuss, proKlima-Option, förderfähige Kosten je Wohneinheit und deinen rechnerischen Eigenanteil.</p>
+                <div class="guide-card-meta">
+                  <span>KfW</span>
+                  <span>proKlima</span>
+                  <span>Eigenanteil</span>
+                </div>
+                <span class="rechner-card-link">Förderung berechnen</span>
+              </div>
+            </a>
+
+            <a href="/preise" class="rechner-tool-card" id="rechner-preise">
+              <div class="rechner-card-art blog-card-art guide-visual guide-visual-value" aria-hidden="true">
+                <svg class="guide-icon" viewBox="635 865 470 470" focusable="false">
+                  <image href="/ratgeber-icons-property.svg" width="3000" height="1800" />
+                </svg>
+              </div>
+              <div class="rechner-card-body">
+                <div class="rechner-card-kicker">Richtpreise</div>
+                <h2>Preiskarten vergleichen</h2>
+                <p>Zeigt die aktuellen Richtpreise, Eigenanteile und technischen Eckdaten der HeroWerk-Referenzpakete für Wolf und Vaillant.</p>
+                <div class="guide-card-meta">
+                  <span>Wolf</span>
+                  <span>Vaillant</span>
+                  <span>Pakete</span>
+                </div>
+                <span class="rechner-card-link">Richtpreise ansehen</span>
+              </div>
+            </a>
+
+            <div class="rechner-roadmap" aria-label="Geplante Rechner">
+              <h2>Weitere Rechner sind vorbereitet</h2>
+              <div class="rechner-roadmap-grid">
+                <div><strong>Verbrauch</strong><span>Strombedarf und Betriebskosten nach Gebäudetyp.</span></div>
+                <div><strong>Amortisation</strong><span>Vergleich zu fossiler Heizung mit Förderung und CO₂-Kosten.</span></div>
+                <div><strong>Schall</strong><span>Abstand, Gerät und Grundstückssituation als Vorprüfung.</span></div>
+              </div>
+            </div>
+
+            <p class="ra-stand">Stand: Juni 2026. Online-Rechner liefern eine unverbindliche Ersteinschätzung. Die technische Auslegung erfolgt im Angebot nach Gebäudedaten und Vor-Ort-Prüfung.</p>
           </div>
-        </div>
 
-        <p class="ra-stand">Stand: Juni 2026. Online-Rechner liefern eine unverbindliche Ersteinschätzung. Die technische Auslegung erfolgt im Angebot nach Gebäudedaten und Vor-Ort-Prüfung.</p>
+          <aside class="rechner-sidebar" aria-label="Rechner-Navigation">
+            <div class="ratgeber-side-panel ratgeber-lead-source">
+              <div class="side-panel-tag">Leadstrecke</div>
+              <h2>Direkt ins Angebot?</h2>
+              <p>Wenn du nicht rechnen willst, starte direkt die Anfrage. Wir prüfen dein Projekt und melden uns mit den nächsten Schritten.</p>
+              <a href="/anfrage" class="btn-primary">Anfrage starten</a>
+            </div>
+            <div class="ratgeber-side-panel ratgeber-side-nav" role="navigation" aria-label="Rechner auf dieser Seite">
+              <h2>Rechner</h2>
+              <a href="#rechner-dimensionierung">Dimensionierung</a>
+              <a href="#rechner-foerderung">Förderung</a>
+              <a href="#rechner-preise">Richtpreise</a>
+            </div>
+            <div class="ratgeber-side-panel ratgeber-next">
+              <h2>Nächste Schritte</h2>
+              <a href="/anfrage">Anfrage starten</a>
+              <a href="/kontakt">Kontakt aufnehmen</a>
+            </div>
+          </aside>
+        </div>
       </div>
     </section>
   </main>
