@@ -4965,19 +4965,125 @@ html[data-theme='light'] .section-tag {
 .rechner-wp-unit-large {
   width: 178px;
   height: 178px;
-  left: 22%;
-  top: 50%;
+  left: 66%;
+  top: 38%;
   opacity: 0.24;
   transform: translate(-50%, -50%) scale(1.08);
 }
 .rechner-wp-unit-small {
   width: 118px;
   height: 118px;
-  left: 60%;
-  top: 56%;
+  left: 36%;
+  top: 64%;
   opacity: 0.96;
   transform: translate(-50%, -50%);
   filter: drop-shadow(0 16px 18px rgba(0, 0, 0, 0.24));
+}
+.rechner-price-visual,
+.rechner-sound-visual {
+  color: var(--white);
+}
+.rechner-price-sheet {
+  position: absolute;
+  left: 51%;
+  top: 50%;
+  width: 126px;
+  height: 154px;
+  border: 5px solid currentColor;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translate(-50%, -50%) rotate(-5deg);
+  box-shadow: 0 18px 24px rgba(0, 0, 0, 0.2);
+}
+.rechner-price-sheet::before {
+  content: '€';
+  position: absolute;
+  left: 50%;
+  top: 22px;
+  width: 50px;
+  height: 50px;
+  border: 4px solid currentColor;
+  border-radius: 50%;
+  color: currentColor;
+  font-family: 'Barlow', sans-serif;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 44px;
+  text-align: center;
+  transform: translateX(-50%);
+}
+.rechner-price-sheet::after {
+  content: '';
+  position: absolute;
+  left: 28px;
+  right: 28px;
+  bottom: 32px;
+  height: 34px;
+  border-top: 4px solid currentColor;
+  border-bottom: 4px solid currentColor;
+  box-shadow: 0 -15px 0 -11px currentColor;
+  opacity: 0.8;
+}
+.rechner-price-coin {
+  position: absolute;
+  border: 4px solid currentColor;
+  border-radius: 50%;
+  background: rgba(183, 217, 0, 0.14);
+}
+.rechner-price-coin-large {
+  right: 16%;
+  bottom: 20%;
+  width: 52px;
+  height: 52px;
+}
+.rechner-price-coin-small {
+  left: 20%;
+  top: 24%;
+  width: 32px;
+  height: 32px;
+  opacity: 0.58;
+}
+.rechner-sound-unit {
+  position: absolute;
+  right: 20%;
+  top: 50%;
+  display: block;
+  width: 80px;
+  height: 80px;
+  background: currentColor;
+  -webkit-mask: url('/funnel-icons/interesse-wp.svg') center / contain no-repeat;
+  mask: url('/funnel-icons/interesse-wp.svg') center / contain no-repeat;
+  transform: translateY(-50%);
+}
+.rechner-sound-wave {
+  position: absolute;
+  display: block;
+  border: 4px solid currentColor;
+  border-right: 0;
+  border-top-left-radius: 999px;
+  border-bottom-left-radius: 999px;
+  transform: translateY(-50%);
+}
+.rechner-sound-wave-small {
+  right: 48%;
+  top: 50%;
+  width: 24px;
+  height: 36px;
+  opacity: 0.96;
+}
+.rechner-sound-wave-medium {
+  right: 58%;
+  top: 50%;
+  width: 38px;
+  height: 58px;
+  opacity: 0.72;
+}
+.rechner-sound-wave-large {
+  right: 70%;
+  top: 50%;
+  width: 54px;
+  height: 82px;
+  opacity: 0.48;
 }
 .rechner-card-body {
   display: flex;
@@ -5114,10 +5220,14 @@ html[data-theme='light'] .section-tag {
   .rechner-wp-unit-large {
     width: 146px;
     height: 146px;
+    left: 63%;
+    top: 39%;
   }
   .rechner-wp-unit-small {
     width: 98px;
     height: 98px;
+    left: 35%;
+    top: 64%;
   }
   .rechner-tool-card h2 {
     font-size: 18px;
