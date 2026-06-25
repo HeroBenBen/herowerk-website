@@ -816,8 +816,7 @@ function wizToFoerder() {
   foerderMarke = wizSelectedMarke || 'wolf';
 
   setKostenModus('manuell');
-  const wpSelect = document.getElementById('foerderWpTyp');
-  if (wpSelect) wpSelect.value = 'm';
+  foerderSelectPackage(foerderMarke, 'm');
   const kostenInput = document.getElementById('wpKostenInput');
   if (kostenInput && selected?.brutto)
     kostenInput.value = Math.round(selected.brutto).toLocaleString('de-DE') + ' €';
@@ -889,6 +888,22 @@ function formatKostenInput(el) {
 let paData = [];
 let paPrices = { wolf: [], vaillant: [] };
 const PA_KLASSEN = ['s', 'm', 'l', 'xl', 'xxl'];
+const FOERDER_PACKAGE_FALLBACK = {
+  wolf: [
+    { klasse: 's', modell: 'Wolf CHA-07', kw: '5–7 kW', brutto: 29568 },
+    { klasse: 'm', modell: 'Wolf CHA-10', kw: '9–12 kW', brutto: 33721 },
+    { klasse: 'l', modell: 'Wolf CHA-16/20', kw: '14–16 kW', brutto: 41360 },
+    { klasse: 'xl', modell: 'Wolf CHA-20/24', kw: '18–24 kW', brutto: 48972 },
+    { klasse: 'xxl', modell: '2× Wolf CHA-16', kw: '32 kW', brutto: 89419 },
+  ],
+  vaillant: [
+    { klasse: 's', modell: 'Vaillant VWL 55/8.1 A', kw: 'ca. 5,6 kW', brutto: 28963 },
+    { klasse: 'm', modell: 'Vaillant VWL 75/8.1 A', kw: 'ca. 6,9 kW', brutto: 32755 },
+    { klasse: 'l', modell: 'Vaillant VWL 105/8.1 A', kw: 'ca. 10,6 kW', brutto: 40276 },
+    { klasse: 'xl', modell: 'Vaillant VWL 125/8.1 A', kw: 'ca. 12,1 kW', brutto: 46159 },
+    { klasse: 'xxl', modell: '2× Vaillant VWL 125/8.1 A', kw: 'ca. 24 kW', brutto: 79060 },
+  ],
+};
 
 function paCloneFallback(data) {
   return data.map((d) => ({
@@ -902,6 +917,73 @@ function paRowsByKlasse(rows) {
     if (row && row.klasse) acc[row.klasse] = row;
     return acc;
   }, {});
+}
+
+function foerderGetSelectedPackage() {
+  const select = document.getElementById('foerderWpTyp');
+  const selected = select?.selectedOptions?.[0];
+  const raw = selected?.value || select?.value || 'wolf:m';
+  const parts = raw.includes(':')
+    ? raw.split(':')
+    : [selected?.dataset.brand || foerderMarke || 'wolf', raw];
+  const marke = parts[0] === 'vaillant' ? 'vaillant' : 'wolf';
+  const klasse = PA_KLASSEN.includes(parts[1]) ? parts[1] : 'm';
+  const row = foerderPackageRows(marke).find((item) => item.klasse === klasse);
+  return {
+    marke,
+    klasse,
+    price: Number(selected?.dataset.price || row?.brutto || 0),
+  };
+}
+
+function foerderPackageRows(brand) {
+  const rows =
+    paPrices[brand] && paPrices[brand].length ? paPrices[brand] : FOERDER_PACKAGE_FALLBACK[brand];
+  return PA_KLASSEN.map((klasse) => rows.find((row) => row.klasse === klasse)).filter(Boolean);
+}
+
+function foerderFormatPackageOption(row) {
+  const brutto = Number(row.brutto) || 0;
+  const kw = String(row.kw || '').replace(/^ca\.\s*/i, '');
+  return row.modell + ' · ' + kw + ' · ' + brutto.toLocaleString('de-DE') + ' €';
+}
+
+function foerderRefreshPackageOptions() {
+  const select = document.getElementById('foerderWpTyp');
+  if (!select) return;
+  const current = foerderGetSelectedPackage();
+  select.innerHTML = '';
+  [
+    ['wolf', 'Wolf CHA'],
+    ['vaillant', 'Vaillant aroTHERM plus'],
+  ].forEach(([brand, label]) => {
+    const group = document.createElement('optgroup');
+    group.label = label;
+    foerderPackageRows(brand).forEach((row) => {
+      const option = document.createElement('option');
+      option.value = brand + ':' + row.klasse;
+      option.dataset.brand = brand;
+      option.dataset.klasse = row.klasse;
+      option.dataset.price = String(row.brutto || '');
+      option.textContent = foerderFormatPackageOption(row);
+      group.appendChild(option);
+    });
+    select.appendChild(group);
+  });
+  const nextValue = current.marke + ':' + current.klasse;
+  select.value = Array.from(select.options).some((option) => option.value === nextValue)
+    ? nextValue
+    : 'wolf:m';
+  foerderMarke = foerderGetSelectedPackage().marke;
+}
+
+function foerderSelectPackage(brand, klasse) {
+  const select = document.getElementById('foerderWpTyp');
+  if (!select) return;
+  const nextBrand = brand === 'vaillant' ? 'vaillant' : 'wolf';
+  const nextKlasse = PA_KLASSEN.includes(klasse) ? klasse : 'm';
+  select.value = nextBrand + ':' + nextKlasse;
+  foerderMarke = nextBrand;
 }
 
 function paApplyBrand(brand) {
@@ -933,6 +1015,7 @@ function paApplyBrand(brand) {
 
 async function paLoadData() {
   paApplyBrand('wolf');
+  foerderRefreshPackageOptions();
   try {
     const response = await fetch(RECHNER_API + '?action=preise&origin=https://herowerk.de');
     if (!response.ok) throw new Error(response.status);
@@ -946,9 +1029,11 @@ async function paLoadData() {
       bruttoMap[row.klasse] = row.brutto;
     });
     if (typeof window !== 'undefined') window.HW_PREISE_BRUTTO = bruttoMap;
+    foerderRefreshPackageOptions();
     paApplyBrand('wolf');
   } catch (e) {
     console.info('Live-Preise nicht verfügbar, zeige "auf Anfrage"', e);
+    foerderRefreshPackageOptions();
   }
 }
 
@@ -1555,6 +1640,7 @@ function updateFoerderrechner() {
 let wpKostenModus = 'paket'; // 'paket' oder 'manuell'
 
 function setKostenModus(modus) {
+  const previousMode = wpKostenModus;
   wpKostenModus = modus;
   const paketDiv = document.getElementById('wpKostenPaket');
   const manuellDiv = document.getElementById('wpKostenManuell');
@@ -1562,6 +1648,13 @@ function setKostenModus(modus) {
   if (modus === 'manuell') {
     showFoerderSlot(paketDiv, false);
     showFoerderSlot(manuellDiv, true);
+    if (previousMode !== 'manuell') {
+      const selectedPackage = foerderGetSelectedPackage();
+      const input = document.getElementById('wpKostenInput');
+      if (input && selectedPackage.price > 0) {
+        input.value = selectedPackage.price.toLocaleString('de-DE') + ' €';
+      }
+    }
     btns[0].classList.remove('active');
     btns[1].classList.add('active');
   } else {
@@ -1633,7 +1726,9 @@ async function calculateFoerder() {
   const heizung = document.getElementById('heizung').value;
   const einkommen = document.getElementById('einkommen').value;
   const gemeinde = document.getElementById('gemeinde').value;
-  const wpTyp = document.getElementById('foerderWpTyp').value;
+  const selectedPackage = foerderGetSelectedPackage();
+  const wpTyp = selectedPackage.klasse;
+  foerderMarke = selectedPackage.marke;
   const preisManuell =
     wpKostenModus === 'manuell'
       ? parseInt(

@@ -5,7 +5,7 @@ const { test, expect } = require('@playwright/test');
 /** @type {Array<[string, RegExp]>} */
 const NAV_TARGETS = [
   ['/preise', /Kosten|Preise/i],
-  ['/dimensionierung', /Rechner|Größe|Ersparnis/i],
+  ['/rechner', /Rechner|Wärmepumpe|Förderung/i],
   ['/foerderung', /Förderung|KfW/i],
   ['/prozess', /Ablauf|Wärmepumpe/i],
   ['/ratgeber', /Ratgeber|FAQ/i],
