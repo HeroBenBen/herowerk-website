@@ -195,7 +195,11 @@
     display: none;
   }
 
-  .pz-backdrop {
+  /* WICHTIG: nur bei offenem Sheet sichtbar/aktiv. Vorher überschrieb
+     `.pz-backdrop {display:block}` das [hidden]-Attribut → ein unsichtbarer
+     Backdrop fing alle Pointer-Events ab (CI Smoke-Test: Nav-Logo-Click
+     blockiert; Reporter "intercepts pointer events"). */
+  body.pz-sheet-open .pz-backdrop {
     display: block;
     position: fixed;
     inset: 0;
