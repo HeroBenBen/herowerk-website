@@ -424,6 +424,17 @@ nav.scrolled {
   flex-wrap: wrap;
   margin-bottom: 32px;
 }
+.hero-ctas .btn-primary,
+.hero-ctas .btn-ghost {
+  flex: 1 1 200px;
+  box-sizing: border-box;
+  min-height: 52px;
+  padding: 14px 28px;
+  font-size: 16px;
+}
+.hero-ctas .btn-primary {
+  border: 1px solid transparent;
+}
 /* Lade-Animation Rechner (foerderSatzKfw / frZuschuss): pulsierende Punkte statt statischem "..." */
 .calc-dots {
   display: inline-flex;
