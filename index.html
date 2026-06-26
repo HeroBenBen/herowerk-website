@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="css/site.css">
   <link rel="preload" href="tokens.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="tokens.css"></noscript>
+  <link rel="stylesheet" href="css/_w2.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -162,9 +163,13 @@
     <div class="fv-inner">
       <div class="fv-content">
         <span class="fv-tag">Fördervorschuss</span>
-        <h2>Wir strecken deine Förderung vor.<br><span class="accent">Du zahlst nur deinen Eigenanteil.</span></h2>
+        <h2>Wir strecken deine Förderung vor.<sup class="fv-asterisk" aria-hidden="true">*</sup><br><span class="accent">Du zahlst nur deinen Eigenanteil.</span></h2>
         <p class="fv-sub">Bis zu 21.000 Euro KfW-Förderung. Wir finanzieren sie vor, damit du nicht monatelang auf die Auszahlung wartest. Ohne eigenen Kredit, ohne Zinsen.</p>
-        <a href="/anfrage" class="btn-primary">Platz sichern →</a>
+        <div class="fv-cta-row">
+          <a href="/anfrage" class="btn-primary">Platz sichern →</a>
+          <a href="/foerdervorschuss" class="btn-ghost">Mehr erfahren</a>
+        </div>
+        <p class="fv-disclaimer">* Fördervorschuss nur mit beauftragtem Einbau, freiem Kontingent und geprüftem Förderanspruch. <a href="/foerderung" class="fv-disclaimer-link">Voraussetzungen</a></p>
       </div>
       <aside class="fv-badge-box" aria-label="Fördervorschuss Kontingent">
         <div class="fv-count">12</div>
@@ -193,7 +198,7 @@
           <button type="submit" class="btn-primary">Jetzt starten →</button>
           <div id="entryPlzFeedback" class="entry-plz-feedback" aria-live="polite"></div>
         </form>
-        <a href="/foerderung" class="home-feature-link">Mehr zu deinen Fördermöglichkeiten</a>
+        <a href="/dimensionierung-verstehen" class="home-feature-link">Mehr zur Dimensionierung erfahren</a>
       </div>
     </div>
   </section>
@@ -210,7 +215,10 @@
         <div class="section-tag">Förderung</div>
         <h2 class="section-title">Deine Förderung in 10 Sekunden</h2>
         <p class="section-lead">KfW 458 und proKlima Region Hannover. Berechne deinen individuellen Fördersatz.</p>
-        <a href="/foerderung" class="btn-primary">Mehr erfahren →</a>
+        <div class="home-feature-ctas">
+          <a href="/foerderung" class="btn-primary">Fördermittel-Rechner starten →</a>
+          <a href="/foerderung-hannover" class="btn-ghost">Mehr erfahren</a>
+        </div>
       </div>
     </div>
   </section>
@@ -263,16 +271,16 @@
           <div><div style="font-weight:700;color:#1C2B36;">Vaillant Group</div><div style="font-size:12px;color:#6b7280;font-weight:400;">aroTHERM plus R290</div></div>
         </div>
         <div class="trust-logo-badge">
-          <div class="badge-icon badge-shk"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2-2 2.5-2.5z"/><circle cx="17.5" cy="17.5" r="4"/><path d="m15.8 17.5 1.1 1.1 2.2-2.4"/></svg></div>
-          <div><div style="font-weight:700;color:#1C2B36;">SHK-Meisterbetrieb</div><div style="font-size:12px;color:#6b7280;font-weight:400;">Eingetragener Fachbetrieb</div></div>
+          <img src="logo-proklima.svg" alt="proKlima Hannover" class="partner-logo" width="96" height="32" loading="lazy" decoding="async">
+          <div><div style="font-weight:700;color:#1C2B36;">proKlima</div><div style="font-size:12px;color:#6b7280;font-weight:400;">Regionalförderung Hannover</div></div>
         </div>
         <div class="trust-logo-badge">
           <img src="logo-kfw.svg" alt="KfW" class="partner-logo" width="96" height="32" loading="lazy" decoding="async">
           <div><div style="font-weight:700;color:#1C2B36;">KfW 458</div><div style="font-size:12px;color:#6b7280;font-weight:400;">Förderfähig nach KfW 458</div></div>
         </div>
         <div class="trust-logo-badge">
-          <img src="logo-proklima.svg" alt="proKlima Hannover" class="partner-logo" width="96" height="32" loading="lazy" decoding="async">
-          <div><div style="font-weight:700;color:#1C2B36;">proKlima</div><div style="font-size:12px;color:#6b7280;font-weight:400;">Regionalförderung Hannover</div></div>
+          <div class="badge-icon badge-shk"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2-2 2.5-2.5z"/><circle cx="17.5" cy="17.5" r="4"/><path d="m15.8 17.5 1.1 1.1 2.2-2.4"/></svg></div>
+          <div><div style="font-weight:700;color:#1C2B36;">SHK-Meisterbetrieb</div><div style="font-size:12px;color:#6b7280;font-weight:400;">Eingetragener Fachbetrieb</div></div>
         </div>
       </div>
       <div class="trust-strip-sub">Unabhängige Herstellerauswahl. Wir empfehlen die beste Lösung für dein Zuhause</div>

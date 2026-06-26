@@ -1,0 +1,345 @@
+/* ==========================================================================
+   _w2.css — Website Runde 2, Welle 2 (Startseite-CTAs, Trust, Bilder, Prozess)
+   Scope: index.html (außer <nav>), prozess.html, kontakt.html.
+   Konflikt-Vermeidung (Shared-Contracts): neue Styles NUR hier, NICHT in site.css.
+   W4 konsolidiert diese Datei später nach site.css.
+   Variablen (--green, --schiefer, …) stammen aus tokens.css / site.css.
+   ========================================================================== */
+
+/* ── FV-Banner §5-UWG-Disclaimer (kein unbedingtes Versprechen) ─────────── */
+/* Sternchen am Claim + Fußnote unterhalb der CTAs; „Voraussetzungen"-Link
+   sitzt außerhalb des klickbaren CTA-Labels (a11y/UX, analog W1 anfrage.html). */
+.fv-asterisk {
+  color: var(--green);
+  font-size: 0.55em;
+  vertical-align: super;
+  font-weight: 800;
+  margin-left: 2px;
+}
+.fv-disclaimer {
+  margin-top: 18px;
+  max-width: 560px;
+  color: var(--g400);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.fv-disclaimer-link {
+  color: var(--green);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+.fv-disclaimer-link:hover {
+  color: var(--white);
+}
+.fv-disclaimer-link:focus-visible {
+  outline: 3px solid rgba(183, 217, 0, 0.55);
+  outline-offset: 3px;
+}
+[data-theme='light'] .fv-disclaimer {
+  color: var(--color-text-secondary);
+}
+[data-theme='light'] .fv-disclaimer-link {
+  color: #3f5f00;
+}
+[data-theme='light'] .fv-disclaimer-link:hover {
+  color: var(--color-text-primary);
+}
+
+/* ── SF2-A2 · Fördervorschuss-Banner: zweiter CTA „Mehr erfahren" ─────────── */
+/* site.css kennt `.fv-cta-row .btn-primary` bereits für Mobil (width:100%);
+   hier nur das Row-Layout + Angleichen des Ghost-Buttons an den Primary. */
+.fv-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+.fv-cta-row .btn-ghost {
+  min-height: 52px;
+  box-sizing: border-box;
+  padding: 14px 26px;
+  font-size: 16px;
+}
+@media (max-width: 768px) {
+  .fv-cta-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .fv-cta-row .btn-primary,
+  .fv-cta-row .btn-ghost {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ── SF2-C1/C2 · Förderungs-Sektion: zwei CTAs nebeneinander ──────────────── */
+.home-feature-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 12px;
+}
+/* Das lange Primär-Label („Fördermittel-Rechner starten") passt neben einem
+   zweiten Button nicht in die schmale Feature-Textspalte (~430px). Saubere,
+   robuste Lösung: zwei volle Breite gestapelte CTAs mit klarer Hierarchie
+   (Primär oben, Ghost darunter). min-width:auto hebt site.css min-width:220 auf. */
+.home-feature-ctas .btn-primary,
+.home-feature-ctas .btn-ghost {
+  flex: 1 1 100%;
+  min-width: auto;
+  justify-content: center;
+}
+.home-feature-ctas .btn-ghost {
+  min-height: 52px;
+  box-sizing: border-box;
+  padding: 14px 26px;
+  font-size: 16px;
+}
+
+/* ── SF2-F1 · Prozess: ein Bild statt zwei ────────────────────────────────── */
+.pz-figure {
+  margin: 0 auto 48px;
+  max-width: 800px;
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 1600 / 844;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+}
+.pz-figure img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+[data-theme='light'] .pz-figure {
+  box-shadow: 0 12px 32px rgba(28, 43, 54, 0.18);
+}
+
+/* ── SF2-F2 · Prozess-Aufklapp-Dynamik (TRIAL) ────────────────────────────── */
+/* Ziel: Leistungsumfang sichtbar machen. Karte 1 vorab offen (Desktop),
+   dezenter „Mehr"-Puls an zugeklappten Karten, Mobil = Bottom-Sheet.
+   Zustände:  .is-open  = Desktop-Inline-Aufklappung (nur ≥769px wirksam)
+              .is-sheet = Mobil-Bottom-Sheet (nur ≤768px wirksam)
+   Substeps/Checks erben ihr Aussehen aus site.css (.pz-substeps/.pz-sub). */
+
+/* Saubere Oberkante, wenn eine Karte höher (offen) ist als die Nachbarn. */
+.pz-steps {
+  align-items: start;
+}
+
+/* Eyebrow über der Checkliste — verstärkt „das übernehmen wir alles". */
+.pz-sub-head {
+  margin: 0 0 10px;
+  text-align: left;
+  color: var(--green);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+/* „Details anzeigen" war zu unscheinbar → klar klickbarer Pill-Button. */
+.pz-expand-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+  padding: 8px 16px;
+  background: rgba(183, 217, 0, 0.08);
+  border: 1px solid rgba(183, 217, 0, 0.28);
+  border-radius: 999px;
+  color: var(--green);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.pz-expand-hint:hover {
+  background: rgba(183, 217, 0, 0.16);
+  border-color: rgba(183, 217, 0, 0.5);
+}
+.pz-expand-hint:focus-visible {
+  outline: 3px solid rgba(183, 217, 0, 0.55);
+  outline-offset: 3px;
+}
+.pz-hint-chev {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+.pz-step.is-open .pz-hint-chev {
+  transform: rotate(180deg);
+}
+
+/* Dezenter „Mehr"-Puls als Klick-Einladung — nur an zugeklappten Karten. */
+@media (prefers-reduced-motion: no-preference) {
+  .pz-step:not(.is-open):not(.is-sheet) .pz-expand-hint {
+    animation: pzPulse 2.6s ease-in-out infinite;
+  }
+}
+@keyframes pzPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(183, 217, 0, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(183, 217, 0, 0.12);
+  }
+}
+
+/* Sheet-Close + Backdrop sind im neuen Modell (kein Bottom-Sheet) nicht mehr aktiv. */
+.pz-sheet-close,
+.pz-backdrop {
+  display: none;
+}
+
+/* Inline-Aufklappung über .is-open — identisches Pattern für Desktop + Mobil
+   (GF-Entscheidung 26.06.: kein Bottom-Sheet mehr; Mobile-Karten initial offen,
+   zuklappbar via Pille. JS-Init setzt is-open auf Mobile auf alle, auf Desktop
+   nur auf die erste Karte). */
+.pz-step.is-open .pz-substeps {
+  max-height: 500px;
+  opacity: 1;
+  margin-top: 16px;
+}
+/* Wenn der User eine explizit geöffnete Karte gerade zugeklappt hat (JS:
+   data-just-closed), darf der site.css :hover/:focus-within-Preview die Karte
+   NICHT sofort wieder aufpoppen lassen. Marker fällt bei mouseleave weg. */
+.pz-step[data-just-closed]:hover .pz-substeps,
+.pz-step[data-just-closed]:focus-within .pz-substeps {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  /* Doppel-Tap-Zoom auf iOS verhindern, damit der Tap unmittelbar greift. */
+  .pz-step,
+  .pz-expand-hint {
+    touch-action: manipulation;
+  }
+  /* Mobil etwas mehr Höhe (5+ Substeps möglich), Pille rückt etwas weiter rauf. */
+  .pz-step.is-open .pz-substeps {
+    max-height: 600px;
+  }
+}
+
+[data-theme='light'] .pz-sub-head {
+  color: #3f5f00;
+}
+
+/* ── SF2-H1 (Nachschliff) · Kontaktformular: Layout + Foto + Pflicht-Felder ── */
+/* Vorher: contact-layout grid blieb auch mobil zweispaltig → rechts neben dem
+   Foto schwarzer Bereich (User-Eindruck: „da fehlt ein zweites Bild");
+   <picture> war inline → Bild füllte Container nicht voll. */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 40px;
+  align-items: stretch;
+}
+.contact-image {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  min-height: 460px;
+}
+.contact-image-picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.contact-image-picture img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 16px;
+}
+.contact-image-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px 24px;
+  background: linear-gradient(transparent, rgba(28, 43, 54, 0.95));
+  border-radius: 0 0 16px 16px;
+}
+.contact-image-caption-title {
+  color: var(--green);
+  font-weight: 700;
+  font-size: 14px;
+}
+.contact-image-caption-sub {
+  color: var(--g300);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* Form-Rows: Straße/Hausnr (3:1) und PLZ/Ort (1:2) nebeneinander auf Desktop. */
+.contact-form .form-row {
+  display: grid;
+  gap: 14px;
+}
+.contact-form .form-row-3-1 {
+  grid-template-columns: 3fr 1fr;
+}
+.contact-form .form-row-1-2 {
+  grid-template-columns: 1fr 2fr;
+}
+.contact-form select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--white);
+  font-family: 'Barlow', sans-serif;
+  font-size: 15px;
+}
+.contact-form select:focus-visible {
+  outline: 3px solid rgba(183, 217, 0, 0.55);
+  outline-offset: 2px;
+}
+.form-optional {
+  display: inline-block;
+  margin-left: 6px;
+  color: var(--g400);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+[data-theme='light'] .contact-form select {
+  background: #ffffff;
+  border-color: rgba(28, 43, 54, 0.24);
+  color: var(--color-text-primary);
+}
+[data-theme='light'] .form-optional {
+  color: #5d6872;
+}
+
+/* Mobil: Foto oben, Form unten — kein „fehlendes zweites Bild"-Eindruck mehr. */
+@media (max-width: 860px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .contact-image {
+    aspect-ratio: 4 / 3;
+    min-height: 0;
+  }
+  .contact-form .form-row,
+  .contact-form .form-row-3-1,
+  .contact-form .form-row-1-2 {
+    grid-template-columns: 1fr;
+  }
+}
