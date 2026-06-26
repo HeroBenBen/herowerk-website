@@ -245,6 +245,18 @@
   body.pz-sheet-open .mobile-bottom-bar {
     display: none;
   }
+  /* WICHTIG (Stacking-Context-Fix): site.css gibt `.pz-step` ein
+     `position:relative; z-index:1`. Das erzeugt einen eigenen Stacking-Context,
+     in dem das Sheet (z-index:1001) gefangen ist — extern wirkt der ganze
+     .pz-step-Layer nur wie z-index:1, während der Backdrop bei z-index:1000
+     im Root sitzt. Folge: Backdrop liegt VOR dem Sheet → genau das gemeldete
+     Symptom „Schleier legt sich übers Display, kein Sheet sichtbar".
+     Fix: die is-sheet-Karte verlässt auf Mobil den Stacking-Context, dann
+     ist Sheets z-index:1001 wieder im Root und sitzt sauber über dem Backdrop. */
+  body.pz-sheet-open .pz-step.is-sheet {
+    position: static;
+    z-index: auto;
+  }
 
   /* WICHTIG: nur bei offenem Sheet sichtbar/aktiv. Vorher überschrieb
      `.pz-backdrop {display:block}` das [hidden]-Attribut → ein unsichtbarer
