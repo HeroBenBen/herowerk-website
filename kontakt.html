@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="css/site.css">
   <link rel="preload" href="tokens.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="tokens.css"></noscript>
+  <link rel="stylesheet" href="css/_w2.css">
 </head>
 <body data-hubspot-portal-id="148110267" data-hubspot-contact-form-id="f4662e0a-f6fd-412f-9cc6-bd3273aee7a0">
   <!-- NAVIGATION -->
@@ -68,15 +69,15 @@
       <div class="section-tag">Kontakt</div>
       <h1 class="section-title" style="color: var(--white);">Schreib uns</h1>
       <p class="section-lead">Wir melden uns innerhalb von 48 Stunden.</p>
-      <div class="contact-layout" style="display:grid;grid-template-columns:1fr 1.2fr;gap:40px;align-items:stretch;">
-        <div class="contact-image" style="border-radius:16px;overflow:hidden;position:relative;">
-          <picture>
+      <div class="contact-layout">
+        <div class="contact-image">
+          <picture class="contact-image-picture">
             <source type="image/webp" srcset="kontakt-monteur-wp-800.webp 800w, kontakt-monteur-wp-1600.webp 1600w" sizes="(max-width: 860px) 100vw, 45vw">
-            <img src="kontakt-monteur-wp-800.webp" alt="HeroWerk Monteur prüft eine Außen-Wärmepumpe vor einem Wohnhaus" width="1600" height="2841" style="width:100%;height:100%;display:block;border-radius:16px;object-fit:cover;" loading="lazy" decoding="async">
+            <img src="kontakt-monteur-wp-800.webp" alt="HeroWerk Monteur prüft eine Außen-Wärmepumpe vor einem Wohnhaus" width="1600" height="2841" loading="lazy" decoding="async">
           </picture>
-          <div style="position:absolute;bottom:0;left:0;right:0;padding:20px 24px;background:linear-gradient(transparent, rgba(28,43,54,0.95));border-radius:0 0 16px 16px;">
-            <div style="color:var(--green);font-weight:700;font-size:14px;">Persönliche Nachricht</div>
-            <div style="color:var(--g300);font-size:13px;margin-top:4px;">Unser Team ist für dich da. Vor Ort in der Region Hannover.</div>
+          <div class="contact-image-caption">
+            <div class="contact-image-caption-title">Persönliche Nachricht</div>
+            <div class="contact-image-caption-sub">Unser Team ist für dich da. Vor Ort in der Region Hannover.</div>
           </div>
         </div>
         <div>
@@ -84,6 +85,11 @@
         <div class="form-group"><label for="kontaktName">Name</label><input id="kontaktName" type="text" name="name" placeholder="Max Mustermann" required></div>
         <div class="form-group"><label for="kontaktEmail">E-Mail</label><input id="kontaktEmail" type="email" name="email" placeholder="max@beispiel.de" required></div>
         <div class="form-group"><label for="kontaktTelefon">Telefon optional</label><input id="kontaktTelefon" type="tel" name="telefon" placeholder="0171 1234567"></div>
+        <div class="form-row">
+          <div class="form-group"><label for="kontaktPlz">PLZ <span class="form-optional">optional</span></label><input id="kontaktPlz" type="text" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{5}" maxlength="5" placeholder="z. B. 30159"></div>
+          <div class="form-group"><label for="kontaktGebaeude">Gebäudetyp <span class="form-optional">optional</span></label><select id="kontaktGebaeude"><option value="">Bitte wählen</option><option value="EFH">Einfamilienhaus</option><option value="DHH">Doppelhaushälfte</option><option value="RH">Reihenhaus</option><option value="MFH">Mehrfamilienhaus</option><option value="Sonstiges">Sonstiges</option></select></div>
+        </div>
+        <div class="form-group"><label for="kontaktZeitrahmen">Zeitrahmen <span class="form-optional">optional</span></label><select id="kontaktZeitrahmen"><option value="">Wann soll es losgehen?</option><option value="3 Monate">In den nächsten 3 Monaten</option><option value="6 Monate">In den nächsten 6 Monaten</option><option value="12 Monate">In den nächsten 12 Monaten</option><option value="Unklar">Noch unklar</option></select></div>
         <div class="form-group"><label for="kontaktNachricht">Nachricht</label><textarea id="kontaktNachricht" name="nachricht" placeholder="Wobei können wir helfen?" required></textarea></div>
         <div class="form-checkbox">
           <input type="checkbox" id="kontaktDsgvo" name="dsgvo" value="zugestimmt" required>
@@ -155,6 +161,34 @@
       Kostenlose Beratung
     </a>
   </div>
+
+  <!-- W2: optionale Zusatzfelder (PLZ/Gebäude/Zeitrahmen) in `nachricht` einbetten,
+       BEVOR site.js den Submit übernimmt. Felder haben kein `name`-Attribut →
+       Form-Payload bleibt HubSpot-schema-konform (kein neues Property). -->
+  <script>
+    (function () {
+      var form = document.getElementById('kontaktForm');
+      if (!form) return;
+      var plz = document.getElementById('kontaktPlz');
+      var geb = document.getElementById('kontaktGebaeude');
+      var zr = document.getElementById('kontaktZeitrahmen');
+      var msg = document.getElementById('kontaktNachricht');
+      form.addEventListener(
+        'submit',
+        function () {
+          if (!msg) return;
+          var extras = [];
+          if (plz && plz.value.trim()) extras.push('PLZ: ' + plz.value.trim());
+          if (geb && geb.value) extras.push('Gebäudetyp: ' + geb.value);
+          if (zr && zr.value) extras.push('Zeitrahmen: ' + zr.value);
+          if (!extras.length) return;
+          var existing = msg.value.trim();
+          msg.value = extras.join(' · ') + (existing ? '\n\n' + existing : '');
+        },
+        true
+      );
+    })();
+  </script>
 
 </body>
 </html>

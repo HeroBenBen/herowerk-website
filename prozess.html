@@ -80,7 +80,7 @@
 
       <!-- 4 Phasen mit aufklappbaren Sub-Steps (Leistungsumfang sichtbar machen) -->
       <div class="pz-steps">
-        <div class="pz-step is-open">
+        <div class="pz-step" data-pz-first>
           <div class="pz-step-num">1</div>
           <h2>Beratung</h2>
           <p>Online in 2 Minuten oder per Anruf. Wir melden uns innerhalb von 24 Stunden.</p>
@@ -93,7 +93,7 @@
             <div class="pz-sub">Datenaufnahme (Fotos, Gebäudedaten)</div>
             <div class="pz-sub">Kostenloser Vor-Ort-Termin</div>
           </div>
-          <button type="button" class="pz-expand-hint" data-pz-toggle aria-expanded="true" aria-controls="pzSub1"><span class="pz-hint-text">Einklappen</span><svg class="pz-hint-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+          <button type="button" class="pz-expand-hint" data-pz-toggle aria-expanded="false" aria-controls="pzSub1"><span class="pz-hint-text">Alle Leistungen ansehen</span><svg class="pz-hint-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
         </div>
         <div class="pz-step">
           <div class="pz-step-num">2</div>
@@ -217,13 +217,19 @@
     </a>
   </div>
 
-  <!-- Prozess-Aufklapp-Dynamik (W2-Trial): Desktop = Inline-Akkordeon, Mobil = Bottom-Sheet -->
+  <!-- Prozess-Aufklapp-Dynamik (W2-Trial): Desktop = Inline-Akkordeon, Mobil = Bottom-Sheet
+       - Initial: Karte 1 (data-pz-first) NUR auf Desktop vorab offen — auf Mobil sieht
+         der „Einklappen"-Pill sonst aktiv aus, obwohl substeps via @media zu sind.
+       - Beim expliziten Schließen einer offenen Karte (Desktop) blurren wir den
+         Button und setzen data-just-closed, damit der site.css :hover/:focus-within-
+         Preview nicht sofort wieder aufpoppt; Marker fällt bei mouseleave/blur weg. -->
   <script>
     (function () {
       var steps = Array.prototype.slice.call(document.querySelectorAll('.pz-step'));
       if (!steps.length) return;
       var backdrop = document.querySelector('[data-pz-backdrop]');
       var mqMobile = window.matchMedia('(max-width: 768px)');
+      var firstStep = document.querySelector('.pz-step[data-pz-first]') || steps[0];
       var lastToggle = null;
 
       function labelFor(step, open) {
@@ -239,6 +245,17 @@
         step.classList.toggle('is-open', open);
         ariaFor(step, open);
         labelFor(step, open);
+      }
+
+      function closeInline(step) {
+        setInline(step, false);
+        step.setAttribute('data-just-closed', '1');
+        var t = step.querySelector('[data-pz-toggle]');
+        if (t && typeof t.blur === 'function') t.blur();
+      }
+
+      function clearJustClosed(step) {
+        step.removeAttribute('data-just-closed');
       }
 
       function closeSheet() {
@@ -274,15 +291,40 @@
         if (mqMobile.matches) {
           if (step.classList.contains('is-sheet')) closeSheet();
           else openSheet(step);
+          return;
+        }
+        if (step.classList.contains('is-open')) {
+          closeInline(step);
         } else {
-          setInline(step, !step.classList.contains('is-open'));
+          // Beim Öffnen einer anderen Karte: Marker auf der vorher zugemachten
+          // Karte räumen (sonst bleibt sie unter dem Hover „blockiert").
+          steps.forEach(clearJustClosed);
+          setInline(step, true);
         }
       }
+
+      function syncInitialDesktopState() {
+        if (mqMobile.matches) {
+          steps.forEach(function (s) {
+            setInline(s, false);
+            clearJustClosed(s);
+          });
+        } else {
+          steps.forEach(function (s) {
+            setInline(s, s === firstStep);
+            clearJustClosed(s);
+          });
+        }
+      }
+      syncInitialDesktopState();
 
       steps.forEach(function (step) {
         step.addEventListener('click', function (e) {
           if (e.target.closest('[data-pz-close]')) return;
           toggleStep(step);
+        });
+        step.addEventListener('mouseleave', function () {
+          clearJustClosed(step);
         });
         var closeBtn = step.querySelector('[data-pz-close]');
         if (closeBtn) {
@@ -297,7 +339,10 @@
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') closeSheet();
       });
-      mqMobile.addEventListener('change', closeSheet);
+      mqMobile.addEventListener('change', function () {
+        closeSheet();
+        syncInitialDesktopState();
+      });
     })();
   </script>
 

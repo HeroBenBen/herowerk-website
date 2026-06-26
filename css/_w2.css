@@ -170,6 +170,16 @@
     opacity: 1;
     margin-top: 16px;
   }
+  /* Wenn der User eine explizit geöffnete Karte gerade zugeklappt hat
+     (JS: data-just-closed), darf der site.css-Hover-/Focus-Preview die Karte
+     NICHT sofort wieder aufpoppen lassen — sonst klickt sich "Einklappen" tot.
+     Marker wird per `mouseleave` und Klick auf eine andere Karte entfernt. */
+  .pz-step[data-just-closed]:hover .pz-substeps,
+  .pz-step[data-just-closed]:focus-within .pz-substeps {
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0;
+  }
 }
 
 /* Mobil (≤768px): Tippen öffnet ein Bottom-Sheet mit dem Leistungsumfang.
@@ -199,6 +209,9 @@
      `.pz-backdrop {display:block}` das [hidden]-Attribut → ein unsichtbarer
      Backdrop fing alle Pointer-Events ab (CI Smoke-Test: Nav-Logo-Click
      blockiert; Reporter "intercepts pointer events"). */
+  /* Backdrop dunkler + leichter Blur, damit dahinterliegende Karten klar als
+     „nicht aktiv" gelesen werden (vorher wirkten Karten unter dem 0.55-Overlay
+     wie sie durchblitzen / Sheet wirkte chaotisch zwischen den Karten). */
   body.pz-sheet-open .pz-backdrop {
     display: block;
     position: fixed;
@@ -207,15 +220,21 @@
     border: 0;
     margin: 0;
     padding: 0;
-    background: rgba(10, 10, 10, 0.55);
+    background: rgba(10, 10, 10, 0.72);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
   }
 
+  /* Sheet bekommt min-height, damit es prominenter als „Vordergrund" wirkt
+     und nicht wie ein zufälliges drittes Mini-Element zwischen den Karten
+     hängen bleibt. */
   body.pz-sheet-open .pz-step.is-sheet .pz-substeps {
     position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 1001;
+    min-height: 48vh;
     max-height: 82vh;
     overflow-y: auto;
     margin: 0;
@@ -295,4 +314,104 @@
 
 [data-theme='light'] .pz-sub-head {
   color: #3f5f00;
+}
+
+/* ── SF2-H1 (Nachschliff) · Kontaktformular: Layout + Foto + Pflicht-Felder ── */
+/* Vorher: contact-layout grid blieb auch mobil zweispaltig → rechts neben dem
+   Foto schwarzer Bereich (User-Eindruck: „da fehlt ein zweites Bild");
+   <picture> war inline → Bild füllte Container nicht voll. */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 40px;
+  align-items: stretch;
+}
+.contact-image {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  min-height: 460px;
+}
+.contact-image-picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.contact-image-picture img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 16px;
+}
+.contact-image-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px 24px;
+  background: linear-gradient(transparent, rgba(28, 43, 54, 0.95));
+  border-radius: 0 0 16px 16px;
+}
+.contact-image-caption-title {
+  color: var(--green);
+  font-weight: 700;
+  font-size: 14px;
+}
+.contact-image-caption-sub {
+  color: var(--g300);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* Form-Row für PLZ + Gebäudetyp nebeneinander auf Desktop. */
+.contact-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.contact-form select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--white);
+  font-family: 'Barlow', sans-serif;
+  font-size: 15px;
+}
+.contact-form select:focus-visible {
+  outline: 3px solid rgba(183, 217, 0, 0.55);
+  outline-offset: 2px;
+}
+.form-optional {
+  display: inline-block;
+  margin-left: 6px;
+  color: var(--g400);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+[data-theme='light'] .contact-form select {
+  background: #ffffff;
+  border-color: rgba(28, 43, 54, 0.24);
+  color: var(--color-text-primary);
+}
+[data-theme='light'] .form-optional {
+  color: #5d6872;
+}
+
+/* Mobil: Foto oben, Form unten — kein „fehlendes zweites Bild"-Eindruck mehr. */
+@media (max-width: 860px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .contact-image {
+    aspect-ratio: 4 / 3;
+    min-height: 0;
+  }
+  .contact-form .form-row {
+    grid-template-columns: 1fr;
+  }
 }
