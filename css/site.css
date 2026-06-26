@@ -4137,8 +4137,13 @@ footer {
   color: var(--color-text-primary) !important;
 }
 .partner-logo {
-  width: 96px;
-  height: 32px;
+  /* Einheitliche Höhe statt starrer 96×32-Box: die 4 Hersteller-/Förder-SVGs
+     haben sehr unterschiedliche Seitenverhältnisse; object-fit in einer festen
+     Box ließ sie optisch verschieden hoch wirken. Höhe fix + Breite auto =
+     gleiche Sichthöhe (dieselbe Methode wie .wiz-brand-logo im Rechner). */
+  height: 24px;
+  width: auto;
+  max-width: 88px;
   object-fit: contain;
   display: block;
   flex-shrink: 0;
@@ -4535,7 +4540,11 @@ html[data-theme='light'] .section-tag {
      ohne dies kollabiert das Feld im Flex-Row-Layout auf ~34px (Placeholder
      und Eingabe abgeschnitten) */
   min-width: 14ch;
-  flex: 1 1 14ch;
+  /* max-width deckelt das Wachstum: ohne Deckel füllt das Feld die ganze
+     Restbreite der Feature-Spalte (mal ~300px, mal länger) und wirkt
+     überdimensioniert; 220px = so breit wie der Button daneben. */
+  flex: 1 1 160px;
+  max-width: 220px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.08);
@@ -4656,6 +4665,17 @@ html[data-theme='light'] .section-tag {
   }
   .home-feature-media {
     min-height: 260px;
+  }
+  /* Trust-Leiste mobil linksbündig wie Hero/Features (vermeidet den
+     center↔links-Sprung beim Scrollen); Desktop bleibt zentriert. */
+  .trust-strip-inner {
+    align-items: flex-start;
+  }
+  .trust-logos {
+    justify-content: flex-start;
+  }
+  .trust-strip-sub {
+    text-align: left;
   }
 }
 @media (max-width: 560px) {
