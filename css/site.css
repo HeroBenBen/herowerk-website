@@ -803,7 +803,7 @@ nav.scrolled {
 }
 @media (max-width: 600px) {
   .usp-strip {
-    padding: 16px 16px;
+    padding: 16px 20px;
   }
   .usp-strip-inner {
     display: grid;
@@ -4628,6 +4628,14 @@ html[data-theme='light'] .section-tag {
   color: #3f5f00;
 }
 @media (max-width: 860px) {
+  .home-feature {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .home-feature-body {
+    padding-left: 0;
+    padding-right: 0;
+  }
   .home-feature-inner,
   .home-feature-inner.media-right {
     grid-template-columns: 1fr;
