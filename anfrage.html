@@ -173,6 +173,7 @@
       background: var(--white);
       display: flex;
       flex-direction: column;
+      overflow-x: clip; /* Welle 1: kein horizontaler Bleed/Artefakt am Rand */
     }
 
     /* Header der Funnel-Spalte */
@@ -236,8 +237,8 @@
     }
     .step.active { display: flex; }
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateX(12px); }
-      to   { opacity: 1; transform: translateX(0); }
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     .step-question {
@@ -451,6 +452,23 @@
     .dsgvo-row label { font-size: 12px; color: var(--g400); line-height: 1.5; }
     .dsgvo-row a { color: var(--g500); }
 
+    /* Fördervorschuss-Opt-in (Welle 1) */
+    .fv-row {
+      display: flex; gap: 10px; align-items: flex-start;
+      margin-bottom: 18px; padding: 13px 15px;
+      background: rgba(183,217,0,0.10);
+      border: 1px solid rgba(183,217,0,0.45);
+      border-radius: 10px;
+    }
+    .fv-row input {
+      width: 18px; height: 18px; margin-top: 1px;
+      cursor: pointer; accent-color: var(--green); flex-shrink: 0;
+    }
+    .fv-row label { font-size: 13px; color: var(--g700); line-height: 1.45; cursor: pointer; }
+    .fv-row label strong { color: var(--schiefer); font-weight: 800; }
+    [data-theme='dark'] .fv-row label { color: #e5e7eb; }
+    [data-theme='dark'] .fv-row label strong { color: #ffffff; }
+
     /* Navigations-Buttons */
     .step-nav {
       display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
@@ -525,15 +543,42 @@
       .trust-panel { display: none; }
       .funnel-header-logo { display: block; }
       .funnel-header { padding: 16px 24px; }
-      .progress-bar-wrap { padding: 20px 24px 0; }
-      .funnel-content { padding: 28px 24px 24px; }
-      .contact-grid { grid-template-columns: 1fr; }
-      .step-nav { grid-template-columns: 1fr 1fr; }
+      .progress-bar-wrap { padding: 18px 24px 0; }
+      .funnel-content { padding: 20px 20px 0; }
+      .step-hint { margin-bottom: 18px; }
+      /* Lead-Strecke mobil (Welle 1): 2-spaltige Kontaktfelder, damit der Absende-Button
+         auch auf iPhone-SE-Höhe (667 px) ohne Scrollen sichtbar bleibt. */
+      .contact-grid { grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+      .contact-grid .form-field { min-width: 0; }
+      .contact-grid .form-field input { width: 100%; min-width: 0; }
+      #plzSummary { margin-bottom: 12px !important; }
+      .dsgvo-row { margin-bottom: 12px; }
+      .fv-row { margin-bottom: 12px; padding: 10px 13px; }
+      /* Sticky Aktionsleiste: "Weiter" bleibt auf jedem Schritt ohne Scrollen sichtbar. */
+      .step-nav {
+        grid-template-columns: 1fr 1fr;
+        position: sticky;
+        bottom: 0;
+        z-index: 5;
+        background: var(--white);
+        padding-bottom: 18px;
+        box-shadow: 0 -8px 18px rgba(0, 0, 0, 0.06);
+      }
+      [data-theme='dark'] .step-nav { background: #1c2b36; }
+      /* Letzter Schritt: Absende-Button liegt im Formular, daher Nav statisch. */
+      .step[data-step='10'] .step-nav {
+        position: static;
+        box-shadow: none;
+        background: transparent;
+        padding-bottom: 20px;
+      }
     }
     @media (max-width: 500px) {
       .answer-grid { grid-template-columns: 1fr; }
       .answer-grid.cols-3 { grid-template-columns: 1fr; }
       .step-nav { grid-template-columns: 1fr; }
+      /* Button-Hierarchie mobil: "Weiter" oben/prominent, "Zurück" sekundär darunter. */
+      .btn-next { order: -1; }
     }
     /* Iteration 3: full funnel theme coverage and stable sidebar scaling. */
     .logo-light { display: none; }
@@ -624,7 +669,10 @@
     [data-theme='dark'] #progressPercent { color: var(--green); }
     [data-theme='light'] .trust-headline em { color: #1c2b36; }
     .partner-badge img { max-width: 72px; max-height: 24px; object-fit: contain; display: block; }
-    @media (max-width: 980px) {
+    /* Tablet-Band (901–980 px): schmaleres Trust-Panel. Unter 901 px greift die
+       1fr-Regel oben (Welle 1: Fix gegen den 70-px-Hintergrund-Streifen rechts,
+       weil diese Regel sonst auch <=900 px gewann und das Trust-Panel-Spalte leer blieb). */
+    @media (min-width: 901px) and (max-width: 980px) {
       .funnel-layout { grid-template-columns: minmax(280px, 360px) minmax(0, 1fr); }
     }
 
@@ -1408,6 +1456,13 @@
             </div>
           </div>
 
+          <div class="fv-row">
+            <input type="checkbox" id="foerdervorschuss" name="foerdervorschuss_interesse" value="true">
+            <label for="foerdervorschuss">
+              Ich möchte mich für den <strong>Fördervorschuss</strong> bewerben (begrenzte Plätze).
+            </label>
+          </div>
+
           <div class="dsgvo-row">
             <input type="checkbox" id="dsgvo" name="dsgvo" required>
             <label for="dsgvo">
@@ -1721,6 +1776,15 @@
     }
   }
 
+  // Welle 1: Kampagnen-Links mit ?fv=1 wählen den Fördervorschuss-Wunsch vor.
+  function prefillFoerdervorschussFromUrl() {
+    const fv = new URLSearchParams(window.location.search).get('fv');
+    if (fv === '1' || fv === 'true') {
+      const box = document.getElementById('foerdervorschuss');
+      if (box) box.checked = true;
+    }
+  }
+
   function collectUtmParams() {
     const params = new URLSearchParams(window.location.search);
     ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach((key) => {
@@ -1747,7 +1811,12 @@
       wohnflaeche: answers.step5 || '',
       waermeverteilung: answers.step6 || '',
       eigentuemer: answers.step7 || '',
-      zeitrahmen: answers.step8 || ''
+      zeitrahmen: answers.step8 || '',
+      // Welle 1: Fördervorschuss-Opt-in (Checkbox Schritt 10). Nur 'true' senden, wenn
+      // angehakt — sonst leer lassen (Filter unten entfernt es), damit Standard-Leads
+      // NICHT brechen, falls die HubSpot-Property noch fehlt/nicht am Formular hängt.
+      // (HubSpot Single-Checkbox: ungesetzt = false.)
+      foerdervorschuss_interesse: data.foerdervorschuss_interesse === 'true' ? 'true' : ''
     };
 
     return {
@@ -1939,6 +2008,7 @@
     showStep(stepOrder[0]);
   }
   prefillPlzFromUrl();
+  prefillFoerdervorschussFromUrl();
 </script>
 
   <nav aria-label="Rechtliches" style="text-align:center;padding:24px 16px;font-size:.9rem"><a href="/impressum">Impressum</a> &middot; <a href="/datenschutz">Datenschutz</a></nav>

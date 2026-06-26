@@ -61,6 +61,9 @@
 }
 html {
   scroll-behavior: smooth;
+  /* Welle 1: globaler Schutz gegen horizontalen Overflow auf Mobile (clip ist
+     sticky-sicher, anders als hidden — bricht .ratgeber-/.rechner-sidebar nicht). */
+  overflow-x: clip;
 }
 /* Offset für fixe Navigation bei Anker-Sprüngen */
 section[id],
@@ -91,6 +94,10 @@ body {
   font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  /* Welle 1: zusammen mit html overflow-x:clip — klammert horizontalen
+     Overflow auf Body-Ebene (verhindert, dass fixe nav/.mobile-bottom-bar
+     über die Viewport-Breite hinauswachsen). clip ist sticky-sicher. */
+  overflow-x: clip;
 }
 h1,
 h2,
@@ -299,6 +306,9 @@ nav.scrolled {
   }
   .mobile-bottom-bar a {
     flex: 1;
+    /* Welle 1: Buttons dürfen schrumpfen statt zu überlaufen — sonst sprengt der
+       Text die Leiste (~90 px Overflow) und schiebt die fixe Nav mit (Header-Clipping). */
+    min-width: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -4695,6 +4705,16 @@ html[data-theme='light'] .section-tag {
 @media (max-width: 560px) {
   .entry-plz {
     flex-direction: column;
+  }
+  /* Welle 1: Im Column-Layout macht das Basis-flex:1 1 160px die 160px zur HÖHE,
+     und flex-grow lässt das Feld mit der Spaltenhöhe mitwachsen (auf iPhones
+     unnatürlich hoch). Höhe deckeln ≈ Button, kein vertikales Strecken mehr. */
+  .entry-plz input {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: none;
+    min-height: 48px;
+    height: auto;
   }
   .entry-plz .btn-primary {
     width: 100%;
