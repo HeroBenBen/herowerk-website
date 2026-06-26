@@ -6,6 +6,47 @@
    Variablen (--green, --schiefer, …) stammen aus tokens.css / site.css.
    ========================================================================== */
 
+/* ── FV-Banner §5-UWG-Disclaimer (kein unbedingtes Versprechen) ─────────── */
+/* Sternchen am Claim + Fußnote unterhalb der CTAs; „Voraussetzungen"-Link
+   sitzt außerhalb des klickbaren CTA-Labels (a11y/UX, analog W1 anfrage.html). */
+.fv-asterisk {
+  color: var(--green);
+  font-size: 0.55em;
+  vertical-align: super;
+  font-weight: 800;
+  margin-left: 2px;
+}
+.fv-disclaimer {
+  margin-top: 18px;
+  max-width: 560px;
+  color: var(--g400);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.fv-disclaimer-link {
+  color: var(--green);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+.fv-disclaimer-link:hover {
+  color: var(--white);
+}
+.fv-disclaimer-link:focus-visible {
+  outline: 3px solid rgba(183, 217, 0, 0.55);
+  outline-offset: 3px;
+}
+[data-theme='light'] .fv-disclaimer {
+  color: var(--color-text-secondary);
+}
+[data-theme='light'] .fv-disclaimer-link {
+  color: #3f5f00;
+}
+[data-theme='light'] .fv-disclaimer-link:hover {
+  color: var(--color-text-primary);
+}
+
 /* ── SF2-A2 · Fördervorschuss-Banner: zweiter CTA „Mehr erfahren" ─────────── */
 /* site.css kennt `.fv-cta-row .btn-primary` bereits für Mobil (width:100%);
    hier nur das Row-Layout + Angleichen des Ghost-Buttons an den Primary. */
