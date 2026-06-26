@@ -196,176 +196,40 @@
   }
 }
 
-/* Sheet-Close + Backdrop sind nur im Mobil-Sheet sichtbar. */
-.pz-sheet-close {
-  display: none;
-}
+/* Sheet-Close + Backdrop sind im neuen Modell (kein Bottom-Sheet) nicht mehr aktiv. */
+.pz-sheet-close,
 .pz-backdrop {
   display: none;
 }
 
-/* Desktop/Tablet (≥769px): Inline-Aufklappung über .is-open. */
-@media (min-width: 769px) {
-  .pz-step.is-open .pz-substeps {
-    max-height: 480px;
-    opacity: 1;
-    margin-top: 16px;
-  }
-  /* Wenn der User eine explizit geöffnete Karte gerade zugeklappt hat
-     (JS: data-just-closed), darf der site.css-Hover-/Focus-Preview die Karte
-     NICHT sofort wieder aufpoppen lassen — sonst klickt sich "Einklappen" tot.
-     Marker wird per `mouseleave` und Klick auf eine andere Karte entfernt. */
-  .pz-step[data-just-closed]:hover .pz-substeps,
-  .pz-step[data-just-closed]:focus-within .pz-substeps {
-    max-height: 0;
-    opacity: 0;
-    margin-top: 0;
-  }
+/* Inline-Aufklappung über .is-open — identisches Pattern für Desktop + Mobil
+   (GF-Entscheidung 26.06.: kein Bottom-Sheet mehr; Mobile-Karten initial offen,
+   zuklappbar via Pille. JS-Init setzt is-open auf Mobile auf alle, auf Desktop
+   nur auf die erste Karte). */
+.pz-step.is-open .pz-substeps {
+  max-height: 500px;
+  opacity: 1;
+  margin-top: 16px;
+}
+/* Wenn der User eine explizit geöffnete Karte gerade zugeklappt hat (JS:
+   data-just-closed), darf der site.css :hover/:focus-within-Preview die Karte
+   NICHT sofort wieder aufpoppen lassen. Marker fällt bei mouseleave weg. */
+.pz-step[data-just-closed]:hover .pz-substeps,
+.pz-step[data-just-closed]:focus-within .pz-substeps {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
 }
 
-/* Mobil (≤768px): Tippen öffnet ein Bottom-Sheet mit dem Leistungsumfang.
-   Die Inline-Aufklappung (.is-open / site.css :hover/:focus-within) wird hier
-   neutralisiert; nur .is-sheet zeigt Inhalt — als fixiertes Sheet. */
 @media (max-width: 768px) {
-  /* Mobil kein Inline-Akkordeon → die geerbte max-height/opacity-Transition
-     (site.css) abschalten. Sie blockiert sonst das Sheet (Transition bleibt
-     near-0 „running"); die Sheet-Bewegung liefert die translateY-Animation. */
-  .pz-step .pz-substeps {
-    max-height: 0;
-    opacity: 0;
-    margin-top: 0;
-    transition: none;
-  }
-
-  body.pz-sheet-open {
-    overflow: hidden;
-  }
-  /* Persistente CTA-Leiste während des Sheets ausblenden (sonst überlappt sie
-     den unteren Sheet-Rand und verdeckt die letzten Leistungen). */
-  body.pz-sheet-open .mobile-bottom-bar {
-    display: none;
-  }
-  /* WICHTIG (Stacking-Context-Fix): site.css gibt `.pz-step` ein
-     `position:relative; z-index:1`. Das erzeugt einen eigenen Stacking-Context,
-     in dem das Sheet (z-index:1001) gefangen ist — extern wirkt der ganze
-     .pz-step-Layer nur wie z-index:1, während der Backdrop bei z-index:1000
-     im Root sitzt. Folge: Backdrop liegt VOR dem Sheet → genau das gemeldete
-     Symptom „Schleier legt sich übers Display, kein Sheet sichtbar".
-     Fix: die is-sheet-Karte verlässt auf Mobil den Stacking-Context, dann
-     ist Sheets z-index:1001 wieder im Root und sitzt sauber über dem Backdrop. */
-  body.pz-sheet-open .pz-step.is-sheet {
-    position: static;
-    z-index: auto;
-  }
-
-  /* WICHTIG: nur bei offenem Sheet sichtbar/aktiv. Vorher überschrieb
-     `.pz-backdrop {display:block}` das [hidden]-Attribut → ein unsichtbarer
-     Backdrop fing alle Pointer-Events ab (CI Smoke-Test: Nav-Logo-Click
-     blockiert; Reporter "intercepts pointer events"). */
-  /* Backdrop dunkler + leichter Blur, damit dahinterliegende Karten klar als
-     „nicht aktiv" gelesen werden (vorher wirkten Karten unter dem 0.55-Overlay
-     wie sie durchblitzen / Sheet wirkte chaotisch zwischen den Karten). */
-  body.pz-sheet-open .pz-backdrop {
-    display: block;
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    border: 0;
-    margin: 0;
-    padding: 0;
-    background: rgba(10, 10, 10, 0.72);
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-  }
-
-  /* Sheet als Vordergrund. iOS-Safari-Härtung:
-     - min/max-height in px statt vh (iOS rechnet vh inkl. Adressleiste falsch);
-     - transform/opacity explizit für Default-State (sichtbar) und visibility/
-       pointer-events auf auto, damit Sheet auch ohne Animation klickbar ist;
-     - -webkit-overflow-scrolling für glattes Touch-Scrollen. */
-  body.pz-sheet-open .pz-step.is-sheet .pz-substeps {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1001;
-    min-height: 360px;
-    max-height: 78vh;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    margin: 0;
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    background: var(--schiefer);
-    border-top: 1px solid rgba(183, 217, 0, 0.22);
-    border-radius: 22px 22px 0 0;
-    padding: 30px 22px calc(24px + env(safe-area-inset-bottom));
-    box-shadow: 0 -18px 50px rgba(0, 0, 0, 0.5);
-  }
-  /* Tap-Target: Doppel-Tap-Zoom auf iOS verhindern, sonst „Tap kommt nicht an". */
+  /* Doppel-Tap-Zoom auf iOS verhindern, damit der Tap unmittelbar greift. */
   .pz-step,
-  .pz-expand-hint,
-  .pz-sheet-close {
+  .pz-expand-hint {
     touch-action: manipulation;
   }
-  /* Grab-Handle als Sheet-Signal. */
-  body.pz-sheet-open .pz-step.is-sheet .pz-substeps::before {
-    content: '';
-    position: absolute;
-    top: 11px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 42px;
-    height: 5px;
-    border-radius: 3px;
-    background: rgba(255, 255, 255, 0.28);
-  }
-  body.pz-sheet-open .pz-step.is-sheet .pz-sub-head {
-    margin-top: 6px;
-    padding-right: 40px;
-  }
-  body.pz-sheet-open .pz-step.is-sheet .pz-sheet-close {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    width: 34px;
-    height: 34px;
-    padding: 0;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.08);
-    color: var(--white);
-    cursor: pointer;
-  }
-  body.pz-sheet-open .pz-step.is-sheet .pz-sheet-close:focus-visible {
-    outline: 3px solid rgba(183, 217, 0, 0.55);
-    outline-offset: 2px;
-  }
-}
-
-/* Bewegung additiv via Backdrop-Fade-In. Das Sheet bekommt KEINE transform-Animation
-   mehr — vorher hing es bei „translateY(100%) → 0", was im Fehlerfall (Animation
-   wird vom Browser nicht durchgespielt, prefers-reduced-motion, Containing-Block-
-   Edge-Case) das Sheet unsichtbar unterhalb des Viewports hängen ließ, während der
-   Backdrop schon sichtbar war → genau das gemeldete Symptom „Layer drüber, nichts
-   bedienbar, Tap macht Layer weg". Ohne transform-Animation ist das Sheet aus
-   `position:fixed; bottom:0` immer sofort am unteren Rand sichtbar. */
-@media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
-  .pz-backdrop {
-    animation: pzFade 0.25s ease forwards;
-  }
-}
-
-@keyframes pzFade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
+  /* Mobil etwas mehr Höhe (5+ Substeps möglich), Pille rückt etwas weiter rauf. */
+  .pz-step.is-open .pz-substeps {
+    max-height: 600px;
   }
 }
 

@@ -217,20 +217,18 @@
     </a>
   </div>
 
-  <!-- Prozess-Aufklapp-Dynamik (W2-Trial): Desktop = Inline-Akkordeon, Mobil = Bottom-Sheet
-       - Initial: Karte 1 (data-pz-first) NUR auf Desktop vorab offen — auf Mobil sieht
-         der „Einklappen"-Pill sonst aktiv aus, obwohl substeps via @media zu sind.
-       - Beim expliziten Schließen einer offenen Karte (Desktop) blurren wir den
-         Button und setzen data-just-closed, damit der site.css :hover/:focus-within-
-         Preview nicht sofort wieder aufpoppt; Marker fällt bei mouseleave/blur weg. -->
+  <!-- Prozess-Aufklapp-Logik (GF-Entscheidung 26.06.: kein Bottom-Sheet mehr)
+       - Mobil: alle Karten initial offen, per Pille zuklappbar.
+       - Desktop: nur die erste Karte (data-pz-first) initial offen, andere auf
+         Klick aufklappbar; site.css :hover/:focus-within-Preview bleibt erhalten.
+       - data-just-closed-Marker verhindert, dass eine gerade zugeklappte Karte
+         vom Hover sofort wieder aufpoppt (Marker fällt bei mouseleave weg). -->
   <script>
     (function () {
       var steps = Array.prototype.slice.call(document.querySelectorAll('.pz-step'));
       if (!steps.length) return;
-      var backdrop = document.querySelector('[data-pz-backdrop]');
       var mqMobile = window.matchMedia('(max-width: 768px)');
       var firstStep = document.querySelector('.pz-step[data-pz-first]') || steps[0];
-      var lastToggle = null;
 
       function labelFor(step, open) {
         var l = step.querySelector('.pz-hint-text');
@@ -240,109 +238,55 @@
         var t = step.querySelector('[data-pz-toggle]');
         if (t) t.setAttribute('aria-expanded', open ? 'true' : 'false');
       }
-
       function setInline(step, open) {
         step.classList.toggle('is-open', open);
         ariaFor(step, open);
         labelFor(step, open);
       }
-
       function closeInline(step) {
         setInline(step, false);
         step.setAttribute('data-just-closed', '1');
         var t = step.querySelector('[data-pz-toggle]');
         if (t && typeof t.blur === 'function') t.blur();
       }
-
       function clearJustClosed(step) {
         step.removeAttribute('data-just-closed');
       }
-
-      function closeSheet() {
-        if (!document.body.classList.contains('pz-sheet-open')) return;
-        document.body.classList.remove('pz-sheet-open');
-        steps.forEach(function (s) {
-          if (s.classList.contains('is-sheet')) {
-            s.classList.remove('is-sheet');
-            ariaFor(s, false);
-            labelFor(s, false);
-          }
-        });
-        if (backdrop) backdrop.hidden = true;
-        if (lastToggle) {
-          lastToggle.focus();
-          lastToggle = null;
-        }
-      }
-
-      function openSheet(step) {
-        closeSheet();
-        step.classList.add('is-sheet');
-        document.body.classList.add('pz-sheet-open');
-        if (backdrop) backdrop.hidden = false;
-        ariaFor(step, true);
-        labelFor(step, true);
-        lastToggle = step.querySelector('[data-pz-toggle]');
-        var closeBtn = step.querySelector('[data-pz-close]');
-        if (closeBtn) closeBtn.focus();
-      }
-
       function toggleStep(step) {
-        if (mqMobile.matches) {
-          if (step.classList.contains('is-sheet')) closeSheet();
-          else openSheet(step);
-          return;
-        }
         if (step.classList.contains('is-open')) {
           closeInline(step);
         } else {
-          // Beim Öffnen einer anderen Karte: Marker auf der vorher zugemachten
-          // Karte räumen (sonst bleibt sie unter dem Hover „blockiert").
           steps.forEach(clearJustClosed);
           setInline(step, true);
         }
       }
-
-      function syncInitialDesktopState() {
+      function syncInitialState() {
         if (mqMobile.matches) {
+          // Mobil: alle Karten dauerhaft initial offen (GF-Entscheidung 26.06.).
           steps.forEach(function (s) {
-            setInline(s, false);
+            setInline(s, true);
             clearJustClosed(s);
           });
         } else {
+          // Desktop: nur erste Karte initial offen — andere via Hover-/Klick-
+          // Preview erreichbar.
           steps.forEach(function (s) {
             setInline(s, s === firstStep);
             clearJustClosed(s);
           });
         }
       }
-      syncInitialDesktopState();
+      syncInitialState();
 
       steps.forEach(function (step) {
-        step.addEventListener('click', function (e) {
-          if (e.target.closest('[data-pz-close]')) return;
+        step.addEventListener('click', function () {
           toggleStep(step);
         });
         step.addEventListener('mouseleave', function () {
           clearJustClosed(step);
         });
-        var closeBtn = step.querySelector('[data-pz-close]');
-        if (closeBtn) {
-          closeBtn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            closeSheet();
-          });
-        }
       });
-
-      if (backdrop) backdrop.addEventListener('click', closeSheet);
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') closeSheet();
-      });
-      mqMobile.addEventListener('change', function () {
-        closeSheet();
-        syncInitialDesktopState();
-      });
+      mqMobile.addEventListener('change', syncInitialState);
     })();
   </script>
 
