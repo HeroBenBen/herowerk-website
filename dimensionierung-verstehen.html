@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico" sizes="any" type="image/x-icon">
+  <meta name="theme-color" content="#0A0A0A">
+  <title>Wärmepumpe richtig dimensionieren: warum die Größe zählt | HeroWerk</title>
+  <meta name="description" content="Es gibt viele Wege, eine Wärmepumpe zu dimensionieren — von der groben Faustformel bis zur raumgenauen Heizlastberechnung nach DIN EN 12831. Warum die richtige Größe über Lebensdauer, Stromverbrauch und Komfort entscheidet.">
+  <link rel="canonical" href="https://www.herowerk.de/dimensionierung-verstehen">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Wärmepumpe richtig dimensionieren: warum die Größe zählt | HeroWerk">
+  <meta property="og:description" content="Es gibt viele Wege, eine Wärmepumpe zu dimensionieren — von der groben Faustformel bis zur raumgenauen Heizlastberechnung nach DIN EN 12831. Warum die richtige Größe über Lebensdauer, Stromverbrauch und Komfort entscheidet.">
+  <meta property="og:url" content="https://www.herowerk.de/dimensionierung-verstehen">
+  <meta property="og:image" content="https://www.herowerk.de/hero-paar-terrasse.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Wärmepumpe richtig dimensionieren: warum die Größe zählt | HeroWerk">
+  <meta name="twitter:description" content="Es gibt viele Wege, eine Wärmepumpe zu dimensionieren — von der groben Faustformel bis zur raumgenauen Heizlastberechnung nach DIN EN 12831. Warum die richtige Größe über Lebensdauer, Stromverbrauch und Komfort entscheidet.">
+  <meta name="twitter:image" content="https://www.herowerk.de/hero-paar-terrasse.png">
+  <script src="js/theme.js"></script>
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/ratgeber.css">
+  <link rel="stylesheet" href="css/_w3.css">
+  <link rel="preload" href="tokens.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="tokens.css"></noscript>
+</head>
+<body>
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="nav-inner">
+      <a href="/" style="display:inline-block;"><img src="herowerk-logo-stacked.png" alt="HeroWerk, Meisterbetrieb für Wärmepumpen" class="nav-logo logo-dark" width="607" height="337" decoding="async"><img src="herowerk-logo-stacked-light.png" alt="HeroWerk, Meisterbetrieb für Wärmepumpen" class="nav-logo logo-light" width="607" height="337" decoding="async"></a>
+      <div class="nav-links">
+        <a href="/" style="display:inline-flex;align-items:center;gap:5px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1V10"/></svg> Startseite</a>
+        <a href="/preise">Preise</a>
+        <a href="/rechner">Rechner</a>
+        <a href="/prozess">Prozess</a>
+        <a href="/foerderung">Förderung</a>
+        <a href="/ratgeber">Ratgeber</a>
+        <a href="/ratgeber#friends">HERO FRIENDS</a>
+        <a href="/kontakt">Kontakt</a>
+        <button type="button" class="theme-toggle" data-theme-toggle>Light-Mode</button>
+        <a href="tel:+4951130030860" class="nav-cta-call"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:4px;"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg> Anrufen</a>
+        <a href="/anfrage" class="nav-cta">Termin vereinbaren</a>
+      </div>
+      <button type="button" class="theme-toggle nav-theme-standalone" data-theme-toggle>Light-Mode</button>
+      <a href="tel:+4951130030860" class="mobile-phone-cta" aria-label="Anrufen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></a>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="/" onclick="toggleMenu()" style="display:inline-flex;align-items:center;gap:5px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h3v-6h6v6h3a1 1 0 001-1V10"/></svg> Startseite</a>
+      <a href="/preise" onclick="toggleMenu()">Preise</a>
+      <a href="/rechner" onclick="toggleMenu()">Rechner</a>
+      <a href="/prozess" onclick="toggleMenu()">Prozess</a>
+      <a href="/foerderung" onclick="toggleMenu()">Förderung</a>
+      <a href="/ratgeber" onclick="toggleMenu()">Ratgeber</a>
+      <a href="/ratgeber#friends" onclick="toggleMenu()">HERO FRIENDS</a>
+      <a href="/kontakt" onclick="toggleMenu()">Kontakt</a>
+      <button type="button" class="theme-toggle" data-theme-toggle>Light-Mode</button>
+      <a href="tel:+4951130030860" class="nav-cta-call" onclick="toggleMenu()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:4px;"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg> Anrufen</a>
+      <a href="/anfrage" class="nav-cta" onclick="toggleMenu()">Termin vereinbaren</a>
+    </div>
+  </nav>
+
+  <main id="main-content">
+<article class="section">
+  <div class="section-inner">
+    <div class="section-tag">Dimensionierung</div>
+    <h1 class="section-title" style="color:var(--white);">Die richtige Größe entscheidet über alles</h1>
+    <p class="section-lead">Ob eine Wärmepumpe leise, sparsam und langlebig läuft, hängt zuallererst davon ab, ob sie richtig dimensioniert ist. Und genau hier gibt es große Unterschiede — je nachdem, wie genau gerechnet wird.</p>
+    <div class="ratgeber-article">
+      <h2>Es gibt viele Verfahren — mit sehr unterschiedlicher Genauigkeit</h2>
+      <p>„Wie groß muss die Wärmepumpe sein?" lässt sich auf ganz unterschiedlichen Wegen beantworten. Sie reichen von der groben Faustformel bis zur raumgenauen Berechnung. Je weiter oben in dieser Leiter, desto verlässlicher das Ergebnis.</p>
+      <div class="w3-ladder">
+        <div class="w3-rung">
+          <div>
+            <h3>Faustformel</h3>
+            <span class="w3-rung-meter" aria-hidden="true"><span class="on"></span><span></span><span></span><span></span></span>
+          </div>
+          <p>Watt pro Quadratmeter mal Wohnfläche — der berühmte „dicke Daumen". Schnell, aber blind für Dämmung, Fenster, Lage und Heizflächen. Taugt allenfalls als erste Hausnummer.</p>
+        </div>
+        <div class="w3-rung">
+          <div>
+            <h3>Verbrauchsschätzung</h3>
+            <span class="w3-rung-meter" aria-hidden="true"><span class="on"></span><span class="on"></span><span></span><span></span></span>
+          </div>
+          <p>Hochrechnung aus dem alten Gas- oder Ölverbrauch. Besser, weil reale Daten einfließen — aber sie spiegeln den oft überdimensionierten Altkessel und das alte Nutzerverhalten wider, nicht den echten Bedarf.</p>
+        </div>
+        <div class="w3-rung">
+          <div>
+            <h3>Vereinfachte Heizlast</h3>
+            <span class="w3-rung-meter" aria-hidden="true"><span class="on"></span><span class="on"></span><span class="on"></span><span></span></span>
+          </div>
+          <p>Überschlägige Berechnung über die Gebäudehülle. Ordentlich für eine erste Auslegung und genau das, was unser Online-Rechner liefert — eine schnelle, fundierte Schätzung.</p>
+        </div>
+        <div class="w3-rung w3-rung--best">
+          <div>
+            <h3>Raumweise Heizlast<span class="w3-rung-tag">am genauesten</span></h3>
+            <span class="w3-rung-meter" aria-hidden="true"><span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span></span>
+          </div>
+          <p>Raum für Raum nach DIN EN 12831, mit echten Gebäudedaten. Das ist der Goldstandard — und das Verfahren, mit dem wir dein Projekt auslegen.</p>
+        </div>
+      </div>
+
+      <h2>Was passiert, wenn die Größe nicht stimmt</h2>
+      <p>Eine falsch dimensionierte Wärmepumpe funktioniert zwar irgendwie — aber sie kostet dich Geld, Komfort und Lebensdauer. In beide Richtungen.</p>
+      <div class="w3-grid">
+        <div class="w3-card w3-card--warn">
+          <span class="w3-card-kicker">Zu groß ausgelegt</span>
+          <h3>Sie taktet sich kaputt</h3>
+          <ul>
+            <li>Ständiges Ein- und Ausschalten („Takten") statt ruhigem Dauerlauf</li>
+            <li>Mehr Verschleiß am Verdichter, kürzere Lebensdauer</li>
+            <li>Schlechtere Effizienz im Alltag, also höhere Stromkosten</li>
+            <li>Unnötig teuer schon in der Anschaffung</li>
+          </ul>
+        </div>
+        <div class="w3-card w3-card--warn">
+          <span class="w3-card-kicker">Zu klein ausgelegt</span>
+          <h3>Der Heizstab übernimmt</h3>
+          <ul>
+            <li>An kalten Tagen springt der elektrische Heizstab zu oft ein</li>
+            <li>Heizen mit reinem Strom treibt den Verbrauch nach oben</li>
+            <li>Bei Spitzenfrost reicht die Leistung womöglich nicht für volle Wärme</li>
+            <li>Springt der Heizstab zu viel ein, kann die Förderfähigkeit leiden</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>So dimensioniert HeroWerk</h2>
+      <p>Für dein Projekt setzen wir das <strong>genaueste aktuell verfügbare Verfahren</strong> ein: die <strong>raumweise Heizlastberechnung (Hüllflächenverfahren) nach DIN EN 12831</strong> — damit du auf der sicheren Seite bist. Sie bildet jeden Raum mit seinen echten Eigenschaften ab, statt das Haus über einen Kamm zu scheren.</p>
+      <p>Unser <a href="/dimensionierung">Online-Rechner</a> gibt dir vorab eine vereinfachte, schnelle Schätzung — ideal, um eine Größenordnung und einen Richtpreis zu bekommen. Die exakte Auslegung machen wir anschließend projektbezogen mit deinen Gebäudedaten, bevor irgendetwas verbindlich wird.</p>
+      <div class="w3-note">
+        <p><strong>Warum sich der Aufwand lohnt — vier Dinge hängen direkt an der richtigen Größe:</strong></p>
+        <ul style="margin:6px 0 0;padding-left:20px;">
+          <li>längere <strong>Lebensdauer</strong> der Anlage</li>
+          <li>niedrigerer <strong>Stromverbrauch</strong></li>
+          <li>spürbar besserer <strong>Komfort</strong></li>
+          <li>ruhiges, schonendes <strong>Taktverhalten</strong></li>
+        </ul>
+      </div>
+
+      <div class="w3-cta-row">
+        <a href="/dimensionierung" class="btn-primary">Jetzt Dimension berechnen</a>
+        <a href="/anfrage" class="btn-primary" style="background:transparent;color:var(--green);border:1px solid var(--green);">Jetzt sofort anfragen</a>
+      </div>
+      <p class="ra-stand">Stand: Juni 2026. Norm-Grundlage: raumweise Heizlastberechnung nach DIN EN 12831. Der Online-Rechner liefert eine vereinfachte Schätzung; die verbindliche Auslegung erfolgt projektbezogen im Rahmen der Baubarkeitsprüfung.</p>
+    </div>
+  </div>
+</article>
+
+  <section class="detail-final-cta" aria-labelledby="dim-final">
+    <div class="section-inner">
+      <h2 id="dim-final">Bereit für deine Empfehlung?</h2>
+      <p>Starte mit einer schnellen Schätzung im Rechner oder frag direkt an. Die genaue Auslegung übernehmen wir.</p>
+      <a href="/dimensionierung" class="btn-primary">Jetzt Dimension berechnen →</a>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h2>HeroWerk</h2>
+          <p>Meisterbetrieb für Wärmepumpen in der Region Hannover.</p>
+          <p style="margin-top: 12px;">Wir verbauen:<br><strong style="color: var(--white);">Wolf GmbH &amp; Vaillant Group</strong></p>
+        </div>
+        <div class="footer-col">
+          <h2>Leistungen</h2>
+          <a href="/dimensionierung">Wärmepumpen-Beratung</a>
+          <a href="/foerderung">Förderrechner</a>
+          <a href="/preise">Richtpreise</a>
+          <a href="/ratgeber#friends">HERO FRIENDS</a>
+        </div>
+        <div class="footer-col">
+          <h2>Unternehmen</h2>
+          <a href="/prozess">Unser Prozess</a>
+          <a href="/ratgeber">Ratgeber</a>
+          <a href="/ratgeber#faq">FAQ</a>
+          <a href="/kontakt">Kontakt</a>
+        </div>
+        <div class="footer-col">
+          <h2>Kontakt</h2>
+          <p>HeroWerk GmbH</p>
+          <p>Region Hannover</p>
+          <p>Tel: 0176 444 25 001</p>
+          <p>info@herowerk.de</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-tagline">HeroWerk GmbH &middot; Meisterqualität aus der Region.</div>
+        <div class="footer-legal">
+          <a href="/impressum">Impressum</a>
+          <a href="/datenschutz">Datenschutz</a>
+          <a href="/hinweise">Hinweise</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/site.js" defer></script>
+
+  <!-- MOBILE BOTTOM BAR -->
+  <div class="mobile-bottom-bar" role="navigation" aria-label="Mobile Schnellnavigation">
+    <a href="tel:+4951130030860" class="mob-bar-call">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      Anrufen
+    </a>
+    <a href="/anfrage" class="mob-bar-cta" onclick="document.getElementById('mobileMenu')?.classList.remove('open');">
+      Kostenlose Beratung
+    </a>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,371 @@
+/* ===== Welle 3 — Neue Inhalts-Seiten (Fördervorschuss, Dimensionierung) + Preise-Anreicherung =====
+   Eigene Welle-CSS (Datei-Eigentum W3). Nutzt ausschliesslich die globalen Theme-Tokens
+   (var(--white)/--green/--g300/--g400/--g600/--schiefer/--nacht/--bernstein), damit Light-Mode
+   automatisch mitlaeuft. Wird per <link> auf foerdervorschuss.html, dimensionierung-verstehen.html
+   und preise.html eingebunden. Konsolidierung nach site.css erfolgt in Welle 4. */
+
+/* ---------- CTA-Reihe (verfuegbar auch ohne ratgeber.css, z. B. auf preise.html) ---------- */
+.w3-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 30px 0 6px;
+}
+
+/* ---------- Callout / Hinweis-Box ---------- */
+.w3-note {
+  margin: 8px 0 24px;
+  padding: 18px 22px;
+  background: rgba(183, 217, 0, 0.06);
+  border-left: 3px solid var(--green);
+  border-radius: 0 8px 8px 0;
+  color: var(--g300);
+  font-size: 16px;
+  line-height: 1.7;
+}
+.w3-note strong {
+  color: var(--white);
+}
+.w3-note p {
+  margin: 0 0 10px;
+}
+.w3-note p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- Karten-Grid (Marken, Konsequenzen, Faktenkacheln) ---------- */
+.w3-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin: 14px 0 26px;
+}
+.w3-card {
+  background: var(--schiefer);
+  border: 1px solid var(--g600);
+  border-radius: 14px;
+  padding: 22px 22px 24px;
+}
+.w3-card h3 {
+  font-family: 'Barlow', sans-serif;
+  color: var(--white);
+  font-size: 19px;
+  margin: 0 0 6px;
+}
+.w3-card p {
+  margin: 0 0 12px;
+  color: var(--g300);
+  font-size: 15px;
+  line-height: 1.65;
+}
+.w3-card ul {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+.w3-card li {
+  position: relative;
+  padding-left: 24px;
+  margin: 0 0 9px;
+  color: var(--g300);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.w3-card li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+/* Konsequenz-Karten (zu gross / zu klein) — warnender Akzent statt gruen */
+.w3-card--warn {
+  border-color: rgba(214, 158, 46, 0.4);
+}
+.w3-card--warn li::before {
+  background: var(--bernstein);
+}
+.w3-card--warn .w3-card-kicker {
+  color: var(--bernstein);
+}
+.w3-card-kicker {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin: 0 0 8px;
+}
+
+/* ---------- Marken-Karten (Wolf / Vaillant) ---------- */
+.w3-brand {
+  display: flex;
+  flex-direction: column;
+}
+.w3-brand-logo {
+  height: 34px;
+  width: auto;
+  max-width: 170px;
+  object-fit: contain;
+  object-position: left center;
+  margin: 0 0 16px;
+}
+.w3-brand-claim {
+  color: var(--g400);
+  font-size: 14px;
+  font-style: italic;
+  margin: 0 0 14px;
+}
+
+/* ---------- Genauigkeits-Leiter (Dimensionierungs-Verfahren) ---------- */
+.w3-ladder {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0 26px;
+}
+.w3-rung {
+  display: grid;
+  grid-template-columns: 132px 1fr;
+  gap: 16px;
+  align-items: center;
+  background: var(--schiefer);
+  border: 1px solid var(--g600);
+  border-radius: 12px;
+  padding: 14px 18px;
+}
+.w3-rung-meter {
+  display: flex;
+  gap: 4px;
+}
+.w3-rung-meter span {
+  flex: 1;
+  height: 9px;
+  border-radius: 3px;
+  background: var(--g600);
+}
+.w3-rung-meter span.on {
+  background: var(--bernstein);
+}
+.w3-rung--best .w3-rung-meter span.on {
+  background: var(--green);
+}
+.w3-rung--best {
+  border-color: rgba(183, 217, 0, 0.45);
+  background: rgba(183, 217, 0, 0.06);
+}
+.w3-rung h3 {
+  font-family: 'Barlow', sans-serif;
+  font-size: 16px;
+  color: var(--white);
+  margin: 0 0 3px;
+}
+.w3-rung p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--g400);
+}
+.w3-rung-tag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  background: rgba(183, 217, 0, 0.14);
+  color: var(--green);
+  vertical-align: middle;
+}
+
+/* ---------- Fördervorschuss: Aufteilung Eigenanteil / Förderanteil ---------- */
+.w3-split {
+  margin: 16px 0 10px;
+}
+.w3-split-bar {
+  display: flex;
+  height: 46px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--g600);
+}
+.w3-split-eigen,
+.w3-split-foerder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  white-space: nowrap;
+  padding: 0 10px;
+}
+.w3-split-eigen {
+  flex: 0 0 55%;
+  background: var(--green);
+  color: var(--nacht);
+}
+.w3-split-foerder {
+  flex: 1;
+  background: rgba(183, 217, 0, 0.16);
+  color: var(--white);
+  border-left: 2px dashed var(--green);
+}
+.w3-split-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--g400);
+}
+.w3-split-legend strong {
+  color: var(--white);
+}
+
+/* ---------- Nummerierte Schritte (FV-Mechanik) ---------- */
+.w3-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 14px 0 26px;
+}
+.w3-step {
+  background: var(--schiefer);
+  border: 1px solid var(--g600);
+  border-radius: 14px;
+  padding: 20px 20px 22px;
+}
+.w3-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--green);
+  color: var(--nacht);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  margin: 0 0 12px;
+}
+.w3-step h3 {
+  font-family: 'Barlow', sans-serif;
+  font-size: 17px;
+  color: var(--white);
+  margin: 0 0 6px;
+}
+.w3-step p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--g300);
+}
+
+/* ---------- Faktenkacheln (Kosten, Bedingungen kompakt) ---------- */
+.w3-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin: 8px 0 22px;
+}
+.w3-fact {
+  background: var(--schiefer);
+  border: 1px solid var(--g600);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.w3-fact-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin: 0 0 6px;
+}
+.w3-fact-value {
+  font-family: 'Barlow', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.25;
+}
+.w3-fact-sub {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--g400);
+  font-weight: 400;
+}
+
+/* ---------- Preise: "So liest du diese Seite" ---------- */
+.w3-howto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 8px;
+}
+.w3-howto-item {
+  background: var(--schiefer);
+  border: 1px solid var(--g600);
+  border-radius: 14px;
+  padding: 22px;
+}
+.w3-howto-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(183, 217, 0, 0.14);
+  color: var(--green);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  margin: 0 0 12px;
+}
+.w3-howto-item h3 {
+  font-family: 'Barlow', sans-serif;
+  font-size: 17px;
+  color: var(--white);
+  margin: 0 0 6px;
+}
+.w3-howto-item p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--g300);
+}
+
+/* dezenter Abstand der Anreicherungs-Sektionen auf preise.html */
+.w3-section-note {
+  margin-top: 18px;
+  font-size: 14px;
+  color: var(--g400);
+  line-height: 1.6;
+}
+.w3-section-note a {
+  color: var(--green);
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .w3-rung {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .w3-split-eigen,
+  .w3-split-foerder {
+    font-size: 12px;
+  }
+}
