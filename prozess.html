@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="css/site.css">
   <link rel="preload" href="tokens.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="tokens.css"></noscript>
+  <link rel="stylesheet" href="css/_w2.css">
 </head>
 <body>
   <!-- NAVIGATION -->
@@ -69,72 +70,78 @@
       <h1 class="section-title" style="color:var(--white);">4 Schritte. Den Rest machen wir.</h1>
       <p class="section-lead">Du kümmerst dich um das Wesentliche. Wir um alles andere. Von der Anfrage bis zur fertigen Anlage in 6 Wochen.</p>
 
-      <!-- Prozess-Bilder: Beratung + Service -->
-      <div class="pz-images" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:48px;max-width:800px;margin-left:auto;margin-right:auto;">
-        <div style="border-radius:12px;overflow:hidden;aspect-ratio:4/3;">
-          <img src="hero-beratung.jpg" alt="Wolf Fachberater erklärt Endkunden die Wärmepumpe vor Ort" width="3000" height="1999" style="width:100%;height:100%;object-fit:cover;image-rendering:auto;" loading="lazy" decoding="async">
-        </div>
-        <div style="border-radius:12px;overflow:hidden;aspect-ratio:4/3;">
-          <img src="hero-service.png" alt="Wolf Techniker bei der Inbetriebnahme der CHA Wärmepumpe" width="3000" height="2000" style="width:100%;height:100%;object-fit:cover;image-rendering:auto;" loading="lazy" decoding="async">
-        </div>
-      </div>
+      <!-- Prozess-Bild: Monteur & Kunde an der Wärmepumpe -->
+      <figure class="pz-figure">
+        <picture>
+          <source type="image/webp" srcset="prozess-handschlag-wp-800.webp 800w, prozess-handschlag-wp-1600.webp 1600w" sizes="(max-width: 860px) 100vw, 800px">
+          <img src="prozess-handschlag-wp-800.webp" alt="HeroWerk Monteur und Kunde geben sich vor einer Außen-Wärmepumpe am Haus die Hand" width="1600" height="844" loading="lazy" decoding="async">
+        </picture>
+      </figure>
 
-      <!-- 4 Phasen mit aufklappbaren Sub-Steps -->
+      <!-- 4 Phasen mit aufklappbaren Sub-Steps (Leistungsumfang sichtbar machen) -->
       <div class="pz-steps">
-        <div class="pz-step" onclick="this.classList.toggle('expanded');this.querySelector('.pz-expand-hint').textContent=this.classList.contains('expanded')?'Details ausblenden':'Details anzeigen'">
+        <div class="pz-step is-open">
           <div class="pz-step-num">1</div>
           <h2>Beratung</h2>
           <p>Online in 2 Minuten oder per Anruf. Wir melden uns innerhalb von 24 Stunden.</p>
           <span class="pz-time">Tag 1–7</span>
-          <div class="pz-substeps">
+          <div class="pz-substeps" id="pzSub1" role="group" aria-label="Leistungen im Schritt Beratung">
+            <button type="button" class="pz-sheet-close" data-pz-close aria-label="Leistungen schließen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+            <p class="pz-sub-head">Das übernehmen wir für dich</p>
             <div class="pz-sub">Anfrage online oder telefonisch</div>
             <div class="pz-sub">Erstgespräch & Bedarfsermittlung</div>
             <div class="pz-sub">Datenaufnahme (Fotos, Gebäudedaten)</div>
             <div class="pz-sub">Kostenloser Vor-Ort-Termin</div>
           </div>
-          <span class="pz-expand-hint">Details anzeigen</span>
+          <button type="button" class="pz-expand-hint" data-pz-toggle aria-expanded="true" aria-controls="pzSub1"><span class="pz-hint-text">Einklappen</span><svg class="pz-hint-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
         </div>
-        <div class="pz-step" onclick="this.classList.toggle('expanded');this.querySelector('.pz-expand-hint').textContent=this.classList.contains('expanded')?'Details ausblenden':'Details anzeigen'">
+        <div class="pz-step">
           <div class="pz-step-num">2</div>
           <h2>Planung</h2>
           <p>Wir planen dein Projekt, beantragen die Förderung und erstellen dein persönliches Angebot.</p>
           <span class="pz-time">Woche 1–2</span>
-          <div class="pz-substeps">
+          <div class="pz-substeps" id="pzSub2" role="group" aria-label="Leistungen im Schritt Planung">
+            <button type="button" class="pz-sheet-close" data-pz-close aria-label="Leistungen schließen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+            <p class="pz-sub-head">Das übernehmen wir für dich</p>
             <div class="pz-sub">Baubarkeitsprüfung</div>
             <div class="pz-sub">Heizlastberechnung (DIN 12831)</div>
             <div class="pz-sub">KfW-Förderantrag (BzA)</div>
             <div class="pz-sub">Persönliches Angebot</div>
             <div class="pz-sub">Netzbetreiber & Schornsteinfeger</div>
           </div>
-          <span class="pz-expand-hint">Details anzeigen</span>
+          <button type="button" class="pz-expand-hint" data-pz-toggle aria-expanded="false" aria-controls="pzSub2"><span class="pz-hint-text">Alle Leistungen ansehen</span><svg class="pz-hint-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
         </div>
-        <div class="pz-step" onclick="this.classList.toggle('expanded');this.querySelector('.pz-expand-hint').textContent=this.classList.contains('expanded')?'Details ausblenden':'Details anzeigen'">
+        <div class="pz-step">
           <div class="pz-step-num">3</div>
           <h2>Installation</h2>
           <p>Fester Termin. Unser Meisterteam installiert deine Wärmepumpe in 1–3 Tagen.</p>
           <span class="pz-time">Woche 3–5</span>
-          <div class="pz-substeps">
+          <div class="pz-substeps" id="pzSub3" role="group" aria-label="Leistungen im Schritt Installation">
+            <button type="button" class="pz-sheet-close" data-pz-close aria-label="Leistungen schließen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+            <p class="pz-sub-head">Das übernehmen wir für dich</p>
             <div class="pz-sub">Materiallogistik & Terminkoordination</div>
             <div class="pz-sub">Demontage Altanlage + Entsorgung</div>
             <div class="pz-sub">Fundament & Aufstellung</div>
             <div class="pz-sub">Elektro- und Hydraulikanschluss</div>
             <div class="pz-sub">Inbetriebnahme & Testlauf</div>
           </div>
-          <span class="pz-expand-hint">Details anzeigen</span>
+          <button type="button" class="pz-expand-hint" data-pz-toggle aria-expanded="false" aria-controls="pzSub3"><span class="pz-hint-text">Alle Leistungen ansehen</span><svg class="pz-hint-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
         </div>
-        <div class="pz-step" onclick="this.classList.toggle('expanded');this.querySelector('.pz-expand-hint').textContent=this.classList.contains('expanded')?'Details ausblenden':'Details anzeigen'">
+        <div class="pz-step">
           <div class="pz-step-num">4</div>
           <h2>Fertig.</h2>
           <p>Übergabe, Einweisung, Dokumentation. Ab jetzt heizt du mit einer Wärmepumpe.</p>
           <span class="pz-time">Woche 6</span>
-          <div class="pz-substeps">
+          <div class="pz-substeps" id="pzSub4" role="group" aria-label="Leistungen im Schritt Fertigstellung">
+            <button type="button" class="pz-sheet-close" data-pz-close aria-label="Leistungen schließen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+            <p class="pz-sub-head">Das übernehmen wir für dich</p>
             <div class="pz-sub">Abnahmeprotokoll</div>
             <div class="pz-sub">Einweisung in Bedienung</div>
             <div class="pz-sub">Übergabe aller Unterlagen</div>
             <div class="pz-sub">Kundenportal freigeschaltet</div>
             <div class="pz-sub">5 Jahre Garantie</div>
           </div>
-          <span class="pz-expand-hint">Details anzeigen</span>
+          <button type="button" class="pz-expand-hint" data-pz-toggle aria-expanded="false" aria-controls="pzSub4"><span class="pz-hint-text">Alle Leistungen ansehen</span><svg class="pz-hint-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
         </div>
       </div>
       <p style="color:var(--g400);font-size:12px;margin-top:18px;text-align:center;">Zeitangaben sind Richtwerte. Angaben ohne Gewähr.</p>
@@ -151,6 +158,9 @@
   </section>
 
   </main>
+
+  <!-- Bottom-Sheet-Backdrop für die Prozess-Aufklapp-Dynamik (mobil) -->
+  <div class="pz-backdrop" data-pz-backdrop hidden></div>
 
   <!-- FOOTER -->
   <footer>
@@ -206,6 +216,90 @@
       Kostenlose Beratung
     </a>
   </div>
+
+  <!-- Prozess-Aufklapp-Dynamik (W2-Trial): Desktop = Inline-Akkordeon, Mobil = Bottom-Sheet -->
+  <script>
+    (function () {
+      var steps = Array.prototype.slice.call(document.querySelectorAll('.pz-step'));
+      if (!steps.length) return;
+      var backdrop = document.querySelector('[data-pz-backdrop]');
+      var mqMobile = window.matchMedia('(max-width: 768px)');
+      var lastToggle = null;
+
+      function labelFor(step, open) {
+        var l = step.querySelector('.pz-hint-text');
+        if (l) l.textContent = open ? 'Einklappen' : 'Alle Leistungen ansehen';
+      }
+      function ariaFor(step, open) {
+        var t = step.querySelector('[data-pz-toggle]');
+        if (t) t.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+
+      function setInline(step, open) {
+        step.classList.toggle('is-open', open);
+        ariaFor(step, open);
+        labelFor(step, open);
+      }
+
+      function closeSheet() {
+        if (!document.body.classList.contains('pz-sheet-open')) return;
+        document.body.classList.remove('pz-sheet-open');
+        steps.forEach(function (s) {
+          if (s.classList.contains('is-sheet')) {
+            s.classList.remove('is-sheet');
+            ariaFor(s, false);
+            labelFor(s, false);
+          }
+        });
+        if (backdrop) backdrop.hidden = true;
+        if (lastToggle) {
+          lastToggle.focus();
+          lastToggle = null;
+        }
+      }
+
+      function openSheet(step) {
+        closeSheet();
+        step.classList.add('is-sheet');
+        document.body.classList.add('pz-sheet-open');
+        if (backdrop) backdrop.hidden = false;
+        ariaFor(step, true);
+        labelFor(step, true);
+        lastToggle = step.querySelector('[data-pz-toggle]');
+        var closeBtn = step.querySelector('[data-pz-close]');
+        if (closeBtn) closeBtn.focus();
+      }
+
+      function toggleStep(step) {
+        if (mqMobile.matches) {
+          if (step.classList.contains('is-sheet')) closeSheet();
+          else openSheet(step);
+        } else {
+          setInline(step, !step.classList.contains('is-open'));
+        }
+      }
+
+      steps.forEach(function (step) {
+        step.addEventListener('click', function (e) {
+          if (e.target.closest('[data-pz-close]')) return;
+          toggleStep(step);
+        });
+        var closeBtn = step.querySelector('[data-pz-close]');
+        if (closeBtn) {
+          closeBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            closeSheet();
+          });
+        }
+      });
+
+      if (backdrop) backdrop.addEventListener('click', closeSheet);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeSheet();
+      });
+      mqMobile.addEventListener('change', closeSheet);
+    })();
+  </script>
 
 </body>
 </html>

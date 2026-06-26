@@ -1,0 +1,294 @@
+/* ==========================================================================
+   _w2.css — Website Runde 2, Welle 2 (Startseite-CTAs, Trust, Bilder, Prozess)
+   Scope: index.html (außer <nav>), prozess.html, kontakt.html.
+   Konflikt-Vermeidung (Shared-Contracts): neue Styles NUR hier, NICHT in site.css.
+   W4 konsolidiert diese Datei später nach site.css.
+   Variablen (--green, --schiefer, …) stammen aus tokens.css / site.css.
+   ========================================================================== */
+
+/* ── SF2-A2 · Fördervorschuss-Banner: zweiter CTA „Mehr erfahren" ─────────── */
+/* site.css kennt `.fv-cta-row .btn-primary` bereits für Mobil (width:100%);
+   hier nur das Row-Layout + Angleichen des Ghost-Buttons an den Primary. */
+.fv-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+.fv-cta-row .btn-ghost {
+  min-height: 52px;
+  box-sizing: border-box;
+  padding: 14px 26px;
+  font-size: 16px;
+}
+@media (max-width: 768px) {
+  .fv-cta-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .fv-cta-row .btn-primary,
+  .fv-cta-row .btn-ghost {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ── SF2-C1/C2 · Förderungs-Sektion: zwei CTAs nebeneinander ──────────────── */
+.home-feature-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 12px;
+}
+/* Das lange Primär-Label („Fördermittel-Rechner starten") passt neben einem
+   zweiten Button nicht in die schmale Feature-Textspalte (~430px). Saubere,
+   robuste Lösung: zwei volle Breite gestapelte CTAs mit klarer Hierarchie
+   (Primär oben, Ghost darunter). min-width:auto hebt site.css min-width:220 auf. */
+.home-feature-ctas .btn-primary,
+.home-feature-ctas .btn-ghost {
+  flex: 1 1 100%;
+  min-width: auto;
+  justify-content: center;
+}
+.home-feature-ctas .btn-ghost {
+  min-height: 52px;
+  box-sizing: border-box;
+  padding: 14px 26px;
+  font-size: 16px;
+}
+
+/* ── SF2-F1 · Prozess: ein Bild statt zwei ────────────────────────────────── */
+.pz-figure {
+  margin: 0 auto 48px;
+  max-width: 800px;
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 1600 / 844;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+}
+.pz-figure img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+[data-theme='light'] .pz-figure {
+  box-shadow: 0 12px 32px rgba(28, 43, 54, 0.18);
+}
+
+/* ── SF2-F2 · Prozess-Aufklapp-Dynamik (TRIAL) ────────────────────────────── */
+/* Ziel: Leistungsumfang sichtbar machen. Karte 1 vorab offen (Desktop),
+   dezenter „Mehr"-Puls an zugeklappten Karten, Mobil = Bottom-Sheet.
+   Zustände:  .is-open  = Desktop-Inline-Aufklappung (nur ≥769px wirksam)
+              .is-sheet = Mobil-Bottom-Sheet (nur ≤768px wirksam)
+   Substeps/Checks erben ihr Aussehen aus site.css (.pz-substeps/.pz-sub). */
+
+/* Saubere Oberkante, wenn eine Karte höher (offen) ist als die Nachbarn. */
+.pz-steps {
+  align-items: start;
+}
+
+/* Eyebrow über der Checkliste — verstärkt „das übernehmen wir alles". */
+.pz-sub-head {
+  margin: 0 0 10px;
+  text-align: left;
+  color: var(--green);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+/* „Details anzeigen" war zu unscheinbar → klar klickbarer Pill-Button. */
+.pz-expand-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 14px;
+  padding: 8px 16px;
+  background: rgba(183, 217, 0, 0.08);
+  border: 1px solid rgba(183, 217, 0, 0.28);
+  border-radius: 999px;
+  color: var(--green);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.pz-expand-hint:hover {
+  background: rgba(183, 217, 0, 0.16);
+  border-color: rgba(183, 217, 0, 0.5);
+}
+.pz-expand-hint:focus-visible {
+  outline: 3px solid rgba(183, 217, 0, 0.55);
+  outline-offset: 3px;
+}
+.pz-hint-chev {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+.pz-step.is-open .pz-hint-chev {
+  transform: rotate(180deg);
+}
+
+/* Dezenter „Mehr"-Puls als Klick-Einladung — nur an zugeklappten Karten. */
+@media (prefers-reduced-motion: no-preference) {
+  .pz-step:not(.is-open):not(.is-sheet) .pz-expand-hint {
+    animation: pzPulse 2.6s ease-in-out infinite;
+  }
+}
+@keyframes pzPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(183, 217, 0, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(183, 217, 0, 0.12);
+  }
+}
+
+/* Sheet-Close + Backdrop sind nur im Mobil-Sheet sichtbar. */
+.pz-sheet-close {
+  display: none;
+}
+.pz-backdrop {
+  display: none;
+}
+
+/* Desktop/Tablet (≥769px): Inline-Aufklappung über .is-open. */
+@media (min-width: 769px) {
+  .pz-step.is-open .pz-substeps {
+    max-height: 480px;
+    opacity: 1;
+    margin-top: 16px;
+  }
+}
+
+/* Mobil (≤768px): Tippen öffnet ein Bottom-Sheet mit dem Leistungsumfang.
+   Die Inline-Aufklappung (.is-open / site.css :hover/:focus-within) wird hier
+   neutralisiert; nur .is-sheet zeigt Inhalt — als fixiertes Sheet. */
+@media (max-width: 768px) {
+  /* Mobil kein Inline-Akkordeon → die geerbte max-height/opacity-Transition
+     (site.css) abschalten. Sie blockiert sonst das Sheet (Transition bleibt
+     near-0 „running"); die Sheet-Bewegung liefert die translateY-Animation. */
+  .pz-step .pz-substeps {
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0;
+    transition: none;
+  }
+
+  body.pz-sheet-open {
+    overflow: hidden;
+  }
+  /* Persistente CTA-Leiste während des Sheets ausblenden (sonst überlappt sie
+     den unteren Sheet-Rand und verdeckt die letzten Leistungen). */
+  body.pz-sheet-open .mobile-bottom-bar {
+    display: none;
+  }
+
+  .pz-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    background: rgba(10, 10, 10, 0.55);
+  }
+
+  body.pz-sheet-open .pz-step.is-sheet .pz-substeps {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1001;
+    max-height: 82vh;
+    overflow-y: auto;
+    margin: 0;
+    opacity: 1;
+    background: var(--schiefer);
+    border-top: 1px solid rgba(183, 217, 0, 0.22);
+    border-radius: 22px 22px 0 0;
+    padding: 30px 22px calc(24px + env(safe-area-inset-bottom));
+    box-shadow: 0 -18px 50px rgba(0, 0, 0, 0.5);
+  }
+  /* Grab-Handle als Sheet-Signal. */
+  body.pz-sheet-open .pz-step.is-sheet .pz-substeps::before {
+    content: '';
+    position: absolute;
+    top: 11px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 42px;
+    height: 5px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.28);
+  }
+  body.pz-sheet-open .pz-step.is-sheet .pz-sub-head {
+    margin-top: 6px;
+    padding-right: 40px;
+  }
+  body.pz-sheet-open .pz-step.is-sheet .pz-sheet-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--white);
+    cursor: pointer;
+  }
+  body.pz-sheet-open .pz-step.is-sheet .pz-sheet-close:focus-visible {
+    outline: 3px solid rgba(183, 217, 0, 0.55);
+    outline-offset: 2px;
+  }
+}
+
+/* Bewegung additiv: Sheet ruht sichtbar (translateY 0); die Slide-/Fade-Animation
+   nur bei erlaubter Bewegung. So bleibt das Sheet auch dann sichtbar, wenn die
+   Animation nicht läuft (reduced-motion oder Animations-Pause). */
+@media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
+  body.pz-sheet-open .pz-step.is-sheet .pz-substeps {
+    animation: pzSheetUp 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .pz-backdrop {
+    animation: pzFade 0.25s ease;
+  }
+}
+
+@keyframes pzFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes pzSheetUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+[data-theme='light'] .pz-sub-head {
+  color: #3f5f00;
+}
