@@ -1,0 +1,443 @@
+/* ===== Karriere-Seite (/karriere) =====
+   Page-spezifische Styles. Nutzt die globalen Theme-Tokens (tokens.css /
+   site.css :root), damit Light-Mode automatisch mitläuft. Alle eigenen
+   Klassen sind mit kar- praefixiert, um Kollisionen mit site.css zu vermeiden.
+   Kartenfarben folgen dem Site-Muster: dunkle Schiefer-Karten im Dark-Mode,
+   weisse Karten im Light-Mode (analog .pa-card in tokens.css). */
+
+/* ---------- Gemeinsame Karten-Basis ---------- */
+.kar-why-card,
+.kar-role-card,
+.kar-benefit,
+.kar-step,
+.kar-cta-panel {
+  background: var(--color-surface-tertiary);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+}
+
+[data-theme='light'] .kar-why-card,
+[data-theme='light'] .kar-role-card,
+[data-theme='light'] .kar-benefit,
+[data-theme='light'] .kar-step,
+[data-theme='light'] .kar-cta-panel {
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: 0 8px 28px var(--color-shadow);
+}
+
+/* ---------- Icon-Chip ---------- */
+.kar-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(183, 217, 0, 0.12);
+  color: var(--green);
+  margin-bottom: 16px;
+}
+
+[data-theme='light'] .kar-icon {
+  background: rgba(183, 217, 0, 0.22);
+  color: var(--color-accent-on-light);
+}
+
+/* ---------- Ghost-Button (Sekundaer-CTA) ---------- */
+.kar-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 24px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border-strong);
+  color: var(--white);
+  font:
+    700 15px/1 'Inter',
+    sans-serif;
+  text-decoration: none;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+
+.kar-btn-ghost:hover {
+  border-color: var(--green);
+  background: rgba(183, 217, 0, 0.08);
+}
+
+.kar-btn-ghost:focus-visible {
+  outline: 3px solid rgba(183, 217, 0, 0.65);
+  outline-offset: 3px;
+}
+
+/* ---------- "zu bestätigen"-Marker (nur Branch-Preview) ----------
+   Bernstein-Pille mit dunkler Schrift in BEIDEN Themes (CI-Regel:
+   Bernstein-Flaeche traegt dunkle Schrift). Markiert die offenen
+   Entscheidungen und wird bei der Integration nach main entfernt. */
+.kar-flag {
+  display: inline-block;
+  vertical-align: middle;
+  background: var(--bernstein);
+  color: #1c2b36;
+  font:
+    700 11px/1.4 'Inter',
+    sans-serif;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* ---------- Interner Abnahme-Hinweis (nur Branch-Preview) ----------
+   PAIRT MIT dem .kar-note-Block in karriere.html. Bei Integration nach main
+   beides (HTML-Block + dieser Abschnitt) entfernen. Die Seite selbst bleibt
+   unveraendert, da der Hinweis ausserhalb der Sektionen liegt. */
+.kar-note {
+  max-width: 1100px;
+  margin: 76px auto 0;
+  padding: 0 24px;
+}
+
+.kar-note-inner {
+  background: rgba(232, 168, 56, 0.1);
+  border: 1px solid rgba(232, 168, 56, 0.45);
+  border-left: 4px solid var(--bernstein);
+  border-radius: 10px;
+  padding: 16px 20px;
+}
+
+.kar-note-head {
+  display: block;
+  color: var(--white);
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.kar-note p {
+  color: var(--g300);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 10px;
+}
+
+.kar-note ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--g300);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.kar-note li {
+  margin-bottom: 4px;
+}
+
+.kar-note strong {
+  color: var(--white);
+}
+
+.kar-note code {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.9em;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+[data-theme='light'] .kar-note code {
+  background: rgba(28, 43, 54, 0.08);
+  color: var(--color-text-primary);
+}
+
+/* ---------- 1 · Hero ---------- */
+.kar-hero .section-lead {
+  max-width: 720px;
+}
+
+.kar-hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 30px 0 18px;
+}
+
+.kar-hero-meta {
+  color: var(--g400);
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ---------- 2 · Warum HeroWerk ---------- */
+.kar-why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 36px;
+}
+
+.kar-why-card {
+  padding: 28px 26px;
+}
+
+.kar-why-card h3 {
+  font-family: 'Barlow', sans-serif;
+  color: var(--white);
+  font-size: 20px;
+  margin: 0 0 10px;
+}
+
+.kar-why-card p {
+  color: var(--g300);
+  font-size: 16px;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ---------- 3 · Offene Rollen ---------- */
+.kar-roles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  margin-top: 36px;
+}
+
+.kar-role-card {
+  display: flex;
+  flex-direction: column;
+  padding: 28px 26px;
+}
+
+.kar-role-card--initiativ {
+  background: rgba(183, 217, 0, 0.07);
+  border: 1px dashed rgba(183, 217, 0, 0.5);
+}
+
+[data-theme='light'] .kar-role-card--initiativ {
+  background: rgba(183, 217, 0, 0.1);
+  border: 1px dashed rgba(159, 191, 0, 0.7);
+  box-shadow: none;
+}
+
+.kar-role-title {
+  font-family: 'Barlow', sans-serif;
+  color: var(--white);
+  font-size: 20px;
+  line-height: 1.3;
+  margin: 0 0 12px;
+}
+
+.kar-mwd {
+  color: var(--g400);
+  font-weight: 600;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+
+.kar-role-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+}
+
+.kar-role-meta li {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--g300);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 11px;
+  border-radius: 999px;
+}
+
+[data-theme='light'] .kar-role-meta li {
+  background: var(--color-surface-tertiary);
+  color: var(--color-text-secondary);
+}
+
+.kar-role-card > p {
+  color: var(--g300);
+  font-size: 16px;
+  line-height: 1.65;
+  margin: 0 0 16px;
+}
+
+.kar-role-tasks {
+  margin: 0 0 22px;
+  padding-left: 20px;
+  color: var(--g300);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.kar-role-tasks li {
+  margin-bottom: 7px;
+}
+
+.kar-role-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+}
+
+/* ---------- 4 · Was wir bieten ---------- */
+.kar-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 36px;
+}
+
+.kar-benefit {
+  padding: 24px 22px;
+}
+
+.kar-benefit .kar-icon {
+  width: 42px;
+  height: 42px;
+  margin-bottom: 14px;
+}
+
+.kar-benefit h3 {
+  font-family: 'Barlow', sans-serif;
+  color: var(--white);
+  font-size: 17px;
+  margin: 0 0 8px;
+}
+
+.kar-benefit p {
+  color: var(--g300);
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ---------- 5 · Bewerbungsprozess ---------- */
+.kar-steps {
+  list-style: none;
+  margin: 36px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.kar-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 22px 24px;
+}
+
+.kar-step-num {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--green);
+  color: #1c2b36;
+  font:
+    800 18px/1 'Barlow',
+    sans-serif;
+}
+
+.kar-step-body h3 {
+  font-family: 'Barlow', sans-serif;
+  color: var(--white);
+  font-size: 18px;
+  margin: 2px 0 8px;
+}
+
+.kar-step-body p {
+  color: var(--g300);
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.kar-cta-panel {
+  margin-top: 30px;
+  padding: 36px 32px;
+  text-align: center;
+}
+
+.kar-cta-panel h3 {
+  font-family: 'Barlow', sans-serif;
+  color: var(--white);
+  font-size: 24px;
+  margin: 0 0 8px;
+}
+
+.kar-cta-panel > p {
+  color: var(--g300);
+  font-size: 16px;
+  margin: 0 0 22px;
+}
+
+.kar-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.kar-cta-hint {
+  color: var(--g400);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.kar-cta-hint a {
+  color: var(--green);
+  text-decoration: underline;
+}
+
+[data-theme='light'] .kar-cta-hint a {
+  color: var(--color-accent-on-light);
+}
+
+[data-theme='light'] .kar-cta-hint strong {
+  color: var(--color-text-primary);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  .kar-why-grid {
+    grid-template-columns: 1fr;
+  }
+  .kar-benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .kar-roles-grid,
+  .kar-steps {
+    grid-template-columns: 1fr;
+  }
+  .kar-cta-panel {
+    padding: 28px 22px;
+  }
+  .kar-hero-cta .btn-primary,
+  .kar-hero-cta .kar-btn-ghost {
+    flex: 1 1 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .kar-benefits-grid {
+    grid-template-columns: 1fr;
+  }
+}
