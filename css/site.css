@@ -424,6 +424,17 @@ nav.scrolled {
   flex-wrap: wrap;
   margin-bottom: 32px;
 }
+.hero-ctas .btn-primary,
+.hero-ctas .btn-ghost {
+  flex: 1 1 200px;
+  box-sizing: border-box;
+  min-height: 52px;
+  padding: 14px 28px;
+  font-size: 16px;
+}
+.hero-ctas .btn-primary {
+  border: 1px solid transparent;
+}
 /* Lade-Animation Rechner (foerderSatzKfw / frZuschuss): pulsierende Punkte statt statischem "..." */
 .calc-dots {
   display: inline-flex;
@@ -803,7 +814,7 @@ nav.scrolled {
 }
 @media (max-width: 600px) {
   .usp-strip {
-    padding: 16px 16px;
+    padding: 16px 20px;
   }
   .usp-strip-inner {
     display: grid;
@@ -4126,8 +4137,13 @@ footer {
   color: var(--color-text-primary) !important;
 }
 .partner-logo {
-  width: 96px;
-  height: 32px;
+  /* Einheitliche Höhe statt starrer 96×32-Box: die 4 Hersteller-/Förder-SVGs
+     haben sehr unterschiedliche Seitenverhältnisse; object-fit in einer festen
+     Box ließ sie optisch verschieden hoch wirken. Höhe fix + Breite auto =
+     gleiche Sichthöhe (dieselbe Methode wie .wiz-brand-logo im Rechner). */
+  height: 24px;
+  width: auto;
+  max-width: 88px;
   object-fit: contain;
   display: block;
   flex-shrink: 0;
@@ -4524,7 +4540,11 @@ html[data-theme='light'] .section-tag {
      ohne dies kollabiert das Feld im Flex-Row-Layout auf ~34px (Placeholder
      und Eingabe abgeschnitten) */
   min-width: 14ch;
-  flex: 1 1 14ch;
+  /* max-width deckelt das Wachstum: ohne Deckel füllt das Feld die ganze
+     Restbreite der Feature-Spalte (mal ~300px, mal länger) und wirkt
+     überdimensioniert; 220px = so breit wie der Button daneben. */
+  flex: 1 1 160px;
+  max-width: 220px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.08);
@@ -4628,6 +4648,14 @@ html[data-theme='light'] .section-tag {
   color: #3f5f00;
 }
 @media (max-width: 860px) {
+  .home-feature {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .home-feature-body {
+    padding-left: 0;
+    padding-right: 0;
+  }
   .home-feature-inner,
   .home-feature-inner.media-right {
     grid-template-columns: 1fr;
@@ -4637,6 +4665,17 @@ html[data-theme='light'] .section-tag {
   }
   .home-feature-media {
     min-height: 260px;
+  }
+  /* Trust-Leiste mobil linksbündig wie Hero/Features (vermeidet den
+     center↔links-Sprung beim Scrollen); Desktop bleibt zentriert. */
+  .trust-strip-inner {
+    align-items: flex-start;
+  }
+  .trust-logos {
+    justify-content: flex-start;
+  }
+  .trust-strip-sub {
+    text-align: left;
   }
 }
 @media (max-width: 560px) {
