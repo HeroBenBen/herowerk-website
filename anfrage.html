@@ -452,22 +452,54 @@
     .dsgvo-row label { font-size: 12px; color: var(--g400); line-height: 1.5; }
     .dsgvo-row a { color: var(--g500); }
 
-    /* Fördervorschuss-Opt-in (Welle 1) */
-    .fv-row {
-      display: flex; gap: 10px; align-items: flex-start;
-      margin-bottom: 18px; padding: 13px 15px;
-      background: rgba(183,217,0,0.10);
-      border: 1px solid rgba(183,217,0,0.45);
-      border-radius: 10px;
+    /* Fördervorschuss-Opt-in (Welle 1) — auswählbare Angebots-Karte, klar abgesetzt
+       von der grauen DSGVO-Pflichtzeile. Amber = Fördervorschuss-Farbwelt der Startseite. */
+    .fv-optin {
+      display: flex; align-items: flex-start; gap: 13px; position: relative;
+      margin-bottom: 18px; padding: 15px 16px;
+      background: rgba(232,168,56,0.10);
+      border: 1.5px solid rgba(232,168,56,0.55);
+      border-radius: 14px; cursor: pointer;
+      transition: border-color .18s, background .18s, box-shadow .18s, transform .12s;
     }
-    .fv-row input {
-      width: 18px; height: 18px; margin-top: 1px;
-      cursor: pointer; accent-color: var(--green); flex-shrink: 0;
+    .fv-optin:hover { border-color: var(--bernstein); background: rgba(232,168,56,0.16); transform: translateY(-1px); }
+    .fv-optin input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+    .fv-optin-icon {
+      flex-shrink: 0; width: 42px; height: 42px; border-radius: 11px;
+      background: rgba(232,168,56,0.20); color: var(--bernstein);
+      display: flex; align-items: center; justify-content: center;
     }
-    .fv-row label { font-size: 13px; color: var(--g700); line-height: 1.45; cursor: pointer; }
-    .fv-row label strong { color: var(--schiefer); font-weight: 800; }
-    [data-theme='dark'] .fv-row label { color: #e5e7eb; }
-    [data-theme='dark'] .fv-row label strong { color: #ffffff; }
+    .fv-optin-icon svg { width: 22px; height: 22px; }
+    .fv-optin-body { flex: 1; min-width: 0; }
+    .fv-optin-head {
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 16px;
+      color: var(--schiefer); line-height: 1.2; margin-bottom: 3px;
+    }
+    .fv-optin-badge {
+      font-family: 'Inter', sans-serif; font-weight: 700; font-size: 10px;
+      letter-spacing: .04em; text-transform: uppercase;
+      color: var(--schiefer); background: var(--bernstein);
+      padding: 3px 8px; border-radius: 20px; white-space: nowrap;
+    }
+    .fv-optin-text { font-size: 12.5px; color: var(--g500); line-height: 1.45; }
+    .fv-optin-check {
+      flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+      border: 2px solid var(--g400); color: transparent;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s, border-color .15s, color .15s; margin-top: 2px;
+    }
+    .fv-optin-check svg { width: 15px; height: 15px; }
+    .fv-optin:has(input:checked) {
+      background: rgba(232,168,56,0.20);
+      border-color: var(--bernstein);
+      box-shadow: 0 0 0 3px rgba(232,168,56,0.30);
+    }
+    .fv-optin:has(input:checked) .fv-optin-check { background: var(--bernstein); border-color: var(--bernstein); color: var(--schiefer); }
+    .fv-optin:has(input:focus-visible) { box-shadow: 0 0 0 3px rgba(232,168,56,0.55); }
+    [data-theme='dark'] .fv-optin-head { color: #ffffff; }
+    [data-theme='dark'] .fv-optin-text { color: #cbd5e1; }
+    [data-theme='dark'] .fv-optin-check { border-color: rgba(255,255,255,0.4); }
 
     /* Navigations-Buttons */
     .step-nav {
@@ -553,7 +585,7 @@
       .contact-grid .form-field input { width: 100%; min-width: 0; }
       #plzSummary { margin-bottom: 12px !important; }
       .dsgvo-row { margin-bottom: 12px; }
-      .fv-row { margin-bottom: 12px; padding: 10px 13px; }
+      .fv-optin { margin-bottom: 14px; padding: 13px 14px; }
       /* Sticky Aktionsleiste: "Weiter" bleibt auf jedem Schritt ohne Scrollen sichtbar. */
       .step-nav {
         grid-template-columns: 1fr 1fr;
@@ -1456,12 +1488,19 @@
             </div>
           </div>
 
-          <div class="fv-row">
+          <label class="fv-optin" for="foerdervorschuss">
             <input type="checkbox" id="foerdervorschuss" name="foerdervorschuss_interesse" value="true">
-            <label for="foerdervorschuss">
-              Ich möchte mich für den <strong>Fördervorschuss</strong> bewerben (begrenzte Plätze).
-            </label>
-          </div>
+            <span class="fv-optin-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+            </span>
+            <span class="fv-optin-body">
+              <span class="fv-optin-head">Fördervorschuss sichern<span class="fv-optin-badge">Begrenzte Plätze</span></span>
+              <span class="fv-optin-text">Wir strecken deine Förderung vor – du zahlst nur deinen Eigenanteil.</span>
+            </span>
+            <span class="fv-optin-check" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+          </label>
 
           <div class="dsgvo-row">
             <input type="checkbox" id="dsgvo" name="dsgvo" required>
