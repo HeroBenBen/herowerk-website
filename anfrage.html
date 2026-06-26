@@ -500,6 +500,14 @@
     [data-theme='dark'] .fv-optin-head { color: #ffffff; }
     [data-theme='dark'] .fv-optin-text { color: #cbd5e1; }
     [data-theme='dark'] .fv-optin-check { border-color: rgba(255,255,255,0.4); }
+    /* Sternchen-Hinweis: Fördervorschuss ist konditioniert (kein Werbeversprechen). */
+    .fv-optin-note {
+      margin: -12px 2px 18px; font-size: 11.5px; line-height: 1.45; color: var(--g500);
+    }
+    .fv-optin-note a { color: var(--g700); font-weight: 700; text-decoration: underline; white-space: nowrap; }
+    .fv-optin-note a::after { content: ' ›'; text-decoration: none; }
+    [data-theme='dark'] .fv-optin-note { color: #9aa6b2; }
+    [data-theme='dark'] .fv-optin-note a { color: #e5e7eb; }
 
     /* Navigations-Buttons */
     .step-nav {
@@ -1495,12 +1503,13 @@
             </span>
             <span class="fv-optin-body">
               <span class="fv-optin-head">Fördervorschuss sichern<span class="fv-optin-badge">Begrenzte Plätze</span></span>
-              <span class="fv-optin-text">Wir strecken deine Förderung vor – du zahlst nur deinen Eigenanteil.</span>
+              <span class="fv-optin-text">Wir strecken deine Förderung vor.<sup>*</sup></span>
             </span>
             <span class="fv-optin-check" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </span>
           </label>
+          <p class="fv-optin-note">* Mit Auftrag, freiem Platz, geprüftem Anspruch. <a href="/foerderung" target="_blank" rel="noopener">Voraussetzungen</a></p>
 
           <div class="dsgvo-row">
             <input type="checkbox" id="dsgvo" name="dsgvo" required>
