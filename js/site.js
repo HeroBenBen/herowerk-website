@@ -2308,7 +2308,15 @@ function initEntryPlzFeedback() {
   };
 
   input.addEventListener('input', update);
-  input.closest('form')?.addEventListener('submit', update);
+  input.closest('form')?.addEventListener('submit', () => {
+    update();
+    if (!input.closest('[data-home-lead-form]')) return;
+    const plz = input.value.replace(/\D/g, '').slice(0, 5);
+    if (!/^\d{5}$/.test(plz)) return;
+    try {
+      sessionStorage.setItem('hwLeadPrefill', JSON.stringify({ plz }));
+    } catch (e) {}
+  });
 }
 
 if (document.readyState === 'loading') {

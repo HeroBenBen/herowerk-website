@@ -355,17 +355,7 @@ nav.scrolled {
   overflow: hidden;
 }
 .hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 55%;
-  background: url('/hero-paar-terrasse-800.webp') center/cover no-repeat;
-  opacity: 0.12;
-  mask-image: linear-gradient(to left, transparent 0%, black 30%);
-  -webkit-mask-image: linear-gradient(to left, transparent 0%, black 30%);
-  pointer-events: none;
+  content: none;
 }
 .hero::after {
   content: '';
@@ -382,7 +372,7 @@ nav.scrolled {
   margin: 0 auto;
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
   gap: 60px;
   align-items: center;
   position: relative;
@@ -422,7 +412,31 @@ nav.scrolled {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
-  margin-bottom: 32px;
+  margin-bottom: 0;
+}
+.hero-media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  aspect-ratio: 4 / 3;
+  min-height: 360px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+}
+.hero-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 45%, rgba(28, 43, 54, 0.34));
+  pointer-events: none;
+}
+.hero-media picture,
+.hero-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.hero-media img {
+  object-fit: cover;
 }
 /* Lade-Animation Rechner (foerderSatzKfw / frZuschuss): pulsierende Punkte statt statischem "..." */
 .calc-dots {
@@ -529,23 +543,6 @@ nav.scrolled {
   border-color: var(--white);
   color: var(--white);
 }
-.hero-trust {
-  display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-.trust-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--g400);
-  font-size: 13px;
-}
-.trust-item .check {
-  color: var(--green);
-  font-weight: 700;
-}
-
 /* ══ HERO CALCULATOR BOX ══ */
 .hero-calc {
   background: var(--schiefer);
@@ -663,8 +660,6 @@ nav.scrolled {
   color: var(--g500);
   line-height: 1.5;
 }
-/* Trust-Badges — siehe oben bei .hero-trust */
-
 /* Tablet: Calculator unter den Text, aber noch sichtbar */
 @media (max-width: 960px) {
   .hero-inner {
@@ -680,10 +675,7 @@ nav.scrolled {
     padding: 88px 20px 48px;
   }
   .hero::before {
-    width: 100%;
-    opacity: 0.1;
-    mask-image: linear-gradient(to bottom, transparent 0%, black 60%);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 60%);
+    content: none;
   }
   .hero h1 {
     font-size: 32px;
@@ -692,14 +684,8 @@ nav.scrolled {
     font-size: 16px;
     margin-bottom: 20px;
   }
-  .hero-ctas {
-    margin-bottom: 20px;
-  }
-  .hero-trust {
-    gap: 12px;
-  }
-  .trust-item {
-    font-size: 12px;
+  .hero-media {
+    min-height: 280px;
   }
   /* Calculator kompakt auf Mobile */
   .hero-calc {
@@ -826,11 +812,6 @@ nav.scrolled {
   .usp-text h2 {
     font-size: 12px;
   }
-  /* 5. Item (ungerade) zentriert → volle Breite */
-  .usp-item:last-child {
-    grid-column: 1 / -1;
-    justify-self: center;
-  }
 }
 
 /* ══ REFERENZEN ══ */
@@ -934,7 +915,7 @@ section {
   background: var(--schiefer);
   padding: 88px 24px 80px;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
   border-top: 1px solid rgba(183, 217, 0, 0.08);
 }
 .fv-banner::before {
@@ -4466,6 +4447,9 @@ html[data-theme='light'] .section-tag {
 .home-feature-alt {
   background: var(--schiefer);
 }
+.home-lead-entry {
+  background: var(--nacht);
+}
 .home-feature-inner {
   position: relative;
   display: grid;
@@ -4506,6 +4490,11 @@ html[data-theme='light'] .section-tag {
 .home-feature-body {
   border-radius: 16px;
   padding: clamp(24px, 4vw, 44px);
+}
+.home-lead-body {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(183, 217, 0, 0.16);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.22);
 }
 .home-feature-amber .section-tag {
   color: var(--bernstein);
@@ -4583,6 +4572,28 @@ html[data-theme='light'] .section-tag {
 .home-feature-link:hover {
   text-decoration: underline;
 }
+.home-lead-points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+.home-lead-points span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(183, 217, 0, 0.1);
+  color: var(--g300);
+  font-weight: 700;
+  font-size: 13px;
+}
+.home-lead-points span::before {
+  content: '✓';
+  color: var(--green);
+  font-weight: 800;
+}
 .foerder-result .fr-row.fr-total {
   border-top: 2px solid rgba(183, 217, 0, 0.65);
   border-bottom: 0;
@@ -4610,8 +4621,16 @@ html[data-theme='light'] .section-tag {
   background: linear-gradient(135deg, #ffffff, #f5f7f8) !important;
   border-top-color: rgba(28, 43, 54, 0.08);
 }
+[data-theme='light'] .home-lead-entry {
+  background: linear-gradient(135deg, #f7f9fb, #ffffff) !important;
+}
 [data-theme='light'] .home-feature-body {
   background: transparent;
+}
+[data-theme='light'] .home-lead-body {
+  background: #ffffff;
+  border-color: rgba(28, 43, 54, 0.08);
+  box-shadow: 0 16px 42px rgba(28, 43, 54, 0.08);
 }
 [data-theme='light'] .home-feature-media {
   box-shadow: 0 10px 28px rgba(28, 43, 54, 0.14);
@@ -4627,6 +4646,10 @@ html[data-theme='light'] .section-tag {
 [data-theme='light'] .home-feature-link {
   color: #3f5f00;
 }
+[data-theme='light'] .home-lead-points span {
+  background: rgba(183, 217, 0, 0.14);
+  color: var(--color-text-secondary);
+}
 @media (max-width: 860px) {
   .home-feature-inner,
   .home-feature-inner.media-right {
@@ -4634,6 +4657,12 @@ html[data-theme='light'] .section-tag {
   }
   .home-feature-inner.media-right .home-feature-media {
     order: 0;
+  }
+  .home-lead-entry .home-feature-inner.media-right .home-feature-media {
+    order: 2;
+  }
+  .home-lead-entry .home-lead-body {
+    order: 1;
   }
   .home-feature-media {
     min-height: 260px;

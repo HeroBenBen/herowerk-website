@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-17",
+  "generated": "2026-06-26",
   "rule": "section-id primär, H2-Fallback, FAQ separat; Fail bei >30% Wort-Abweichung",
   "threshold": 0.3,
   "pages": [
@@ -8,15 +8,15 @@
       "sections": [
         {
           "id": "class:hero",
-          "words": 118
+          "words": 36
+        },
+        {
+          "id": "angebot-starten",
+          "words": 33
         },
         {
           "id": "foerdervorschuss",
           "words": 54
-        },
-        {
-          "id": "schnellstart",
-          "words": 26
         },
         {
           "id": "foerderung-start",
