@@ -85,9 +85,13 @@
         <div class="form-group"><label for="kontaktName">Name</label><input id="kontaktName" type="text" name="name" placeholder="Max Mustermann" required></div>
         <div class="form-group"><label for="kontaktEmail">E-Mail</label><input id="kontaktEmail" type="email" name="email" placeholder="max@beispiel.de" required></div>
         <div class="form-group"><label for="kontaktTelefon">Telefon optional</label><input id="kontaktTelefon" type="tel" name="telefon" placeholder="0171 1234567"></div>
-        <div class="form-row">
-          <div class="form-group"><label for="kontaktPlz">PLZ <span class="form-optional">optional</span></label><input id="kontaktPlz" type="text" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{5}" maxlength="5" placeholder="z. B. 30159"></div>
-          <div class="form-group"><label for="kontaktGebaeude">Gebäudetyp <span class="form-optional">optional</span></label><select id="kontaktGebaeude"><option value="">Bitte wählen</option><option value="EFH">Einfamilienhaus</option><option value="DHH">Doppelhaushälfte</option><option value="RH">Reihenhaus</option><option value="MFH">Mehrfamilienhaus</option><option value="Sonstiges">Sonstiges</option></select></div>
+        <div class="form-row form-row-3-1">
+          <div class="form-group"><label for="kontaktStrasse">Straße <span class="form-optional">optional</span></label><input id="kontaktStrasse" type="text" autocomplete="address-line1" placeholder="z. B. Lindener Marktplatz"></div>
+          <div class="form-group"><label for="kontaktHausnr">Hausnr. <span class="form-optional">optional</span></label><input id="kontaktHausnr" type="text" autocomplete="address-line2" placeholder="12a"></div>
+        </div>
+        <div class="form-row form-row-1-2">
+          <div class="form-group"><label for="kontaktPlz">PLZ <span class="form-optional">optional</span></label><input id="kontaktPlz" type="text" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{5}" maxlength="5" placeholder="30449"></div>
+          <div class="form-group"><label for="kontaktOrt">Ort <span class="form-optional">optional</span></label><input id="kontaktOrt" type="text" autocomplete="address-level2" placeholder="Hannover"></div>
         </div>
         <div class="form-group"><label for="kontaktZeitrahmen">Zeitrahmen <span class="form-optional">optional</span></label><select id="kontaktZeitrahmen"><option value="">Wann soll es losgehen?</option><option value="3 Monate">In den nächsten 3 Monaten</option><option value="6 Monate">In den nächsten 6 Monaten</option><option value="12 Monate">In den nächsten 12 Monaten</option><option value="Unklar">Noch unklar</option></select></div>
         <div class="form-group"><label for="kontaktNachricht">Nachricht</label><textarea id="kontaktNachricht" name="nachricht" placeholder="Wobei können wir helfen?" required></textarea></div>
@@ -162,24 +166,33 @@
     </a>
   </div>
 
-  <!-- W2: optionale Zusatzfelder (PLZ/Gebäude/Zeitrahmen) in `nachricht` einbetten,
+  <!-- W2: optionale Zusatzfelder (Adresse + Zeitrahmen) in `nachricht` einbetten,
        BEVOR site.js den Submit übernimmt. Felder haben kein `name`-Attribut →
-       Form-Payload bleibt HubSpot-schema-konform (kein neues Property). -->
+       Form-Payload bleibt HubSpot-schema-konform (kein neues Property). Adresse
+       als einzeilige Zusammenfassung „Straße Nr, PLZ Ort". -->
   <script>
     (function () {
       var form = document.getElementById('kontaktForm');
       if (!form) return;
+      var strasse = document.getElementById('kontaktStrasse');
+      var hausnr = document.getElementById('kontaktHausnr');
       var plz = document.getElementById('kontaktPlz');
-      var geb = document.getElementById('kontaktGebaeude');
+      var ort = document.getElementById('kontaktOrt');
       var zr = document.getElementById('kontaktZeitrahmen');
       var msg = document.getElementById('kontaktNachricht');
       form.addEventListener(
         'submit',
         function () {
           if (!msg) return;
+          var sV = (strasse && strasse.value.trim()) || '';
+          var hV = (hausnr && hausnr.value.trim()) || '';
+          var pV = (plz && plz.value.trim()) || '';
+          var oV = (ort && ort.value.trim()) || '';
+          var street = [sV, hV].filter(Boolean).join(' ');
+          var city = [pV, oV].filter(Boolean).join(' ');
+          var address = [street, city].filter(Boolean).join(', ');
           var extras = [];
-          if (plz && plz.value.trim()) extras.push('PLZ: ' + plz.value.trim());
-          if (geb && geb.value) extras.push('Gebäudetyp: ' + geb.value);
+          if (address) extras.push('Adresse: ' + address);
           if (zr && zr.value) extras.push('Zeitrahmen: ' + zr.value);
           if (!extras.length) return;
           var existing = msg.value.trim();

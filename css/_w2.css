@@ -364,11 +364,16 @@
   margin-top: 4px;
 }
 
-/* Form-Row für PLZ + Gebäudetyp nebeneinander auf Desktop. */
+/* Form-Rows: Straße/Hausnr (3:1) und PLZ/Ort (1:2) nebeneinander auf Desktop. */
 .contact-form .form-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 14px;
+}
+.contact-form .form-row-3-1 {
+  grid-template-columns: 3fr 1fr;
+}
+.contact-form .form-row-1-2 {
+  grid-template-columns: 1fr 2fr;
 }
 .contact-form select {
   width: 100%;
@@ -411,7 +416,9 @@
     aspect-ratio: 4 / 3;
     min-height: 0;
   }
-  .contact-form .form-row {
+  .contact-form .form-row,
+  .contact-form .form-row-3-1,
+  .contact-form .form-row-1-2 {
     grid-template-columns: 1fr;
   }
 }
