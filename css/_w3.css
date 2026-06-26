@@ -369,3 +369,24 @@
     font-size: 12px;
   }
 }
+
+/* ---------- Light-Mode Kontrast (WCAG AA) ----------
+   --green (#b7d900) ist nur auf dunklen Flächen lesbar. Auf Sand/Weiss nutzt das Theme
+   --color-accent-on-light (#4f6000) für grünen Text; auf grün gefüllten Flächen die
+   Slate-Primärfarbe (--color-accent-primary-text). Analog zu .section-tag/.btn-primary
+   in site.css/tokens.css — dort werden Klassen- bzw. Inline-Styles separat korrigiert,
+   diese Welle-3-Klassen brauchen ihre eigene Korrektur. */
+[data-theme='light'] .w3-card-kicker,
+[data-theme='light'] .w3-rung-tag,
+[data-theme='light'] .w3-fact-label,
+[data-theme='light'] .w3-howto-num,
+[data-theme='light'] .w3-section-note a {
+  color: var(--color-accent-on-light);
+}
+[data-theme='light'] .w3-card--warn .w3-card-kicker {
+  color: var(--color-text-primary);
+}
+[data-theme='light'] .w3-split-eigen,
+[data-theme='light'] .w3-step-num {
+  color: var(--color-accent-primary-text);
+}
