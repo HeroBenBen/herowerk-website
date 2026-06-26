@@ -4507,12 +4507,14 @@ html[data-theme='light'] .section-tag {
   pointer-events: none;
 }
 .home-feature-media picture,
-.home-feature-media img {
+.home-feature-media img,
+.home-feature-media video {
   display: block;
   width: 100%;
   height: 100%;
 }
-.home-feature-media img {
+.home-feature-media img,
+.home-feature-media video {
   object-fit: cover;
   transition: transform 0.35s ease;
 }
