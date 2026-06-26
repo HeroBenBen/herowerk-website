@@ -225,25 +225,37 @@
     -webkit-backdrop-filter: blur(3px);
   }
 
-  /* Sheet bekommt min-height, damit es prominenter als „Vordergrund" wirkt
-     und nicht wie ein zufälliges drittes Mini-Element zwischen den Karten
-     hängen bleibt. */
+  /* Sheet als Vordergrund. iOS-Safari-Härtung:
+     - min/max-height in px statt vh (iOS rechnet vh inkl. Adressleiste falsch);
+     - transform/opacity explizit für Default-State (sichtbar) und visibility/
+       pointer-events auf auto, damit Sheet auch ohne Animation klickbar ist;
+     - -webkit-overflow-scrolling für glattes Touch-Scrollen. */
   body.pz-sheet-open .pz-step.is-sheet .pz-substeps {
     position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 1001;
-    min-height: 48vh;
-    max-height: 82vh;
+    min-height: 360px;
+    max-height: 78vh;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     margin: 0;
     opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
     background: var(--schiefer);
     border-top: 1px solid rgba(183, 217, 0, 0.22);
     border-radius: 22px 22px 0 0;
     padding: 30px 22px calc(24px + env(safe-area-inset-bottom));
     box-shadow: 0 -18px 50px rgba(0, 0, 0, 0.5);
+  }
+  /* Tap-Target: Doppel-Tap-Zoom auf iOS verhindern, sonst „Tap kommt nicht an". */
+  .pz-step,
+  .pz-expand-hint,
+  .pz-sheet-close {
+    touch-action: manipulation;
   }
   /* Grab-Handle als Sheet-Signal. */
   body.pz-sheet-open .pz-step.is-sheet .pz-substeps::before {
@@ -288,10 +300,10 @@
    Animation nicht läuft (reduced-motion oder Animations-Pause). */
 @media (max-width: 768px) and (prefers-reduced-motion: no-preference) {
   body.pz-sheet-open .pz-step.is-sheet .pz-substeps {
-    animation: pzSheetUp 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+    animation: pzSheetUp 0.34s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
   .pz-backdrop {
-    animation: pzFade 0.25s ease;
+    animation: pzFade 0.25s ease forwards;
   }
 }
 
