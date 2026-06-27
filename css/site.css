@@ -4126,6 +4126,14 @@ footer {
   color: #1c2b36 !important;
   box-shadow: 0 14px 32px rgba(232, 168, 56, 0.24);
 }
+
+/* Abnahme 27.06.: Light-Mode zeigte einen 1px weissen Sliver links/rechts der
+   Amber-Box (border-radius+overflow:hidden+weisser Card-BG scheint an der Clip-Kante
+   durch). Amber 1px ueber die Kante ziehen — overflow:hidden der .hero-calc kappt es
+   sauber. Dark-Mode unsichtbar (dunkler Card-BG), daher nur light-scoped. */
+[data-theme='light'] .hc-fv-highlight {
+  margin-inline: -1px;
+}
 .hc-fv-badge,
 .hc-fv-badge svg,
 .hc-fv-text,
