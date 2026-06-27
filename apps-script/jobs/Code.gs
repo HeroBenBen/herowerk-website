@@ -98,6 +98,7 @@ function onOpen() {
     .addItem('Rolle anlegen', 'createRole')
     .addItem('Einrichten / Reparieren', 'setup')
     .addItem('Website-Rollen vorbefüllen', 'seedWebsiteRoles')
+    .addItem('Alles befüllen (Go-Live: 20 Rollen)', 'populateAll')
     .addToUi();
 }
 
@@ -406,6 +407,108 @@ function seedWebsiteRoles() {
       unmatched.join('\n• ');
   }
   ui.alert(SERVICE_NAME, msg, ui.ButtonSet.OK);
+}
+
+// ---------------------------------------------------------------------------
+// Go-Live: Alle 20 Rollen befüllen (deterministischer Seed, idempotent)
+// ---------------------------------------------------------------------------
+
+/**
+ * Schreibt die Übersicht deterministisch auf den freigegebenen 20-Rollen-Roster
+ * (Reihenfolge = Anzeige-Reihenfolge, Nr = order) und überschreibt alle 20
+ * Detail-Tabs mit dem freigegebenen Inhalt. 19 online, 1 offline (Finance).
+ * Idempotent: mehrfach ausführbar, Ergebnis ist immer identisch.
+ * Danach im Menü "Auf Webseite veröffentlichen" ausführen.
+ */
+function populateAll() {
+  var ui = SpreadsheetApp.getUi();
+  var roster = ROSTER_();
+  var onlineN = roster.filter(function (r) { return r.status === 'online'; }).length;
+  var offlineN = roster.length - onlineN;
+  var resp = ui.alert(
+    SERVICE_NAME + ' — Alles befüllen (Go-Live)',
+    'Baut die Übersicht auf die ' + roster.length + ' Go-Live-Rollen neu auf und ' +
+      'ÜBERSCHREIBT deren Detail-Tabs mit dem freigegebenen Text.\n\n' +
+      onlineN + ' online, ' + offlineN + ' offline (Finance Business Partner).\n\nFortfahren?',
+    ui.ButtonSet.OK_CANCEL
+  );
+  if (resp !== ui.Button.OK) return;
+
+  var ss = SpreadsheetApp.openById(SHEET_ID);
+  ensureUebersichtHeader_(ss);
+  getOrCreateHiddenSheet_(ss, TAB_PUBLISHED);
+  var sh = ss.getSheetByName(TAB_UEBERSICHT);
+  var content = CONTENT_BY_ID_();
+
+  // 1) Übersicht-Datenzeilen (ab Zeile 2) leeren und Roster frisch schreiben.
+  var rows = [];
+  var missing = [];
+  for (var i = 0; i < roster.length; i++) {
+    var r = roster[i];
+    var role = content[r.id];
+    if (!role) missing.push(r.id);
+    rows.push([r.nr, role ? role.name : r.id, r.kategorie, r.status, r.id]);
+  }
+  var lastRow = sh.getLastRow();
+  if (lastRow >= 2) {
+    sh.getRange(2, 1, lastRow - 1, Math.max(5, sh.getLastColumn())).clearContent();
+  }
+  sh.getRange(2, 1, rows.length, 5).setValues(rows);
+
+  // 2) Detail-Tabs aller Roster-Rollen schreiben/überschreiben.
+  var written = 0;
+  for (var j = 0; j < roster.length; j++) {
+    var role2 = content[roster[j].id];
+    if (!role2) continue;
+    writeDetailContent_(ss, role2);
+    written++;
+  }
+
+  var msg =
+    roster.length + ' Rollen in die Übersicht geschrieben (' + onlineN + ' online, ' +
+    offlineN + ' offline).\n' + written + ' Detail-Tabs befüllt.';
+  if (missing.length) {
+    msg += '\n\n⚠ FEHLENDER Inhalt (kein Seed gefunden) für:\n• ' + missing.join('\n• ');
+  }
+  msg += '\n\nNächster Schritt: Menü → "Auf Webseite veröffentlichen".';
+  ui.alert(SERVICE_NAME, msg, ui.ButtonSet.OK);
+}
+
+// Freigegebener Go-Live-Roster (28.06.2026). Reihenfolge = Anzeige; Nr = Sortier-order.
+// kategorie MUSS exakt einer data-kategorie-Gruppe in karriere.html entsprechen.
+function ROSTER_() {
+  return [
+    { nr: 1,  id: 'shk-meister',                 kategorie: 'Montage & Technik',   status: 'online' },
+    { nr: 2,  id: 'shk-meister-montage',         kategorie: 'Montage & Technik',   status: 'online' },
+    { nr: 3,  id: 'anlagenmechaniker',           kategorie: 'Montage & Technik',   status: 'online' },
+    { nr: 4,  id: 'quereinsteiger',              kategorie: 'Montage & Technik',   status: 'online' },
+    { nr: 5,  id: 'elektromeister',              kategorie: 'Montage & Technik',   status: 'online' },
+    { nr: 6,  id: 'elektriker',                  kategorie: 'Montage & Technik',   status: 'online' },
+    { nr: 7,  id: 'gala',                        kategorie: 'Montage & Technik',   status: 'online' },
+    { nr: 8,  id: 'quereinsteiger-fundamentbau', kategorie: 'Montage & Technik',   status: 'online' },
+    { nr: 9,  id: 'service',                     kategorie: 'Montage & Technik',   status: 'online' },
+    { nr: 10, id: 'planer-shk',                  kategorie: 'Büro & Organisation', status: 'online' },
+    { nr: 11, id: 'planer-elektro',              kategorie: 'Büro & Organisation', status: 'online' },
+    { nr: 12, id: 'technischer-aussendienst',    kategorie: 'Vertrieb & Beratung', status: 'online' },
+    { nr: 13, id: 'vad',                         kategorie: 'Vertrieb & Beratung', status: 'online' },
+    { nr: 14, id: 'va',                          kategorie: 'Vertrieb & Beratung', status: 'online' },
+    { nr: 15, id: 'hr',                          kategorie: 'Büro & Organisation', status: 'online' },
+    { nr: 16, id: 'assistenz',                   kategorie: 'Büro & Organisation', status: 'online' },
+    { nr: 17, id: 'disponent',                   kategorie: 'Büro & Organisation', status: 'online' },
+    { nr: 18, id: 'finance-business-partner',    kategorie: 'Büro & Organisation', status: 'offline' },
+    { nr: 19, id: 'finanzbuchhalter',            kategorie: 'Büro & Organisation', status: 'online' },
+    { nr: 20, id: 'backoffice',                  kategorie: 'Büro & Organisation', status: 'online' },
+  ];
+}
+
+// Inhalt aller Rollen nach id (Website-Rollen + neue Rollen zusammengeführt).
+function CONTENT_BY_ID_() {
+  var all = WEBSITE_ROLES_().concat(NEW_ROLES_());
+  var map = {};
+  for (var i = 0; i < all.length; i++) {
+    map[all[i].id] = all[i];
+  }
+  return map;
 }
 
 // ---------------------------------------------------------------------------
@@ -915,6 +1018,225 @@ function WEBSITE_ROLES_() {
       freuen: [
         'Anteilig Homeoffice und flexible Arbeitszeiten.',
         'Großer Gestaltungsspielraum, flache Hierarchien und kurze Wege.',
+        'Faire Vergütung + Bonus und Weiterbildung auf unsere Kosten.',
+        'Unbefristete Festanstellung und 30 Tage Urlaub.',
+      ],
+    },
+  ];
+}
+
+// ---------------------------------------------------------------------------
+// Eingebetteter Inhalt der 8 neuen Rollen (freigegebener Entwurf, Stand 28.06.2026).
+// Gleiche Struktur wie WEBSITE_ROLES_. id | name (mit (m/w/d)) | icon | teaser |
+// aufgaben[] | profil[] | freuen[].
+// ---------------------------------------------------------------------------
+
+function NEW_ROLES_() {
+  return [
+    {
+      id: 'shk-meister-montage',
+      name: 'SHK-Meister:in (m/w/d)',
+      icon: 'medal',
+      teaser:
+        'Du führst dein Team fachlich auf der Baustelle, sorgst für saubere Wärmepumpen-Installationen und packst selbst mit an – als Meister:in mittendrin im festen Einsatzgebiet Region Hannover.',
+      aufgaben: [
+        'Du führst dein Montageteam fachlich an und arbeitest auf der Baustelle aktiv mit – Meister, der mit anpackt, nicht nur zuschaut.',
+        'Du sicherst die Qualität jeder Installation und nimmst die fertigen Wärmepumpen-Anlagen ab.',
+        'Du leitest die Kolleg:innen vor Ort an, gibst dein Wissen weiter und entwickelst das Team fachlich weiter.',
+        'Du stellst sicher, dass Normen (DIN/VDE) und Herstellervorgaben sauber eingehalten werden.',
+        'Du arbeitest eng mit der Planung und der technischen Betriebsleitung zusammen und sorgst für reibungslose Abläufe.',
+      ],
+      profil: [
+        'Meisterbrief im SHK-Handwerk.',
+        'Mehrjährige Erfahrung in der Heizungs- bzw. Wärmepumpentechnik.',
+        'Führungsstärke, Verantwortungsbewusstsein und ein Auge fürs Detail – und Lust, selbst auf der Baustelle dabei zu sein.',
+        'Führerschein Klasse B.',
+      ],
+      freuen: [
+        'Feste Region Hannover – keine Fernmontage, abends daheim.',
+        'Modernes Werkzeug, gut ausgestattete Fahrzeuge, Tablet statt Papierkram.',
+        'Herstellerschulungen & Weiterbildung auf unsere Kosten.',
+        'Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub.',
+      ],
+    },
+    {
+      id: 'quereinsteiger-fundamentbau',
+      name: 'Quereinsteiger:in Fundamentbau Wärmepumpe (m/w/d)',
+      icon: 'learning',
+      teaser:
+        'Du hast handwerkliches Talent und Lust, draußen anzupacken? Wir lernen dich Schritt für Schritt an, damit jede Wärmepumpen-Außeneinheit sicher steht – im festen Team in der Region Hannover, abends zuhause.',
+      aufgaben: [
+        'Du bereitest Aufstellflächen und Fundamente für die Außeneinheiten der Wärmepumpen vor.',
+        'Du übernimmst Erd-, Pflaster- und kleinere Tiefbauarbeiten rund um die Anlage.',
+        'Du stellst die Außenanlagen wieder her und hinterlässt die Baustelle sauber und ordentlich.',
+        'Du arbeitest eng mit dem Montageteam vor Ort zusammen und lernst von erfahrenen Kolleg:innen.',
+        'Du wächst Schritt für Schritt in die Fundament- und Außenarbeiten hinein – wir bilden dich an.',
+      ],
+      profil: [
+        'Handwerkliches Geschick, körperliche Belastbarkeit und Lust, draußen zu arbeiten.',
+        'Erfahrung im Garten- und Landschaftsbau, Tiefbau oder Hochbau ist ein Plus, aber kein Muss – wir lernen dich an.',
+        'Zuverlässigkeit, Sorgfalt und Teamgeist.',
+        'Führerschein Klasse B, idealerweise BE.',
+      ],
+      freuen: [
+        'Strukturiertes Onboarding durch erfahrene Kolleg:innen.',
+        'Feste Region Hannover – keine Fernmontage, abends daheim.',
+        'Modernes Werkzeug und gut ausgestattete Fahrzeuge.',
+        'Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub.',
+      ],
+    },
+    {
+      id: 'planer-shk',
+      name: 'Technischer Planer SHK (m/w/d)',
+      icon: 'layout',
+      teaser:
+        'Du legst Wärmepumpen-Anlagen am Rechner passgenau aus, damit jede Anlage zum Haus passt und sparsam läuft – auf Wunsch auch anteilig im Homeoffice, im festen Einsatzgebiet Region Hannover.',
+      aufgaben: [
+        'Du legst verkaufte Wärmepumpen-Projekte technisch am PC aus und sorgst dafür, dass jede Anlage zum Gebäude passt.',
+        'Du plausibilisierst Heizlastberechnungen und Wärmepumpen-Auslegungen.',
+        'Du unterstützt den Außendienst technisch und arbeitest an Zusatzangeboten mit.',
+        'Du koordinierst dich mit Schornsteinfeger und Behörden.',
+        'Du sorgst dafür, dass jede Anlage effizient und normgerecht geplant ins Montageteam geht.',
+      ],
+      profil: [
+        'Geselle:in, Meister:in oder Techniker:in im SHK-Bereich.',
+        'Mehrjährige Erfahrung in der Heizungs- bzw. Wärmepumpentechnik.',
+        'Wärmepumpen-Schulungen oder -Zertifikate von Vorteil.',
+        'Sicheres, strukturiertes Arbeiten am PC.',
+      ],
+      freuen: [
+        'Anteilig Homeoffice und flexible Arbeitszeiten.',
+        'Weiterbildung auf unsere Kosten – inklusive Wärmepumpen-Schulungen.',
+        'Faire Vergütung + Bonus und Gestaltungsspielraum mit kurzen Wegen.',
+        'Unbefristete Festanstellung und 30 Tage Urlaub.',
+      ],
+    },
+    {
+      id: 'planer-elektro',
+      name: 'Technischer Planer Elektro (m/w/d)',
+      icon: 'layout',
+      teaser:
+        'Du planst die Elektro-Seite unserer Wärmepumpen- und PV-Projekte am Rechner, damit jeder Anschluss sicher und normgerecht ans Netz geht – auf Wunsch anteilig im Homeoffice, im festen Einsatzgebiet Region Hannover.',
+      aufgaben: [
+        'Du planst die Elektro-Seite der Wärmepumpen- und PV-Projekte am PC und legst sie passgenau aus.',
+        'Du erstellst Lastberechnungen, Schaltpläne und die Auslegung des Zählerplatzes.',
+        'Du bereitest die Netzanmeldungen beim Netzbetreiber vor und hältst die Vorgaben im Blick.',
+        'Du unterstützt den Außendienst und das Montageteam technisch in allen Elektro-Fragen.',
+        'Du sorgst dafür, dass jedes Projekt elektrotechnisch sauber und nach VDE geplant in die Umsetzung geht.',
+      ],
+      profil: [
+        'Geselle:in, Meister:in oder Techniker:in im Elektrohandwerk (Energie- und Gebäudetechnik) oder vergleichbar.',
+        'Erfahrung in der Elektroplanung, idealerweise mit Wärmepumpen oder PV-Anlagen.',
+        'Kenntnisse in Netzanmeldung, Lastberechnung und VDE-Normen.',
+        'Sicheres, strukturiertes Arbeiten am PC.',
+      ],
+      freuen: [
+        'Anteilig Homeoffice und flexible Arbeitszeiten.',
+        'Weiterbildung auf unsere Kosten – inklusive Hersteller- und Fachschulungen.',
+        'Faire Vergütung + Bonus und Gestaltungsspielraum mit kurzen Wegen.',
+        'Unbefristete Festanstellung und 30 Tage Urlaub.',
+      ],
+    },
+    {
+      id: 'technischer-aussendienst',
+      name: 'Technischer Außendienst – Wärmepumpen-Projekte (m/w/d)',
+      icon: 'clipboard',
+      teaser:
+        'Du nimmst Objekte vor Ort technisch auf und prüfst, ob die Wärmepumpe sauber ins Haus passt – die technische Vorhut, die der Planung saubere Daten liefert. Dein Revier: die Region Hannover, abends bist du zuhause.',
+      aufgaben: [
+        'Du nimmst Objekte vor Ort auf und erstellst ein sauberes technisches Aufmaß der Bestandssituation.',
+        'Du prüfst die Baubarkeit und Machbarkeit der Wärmepumpen-Installation direkt am Gebäude.',
+        'Du erfasst alle Daten für Planung und Angebot strukturiert und vollständig per Tablet.',
+        'Du klärst technische Details mit den Kund:innen vor Ort und dokumentierst die Situation mit Fotos.',
+        'Du arbeitest eng mit Planung und Innendienst zusammen, damit jedes Projekt sauber in die Umsetzung geht.',
+      ],
+      profil: [
+        'Technische Ausbildung im SHK- oder Elektro-Bereich oder vergleichbare technische Erfahrung.',
+        'Erfahrung mit Objektaufnahme, Aufmaß oder Heizungstechnik – Wärmepumpen-Kenntnisse sind ein Plus.',
+        'Sorgfältige, eigenständige Arbeitsweise und ein gutes Auge für technische Details.',
+        'Führerschein Klasse B.',
+      ],
+      freuen: [
+        'Firmenwagen, den du auch privat fahren kannst (1 %-Regelung).',
+        'Feste Region Hannover – kurze Wege, abends daheim.',
+        'Modernes Werkzeug, Tablet und Weiterbildung auf unsere Kosten.',
+        'Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub.',
+      ],
+    },
+    {
+      id: 'disponent',
+      name: 'Disponent:in / Projekt- & Partnermanagement (m/w/d)',
+      icon: 'file',
+      teaser:
+        'Du planst die Einsätze unserer Montageteams, steuerst Partner und Nachunternehmer und hältst alle Fäden in der Hand – die Schaltzentrale, die dafür sorgt, dass jedes Projekt rundläuft. Festes Einsatzgebiet: Region Hannover.',
+      aufgaben: [
+        'Du planst die Einsätze und Termine der Montageteams und sorgst für eine runde Auslastung.',
+        'Du steuerst Partner und Nachunternehmer und stimmst dich eng mit ihnen ab.',
+        'Du koordinierst die Projekte von der Planung bis zur Montage und behältst alle Termine im Blick.',
+        'Du organisierst die Material- und Termin-Logistik, damit auf der Baustelle nichts fehlt.',
+        'Du behältst den Überblick und sorgst dafür, dass nichts zwischen den Bereichen liegen bleibt.',
+      ],
+      profil: [
+        'Kaufmännische oder technische Ausbildung oder vergleichbare Erfahrung in Disposition, Projektkoordination oder Logistik.',
+        'Organisationstalent, Durchsetzungsstärke und ein kühler Kopf, auch wenn es voll wird.',
+        'Sicherer Umgang mit digitalen Tools und Planungssystemen.',
+        'Strukturierte, zuverlässige Arbeitsweise und freundliches Auftreten.',
+      ],
+      freuen: [
+        'Anteilig Homeoffice und flexible Arbeitszeiten.',
+        'Strukturiertes Onboarding durch erfahrene Kolleg:innen.',
+        'Faire Vergütung + Bonus und Weiterbildung auf unsere Kosten.',
+        'Unbefristete Festanstellung und 30 Tage Urlaub.',
+      ],
+    },
+    {
+      id: 'finance-business-partner',
+      name: 'Finance Business Partner: Operations & Performance (m/w/d)',
+      icon: 'briefcase',
+      teaser:
+        'Du machst Zahlen für die Operations greifbar und bist Sparringspartner für die Bereiche, wenn es um Performance und Steuerung geht – nah dran am Geschäft, im festen Einsatzgebiet Region Hannover, auf Wunsch anteilig im Homeoffice.',
+      aufgaben: [
+        'Du baust das Controlling und die Kennzahlen auf, die unsere Operations steuerbar machen.',
+        'Du bist Business-Partner für die Bereiche und übersetzt Zahlen in klare Handlungsempfehlungen.',
+        'Du erstellst Forecasts und das laufende Reporting für Geschäftsführung und Teams.',
+        'Du analysierst die Performance, deckst Hebel auf und begleitest Verbesserungen aktiv mit.',
+        'Du baust Finance-Prozesse und Strukturen von Grund auf mit auf und prägst sie mit.',
+      ],
+      profil: [
+        'Studium oder kaufmännische Ausbildung mit Schwerpunkt Controlling, Finance oder vergleichbar.',
+        'Erfahrung im Controlling, Business-Partnering oder Finanzwesen, gern im operativen oder handwerklichen Umfeld.',
+        'Analytisches Denken, Zahlenaffinität und die Fähigkeit, Zahlen verständlich zu erklären.',
+        'Sicherer Umgang mit Excel und gängigen Finanz- bzw. BI-Tools.',
+      ],
+      freuen: [
+        'Anteilig Homeoffice und flexible Arbeitszeiten.',
+        'Großer Gestaltungsspielraum, flache Hierarchien und kurze Wege.',
+        'Faire Vergütung + Bonus und Weiterbildung auf unsere Kosten.',
+        'Unbefristete Festanstellung und 30 Tage Urlaub.',
+      ],
+    },
+    {
+      id: 'finanzbuchhalter',
+      name: 'Finanzbuchhalter:in (m/w/d)',
+      icon: 'file',
+      teaser:
+        'Du hältst unsere Buchhaltung sauber und im Griff – von der laufenden Buchung bis zur Zusammenarbeit mit der Steuerberatung. Festes Einsatzgebiet: Region Hannover, auf Wunsch anteilig im Homeoffice.',
+      aufgaben: [
+        'Du übernimmst die laufende Finanzbuchhaltung und buchst Geschäftsvorfälle sauber und nachvollziehbar.',
+        'Du bearbeitest Eingangs- und Ausgangsrechnungen und steuerst den Zahlungsverkehr.',
+        'Du übernimmst vorbereitende Tätigkeiten für Monats- und Jahresabschlüsse.',
+        'Du arbeitest eng mit der Steuerberatung zusammen und hältst die Unterlagen prüfsicher bereit.',
+        'Du behältst Fristen und offene Posten im Blick und sorgst dafür, dass nichts liegen bleibt.',
+      ],
+      profil: [
+        'Kaufmännische Ausbildung, idealerweise mit Weiterbildung zur Finanzbuchhalter:in oder vergleichbarer Erfahrung.',
+        'Erfahrung in der laufenden Buchhaltung und mit gängiger Buchhaltungssoftware (z. B. DATEV).',
+        'Sorgfalt, Verlässlichkeit und ein sicheres Gefühl für Zahlen.',
+        'Diskretion und eine strukturierte, eigenständige Arbeitsweise.',
+      ],
+      freuen: [
+        'Anteilig Homeoffice und flexible Arbeitszeiten.',
+        'Strukturiertes Onboarding durch erfahrene Kolleg:innen.',
         'Faire Vergütung + Bonus und Weiterbildung auf unsere Kosten.',
         'Unbefristete Festanstellung und 30 Tage Urlaub.',
       ],
