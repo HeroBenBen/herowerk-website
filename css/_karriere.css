@@ -360,6 +360,26 @@
   margin: 0;
 }
 
+.kar-step-opt {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--g400);
+  font:
+    600 11px/1.4 'Inter',
+    sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+[data-theme='light'] .kar-step-opt {
+  background: var(--color-surface-tertiary);
+  color: var(--color-text-secondary);
+}
+
 .kar-cta-panel {
   margin-top: 30px;
   padding: 36px 32px;
