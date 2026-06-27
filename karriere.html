@@ -749,11 +749,28 @@
           btn.textContent = isOpen ? 'Weniger anzeigen' : 'Mehr erfahren';
         });
       });
+      // Bewerbungs-Kanal: aktuell Mailto (Bewerberfunnel existiert noch nicht).
+      // (b) FUNNEL-SWAP: sobald der Funnel steht, hier APPLY_BASE auf die
+      // Funnel-URL setzen (eine Stelle) – die Rolle haengt als Parameter dran.
+      var APPLY_BASE = 'mailto:bewerbung@herowerk.de';
       document.querySelectorAll('.kar-apply').forEach(function (a) {
         var role = a.getAttribute('data-role');
         if (role) {
-          a.setAttribute('href', 'mailto:bewerbung@herowerk.de?subject=' + encodeURIComponent('Bewerbung: ' + role));
+          a.setAttribute('href', APPLY_BASE + '?subject=' + encodeURIComponent('Bewerbung: ' + role));
         }
+      });
+      // (a) Sichtbare, kopierbare E-Mail-Adresse unter jeder Rolle
+      document.querySelectorAll('.kar-role').forEach(function (card) {
+        var foot = card.querySelector('.kar-role-foot');
+        if (!foot || card.querySelector('.kar-apply-hint')) return;
+        var hint = document.createElement('p');
+        hint.className = 'kar-apply-hint';
+        hint.appendChild(document.createTextNode('oder per E-Mail an '));
+        var link = document.createElement('a');
+        link.href = APPLY_BASE + '?subject=Bewerbung%20bei%20HeroWerk';
+        link.textContent = 'bewerbung@herowerk.de';
+        hint.appendChild(link);
+        foot.insertAdjacentElement('afterend', hint);
       });
       // Deep-Link /karriere#role-... oeffnet die passende Karte direkt
       if (window.location.hash) {

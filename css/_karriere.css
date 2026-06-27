@@ -257,6 +257,23 @@
   font-size: 15px;
 }
 
+.kar-apply-hint {
+  color: var(--g400);
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 12px 0 0;
+}
+
+.kar-apply-hint a {
+  color: var(--green);
+  text-decoration: underline;
+  word-break: break-word;
+}
+
+[data-theme='light'] .kar-apply-hint a {
+  color: var(--color-accent-on-light);
+}
+
 .kar-initiativ {
   display: flex;
   flex-wrap: wrap;
