@@ -246,7 +246,30 @@
   font-size: 15px;
   line-height: 1.65;
   margin: 0 0 16px;
-  max-width: 720px;
+  max-width: 760px;
+}
+
+.kar-detail-h {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  color: var(--white);
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 16px 0 8px;
+}
+
+.kar-detail-list {
+  margin: 0 0 16px;
+  padding-left: 20px;
+  color: var(--g300);
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 760px;
+}
+
+.kar-detail-list li {
+  margin-bottom: 6px;
 }
 
 .kar-initiativ {
