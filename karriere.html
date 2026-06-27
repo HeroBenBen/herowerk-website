@@ -126,26 +126,27 @@
       </div>
     </section>
 
-    <!-- ===================== 3 · OFFENE ROLLEN (aufklappbare Liste) ===================== -->
+    <!-- ===================== 3 · OFFENE ROLLEN (Karten) ===================== -->
     <section class="section kar-roles" id="rollen">
       <div class="section-inner">
         <div class="section-tag">Offene Rollen</div>
         <h2 class="section-title">Werde HeroWerker</h2>
         <p class="section-lead">
-          Klapp die Rollen auf, die dich interessieren – du siehst Aufgaben, Profil und den
-          direkten Weg zur Bewerbung. Ist deine dabei? Dann freuen wir uns auf dich.
+          Finde deine Rolle, lies dich mit „Mehr erfahren" in die Details ein und bewirb dich
+          direkt. Ist deine dabei? Dann freuen wir uns auf dich.
         </p>
 
         <div class="kar-roles-group">
           <h3 class="kar-roles-group-title">Montage &amp; Technik</h3>
           <div class="kar-role-list">
-            <details class="kar-role" open>
-              <summary class="kar-role-sum">
-                <span class="kar-role-name">Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in <span class="kar-mwd">(m/w/d)</span></span>
+
+            <article class="kar-role" id="role-anlagenmechaniker">
+              <div class="kar-role-head">
+                <h4 class="kar-role-name">Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in <span class="kar-mwd">(m/w/d)</span></h4>
                 <span class="kar-role-tags"><span class="kar-tag">Region Hannover</span><span class="kar-tag">Vollzeit</span></span>
-              </summary>
-              <div class="kar-role-detail">
-                <p>Du baust mit deinem Montageteam Wärmepumpen bei Hausbesitzer:innen ein – auf vorbereiteten Baustellen, sauber und mit Stolz aufs Ergebnis.</p>
+              </div>
+              <p class="kar-role-teaser">Du baust mit deinem Montageteam Wärmepumpen bei Hausbesitzer:innen ein – auf vorbereiteten Baustellen, sauber und mit Stolz aufs Ergebnis.</p>
+              <div class="kar-role-detail" id="detail-anlagenmechaniker">
                 <p class="kar-detail-h">Deine Aufgaben</p>
                 <ul class="kar-detail-list">
                   <li>Demontage der alten Heizung sowie Installation und Inbetriebnahme der Wärmepumpe im Zweier-Team</li>
@@ -160,16 +161,20 @@
                   <li>Sorgfältige, kundenorientierte und eigenverantwortliche Arbeitsweise im Team</li>
                   <li>Führerschein Klasse B, Reisebereitschaft in der Region und Deutsch ab B2</li>
                 </ul>
-                <a href="#bewerbung" class="btn-primary">Jetzt bewerben</a>
               </div>
-            </details>
-            <details class="kar-role">
-              <summary class="kar-role-sum">
-                <span class="kar-role-name">SHK-Meister:in / Technische Betriebsleitung <span class="kar-mwd">(m/w/d)</span></span>
+              <div class="kar-role-foot">
+                <button type="button" class="kar-btn-ghost kar-more" aria-expanded="false" aria-controls="detail-anlagenmechaniker">Mehr erfahren</button>
+                <a class="btn-primary kar-apply" data-role="Anlagenmechaniker:in SHK / WP-Monteur:in" href="mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk">Jetzt bewerben</a>
+              </div>
+            </article>
+
+            <article class="kar-role" id="role-shk-meister">
+              <div class="kar-role-head">
+                <h4 class="kar-role-name">SHK-Meister:in / Technische Betriebsleitung <span class="kar-mwd">(m/w/d)</span></h4>
                 <span class="kar-role-tags"><span class="kar-tag">Region Hannover</span><span class="kar-tag">Vollzeit</span></span>
-              </summary>
-              <div class="kar-role-detail">
-                <p>Du führst unsere Montageteams fachlich und stehst mit deinem Namen für die Qualität jeder Anlage.</p>
+              </div>
+              <p class="kar-role-teaser">Du führst unsere Montageteams fachlich und stehst mit deinem Namen für die Qualität jeder Anlage.</p>
+              <div class="kar-role-detail" id="detail-shk-meister">
                 <p class="kar-detail-h">Deine Aufgaben</p>
                 <ul class="kar-detail-list">
                   <li>Fachliche Leitung und Anleitung der Montageteams</li>
@@ -184,16 +189,20 @@
                   <li>Führungsstärke und ein Auge fürs Detail</li>
                   <li>Führerschein Klasse B</li>
                 </ul>
-                <a href="#bewerbung" class="btn-primary">Jetzt bewerben</a>
               </div>
-            </details>
-            <details class="kar-role">
-              <summary class="kar-role-sum">
-                <span class="kar-role-name">Quereinsteiger:in Montage <span class="kar-mwd">(m/w/d)</span></span>
+              <div class="kar-role-foot">
+                <button type="button" class="kar-btn-ghost kar-more" aria-expanded="false" aria-controls="detail-shk-meister">Mehr erfahren</button>
+                <a class="btn-primary kar-apply" data-role="SHK-Meister:in / Technische Betriebsleitung" href="mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk">Jetzt bewerben</a>
+              </div>
+            </article>
+
+            <article class="kar-role" id="role-quereinsteiger">
+              <div class="kar-role-head">
+                <h4 class="kar-role-name">Quereinsteiger:in Montage <span class="kar-mwd">(m/w/d)</span></h4>
                 <span class="kar-role-tags"><span class="kar-tag">Region Hannover</span><span class="kar-tag">Vollzeit</span></span>
-              </summary>
-              <div class="kar-role-detail">
-                <p>Du hast handwerkliches Talent und Lust auf die Wärmewende? Wir bilden dich Schritt für Schritt zum Wärmepumpen-Profi aus.</p>
+              </div>
+              <p class="kar-role-teaser">Du hast handwerkliches Talent und Lust auf die Wärmewende? Wir bilden dich Schritt für Schritt zum Wärmepumpen-Profi aus.</p>
+              <div class="kar-role-detail" id="detail-quereinsteiger">
                 <p class="kar-detail-h">Deine Aufgaben</p>
                 <ul class="kar-detail-list">
                   <li>Mitarbeit im Montageteam beim Ein- und Ausbau der Anlagen</li>
@@ -208,40 +217,48 @@
                   <li>Zuverlässigkeit, Sorgfalt und Teamgeist</li>
                   <li>Führerschein Klasse B</li>
                 </ul>
-                <a href="#bewerbung" class="btn-primary">Jetzt bewerben</a>
               </div>
-            </details>
-            <details class="kar-role">
-              <summary class="kar-role-sum">
-                <span class="kar-role-name">Elektromeister:in <span class="kar-mwd">(m/w/d)</span></span>
+              <div class="kar-role-foot">
+                <button type="button" class="kar-btn-ghost kar-more" aria-expanded="false" aria-controls="detail-quereinsteiger">Mehr erfahren</button>
+                <a class="btn-primary kar-apply" data-role="Quereinsteiger:in Montage" href="mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk">Jetzt bewerben</a>
+              </div>
+            </article>
+
+            <article class="kar-role" id="role-elektromeister">
+              <div class="kar-role-head">
+                <h4 class="kar-role-name">Elektromeister:in / Konzessionsträger:in Elektro <span class="kar-mwd">(m/w/d)</span></h4>
                 <span class="kar-role-tags"><span class="kar-tag">Region Hannover</span><span class="kar-tag">Vollzeit</span></span>
-              </summary>
-              <div class="kar-role-detail">
-                <p>Du verantwortest die Elektro-Seite unserer Installationen und gibst grünes Licht für jeden Anschluss.</p>
+              </div>
+              <p class="kar-role-teaser">Du verantwortest die Elektro-Seite unserer Installationen, gibst grünes Licht für jeden Anschluss – und bringst die Konzession dafür mit.</p>
+              <div class="kar-role-detail" id="detail-elektromeister">
                 <p class="kar-detail-h">Deine Aufgaben</p>
                 <ul class="kar-detail-list">
                   <li>Fachliche Verantwortung und Aufsicht der Elektroarbeiten an Wärmepumpe und PV</li>
-                  <li>Abnahme und Prüfung elektrotechnischer Installationen</li>
-                  <li>Einhaltung der VDE-Normen und der Vorgaben des Netzbetreibers</li>
+                  <li>Eintragung als verantwortliche Elektrofachkraft im Installateurverzeichnis des Netzbetreibers (Konzessionsträger:in)</li>
+                  <li>Abnahme und Prüfung elektrotechnischer Installationen nach VDE</li>
                   <li>Anleitung der Elektrofachkräfte im Team</li>
                 </ul>
                 <p class="kar-detail-h">Dein Profil</p>
                 <ul class="kar-detail-list">
                   <li>Meisterbrief im Elektrohandwerk (Energie- und Gebäudetechnik)</li>
-                  <li>Eintragung in die Handwerksrolle oder Bereitschaft dazu</li>
+                  <li>Eintragung in die Handwerksrolle und Eignung als Konzessionsträger:in beim Netzbetreiber</li>
                   <li>Erfahrung mit WP- bzw. PV-Elektroinstallation</li>
                   <li>Führerschein Klasse B</li>
                 </ul>
-                <a href="#bewerbung" class="btn-primary">Jetzt bewerben</a>
               </div>
-            </details>
-            <details class="kar-role">
-              <summary class="kar-role-sum">
-                <span class="kar-role-name">Elektriker:in – Wärmepumpen &amp; Photovoltaik <span class="kar-mwd">(m/w/d)</span></span>
+              <div class="kar-role-foot">
+                <button type="button" class="kar-btn-ghost kar-more" aria-expanded="false" aria-controls="detail-elektromeister">Mehr erfahren</button>
+                <a class="btn-primary kar-apply" data-role="Elektromeister:in / Konzessionsträger:in Elektro" href="mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk">Jetzt bewerben</a>
+              </div>
+            </article>
+
+            <article class="kar-role" id="role-elektriker">
+              <div class="kar-role-head">
+                <h4 class="kar-role-name">Elektriker:in – Wärmepumpen &amp; Photovoltaik <span class="kar-mwd">(m/w/d)</span></h4>
                 <span class="kar-role-tags"><span class="kar-tag">Region Hannover</span><span class="kar-tag">Vollzeit</span></span>
-              </summary>
-              <div class="kar-role-detail">
-                <p>Du bringst Wärmepumpen und PV-Anlagen sauber ans Netz – vom Anschluss bis zur Inbetriebnahme.</p>
+              </div>
+              <p class="kar-role-teaser">Du bringst Wärmepumpen und PV-Anlagen sauber ans Netz – vom Anschluss bis zur Inbetriebnahme.</p>
+              <div class="kar-role-detail" id="detail-elektriker">
                 <p class="kar-detail-h">Deine Aufgaben</p>
                 <ul class="kar-detail-list">
                   <li>Elektroanschluss der Wärmepumpe: Zählerplatz, Sicherungskasten, Steuerleitung</li>
@@ -256,16 +273,20 @@
                   <li>Selbstständige, verantwortungsvolle Arbeitsweise und Qualitätsbewusstsein</li>
                   <li>Führerschein Klasse B, Deutsch mind. B2</li>
                 </ul>
-                <a href="#bewerbung" class="btn-primary">Jetzt bewerben</a>
               </div>
-            </details>
-            <details class="kar-role">
-              <summary class="kar-role-sum">
-                <span class="kar-role-name">Fundament- &amp; Außenanlagen / GaLa <span class="kar-mwd">(m/w/d)</span></span>
+              <div class="kar-role-foot">
+                <button type="button" class="kar-btn-ghost kar-more" aria-expanded="false" aria-controls="detail-elektriker">Mehr erfahren</button>
+                <a class="btn-primary kar-apply" data-role="Elektriker:in – Wärmepumpen &amp; Photovoltaik" href="mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk">Jetzt bewerben</a>
+              </div>
+            </article>
+
+            <article class="kar-role" id="role-gala">
+              <div class="kar-role-head">
+                <h4 class="kar-role-name">Fundament- &amp; Außenanlagen / GaLa <span class="kar-mwd">(m/w/d)</span></h4>
                 <span class="kar-role-tags"><span class="kar-tag">Region Hannover</span><span class="kar-tag">Vollzeit</span></span>
-              </summary>
-              <div class="kar-role-detail">
-                <p>Du schaffst die Basis – damit die Außeneinheit sicher steht und drumherum alles stimmt.</p>
+              </div>
+              <p class="kar-role-teaser">Du schaffst die Basis – damit die Außeneinheit sicher steht und drumherum alles stimmt.</p>
+              <div class="kar-role-detail" id="detail-gala">
                 <p class="kar-detail-h">Deine Aufgaben</p>
                 <ul class="kar-detail-list">
                   <li>Vorbereitung von Aufstellflächen und Fundamenten für die Außeneinheiten</li>
@@ -280,16 +301,20 @@
                   <li>Sorgfalt und Zuverlässigkeit</li>
                   <li>Führerschein Klasse B, idealerweise BE</li>
                 </ul>
-                <a href="#bewerbung" class="btn-primary">Jetzt bewerben</a>
               </div>
-            </details>
-            <details class="kar-role">
-              <summary class="kar-role-sum">
-                <span class="kar-role-name">Service-/Wartungstechniker:in <span class="kar-mwd">(m/w/d)</span></span>
+              <div class="kar-role-foot">
+                <button type="button" class="kar-btn-ghost kar-more" aria-expanded="false" aria-controls="detail-gala">Mehr erfahren</button>
+                <a class="btn-primary kar-apply" data-role="Fundament- &amp; Außenanlagen / GaLa" href="mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk">Jetzt bewerben</a>
+              </div>
+            </article>
+
+            <article class="kar-role" id="role-service">
+              <div class="kar-role-head">
+                <h4 class="kar-role-name">Service-/Wartungstechniker:in <span class="kar-mwd">(m/w/d)</span></h4>
                 <span class="kar-role-tags"><span class="kar-tag">Region Hannover</span><span class="kar-tag">Vollzeit</span></span>
-              </summary>
-              <div class="kar-role-detail">
-                <p>Du hältst die Anlagen unserer Kund:innen am Laufen – und bist ihr vertrautes Gesicht.</p>
+              </div>
+              <p class="kar-role-teaser">Du hältst die Anlagen unserer Kund:innen am Laufen – und bist ihr vertrautes Gesicht.</p>
+              <div class="kar-role-detail" id="detail-service">
                 <p class="kar-detail-h">Deine Aufgaben</p>
                 <ul class="kar-detail-list">
                   <li>Wartung und Inspektion installierter Wärmepumpen</li>
@@ -304,22 +329,27 @@
                   <li>Selbstständige, serviceorientierte Arbeitsweise</li>
                   <li>Führerschein Klasse B</li>
                 </ul>
-                <a href="#bewerbung" class="btn-primary">Jetzt bewerben</a>
               </div>
-            </details>
+              <div class="kar-role-foot">
+                <button type="button" class="kar-btn-ghost kar-more" aria-expanded="false" aria-controls="detail-service">Mehr erfahren</button>
+                <a class="btn-primary kar-apply" data-role="Service-/Wartungstechniker:in" href="mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk">Jetzt bewerben</a>
+              </div>
+            </article>
+
           </div>
         </div>
 
         <div class="kar-roles-group">
           <h3 class="kar-roles-group-title">Vertrieb &amp; Beratung</h3>
           <div class="kar-role-list">
-            <details class="kar-role">
-              <summary class="kar-role-sum">
-                <span class="kar-role-name">Vertriebsberater:in Außendienst – Wärmepumpe <span class="kar-mwd">(m/w/d)</span></span>
+
+            <article class="kar-role" id="role-vad">
+              <div class="kar-role-head">
+                <h4 class="kar-role-name">Vertriebsberater:in Außendienst – Wärmepumpe <span class="kar-mwd">(m/w/d)</span></h4>
                 <span class="kar-role-tags"><span class="kar-tag">Region Hannover</span><span class="kar-tag">Vollzeit</span></span>
-              </summary>
-              <div class="kar-role-detail">
-                <p>Du holst Menschen bei ihrem Heizungswechsel ab – direkt am Küchentisch – und machst aus Interesse ein überzeugtes Ja zur Wärmepumpe.</p>
+              </div>
+              <p class="kar-role-teaser">Du holst Menschen bei ihrem Heizungswechsel ab – direkt am Küchentisch – und machst aus Interesse ein überzeugtes Ja zur Wärmepumpe.</p>
+              <div class="kar-role-detail" id="detail-vad">
                 <p class="kar-detail-h">Deine Aufgaben</p>
                 <ul class="kar-detail-list">
                   <li>Beratung von Hausbesitzer:innen vor Ort zu Wärmepumpe und Förderung</li>
@@ -334,16 +364,20 @@
                   <li>Digital-affin und sicher im Umgang mit CRM-Tools</li>
                   <li>Führerschein Klasse B</li>
                 </ul>
-                <a href="#bewerbung" class="btn-primary">Jetzt bewerben</a>
               </div>
-            </details>
-            <details class="kar-role">
-              <summary class="kar-role-sum">
-                <span class="kar-role-name">Vertriebsassistenz / Innendienst <span class="kar-mwd">(m/w/d)</span></span>
+              <div class="kar-role-foot">
+                <button type="button" class="kar-btn-ghost kar-more" aria-expanded="false" aria-controls="detail-vad">Mehr erfahren</button>
+                <a class="btn-primary kar-apply" data-role="Vertriebsberater:in Außendienst – Wärmepumpe" href="mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk">Jetzt bewerben</a>
+              </div>
+            </article>
+
+            <article class="kar-role" id="role-va">
+              <div class="kar-role-head">
+                <h4 class="kar-role-name">Vertriebsassistenz / Innendienst <span class="kar-mwd">(m/w/d)</span></h4>
                 <span class="kar-role-tags"><span class="kar-tag">Region Hannover</span><span class="kar-tag">Vollzeit</span></span>
-              </summary>
-              <div class="kar-role-detail">
-                <p>Du hältst dem Außendienst den Rücken frei und sorgst dafür, dass kein Lead verloren geht.</p>
+              </div>
+              <p class="kar-role-teaser">Du hältst dem Außendienst den Rücken frei und sorgst dafür, dass kein Lead verloren geht.</p>
+              <div class="kar-role-detail" id="detail-va">
                 <p class="kar-detail-h">Deine Aufgaben</p>
                 <ul class="kar-detail-list">
                   <li>Terminierung und Vorbereitung der Beratungsgespräche</li>
@@ -358,22 +392,27 @@
                   <li>Sicherer Umgang mit digitalen Tools</li>
                   <li>Strukturierte, zuverlässige Arbeitsweise</li>
                 </ul>
-                <a href="#bewerbung" class="btn-primary">Jetzt bewerben</a>
               </div>
-            </details>
+              <div class="kar-role-foot">
+                <button type="button" class="kar-btn-ghost kar-more" aria-expanded="false" aria-controls="detail-va">Mehr erfahren</button>
+                <a class="btn-primary kar-apply" data-role="Vertriebsassistenz / Innendienst" href="mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk">Jetzt bewerben</a>
+              </div>
+            </article>
+
           </div>
         </div>
 
         <div class="kar-roles-group">
           <h3 class="kar-roles-group-title">Büro &amp; Organisation</h3>
           <div class="kar-role-list">
-            <details class="kar-role">
-              <summary class="kar-role-sum">
-                <span class="kar-role-name">Backoffice / Auftragssachbearbeitung <span class="kar-mwd">(m/w/d)</span></span>
+
+            <article class="kar-role" id="role-backoffice">
+              <div class="kar-role-head">
+                <h4 class="kar-role-name">Backoffice / Auftragssachbearbeitung <span class="kar-mwd">(m/w/d)</span></h4>
                 <span class="kar-role-tags"><span class="kar-tag">Region Hannover</span><span class="kar-tag">Vollzeit</span></span>
-              </summary>
-              <div class="kar-role-detail">
-                <p>Du bist die organisatorische Drehscheibe zwischen Kund:innen, Montage und Vertrieb.</p>
+              </div>
+              <p class="kar-role-teaser">Du bist die organisatorische Drehscheibe zwischen Kund:innen, Montage und Vertrieb.</p>
+              <div class="kar-role-detail" id="detail-backoffice">
                 <p class="kar-detail-h">Deine Aufgaben</p>
                 <ul class="kar-detail-list">
                   <li>Auftragsabwicklung von der Annahme bis zur Abrechnung</li>
@@ -388,16 +427,20 @@
                   <li>Sicherer Umgang mit Office- und ERP-Tools</li>
                   <li>Kommunikationsstärke</li>
                 </ul>
-                <a href="#bewerbung" class="btn-primary">Jetzt bewerben</a>
               </div>
-            </details>
-            <details class="kar-role">
-              <summary class="kar-role-sum">
-                <span class="kar-role-name">SHK-Planer:in / Anlagenauslegung <span class="kar-mwd">(m/w/d)</span></span>
+              <div class="kar-role-foot">
+                <button type="button" class="kar-btn-ghost kar-more" aria-expanded="false" aria-controls="detail-backoffice">Mehr erfahren</button>
+                <a class="btn-primary kar-apply" data-role="Backoffice / Auftragssachbearbeitung" href="mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk">Jetzt bewerben</a>
+              </div>
+            </article>
+
+            <article class="kar-role" id="role-planer">
+              <div class="kar-role-head">
+                <h4 class="kar-role-name">SHK-Planer:in / Anlagenauslegung <span class="kar-mwd">(m/w/d)</span></h4>
                 <span class="kar-role-tags"><span class="kar-tag">Region Hannover</span><span class="kar-tag">Vollzeit</span></span>
-              </summary>
-              <div class="kar-role-detail">
-                <p>Du prüfst und planst Wärmepumpen-Projekte am Rechner, damit jede Anlage zum Haus passt und sparsam läuft – auf Wunsch auch im Homeoffice.</p>
+              </div>
+              <p class="kar-role-teaser">Du prüfst und planst Wärmepumpen-Projekte am Rechner, damit jede Anlage zum Haus passt und sparsam läuft – auf Wunsch auch im Homeoffice.</p>
+              <div class="kar-role-detail" id="detail-planer">
                 <p class="kar-detail-h">Deine Aufgaben</p>
                 <ul class="kar-detail-list">
                   <li>Technische Prüfung verkaufter Wärmepumpen-Projekte am PC</li>
@@ -412,16 +455,20 @@
                   <li>Wärmepumpen-Schulungen oder -Zertifikate von Vorteil</li>
                   <li>Sicheres, strukturiertes Arbeiten am PC</li>
                 </ul>
-                <a href="#bewerbung" class="btn-primary">Jetzt bewerben</a>
               </div>
-            </details>
-            <details class="kar-role">
-              <summary class="kar-role-sum">
-                <span class="kar-role-name">Personalreferent:in / HR <span class="kar-mwd">(m/w/d)</span></span>
+              <div class="kar-role-foot">
+                <button type="button" class="kar-btn-ghost kar-more" aria-expanded="false" aria-controls="detail-planer">Mehr erfahren</button>
+                <a class="btn-primary kar-apply" data-role="SHK-Planer:in / Anlagenauslegung" href="mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk">Jetzt bewerben</a>
+              </div>
+            </article>
+
+            <article class="kar-role" id="role-hr">
+              <div class="kar-role-head">
+                <h4 class="kar-role-name">Personalreferent:in / HR <span class="kar-mwd">(m/w/d)</span></h4>
                 <span class="kar-role-tags"><span class="kar-tag">Region Hannover</span><span class="kar-tag">Vollzeit</span></span>
-              </summary>
-              <div class="kar-role-detail">
-                <p>Du baust mit uns das Team auf, das die Wärmewende vor Ort umsetzt.</p>
+              </div>
+              <p class="kar-role-teaser">Du baust mit uns das Team auf, das die Wärmewende vor Ort umsetzt.</p>
+              <div class="kar-role-detail" id="detail-hr">
                 <p class="kar-detail-h">Deine Aufgaben</p>
                 <ul class="kar-detail-list">
                   <li>Recruiting von der Ausschreibung bis zum Vertrag</li>
@@ -436,16 +483,20 @@
                   <li>Strukturierte, eigenständige Arbeitsweise</li>
                   <li>Diskretion und Verlässlichkeit</li>
                 </ul>
-                <a href="#bewerbung" class="btn-primary">Jetzt bewerben</a>
               </div>
-            </details>
-            <details class="kar-role">
-              <summary class="kar-role-sum">
-                <span class="kar-role-name">Assistenz der Geschäftsführung <span class="kar-mwd">(m/w/d)</span></span>
+              <div class="kar-role-foot">
+                <button type="button" class="kar-btn-ghost kar-more" aria-expanded="false" aria-controls="detail-hr">Mehr erfahren</button>
+                <a class="btn-primary kar-apply" data-role="Personalreferent:in / HR" href="mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk">Jetzt bewerben</a>
+              </div>
+            </article>
+
+            <article class="kar-role" id="role-assistenz">
+              <div class="kar-role-head">
+                <h4 class="kar-role-name">Assistenz der Geschäftsführung <span class="kar-mwd">(m/w/d)</span></h4>
                 <span class="kar-role-tags"><span class="kar-tag">Region Hannover</span><span class="kar-tag">Vollzeit</span></span>
-              </summary>
-              <div class="kar-role-detail">
-                <p>Du hältst der Geschäftsführung den Rücken frei und sorgst dafür, dass der Laden rundläuft.</p>
+              </div>
+              <p class="kar-role-teaser">Du hältst der Geschäftsführung den Rücken frei und sorgst dafür, dass der Laden rundläuft.</p>
+              <div class="kar-role-detail" id="detail-assistenz">
                 <p class="kar-detail-h">Deine Aufgaben</p>
                 <ul class="kar-detail-list">
                   <li>Organisatorische und administrative Unterstützung der Geschäftsführung</li>
@@ -460,9 +511,13 @@
                   <li>Sicherer Umgang mit digitalen Tools</li>
                   <li>Proaktive, mitdenkende Arbeitsweise</li>
                 </ul>
-                <a href="#bewerbung" class="btn-primary">Jetzt bewerben</a>
               </div>
-            </details>
+              <div class="kar-role-foot">
+                <button type="button" class="kar-btn-ghost kar-more" aria-expanded="false" aria-controls="detail-assistenz">Mehr erfahren</button>
+                <a class="btn-primary kar-apply" data-role="Assistenz der Geschäftsführung" href="mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk">Jetzt bewerben</a>
+              </div>
+            </article>
+
           </div>
         </div>
 
@@ -474,7 +529,7 @@
               hinwillst – und werde HeroWerker.
             </p>
           </div>
-          <a href="#bewerbung" class="kar-btn-ghost">Initiativ bewerben</a>
+          <a href="mailto:bewerbung@herowerk.de?subject=Initiativbewerbung%20bei%20HeroWerk" class="kar-btn-ghost">Initiativ bewerben</a>
         </div>
       </div>
     </section>
@@ -672,6 +727,40 @@
   </footer>
 
   <script src="js/site.js" defer></script>
+
+  <!-- Karriere: Mehr-erfahren-Toggle + rollenspezifische Bewerbungs-Mailto -->
+  <script>
+    (function () {
+      var cards = document.querySelectorAll('.kar-role');
+      function openCard(card) {
+        if (!card) return;
+        card.classList.add('is-open');
+        var b = card.querySelector('.kar-more');
+        if (b) {
+          b.setAttribute('aria-expanded', 'true');
+          b.textContent = 'Weniger anzeigen';
+        }
+      }
+      document.querySelectorAll('.kar-more').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var card = btn.closest('.kar-role');
+          var isOpen = card.classList.toggle('is-open');
+          btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+          btn.textContent = isOpen ? 'Weniger anzeigen' : 'Mehr erfahren';
+        });
+      });
+      document.querySelectorAll('.kar-apply').forEach(function (a) {
+        var role = a.getAttribute('data-role');
+        if (role) {
+          a.setAttribute('href', 'mailto:bewerbung@herowerk.de?subject=' + encodeURIComponent('Bewerbung: ' + role));
+        }
+      });
+      // Deep-Link /karriere#role-... oeffnet die passende Karte direkt
+      if (window.location.hash) {
+        openCard(document.querySelector(window.location.hash + '.kar-role'));
+      }
+    })();
+  </script>
 
   <!-- MOBILE BOTTOM BAR -->
   <div class="mobile-bottom-bar" role="navigation" aria-label="Mobile Schnellnavigation">
