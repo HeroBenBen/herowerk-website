@@ -85,6 +85,15 @@
     },
     "waermeverteilung": {
       "type": "string"
+    },
+    "foerdervorschuss_interesse": {
+      "$comment": "Funnel-Checkbox anfrage.html (name=foerdervorschuss_interesse). Form sendet 'true' bei Interesse, sonst '' (leer). 'false' defensiv erlaubt.",
+      "type": "string",
+      "enum": [
+        "true",
+        "false",
+        ""
+      ]
     }
   }
 }
