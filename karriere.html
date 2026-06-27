@@ -1097,7 +1097,8 @@
       }
 
       function reconcile(feed) {
-        if (!Array.isArray(feed)) return;
+        // Leerer/ungueltiger Feed -> statische Baseline behalten (nie die Seite leeren).
+        if (!Array.isArray(feed) || feed.length === 0) return;
         var feedById = {};
         feed.forEach(function (it) {
           if (it && it.id) feedById[it.id] = it;

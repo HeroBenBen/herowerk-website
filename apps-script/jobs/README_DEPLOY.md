@@ -207,3 +207,13 @@ die Karte nicht):
 `1n6kuRA4sjyFI2SMwcIpE6_QRBHEfsQYLZDus9vJm160`. `doGet` liefert den in `_published!A1`
 eingefrorenen JSON-Snapshot. In `karriere.html` steuert die Konstante `JOBS_FEED_URL` den
 Abruf — leer = statischer Baseline-Stand (No-Op).*
+
+---
+
+## Deployment-Stand (28.06.2026)
+
+- **Web-App v1 ist deployt** (autonom via Browser, Konto `b.bendler@herowerk.de`, Zugriff „Jeder", Ausführen als ich). Antwortet (HTTP 200, JSON; aktuell `[]`, da noch nichts veröffentlicht).
+- **Web-App-URL (für `JOBS_FEED_URL`):**
+  `https://script.google.com/macros/s/AKfycbyWT1oEelZ9IenXedyH5KdCyyDogmdlVxnbAexJdv_ZqPhEp_encxfJPvrEiBd7VpqcQw/exec`
+- **`JOBS_FEED_URL` in karriere.html ist bewusst noch LEER** (Seite bleibt statisch). Aktivierung erst **nach Sheet-Abgleich** (die 19 Sheet-Rollen vs. die 13 Seiten-Karten ausrichten: Dublette SHK-Meister, fehlendes „Backoffice", abweichende Planer-Benennung, neue Rollen online/offline). Dann: URL eintragen → Seite prüfen → veröffentlichen.
+- Robustheit: leerer/fehlerhafter Feed → Seite behält die statische Baseline (kein Leeren der Seite).
