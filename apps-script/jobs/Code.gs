@@ -440,6 +440,15 @@ function populateAll() {
   var sh = ss.getSheetByName(TAB_UEBERSICHT);
   var content = CONTENT_BY_ID_();
 
+  // 0) Alt-Datenvalidierungen + Alt-Formate der Datenzeilen entfernen.
+  // Manuell gesetzte Reject-Dropdowns (z.B. Kategorie auf Spalte D) würden sonst
+  // das setValues blockieren (Reject-Type wirft Exception). clearFormat räumt
+  // verwaiste Dropdown-/Farb-Hintergründe weg, damit das Sheet sauber bleibt.
+  var maxR = sh.getMaxRows();
+  var clearW = Math.max(6, sh.getLastColumn());
+  sh.getRange(1, 1, maxR, clearW).clearDataValidations();
+  if (maxR >= 2) sh.getRange(2, 1, maxR - 1, clearW).clearFormat();
+
   // 1) Übersicht-Datenzeilen (ab Zeile 2) leeren und Roster frisch schreiben.
   var rows = [];
   var missing = [];
