@@ -1,0 +1,507 @@
+/* ===== Karriere-Seite (/karriere) =====
+   Page-spezifische Styles. Nutzt die globalen Theme-Tokens (tokens.css /
+   site.css :root), damit Light-Mode automatisch mitläuft. Alle eigenen
+   Klassen sind mit kar- praefixiert, um Kollisionen mit site.css zu vermeiden.
+   Kartenfarben folgen dem Site-Muster: dunkle Schiefer-Flaechen im Dark-Mode,
+   weisse Flaechen im Light-Mode (analog .pa-card in tokens.css).
+   Rollen sind Karten; "Mehr erfahren" toggelt das Detail per JS (.is-open) und
+   ueber Deep-Link (:target). */
+
+/* ---------- Gemeinsame Karten-Basis ---------- */
+.kar-why-card,
+.kar-benefit,
+.kar-step,
+.kar-cta-panel,
+.kar-role {
+  background: var(--color-surface-tertiary);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+}
+
+[data-theme='light'] .kar-why-card,
+[data-theme='light'] .kar-benefit,
+[data-theme='light'] .kar-step,
+[data-theme='light'] .kar-cta-panel,
+[data-theme='light'] .kar-role {
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: 0 8px 28px var(--color-shadow);
+}
+
+/* ---------- Icon-Chip ---------- */
+.kar-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(183, 217, 0, 0.12);
+  color: var(--green);
+  margin-bottom: 16px;
+}
+
+[data-theme='light'] .kar-icon {
+  background: rgba(183, 217, 0, 0.22);
+  color: var(--color-accent-on-light);
+}
+
+/* ---------- Ghost-Button (Sekundaer-CTA) ---------- */
+.kar-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 24px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border-strong);
+  background: transparent;
+  color: var(--white);
+  font:
+    700 15px/1 'Inter',
+    sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+
+.kar-btn-ghost:hover {
+  border-color: var(--green);
+  background: rgba(183, 217, 0, 0.08);
+}
+
+.kar-btn-ghost:focus-visible {
+  outline: 3px solid rgba(183, 217, 0, 0.65);
+  outline-offset: 3px;
+}
+
+/* ---------- 1 · Hero ---------- */
+.kar-hero .section-lead {
+  max-width: 760px;
+}
+
+.kar-hero-title {
+  max-width: 880px;
+}
+
+.kar-hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 30px 0 18px;
+}
+
+.kar-hero-meta {
+  color: var(--g400);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+/* ---------- 2 · Warum HeroWerk ---------- */
+.kar-why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 36px;
+}
+
+.kar-why-card {
+  padding: 28px 26px;
+}
+
+.kar-why-card h3 {
+  font-family: 'Barlow', sans-serif;
+  color: var(--white);
+  font-size: 20px;
+  margin: 0 0 10px;
+}
+
+.kar-why-card p {
+  color: var(--g300);
+  font-size: 16px;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ---------- 3 · Offene Rollen (Karten) ---------- */
+.kar-roles-group {
+  margin-top: 40px;
+}
+
+.kar-roles-group-title {
+  font-family: 'Barlow', sans-serif;
+  color: var(--white);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 16px;
+}
+
+.kar-role-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.kar-role {
+  padding: 22px 24px;
+  scroll-margin-top: 90px;
+}
+
+.kar-role:target {
+  outline: 2px solid rgba(183, 217, 0, 0.55);
+  outline-offset: 3px;
+}
+
+.kar-role-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+}
+
+.kar-role-id {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.kar-role-icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: rgba(183, 217, 0, 0.12);
+  color: var(--green);
+}
+
+[data-theme='light'] .kar-role-icon {
+  background: rgba(183, 217, 0, 0.22);
+  color: var(--color-accent-on-light);
+}
+
+.kar-role-name {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.3;
+  color: var(--white);
+  margin: 0;
+}
+
+.kar-mwd {
+  color: var(--g400);
+  font-weight: 600;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+
+.kar-role-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.kar-tag {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--g300);
+  font:
+    700 12px/1.4 'Inter',
+    sans-serif;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+[data-theme='light'] .kar-tag {
+  background: var(--color-surface-tertiary);
+  color: var(--color-text-secondary);
+}
+
+.kar-role-teaser {
+  color: var(--g300);
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 12px 0 0;
+  max-width: 820px;
+}
+
+.kar-role-detail {
+  display: none;
+  margin-top: 4px;
+}
+
+.kar-role.is-open .kar-role-detail,
+.kar-role:target .kar-role-detail {
+  display: block;
+}
+
+.kar-detail-h {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  color: var(--white);
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 16px 0 8px;
+}
+
+.kar-detail-list {
+  margin: 0 0 16px;
+  padding-left: 20px;
+  color: var(--g300);
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 820px;
+}
+
+.kar-detail-list li {
+  margin-bottom: 6px;
+}
+
+.kar-role-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.kar-more {
+  padding: 12px 22px;
+  font-size: 15px;
+}
+
+.kar-apply-hint {
+  color: var(--g400);
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 12px 0 0;
+}
+
+.kar-apply-hint a {
+  color: var(--green);
+  text-decoration: underline;
+  word-break: break-word;
+}
+
+[data-theme='light'] .kar-apply-hint a {
+  color: var(--color-accent-on-light);
+}
+
+.kar-initiativ {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 28px;
+  padding: 24px 26px;
+  border-radius: 14px;
+  background: rgba(183, 217, 0, 0.07);
+  border: 1px dashed rgba(183, 217, 0, 0.5);
+}
+
+[data-theme='light'] .kar-initiativ {
+  background: rgba(183, 217, 0, 0.1);
+  border: 1px dashed rgba(159, 191, 0, 0.7);
+}
+
+.kar-initiativ h3 {
+  font-family: 'Barlow', sans-serif;
+  color: var(--white);
+  font-size: 20px;
+  margin: 0 0 6px;
+}
+
+.kar-initiativ p {
+  color: var(--g300);
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 640px;
+}
+
+/* ---------- 4 · Was wir bieten ---------- */
+.kar-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 36px;
+}
+
+.kar-benefit {
+  padding: 24px 22px;
+}
+
+.kar-benefit .kar-icon {
+  width: 42px;
+  height: 42px;
+  margin-bottom: 14px;
+}
+
+.kar-benefit h3 {
+  font-family: 'Barlow', sans-serif;
+  color: var(--white);
+  font-size: 17px;
+  margin: 0 0 8px;
+}
+
+.kar-benefit p {
+  color: var(--g300);
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ---------- 5 · Bewerbungsprozess ---------- */
+.kar-steps {
+  list-style: none;
+  margin: 36px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.kar-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 22px 24px;
+}
+
+.kar-step-num {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--green);
+  color: #1c2b36;
+  font:
+    800 18px/1 'Barlow',
+    sans-serif;
+}
+
+.kar-step-body h3 {
+  font-family: 'Barlow', sans-serif;
+  color: var(--white);
+  font-size: 18px;
+  margin: 2px 0 8px;
+}
+
+.kar-step-body p {
+  color: var(--g300);
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.kar-step-opt {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--g400);
+  font:
+    600 11px/1.4 'Inter',
+    sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+[data-theme='light'] .kar-step-opt {
+  background: var(--color-surface-tertiary);
+  color: var(--color-text-secondary);
+}
+
+.kar-cta-panel {
+  margin-top: 30px;
+  padding: 36px 32px;
+  text-align: center;
+}
+
+.kar-cta-panel h3 {
+  font-family: 'Barlow', sans-serif;
+  color: var(--white);
+  font-size: 24px;
+  margin: 0 0 8px;
+}
+
+.kar-cta-panel > p {
+  color: var(--g300);
+  font-size: 16px;
+  margin: 0 0 22px;
+}
+
+.kar-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.kar-cta-hint {
+  color: var(--g400);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.kar-cta-hint a {
+  color: var(--green);
+  text-decoration: underline;
+}
+
+[data-theme='light'] .kar-cta-hint a {
+  color: var(--color-accent-on-light);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  .kar-why-grid {
+    grid-template-columns: 1fr;
+  }
+  .kar-benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .kar-steps {
+    grid-template-columns: 1fr;
+  }
+  .kar-cta-panel {
+    padding: 28px 22px;
+  }
+  .kar-hero-cta .btn-primary,
+  .kar-hero-cta .kar-btn-ghost {
+    flex: 1 1 auto;
+  }
+  .kar-role-foot .kar-more,
+  .kar-role-foot .btn-primary {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .kar-benefits-grid {
+    grid-template-columns: 1fr;
+  }
+}

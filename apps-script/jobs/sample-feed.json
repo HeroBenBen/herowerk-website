@@ -1,0 +1,363 @@
+[
+  {
+    "id": "anlagenmechaniker",
+    "name": "Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in",
+    "mwd": "(m/w/d)",
+    "kategorie": "Montage & Technik",
+    "tags": ["Region Hannover", "Vollzeit"],
+    "teaser": "TESTFEED Teaser Anlagenmechaniker",
+    "aufgaben": [
+      "Du baust die alte Heizung aus und die neue Wärmepumpe ein – von der Außeneinheit bis zur Inbetriebnahme, im eingespielten Montageteam.",
+      "Du bindest die Anlage hydraulisch ein, befüllst, entlüftest und nimmst sie in Betrieb.",
+      "Du übergibst die fertige Anlage und erklärst den Kund:innen ihre neue Heizung verständlich.",
+      "Du dokumentierst sauber per Tablet (Fotos + Abnahmeprotokoll) – die Auftragsdaten hast du vorab digital dabei, kein Zettelchaos.",
+      "Du arbeitest auf vorbereiteten Baustellen: Aufmaß, Planung und Material kommen aus dem Innendienst – du konzentrierst dich aufs Handwerk."
+    ],
+    "profil": [
+      "Abgeschlossene Ausbildung als Anlagenmechaniker:in SHK, Gas-/Wasserinstallateur:in oder Heizungsbauer:in.",
+      "Erfahrung in der Heizungsinstallation – erste Wärmepumpen-Berührung ist ein Plus, aber kein Muss (wir schulen dich).",
+      "Sorgfältige, kundenfreundliche und eigenverantwortliche Arbeitsweise im Team.",
+      "Führerschein Klasse B und Deutsch ab B2."
+    ],
+    "freuen": [
+      "Feste Region Hannover – keine Fernmontage, kein Hotel, abends daheim.",
+      "Modernes Werkzeug, gut ausgestattete Fahrzeuge, Tablet statt Papierkram.",
+      "Kälteschein & Herstellerschulungen auf unsere Kosten.",
+      "Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub."
+    ],
+    "icon": "wrench",
+    "order": 1
+  },
+  {
+    "id": "shk-meister",
+    "name": "SHK-Meister:in / Technische Betriebsleitung",
+    "mwd": "(m/w/d)",
+    "kategorie": "Montage & Technik",
+    "tags": ["Region Hannover", "Vollzeit"],
+    "teaser": "Du führst unsere Montageteams fachlich und stehst mit deinem Namen für die Qualität jeder Anlage – als technische Betriebsleitung in der Region Hannover.",
+    "aufgaben": [
+      "Du leitest und führst unsere Montageteams fachlich an – auf der Baustelle und im Hintergrund.",
+      "Du sicherst die Qualität und nimmst die fertigen Wärmepumpen-Installationen ab.",
+      "Du übernimmst die Verantwortung als technische:r Betriebsleiter:in nach Handwerksordnung.",
+      "Du stellst sicher, dass Normen (DIN/VDE) und Herstellervorgaben sauber eingehalten werden.",
+      "Du gibst dein Wissen weiter und entwickelst die Kolleg:innen im Team fachlich weiter."
+    ],
+    "profil": [
+      "Meisterbrief im SHK-Handwerk.",
+      "Mehrjährige Erfahrung in der Heizungs- bzw. Wärmepumpentechnik.",
+      "Führungsstärke, Verantwortungsbewusstsein und ein Auge fürs Detail.",
+      "Führerschein Klasse B."
+    ],
+    "freuen": [
+      "Feste Region Hannover – keine Fernmontage, abends daheim.",
+      "Gestaltungsspielraum, flache Hierarchien und kurze Wege.",
+      "Herstellerschulungen & Weiterbildung auf unsere Kosten.",
+      "Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub."
+    ],
+    "icon": "medal",
+    "order": 2
+  },
+  {
+    "id": "quereinsteiger",
+    "name": "Quereinsteiger:in Montage",
+    "mwd": "(m/w/d)",
+    "kategorie": "Montage & Technik",
+    "tags": ["Region Hannover", "Vollzeit"],
+    "teaser": "Du hast handwerkliches Talent und Lust auf die Wärmewende? Wir bilden dich Schritt für Schritt zum Wärmepumpen-Profi aus – im festen Team in der Region Hannover.",
+    "aufgaben": [
+      "Du arbeitest im Montageteam beim Ein- und Ausbau der Anlagen mit und lernst von erfahrenen Kolleg:innen.",
+      "Du verlegst Kabel, übernimmst Bohrarbeiten und setzt Schaltschränke.",
+      "Du bereitest Baustelle, Material und Werkzeug vor – sauber und präzise.",
+      "Du unterstützt bei Anschluss, Inbetriebnahme und Übergabe der Wärmepumpe.",
+      "Du dokumentierst deine Arbeit per Tablet und wächst Schritt für Schritt in die Rolle hinein."
+    ],
+    "profil": [
+      "Handwerkliche Praxis und ausgeprägte Lernbereitschaft.",
+      "Bereitschaft, dich zum Wärmepumpen-Profi ausbilden zu lassen – SHK- oder Elektro-Erfahrung ist ein Plus, aber kein Muss.",
+      "Zuverlässigkeit, Sorgfalt und Teamgeist.",
+      "Führerschein Klasse B."
+    ],
+    "freuen": [
+      "Strukturiertes Onboarding durch erfahrene Kolleg:innen.",
+      "Weiterbildung auf unsere Kosten – bis zum Kälteschein & Herstellerschulungen.",
+      "Feste Region Hannover, modernes Werkzeug und gut ausgestattete Fahrzeuge.",
+      "Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub."
+    ],
+    "icon": "learning",
+    "order": 3
+  },
+  {
+    "id": "elektromeister",
+    "name": "Elektromeister:in / Konzessionsträger:in Elektro",
+    "mwd": "(m/w/d)",
+    "kategorie": "Montage & Technik",
+    "tags": ["Region Hannover", "Vollzeit"],
+    "teaser": "Du verantwortest die Elektro-Seite unserer Installationen, gibst grünes Licht für jeden Anschluss – und bringst die Konzession dafür mit. Festes Einsatzgebiet: Region Hannover.",
+    "aufgaben": [
+      "Du verantwortest fachlich die Elektroarbeiten an Wärmepumpe und PV und behältst sie im Blick.",
+      "Du bist als verantwortliche Elektrofachkraft im Installateurverzeichnis des Netzbetreibers eingetragen (Konzessionsträger:in).",
+      "Du nimmst elektrotechnische Installationen nach VDE ab und prüfst sie.",
+      "Du leitest die Elektrofachkräfte im Team an und gibst dein Wissen weiter.",
+      "Du sorgst dafür, dass jeder Anschluss normgerecht und sicher ans Netz geht."
+    ],
+    "profil": [
+      "Meisterbrief im Elektrohandwerk (Energie- und Gebäudetechnik).",
+      "Eintragung in die Handwerksrolle und Eignung als Konzessionsträger:in beim Netzbetreiber.",
+      "Erfahrung mit WP- bzw. PV-Elektroinstallation.",
+      "Führerschein Klasse B."
+    ],
+    "freuen": [
+      "Feste Region Hannover – keine Fernmontage, abends daheim.",
+      "Gestaltungsspielraum, flache Hierarchien und kurze Wege.",
+      "Herstellerschulungen & Weiterbildung auf unsere Kosten.",
+      "Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub."
+    ],
+    "icon": "shield",
+    "order": 4
+  },
+  {
+    "id": "elektriker",
+    "name": "Elektriker:in – Wärmepumpen & Photovoltaik",
+    "mwd": "(m/w/d)",
+    "kategorie": "Montage & Technik",
+    "tags": ["Region Hannover", "Vollzeit"],
+    "teaser": "Du bringst Wärmepumpen und PV-Anlagen sauber ans Netz – vom Anschluss bis zur Inbetriebnahme, im festen Team in der Region Hannover.",
+    "aufgaben": [
+      "Du übernimmst den Elektroanschluss der Wärmepumpe: Zählerplatz, Sicherungskasten, Steuerleitung.",
+      "Du schließt PV-Anlagen auf der AC-Seite an: Wechselrichter ans Hausnetz, Schutz und Erdung.",
+      "Du installierst Batteriespeicher und Wallboxen und nimmst sie in Betrieb.",
+      "Du machst die Funktionsprüfung, erstellst das VDE-Messprotokoll und meldest beim Netzbetreiber an.",
+      "Du dokumentierst deine Arbeit sauber per Tablet – die Auftragsdaten hast du vorab digital dabei."
+    ],
+    "profil": [
+      "Abgeschlossene Ausbildung als Elektroniker:in (Energie- und Gebäudetechnik) oder vergleichbar.",
+      "Installationserfahrung, idealerweise mit Wärmepumpen, Wallboxen oder PV-Anlagen.",
+      "Selbstständige, verantwortungsvolle Arbeitsweise und Qualitätsbewusstsein.",
+      "Führerschein Klasse B und Deutsch ab B2."
+    ],
+    "freuen": [
+      "Feste Region Hannover – keine Fernmontage, kein Hotel, abends daheim.",
+      "Modernes Werkzeug, gut ausgestattete Fahrzeuge, Tablet statt Papierkram.",
+      "Herstellerschulungen & Weiterbildung auf unsere Kosten.",
+      "Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub."
+    ],
+    "icon": "zap",
+    "order": 5
+  },
+  {
+    "id": "gala",
+    "name": "Fundament- & Außenanlagen / GaLa",
+    "mwd": "(m/w/d)",
+    "kategorie": "Montage & Technik",
+    "tags": ["Region Hannover", "Vollzeit"],
+    "teaser": "Du schaffst die Basis – damit die Außeneinheit sicher steht und drumherum alles stimmt. Festes Einsatzgebiet: Region Hannover, abends bist du zuhause.",
+    "aufgaben": [
+      "Du bereitest Aufstellflächen und Fundamente für die Außeneinheiten vor.",
+      "Du übernimmst Erd-, Pflaster- und kleinere Tiefbauarbeiten rund um die Anlage.",
+      "Du stellst die Außenanlagen wieder her und gestaltest sie sauber.",
+      "Du arbeitest eng mit dem Montageteam vor Ort zusammen.",
+      "Du sorgst dafür, dass die Baustelle ordentlich und sicher hinterlassen wird."
+    ],
+    "profil": [
+      "Erfahrung im Garten- und Landschaftsbau oder Tiefbau.",
+      "Handwerkliches Geschick und körperliche Belastbarkeit.",
+      "Sorgfalt, Zuverlässigkeit und Teamgeist.",
+      "Führerschein Klasse B, idealerweise BE."
+    ],
+    "freuen": [
+      "Feste Region Hannover – keine Fernmontage, abends daheim.",
+      "Modernes Werkzeug und gut ausgestattete Fahrzeuge.",
+      "Strukturiertes Onboarding durch erfahrene Kolleg:innen.",
+      "Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub."
+    ],
+    "icon": "layers",
+    "order": 6
+  },
+  {
+    "id": "vad",
+    "name": "Vertriebsberater:in Außendienst – Wärmepumpe",
+    "mwd": "(m/w/d)",
+    "kategorie": "Vertrieb & Beratung",
+    "tags": ["Region Hannover", "Vollzeit"],
+    "teaser": "Du holst Menschen bei ihrem Heizungswechsel ab – direkt am Küchentisch – und machst aus Interesse ein überzeugtes Ja zur Wärmepumpe. Dein Revier: die Region Hannover.",
+    "aufgaben": [
+      "Du berätst Hausbesitzer:innen vor Ort zu Wärmepumpe und Förderung – ehrlich und auf Augenhöhe.",
+      "Du nimmst das technische Aufmaß und das Objekt auf und dokumentierst die Daten sauber.",
+      "Du erstellst das passgenaue, individuelle Angebot und begleitest die Kund:innen bis zur Entscheidung.",
+      "Du pflegst deine Kontakte und Termine zuverlässig im CRM.",
+      "Du bist das Gesicht von HeroWerk vor Ort und baust echtes Vertrauen auf."
+    ],
+    "profil": [
+      "Kommunikationsstärke und Vertriebstalent – idealerweise im Umfeld SHK, Energie oder Bau (Quereinsteiger:innen willkommen).",
+      "Technisches Verständnis und Freude an ehrlichen, transparenten Gesprächen.",
+      "Digital-affin und sicher im Umgang mit CRM-Tools.",
+      "Führerschein Klasse B."
+    ],
+    "freuen": [
+      "Firmenwagen, den du auch privat fahren kannst (1 %-Regelung).",
+      "Feste Region Hannover – kurze Wege, abends daheim.",
+      "Faire Vergütung + Bonus und Weiterbildung auf unsere Kosten.",
+      "Unbefristete Festanstellung und 30 Tage Urlaub."
+    ],
+    "icon": "chat",
+    "order": 7
+  },
+  {
+    "id": "va",
+    "name": "Vertriebsassistenz / Innendienst",
+    "mwd": "(m/w/d)",
+    "kategorie": "Vertrieb & Beratung",
+    "tags": ["Region Hannover", "Vollzeit"],
+    "teaser": "Du hältst dem Außendienst den Rücken frei und sorgst dafür, dass kein Lead verloren geht – die organisatorische Schaltzentrale unseres Vertriebs.",
+    "aufgaben": [
+      "Du terminierst und bereitest die Beratungsgespräche des Außendiensts vor.",
+      "Du pflegst Kundendaten und Angebote zuverlässig im CRM.",
+      "Du kommunizierst freundlich mit Kund:innen per Telefon und E-Mail.",
+      "Du unterstützt das Vertriebsteam im Tagesgeschäft und hältst alle Fäden zusammen.",
+      "Du behältst offene Leads im Blick und sorgst dafür, dass nichts liegen bleibt."
+    ],
+    "profil": [
+      "Kaufmännische Ausbildung oder vergleichbare Erfahrung.",
+      "Organisationstalent und freundliches Auftreten.",
+      "Sicherer Umgang mit digitalen Tools.",
+      "Strukturierte, zuverlässige Arbeitsweise."
+    ],
+    "freuen": [
+      "Anteilig Homeoffice und flexible Arbeitszeiten.",
+      "Strukturiertes Onboarding durch erfahrene Kolleg:innen.",
+      "Faire Vergütung + Bonus und Weiterbildung auf unsere Kosten.",
+      "Unbefristete Festanstellung und 30 Tage Urlaub."
+    ],
+    "icon": "clipboard",
+    "order": 8
+  },
+  {
+    "id": "backoffice",
+    "name": "Backoffice / Auftragssachbearbeitung",
+    "mwd": "(m/w/d)",
+    "kategorie": "Büro & Organisation",
+    "tags": ["Region Hannover", "Vollzeit"],
+    "teaser": "Du bist die organisatorische Drehscheibe zwischen Kund:innen, Montage und Vertrieb – und sorgst dafür, dass jeder Auftrag rundläuft.",
+    "aufgaben": [
+      "Du wickelst Aufträge von der Annahme bis zur Abrechnung ab.",
+      "Du koordinierst Termine und Einsätze der Teams.",
+      "Du kommunizierst mit Kund:innen, Lieferanten und Behörden.",
+      "Du pflegst Dokumente und Prozesse sauber und strukturiert.",
+      "Du behältst den Überblick und sorgst dafür, dass nichts zwischen den Bereichen verloren geht."
+    ],
+    "profil": [
+      "Kaufmännische Ausbildung.",
+      "Organisationsstärke und Sorgfalt.",
+      "Sicherer Umgang mit Office- und ERP-Tools.",
+      "Kommunikationsstärke und freundliches Auftreten."
+    ],
+    "freuen": [
+      "Anteilig Homeoffice und flexible Arbeitszeiten.",
+      "Strukturiertes Onboarding durch erfahrene Kolleg:innen.",
+      "Faire Vergütung + Bonus und Weiterbildung auf unsere Kosten.",
+      "Unbefristete Festanstellung und 30 Tage Urlaub."
+    ],
+    "icon": "file",
+    "order": 10
+  },
+  {
+    "id": "planer",
+    "name": "SHK-Planer:in / Anlagenauslegung",
+    "mwd": "(m/w/d)",
+    "kategorie": "Büro & Organisation",
+    "tags": ["Region Hannover", "Vollzeit"],
+    "teaser": "Du prüfst und planst Wärmepumpen-Projekte am Rechner, damit jede Anlage zum Haus passt und sparsam läuft – auf Wunsch auch anteilig im Homeoffice.",
+    "aufgaben": [
+      "Du prüfst verkaufte Wärmepumpen-Projekte technisch am PC und legst die Anlagen passgenau aus.",
+      "Du plausibilisierst Heizlastberechnungen und Wärmepumpen-Auslegungen.",
+      "Du unterstützt den Außendienst technisch und arbeitest an Zusatzangeboten mit.",
+      "Du koordinierst dich mit Schornsteinfeger und Behörden.",
+      "Du sorgst dafür, dass jede Anlage effizient und normgerecht geplant ins Montageteam geht."
+    ],
+    "profil": [
+      "Geselle:in, Meister:in oder Techniker:in im SHK-Bereich.",
+      "Mehrjährige Erfahrung in der Heizungs- bzw. Wärmepumpentechnik.",
+      "Wärmepumpen-Schulungen oder -Zertifikate von Vorteil.",
+      "Sicheres, strukturiertes Arbeiten am PC."
+    ],
+    "freuen": [
+      "Anteilig Homeoffice und flexible Arbeitszeiten.",
+      "Weiterbildung auf unsere Kosten – inklusive Wärmepumpen-Schulungen.",
+      "Faire Vergütung + Bonus und Gestaltungsspielraum mit kurzen Wegen.",
+      "Unbefristete Festanstellung und 30 Tage Urlaub."
+    ],
+    "icon": "layout",
+    "order": 11
+  },
+  {
+    "id": "hr",
+    "name": "Personalreferent:in / HR",
+    "mwd": "(m/w/d)",
+    "kategorie": "Büro & Organisation",
+    "tags": ["Region Hannover", "Vollzeit"],
+    "teaser": "Du baust mit uns das Team auf, das die Wärmewende vor Ort umsetzt – von der ersten Ausschreibung bis zum gelungenen Einstieg.",
+    "aufgaben": [
+      "Du steuerst das Recruiting von der Ausschreibung bis zur Einstellung neuer Kolleg:innen.",
+      "Du gestaltest ein strukturiertes Onboarding, das neue Teammitglieder gut ankommen lässt.",
+      "Du betreust die Mitarbeitenden empathisch in allen Personalfragen.",
+      "Du baust HR-Prozesse und -Strukturen von Grund auf mit auf.",
+      "Du machst HeroWerk als Arbeitgeber in der Region sichtbar und attraktiv."
+    ],
+    "profil": [
+      "Erfahrung im Recruiting oder HR, gern im handwerklichen/gewerblichen Umfeld.",
+      "Empathie und Kommunikationsstärke.",
+      "Strukturierte, eigenständige Arbeitsweise.",
+      "Diskretion und Verlässlichkeit."
+    ],
+    "freuen": [
+      "Anteilig Homeoffice und flexible Arbeitszeiten.",
+      "Großer Gestaltungsspielraum, flache Hierarchien und kurze Wege.",
+      "Faire Vergütung + Bonus und Weiterbildung auf unsere Kosten.",
+      "Unbefristete Festanstellung und 30 Tage Urlaub."
+    ],
+    "icon": "users",
+    "order": 12
+  },
+  {
+    "id": "assistenz",
+    "name": "Assistenz der Geschäftsführung",
+    "mwd": "(m/w/d)",
+    "kategorie": "Büro & Organisation",
+    "tags": ["Region Hannover", "Vollzeit"],
+    "teaser": "Du hältst der Geschäftsführung den Rücken frei und sorgst dafür, dass der Laden rundläuft – die rechte Hand mit Überblick über das ganze Unternehmen.",
+    "aufgaben": [
+      "Du unterstützt die Geschäftsführung organisatorisch und administrativ.",
+      "Du bereitest Termine, Unterlagen und Entscheidungen vor.",
+      "Du koordinierst zwischen den Bereichen und externen Partnern.",
+      "Du übernimmst eigene Projekte und treibst sie eigenständig voran.",
+      "Du behältst den Überblick und denkst proaktiv mit, bevor etwas zum Problem wird."
+    ],
+    "profil": [
+      "Kaufmännische Ausbildung oder Studium.",
+      "Organisationstalent und Diskretion.",
+      "Sicherer Umgang mit digitalen Tools.",
+      "Proaktive, mitdenkende Arbeitsweise."
+    ],
+    "freuen": [
+      "Anteilig Homeoffice und flexible Arbeitszeiten.",
+      "Großer Gestaltungsspielraum, flache Hierarchien und kurze Wege.",
+      "Faire Vergütung + Bonus und Weiterbildung auf unsere Kosten.",
+      "Unbefristete Festanstellung und 30 Tage Urlaub."
+    ],
+    "icon": "briefcase",
+    "order": 13
+  },
+  {
+    "id": "disponent",
+    "name": "Disponent:in",
+    "mwd": "(m/w/d)",
+    "kategorie": "Büro & Organisation",
+    "tags": ["Region Hannover", "Vollzeit"],
+    "teaser": "Du steuerst Termine und Teams.",
+    "aufgaben": ["A", "B", "C"],
+    "profil": ["X", "Y"],
+    "freuen": ["1", "2"],
+    "icon": "layout",
+    "order": 99
+  }
+]

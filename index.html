@@ -26,7 +26,7 @@
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "@id": "https://www.herowerk.de/#localbusiness",
-    "name": "HeroWerk GmbH",
+    "name": "HeroWerk GmbH i.G.",
     "url": "https://www.herowerk.de/",
     "telephone": "+4951130030860",
     "email": "info@herowerk.de",
@@ -55,6 +55,7 @@
         <a href="/ratgeber">Ratgeber</a>
         <a href="/ratgeber#friends">HERO FRIENDS</a>
         <a href="/kontakt">Kontakt</a>
+        <a href="/karriere">Karriere</a>
         <button type="button" class="theme-toggle" data-theme-toggle>Light-Mode</button>
         <a href="tel:+4951130030860" class="nav-cta-call"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:4px;"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg> Anrufen</a>
         <a href="/anfrage" class="nav-cta">Termin vereinbaren</a>
@@ -74,6 +75,7 @@
       <a href="/ratgeber" onclick="toggleMenu()">Ratgeber</a>
       <a href="/ratgeber#friends" onclick="toggleMenu()">HERO FRIENDS</a>
       <a href="/kontakt" onclick="toggleMenu()">Kontakt</a>
+      <a href="/karriere" onclick="toggleMenu()">Karriere</a>
       <button type="button" class="theme-toggle" data-theme-toggle>Light-Mode</button>
       <a href="tel:+4951130030860" class="nav-cta-call" onclick="toggleMenu()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:4px;"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg> Anrufen</a>
       <a href="/anfrage" class="nav-cta" onclick="toggleMenu()">Termin vereinbaren</a>
@@ -123,10 +125,10 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             Fördervorschuss
           </div>
-          <div class="hc-fv-text">Wir schießen die Förderung vor.<br><strong>Du zahlst nur deinen Eigenanteil.</strong></div>
+          <div class="hc-fv-text">Wir schießen die Förderung vor.<sup aria-hidden="true">*</sup><br><strong>Du zahlst nur deinen Eigenanteil.</strong></div>
         </div>
         <!-- Fußnote -->
-        <div class="hc-footnote">* Beispielrechnung Wolf CHA-07 (alternativ: Vaillant aroTHERM plus), Förderquote 70 % auf förderfähige Kosten (KfW-Deckel 30.000 €). Endpreis nach individueller Baubarkeitsprüfung. Alle Preise brutto inkl. MwSt. Angaben ohne Gewähr.</div>
+        <div class="hc-footnote">* Fördervorschuss nur mit beauftragtem Einbau, freiem Kontingent und geprüftem Förderanspruch. Beispielrechnung Wolf CHA-07 (alternativ: Vaillant aroTHERM plus), Förderquote 70 % auf förderfähige Kosten (KfW-Deckel 30.000 €). Endpreis nach individueller Baubarkeitsprüfung. Alle Preise brutto inkl. MwSt. Angaben ohne Gewähr.</div>
       </div>
     </div>
   </section>
@@ -162,9 +164,13 @@
     <div class="fv-inner">
       <div class="fv-content">
         <span class="fv-tag">Fördervorschuss</span>
-        <h2>Wir strecken deine Förderung vor.<br><span class="accent">Du zahlst nur deinen Eigenanteil.</span></h2>
+        <h2>Wir strecken deine Förderung vor.<sup class="fv-asterisk" aria-hidden="true">*</sup><br><span class="accent">Du zahlst nur deinen Eigenanteil.</span></h2>
         <p class="fv-sub">Bis zu 21.000 Euro KfW-Förderung. Wir finanzieren sie vor, damit du nicht monatelang auf die Auszahlung wartest. Ohne eigenen Kredit, ohne Zinsen.</p>
-        <a href="/anfrage" class="btn-primary">Platz sichern →</a>
+        <div class="fv-cta-row">
+          <a href="/anfrage?fv=1" class="btn-primary">Platz sichern →</a>
+          <a href="/foerdervorschuss" class="btn-ghost">Mehr erfahren</a>
+        </div>
+        <p class="fv-disclaimer">* Fördervorschuss nur mit beauftragtem Einbau, freiem Kontingent und geprüftem Förderanspruch. <a href="/foerdervorschuss#voraussetzungen" class="fv-disclaimer-link">Voraussetzungen</a></p>
       </div>
       <aside class="fv-badge-box" aria-label="Fördervorschuss Kontingent">
         <div class="fv-count">12</div>
@@ -193,7 +199,7 @@
           <button type="submit" class="btn-primary">Jetzt starten →</button>
           <div id="entryPlzFeedback" class="entry-plz-feedback" aria-live="polite"></div>
         </form>
-        <a href="/foerderung" class="home-feature-link">Mehr zu deinen Fördermöglichkeiten</a>
+        <a href="/dimensionierung-verstehen" class="home-feature-link">Mehr zur Dimensionierung erfahren</a>
       </div>
     </div>
   </section>
@@ -210,7 +216,10 @@
         <div class="section-tag">Förderung</div>
         <h2 class="section-title">Deine Förderung in 10 Sekunden</h2>
         <p class="section-lead">KfW 458 und proKlima Region Hannover. Berechne deinen individuellen Fördersatz.</p>
-        <a href="/foerderung" class="btn-primary">Mehr erfahren →</a>
+        <div class="home-feature-ctas">
+          <a href="/foerderung" class="btn-primary">Fördermittel-Rechner starten →</a>
+          <a href="/foerderung-hannover" class="btn-ghost">Mehr erfahren</a>
+        </div>
       </div>
     </div>
   </section>
@@ -263,16 +272,16 @@
           <div><div style="font-weight:700;color:#1C2B36;">Vaillant Group</div><div style="font-size:12px;color:#6b7280;font-weight:400;">aroTHERM plus R290</div></div>
         </div>
         <div class="trust-logo-badge">
-          <div class="badge-icon badge-shk"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2-2 2.5-2.5z"/><circle cx="17.5" cy="17.5" r="4"/><path d="m15.8 17.5 1.1 1.1 2.2-2.4"/></svg></div>
-          <div><div style="font-weight:700;color:#1C2B36;">SHK-Meisterbetrieb</div><div style="font-size:12px;color:#6b7280;font-weight:400;">Eingetragener Fachbetrieb</div></div>
+          <img src="logo-proklima.svg" alt="proKlima Hannover" class="partner-logo" width="96" height="32" loading="lazy" decoding="async">
+          <div><div style="font-weight:700;color:#1C2B36;">proKlima</div><div style="font-size:12px;color:#6b7280;font-weight:400;">Regionalförderung Hannover</div></div>
         </div>
         <div class="trust-logo-badge">
           <img src="logo-kfw.svg" alt="KfW" class="partner-logo" width="96" height="32" loading="lazy" decoding="async">
           <div><div style="font-weight:700;color:#1C2B36;">KfW 458</div><div style="font-size:12px;color:#6b7280;font-weight:400;">Förderfähig nach KfW 458</div></div>
         </div>
         <div class="trust-logo-badge">
-          <img src="logo-proklima.svg" alt="proKlima Hannover" class="partner-logo" width="96" height="32" loading="lazy" decoding="async">
-          <div><div style="font-weight:700;color:#1C2B36;">proKlima</div><div style="font-size:12px;color:#6b7280;font-weight:400;">Regionalförderung Hannover</div></div>
+          <div class="badge-icon badge-shk"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2-2 2.5-2.5z"/><circle cx="17.5" cy="17.5" r="4"/><path d="m15.8 17.5 1.1 1.1 2.2-2.4"/></svg></div>
+          <div><div style="font-weight:700;color:#1C2B36;">SHK-Meisterbetrieb</div><div style="font-size:12px;color:#6b7280;font-weight:400;">Eingetragener Fachbetrieb</div></div>
         </div>
       </div>
       <div class="trust-strip-sub">Unabhängige Herstellerauswahl. Wir empfehlen die beste Lösung für dein Zuhause</div>
@@ -321,17 +330,18 @@
           <a href="/ratgeber">Ratgeber</a>
           <a href="/ratgeber#faq">FAQ</a>
           <a href="/kontakt">Kontakt</a>
+          <a href="/karriere">Karriere</a>
         </div>
         <div class="footer-col">
           <h2>Kontakt</h2>
-          <p>HeroWerk GmbH</p>
+          <p>HeroWerk GmbH i.G.</p>
           <p>Region Hannover</p>
           <p>Tel: 0176 444 25 001</p>
           <p>info@herowerk.de</p>
         </div>
       </div>
       <div class="footer-bottom">
-        <div class="footer-tagline">HeroWerk GmbH &middot; Meisterqualität aus der Region.</div>
+        <div class="footer-tagline">HeroWerk GmbH i.G. &middot; Meisterqualität aus der Region.</div>
         <div class="footer-legal">
           <a href="/impressum">Impressum</a>
           <a href="/datenschutz">Datenschutz</a>

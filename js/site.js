@@ -1014,6 +1014,9 @@ function paApplyBrand(brand) {
 }
 
 async function paLoadData() {
+  // Beide Marken-Labels (wolfMinEigen/vaillantMinEigen) beim Laden fuellen, nicht
+  // erst beim Tab-Klick. Wolf zuletzt -> aktive Ansicht + paData bleiben Wolf.
+  paApplyBrand('vaillant');
   paApplyBrand('wolf');
   foerderRefreshPackageOptions();
   try {
@@ -1030,6 +1033,7 @@ async function paLoadData() {
     });
     if (typeof window !== 'undefined') window.HW_PREISE_BRUTTO = bruttoMap;
     foerderRefreshPackageOptions();
+    paApplyBrand('vaillant');
     paApplyBrand('wolf');
   } catch (e) {
     console.info('Live-Preise nicht verfügbar, zeige "auf Anfrage"', e);

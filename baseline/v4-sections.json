@@ -125,7 +125,9 @@
             "/waermepumpe-altbau",
             "/gasheizung-tauschen-oder-reparieren",
             "/baubarkeitspruefung",
-            "/waermepumpe-hannover"
+            "/waermepumpe-hannover",
+            "/foerdervorschuss",
+            "/dimensionierung-verstehen"
           ]
         },
         {
@@ -187,7 +189,7 @@
       "sections": [
         {
           "id": "contact",
-          "words": 55
+          "words": 86
         }
       ]
     },

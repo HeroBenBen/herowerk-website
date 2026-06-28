@@ -36,6 +36,7 @@
         <a href="/ratgeber">Ratgeber</a>
         <a href="/ratgeber#friends">HERO FRIENDS</a>
         <a href="/kontakt">Kontakt</a>
+        <a href="/karriere">Karriere</a>
         <button type="button" class="theme-toggle" data-theme-toggle>Light-Mode</button>
         <a href="tel:+4917644425001" class="nav-cta-call"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:4px;"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg> Anrufen</a>
         <a href="/anfrage" class="nav-cta">Termin vereinbaren</a>
@@ -55,6 +56,7 @@
       <a href="/ratgeber" onclick="toggleMenu()">Ratgeber</a>
       <a href="/ratgeber#friends" onclick="toggleMenu()">HERO FRIENDS</a>
       <a href="/kontakt" onclick="toggleMenu()">Kontakt</a>
+      <a href="/karriere" onclick="toggleMenu()">Karriere</a>
       <button type="button" class="theme-toggle" data-theme-toggle>Light-Mode</button>
       <a href="tel:+4917644425001" class="nav-cta-call" onclick="toggleMenu()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:4px;"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg> Anrufen</a>
       <a href="/anfrage" class="nav-cta" onclick="toggleMenu()">Termin vereinbaren</a>
@@ -68,12 +70,15 @@
       <div class="section-tag">Kontakt</div>
       <h1 class="section-title" style="color: var(--white);">Schreib uns</h1>
       <p class="section-lead">Wir melden uns innerhalb von 48 Stunden.</p>
-      <div class="contact-layout" style="display:grid;grid-template-columns:1fr 1.2fr;gap:40px;align-items:stretch;">
-        <div class="contact-image" style="border-radius:16px;overflow:hidden;position:relative;">
-          <img src="hero-fachpartner.png" alt="HeroWerk Fachpartnerin im Gespräch mit einem Kunden bei einer Wolf CHA Wärmepumpe" width="3000" height="2000" style="width:100%;height:100%;display:block;border-radius:16px;object-fit:cover;" loading="lazy" decoding="async">
-          <div style="position:absolute;bottom:0;left:0;right:0;padding:20px 24px;background:linear-gradient(transparent, rgba(28,43,54,0.95));border-radius:0 0 16px 16px;">
-            <div style="color:var(--green);font-weight:700;font-size:14px;">Persönliche Nachricht</div>
-            <div style="color:var(--g300);font-size:13px;margin-top:4px;">Unser Team ist für dich da. Vor Ort in der Region Hannover.</div>
+      <div class="contact-layout">
+        <div class="contact-image">
+          <picture class="contact-image-picture">
+            <source type="image/webp" srcset="kontakt-monteur-wp-800.webp 800w, kontakt-monteur-wp-1600.webp 1600w" sizes="(max-width: 860px) 100vw, 45vw">
+            <img src="kontakt-monteur-wp-800.webp" alt="HeroWerk Monteur prüft eine Außen-Wärmepumpe vor einem Wohnhaus" width="1600" height="2841" loading="lazy" decoding="async">
+          </picture>
+          <div class="contact-image-caption">
+            <div class="contact-image-caption-title">Persönliche Nachricht</div>
+            <div class="contact-image-caption-sub">Unser Team ist für dich da. Vor Ort in der Region Hannover.</div>
           </div>
         </div>
         <div>
@@ -81,6 +86,15 @@
         <div class="form-group"><label for="kontaktName">Name</label><input id="kontaktName" type="text" name="name" placeholder="Max Mustermann" required></div>
         <div class="form-group"><label for="kontaktEmail">E-Mail</label><input id="kontaktEmail" type="email" name="email" placeholder="max@beispiel.de" required></div>
         <div class="form-group"><label for="kontaktTelefon">Telefon optional</label><input id="kontaktTelefon" type="tel" name="telefon" placeholder="0171 1234567"></div>
+        <div class="form-row form-row-3-1">
+          <div class="form-group"><label for="kontaktStrasse">Straße <span class="form-optional">optional</span></label><input id="kontaktStrasse" type="text" autocomplete="address-line1" placeholder="z. B. Lindener Marktplatz"></div>
+          <div class="form-group"><label for="kontaktHausnr">Hausnr. <span class="form-optional">optional</span></label><input id="kontaktHausnr" type="text" autocomplete="address-line2" placeholder="12a"></div>
+        </div>
+        <div class="form-row form-row-1-2">
+          <div class="form-group"><label for="kontaktPlz">PLZ <span class="form-optional">optional</span></label><input id="kontaktPlz" type="text" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{5}" maxlength="5" placeholder="30449"></div>
+          <div class="form-group"><label for="kontaktOrt">Ort <span class="form-optional">optional</span></label><input id="kontaktOrt" type="text" autocomplete="address-level2" placeholder="Hannover"></div>
+        </div>
+        <div class="form-group"><label for="kontaktZeitrahmen">Zeitrahmen <span class="form-optional">optional</span></label><select id="kontaktZeitrahmen"><option value="">Wann soll es losgehen?</option><option value="3 Monate">In den nächsten 3 Monaten</option><option value="6 Monate">In den nächsten 6 Monaten</option><option value="12 Monate">In den nächsten 12 Monaten</option><option value="Unklar">Noch unklar</option></select></div>
         <div class="form-group"><label for="kontaktNachricht">Nachricht</label><textarea id="kontaktNachricht" name="nachricht" placeholder="Wobei können wir helfen?" required></textarea></div>
         <div class="form-checkbox">
           <input type="checkbox" id="kontaktDsgvo" name="dsgvo" value="zugestimmt" required>
@@ -120,17 +134,18 @@
           <a href="/ratgeber">Ratgeber</a>
           <a href="/ratgeber#faq">FAQ</a>
           <a href="/kontakt">Kontakt</a>
+          <a href="/karriere">Karriere</a>
         </div>
         <div class="footer-col">
           <h2>Kontakt</h2>
-          <p>HeroWerk GmbH</p>
+          <p>HeroWerk GmbH i.G.</p>
           <p>Region Hannover</p>
           <p>Tel: 0176 444 25 001</p>
           <p>info@herowerk.de</p>
         </div>
       </div>
       <div class="footer-bottom">
-        <div class="footer-tagline">HeroWerk GmbH &middot; Meisterqualität aus der Region.</div>
+        <div class="footer-tagline">HeroWerk GmbH i.G. &middot; Meisterqualität aus der Region.</div>
         <div class="footer-legal">
           <a href="/impressum">Impressum</a>
           <a href="/datenschutz">Datenschutz</a>
@@ -152,6 +167,43 @@
       Kostenlose Beratung
     </a>
   </div>
+
+  <!-- W2: optionale Zusatzfelder (Adresse + Zeitrahmen) in `nachricht` einbetten,
+       BEVOR site.js den Submit übernimmt. Felder haben kein `name`-Attribut →
+       Form-Payload bleibt HubSpot-schema-konform (kein neues Property). Adresse
+       als einzeilige Zusammenfassung „Straße Nr, PLZ Ort". -->
+  <script>
+    (function () {
+      var form = document.getElementById('kontaktForm');
+      if (!form) return;
+      var strasse = document.getElementById('kontaktStrasse');
+      var hausnr = document.getElementById('kontaktHausnr');
+      var plz = document.getElementById('kontaktPlz');
+      var ort = document.getElementById('kontaktOrt');
+      var zr = document.getElementById('kontaktZeitrahmen');
+      var msg = document.getElementById('kontaktNachricht');
+      form.addEventListener(
+        'submit',
+        function () {
+          if (!msg) return;
+          var sV = (strasse && strasse.value.trim()) || '';
+          var hV = (hausnr && hausnr.value.trim()) || '';
+          var pV = (plz && plz.value.trim()) || '';
+          var oV = (ort && ort.value.trim()) || '';
+          var street = [sV, hV].filter(Boolean).join(' ');
+          var city = [pV, oV].filter(Boolean).join(' ');
+          var address = [street, city].filter(Boolean).join(', ');
+          var extras = [];
+          if (address) extras.push('Adresse: ' + address);
+          if (zr && zr.value) extras.push('Zeitrahmen: ' + zr.value);
+          if (!extras.length) return;
+          var existing = msg.value.trim();
+          msg.value = extras.join(' · ') + (existing ? '\n\n' + existing : '');
+        },
+        true
+      );
+    })();
+  </script>
 
 </body>
 </html>

@@ -484,6 +484,17 @@ body {
   color: var(--color-text-primary) !important;
 }
 
+/* SF2-F2-Nachschliff (Abnahme 27.06.): Prozess-Karten im Light-Mode OHNE weisse Box.
+   Die unterschiedlich langen Aufklapp-Listen wirkten als ungleich hohe weisse Bloecke
+   unprofessionell. Loesung: Karte transparent (wie Dark-Mode, das bleibt unveraendert);
+   Titel/Text bleiben dunkles Slate (AA), nur das Haeken-Gruen auf Sand-tauglich dunkeln. */
+[data-theme='light'] .pz-step {
+  background: transparent !important;
+}
+[data-theme='light'] .pz-sub::before {
+  color: var(--color-accent-on-light) !important;
+}
+
 /* Iteration 3: Light headlines use slate consistently; chartreuse remains dark-only accent. */
 [data-theme='light'] .hero h1 .accent,
 [data-theme='light'] .trust-headline em {

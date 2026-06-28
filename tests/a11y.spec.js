@@ -14,6 +14,7 @@ const PAGES = [
   '/ratgeber.html',
   '/kontakt.html',
   '/anfrage.html',
+  '/karriere.html',
 ];
 const THEMES = ['dark', 'light'];
 
