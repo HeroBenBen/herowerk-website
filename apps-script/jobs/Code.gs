@@ -1,12 +1,12 @@
 /**
- * HeroWerk_Jobs_Website — Code.gs (container-bound Google Apps Script Web App)
+ * HeroWerk_Jobs_Website, Code.gs (container-bound Google Apps Script Web App)
  *
  * ZWECK: Die Google-Tabelle steuert die Stellen auf der Karriereseite (karriere.html).
  *   - Tab "Übersicht": Nr. | Rolle | Web-Kategorie | Status (online/offline) | id
  *   - je Rolle ein Detail-Tab (A=Label, B=Wert), verknüpft über die id
  *   - publish() friert die aktuelle Auswahl als JSON in den versteckten Tab "_published" (A1) ein
  *   - doGet() liefert GENAU diesen eingefrorenen Snapshot als JSON aus (halbfertige
- *     Entwürfe gehen so nie versehentlich live — nur ein bewusstes "Veröffentlichen" zählt)
+ *     Entwürfe gehen so nie versehentlich live, nur ein bewusstes "Veröffentlichen" zählt)
  *
  * GEBUNDENE TABELLE (container-bound): 1n6kuRA4sjyFI2SMwcIpE6_QRBHEfsQYLZDus9vJm160
  *   (Sheet "Hero_Jobs_Website"). Dieses Skript ist an genau diese Tabelle gebunden.
@@ -99,7 +99,7 @@ function onOpen() {
     .addItem('Einrichten / Reparieren', 'setup')
     .addItem('How-to-use-Tab schreiben / aktualisieren', 'writeHowToUse')
     .addSeparator()
-    .addItem('⚠ Alles NEU befüllen (Reseed – überschreibt alles!)', 'populateAll')
+    .addItem('⚠ Alles NEU befüllen (Reseed, überschreibt alles!)', 'populateAll')
     .addItem('Website-Rollen vorbefüllen (13 alte)', 'seedWebsiteRoles')
     .addToUi();
 }
@@ -115,7 +115,7 @@ function onOpen() {
 function buildFeed_() {
   var ss = SpreadsheetApp.openById(SHEET_ID);
   var sh = ss.getSheetByName(TAB_UEBERSICHT);
-  if (!sh) throw new Error('Tab "' + TAB_UEBERSICHT + '" fehlt — bitte "Einrichten / Reparieren" ausführen.');
+  if (!sh) throw new Error('Tab "' + TAB_UEBERSICHT + '" fehlt, bitte "Einrichten / Reparieren" ausführen.');
   var values = sh.getDataRange().getValues();
   var out = [];
   for (var i = 1; i < values.length; i++) {
@@ -278,7 +278,7 @@ function createRole() {
   if (nameResp.getSelectedButton() !== ui.Button.OK) return;
   var roleName = String(nameResp.getResponseText() || '').trim();
   if (!roleName) {
-    ui.alert(SERVICE_NAME, 'Kein Rollenname eingegeben — abgebrochen.', ui.ButtonSet.OK);
+    ui.alert(SERVICE_NAME, 'Kein Rollenname eingegeben, abgebrochen.', ui.ButtonSet.OK);
     return;
   }
 
@@ -286,11 +286,11 @@ function createRole() {
   for (var k = 0; k < KATEGORIEN.length; k++) {
     katMsg += (k + 1) + ' = ' + KATEGORIEN[k] + '\n';
   }
-  var katResp = ui.prompt('Rolle anlegen — Kategorie', katMsg, ui.ButtonSet.OK_CANCEL);
+  var katResp = ui.prompt('Rolle anlegen, Kategorie', katMsg, ui.ButtonSet.OK_CANCEL);
   if (katResp.getSelectedButton() !== ui.Button.OK) return;
   var katIdx = parseInt(String(katResp.getResponseText() || '').trim(), 10) - 1;
   if (isNaN(katIdx) || katIdx < 0 || katIdx >= KATEGORIEN.length) {
-    ui.alert(SERVICE_NAME, 'Ungültige Kategorie — abgebrochen.', ui.ButtonSet.OK);
+    ui.alert(SERVICE_NAME, 'Ungültige Kategorie, abgebrochen.', ui.ButtonSet.OK);
     return;
   }
   var kategorie = KATEGORIEN[katIdx];
@@ -343,6 +343,8 @@ function setup() {
     }
   }
 
+  applyUebersichtValidation_(sh); // Dropdowns (Status/Kategorie) wiederherstellen, non-destruktiv
+
   SpreadsheetApp.getUi().alert(
     SERVICE_NAME,
     'Einrichten / Reparieren fertig.\n\n' +
@@ -364,7 +366,7 @@ function setup() {
 function seedWebsiteRoles() {
   var ui = SpreadsheetApp.getUi();
   var resp = ui.alert(
-    SERVICE_NAME + ' — Website-Rollen vorbefüllen',
+    SERVICE_NAME + ', Website-Rollen vorbefüllen',
     'Dies setzt für die 13 Webseiten-Rollen die id und ÜBERSCHREIBT deren Detail-Tabs mit dem ' +
       'aktuellen Webseiten-Text.\n\nFortfahren?',
     ui.ButtonSet.OK_CANCEL
@@ -428,7 +430,7 @@ function populateAll() {
   var onlineN = roster.filter(function (r) { return r.status === 'online'; }).length;
   var offlineN = roster.length - onlineN;
   var resp = ui.alert(
-    SERVICE_NAME + ' — Alles befüllen (Go-Live)',
+    SERVICE_NAME + ', Alles befüllen (Go-Live)',
     'Baut die Übersicht auf die ' + roster.length + ' Go-Live-Rollen neu auf und ' +
       'ÜBERSCHREIBT deren Detail-Tabs mit dem freigegebenen Text.\n\n' +
       onlineN + ' online, ' + offlineN + ' offline (Finance Business Partner).\n\nFortfahren?',
@@ -474,6 +476,9 @@ function populateAll() {
     writeDetailContent_(ss, role2);
     written++;
   }
+
+  // 3) Dropdowns (Status + Web-Kategorie) als Auswahllisten setzen.
+  applyUebersichtValidation_(sh);
 
   var msg =
     roster.length + ' Rollen in die Übersicht geschrieben (' + onlineN + ' online, ' +
@@ -522,6 +527,21 @@ function CONTENT_BY_ID_() {
   return map;
 }
 
+// Setzt die Auswahllisten (Dropdowns) der Übersicht: Status = online/offline,
+// Web-Kategorie = die drei erlaubten Gruppen. allowInvalid=true -> reine Auswahl-
+// Hilfe, blockiert keine programmatischen Schreibvorgänge (kein Reseed-Footgun).
+function applyUebersichtValidation_(sh) {
+  var maxR = sh.getMaxRows();
+  if (maxR < 2) return;
+  var n = maxR - 1;
+  var statusRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(['online', 'offline'], true).setAllowInvalid(true).build();
+  sh.getRange(2, COL_STATUS, n, 1).setDataValidation(statusRule);
+  var katRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(KATEGORIEN, true).setAllowInvalid(true).build();
+  sh.getRange(2, COL_KATEGORIE, n, 1).setDataValidation(katRule);
+}
+
 // ---------------------------------------------------------------------------
 // How_to_use: Bedien- und Architektur-Doku als Tabellenblatt
 // ---------------------------------------------------------------------------
@@ -537,36 +557,34 @@ function writeHowToUse() {
   if (!sh) sh = ss.insertSheet(name, 1); // Position direkt nach der Übersicht
   sh.clear();
   var rows = [
-    ['HeroWerk Jobs — How to use', 'Bedienung + Aufbau dieser Stellen-Steuerung. Stand 2026-06-28.'],
+    ['So pflegst du die Stellenanzeigen', 'Kurzanleitung für alle (auch ohne Technik-Hintergrund). Diese Google-Tabelle steuert die Stellen auf herowerk.de/karriere. Stand 2026-06-28.'],
     ['', ''],
-    ['ZWECK', 'Diese Tabelle steuert die offenen Stellen auf herowerk.de/karriere. Was hier auf "online" steht, erscheint auf der Website.'],
+    ['DIE EINE WICHTIGE REGEL', 'Nach JEDER Änderung in dieser Tabelle einmal oben im Menü auf "HeroWerk Jobs" klicken und "① Auf Webseite veröffentlichen" wählen. Ohne diesen Klick passiert auf der Website NICHTS. (Das ist Absicht: So gehen halbfertige Änderungen nie aus Versehen live.)'],
     ['', ''],
-    ['DER KNOPF (Website aktualisieren)', 'Menü oben "HeroWerk Jobs" → "① Auf Webseite veröffentlichen". NACH JEDER Änderung klicken — sonst ändert sich auf der Website nichts.'],
-    ['Warum ein Knopf?', 'Veröffentlichen friert den aktuellen Stand in den versteckten Tab "_published" ein; die Website liest genau diesen eingefrorenen Stand. So gehen halbfertige Änderungen nie versehentlich live.'],
+    ['AUFGABE: Eine Stelle ausblenden oder wieder zeigen', '1) Geh in den Tab "Übersicht". 2) In der Zeile der Stelle in Spalte "Status" aus der Auswahlliste "offline" (ausblenden) oder "online" (zeigen) wählen. 3) Menü "HeroWerk Jobs" → "① Auf Webseite veröffentlichen". Fertig. (offline = von der Website weg, bleibt aber in der Tabelle erhalten.)'],
     ['', ''],
-    ['Rolle ONLINE / OFFLINE', 'In der Übersicht Spalte D (Status) auf "online" oder "offline" setzen → veröffentlichen. "offline" = verschwindet von der Website, bleibt aber in der Tabelle erhalten.'],
+    ['AUFGABE: Text einer bestehenden Stelle ändern', '1) Unten auf den Reiter (Tab) mit dem Namen der Stelle klicken (z. B. "anlagenmechaniker", steht in der Übersicht in Spalte "id"). 2) Dort den Text in Spalte B ändern (Teaser, Aufgaben, Profil, "Darauf kannst du dich freuen"). 3) Veröffentlichen. -> Du musst NICHTS neu anlegen, einfach den vorhandenen Tab bearbeiten. Titel/Kategorie/Status änderst du direkt in der Zeile im Tab "Übersicht".'],
     ['', ''],
-    ['NEUE Rolle hinzufügen', 'Menü "HeroWerk Jobs" → "Neue Rolle anlegen". Legt automatisch eine Zeile (unten) + einen Detail-Tab an. Dann Detail-Tab füllen, Status auf "online", veröffentlichen.'],
-    ['Brauche ich freien Platz?', 'Nein. Neue Rollen kommen automatisch UNTEN dazu — du musst keine leeren Zeilen vorhalten. Die Reihenfolge auf der Website steuerst du über Spalte A (Nr.): kleinere Nr. = weiter oben.'],
-    ['Rolle entfernen', 'Sauberste Variante: Status auf "offline" (Inhalt bleibt). Oder Zeile + zugehörigen Detail-Tab löschen. Danach veröffentlichen.'],
+    ['AUFGABE: Eine neue Stelle hinzufügen', '1) Menü "HeroWerk Jobs" → "Neue Rolle anlegen", Titel eingeben, Kategorie wählen. Es entsteht automatisch eine neue Zeile (unten in der Übersicht) UND ein neuer Detail-Tab. 2) Den neuen Detail-Tab ausfüllen. 3) In der Übersicht Status auf "online". 4) Veröffentlichen.'],
+    ['Frage: Wo ist Platz für neue Zeilen?', 'Den brauchst du nicht vorzuhalten, neue Stellen kommen automatisch UNTEN dazu. Die Reihenfolge auf der Website bestimmst du über die Spalte "Nr." (kleinere Zahl = weiter oben).'],
     ['', ''],
-    ['⚠ ACHTUNG: "Alles NEU befüllen"', 'Der Menüpunkt "⚠ Alles NEU befüllen (Reseed)" überschreibt ALLE Zeilen + ALLE Detail-Tabs mit dem fest im Code hinterlegten Stand. Das war der EINMALIGE Go-Live-Schritt. NICHT mehr benutzen — sonst sind manuell hinzugefügte Rollen weg.'],
+    ['AUFGABE: Eine Stelle ganz entfernen', 'Am einfachsten: Status auf "offline" (dann ist sie weg, der Text bleibt erhalten, falls du sie später wieder brauchst). Wirklich löschen: die Zeile in der Übersicht löschen + den gleichnamigen Detail-Tab löschen, dann veröffentlichen.'],
     ['', ''],
-    ['SPALTEN der Übersicht', 'A = Nr. (Reihenfolge) · B = Rolle (Titel inkl. "(m/w/d)") · C = Web-Kategorie · D = Status (online/offline) · E = id (eindeutiger Kurzname/Slug = Name des Detail-Tabs).'],
-    ['Erlaubte Web-Kategorien', 'Genau eine von: "Montage & Technik" · "Vertrieb & Beratung" · "Büro & Organisation". Exakte Schreibweise wichtig — sonst landet die Rolle in der falschen Gruppe auf der Website.'],
+    ['BITTE NICHT anklicken', 'Den Menüpunkt "⚠ Alles NEU befüllen (Reseed)" NICHT benutzen. Er setzt die ganze Tabelle auf den ursprünglichen Auslieferungsstand zurück und löscht dabei alle selbst hinzugefügten oder geänderten Stellen. Er war nur für den allerersten Aufbau gedacht.'],
+    ['Auch nicht anfassen', 'Den versteckten Tab "_published". Den schreibt das System beim Veröffentlichen selbst.'],
     ['', ''],
-    ['DETAIL-TABS (je Rolle)', 'Pro Rolle ein eigener Tab, benannt nach der id. Aufbau: Spalte A = Feld, Spalte B = Inhalt. Felder: Beschäftigung, Standort, Icon, Teaser, Aufgaben, Profil, "Darauf kannst du dich freuen".'],
-    ['Listenfelder (Aufgaben/Profil/Freuen)', 'Erste Zeile: Label in A + erster Punkt in B. Jeder weitere Punkt: A leer lassen, Text in B. Leeres A = "gehört zum Feld darüber".'],
-    ['Erlaubte Icons', 'wrench, medal, learning, shield, zap, layers, gear, chat, clipboard, file, layout, users, briefcase (unbekanntes Icon → Fallback briefcase).'],
+    ['GUT ZU WISSEN: die Spalten der Übersicht', 'Nr. = Reihenfolge auf der Website · Rolle = Titel (mit "(m/w/d)") · Web-Kategorie = in welcher Gruppe die Stelle erscheint · Status = online/offline · id = interner Kurzname (= Name des passenden Detail-Tabs, bitte nicht ändern).'],
+    ['Die drei Kategorien (genau so schreiben)', 'Montage & Technik · Vertrieb & Beratung · Büro & Organisation. (Über die Auswahlliste in der Spalte wählen, dann kann nichts falsch geschrieben werden.)'],
+    ['Wie ein Detail-Tab aufgebaut ist', 'Spalte A = Feldname, Spalte B = Inhalt. Felder: Beschäftigung, Standort, Icon, Teaser, Aufgaben, Profil, "Darauf kannst du dich freuen". Bei Listen (Aufgaben/Profil/Freuen): erster Punkt neben dem Feldnamen, jeder weitere Punkt eine Zeile tiefer mit LEERER Spalte A.'],
+    ['Mögliche Icons', 'wrench, medal, learning, shield, zap, layers, gear, chat, clipboard, file, layout, users, briefcase (wird im Detail-Tab im Feld "Icon" eingetragen).'],
     ['', ''],
-    ['WIE ALLES ZUSAMMENHÄNGT', '1) Diese Tabelle = die Wahrheit. 2) "Veröffentlichen" schreibt einen Snapshot in den versteckten Tab "_published". 3) Eine Google-Apps-Script-Web-App (doGet) liefert diesen Snapshot als JSON. 4) karriere.html holt diesen Feed (Konstante JOBS_FEED_URL) und baut die Karten. Leerer Feed = die Seite zeigt ihren statischen Grundstand.'],
-    ['NICHT anfassen', 'Versteckter Tab "_published" — interner Snapshot, wird automatisch geschrieben/überschrieben.'],
+    ['FÜR NEUGIERIGE: wie es technisch zusammenhängt', '1) Diese Tabelle ist die Wahrheit. 2) "Veröffentlichen" macht eine eingefrorene Kopie (Tab "_published"). 3) Ein kleines Google-Programm (Apps Script) stellt diese Kopie als Datenfeed bereit. 4) Die Karriere-Seite holt sich diesen Feed und baut die Stellen-Karten daraus. Ist der Feed leer, zeigt die Seite ihren fest eingebauten Grundstand.'],
     ['', ''],
-    ['WICHTIGE IDs / TECHNIK', ''],
-    ['Sheet-ID', SHEET_ID],
-    ['Apps-Script-Projekt', 'Erweiterungen → Apps Script (Code.gs, container-gebunden an diese Tabelle).'],
-    ['Feed-URL (/exec)', 'Eingetragen als JOBS_FEED_URL in karriere.html (Repo herowerk-website).'],
-    ['Bewerbungen gehen aktuell an', 'bewerbung@herowerk.de (später Bewerber-Funnel / Bewerberportal — Swap-Punkt im Website-Code markiert).'],
+    ['Technische Eckdaten', ''],
+    ['Tabellen-ID', SHEET_ID],
+    ['Programm öffnen', 'Menü Erweiterungen → Apps Script (Datei Code.gs, fest mit dieser Tabelle verbunden).'],
+    ['Datenfeed-Adresse', 'Ist als JOBS_FEED_URL in der Website-Datei karriere.html eingetragen (Repo herowerk-website).'],
+    ['Bewerbungen gehen aktuell an', 'bewerbung@herowerk.de (später eigener Bewerber-Funnel / Bewerberportal).'],
   ];
   sh.getRange(1, 1, rows.length, 2).setValues(rows);
   sh.setColumnWidth(1, 290);
@@ -592,7 +610,7 @@ function ensureUebersichtHeader_(ss) {
       break;
     }
   }
-  // id-Spalten-Header gezielt sicherstellen (non-destruktiv für A–D, falls schon befüllt).
+  // id-Spalten-Header gezielt sicherstellen (non-destruktiv für A, D, falls schon befüllt).
   if (needsHeader) {
     if (String(sh.getRange(1, COL_NR).getValue() || '').trim() === '') sh.getRange(1, COL_NR).setValue('Nr.');
     if (String(sh.getRange(1, COL_ROLLE).getValue() || '').trim() === '') sh.getRange(1, COL_ROLLE).setValue('Rolle');
@@ -755,22 +773,22 @@ function WEBSITE_ROLES_() {
       name: 'Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in (m/w/d)',
       icon: 'wrench',
       teaser:
-        'Du machst aus alten Öl- und Gasheizungen moderne Wärmepumpen – im festen Zweier-Team, auf vorbereiteten Baustellen in der Region Hannover. Abends bist du zuhause, nicht im Hotel.',
+        'Du machst aus alten Öl- und Gasheizungen moderne Wärmepumpen, im festen Zweier-Team, auf vorbereiteten Baustellen in der Region Hannover. Abends bist du zuhause, nicht im Hotel.',
       aufgaben: [
-        'Du baust die alte Heizung aus und die neue Wärmepumpe ein – von der Außeneinheit bis zur Inbetriebnahme, im eingespielten Montageteam.',
+        'Du baust die alte Heizung aus und die neue Wärmepumpe ein, von der Außeneinheit bis zur Inbetriebnahme, im eingespielten Montageteam.',
         'Du bindest die Anlage hydraulisch ein, befüllst, entlüftest und nimmst sie in Betrieb.',
         'Du übergibst die fertige Anlage und erklärst den Kund:innen ihre neue Heizung verständlich.',
-        'Du dokumentierst sauber per Tablet (Fotos + Abnahmeprotokoll) – die Auftragsdaten hast du vorab digital dabei, kein Zettelchaos.',
-        'Du arbeitest auf vorbereiteten Baustellen: Aufmaß, Planung und Material kommen aus dem Innendienst – du konzentrierst dich aufs Handwerk.',
+        'Du dokumentierst sauber per Tablet (Fotos + Abnahmeprotokoll), die Auftragsdaten hast du vorab digital dabei, kein Zettelchaos.',
+        'Du arbeitest auf vorbereiteten Baustellen: Aufmaß, Planung und Material kommen aus dem Innendienst, du konzentrierst dich aufs Handwerk.',
       ],
       profil: [
         'Abgeschlossene Ausbildung als Anlagenmechaniker:in SHK, Gas-/Wasserinstallateur:in oder Heizungsbauer:in.',
-        'Erfahrung in der Heizungsinstallation – erste Wärmepumpen-Berührung ist ein Plus, aber kein Muss (wir schulen dich).',
+        'Erfahrung in der Heizungsinstallation, erste Wärmepumpen-Berührung ist ein Plus, aber kein Muss (wir schulen dich).',
         'Sorgfältige, kundenfreundliche und eigenverantwortliche Arbeitsweise im Team.',
         'Führerschein Klasse B und Deutsch ab B2.',
       ],
       freuen: [
-        'Feste Region Hannover – keine Fernmontage, kein Hotel, abends daheim.',
+        'Feste Region Hannover, keine Fernmontage, kein Hotel, abends daheim.',
         'Modernes Werkzeug, gut ausgestattete Fahrzeuge, Tablet statt Papierkram.',
         'Kälteschein & Herstellerschulungen auf unsere Kosten.',
         'Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub.',
@@ -781,9 +799,9 @@ function WEBSITE_ROLES_() {
       name: 'SHK-Meister:in / Technische Betriebsleitung (m/w/d)',
       icon: 'medal',
       teaser:
-        'Du führst unsere Montageteams fachlich und stehst mit deinem Namen für die Qualität jeder Anlage – als technische Betriebsleitung in der Region Hannover.',
+        'Du führst unsere Montageteams fachlich und stehst mit deinem Namen für die Qualität jeder Anlage, als technische Betriebsleitung in der Region Hannover.',
       aufgaben: [
-        'Du leitest und führst unsere Montageteams fachlich an – auf der Baustelle und im Hintergrund.',
+        'Du leitest und führst unsere Montageteams fachlich an, auf der Baustelle und im Hintergrund.',
         'Du sicherst die Qualität und nimmst die fertigen Wärmepumpen-Installationen ab.',
         'Du übernimmst die Verantwortung als technische:r Betriebsleiter:in nach Handwerksordnung.',
         'Du stellst sicher, dass Normen (DIN/VDE) und Herstellervorgaben sauber eingehalten werden.',
@@ -796,7 +814,7 @@ function WEBSITE_ROLES_() {
         'Führerschein Klasse B.',
       ],
       freuen: [
-        'Feste Region Hannover – keine Fernmontage, abends daheim.',
+        'Feste Region Hannover, keine Fernmontage, abends daheim.',
         'Gestaltungsspielraum, flache Hierarchien und kurze Wege.',
         'Herstellerschulungen & Weiterbildung auf unsere Kosten.',
         'Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub.',
@@ -807,23 +825,23 @@ function WEBSITE_ROLES_() {
       name: 'Quereinsteiger:in Montage (m/w/d)',
       icon: 'learning',
       teaser:
-        'Du hast handwerkliches Talent und Lust auf die Wärmewende? Wir bilden dich Schritt für Schritt zum Wärmepumpen-Profi aus – im festen Team in der Region Hannover.',
+        'Du hast handwerkliches Talent und Lust auf die Wärmewende? Wir bilden dich Schritt für Schritt zum Wärmepumpen-Profi aus, im festen Team in der Region Hannover.',
       aufgaben: [
         'Du arbeitest im Montageteam beim Ein- und Ausbau der Anlagen mit und lernst von erfahrenen Kolleg:innen.',
         'Du verlegst Kabel, übernimmst Bohrarbeiten und setzt Schaltschränke.',
-        'Du bereitest Baustelle, Material und Werkzeug vor – sauber und präzise.',
+        'Du bereitest Baustelle, Material und Werkzeug vor, sauber und präzise.',
         'Du unterstützt bei Anschluss, Inbetriebnahme und Übergabe der Wärmepumpe.',
         'Du dokumentierst deine Arbeit per Tablet und wächst Schritt für Schritt in die Rolle hinein.',
       ],
       profil: [
         'Handwerkliche Praxis und ausgeprägte Lernbereitschaft.',
-        'Bereitschaft, dich zum Wärmepumpen-Profi ausbilden zu lassen – SHK- oder Elektro-Erfahrung ist ein Plus, aber kein Muss.',
+        'Bereitschaft, dich zum Wärmepumpen-Profi ausbilden zu lassen, SHK- oder Elektro-Erfahrung ist ein Plus, aber kein Muss.',
         'Zuverlässigkeit, Sorgfalt und Teamgeist.',
         'Führerschein Klasse B.',
       ],
       freuen: [
         'Strukturiertes Onboarding durch erfahrene Kolleg:innen.',
-        'Weiterbildung auf unsere Kosten – bis zum Kälteschein & Herstellerschulungen.',
+        'Weiterbildung auf unsere Kosten, bis zum Kälteschein & Herstellerschulungen.',
         'Feste Region Hannover, modernes Werkzeug und gut ausgestattete Fahrzeuge.',
         'Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub.',
       ],
@@ -833,7 +851,7 @@ function WEBSITE_ROLES_() {
       name: 'Elektromeister:in / Konzessionsträger:in Elektro (m/w/d)',
       icon: 'shield',
       teaser:
-        'Du verantwortest die Elektro-Seite unserer Installationen, gibst grünes Licht für jeden Anschluss – und bringst die Konzession dafür mit. Festes Einsatzgebiet: Region Hannover.',
+        'Du verantwortest die Elektro-Seite unserer Installationen, gibst grünes Licht für jeden Anschluss, und bringst die Konzession dafür mit. Festes Einsatzgebiet: Region Hannover.',
       aufgaben: [
         'Du verantwortest fachlich die Elektroarbeiten an Wärmepumpe und PV und behältst sie im Blick.',
         'Du bist als verantwortliche Elektrofachkraft im Installateurverzeichnis des Netzbetreibers eingetragen (Konzessionsträger:in).',
@@ -848,7 +866,7 @@ function WEBSITE_ROLES_() {
         'Führerschein Klasse B.',
       ],
       freuen: [
-        'Feste Region Hannover – keine Fernmontage, abends daheim.',
+        'Feste Region Hannover, keine Fernmontage, abends daheim.',
         'Gestaltungsspielraum, flache Hierarchien und kurze Wege.',
         'Herstellerschulungen & Weiterbildung auf unsere Kosten.',
         'Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub.',
@@ -856,16 +874,16 @@ function WEBSITE_ROLES_() {
     },
     {
       id: 'elektriker',
-      name: 'Elektriker:in – Wärmepumpen & Photovoltaik (m/w/d)',
+      name: 'Elektriker:in für Wärmepumpen & Photovoltaik (m/w/d)',
       icon: 'zap',
       teaser:
-        'Du bringst Wärmepumpen und PV-Anlagen sauber ans Netz – vom Anschluss bis zur Inbetriebnahme, im festen Team in der Region Hannover.',
+        'Du bringst Wärmepumpen und PV-Anlagen sauber ans Netz, vom Anschluss bis zur Inbetriebnahme, im festen Team in der Region Hannover.',
       aufgaben: [
         'Du übernimmst den Elektroanschluss der Wärmepumpe: Zählerplatz, Sicherungskasten, Steuerleitung.',
         'Du schließt PV-Anlagen auf der AC-Seite an: Wechselrichter ans Hausnetz, Schutz und Erdung.',
         'Du installierst Batteriespeicher und Wallboxen und nimmst sie in Betrieb.',
         'Du machst die Funktionsprüfung, erstellst das VDE-Messprotokoll und meldest beim Netzbetreiber an.',
-        'Du dokumentierst deine Arbeit sauber per Tablet – die Auftragsdaten hast du vorab digital dabei.',
+        'Du dokumentierst deine Arbeit sauber per Tablet, die Auftragsdaten hast du vorab digital dabei.',
       ],
       profil: [
         'Abgeschlossene Ausbildung als Elektroniker:in (Energie- und Gebäudetechnik) oder vergleichbar.',
@@ -874,7 +892,7 @@ function WEBSITE_ROLES_() {
         'Führerschein Klasse B und Deutsch ab B2.',
       ],
       freuen: [
-        'Feste Region Hannover – keine Fernmontage, kein Hotel, abends daheim.',
+        'Feste Region Hannover, keine Fernmontage, kein Hotel, abends daheim.',
         'Modernes Werkzeug, gut ausgestattete Fahrzeuge, Tablet statt Papierkram.',
         'Herstellerschulungen & Weiterbildung auf unsere Kosten.',
         'Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub.',
@@ -885,7 +903,7 @@ function WEBSITE_ROLES_() {
       name: 'Fundament- & Außenanlagen / GaLa (m/w/d)',
       icon: 'layers',
       teaser:
-        'Du schaffst die Basis – damit die Außeneinheit sicher steht und drumherum alles stimmt. Festes Einsatzgebiet: Region Hannover, abends bist du zuhause.',
+        'Du schaffst die Basis, damit die Außeneinheit sicher steht und drumherum alles stimmt. Festes Einsatzgebiet: Region Hannover, abends bist du zuhause.',
       aufgaben: [
         'Du bereitest Aufstellflächen und Fundamente für die Außeneinheiten vor.',
         'Du übernimmst Erd-, Pflaster- und kleinere Tiefbauarbeiten rund um die Anlage.',
@@ -900,7 +918,7 @@ function WEBSITE_ROLES_() {
         'Führerschein Klasse B, idealerweise BE.',
       ],
       freuen: [
-        'Feste Region Hannover – keine Fernmontage, abends daheim.',
+        'Feste Region Hannover, keine Fernmontage, abends daheim.',
         'Modernes Werkzeug und gut ausgestattete Fahrzeuge.',
         'Strukturiertes Onboarding durch erfahrene Kolleg:innen.',
         'Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub.',
@@ -911,7 +929,7 @@ function WEBSITE_ROLES_() {
       name: 'Service-/Wartungstechniker:in (m/w/d)',
       icon: 'gear',
       teaser:
-        'Du hältst die Anlagen unserer Kund:innen am Laufen – und bist ihr vertrautes Gesicht in der Region Hannover. Abends bist du zuhause, nicht im Hotel.',
+        'Du hältst die Anlagen unserer Kund:innen am Laufen, und bist ihr vertrautes Gesicht in der Region Hannover. Abends bist du zuhause, nicht im Hotel.',
       aufgaben: [
         'Du wartest und inspizierst installierte Wärmepumpen und hältst sie effizient am Laufen.',
         'Du gehst auf Fehlersuche, behebst Störungen und übernimmst kleinere Reparaturen.',
@@ -926,7 +944,7 @@ function WEBSITE_ROLES_() {
         'Führerschein Klasse B.',
       ],
       freuen: [
-        'Feste Region Hannover – keine Fernmontage, abends daheim.',
+        'Feste Region Hannover, keine Fernmontage, abends daheim.',
         'Modernes Werkzeug, gut ausgestattete Fahrzeuge, Tablet statt Papierkram.',
         'Kälteschein & Herstellerschulungen auf unsere Kosten.',
         'Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub.',
@@ -934,26 +952,26 @@ function WEBSITE_ROLES_() {
     },
     {
       id: 'vad',
-      name: 'Vertriebsberater:in Außendienst – Wärmepumpe (m/w/d)',
+      name: 'Vertriebsberater:in Außendienst für Wärmepumpen (m/w/d)',
       icon: 'chat',
       teaser:
-        'Du holst Menschen bei ihrem Heizungswechsel ab – direkt am Küchentisch – und machst aus Interesse ein überzeugtes Ja zur Wärmepumpe. Dein Revier: die Region Hannover.',
+        'Du holst Menschen bei ihrem Heizungswechsel ab, direkt am Küchentisch, und machst aus Interesse ein überzeugtes Ja zur Wärmepumpe. Dein Revier: die Region Hannover.',
       aufgaben: [
-        'Du berätst Hausbesitzer:innen vor Ort zu Wärmepumpe und Förderung – ehrlich und auf Augenhöhe.',
+        'Du berätst Hausbesitzer:innen vor Ort zu Wärmepumpe und Förderung, ehrlich und auf Augenhöhe.',
         'Du nimmst das technische Aufmaß und das Objekt auf und dokumentierst die Daten sauber.',
         'Du erstellst das passgenaue, individuelle Angebot und begleitest die Kund:innen bis zur Entscheidung.',
         'Du pflegst deine Kontakte und Termine zuverlässig im CRM.',
         'Du bist das Gesicht von HeroWerk vor Ort und baust echtes Vertrauen auf.',
       ],
       profil: [
-        'Kommunikationsstärke und Vertriebstalent – idealerweise im Umfeld SHK, Energie oder Bau (Quereinsteiger:innen willkommen).',
+        'Kommunikationsstärke und Vertriebstalent, idealerweise im Umfeld SHK, Energie oder Bau (Quereinsteiger:innen willkommen).',
         'Technisches Verständnis und Freude an ehrlichen, transparenten Gesprächen.',
         'Digital-affin und sicher im Umgang mit CRM-Tools.',
         'Führerschein Klasse B.',
       ],
       freuen: [
         'Firmenwagen, den du auch privat fahren kannst (1 %-Regelung).',
-        'Feste Region Hannover – kurze Wege, abends daheim.',
+        'Feste Region Hannover, kurze Wege, abends daheim.',
         'Faire Vergütung + Bonus und Weiterbildung auf unsere Kosten.',
         'Unbefristete Festanstellung und 30 Tage Urlaub.',
       ],
@@ -963,7 +981,7 @@ function WEBSITE_ROLES_() {
       name: 'Vertriebsassistenz / Innendienst (m/w/d)',
       icon: 'clipboard',
       teaser:
-        'Du hältst dem Außendienst den Rücken frei und sorgst dafür, dass kein Lead verloren geht – die organisatorische Schaltzentrale unseres Vertriebs.',
+        'Du hältst dem Außendienst den Rücken frei und sorgst dafür, dass kein Lead verloren geht, die organisatorische Schaltzentrale unseres Vertriebs.',
       aufgaben: [
         'Du terminierst und bereitest die Beratungsgespräche des Außendiensts vor.',
         'Du pflegst Kundendaten und Angebote zuverlässig im CRM.',
@@ -989,7 +1007,7 @@ function WEBSITE_ROLES_() {
       name: 'Backoffice / Auftragssachbearbeitung (m/w/d)',
       icon: 'file',
       teaser:
-        'Du bist die organisatorische Drehscheibe zwischen Kund:innen, Montage und Vertrieb – und sorgst dafür, dass jeder Auftrag rundläuft.',
+        'Du bist die organisatorische Drehscheibe zwischen Kund:innen, Montage und Vertrieb, und sorgst dafür, dass jeder Auftrag rundläuft.',
       aufgaben: [
         'Du wickelst Aufträge von der Annahme bis zur Abrechnung ab.',
         'Du koordinierst Termine und Einsätze der Teams.',
@@ -1015,7 +1033,7 @@ function WEBSITE_ROLES_() {
       name: 'SHK-Planer:in / Anlagenauslegung (m/w/d)',
       icon: 'layout',
       teaser:
-        'Du prüfst und planst Wärmepumpen-Projekte am Rechner, damit jede Anlage zum Haus passt und sparsam läuft – auf Wunsch auch anteilig im Homeoffice.',
+        'Du prüfst und planst Wärmepumpen-Projekte am Rechner, damit jede Anlage zum Haus passt und sparsam läuft, auf Wunsch auch anteilig im Homeoffice.',
       aufgaben: [
         'Du prüfst verkaufte Wärmepumpen-Projekte technisch am PC und legst die Anlagen passgenau aus.',
         'Du plausibilisierst Heizlastberechnungen und Wärmepumpen-Auslegungen.',
@@ -1031,7 +1049,7 @@ function WEBSITE_ROLES_() {
       ],
       freuen: [
         'Anteilig Homeoffice und flexible Arbeitszeiten.',
-        'Weiterbildung auf unsere Kosten – inklusive Wärmepumpen-Schulungen.',
+        'Weiterbildung auf unsere Kosten, inklusive Wärmepumpen-Schulungen.',
         'Faire Vergütung + Bonus und Gestaltungsspielraum mit kurzen Wegen.',
         'Unbefristete Festanstellung und 30 Tage Urlaub.',
       ],
@@ -1041,7 +1059,7 @@ function WEBSITE_ROLES_() {
       name: 'Personalreferent:in / HR (m/w/d)',
       icon: 'users',
       teaser:
-        'Du baust mit uns das Team auf, das die Wärmewende vor Ort umsetzt – von der ersten Ausschreibung bis zum gelungenen Einstieg.',
+        'Du baust mit uns das Team auf, das die Wärmewende vor Ort umsetzt, von der ersten Ausschreibung bis zum gelungenen Einstieg.',
       aufgaben: [
         'Du steuerst das Recruiting von der Ausschreibung bis zur Einstellung neuer Kolleg:innen.',
         'Du gestaltest ein strukturiertes Onboarding, das neue Teammitglieder gut ankommen lässt.',
@@ -1067,7 +1085,7 @@ function WEBSITE_ROLES_() {
       name: 'Assistenz der Geschäftsführung (m/w/d)',
       icon: 'briefcase',
       teaser:
-        'Du hältst der Geschäftsführung den Rücken frei und sorgst dafür, dass der Laden rundläuft – die rechte Hand mit Überblick über das ganze Unternehmen.',
+        'Du hältst der Geschäftsführung den Rücken frei und sorgst dafür, dass der Laden rundläuft, die rechte Hand mit Überblick über das ganze Unternehmen.',
       aufgaben: [
         'Du unterstützt die Geschäftsführung organisatorisch und administrativ.',
         'Du bereitest Termine, Unterlagen und Entscheidungen vor.',
@@ -1104,9 +1122,9 @@ function NEW_ROLES_() {
       name: 'SHK-Meister:in (m/w/d)',
       icon: 'medal',
       teaser:
-        'Du führst dein Team fachlich auf der Baustelle, sorgst für saubere Wärmepumpen-Installationen und packst selbst mit an – als Meister:in mittendrin im festen Einsatzgebiet Region Hannover.',
+        'Du führst dein Team fachlich auf der Baustelle, sorgst für saubere Wärmepumpen-Installationen und packst selbst mit an, als Meister:in mittendrin im festen Einsatzgebiet Region Hannover.',
       aufgaben: [
-        'Du führst dein Montageteam fachlich an und arbeitest auf der Baustelle aktiv mit – Meister, der mit anpackt, nicht nur zuschaut.',
+        'Du führst dein Montageteam fachlich an und arbeitest auf der Baustelle aktiv mit, Meister, der mit anpackt, nicht nur zuschaut.',
         'Du sicherst die Qualität jeder Installation und nimmst die fertigen Wärmepumpen-Anlagen ab.',
         'Du leitest die Kolleg:innen vor Ort an, gibst dein Wissen weiter und entwickelst das Team fachlich weiter.',
         'Du stellst sicher, dass Normen (DIN/VDE) und Herstellervorgaben sauber eingehalten werden.',
@@ -1115,11 +1133,11 @@ function NEW_ROLES_() {
       profil: [
         'Meisterbrief im SHK-Handwerk.',
         'Mehrjährige Erfahrung in der Heizungs- bzw. Wärmepumpentechnik.',
-        'Führungsstärke, Verantwortungsbewusstsein und ein Auge fürs Detail – und Lust, selbst auf der Baustelle dabei zu sein.',
+        'Führungsstärke, Verantwortungsbewusstsein und ein Auge fürs Detail, und Lust, selbst auf der Baustelle dabei zu sein.',
         'Führerschein Klasse B.',
       ],
       freuen: [
-        'Feste Region Hannover – keine Fernmontage, abends daheim.',
+        'Feste Region Hannover, keine Fernmontage, abends daheim.',
         'Modernes Werkzeug, gut ausgestattete Fahrzeuge, Tablet statt Papierkram.',
         'Herstellerschulungen & Weiterbildung auf unsere Kosten.',
         'Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub.',
@@ -1130,23 +1148,23 @@ function NEW_ROLES_() {
       name: 'Quereinsteiger:in Fundamentbau Wärmepumpe (m/w/d)',
       icon: 'learning',
       teaser:
-        'Du hast handwerkliches Talent und Lust, draußen anzupacken? Wir lernen dich Schritt für Schritt an, damit jede Wärmepumpen-Außeneinheit sicher steht – im festen Team in der Region Hannover, abends zuhause.',
+        'Du hast handwerkliches Talent und Lust, draußen anzupacken? Wir lernen dich Schritt für Schritt an, damit jede Wärmepumpen-Außeneinheit sicher steht, im festen Team in der Region Hannover, abends zuhause.',
       aufgaben: [
         'Du bereitest Aufstellflächen und Fundamente für die Außeneinheiten der Wärmepumpen vor.',
         'Du übernimmst Erd-, Pflaster- und kleinere Tiefbauarbeiten rund um die Anlage.',
         'Du stellst die Außenanlagen wieder her und hinterlässt die Baustelle sauber und ordentlich.',
         'Du arbeitest eng mit dem Montageteam vor Ort zusammen und lernst von erfahrenen Kolleg:innen.',
-        'Du wächst Schritt für Schritt in die Fundament- und Außenarbeiten hinein – wir bilden dich an.',
+        'Du wächst Schritt für Schritt in die Fundament- und Außenarbeiten hinein, wir bilden dich an.',
       ],
       profil: [
         'Handwerkliches Geschick, körperliche Belastbarkeit und Lust, draußen zu arbeiten.',
-        'Erfahrung im Garten- und Landschaftsbau, Tiefbau oder Hochbau ist ein Plus, aber kein Muss – wir lernen dich an.',
+        'Erfahrung im Garten- und Landschaftsbau, Tiefbau oder Hochbau ist ein Plus, aber kein Muss, wir lernen dich an.',
         'Zuverlässigkeit, Sorgfalt und Teamgeist.',
         'Führerschein Klasse B, idealerweise BE.',
       ],
       freuen: [
         'Strukturiertes Onboarding durch erfahrene Kolleg:innen.',
-        'Feste Region Hannover – keine Fernmontage, abends daheim.',
+        'Feste Region Hannover, keine Fernmontage, abends daheim.',
         'Modernes Werkzeug und gut ausgestattete Fahrzeuge.',
         'Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub.',
       ],
@@ -1156,7 +1174,7 @@ function NEW_ROLES_() {
       name: 'Technischer Planer SHK (m/w/d)',
       icon: 'layout',
       teaser:
-        'Du legst Wärmepumpen-Anlagen am Rechner passgenau aus, damit jede Anlage zum Haus passt und sparsam läuft – auf Wunsch auch anteilig im Homeoffice, im festen Einsatzgebiet Region Hannover.',
+        'Du legst Wärmepumpen-Anlagen am Rechner passgenau aus, damit jede Anlage zum Haus passt und sparsam läuft, auf Wunsch auch anteilig im Homeoffice, im festen Einsatzgebiet Region Hannover.',
       aufgaben: [
         'Du legst verkaufte Wärmepumpen-Projekte technisch am PC aus und sorgst dafür, dass jede Anlage zum Gebäude passt.',
         'Du plausibilisierst Heizlastberechnungen und Wärmepumpen-Auslegungen.',
@@ -1172,7 +1190,7 @@ function NEW_ROLES_() {
       ],
       freuen: [
         'Anteilig Homeoffice und flexible Arbeitszeiten.',
-        'Weiterbildung auf unsere Kosten – inklusive Wärmepumpen-Schulungen.',
+        'Weiterbildung auf unsere Kosten, inklusive Wärmepumpen-Schulungen.',
         'Faire Vergütung + Bonus und Gestaltungsspielraum mit kurzen Wegen.',
         'Unbefristete Festanstellung und 30 Tage Urlaub.',
       ],
@@ -1182,7 +1200,7 @@ function NEW_ROLES_() {
       name: 'Technischer Planer Elektro (m/w/d)',
       icon: 'layout',
       teaser:
-        'Du planst die Elektro-Seite unserer Wärmepumpen- und PV-Projekte am Rechner, damit jeder Anschluss sicher und normgerecht ans Netz geht – auf Wunsch anteilig im Homeoffice, im festen Einsatzgebiet Region Hannover.',
+        'Du planst die Elektro-Seite unserer Wärmepumpen- und PV-Projekte am Rechner, damit jeder Anschluss sicher und normgerecht ans Netz geht, auf Wunsch anteilig im Homeoffice, im festen Einsatzgebiet Region Hannover.',
       aufgaben: [
         'Du planst die Elektro-Seite der Wärmepumpen- und PV-Projekte am PC und legst sie passgenau aus.',
         'Du erstellst Lastberechnungen, Schaltpläne und die Auslegung des Zählerplatzes.',
@@ -1198,17 +1216,17 @@ function NEW_ROLES_() {
       ],
       freuen: [
         'Anteilig Homeoffice und flexible Arbeitszeiten.',
-        'Weiterbildung auf unsere Kosten – inklusive Hersteller- und Fachschulungen.',
+        'Weiterbildung auf unsere Kosten, inklusive Hersteller- und Fachschulungen.',
         'Faire Vergütung + Bonus und Gestaltungsspielraum mit kurzen Wegen.',
         'Unbefristete Festanstellung und 30 Tage Urlaub.',
       ],
     },
     {
       id: 'technischer-aussendienst',
-      name: 'Technischer Außendienst – Wärmepumpen-Projekte (m/w/d)',
+      name: 'Technischer Außendienst für Wärmepumpen-Projekte (m/w/d)',
       icon: 'clipboard',
       teaser:
-        'Du nimmst Objekte vor Ort technisch auf und prüfst, ob die Wärmepumpe sauber ins Haus passt – die technische Vorhut, die der Planung saubere Daten liefert. Dein Revier: die Region Hannover, abends bist du zuhause.',
+        'Du nimmst Objekte vor Ort technisch auf und prüfst, ob die Wärmepumpe sauber ins Haus passt, die technische Vorhut, die der Planung saubere Daten liefert. Dein Revier: die Region Hannover, abends bist du zuhause.',
       aufgaben: [
         'Du nimmst Objekte vor Ort auf und erstellst ein sauberes technisches Aufmaß der Bestandssituation.',
         'Du prüfst die Baubarkeit und Machbarkeit der Wärmepumpen-Installation direkt am Gebäude.',
@@ -1218,13 +1236,13 @@ function NEW_ROLES_() {
       ],
       profil: [
         'Technische Ausbildung im SHK- oder Elektro-Bereich oder vergleichbare technische Erfahrung.',
-        'Erfahrung mit Objektaufnahme, Aufmaß oder Heizungstechnik – Wärmepumpen-Kenntnisse sind ein Plus.',
+        'Erfahrung mit Objektaufnahme, Aufmaß oder Heizungstechnik, Wärmepumpen-Kenntnisse sind ein Plus.',
         'Sorgfältige, eigenständige Arbeitsweise und ein gutes Auge für technische Details.',
         'Führerschein Klasse B.',
       ],
       freuen: [
         'Firmenwagen, den du auch privat fahren kannst (1 %-Regelung).',
-        'Feste Region Hannover – kurze Wege, abends daheim.',
+        'Feste Region Hannover, kurze Wege, abends daheim.',
         'Modernes Werkzeug, Tablet und Weiterbildung auf unsere Kosten.',
         'Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub.',
       ],
@@ -1234,7 +1252,7 @@ function NEW_ROLES_() {
       name: 'Disponent:in / Projekt- & Partnermanagement (m/w/d)',
       icon: 'file',
       teaser:
-        'Du planst die Einsätze unserer Montageteams, steuerst Partner und Nachunternehmer und hältst alle Fäden in der Hand – die Schaltzentrale, die dafür sorgt, dass jedes Projekt rundläuft. Festes Einsatzgebiet: Region Hannover.',
+        'Du planst die Einsätze unserer Montageteams, steuerst Partner und Nachunternehmer und hältst alle Fäden in der Hand, die Schaltzentrale, die dafür sorgt, dass jedes Projekt rundläuft. Festes Einsatzgebiet: Region Hannover.',
       aufgaben: [
         'Du planst die Einsätze und Termine der Montageteams und sorgst für eine runde Auslastung.',
         'Du steuerst Partner und Nachunternehmer und stimmst dich eng mit ihnen ab.',
@@ -1260,7 +1278,7 @@ function NEW_ROLES_() {
       name: 'Finance Business Partner: Operations & Performance (m/w/d)',
       icon: 'briefcase',
       teaser:
-        'Du machst Zahlen für die Operations greifbar und bist Sparringspartner für die Bereiche, wenn es um Performance und Steuerung geht – nah dran am Geschäft, im festen Einsatzgebiet Region Hannover, auf Wunsch anteilig im Homeoffice.',
+        'Du machst Zahlen für die Operations greifbar und bist Sparringspartner für die Bereiche, wenn es um Performance und Steuerung geht, nah dran am Geschäft, im festen Einsatzgebiet Region Hannover, auf Wunsch anteilig im Homeoffice.',
       aufgaben: [
         'Du baust das Controlling und die Kennzahlen auf, die unsere Operations steuerbar machen.',
         'Du bist Business-Partner für die Bereiche und übersetzt Zahlen in klare Handlungsempfehlungen.',
@@ -1286,7 +1304,7 @@ function NEW_ROLES_() {
       name: 'Finanzbuchhalter:in (m/w/d)',
       icon: 'file',
       teaser:
-        'Du hältst unsere Buchhaltung sauber und im Griff – von der laufenden Buchung bis zur Zusammenarbeit mit der Steuerberatung. Festes Einsatzgebiet: Region Hannover, auf Wunsch anteilig im Homeoffice.',
+        'Du hältst unsere Buchhaltung sauber und im Griff, von der laufenden Buchung bis zur Zusammenarbeit mit der Steuerberatung. Festes Einsatzgebiet: Region Hannover, auf Wunsch anteilig im Homeoffice.',
       aufgaben: [
         'Du übernimmst die laufende Finanzbuchhaltung und buchst Geschäftsvorfälle sauber und nachvollziehbar.',
         'Du bearbeitest Eingangs- und Ausgangsrechnungen und steuerst den Zahlungsverkehr.',
