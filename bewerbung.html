@@ -26,7 +26,19 @@
     /* Bewerber-Funnel: nutzt die Standard-Formularklassen der Seite (.contact-form/.form-group/
        .form-checkbox/.form-submit) – die sind theme-adaptiv (CSS-Variablen), also hell wie
        dunkel voll lesbar. Hier nur die schmale Hülle drumherum. */
-    .bewerbung-layout { max-width: 640px; margin: 0 auto; }
+    .bewerbung-layout { max-width: 680px; margin: 0 auto; }
+    /* Förderrechner-Farblayout: gerahmte Karte (.foerder-grid wiederverwendet -> exakt gleiche
+       Optik + getestete Light/Dark-Overrides) als Block statt Grid. */
+    #bewerbungCard { display: block; }
+    /* Eine Rahmung wie im Förderrechner: innere .contact-form-Kartenoptik neutralisieren. */
+    #bewerbungCard .contact-form { background: transparent; border: 0; padding: 0; box-shadow: none; }
+    /* Förder-Input-Optik: charcoal/g600/10px/16px (alle Tokens theme-adaptiv wie im Förderrechner). */
+    #bewerbungForm .form-group input,
+    #bewerbungForm .form-group select,
+    #bewerbungForm .form-group textarea {
+      background: var(--charcoal); border: 1px solid var(--g600);
+      border-radius: 10px; font-size: 16px; padding: 12px 16px;
+    }
     .bewerbung-intro-card {
       background: rgba(183,217,0,0.10); border: 1px solid rgba(183,217,0,0.40);
       border-radius: 12px; padding: 16px 18px; margin-bottom: 24px; font-size: 15px; line-height: 1.55;
@@ -96,6 +108,7 @@
       <h1 class="section-title" style="color: var(--white);">Jetzt bei HeroWerk bewerben</h1>
       <p class="section-lead">Zwei Minuten, ein kurzes Formular – den Rest besprechen wir persönlich.</p>
       <div class="bewerbung-layout">
+        <div class="foerder-grid" id="bewerbungCard">
         <div class="bewerbung-steps">
           <span><b>1</b> Formular ausfüllen</span>
           <span><b>2</b> Portal-Link per E-Mail</span>
@@ -160,6 +173,7 @@
           <h2>Danke, <span id="bewerbungSuccessName"></span>!</h2>
           <p style="color: var(--g300);">Deine Bewerbung ist bei uns eingegangen. Du bekommst gleich eine E-Mail mit dem Link zu deinem persönlichen Bewerber-Portal – dort kannst du jederzeit Lebenslauf, Zeugnisse und Zertifikate hochladen und sehen, wie es weitergeht.</p>
         </div>
+        </div><!-- /#bewerbungCard -->
 
         <p class="bewerbung-fallback">
           Lieber direkt per E-Mail? Schreib uns an
