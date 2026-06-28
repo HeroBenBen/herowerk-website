@@ -26,6 +26,11 @@
     /* Bewerber-Funnel: nutzt die Standard-Formularklassen der Seite (.contact-form/.form-group/
        .form-checkbox/.form-submit) – die sind theme-adaptiv (CSS-Variablen), also hell wie
        dunkel voll lesbar. Hier nur die schmale Hülle drumherum. */
+    /* Seiten-Untergrund = Slate (--schiefer) wie Förderrechner/Dimensionierungsrechner.
+       Die .contact-Section erzwingt im Dunkelmodus sonst --nacht (Schwarz) via !important
+       -> hier mit gleicher Spezifität + !important auf Slate korrigiert. Hellmodus (Sand)
+       bleibt unberührt. */
+    [data-theme='dark'] #bewerbung.contact { background: var(--schiefer) !important; border-top: none !important; }
     .bewerbung-layout { max-width: 680px; margin: 0 auto; }
     /* Förderrechner-Farblayout: gerahmte Karte (.foerder-grid wiederverwendet -> exakt gleiche
        Optik + getestete Light/Dark-Overrides) als Block statt Grid. */
