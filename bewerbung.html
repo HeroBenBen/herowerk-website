@@ -26,6 +26,11 @@
     /* Bewerber-Funnel: nutzt die Standard-Formularklassen der Seite (.contact-form/.form-group/
        .form-checkbox/.form-submit) – die sind theme-adaptiv (CSS-Variablen), also hell wie
        dunkel voll lesbar. Hier nur die schmale Hülle drumherum. */
+    /* Seiten-Untergrund = Slate (--schiefer) wie Förderrechner/Dimensionierungsrechner.
+       Die .contact-Section erzwingt im Dunkelmodus sonst --nacht (Schwarz) via !important
+       -> hier mit gleicher Spezifität + !important auf Slate korrigiert. Hellmodus (Sand)
+       bleibt unberührt. */
+    [data-theme='dark'] #bewerbung.contact { background: var(--schiefer) !important; border-top: none !important; }
     .bewerbung-layout { max-width: 680px; margin: 0 auto; }
     /* Förderrechner-Farblayout: gerahmte Karte (.foerder-grid wiederverwendet -> exakt gleiche
        Optik + getestete Light/Dark-Overrides) als Block statt Grid. */
@@ -164,6 +169,10 @@
           <div class="form-checkbox">
             <input type="checkbox" id="bwDsgvo" name="datenschutzeinwilligung_bewerbung" value="true" required>
             <label for="bwDsgvo">Ich willige ein, dass HeroWerk meine angegebenen Daten zur Bearbeitung meiner Bewerbung speichert und verarbeitet, und akzeptiere die <a href="/datenschutz" target="_blank" rel="noopener" style="color:var(--green);">Datenschutzbedingungen</a>. Die Einwilligung ist jederzeit widerrufbar.</label>
+          </div>
+          <div class="form-checkbox">
+            <input type="checkbox" id="bwNewsletter" name="newslettereinwilligung" value="true">
+            <label for="bwNewsletter">Möchtest du von uns hören, wenn es bei HeroWerk etwas Neues gibt – neue Stellen oder Neuigkeiten? <span class="form-optional">optional</span></label>
           </div>
           <button type="submit" class="form-submit">Bewerbung absenden</button>
           <p class="bewerbung-fallback" id="bewerbungError" style="display:none;color:#ff8a8a;">Da ist etwas schiefgelaufen. Bitte fülle alle Pflichtfelder aus oder schreib uns an <a href="mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk">bewerbung@herowerk.de</a>.</p>
@@ -327,6 +336,11 @@
         if (eintrittMs != null) fields.push({ name: 'fruhester_eintritt', value: String(eintrittMs) });
         if (data.datenschutzeinwilligung_bewerbung) {
           fields.push({ name: 'datenschutzeinwilligung_bewerbung', value: 'true' });
+        }
+        // Optionales Marketing-Opt-in (offen gefragt) -> nur senden wenn angehakt.
+        // Setzt die Kontakt-Property newslettereinwilligung (booleancheckbox).
+        if (data.newslettereinwilligung) {
+          fields.push({ name: 'newslettereinwilligung', value: 'true' });
         }
         return {
           fields: fields.filter(function (f) { return f.value !== '' && f.value != null; }),
