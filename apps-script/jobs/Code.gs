@@ -92,13 +92,15 @@ var DEFAULT_STANDORT = 'Region Hannover';
 function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu('HeroWerk Jobs')
-    .addItem('Auf Webseite veröffentlichen', 'publish')
+    .addItem('① Auf Webseite veröffentlichen', 'publish')
     .addItem('Vorschau anzeigen', 'preview')
     .addSeparator()
-    .addItem('Rolle anlegen', 'createRole')
+    .addItem('Neue Rolle anlegen', 'createRole')
     .addItem('Einrichten / Reparieren', 'setup')
-    .addItem('Website-Rollen vorbefüllen', 'seedWebsiteRoles')
-    .addItem('Alles befüllen (Go-Live: 20 Rollen)', 'populateAll')
+    .addItem('How-to-use-Tab schreiben / aktualisieren', 'writeHowToUse')
+    .addSeparator()
+    .addItem('⚠ Alles NEU befüllen (Reseed – überschreibt alles!)', 'populateAll')
+    .addItem('Website-Rollen vorbefüllen (13 alte)', 'seedWebsiteRoles')
     .addToUi();
 }
 
@@ -518,6 +520,61 @@ function CONTENT_BY_ID_() {
     map[all[i].id] = all[i];
   }
   return map;
+}
+
+// ---------------------------------------------------------------------------
+// How_to_use: Bedien- und Architektur-Doku als Tabellenblatt
+// ---------------------------------------------------------------------------
+
+/**
+ * Legt/aktualisiert den Tab "How_to_use" mit der kompletten Bedien-Anleitung
+ * + Architektur-/Setup-Erklärung. Idempotent (überschreibt nur diesen Tab).
+ */
+function writeHowToUse() {
+  var ss = SpreadsheetApp.openById(SHEET_ID);
+  var name = 'How_to_use';
+  var sh = ss.getSheetByName(name);
+  if (!sh) sh = ss.insertSheet(name, 1); // Position direkt nach der Übersicht
+  sh.clear();
+  var rows = [
+    ['HeroWerk Jobs — How to use', 'Bedienung + Aufbau dieser Stellen-Steuerung. Stand 2026-06-28.'],
+    ['', ''],
+    ['ZWECK', 'Diese Tabelle steuert die offenen Stellen auf herowerk.de/karriere. Was hier auf "online" steht, erscheint auf der Website.'],
+    ['', ''],
+    ['DER KNOPF (Website aktualisieren)', 'Menü oben "HeroWerk Jobs" → "① Auf Webseite veröffentlichen". NACH JEDER Änderung klicken — sonst ändert sich auf der Website nichts.'],
+    ['Warum ein Knopf?', 'Veröffentlichen friert den aktuellen Stand in den versteckten Tab "_published" ein; die Website liest genau diesen eingefrorenen Stand. So gehen halbfertige Änderungen nie versehentlich live.'],
+    ['', ''],
+    ['Rolle ONLINE / OFFLINE', 'In der Übersicht Spalte D (Status) auf "online" oder "offline" setzen → veröffentlichen. "offline" = verschwindet von der Website, bleibt aber in der Tabelle erhalten.'],
+    ['', ''],
+    ['NEUE Rolle hinzufügen', 'Menü "HeroWerk Jobs" → "Neue Rolle anlegen". Legt automatisch eine Zeile (unten) + einen Detail-Tab an. Dann Detail-Tab füllen, Status auf "online", veröffentlichen.'],
+    ['Brauche ich freien Platz?', 'Nein. Neue Rollen kommen automatisch UNTEN dazu — du musst keine leeren Zeilen vorhalten. Die Reihenfolge auf der Website steuerst du über Spalte A (Nr.): kleinere Nr. = weiter oben.'],
+    ['Rolle entfernen', 'Sauberste Variante: Status auf "offline" (Inhalt bleibt). Oder Zeile + zugehörigen Detail-Tab löschen. Danach veröffentlichen.'],
+    ['', ''],
+    ['⚠ ACHTUNG: "Alles NEU befüllen"', 'Der Menüpunkt "⚠ Alles NEU befüllen (Reseed)" überschreibt ALLE Zeilen + ALLE Detail-Tabs mit dem fest im Code hinterlegten Stand. Das war der EINMALIGE Go-Live-Schritt. NICHT mehr benutzen — sonst sind manuell hinzugefügte Rollen weg.'],
+    ['', ''],
+    ['SPALTEN der Übersicht', 'A = Nr. (Reihenfolge) · B = Rolle (Titel inkl. "(m/w/d)") · C = Web-Kategorie · D = Status (online/offline) · E = id (eindeutiger Kurzname/Slug = Name des Detail-Tabs).'],
+    ['Erlaubte Web-Kategorien', 'Genau eine von: "Montage & Technik" · "Vertrieb & Beratung" · "Büro & Organisation". Exakte Schreibweise wichtig — sonst landet die Rolle in der falschen Gruppe auf der Website.'],
+    ['', ''],
+    ['DETAIL-TABS (je Rolle)', 'Pro Rolle ein eigener Tab, benannt nach der id. Aufbau: Spalte A = Feld, Spalte B = Inhalt. Felder: Beschäftigung, Standort, Icon, Teaser, Aufgaben, Profil, "Darauf kannst du dich freuen".'],
+    ['Listenfelder (Aufgaben/Profil/Freuen)', 'Erste Zeile: Label in A + erster Punkt in B. Jeder weitere Punkt: A leer lassen, Text in B. Leeres A = "gehört zum Feld darüber".'],
+    ['Erlaubte Icons', 'wrench, medal, learning, shield, zap, layers, gear, chat, clipboard, file, layout, users, briefcase (unbekanntes Icon → Fallback briefcase).'],
+    ['', ''],
+    ['WIE ALLES ZUSAMMENHÄNGT', '1) Diese Tabelle = die Wahrheit. 2) "Veröffentlichen" schreibt einen Snapshot in den versteckten Tab "_published". 3) Eine Google-Apps-Script-Web-App (doGet) liefert diesen Snapshot als JSON. 4) karriere.html holt diesen Feed (Konstante JOBS_FEED_URL) und baut die Karten. Leerer Feed = die Seite zeigt ihren statischen Grundstand.'],
+    ['NICHT anfassen', 'Versteckter Tab "_published" — interner Snapshot, wird automatisch geschrieben/überschrieben.'],
+    ['', ''],
+    ['WICHTIGE IDs / TECHNIK', ''],
+    ['Sheet-ID', SHEET_ID],
+    ['Apps-Script-Projekt', 'Erweiterungen → Apps Script (Code.gs, container-gebunden an diese Tabelle).'],
+    ['Feed-URL (/exec)', 'Eingetragen als JOBS_FEED_URL in karriere.html (Repo herowerk-website).'],
+    ['Bewerbungen gehen aktuell an', 'bewerbung@herowerk.de (später Bewerber-Funnel / Bewerberportal — Swap-Punkt im Website-Code markiert).'],
+  ];
+  sh.getRange(1, 1, rows.length, 2).setValues(rows);
+  sh.setColumnWidth(1, 290);
+  sh.setColumnWidth(2, 780);
+  sh.getRange(1, 1, rows.length, 1).setFontWeight('bold');
+  sh.getRange(1, 1, 1, 2).setFontSize(13);
+  sh.setFrozenRows(1);
+  ss.toast('Tab "How_to_use" geschrieben/aktualisiert.', SERVICE_NAME, 5);
 }
 
 // ---------------------------------------------------------------------------
