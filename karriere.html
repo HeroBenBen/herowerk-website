@@ -895,15 +895,13 @@
           btn.textContent = isOpen ? 'Weniger anzeigen' : 'Mehr erfahren';
         });
       });
-      // Bewerbungs-Kanal: aktuell Mailto (Bewerberfunnel existiert noch nicht).
-      // (b) FUNNEL-SWAP: sobald der Funnel steht, hier APPLY_BASE auf die
-      // Funnel-URL setzen (eine Stelle), die Rolle haengt als Parameter dran.
-      var APPLY_BASE = 'mailto:bewerbung@herowerk.de';
+      // Bewerbungs-Kanal: Bewerber-Funnel ist live.
+      // (b) FUNNEL-SWAP vollzogen (2026-06-28): Apply-Buttons zeigen auf die
+      // Funnel-Seite /bewerbung; die Rolle haengt als ?role=-Parameter dran.
+      var APPLY_BASE = '/bewerbung';
       document.querySelectorAll('.kar-apply').forEach(function (a) {
         var role = a.getAttribute('data-role');
-        if (role) {
-          a.setAttribute('href', APPLY_BASE + '?subject=' + encodeURIComponent('Bewerbung: ' + role));
-        }
+        a.setAttribute('href', role ? (APPLY_BASE + '?role=' + encodeURIComponent(role)) : APPLY_BASE);
       });
       // (a) Sichtbare, kopierbare E-Mail-Adresse unter jeder Rolle
       document.querySelectorAll('.kar-role').forEach(function (card) {
@@ -913,7 +911,7 @@
         hint.className = 'kar-apply-hint';
         hint.appendChild(document.createTextNode('oder per E-Mail an '));
         var link = document.createElement('a');
-        link.href = APPLY_BASE + '?subject=Bewerbung%20bei%20HeroWerk';
+        link.href = 'mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk';
         link.textContent = 'bewerbung@herowerk.de';
         hint.appendChild(link);
         foot.insertAdjacentElement('afterend', hint);
@@ -957,7 +955,7 @@
           '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>',
       };
       var SVG_NS = 'http://www.w3.org/2000/svg';
-      var APPLY_BASE = 'mailto:bewerbung@herowerk.de';
+      var APPLY_BASE = '/bewerbung';
 
       function iconKey(k) {
         return Object.prototype.hasOwnProperty.call(ICONS, k) ? k : 'briefcase';
@@ -1059,7 +1057,7 @@
           apply.setAttribute('data-role', item.name || '');
           apply.setAttribute(
             'href',
-            APPLY_BASE + '?subject=' + encodeURIComponent('Bewerbung: ' + (item.name || ''))
+            item.name ? (APPLY_BASE + '?role=' + encodeURIComponent(item.name)) : APPLY_BASE
           );
         }
 
@@ -1092,7 +1090,7 @@
           hint.className = 'kar-apply-hint';
           hint.appendChild(document.createTextNode('oder per E-Mail an '));
           var link = document.createElement('a');
-          link.href = APPLY_BASE + '?subject=Bewerbung%20bei%20HeroWerk';
+          link.href = 'mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk';
           link.textContent = 'bewerbung@herowerk.de';
           hint.appendChild(link);
           foot.insertAdjacentElement('afterend', hint);
