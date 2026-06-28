@@ -23,18 +23,28 @@
   <link rel="preload" href="tokens.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="tokens.css"></noscript>
   <style>
-    /* Bewerber-Funnel: nur die Hülle um das HubSpot-Formular. Das Formular selbst
-       rendert HubSpot in einem eigenen <iframe> – dessen Innen-Optik wird im HubSpot-
-       Formular-Editor gesteuert, nicht hier (CSS reicht nicht in den iframe hinein). */
-    .bewerbung-layout { max-width: 720px; margin: 0 auto; }
+    /* Bewerber-Funnel: nutzt die Standard-Formularklassen der Seite (.contact-form/.form-group/
+       .form-checkbox/.form-submit) – die sind theme-adaptiv (CSS-Variablen), also hell wie
+       dunkel voll lesbar. Hier nur die schmale Hülle drumherum. */
+    .bewerbung-layout { max-width: 640px; margin: 0 auto; }
     .bewerbung-intro-card {
       background: rgba(183,217,0,0.10); border: 1px solid rgba(183,217,0,0.40);
-      border-radius: 12px; padding: 16px 18px; margin-bottom: 22px; font-size: 15px; line-height: 1.55;
+      border-radius: 12px; padding: 16px 18px; margin-bottom: 24px; font-size: 15px; line-height: 1.55;
+      color: var(--g200, #e6e6e6);
     }
     .bewerbung-intro-card strong { color: var(--white); }
-    #hsBewerbungForm { width: 100%; min-height: 320px; }
+    /* Hellmodus: Karten-/Schritt-Text auf dunkles Navy (gleicher Kontrast wie die Labels),
+       sonst hellgrau auf pale-lime = unlesbar. */
+    [data-theme='light'] .bewerbung-intro-card { color: #1c2b36; }
+    [data-theme='light'] .bewerbung-intro-card strong { color: #0a0a0a; }
+    [data-theme='light'] .bewerbung-steps { color: #3a4a55; }
+    .bewerbung-steps { display:flex; gap:18px; flex-wrap:wrap; margin-bottom:24px; font-size:14px; color: var(--g300, #b3b3b3); }
+    .bewerbung-steps span { display:inline-flex; align-items:center; gap:7px; }
+    .bewerbung-steps b { background: var(--green, #B7D900); color:#0A0A0A; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; }
+    .form-row-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    @media (max-width: 560px){ .form-row-2 { grid-template-columns:1fr; } }
     .bewerbung-fallback { margin-top:18px; font-size:14px; color: var(--g300, #b3b3b3); }
-    .bewerbung-fallback a { color: var(--lime, #B7D900); }
+    .bewerbung-fallback a { color: var(--green, #B7D900); }
   </style>
 </head>
 <body data-hubspot-portal-id="148110267" data-hubspot-applicant-form-id="c6a199f5-bab6-499e-a3ee-3d9605120877">
@@ -84,14 +94,75 @@
     <div class="section-inner">
       <div class="section-tag">Karriere</div>
       <h1 class="section-title" style="color: var(--white);">Jetzt bei HeroWerk bewerben</h1>
-      <p class="section-lead">Ein kurzes Formular – den Rest besprechen wir persönlich. Deine Unterlagen (Lebenslauf, Zeugnisse) kannst du anschließend jederzeit in deinem persönlichen Bewerber-Portal nachreichen.</p>
+      <p class="section-lead">Zwei Minuten, ein kurzes Formular – den Rest besprechen wir persönlich.</p>
       <div class="bewerbung-layout">
-        <div class="bewerbung-intro-card" id="bewerbungRoleHint">
-          <strong>Schön, dass du da bist.</strong> Wähle deine Rolle, trag deine Kontaktdaten ein – wir melden uns zeitnah bei dir.
+        <div class="bewerbung-steps">
+          <span><b>1</b> Formular ausfüllen</span>
+          <span><b>2</b> Portal-Link per E-Mail</span>
+          <span><b>3</b> Unterlagen in Ruhe nachreichen</span>
         </div>
-        <div id="hsBewerbungForm"></div>
+        <div class="bewerbung-intro-card" id="bewerbungRoleHint">
+          <strong>Schön, dass du da bist.</strong> Wähle deine Rolle, trag deine Kontaktdaten ein – wir melden uns zeitnah. Lebenslauf &amp; Zeugnisse brauchst du jetzt noch nicht: die lädst du anschließend bequem in deinem persönlichen Bewerber-Portal hoch.
+        </div>
+
+        <form class="contact-form" id="bewerbungForm" data-hubspot-form-id="c6a199f5-bab6-499e-a3ee-3d9605120877" data-mailto="bewerbung@herowerk.de" novalidate>
+          <div class="form-group">
+            <label for="bwRolle">Auf welche Stelle bewirbst du dich?</label>
+            <select id="bwRolle" name="beworbene_rolle" required>
+              <option value="">Bitte wählen …</option>
+              <option value="shk-meister">SHK-Meister:in / Technische Betriebsleitung (m/w/d)</option>
+              <option value="shk-meister-montage">SHK-Meister:in (m/w/d)</option>
+              <option value="anlagenmechaniker">Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in (m/w/d)</option>
+              <option value="quereinsteiger">Quereinsteiger:in Montage (m/w/d)</option>
+              <option value="elektromeister">Elektromeister:in / Konzessionsträger:in Elektro (m/w/d)</option>
+              <option value="elektriker">Elektriker:in für Wärmepumpen &amp; Photovoltaik (m/w/d)</option>
+              <option value="gala">Fundament- &amp; Außenanlagen / GaLa (m/w/d)</option>
+              <option value="quereinsteiger-fundamentbau">Quereinsteiger:in Fundamentbau Wärmepumpe (m/w/d)</option>
+              <option value="service">Service-/Wartungstechniker:in (m/w/d)</option>
+              <option value="planer-shk">Technischer Planer SHK (m/w/d)</option>
+              <option value="planer-elektro">Technischer Planer Elektro (m/w/d)</option>
+              <option value="technischer-aussendienst">Technischer Außendienst für Wärmepumpen-Projekte (m/w/d)</option>
+              <option value="vad">Vertriebsberater:in Außendienst für Wärmepumpen (m/w/d)</option>
+              <option value="va">Vertriebsassistenz / Innendienst (m/w/d)</option>
+              <option value="hr">Personalreferent:in / HR (m/w/d)</option>
+              <option value="assistenz">Assistenz der Geschäftsführung (m/w/d)</option>
+              <option value="disponent">Disponent:in / Projekt- &amp; Partnermanagement (m/w/d)</option>
+              <option value="finance-business-partner">Finance Business Partner: Operations &amp; Performance (m/w/d)</option>
+              <option value="finanzbuchhalter">Finanzbuchhalter:in (m/w/d)</option>
+              <option value="backoffice">Backoffice / Auftragssachbearbeitung (m/w/d)</option>
+            </select>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group"><label for="bwVorname">Vorname</label><input id="bwVorname" type="text" name="firstname" autocomplete="given-name" placeholder="Max" required></div>
+            <div class="form-group"><label for="bwNachname">Nachname</label><input id="bwNachname" type="text" name="lastname" autocomplete="family-name" placeholder="Mustermann" required></div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group"><label for="bwEmail">E-Mail</label><input id="bwEmail" type="email" name="email" autocomplete="email" placeholder="max@beispiel.de" required></div>
+            <div class="form-group"><label for="bwTelefon">Telefon</label><input id="bwTelefon" type="tel" name="phone" autocomplete="tel" placeholder="0171 1234567" required></div>
+          </div>
+          <div class="form-group">
+            <label for="bwEintritt">Frühester Eintritt <span class="form-optional">optional</span></label>
+            <input id="bwEintritt" type="date" name="fruhester_eintritt">
+          </div>
+          <div class="form-group">
+            <label for="bwNachricht">Kurznachricht an uns <span class="form-optional">optional</span></label>
+            <textarea id="bwNachricht" name="message" placeholder="Worauf freust du dich? Was sollen wir wissen?"></textarea>
+          </div>
+          <div class="form-checkbox">
+            <input type="checkbox" id="bwDsgvo" name="datenschutzeinwilligung_bewerbung" value="true" required>
+            <label for="bwDsgvo">Ich willige ein, dass HeroWerk meine angegebenen Daten zur Bearbeitung meiner Bewerbung speichert und verarbeitet, und akzeptiere die <a href="/datenschutz" target="_blank" rel="noopener" style="color:var(--green);">Datenschutzbedingungen</a>. Die Einwilligung ist jederzeit widerrufbar.</label>
+          </div>
+          <button type="submit" class="form-submit">Bewerbung absenden</button>
+          <p class="bewerbung-fallback" id="bewerbungError" style="display:none;color:#ff8a8a;">Da ist etwas schiefgelaufen. Bitte fülle alle Pflichtfelder aus oder schreib uns an <a href="mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk">bewerbung@herowerk.de</a>.</p>
+        </form>
+
+        <div class="form-success" id="bewerbungSuccess" role="status" aria-live="polite">
+          <h2>Danke, <span id="bewerbungSuccessName"></span>!</h2>
+          <p style="color: var(--g300);">Deine Bewerbung ist bei uns eingegangen. Du bekommst gleich eine E-Mail mit dem Link zu deinem persönlichen Bewerber-Portal – dort kannst du jederzeit Lebenslauf, Zeugnisse und Zertifikate hochladen und sehen, wie es weitergeht.</p>
+        </div>
+
         <p class="bewerbung-fallback">
-          Formular lädt nicht? Schreib uns direkt an
+          Lieber direkt per E-Mail? Schreib uns an
           <a href="mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk">bewerbung@herowerk.de</a>.
         </p>
       </div>
@@ -156,50 +227,144 @@
   </div>
 
   <!-- ============================================================
-       BEWERBER-FUNNEL: HubSpot-Embed des veröffentlichten Formulars
-       c6a199f5-… (Region eu1, Portal 148110267). Das eingebettete
-       Original-Formular trägt die getesteten Pflichtfelder + DSGVO-
-       Consent + Marketing-Opt-in + den Workflow-Trigger 4481906878.
-
-       Hinweis (verifiziert 2026-06-28): HubSpot rendert dieses Formular
-       in einem cross-origin <iframe>. Eine parent-seitige Vorbelegung
-       des Rollen-Dropdowns ist daher technisch nicht möglich. Die Rolle
-       aus ?role= wird stattdessen in der Intro-Karte benannt; der
-       Bewerber wählt die Rolle im Pflicht-Dropdown selbst (kein stiller
-       Fehlwert). Echte Auto-Vorbelegung = Follow-up (HubSpot-Feld-
-       Query-Param-Prefill aktivieren + Slug-Übergabe aus Jobs-Sheet).
+       BEWERBER-FUNNEL — natives HeroWerk-Formular (theme-adaptiv).
+       Postet an die HubSpot Forms-API mit der Form-GUID c6a199f5-…
+       (Portal 148110267) -> dieselbe veröffentlichte Form wie der
+       iframe-Embed: Kontakt-Anlage + Workflow-Trigger 4481906878
+       feuern unverändert, nur die Optik ist jetzt unsere (hell+dunkel
+       lesbar). Rolle aus ?role= wird im Dropdown vorbelegt (Label->Slug
+       gegen die echten Optionen; greift nicht -> Bewerber wählt selbst).
+       Feld-Mapping = HubSpot-interne Property-Namen (live verifiziert).
        ============================================================ -->
-  <script src="https://js-eu1.hsforms.net/forms/embed/v2.js" defer></script>
   <script>
     (function () {
-      function prettyRole(s) {
-        return (s || '').replace(/\s*\(m\/w\/d\)\s*/gi, '').trim();
+      var form = document.getElementById('bewerbungForm');
+      if (!form) return;
+      var PORTAL_ID = '148110267';
+      var FORM_ID = 'c6a199f5-bab6-499e-a3ee-3d9605120877';
+
+      // Stoppwörter + das Gender-Suffix "in" (aus ":in") raus, damit nur die
+      // unterscheidenden Begriffe zählen.
+      var STOP = { in: 1, und: 1, fuer: 1, der: 1, die: 1, das: 1, mit: 1, von: 1, im: 1, am: 1 };
+      function tokens(s) {
+        return (s || '')
+          .toLowerCase()
+          .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
+          .replace(/\(m\/w\/d\)/g, '')
+          .replace(/[^a-z0-9]+/g, ' ')
+          .trim().split(/\s+/)
+          .filter(function (t) { return t.length >= 3 && !STOP[t]; });
       }
-      function showRoleContext() {
+
+      // Rolle aus ?role= im Dropdown vorbelegen + Intro-Karte personalisieren.
+      // Token-Überlappung statt Teilstring -> robust gegen Label-Abweichungen
+      // (z. B. karriere "WP-Monteur" vs HubSpot "Wärmepumpen-Monteur").
+      (function prefillRole() {
         try {
           var params = new URLSearchParams(window.location.search);
-          var role = params.get('role') || params.get('rolle') || params.get('beworbene_rolle');
-          if (!role) return;
-          var pretty = prettyRole(role);
-          if (!pretty) return;
-          var hint = document.getElementById('bewerbungRoleHint');
-          if (hint) {
-            hint.innerHTML = '<strong>Bewerbung als ' + pretty.replace(/[<>]/g, '') +
-              '.</strong> Bitte wähle deine Rolle unten im Formular aus und ergänze deine Kontaktdaten.';
+          var roleParam = params.get('role') || params.get('rolle') || params.get('beworbene_rolle');
+          if (!roleParam) return;
+          var select = document.getElementById('bwRolle');
+          var wanted = tokens(roleParam);
+          if (!wanted.length) return;
+          var best = null, bestScore = 0;
+          for (var i = 0; i < select.options.length; i++) {
+            var opt = select.options[i];
+            if (!opt.value) continue;
+            if (opt.value.toLowerCase() === roleParam.toLowerCase()) { best = opt; break; }
+            var labelTokens = tokens(opt.text);
+            var score = 0;
+            for (var j = 0; j < wanted.length; j++) {
+              if (labelTokens.indexOf(wanted[j]) !== -1) score++;
+            }
+            if (score > bestScore) { bestScore = score; best = opt; }
           }
-        } catch (e) { /* Kontext-Hinweis ist optional – nie blockieren */ }
+          // Mindestens 2 gemeinsame unterscheidende Begriffe (bzw. 1, wenn die
+          // Rolle selbst nur aus einem besteht) -> sonst lieber nicht raten.
+          if (best && best.value && bestScore < Math.min(2, wanted.length)) best = null;
+          if (best) {
+            select.value = best.value;
+            var hint = document.getElementById('bewerbungRoleHint');
+            if (hint) {
+              hint.innerHTML = '<strong>Bewerbung als ' +
+                best.text.replace(/\s*\(m\/w\/d\)\s*/i, '').replace(/[<>]/g, '') +
+                '.</strong> Du kannst die Rolle unten jederzeit ändern. Lebenslauf &amp; Zeugnisse reichst du später bequem im Bewerber-Portal nach.';
+            }
+          }
+        } catch (e) { /* Prefill ist optional – nie blockieren */ }
+      })();
+
+      function dateToMs(v) {
+        if (!v) return null;
+        var ms = Date.parse(v + 'T00:00:00Z');
+        return isNaN(ms) ? null : ms;
       }
-      function mountForm() {
-        if (!window.hbspt || !window.hbspt.forms) { setTimeout(mountForm, 120); return; }
-        window.hbspt.forms.create({
-          region: 'eu1',
-          portalId: '148110267',
-          formId: 'c6a199f5-bab6-499e-a3ee-3d9605120877',
-          target: '#hsBewerbungForm'
-        });
+
+      function buildPayload(data) {
+        var fields = [
+          { name: 'beworbene_rolle', value: data.beworbene_rolle || '' },
+          { name: 'firstname', value: data.firstname || '' },
+          { name: 'lastname', value: data.lastname || '' },
+          { name: 'email', value: data.email || '' },
+          { name: 'phone', value: data.phone || '' },
+          { name: 'message', value: data.message || '' }
+        ];
+        var eintrittMs = dateToMs(data.fruhester_eintritt);
+        if (eintrittMs != null) fields.push({ name: 'fruhester_eintritt', value: String(eintrittMs) });
+        if (data.datenschutzeinwilligung_bewerbung) {
+          fields.push({ name: 'datenschutzeinwilligung_bewerbung', value: 'true' });
+        }
+        return {
+          fields: fields.filter(function (f) { return f.value !== '' && f.value != null; }),
+          context: { pageUri: window.location.href, pageName: document.title },
+          legalConsentOptions: {
+            consent: {
+              consentToProcess: true,
+              text: 'Ich willige ein, dass HeroWerk meine angegebenen Daten zur Bearbeitung meiner Bewerbung speichert und verarbeitet.',
+              communications: []
+            }
+          }
+        };
       }
-      showRoleContext();
-      mountForm();
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        var errEl = document.getElementById('bewerbungError');
+        errEl.style.display = 'none';
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+
+        var data = Object.fromEntries(new FormData(form).entries());
+        var btn = form.querySelector('button[type="submit"]');
+        if (btn) { btn.disabled = true; btn.textContent = 'Wird gesendet …'; }
+
+        var endpoint = 'https://api.hsforms.com/submissions/v3/integration/submit/' + PORTAL_ID + '/' + FORM_ID;
+        try {
+          var res = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(buildPayload(data))
+          });
+          if (!res.ok) throw new Error('HubSpot submit failed: ' + res.status);
+          form.style.display = 'none';
+          document.getElementById('bewerbungSuccessName').textContent = (data.firstname || '').trim() || 'dir';
+          document.getElementById('bewerbungSuccess').classList.add('show');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch (err) {
+          // Bewerbung nie still verlieren: Fallback per E-Mail an bewerbung@.
+          var roleText = (form.querySelector('#bwRolle option:checked') || {}).text || '';
+          var subject = encodeURIComponent('Bewerbung: ' + roleText);
+          var body = encodeURIComponent(
+            'Rolle: ' + roleText + '\nName: ' + (data.firstname || '') + ' ' + (data.lastname || '') +
+            '\nE-Mail: ' + (data.email || '') + '\nTelefon: ' + (data.phone || '') +
+            '\nFrühester Eintritt: ' + (data.fruhester_eintritt || '') + '\n\nNachricht:\n' + (data.message || '') +
+            '\n\n(Automatischer Fallback – die Online-Übermittlung war kurz nicht verfügbar.)'
+          );
+          window.location.href = 'mailto:' + (form.dataset.mailto || 'bewerbung@herowerk.de') + '?subject=' + subject + '&body=' + body;
+          errEl.style.display = 'block';
+        } finally {
+          if (btn) { btn.disabled = false; btn.textContent = 'Bewerbung absenden'; }
+        }
+      });
     })();
   </script>
 
