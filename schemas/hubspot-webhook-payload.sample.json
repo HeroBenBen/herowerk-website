@@ -10,5 +10,6 @@
   "gebaeudetyp": "Einfamilienhaus",
   "heizung_aktuell": "Gastherme",
   "utm_source": "test",
-  "interesse": "Wärmepumpe;Photovoltaik"
+  "interesse": "Wärmepumpe;Photovoltaik",
+  "foerdervorschuss_interesse": "true"
 }
