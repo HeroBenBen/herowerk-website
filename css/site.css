@@ -3935,6 +3935,10 @@ section {
   background: rgba(183, 217, 0, 0.15);
   color: #1c2b36;
 }
+.badge-hero {
+  background: rgba(183, 217, 0, 0.15);
+  color: #1c2b36;
+}
 .badge-kfw {
   background: #006ab3;
   color: #ffffff;
