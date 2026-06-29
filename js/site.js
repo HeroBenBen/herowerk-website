@@ -673,14 +673,10 @@ function renderWizServerResult(data) {
     </div>`;
 }
 
-// Marken-Logo fuer die Ergebnis-Panels. Wolf wird inline gerendert (currentColor =
-// --color-text-primary: weiss auf dunkel, Schiefer auf hell; roter Punkt bleibt fix).
-// Andere Marken (z. B. Vaillant) als Text-Schriftzug — kein fremdes Logo ohne
-// Nutzungsrecht (Marken-Entschaerfung 2026-06-29; currentColor bleibt theme-aware).
+// Marken-Schriftzug fuer die Ergebnis-Panels — alle Marken (Wolf, Vaillant) als Text,
+// kein Hersteller-Logo. Gleichbehandlung + keine optische Bevorzugung (GF 2026-06-29);
+// currentColor = theme-aware (weiss auf dunkel, Schiefer auf hell).
 function brandLogo(key, label) {
-  if (key === 'wolf') {
-    return `<span class="wiz-brand-logo" role="img" aria-label="Wolf"><svg width="73" height="22" viewBox="0 0 174 52.6" aria-hidden="true" focusable="false"><polygon fill="currentColor" points="62.2,0 50.1,52.6 102.7,52.6 114.8,0"/><polygon fill="currentColor" points="134.3,5.4 117.4,5.4 107.8,47 133.5,47 136.8,32.8 128,32.8"/><polygon fill="currentColor" points="171.1,18 174,5.4 146.8,5.4 137.2,47 154.1,47 157,34.4 167.3,34.4 170,22.5 159.7,22.5 160.8,18"/><polygon fill="currentColor" points="42.6,5.4 39.2,20.6 35.7,5.4 21.2,5.4 17.8,20.6 14.3,5.4 0,5.4 9.4,47 24.3,47 28.1,30 31.9,47 47.6,47 57,5.4"/><circle fill="#E10000" cx="82.3" cy="26.3" r="22.7"/></svg></span>`;
-  }
   return `<span class="wiz-brand-logo" role="img" aria-label="${label}" style="font-weight:800;font-size:19px;letter-spacing:0.01em;line-height:22px;display:block;">${label}</span>`;
 }
 
