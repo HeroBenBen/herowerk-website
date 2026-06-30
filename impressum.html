@@ -2,6 +2,45 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
+  <!-- ============================================================== -->
+  <!-- HeroWerk Consent + Analytics (Opt-in, Google Consent Mode v2)   -->
+  <!-- Reihenfolge im <head> ist rechtlich wichtig: erst Consent-Mode- -->
+  <!-- Default (alles 'denied'), dann CMP, dann Loader. GA4 + Meta     -->
+  <!-- werden erst NACH Einwilligung aus js/consent.js injiziert.      -->
+  <!-- ============================================================== -->
+  <!-- (a) Google Consent Mode v2 — Default: alles verweigert -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+      functionality_storage: 'denied',
+      personalization_storage: 'denied',
+      security_storage: 'granted',
+      wait_for_update: 500
+    });
+    gtag('set', 'ads_data_redaction', true);
+    gtag('set', 'url_passthrough', true);
+  </script>
+  <!-- (b) consentmanager CMP (Autoblocking) — Konto 104033 / CMP 173772 -->
+  <!-- TODO consentmanager: Live-Snippet aus Konto 104033/CMP 173772 hier einsetzen
+       (consentmanager-Konto -> CMPs -> "Codes fuer Webseiten" -> Autoblocking-Variante kopieren).
+       NICHT erfinden. Bis dahin laedt KEINE CMP -> GA4/Meta bleiben aus (fail-closed).
+       Standard-Form als Vorlage (durch das Live-Snippet ERSETZEN, nicht ergaenzen):
+  <script
+    type="text/javascript"
+    data-cmp-ab="1"
+    src="https://cdn.consentmanager.net/delivery/autoblocking/173772.js"
+    data-cmp-host="b.delivery.consentmanager.net"
+    data-cmp-cdn="cdn.consentmanager.net"
+    data-cmp-codesrc="16"></script>
+  -->
+  <!-- (c) Opt-in-Loader: injiziert GA4 (G-1XT9BLBDW8) + Meta-Pixel (1348888427192043) ERST nach Consent -->
+  <script src="js/consent.js"></script>
+  <!-- ============================================================== -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="/favicon.ico" sizes="any" type="image/x-icon">
   <title>Impressum | HeroWerk</title>

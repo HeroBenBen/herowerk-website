@@ -2,6 +2,45 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
+  <!-- ============================================================== -->
+  <!-- HeroWerk Consent + Analytics (Opt-in, Google Consent Mode v2)   -->
+  <!-- Reihenfolge im <head> ist rechtlich wichtig: erst Consent-Mode- -->
+  <!-- Default (alles 'denied'), dann CMP, dann Loader. GA4 + Meta     -->
+  <!-- werden erst NACH Einwilligung aus js/consent.js injiziert.      -->
+  <!-- ============================================================== -->
+  <!-- (a) Google Consent Mode v2 — Default: alles verweigert -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+      functionality_storage: 'denied',
+      personalization_storage: 'denied',
+      security_storage: 'granted',
+      wait_for_update: 500
+    });
+    gtag('set', 'ads_data_redaction', true);
+    gtag('set', 'url_passthrough', true);
+  </script>
+  <!-- (b) consentmanager CMP (Autoblocking) — Konto 104033 / CMP 173772 -->
+  <!-- TODO consentmanager: Live-Snippet aus Konto 104033/CMP 173772 hier einsetzen
+       (consentmanager-Konto -> CMPs -> "Codes fuer Webseiten" -> Autoblocking-Variante kopieren).
+       NICHT erfinden. Bis dahin laedt KEINE CMP -> GA4/Meta bleiben aus (fail-closed).
+       Standard-Form als Vorlage (durch das Live-Snippet ERSETZEN, nicht ergaenzen):
+  <script
+    type="text/javascript"
+    data-cmp-ab="1"
+    src="https://cdn.consentmanager.net/delivery/autoblocking/173772.js"
+    data-cmp-host="b.delivery.consentmanager.net"
+    data-cmp-cdn="cdn.consentmanager.net"
+    data-cmp-codesrc="16"></script>
+  -->
+  <!-- (c) Opt-in-Loader: injiziert GA4 (G-1XT9BLBDW8) + Meta-Pixel (1348888427192043) ERST nach Consent -->
+  <script src="js/consent.js"></script>
+  <!-- ============================================================== -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="/favicon.ico" sizes="any" type="image/x-icon">
   <title>Datenschutzerkl&auml;rung | HeroWerk</title>
@@ -40,6 +79,9 @@
     </div>
 
     <h1>Datenschutzerkl&auml;rung</h1>
+    <!-- HINWEIS (nicht oeffentlich gedacht): Die Abschnitte 10-12 (consentmanager, GA4,
+         Meta-Pixel, Einwilligung) sind RECHTSTEXT-ENTWURF und VOR LIVE-Schaltung
+         juristisch zu bestaetigen. -->
     <p>Wir informieren Sie gem&auml;&szlig; Art. 13 DSGVO &uuml;ber die Verarbeitung Ihrer personenbezogenen
       Daten beim Besuch dieser Website und bei Nutzung unserer Formulare.</p>
 
@@ -98,36 +140,78 @@
       Berechnung durchzuf&uuml;hren. Dabei wird Ihre IP-Adresse an Google &uuml;bertragen.
       Rechtsgrundlage: Art. 6 Abs. 1 lit. f bzw. lit. b DSGVO. US-Transfer: DPF/SCC.</p>
 
-    <h2>10. Cookies und lokale Speicherung</h2>
-    <p>Diese Website setzt derzeit <strong>keine</strong> Cookies zu Analyse-, Marketing- oder
-      Tracking-Zwecken und bindet keine Tracking-Dienste (z.&nbsp;B. Google Analytics, Meta-Pixel) ein.
-      Ein Cookie-Einwilligungsbanner ist daher aktuell nicht erforderlich. Wir nutzen ausschlie&szlig;lich
-      technisch notwendige lokale Speicherung (&sect; 25 Abs. 2 TDDDG): <code>localStorage hero-theme</code>
-      (Hell-/Dunkel-Auswahl) und <code>sessionStorage hwLeadPrefill</code>/<code>hwFoerderPrefill</code>
-      (&Uuml;bernahme der Rechner-Eingaben innerhalb der Sitzung).</p>
-    <p><strong>Geplante Webanalyse:</strong> Wir beabsichtigen, k&uuml;nftig Webanalyse- und
-      Reichweitenmessungs-Dienste (z.&nbsp;B. Google Analytics 4, Google Tag Manager, PostHog)
-      einzusetzen. Diese werden <em>erst nach Ihrer ausdr&uuml;cklichen Einwilligung</em> &uuml;ber ein
-      Cookie-Banner (Consent-Management) geladen; bis zur Aktivierung findet keine solche Verarbeitung
-      statt. Sobald diese Dienste live sind, aktualisieren wir diese Datenschutzerkl&auml;rung mit den
-      konkreten Anbietern, Zwecken, Rechtsgrundlagen und Speicherdauern.</p>
+    <h2>10. Einwilligung und Cookie-Banner (consentmanager)</h2>
+    <p>F&uuml;r einwilligungspflichtige Dienste (Statistik/Webanalyse und Marketing, siehe Abschnitte 11
+      und 12) holen wir Ihre Einwilligung vorab &uuml;ber ein Consent-Management-Banner (Consent-Layer) ein.
+      Anbieter ist die consentmanager AB (J&auml;rnv&auml;gsgatan 7, 252 24 Helsingborg, Schweden;
+      Betrieb innerhalb der EU). Das Banner speichert Ihre Auswahl (Zustimmung/Ablehnung je Zweck) in einem
+      Einwilligungs-Cookie bzw. im lokalen Speicher Ihres Browsers, damit es nicht bei jedem Seitenaufruf
+      erneut erscheint. Rechtsgrundlage f&uuml;r das Banner selbst: Art. 6 Abs. 1 lit. c i.&nbsp;V.&nbsp;m.
+      Art. 6 Abs. 1 lit. f DSGVO (gesetzliche Nachweispflicht der Einwilligung, &sect; 25 TDDDG).</p>
+    <p><strong>So funktioniert es technisch (Opt-in):</strong> Google Analytics 4 und der Meta-Pixel werden
+      <em>erst nach Ihrer ausdr&uuml;cklichen Zustimmung</em> geladen. Standardm&auml;&szlig;ig ist der
+      Google Consent Mode v2 auf <code>denied</code> gesetzt (keine Analyse-/Marketing-Speicherung); die
+      Tag-Skripte werden &uuml;ber das Autoblocking der CMP blockiert und erst nach Zustimmung aktiviert.
+      <strong>Vor einer Zustimmung findet keine Analyse- oder Marketing-Verarbeitung statt.</strong></p>
+    <p><strong>Widerruf jederzeit:</strong> Sie k&ouml;nnen Ihre Einwilligung jederzeit mit Wirkung f&uuml;r
+      die Zukunft &auml;ndern oder widerrufen (Art. 7 Abs. 3 DSGVO) &mdash; &uuml;ber den Link bzw. den
+      Button &bdquo;Cookie-Einstellungen&ldquo; (Consent-Layer erneut &ouml;ffnen). Nach Widerruf werden die
+      betroffenen Dienste nicht mehr geladen.</p>
+    <p>Technisch notwendige lokale Speicherung nutzen wir unabh&auml;ngig davon ohne Einwilligung
+      (&sect; 25 Abs. 2 TDDDG): <code>localStorage hero-theme</code> (Hell-/Dunkel-Auswahl) und
+      <code>sessionStorage hwLeadPrefill</code>/<code>hwFoerderPrefill</code> (&Uuml;bernahme der
+      Rechner-Eingaben innerhalb der Sitzung).</p>
 
-    <h2>11. Kontaktaufnahme per E-Mail/Telefon</h2>
+    <h2>11. Webanalyse: Google Analytics 4 (GA4)</h2>
+    <p>Nach Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) nutzen wir Google Analytics 4, einen
+      Webanalysedienst der Google Ireland Ltd. (Gordon House, Barrow Street, Dublin 4, Irland), um die
+      Nutzung unserer Website statistisch auszuwerten und zu verbessern. GA4 setzt Cookies und verarbeitet
+      u.&nbsp;a. gek&uuml;rzte IP-Adresse, aufgerufene Seiten, ungef&auml;hren Standort, Ger&auml;te-/Browser-Daten
+      sowie Interaktionen.</p>
+    <ul>
+      <li><strong>Google-Signale: deaktiviert.</strong> Es findet keine ger&auml;te&uuml;bergreifende
+        Auswertung &uuml;ber Google-Konten statt.</li>
+      <li><strong>IP-Anonymisierung</strong> ist in GA4 Standard; die Verarbeitung erfolgt in der
+        EU-Region.</li>
+      <li><strong>Aufbewahrung:</strong> Nutzer-/Ereignisdaten werden nach <strong>14 Monaten</strong>
+        automatisch gel&ouml;scht.</li>
+      <li><strong>Consent Mode v2:</strong> Ohne Einwilligung werden keine Analyse-Cookies gesetzt und kein
+        personenbezogenes Tracking durchgef&uuml;hrt.</li>
+    </ul>
+    <p>US-Transfer: Eine &Uuml;bermittlung an die Google LLC (USA) ist nicht ausgeschlossen. Google ist unter
+      dem EU-US Data Privacy Framework (DPF) zertifiziert; erg&auml;nzend gelten Standardvertragsklauseln
+      (SCC, Art. 46 DSGVO). Mit Google besteht ein AV-Vertrag nach Art. 28 DSGVO.</p>
+
+    <h2>12. Marketing: Meta-Pixel (Facebook/Instagram)</h2>
+    <p>Nach Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) setzen wir den Meta-Pixel ein, eine Technologie
+      der Meta Platforms Ireland Ltd. (4 Grand Canal Square, Dublin 2, Irland). Der Pixel misst die
+      Wirksamkeit unserer Werbeanzeigen, erm&ouml;glicht Reichweiten-/Conversion-Messung und das Ausspielen
+      passender Anzeigen (auch Remarketing) auf Facebook und Instagram. Verarbeitet werden u.&nbsp;a.
+      Pixel-/Cookie-Kennungen, IP-Adresse, Browser-/Ger&auml;te-Daten sowie Ihre Interaktionen auf unserer
+      Website.</p>
+    <p>Eine gemeinsame Verantwortlichkeit mit Meta (Art. 26 DSGVO) kann f&uuml;r die Erhebung und
+      &Uuml;bermittlung bestehen. Ohne Einwilligung wird der Pixel nicht geladen.</p>
+    <p>US-Transfer: Der Meta-Pixel &uuml;bermittelt Daten an die Meta Platforms, Inc. (USA). Meta ist unter
+      dem EU-US Data Privacy Framework (DPF) zertifiziert; erg&auml;nzend gelten Standardvertragsklauseln
+      (SCC, Art. 46 DSGVO). Trotz dieser Garantien ist beim US-Transfer ein Zugriff durch US-Beh&ouml;rden
+      nicht vollst&auml;ndig auszuschlie&szlig;en.</p>
+
+    <h2>13. Kontaktaufnahme per E-Mail/Telefon</h2>
     <p>Bei Kontakt verarbeiten wir Ihre Angaben zur Bearbeitung (Art. 6 Abs. 1 lit. b bzw. lit. f DSGVO).
       Unsere E-Mail-Postf&auml;cher (u.&nbsp;a. info@herowerk.de) betreiben wir &uuml;ber Google Workspace
       (Google Ireland Ltd., Dublin); ein AV-Vertrag nach Art. 28 DSGVO besteht.</p>
 
-    <h2>12. Empf&auml;nger</h2>
-    <p>Eine &Uuml;bermittlung erfolgt nur an die genannten Auftragsverarbeiter (IONOS, HubSpot, Google),
-      soweit zur Bereitstellung der Website und Bearbeitung Ihrer Anfrage erforderlich. Ein Verkauf Ihrer
-      Daten findet nicht statt.</p>
+    <h2>14. Empf&auml;nger</h2>
+    <p>Eine &Uuml;bermittlung erfolgt nur an die genannten Dienstleister (IONOS, HubSpot, Google,
+      consentmanager, Meta), soweit zur Bereitstellung der Website, Bearbeitung Ihrer Anfrage oder &mdash;
+      nach Einwilligung &mdash; zur Analyse/Werbung erforderlich. Ein Verkauf Ihrer Daten findet nicht statt.</p>
 
-    <h2>13. Datensicherheit</h2>
+    <h2>15. Datensicherheit</h2>
     <p>Die &Uuml;bertragung erfolgt TLS-/SSL-verschl&uuml;sselt (HTTPS).</p>
 
-    <h2>14. Aktualit&auml;t</h2>
+    <h2>16. Aktualit&auml;t</h2>
     <p>Es gilt die jeweils auf dieser Seite ver&ouml;ffentlichte Fassung. Bei &Auml;nderung der
-      Datenverarbeitung (z.&nbsp;B. Einf&uuml;hrung von Tracking) passen wir diese Erkl&auml;rung an.</p>
+      Datenverarbeitung (z.&nbsp;B. weiteren Tracking-Diensten) passen wir diese Erkl&auml;rung an.</p>
   </main>
 
   <nav class="legal-footer" aria-label="Rechtliches">
