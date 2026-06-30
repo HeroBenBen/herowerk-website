@@ -27,19 +27,35 @@ DirectoryIndex index.html
   # /funnel -> /anfrage (permanent, aus vercel.json)
   RewriteRule ^funnel/?$ /anfrage [L,R=301]
 
-  # Sichtbare .html-URL -> saubere URL (301), damit nur die saubere Variante existiert
+  # --- API: server-seitige Proxys (Rechner + Stellen-Feed) ---
+  # /api/rechner und /api/jobs (saubere URLs, ohne .php) -> intern an die jeweilige .php-Datei.
+  # MUSS vor der cleanUrls-.html-Regel stehen, damit der /api/-Pfad NICHT als .html-Seite
+  # behandelt wird. [L] beendet die Rewrite-Kette fuer diesen Request sofort.
+  RewriteRule ^api/rechner/?$ api/rechner.php [L]
+  RewriteRule ^api/jobs/?$ api/jobs.php [L]
+
+  # Sichtbare .html-URL -> saubere URL (301), damit nur die saubere Variante existiert.
+  # /api/ ist ausgenommen (kein .html dahinter), damit der Proxy-Pfad unberuehrt bleibt.
+  RewriteCond %{REQUEST_URI} !^/api/ [NC]
   RewriteCond %{THE_REQUEST} \s/+([^.\s?]+)\.html[\s?] [NC]
   RewriteRule ^ /%1 [L,R=301]
 
-  # Saubere URL -> intern .html ausliefern (nur wenn Datei existiert)
+  # Saubere URL -> intern .html ausliefern (nur wenn Datei existiert).
+  # /api/ explizit ausnehmen, damit /api/rechner nie nach einer .html-Datei sucht.
+  RewriteCond %{REQUEST_URI} !^/api/ [NC]
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME}\.html -f
   RewriteRule ^(.+?)/?$ $1.html [L]
 </IfModule>
 
 # ---------- 3. Security-Header (1:1 aus vercel.json; vercel-insights inert auf IONOS) ----------
+# CSP-Hinweis (Google-Proxys): BEIDE browser-seitigen Google-Aufrufe laufen jetzt server-seitig:
+# der Rechner ueber api/rechner.php (/api/rechner) und der Stellen-Feed ueber api/jobs.php
+# (/api/jobs). KEIN Browser-Code ruft mehr script.google.com auf. Deshalb sind script.google.com
+# UND script.googleusercontent.com aus connect-src ENTFERNT (vorher dort, solange der Jobs-Feed
+# noch direkt im Browser lief). HubSpot/Vercel-Direktiven unveraendert.
 <IfModule mod_headers.c>
-  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; form-action 'self' https://api.hsforms.com; connect-src 'self' https://api.hsforms.com https://*.hubspot.com https://*.hsforms.com https://vitals.vercel-insights.com https://script.google.com https://script.googleusercontent.com; img-src 'self' data: https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://*.vercel-insights.com; frame-src 'none'"
+  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; form-action 'self' https://api.hsforms.com; connect-src 'self' https://api.hsforms.com https://*.hubspot.com https://*.hsforms.com https://vitals.vercel-insights.com; img-src 'self' data: https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://*.vercel-insights.com; frame-src 'none'"
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"

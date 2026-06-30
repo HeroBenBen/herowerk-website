@@ -29,8 +29,11 @@ const wizData = {
   verbrauch: 0,
 };
 let wizStep = 1;
-const RECHNER_API =
-  'https://script.google.com/macros/s/AKfycbwsvoC0ZBtpZq8WY_hNS-BPN1gcTK5G1JAMfxSc5FpjWxQ2SbRLI9VqCnX8SRLO4meF/exec';
+// Server-seitiger Proxy auf UNSERER Domain (api/rechner.php). Der echte Apps-Script-Endpunkt
+// steht nur noch server-seitig im PHP — nicht mehr im Browser sichtbar/direkt aufrufbar; die
+// Besucher-IP geht an unseren Server statt an Google. Same-Origin -> kein CORS. Alle Aufruf-
+// stellen haengen wie bisher '?...' an, daher bleibt die Rechner-Logik unveraendert.
+const RECHNER_API = '/api/rechner';
 let wizServerResult = null;
 let wizSelectedMarke = 'wolf';
 let foerderMarke = 'wolf';

@@ -927,7 +927,7 @@
        Leer = exakt der statische Stand (No-Op, SEO-/No-JS-Quelle der Wahrheit). -->
   <script>
     (function () {
-      var JOBS_FEED_URL = 'https://script.google.com/macros/s/AKfycbyWT1oEelZ9IenXedyH5KdCyyDogmdlVxnbAexJdv_ZqPhEp_encxfJPvrEiBd7VpqcQw/exec'; // (B) PUSH-TO-WEBSITE-SWAP: /exec des Apps-Script-Web-Apps (Hero_Jobs_Website). Leerer/ungueltiger Feed -> statische Baseline.
+      var JOBS_FEED_URL = '/api/jobs'; // (B) PUSH-TO-WEBSITE-SWAP: server-seitiger Proxy (api/jobs.php) -> Apps-Script-Web-App (Hero_Jobs_Website). Browser ruft KEIN script.google.com mehr auf. Leerer/ungueltiger Feed -> statische Baseline.
       if (!JOBS_FEED_URL) return; // No-Op: Seite bleibt der statische Baseline-Stand
 
       // Icon-Schlüssel -> innerer SVG-Pfad (exakt wie die statischen Karten oben).
