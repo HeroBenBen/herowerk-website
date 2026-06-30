@@ -5,7 +5,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; form-action 'self' https://api.hsforms.com; connect-src 'self' https://api.hsforms.com https://*.hubspot.com https://*.hsforms.com https://vitals.vercel-insights.com https://script.google.com https://script.googleusercontent.com; img-src 'self' data: https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://*.vercel-insights.com; frame-src 'none'"
+          "value": "default-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; form-action 'self' https://api.hsforms.com; connect-src 'self' https://api.hsforms.com https://*.hubspot.com https://*.hsforms.com https://vitals.vercel-insights.com https://script.google.com https://script.googleusercontent.com https://*.consentmanager.net https://*.delivery.consentmanager.net https://www.googletagmanager.com https://*.google-analytics.com https://region1.google-analytics.com https://connect.facebook.net https://www.facebook.com; img-src 'self' data: https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://*.vercel-insights.com https://cdn.consentmanager.net https://www.googletagmanager.com https://connect.facebook.net; frame-src https://*.consentmanager.net https://www.facebook.com"
         },
         {
           "key": "X-Content-Type-Options",
