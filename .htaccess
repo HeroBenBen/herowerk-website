@@ -27,17 +27,33 @@ DirectoryIndex index.html
   # /funnel -> /anfrage (permanent, aus vercel.json)
   RewriteRule ^funnel/?$ /anfrage [L,R=301]
 
-  # Sichtbare .html-URL -> saubere URL (301), damit nur die saubere Variante existiert
+  # --- API: server-seitiger Rechner-Proxy ---
+  # /api/rechner (saubere URL, ohne .php) -> intern api/rechner.php ausliefern.
+  # MUSS vor der cleanUrls-.html-Regel stehen, damit der /api/-Pfad NICHT als .html-Seite
+  # behandelt wird. [L] beendet die Rewrite-Kette fuer diesen Request sofort.
+  RewriteRule ^api/rechner/?$ api/rechner.php [L]
+
+  # Sichtbare .html-URL -> saubere URL (301), damit nur die saubere Variante existiert.
+  # /api/ ist ausgenommen (kein .html dahinter), damit der Proxy-Pfad unberuehrt bleibt.
+  RewriteCond %{REQUEST_URI} !^/api/ [NC]
   RewriteCond %{THE_REQUEST} \s/+([^.\s?]+)\.html[\s?] [NC]
   RewriteRule ^ /%1 [L,R=301]
 
-  # Saubere URL -> intern .html ausliefern (nur wenn Datei existiert)
+  # Saubere URL -> intern .html ausliefern (nur wenn Datei existiert).
+  # /api/ explizit ausnehmen, damit /api/rechner nie nach einer .html-Datei sucht.
+  RewriteCond %{REQUEST_URI} !^/api/ [NC]
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME}\.html -f
   RewriteRule ^(.+?)/?$ $1.html [L]
 </IfModule>
 
 # ---------- 3. Security-Header (1:1 aus vercel.json; vercel-insights inert auf IONOS) ----------
+# CSP-Hinweis (Rechner-Proxy): Der Rechner spricht ueber api/rechner.php server-seitig mit
+# Google, der Browser ruft fuer den Rechner KEIN script.google.com mehr auf. script.google.com
+# + script.googleusercontent.com bleiben in connect-src aber NOTWENDIG, weil karriere.html den
+# Stellen-Feed (JOBS_FEED_URL) weiterhin direkt im Browser von script.google.com laedt (302 ->
+# script.googleusercontent.com). Erst wenn auch der Jobs-Feed server-seitig proxied ist, koennen
+# beide Google-Hosts hier entfernt werden. (Bewusst NICHT in diesem PR, sonst bricht /karriere.)
 <IfModule mod_headers.c>
   Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; form-action 'self' https://api.hsforms.com; connect-src 'self' https://api.hsforms.com https://*.hubspot.com https://*.hsforms.com https://vitals.vercel-insights.com https://script.google.com https://script.googleusercontent.com; img-src 'self' data: https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://*.vercel-insights.com; frame-src 'none'"
   Header always set X-Content-Type-Options "nosniff"
