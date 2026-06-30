@@ -25,19 +25,8 @@
     gtag('set', 'ads_data_redaction', true);
     gtag('set', 'url_passthrough', true);
   </script>
-  <!-- (b) consentmanager CMP (Autoblocking) — Konto 104033 / CMP 173772 -->
-  <!-- TODO consentmanager: Live-Snippet aus Konto 104033/CMP 173772 hier einsetzen
-       (consentmanager-Konto -> CMPs -> "Codes fuer Webseiten" -> Autoblocking-Variante kopieren).
-       NICHT erfinden. Bis dahin laedt KEINE CMP -> GA4/Meta bleiben aus (fail-closed).
-       Standard-Form als Vorlage (durch das Live-Snippet ERSETZEN, nicht ergaenzen):
-  <script
-    type="text/javascript"
-    data-cmp-ab="1"
-    src="https://cdn.consentmanager.net/delivery/autoblocking/173772.js"
-    data-cmp-host="b.delivery.consentmanager.net"
-    data-cmp-cdn="cdn.consentmanager.net"
-    data-cmp-codesrc="16"></script>
-  -->
+  <!-- (b) consentmanager CMP (Autoblocking) Konto 104033 / CMP 173772 (live d94854dc5273c) -->
+  <script type="text/javascript" data-cmp-ab="1" src="https://cdn.consentmanager.net/delivery/autoblocking/d94854dc5273c.js" data-cmp-host="a.delivery.consentmanager.net" data-cmp-cdn="cdn.consentmanager.net" data-cmp-codesrc="0"></script>
   <!-- (c) Opt-in-Loader: injiziert GA4 (G-1XT9BLBDW8) + Meta-Pixel (1348888427192043) ERST nach Consent -->
   <script src="js/consent.js"></script>
   <!-- ============================================================== -->
