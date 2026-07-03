@@ -48,6 +48,32 @@ if [ ! -f "$OUT/.htaccess" ]; then
   exit 1
 fi
 
+# ── Cache-Busting: Content-Hash an lokale JS/CSS-Referenzen anhaengen ────────
+# Grund (2026-07-04): .htaccess cacht JS/CSS 1 Jahr (ExpiresByType ... "access
+# plus 1 year"). Ohne versionierte URL fuehren wiederkehrende Besucher alte
+# Dateien aus dem Browser-Cache aus - konkret fehlte hwMergeLeadPrefill im
+# gecachten js/site.js, wodurch Rechner-Werte (Heizlast/Foerderung) nicht an den
+# HubSpot-Lead durchgereicht wurden. Loesung: pro Asset ein Inhalts-Hash als
+# ?v=<hash>. Geaenderte Datei -> neue URL -> Browser laedt frisch; unveraenderte
+# Datei -> gleiche URL -> Cache bleibt gueltig (1-Jahr-Cache bleibt korrekt).
+echo "Cache-Busting: versioniere lokale JS/CSS-Referenzen (Content-Hash)..."
+asset_count=0
+while IFS= read -r -d '' asset; do
+  rel="${asset#"$OUT"/}"
+  hash="$(shasum -a 256 "$asset" | cut -c1-10)"
+  while IFS= read -r -d '' html; do
+    PR="$rel" PH="$hash" perl -0pi -e 'my $r=$ENV{PR}; my $q=quotemeta($r); my $h=$ENV{PH}; s{(["\x27])((?:\.\./|/)*)$q\1}{$1$2$r?v=$h$1}g;' "$html"
+  done < <(find "$OUT" -name '*.html' -print0)
+  asset_count=$((asset_count + 1))
+done < <(find "$OUT" \( -name '*.js' -o -name '*.css' \) -print0)
+busted="$(grep -rlF '?v=' "$OUT" --include='*.html' | wc -l | tr -d ' ')"
+echo "  versionierte Assets: $asset_count | HTML-Seiten mit Cache-Bust: $busted"
+# Fail-safe: js/site.js MUSS versioniert sein (Kern des Rechner-Handoff-Fixes).
+if grep -rEl 'src="[^"?]*js/site\.js"' "$OUT" --include='*.html' >/dev/null 2>&1; then
+  echo "FEHLER: unversionierte js/site.js-Referenz im Bundle gefunden." >&2
+  exit 1
+fi
+
 echo "============================================"
 echo "IONOS-Bundle erstellt: $OUT"
 echo "  Dateien gesamt : $(find "$OUT" -type f | wc -l | tr -d ' ')"
