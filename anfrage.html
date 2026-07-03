@@ -1896,8 +1896,9 @@
 
   function buildHubSpotPayload(data) {
     // HubSpot-Mapping: Kernfelder auf Standard-Properties (firstname/lastname/phone/zip),
-    // Funnel-Antworten auf die HeroWerk-Custom-Properties. Genau die 14 Felder des
-    // HubSpot-Formulars 023b1ead-7bcd-4eba-ba72-dd1038728721 (Consent via UI-Checkbox).
+    // Funnel-Antworten auf die HeroWerk-Custom-Properties. 14 Kernfelder des HubSpot-Formulars
+    // 023b1ead-7bcd-4eba-ba72-dd1038728721 (Consent via UI-Checkbox) plus 5 additive, errechnete
+    // Rechner-Werte aus der Rechner-Kette (s. u.; nur gesendet, wenn gesetzt).
     const fields = {
       firstname: data.vorname || '',
       lastname: data.nachname || '',
@@ -1917,7 +1918,18 @@
       // angehakt — sonst leer lassen (Filter unten entfernt es), damit Standard-Leads
       // NICHT brechen, falls die HubSpot-Property noch fehlt/nicht am Formular hängt.
       // (HubSpot Single-Checkbox: ungesetzt = false.)
-      foerdervorschuss_interesse: data.foerdervorschuss_interesse === 'true' ? 'true' : ''
+      foerdervorschuss_interesse: data.foerdervorschuss_interesse === 'true' ? 'true' : '',
+      // WP-Web (Rechner-Daten an HubSpot, 2026-07-03): errechnete Dimensionierungs-/Foerderwerte
+      // aus der Rechner-Kette (pfadunabhaengig via hwLeadPrefill). Der Filter unten entfernt leere
+      // Felder -> Standard-Leads ohne Rechner-Nutzung bleiben unveraendert. PFLICHT VOR DEPLOY:
+      // die Kontakt-Properties heizlast_kw / energiebedarf_kwh / foerderquote_pct /
+      // foerderbetrag_eur / einkommen_unter_40k muessen in HubSpot existieren, sonst Forms-API-400
+      // fuer Rechner-Leads.
+      heizlast_kw: answers.heizlast_kw != null ? String(answers.heizlast_kw) : '',
+      energiebedarf_kwh: answers.energiebedarf_kwh != null ? String(answers.energiebedarf_kwh) : '',
+      foerderquote_pct: answers.foerderquote_pct != null ? String(answers.foerderquote_pct) : '',
+      foerderbetrag_eur: answers.foerderbetrag_eur != null ? String(answers.foerderbetrag_eur) : '',
+      einkommen_unter_40k: answers.einkommen_unter_40k || ''
     };
 
     return {
@@ -2084,6 +2096,12 @@
     if (fb) answers.step5 = fb;
     if (d.heizsystem && heizsysMap[d.heizsystem]) answers.step6 = heizsysMap[d.heizsystem];
     if (d.heizungsalter) answers.step3 = d.heizungsalter;
+    // WP-Web: errechnete Rechner-Werte aus der Kette (Dim/Foerder) in die Antworten uebernehmen.
+    if (d.heizlast_kw != null) answers.heizlast_kw = d.heizlast_kw;
+    if (d.energiebedarf_kwh != null) answers.energiebedarf_kwh = d.energiebedarf_kwh;
+    if (d.foerderquote_pct != null) answers.foerderquote_pct = d.foerderquote_pct;
+    if (d.foerderbetrag_eur != null) answers.foerderbetrag_eur = d.foerderbetrag_eur;
+    if (d.einkommen_unter_40k) answers.einkommen_unter_40k = d.einkommen_unter_40k;
 
     let plzApplied = false;
     if (d.plz && /^\d{5}$/.test(d.plz)) {
