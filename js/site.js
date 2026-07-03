@@ -620,6 +620,12 @@ async function wizCalculate() {
     const data = await response.json();
     if (data.error) throw new Error(data.message || 'server_error');
     wizServerResult = data;
+    // WP-Web: Dimensionierungs-Ergebnis (kW-Bedarf/Heizlast + bekannter Energiebedarf) fuer den
+    // Lead-Prefill festhalten, damit es pfadunabhaengig bis /anfrage -> HubSpot ueberlebt.
+    hwMergeLeadPrefill({
+      heizlast_kw: data && data.bedarf != null ? Math.round(Number(data.bedarf) * 10) / 10 : null,
+      energiebedarf_kwh: wizData.verbrauchKnown ? Number(wizData.verbrauch) || null : null,
+    });
     wizSelectedMarke = data.marken?.wolf?.deckt
       ? 'wolf'
       : data.marken?.vaillant?.deckt
@@ -1572,6 +1578,20 @@ function getHeizungsalter() {
   }
 }
 
+// WP-Web (Rechner-Daten an HubSpot, 2026-07-03): non-null-Werte in hwLeadPrefill mergen,
+// ohne bestehende Keys zu verlieren. Ueberlebt Dim -> Foerder -> Anfrage (sessionStorage),
+// damit errechnete Dimensionierungs-/Foerderwerte pfadunabhaengig im Funnel/HubSpot ankommen.
+function hwMergeLeadPrefill(patch) {
+  try {
+    const d = JSON.parse(sessionStorage.getItem('hwLeadPrefill') || '{}') || {};
+    Object.keys(patch || {}).forEach(function (k) {
+      const v = patch[k];
+      if (v !== null && v !== undefined && v !== '') d[k] = v;
+    });
+    sessionStorage.setItem('hwLeadPrefill', JSON.stringify(d));
+  } catch (e) {}
+}
+
 // Foerderrechner -> Leadstrecke: Heizungsalter zusaetzlich in hwLeadPrefill mitgeben,
 // damit /anfrage es nicht erneut abfragt. Nur das Alter (saubere Zeichenkette) ergaenzen;
 // uebrige Felder (heizung/gebaeude/...) bleiben aus dem Rechner-Prefill (korrekte Keys).
@@ -1834,6 +1854,16 @@ async function calculateFoerder() {
       '<div class="breakdown-item" style="margin-top:8px;"><span style="color:var(--g400);">proKlima: nicht im Fördergebiet</span><span class="pct" style="color:var(--g400);">0 €</span></div>';
   }
   breakdown.innerHTML = html;
+
+  // WP-Web: Foerder-Ergebnis fuer den Lead-Prefill festhalten (ueberlebt bis /anfrage -> HubSpot).
+  // einkommen_unter_40k = <40k-Bonus-Flag (ja/nein/ka); unvalidierte Selbstauskunft, der
+  // Sales-Agent prueft sie beim Vollstaendigkeits-Check. Nur fuer Selbstnutzer aussagekraeftig.
+  const einkommenFlag = einkommen === 'unter40' ? 'ja' : einkommen === 'ueber40' ? 'nein' : 'ka';
+  hwMergeLeadPrefill({
+    foerderquote_pct: (effektivSatz || kfwSatz) || null,
+    foerderbetrag_eur: Math.round(gesamtZuschuss) || null,
+    einkommen_unter_40k: selbstWE > 0 ? einkommenFlag : 'ka',
+  });
 
   const wegBox = document.getElementById('wegHinweis');
   if (we >= 3) {

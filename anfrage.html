@@ -671,7 +671,20 @@
     [data-theme='dark'] .success-step h2 { color: #ffffff; }
     [data-theme='dark'] .step-hint,
     [data-theme='dark'] .funnel-step-counter,
-    [data-theme='dark'] .success-detail { color: #d1d5db; }
+    [data-theme='dark'] .success-detail,
+    [data-theme='dark'] .success-step p { color: #e5e7eb; }
+    .success-actions { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:28px; }
+    .success-btn { display:inline-flex; align-items:center; gap:8px; padding:14px 22px; border-radius:10px; font-size:15px; font-weight:600; text-decoration:none; cursor:pointer; border:none; transition:all .2s; font-family:inherit; }
+    .success-btn-primary { background:var(--green); color:#1c2b36; }
+    .success-btn-primary:hover { background:var(--green-dark); transform:translateY(-1px); }
+    .success-btn-secondary { background:rgba(183,217,0,0.12); color:var(--schiefer); border:1px solid var(--green); }
+    .success-btn-secondary:hover { background:rgba(183,217,0,0.20); transform:translateY(-1px); }
+    [data-theme='dark'] .success-btn-primary { color:#1c2b36; }
+    [data-theme='dark'] .success-btn-secondary { color:#ffffff; background:rgba(183,217,0,0.14); border-color:var(--green); }
+    [data-theme='dark'] .success-btn-secondary:hover { background:rgba(183,217,0,0.24); }
+    .success-share-toast { display:none; margin-top:12px; font-size:13px; color:var(--green-dark); text-align:center; }
+    [data-theme='dark'] .success-share-toast { color:var(--green); }
+    .success-share-toast.visible { display:block; }
     [data-theme='dark'] .form-field input,
     [data-theme='dark'] .form-field select,
     [data-theme='dark'] .form-field textarea {
@@ -792,7 +805,7 @@
         </div>
         <div class="trust-usp-text">
           <strong>Bis zu 70 % KfW-Förderung</strong><br>
-          Antrag inklusive. Wir regeln das komplett.
+          Volle Förderung sichern. Wir unterstützen dich beim Antrag.
         </div>
       </div>
       <div class="trust-usp">
@@ -1577,10 +1590,21 @@
         <div class="success-detail">
           <strong>Wie geht es weiter?</strong><br>
           1. Wir rufen dich an und klären offene Fragen<br>
-          2. Baubarkeitsprüfung vor Ort (kostenlos)<br>
+          2. Kostenlose Beratung vor Ort<br>
           <span id="successLine3">3. Individuelles Angebot mit Förderberechnung</span><br>
-          <span id="successLine4">4. Förderantrag stellen. Wir übernehmen das</span>
+          <span id="successLine4">4. Förderantrag stellen, wir unterstützen dich dabei</span>
         </div>
+        <div class="success-actions">
+          <a class="success-btn success-btn-primary" href="/">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2 7-7 7 7 2 2"/><path d="M5 10v10a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1V10"/></svg>
+            Zur Homepage
+          </a>
+          <button class="success-btn success-btn-secondary" type="button" onclick="shareHeroWerk(event)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            HeroWerk empfehlen
+          </button>
+        </div>
+        <div id="successShareToast" class="success-share-toast">Link kopiert. Danke fürs Weitersagen.</div>
       </div>
 
     </div><!-- /funnel-content -->
@@ -1654,7 +1678,7 @@
     setText('step8Question', 'Wann soll die Wärmepumpe installiert werden?', 'Wann soll es losgehen?');
     setText('step8Hint', 'Für unsere Kapazitätsplanung und deine Förderantragsfrist.', 'Für unsere Kapazitätsplanung.');
     setText('successLine3', '3. Individuelles Angebot mit Förderberechnung', '3. Individuelles Angebot');
-    setText('successLine4', '4. Förderantrag stellen. Wir übernehmen das', '4. Auf Wunsch Beratung zu passenden Förderungen');
+    setText('successLine4', '4. Förderantrag stellen, wir unterstützen dich dabei', '4. Auf Wunsch Beratung zu passenden Förderungen');
     const plzInput = document.getElementById('plzInput');
     if (plzInput && plzInput.value) validatePlz(plzInput);
   }
@@ -1872,8 +1896,9 @@
 
   function buildHubSpotPayload(data) {
     // HubSpot-Mapping: Kernfelder auf Standard-Properties (firstname/lastname/phone/zip),
-    // Funnel-Antworten auf die HeroWerk-Custom-Properties. Genau die 14 Felder des
-    // HubSpot-Formulars 023b1ead-7bcd-4eba-ba72-dd1038728721 (Consent via UI-Checkbox).
+    // Funnel-Antworten auf die HeroWerk-Custom-Properties. 14 Kernfelder des HubSpot-Formulars
+    // 023b1ead-7bcd-4eba-ba72-dd1038728721 (Consent via UI-Checkbox) plus 5 additive, errechnete
+    // Rechner-Werte aus der Rechner-Kette (s. u.; nur gesendet, wenn gesetzt).
     const fields = {
       firstname: data.vorname || '',
       lastname: data.nachname || '',
@@ -1893,7 +1918,18 @@
       // angehakt — sonst leer lassen (Filter unten entfernt es), damit Standard-Leads
       // NICHT brechen, falls die HubSpot-Property noch fehlt/nicht am Formular hängt.
       // (HubSpot Single-Checkbox: ungesetzt = false.)
-      foerdervorschuss_interesse: data.foerdervorschuss_interesse === 'true' ? 'true' : ''
+      foerdervorschuss_interesse: data.foerdervorschuss_interesse === 'true' ? 'true' : '',
+      // WP-Web (Rechner-Daten an HubSpot, 2026-07-03): errechnete Dimensionierungs-/Foerderwerte
+      // aus der Rechner-Kette (pfadunabhaengig via hwLeadPrefill). Der Filter unten entfernt leere
+      // Felder -> Standard-Leads ohne Rechner-Nutzung bleiben unveraendert. PFLICHT VOR DEPLOY:
+      // die Kontakt-Properties heizlast_kw / energiebedarf_kwh / foerderquote_pct /
+      // foerderbetrag_eur / einkommen_unter_40k muessen in HubSpot existieren, sonst Forms-API-400
+      // fuer Rechner-Leads.
+      heizlast_kw: answers.heizlast_kw != null ? String(answers.heizlast_kw) : '',
+      energiebedarf_kwh: answers.energiebedarf_kwh != null ? String(answers.energiebedarf_kwh) : '',
+      foerderquote_pct: answers.foerderquote_pct != null ? String(answers.foerderquote_pct) : '',
+      foerderbetrag_eur: answers.foerderbetrag_eur != null ? String(answers.foerderbetrag_eur) : '',
+      einkommen_unter_40k: answers.einkommen_unter_40k || ''
     };
 
     return {
@@ -1961,6 +1997,23 @@
     document.getElementById('progressFill').style.width = '100%';
     document.getElementById('progressPercent').textContent = '100 % geschafft';
     document.getElementById('stepCounter').textContent = 'Fertig!';
+  }
+
+  // ── Share-Funktion für Success-Screen ────────
+  async function shareHeroWerk(e){
+    e && e.preventDefault();
+    const url = 'https://www.herowerk.de/';
+    const text = 'HeroWerk kümmert sich um Wärmepumpe, Förderung und Einbau in der Region Hannover. Schau mal vorbei:';
+    const toast = document.getElementById('successShareToast');
+    if (navigator.share) {
+      try { await navigator.share({ title: 'HeroWerk', text, url }); return; } catch(_) {}
+    }
+    try {
+      await navigator.clipboard.writeText(text + ' ' + url);
+      if (toast) { toast.classList.add('visible'); setTimeout(()=>toast.classList.remove('visible'), 4000); }
+    } catch(_) {
+      window.location.href = 'mailto:?subject=' + encodeURIComponent('HeroWerk empfehlen') + '&body=' + encodeURIComponent(text + '\n\n' + url);
+    }
   }
 
   // ── Lead-Handoff aus dem Dimensionierungs-Assistent (abgespeckte Leadstrecke) ──
@@ -2043,6 +2096,12 @@
     if (fb) answers.step5 = fb;
     if (d.heizsystem && heizsysMap[d.heizsystem]) answers.step6 = heizsysMap[d.heizsystem];
     if (d.heizungsalter) answers.step3 = d.heizungsalter;
+    // WP-Web: errechnete Rechner-Werte aus der Kette (Dim/Foerder) in die Antworten uebernehmen.
+    if (d.heizlast_kw != null) answers.heizlast_kw = d.heizlast_kw;
+    if (d.energiebedarf_kwh != null) answers.energiebedarf_kwh = d.energiebedarf_kwh;
+    if (d.foerderquote_pct != null) answers.foerderquote_pct = d.foerderquote_pct;
+    if (d.foerderbetrag_eur != null) answers.foerderbetrag_eur = d.foerderbetrag_eur;
+    if (d.einkommen_unter_40k) answers.einkommen_unter_40k = d.einkommen_unter_40k;
 
     let plzApplied = false;
     if (d.plz && /^\d{5}$/.test(d.plz)) {
