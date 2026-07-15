@@ -179,7 +179,7 @@ function renderPlzFeedback(result) {
       text:
         '✓ ' +
         result.label +
-        ', wir sind für dich da. proKlima-Fördergebiet, bis zu 5 % (max. 1.500 €) extra möglich, nur für Anträge bis 31.10.2026.',
+        ', wir sind für dich da. proKlima-Fördergebiet, bis zu 5 % (max. 1.500 €) zusätzlich zum KfW-Zuschuss möglich, nur für Anträge bis 31.10.2026. Zusammen höchstens 60 % derselben Kosten (der KfW-Zuschuss allein darf darüber liegen).',
       cls: 'is-ok',
     };
   if (result.status === 'region')
@@ -702,10 +702,13 @@ function renderBrandCard(key, label, brand, bedarf) {
       <div class="fr-row"><span>Auslegung</span><span class="fr-val">im Vor-Ort-Termin</span></div>
     </button>`;
   }
+  // Gleicher proKlima- und Eigenanteil = Kumulierungs-Deckel greift (Kanon 1.3), proKlima bringt
+  // im Maximalfall nichts: dann keine Zeile statt einer irrefuehrenden Doppel-Zahl. Gleicher Guard
+  // wie im Schwester-Pfad paApplyBrand (row.proklima !== row.eigen).
   return `<button type="button" class="${cls}" onclick="wizSelectMarke('${key}')" style="text-align:left;font:inherit;">
     ${head}
     <div class="wiz-brand-satz"><div class="fr-satz" style="font-size:40px;">ab ${formatEuro(brand.eigenanteil)}</div><div class="fr-label" style="margin-bottom:0;">geschätzter Eigenanteil nach max. Förderung (80 %)*</div></div>
-    ${brand.eigenanteilProklima ? `<div class="wiz-brand-proklima" style="margin:6px 0 2px;font-size:13px;color:var(--green);">proKlima möglich: ab ${formatEuro(brand.eigenanteilProklima)} (nur für Anträge bis 31.10.2026)*</div>` : ''}
+    ${brand.eigenanteilProklima && brand.eigenanteilProklima !== brand.eigenanteil ? `<div class="wiz-brand-proklima" style="margin:6px 0 2px;font-size:13px;color:var(--green);">proKlima möglich: ab ${formatEuro(brand.eigenanteilProklima)} (nur für Anträge bis 31.10.2026)*</div>` : ''}
     <div class="fr-row"><span>Empfohlenes Modell</span><span class="fr-val">${modellZweizeilig(brand.modell)}</span></div>
     <div class="fr-row"><span>Deckt deinen Bedarf</span><span class="fr-val">${formatKw(bedarf)} kW${brand.kaskade ? ' · Kaskade' : ''} ✓</span></div>
     <div class="fr-row"><span>Brutto-Richtpreis vor Förderung</span><span class="fr-val">ab ${formatEuro(brand.brutto)}</span></div>
