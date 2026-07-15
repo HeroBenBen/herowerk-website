@@ -252,10 +252,10 @@ function foerderCalc_(p, f, heute) {
   const hinweise = [];
 
   // --- Klimabonus-Voraussetzung: in beiden Regelwerken gleich (Kanon 1.2 / Orakel Z.116-118 == Ist-Code).
-  // Öl/Kohle/Gasetage/Nachtspeicher immer; Gas-Zentralheizung ab Mindestalter. Nur für selbstgenutzte WE.
+  // Öl/Kohle/Gasetage/Nachtspeicher immer; Gas-Zentralheizung und Biomasse ab Mindestalter. Nur für selbstgenutzte WE.
   let klimaBonus = false;
-  if (heizung === 'oel' || heizung === 'nachtspeicher' || heizung === 'gas-etage') klimaBonus = true;
-  else if (heizung === 'gas') klimaBonus = int_(p.heizungsalter, 20) >= getNum_(f, 'gas_klimabonus_min_alter', 20);
+  if (heizung === 'oel' || heizung === 'kohle' || heizung === 'nachtspeicher' || heizung === 'gas-etage') klimaBonus = true;
+  else if (heizung === 'gas' || heizung === 'biomasse') klimaBonus = int_(p.heizungsalter, 20) >= getNum_(f, 'gas_klimabonus_min_alter', 20);
 
   let satzSelbst, satzVermietet, foerderFaehigGesamt, einkommensbonusPct, grundPct, klimaPct, bausteine;
 
@@ -315,7 +315,8 @@ function foerderCalc_(p, f, heute) {
   // (Orakel Z.218 `0.05*investWP`, Kanon 5 "0,05 mal Brutto") -> Parameter proklima_basis.
   const proGemeinden = String(f.proklima_gemeinden || '').split(',').map(function (x) { return x.trim(); });
   const imFoerdergebiet = proGemeinden.indexOf(gemeinde) >= 0;
-  const optin = String(p.proklimaOptin) === 'ja';
+  const proklimaAktiv = String(f.proklima_aktiv || 'N').trim().toUpperCase() === 'J';
+  const optin = proklimaAktiv && String(p.proklimaOptin) === 'ja';
   const d = heute instanceof Date ? heute : new Date(heute);
   const ymd = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
   const pkFrist = int_(f.proklima_frist_ymd, 20261031);
@@ -582,7 +583,7 @@ function round1_(v) { return Math.round(v * 10) / 10; }
 function key_(s) { return String(s).replace(/-/g, '_'); }
 
 function FOERDER_ROWS_() { return [
-  ['grundfoerderung_pct',30,'%', 'KfW-Grundförderung','ADR-04 Anhang A / js/site.js calculateFoerder'], ['klimabonus_pct',20,'%', 'Klimageschwindigkeitsbonus','ADR-04 Anhang A'], ['einkommensbonus_pct',30,'%', 'Einkommensbonus bis Einkommensgrenze','ADR-04 Anhang A'], ['effizienzbonus_pct',5,'%', 'Effizienzbonus R290','ADR-04 Anhang A'], ['deckel_selbst_pct',70,'%', 'Maximaler Satz Selbstnutzer','ADR-04 Anhang A'], ['deckel_vermietet_pct',35,'%', 'Maximaler Satz vermietet','ADR-04 Anhang A'], ['gas_klimabonus_min_alter',20,'Jahre', 'Mindestalter Gas-Zentralheizung für Klimabonus','js/site.js getHeizungsalter/calculateFoerder'], ['einkommensgrenze_eur',40000,'EUR', 'Grenze Einkommensbonus','ADR-04 Anhang A'], ['foerderfaehig_we1',30000,'EUR', 'Förderfähige Kosten 1. WE','js/site.js foerderFaehigeKostenGesamt'], ['foerderfaehig_we2bis6',15000,'EUR/WE', 'Förderfähige Kosten 2.–6. WE','js/site.js foerderFaehigeKostenGesamt'], ['foerderfaehig_we7plus',8000,'EUR/WE', 'Förderfähige Kosten ab 7. WE','js/site.js foerderFaehigeKostenGesamt'], ['proklima_pct',5,'%', 'proKlima-Satz','ADR-04 Anhang A'], ['proklima_max_eur',1500,'EUR', 'proKlima-Höchstbetrag','ADR-04 Anhang A'], ['proklima_gemeinden','hannover,seelze,langenhagen,laatzen,hemmingen,ronnenberg','CSV', 'proKlima-Fördergebiet','ADR-04 Anhang A'],
+  ['grundfoerderung_pct',30,'%', 'KfW-Grundförderung','ADR-04 Anhang A / js/site.js calculateFoerder'], ['klimabonus_pct',20,'%', 'Klimageschwindigkeitsbonus','ADR-04 Anhang A'], ['einkommensbonus_pct',30,'%', 'Einkommensbonus bis Einkommensgrenze','ADR-04 Anhang A'], ['effizienzbonus_pct',5,'%', 'Effizienzbonus R290','ADR-04 Anhang A'], ['deckel_selbst_pct',70,'%', 'Maximaler Satz Selbstnutzer','ADR-04 Anhang A'], ['deckel_vermietet_pct',35,'%', 'Maximaler Satz vermietet','ADR-04 Anhang A'], ['gas_klimabonus_min_alter',20,'Jahre', 'Mindestalter Gas-Zentralheizung und Biomasse für Klimabonus','js/site.js getHeizungsalter/calculateFoerder'], ['einkommensgrenze_eur',40000,'EUR', 'Grenze Einkommensbonus','ADR-04 Anhang A'], ['foerderfaehig_we1',30000,'EUR', 'Förderfähige Kosten 1. WE','js/site.js foerderFaehigeKostenGesamt'], ['foerderfaehig_we2bis6',15000,'EUR/WE','Förderfähige Kosten 2. bis 6. WE','js/site.js foerderFaehigeKostenGesamt'], ['foerderfaehig_we7plus',8000,'EUR/WE','Förderfähige Kosten ab 7. WE','js/site.js foerderFaehigeKostenGesamt'], ['proklima_aktiv','N','J/N', 'proKlima global aktiv','GF-Entscheid 15.07.2026: Website aus, Engine bleibt'], ['proklima_pct',5,'%', 'proKlima-Satz','ADR-04 Anhang A'], ['proklima_max_eur',1500,'EUR', 'proKlima-Höchstbetrag','ADR-04 Anhang A'], ['proklima_gemeinden','hannover,seelze,langenhagen,laatzen,hemmingen,ronnenberg','CSV', 'proKlima-Fördergebiet','ADR-04 Anhang A'],
   // --- Reform ab 21.07.2026 (additiv). Defaults im Code = Kanon-Werte: die Engine rechnet auch dann
   // korrekt, wenn diese Zeilen im Sheet noch fehlen. Perioden-Tabelle (Klima/Grenze/EU) = FOERDER_PERIODEN_().
   ['reform_grund_pct',30,'%', 'Grundförderung Reform (EU-Gerät)','Kanon 1.2 / Orakel Z.106'], ['reform_grund_pct_nicht_eu',15,'%', 'Grundförderung Reform ohne EU-Wertschöpfung (ab 01.02.2027)','Kanon 1.2 / Orakel Z.106, Z.114-115'], ['reform_deckel_pct',80,'%', 'Maximaler Satz Selbstnutzer Reform','Kanon 1.2 / Orakel Z.120'], ['reform_eink_pct_bis30',40,'%', 'Einkommensbonus bis 30.000 EUR anrechenbar','Kanon 1.2 / Orakel Z.113'], ['reform_eink_pct_bis40',30,'%', 'Einkommensbonus bis 40.000 EUR anrechenbar','Kanon 1.2 / Orakel Z.113'], ['reform_eink_pct_bis50',10,'%', 'Einkommensbonus bis 50.000 EUR anrechenbar','Kanon 1.2 / Orakel Z.113'], ['reform_eink_grenze_bis30',30000,'EUR', 'Staffelgrenze 1 anrechenbares zvE','Kanon 1.2 / Orakel Z.113'], ['reform_eink_grenze_bis40',40000,'EUR', 'Staffelgrenze 2 anrechenbares zvE','Kanon 1.2 / Orakel Z.113'], ['reform_eink_grenze_bis50',50000,'EUR', 'Staffelgrenze 3 anrechenbares zvE','Kanon 1.2 / Orakel Z.113'], ['reform_kind_abzug_eur',10000,'EUR', 'Einmaliger Abzug vom zvE bei mind. einem minderjährigen Kind','Kanon 1.2 / Orakel Z.109-112'], ['kumulierung_max_pct',60,'%', 'BEG-Kumulierungshöchstsatz aller öffentlichen Mittel','BEG-EM Nr. 8.6 (BAnz AT 29.12.2023 B1) + KfW-Merkblatt 458 12/2025; Kanon 1.3'], ['proklima_frist_ymd',20261031,'YYYYMMDD', 'Letztes Antragsdatum proKlima-Richtlinie','Kanon 1.3 / proKlima-Richtlinie 2026 v1.4'], ['proklima_basis','','Text', 'proKlima-Bemessungsbasis: preis | foerderfaehig (leer = periodenabhängiger Default: Alt foerderfaehig, Reform preis)','Kanon 1.3 / Orakel Z.218 / Kanon 5']

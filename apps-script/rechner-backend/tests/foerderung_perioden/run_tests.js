@@ -44,6 +44,7 @@ const F = {};
 FOERDER_ROWS_().forEach((r) => {
   F[r[0]] = r[1];
 });
+const F_PROKLIMA_AN = Object.assign({}, F, { proklima_aktiv: 'J' });
 
 const d = (s) => {
   const [y, m, day] = s.split('-').map(Number);
@@ -264,7 +265,7 @@ pruefe('C-09', 'Reform h2-2026 | ohne Klimabonus', foerderCalc_(p({ heizung: 'so
 pruefe(
   'C-10',
   'Reform h1-2027 | EU-Gerät | proKlima-Frist abgelaufen',
-  foerderCalc_(p({ einkommen: 'bis40', gemeinde: 'hannover', proklimaOptin: 'ja', preis: 34510 }), F, d('2027-02-01')),
+  foerderCalc_(p({ einkommen: 'bis40', gemeinde: 'hannover', proklimaOptin: 'ja', preis: 34510 }), F_PROKLIMA_AN, d('2027-02-01')),
   {
     periode: 'h1-2027',
     periodeLabel: '01.02. bis 31.07.2027',
@@ -316,7 +317,7 @@ pruefe('C-12', 'Reform h2-2028 | Klimabonus entfallen | Grenze 25.000', foerderC
 pruefe(
   'C-13',
   'Reform h2-2026 | proKlima voll wirksam (Komfort 45.220)',
-  foerderCalc_(p({ einkommen: 'bis30', gemeinde: 'hannover', proklimaOptin: 'ja', preis: 45220 }), F, d('2026-08-15')),
+  foerderCalc_(p({ einkommen: 'bis30', gemeinde: 'hannover', proklimaOptin: 'ja', preis: 45220 }), F_PROKLIMA_AN, d('2026-08-15')),
   {
     zuschussGesamt: 22400,
     proklimaZuschuss: 1500,
@@ -337,7 +338,7 @@ pruefe(
 pruefe(
   'C-14',
   'Reform h2-2026 | proKlima am 60-%-Deckel gekappt',
-  foerderCalc_(p({ einkommen: 'bis30', gemeinde: 'hannover', proklimaOptin: 'ja', preis: 34510 }), F, d('2026-08-15')),
+  foerderCalc_(p({ einkommen: 'bis30', gemeinde: 'hannover', proklimaOptin: 'ja', preis: 34510 }), F_PROKLIMA_AN, d('2026-08-15')),
   {
     zuschussGesamt: 22400,
     proklimaZuschuss: 0,
@@ -444,7 +445,7 @@ pruefe('C-17', 'Horizont > h1-2029 | klemmt auf h1-2029 + Hinweis', foerderCalc_
 // Dieser Test hält die Abweichung fest, damit sie nicht unbemerkt bleibt. Controller-Entscheid.
 {
   const req = p({ einkommen: 'unter40', gemeinde: 'hannover', proklimaOptin: 'ja', preis: 34510 });
-  const ist = foerderCalc_(req, F, d('2026-07-15'));
+  const ist = foerderCalc_(req, F_PROKLIMA_AN, d('2026-07-15'));
   const heute = altReferenz_(req, F, 34510);
   pruefe('C-R4', 'Alt + proKlima | dokumentierte Abweichung zur heutigen Logik', {
     neu_proklima: ist.proklimaZuschuss,
@@ -535,6 +536,39 @@ pruefe(
   },
   { unter40: 'bis40', ueber40: 'ueber50', bis30: 'bis30', bis40: 'bis40', bis50: 'bis50', ueber50: 'ueber50', keine: 'unbekannt', leer: 'unbekannt' }
 );
+
+// C-22 bis C-28 | A-BIO und globaler proKlima-Schalter (Kanon 10 / GF-Entscheid 15.07.2026).
+pruefe('C-22', 'A-BIO | Kohle funktionsfähig ohne Altersgrenze', foerderCalc_(p({ heizung: 'kohle', heizungsalter: '1', einkommen: 'bis30', preis: 34510 }), F, d('2026-08-01')), {
+  klimaBonus: true,
+  kfwSatz: 80,
+});
+pruefe('C-23', 'A-BIO | Biomasse 19 Jahre ohne Klimabonus', foerderCalc_(p({ heizung: 'biomasse', heizungsalter: '19', einkommen: 'bis30', preis: 34510 }), F, d('2026-08-01')), {
+  klimaBonus: false,
+  kfwSatz: 70,
+});
+pruefe('C-24', 'A-BIO | Biomasse 20 Jahre mit Klimabonus', foerderCalc_(p({ heizung: 'biomasse', heizungsalter: '20', einkommen: 'bis30', preis: 34510 }), F, d('2026-08-01')), {
+  klimaBonus: true,
+  kfwSatz: 80,
+});
+pruefe('C-25', 'A-BIO | Pellet 25 Jahre, selbstnutzend, Einkommen bis 30.000 = 80 Prozent', foerderCalc_(p({ heizung: 'biomasse', heizungsalter: '25', einkommen: 'bis30', preis: 34510 }), F, d('2026-08-01')), {
+  klimaBonus: true,
+  kfwSatz: 80,
+  zuschussGesamt: 22400,
+});
+pruefe('C-26', 'A-BIO | Sonstige bleibt ohne Klimabonus', foerderCalc_(p({ heizung: 'sonstige', heizungsalter: '99', einkommen: 'bis30', preis: 34510 }), F, d('2026-08-01')), {
+  klimaBonus: false,
+  kfwSatz: 70,
+});
+pruefe('C-27', 'proKlima | globaler Default N schlägt Request-Opt-in', foerderCalc_(p({ einkommen: 'bis30', gemeinde: 'hannover', proklimaOptin: 'ja', preis: 45220 }), F, d('2026-08-15')), {
+  proklimaZuschuss: 0,
+  proklimaGekappt: false,
+  eigenanteil: 22820,
+});
+pruefe('C-28', 'proKlima | explizites J erhält Alt-Fähigkeit', foerderCalc_(p({ einkommen: 'bis30', gemeinde: 'hannover', proklimaOptin: 'ja', preis: 45220 }), F_PROKLIMA_AN, d('2026-08-15')), {
+  proklimaZuschuss: 1500,
+  proklimaGekappt: false,
+  eigenanteil: 21320,
+});
 
 // C-21 | Response-Vertrag: Bestandsfelder vorhanden, neue Felder additiv, KEINE unerwarteten Felder.
 {
