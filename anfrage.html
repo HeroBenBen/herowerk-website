@@ -2044,7 +2044,7 @@
   // ── Lead-Handoff aus dem Dimensionierungs-Assistent (abgespeckte Leadstrecke) ──
   // Übernimmt die Wizard-Antworten, überspringt die schon beantworteten Schritte und
   // zeigt nur noch die offenen (Heizungsalter, Eigentümer, Zeitpunkt, Kontakt).
-  function showLeadHandoffBanner() {
+  function showLeadHandoffBanner(context) {
     if (document.getElementById('leadHandoffBanner')) return;
     const parts = [answers.step1, answers.step2, answers.step3, answers.step4, answers.step5, answers.step6, answers.plz].filter(
       Boolean,
@@ -2055,13 +2055,128 @@
     banner.id = 'leadHandoffBanner';
     banner.style.cssText =
       'background:rgba(183,217,0,0.12);border:1px solid rgba(183,217,0,0.45);border-radius:10px;padding:12px 16px;margin-bottom:18px;font-size:14px;line-height:1.5;';
-    banner.innerHTML =
-      '<strong>Aus deiner Berechnung übernommen.</strong> Nur noch wenige Angaben bis zu deinem Angebot.' +
-      (parts.length ? '<br><span style="opacity:0.8;font-size:13px;">' + parts.join(' · ') + '</span>' : '');
+    if (context && context.kind === 'kostenvergleich') {
+      const result = context.lead.ergebnis;
+      banner.innerHTML =
+        '<strong>Aus deinem Kostenvergleich übernommen.</strong> Quelle: Kostenvergleich Wärmepumpe.' +
+        '<br><span style="opacity:0.8;font-size:13px;">Zuschuss ' + Number(result.zuschuss).toLocaleString('de-DE') +
+        ' € · Eigenanteil ' + Number(result.eigenanteil).toLocaleString('de-DE') +
+        ' € · ohne deine Einkommensangabe gerechnet</span>' +
+        (parts.length ? '<br><span style="opacity:0.8;font-size:13px;">' + parts.join(' · ') + '</span>' : '') +
+        '<br><button type="button" id="leadHandoffEdit" style="margin-top:10px;border:1px solid currentColor;border-radius:7px;padding:7px 11px;background:transparent;color:inherit;font-weight:700;cursor:pointer;">Angaben ändern</button>';
+    } else {
+      banner.innerHTML =
+        '<strong>Aus deiner Berechnung übernommen.</strong> Nur noch wenige Angaben bis zu deinem Angebot.' +
+        (parts.length ? '<br><span style="opacity:0.8;font-size:13px;">' + parts.join(' · ') + '</span>' : '');
+    }
     firstStep.parentElement.insertBefore(banner, firstStep);
+    const edit = document.getElementById('leadHandoffEdit');
+    if (edit) edit.addEventListener('click', clearKvLeadHandoff);
+  }
+
+  const KV_LEAD_KEY = 'hero_kv_lead';
+  const KV_LEAD_ANSWER_KEYS = [
+    'step1', 'step2', 'step3', 'step4', 'step5', 'energiebedarf_kwh',
+    'foerderquote_pct', 'foerderbetrag_eur', 'kv_eigenanteil_eur', 'kv_vorteil_eur',
+    'kv_verbrauch_eingabe', 'kv_verbrauch_einheit', 'kv_verbrauch_herkunft',
+    'kv_zeitraum', 'kv_kessel_rohr', 'kv_kessel_baujahr', 'kv_altgas'
+  ];
+  function exactKeys(value, required, optional) {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
+    const keys = Object.keys(value).sort();
+    const allowed = required.concat(optional || []);
+    if (!required.every((key) => Object.prototype.hasOwnProperty.call(value, key))) return false;
+    return keys.every((key) => allowed.includes(key));
+  }
+  function finiteIn(value, min, max) {
+    return typeof value === 'number' && Number.isFinite(value) && value >= min && value <= max;
+  }
+  function validKvLead(d) {
+    if (!exactKeys(d, ['v', 'quelle', 'heizungsart', 'verbrauch', 'gebaeude', 'kessel', 'zeitraum', 'ergebnis'], ['zeitpunkt'])) return false;
+    if (d.v !== 1 || d.quelle !== 'kostenvergleich-waermepumpe' || !['gas', 'oel'].includes(d.heizungsart)) return false;
+    if (d.zeitpunkt != null && (typeof d.zeitpunkt !== 'string' || !Number.isFinite(Date.parse(d.zeitpunkt)))) return false;
+    if (!['alt', 'h2-2026', 'h1-2027', 'h2-2027', 'h1-2028', 'h2-2028', 'h1-2029'].includes(d.zeitraum)) return false;
+    if (!exactKeys(d.verbrauch, ['kwh', 'eingabeWert', 'einheit', 'herkunft'])) return false;
+    if (!finiteIn(d.verbrauch.kwh, 5000, 80000) || !finiteIn(d.verbrauch.eingabeWert, 1, 80000)) return false;
+    if (!['kwh', 'm3', 'liter'].includes(d.verbrauch.einheit) || !['own', 'market'].includes(d.verbrauch.herkunft)) return false;
+    if (d.gebaeude !== null) {
+      if (!exactKeys(d.gebaeude, ['geb', 'bj', 'san', 'flaeche'])) return false;
+      if (!['efh', 'dhh', 'rh', 'zfh', 'mfh'].includes(d.gebaeude.geb)) return false;
+      if (!['vor1978', '1978-1994', '1995-2010', 'nach2010'].includes(d.gebaeude.bj)) return false;
+      if (!['nein', 'teilweise', 'umfassend'].includes(d.gebaeude.san) || !finiteIn(d.gebaeude.flaeche, 20, 1000)) return false;
+    }
+    if (!exactKeys(d.kessel, ['rohr', 'kbj', 'altgas'])) return false;
+    if (d.kessel.rohr !== null && !['metall', 'kunststoff', 'unklar'].includes(d.kessel.rohr)) return false;
+    if (d.kessel.kbj !== null && !['vor1990', '1990-2010', 'nach2010', 'unklar'].includes(d.kessel.kbj)) return false;
+    if (d.kessel.altgas !== null && !['ja', 'nein', 'unklar'].includes(d.kessel.altgas)) return false;
+    if (!exactKeys(d.ergebnis, ['eigenanteil', 'zuschuss', 'quote'], ['vorteil'])) return false;
+    if (!finiteIn(d.ergebnis.eigenanteil, 0, 65000) || !finiteIn(d.ergebnis.zuschuss, 0, 65000) || !finiteIn(d.ergebnis.quote, 0, 80)) return false;
+    return d.ergebnis.vorteil === undefined || finiteIn(d.ergebnis.vorteil, -1000000, 1000000);
+  }
+  function clearKvLeadHandoff() {
+    try { sessionStorage.removeItem(KV_LEAD_KEY); } catch (e) {}
+    KV_LEAD_ANSWER_KEYS.forEach((key) => delete answers[key]);
+    answers.interesse = [];
+    stepOrder = [0, 9, 1, 2, 3, 4, 5, 6, 7, 8, 10];
+    window.__wpPfad = true;
+    document.getElementById('leadHandoffBanner')?.remove();
+    recomputeProgress();
+    applyR17PfadContent();
+    showStep(stepOrder[0]);
+  }
+  function applyKvLeadHandoff(d) {
+    const gebMap = { efh: 'Einfamilienhaus', dhh: 'Doppelhaushälfte', rh: 'Reihenhaus', zfh: 'Mehrfamilienhaus', mfh: 'Mehrfamilienhaus' };
+    const heizMap = { gas: 'Gasheizung', oel: 'Ölheizung' };
+    const bauMap = { vor1978: 'Vor 1978', '1978-1994': '1978–1994', '1995-2010': '1995–2009', nach2010: 'Ab 2010' };
+    const flaecheBucket = (n) => n < 100 ? 'Bis 100 m²' : n < 150 ? '100–150 m²' : n < 200 ? '150–200 m²' : n <= 280 ? '200–280 m²' : 'Über 280 m²';
+    answers.interesse = ['Wärmepumpe'];
+    answers.step2 = heizMap[d.heizungsart];
+    answers.energiebedarf_kwh = d.verbrauch.kwh;
+    answers.kv_verbrauch_eingabe = d.verbrauch.eingabeWert;
+    answers.kv_verbrauch_einheit = d.verbrauch.einheit;
+    answers.kv_verbrauch_herkunft = d.verbrauch.herkunft;
+    answers.kv_zeitraum = d.zeitraum;
+    answers.foerderquote_pct = d.ergebnis.quote;
+    answers.foerderbetrag_eur = d.ergebnis.zuschuss;
+    answers.kv_eigenanteil_eur = d.ergebnis.eigenanteil;
+    if (d.ergebnis.vorteil !== undefined) answers.kv_vorteil_eur = d.ergebnis.vorteil;
+    answers.kv_kessel_rohr = d.kessel.rohr;
+    answers.kv_kessel_baujahr = d.kessel.kbj;
+    answers.kv_altgas = d.kessel.altgas;
+    if (d.gebaeude) {
+      answers.step1 = gebMap[d.gebaeude.geb];
+      answers.step4 = bauMap[d.gebaeude.bj];
+      answers.step5 = flaecheBucket(d.gebaeude.flaeche);
+    }
+    if (d.kessel.altgas === 'ja') answers.step3 = '20 Jahre oder älter';
+    else if (d.kessel.altgas === 'nein') answers.step3 = 'Unter 20 Jahre';
+    else if (d.kessel.kbj === 'vor1990') answers.step3 = '30 Jahre oder älter';
+    else if (d.kessel.kbj === '1990-2010') answers.step3 = '20 Jahre oder älter';
+
+    window.__wpPfad = true;
+    applyR17PfadContent();
+    const full = [0, 9, 1, 2, 3, 4, 5, 6, 7, 8, 10];
+    const prefilled = new Set([0]);
+    [1, 2, 3, 4, 5].forEach((step) => { if (answers['step' + step]) prefilled.add(step); });
+    stepOrder = full.filter((step) => !prefilled.has(step));
+    recomputeProgress();
+    showLeadHandoffBanner({ kind: 'kostenvergleich', lead: d });
+    showStep(stepOrder[0]);
+    return true;
   }
 
   function applyLeadHandoff() {
+    let kvRaw = null;
+    try { kvRaw = sessionStorage.getItem(KV_LEAD_KEY); } catch (e) {}
+    if (kvRaw) {
+      let kvLead = null;
+      try { kvLead = JSON.parse(kvRaw); } catch (e) {}
+      if (validKvLead(kvLead) && applyKvLeadHandoff(kvLead)) {
+        try { sessionStorage.removeItem(KV_LEAD_KEY); } catch (e) {}
+        return true;
+      }
+      try { sessionStorage.removeItem(KV_LEAD_KEY); } catch (e) {}
+    }
     let raw = null;
     try {
       raw = sessionStorage.getItem('hwLeadPrefill');
