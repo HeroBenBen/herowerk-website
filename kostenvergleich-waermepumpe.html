@@ -578,9 +578,9 @@
       <p style="color:var(--hero-muted);font-size:0.85rem;margin-bottom:16px;">Die wenigsten zahlen die neue Heizung bar, egal ob Wärmepumpe oder Gaskessel. Legen Sie hier Ihre Finanzierung fest. Im Ergebnis vergleichen wir dann fair: neue Wärmepumpe finanziert gegen neue fossile Anlage finanziert, jeweils Rate plus laufende Kosten.</p>
       <div class="grid-2">
         <div>
-          <div class="tg"><label class="tog"><input type="checkbox" id="finanzTog" checked><span class="sl"></span></label>
+          <div class="tg"><label class="tog"><input type="checkbox" id="finanzTog"><span class="sl"></span></label>
             <div class="tl">Wärmepumpe finanzieren (KfW-Ergänzungskredit 358/359)<small>Blendet den monatlichen Vergleich im Ergebnis ein</small></div></div>
-          <div id="finanzOpt">
+          <div id="finanzOpt" style="display:none">
             <div class="sg"><label>Kreditlaufzeit <span class="v" id="vKredLZ">10 Jahre</span></label>
               <input type="range" id="kredLZ" min="5" max="20" step="1" value="10"></div>
             <div class="sg"><label>Zinssatz (nominal) <span class="ii" data-tooltip="Richtwert aus dem KfW-Konditionenanzeiger, Stand 14.07.2026: Ergänzungskredit Plus (358) bei 10 Jahren Laufzeit, Sollzins 0,71 %. Den Zins legt die KfW bei Zusage fest. Frei einstellbar, wenn Ihre Bank andere Konditionen nennt.">i</span> <span class="v" id="vKredZins">0,7 %</span></label>
@@ -1675,7 +1675,14 @@ function calculate(){
     const inv=parseFloat($('invWP').value);
     const basis=Math.min(inv,f.grenze);
     const betrag=Math.round(basis*f.q/100);
-    const eigen=inv-betrag;
+    // proKlima (read-only Spiegel der Engine-Formel): nur Antragszeitraum bis 31.10.2026, max. 1.500, BEG-60-Prozent-Deckel
+    const pkTog=$('proklimaTog');
+    const pkOn=!!(pkTog&&pkTog.checked);
+    const pkAllowed=$('fHalbjahr')&&$('fHalbjahr').value==='h2-2026';
+    const pk=(pkOn&&pkAllowed)?Math.min(Math.round(0.05*inv),1500):0;
+    const zuschuss=pk>0?Math.max(betrag,Math.min(betrag+pk,Math.round(0.6*inv))):betrag;
+    const pkEff=zuschuss-betrag;
+    const eigen=inv-zuschuss;
     const rows=[];
     rows.push(['Heizung heute',(WZ.step1.heizart==='oel'?'Öl':'Gas')+', '+Number($('bedarf').value).toLocaleString('de-DE')+' kWh']);
     const vgl=$('vglBrennstoff');
@@ -1684,7 +1691,9 @@ function calculate(){
     if(WZ.touched.has('fEinkSlider'))rows.push(['Einkommen (anrechenbar)',f.anr.toLocaleString('de-DE')+' €']);
     host.innerHTML=`<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accent);">${f.q} %</div><div style="font-size:0.8rem;color:var(--hero-muted);">Ihre Förderquote (KfW 458)</div></div>
       <div class="ln"><span class="lbl">Ihre Wärmepumpe</span><span class="vv">${inv.toLocaleString('de-DE')} €</span></div>
-      <div class="ln"><span class="lbl">Ihr Zuschuss</span><span class="vv" style="color:var(--hero-green)">−${betrag.toLocaleString('de-DE')} €</span></div>
+      <div class="ln"><span class="lbl">Ihr Zuschuss (KfW 458)</span><span class="vv" style="color:var(--hero-green)">−${betrag.toLocaleString('de-DE')} €</span></div>
+      ${pkEff>0?`<div class="ln"><span class="lbl">proKlima Hannover</span><span class="vv" style="color:var(--hero-green)">−${pkEff.toLocaleString('de-DE')} €</span></div>`:''}
+      ${(pkOn&&!pkAllowed)?`<div class="ln"><span class="lbl">proKlima: nur für Anträge bis 31.10.2026, in Ihrem Antragszeitraum nicht mehr enthalten</span><span class="vv">−0 €</span></div>`:''}
       <div class="ln" style="border-top:1px solid var(--hero-separator);margin-top:4px;padding-top:6px;"><span class="lbl"><strong>Ihr Eigenanteil</strong></span><span class="vv" style="color:var(--hero-accent);font-size:1.05rem;">${eigen.toLocaleString('de-DE')} €</span></div>
       <div style="font-size:0.68rem;color:var(--hero-muted);margin:8px 0 12px;">Förderfähig max. ${f.grenze.toLocaleString('de-DE')} €. Unverbindliche Berechnung, ohne Gewähr.</div>
       <div style="border-top:1px solid var(--hero-separator);padding-top:10px;margin-bottom:12px;">${rows.map(r=>`<div class="ln"><span class="lbl">${r[0]}</span><span class="vv" style="font-weight:600;font-size:0.8rem;">${r[1]}</span></div>`).join('')}</div>`;
@@ -1707,6 +1716,11 @@ function calculate(){
     }
     if(f.e>0)rows.push(`<div class="ln"><span class="lbl">Einkommensbonus (anrechenbares Einkommen ${f.anr.toLocaleString('de-DE')} €)</span><span class="vv">+${f.e} %</span></div>`);
     if(f.sum>80)rows.push(`<div class="ln"><span class="lbl">Gesetzlicher Deckel: mehr als 80 % gibt es nicht</span><span class="vv">80 %</span></div>`);
+    const pkTog=$('proklimaTog');
+    if(pkTog&&pkTog.checked){
+      if($('fHalbjahr')&&$('fHalbjahr').value==='h2-2026')rows.push(`<div class="ln"><span class="lbl">proKlima Hannover (enercity-Fonds): zusätzlich zum KfW-Zuschuss, 5 % der Kosten</span><span class="vv">+ bis 1.500 €</span></div>`);
+      else rows.push(`<div class="ln"><span class="lbl">proKlima Hannover: gilt nur für Anträge bis 31.10.2026, in Ihrem Antragszeitraum nicht mehr enthalten</span><span class="vv">+0 €</span></div>`);
+    }
     host.innerHTML=`<strong>So setzt sich Ihre Förderung zusammen:</strong>`+rows.join('');
   }
   function prepareIncomeDiscreet(){
@@ -1718,7 +1732,7 @@ function calculate(){
   function wireGlobalTracking(){
     document.addEventListener('input',e=>{if(WZ.programmatic)return;const id=e.target&&e.target.id;if(WZ_TRACK_IDS.includes(id)){if(id==='fEinkSlider'&&!WZ.incomeOpted)return;touch(id);}});
     document.addEventListener('change',e=>{if(WZ.programmatic)return;const id=e.target&&e.target.id;if(WZ_TRACK_IDS.includes(id)){if(id==='fEinkSlider'&&!WZ.incomeOpted)return;touch(id);}});
-    const WZ_FOERDER_IDS=['fHalbjahr','fEinkSlider','fKind','fGrund','fEU','fKlima','fAlt20'];
+    const WZ_FOERDER_IDS=['fHalbjahr','fEinkSlider','fKind','fGrund','fEU','fKlima','fAlt20','proklimaTog'];
     ['input','change'].forEach(t=>document.addEventListener(t,e=>{const id=e.target&&e.target.id;if(WZ_FOERDER_IDS.includes(id)){renderFoerderAufbau();renderLiveFoerder();}}));
   }
   const WZ_MARKET_LABELS={invWP:'Richtwert HeroWerk-Einstiegsangebot',vglBrennstoff:'Vorbelegt nach Ihrer Heizungsart',kredZins:'KfW-Kondition Stand 14.07.2026'};
@@ -1797,7 +1811,19 @@ function calculate(){
         <div class="ln wz-hc-sum"><span class="lbl"><strong>Ihr Vorteil mit der Wärmepumpe</strong></span><span class="vv">${benefit}</span></div></div>`;
     } else if(!vglOn){
       const anschaffung=findPathValue('Anschaffung Wärmepumpe (nach Förderung)');
-      if(anschaffung){
+      // WP-Betrieb aus der Annahmen-Box (Kopplung an eingefrorene calculate-Ausgabe: "WP-Strom XJ.:" + "Wartung: WP Y€/J")
+      const assTxt=$('assBox')?$('assBox').textContent:'';
+      const mStrom=assTxt.match(/WP-Strom\s*\d+\s*J\.\s*:\s*([\d.]+)\s*€/);
+      const mWart=assTxt.match(/Wartung:\s*WP\s*(\d+)\s*€\/J/);
+      if(anschaffung&&mStrom&&mWart){
+        const wpBetrieb=pf(mStrom[1])+parseInt(mWart[1],10)*parseInt(lz,10);
+        const weiterKosten=(pf(benefit)+pf(anschaffung)+wpBetrieb).toLocaleString('de-DE')+' €';
+        rechnung=`<div class="wz-herocalc"><div class="wz-hc-title">So kommen wir auf diese Zahl (Vergleich: Sie behalten Ihre ${fuel}heizung):</div>
+        <div class="ln"><span class="lbl">Was der Weiterbetrieb Ihrer ${fuel}heizung kostet: ${fuel}, Wartung und CO₂-Preis über ${lz} Jahre</span><span class="vv">${weiterKosten}</span></div>
+        <div class="ln"><span class="lbl">Was die Wärmepumpe stattdessen kostet: Strom und Wartung über ${lz} Jahre</span><span class="vv">−${wpBetrieb.toLocaleString('de-DE')} €</span></div>
+        <div class="ln"><span class="lbl">Anschaffung der Wärmepumpe, nach Abzug der Förderung</span><span class="vv">−${anschaffung}</span></div>
+        <div class="ln wz-hc-sum"><span class="lbl"><strong>Ihr Vorteil mit der Wärmepumpe</strong></span><span class="vv">${benefit}</span></div></div>`;
+      } else if(anschaffung){
         const sparAnz=(pf(benefit)+pf(anschaffung)).toLocaleString('de-DE')+' €';
         rechnung=`<div class="wz-herocalc"><div class="wz-hc-title">So kommen wir auf diese Zahl (Vergleich: Sie behalten Ihre ${fuel}heizung):</div>
         <div class="ln"><span class="lbl">Eingesparte Heizkosten gegenüber dem Weiterbetrieb Ihrer ${fuel}heizung über ${lz} Jahre</span><span class="vv">${sparAnz}</span></div>
