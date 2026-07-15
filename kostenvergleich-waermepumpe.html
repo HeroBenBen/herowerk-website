@@ -873,6 +873,45 @@ kvLoadBootstrap();
   function ctaHtml(compact){
     return `<h3>Aus Richtwerten wird Ihr Angebot</h3><p>Der Rechner zeigt die Größenordnung. Ihr individuelles Angebot rechnet mit Ihrem Gebäude, Ihrer Heizlast und der aktuell besten Förderung, kostenlos und unverbindlich.</p>${compact?'':`<ul><li>Vor-Ort-Termin mit Meisterbetrieb aus der Region Hannover</li><li>Förderantrag übernehmen wir</li><li>Festpreis statt Richtwert</li></ul>`}<a href="${CTA_URL}">Individuelles Angebot anfragen</a>`;
   }
+  function finiteNumber(value){
+    const number=Number(value);
+    return Number.isFinite(number)?number:null;
+  }
+  function buildLeadHandoff(){
+    const response=KV_STATE.last;
+    if(!response||!response.foerder||!response.inputsEcho||!response.system)return null;
+    const f=response.foerder;
+    const quote=finiteNumber(f.quoteOhneEinkommen);
+    const zuschuss=finiteNumber(f.zuschussOhneEinkommen);
+    const eigenanteil=finiteNumber(f.eigenanteilOhneEinkommen);
+    const kwh=finiteNumber(response.inputsEcho.bedarf);
+    if(quote===null||zuschuss===null||eigenanteil===null||kwh===null)return null;
+    const source=WZ.step1.bedarfSource==='market'?'market':'own';
+    const slider=$('wzVerbSlider');
+    const unit=source==='own'&&['kwh','m3','liter'].includes(WZ.step1.unit)?WZ.step1.unit:'kwh';
+    const entered=source==='own'&&slider?finiteNumber(slider.value):kwh;
+    const estimated=source==='market';
+    return {
+      v:1,
+      quelle:'kostenvergleich-waermepumpe',
+      zeitpunkt:new Date().toISOString(),
+      heizungsart:response.system.heizart,
+      verbrauch:{kwh,eingabeWert:entered===null?kwh:entered,einheit:unit,herkunft:source},
+      gebaeude:estimated?{geb:WZ.step1.geb,bj:WZ.step1.bj,san:WZ.step1.san,flaeche:finiteNumber(WZ.step1.flaeche)}:null,
+      kessel:{rohr:WZ.step1.rohr||null,kbj:WZ.step1.kbj||null,altgas:WZ.step1.altgas||null},
+      zeitraum:f.periode,
+      ergebnis:{eigenanteil,zuschuss,quote}
+    };
+  }
+  function writeLeadHandoff(){
+    try{sessionStorage.removeItem('hero_kv_lead');}catch(_error){}
+    let payload=null;
+    try{payload=buildLeadHandoff();}catch(_error){}
+    if(!payload)return;
+    try{sessionStorage.setItem('hero_kv_lead',JSON.stringify(payload));}catch(_error){
+      // Der CTA bleibt auch bei blockiertem sessionStorage ein normaler Link.
+    }
+  }
   function setControl(id,value,events){
     const el=$(id);if(!el)return;
     WZ.programmatic=true;
@@ -906,6 +945,15 @@ kvLoadBootstrap();
     $('wzNext').addEventListener('click',()=>{if(WZ.current<4)goStep(WZ.current+1);});
     goStep(0);
   }
+
+  document.addEventListener('click',event=>{
+    const link=event.target&&event.target.closest?event.target.closest('a[href]'):null;
+    if(!link)return;
+    let target;
+    try{target=new URL(link.href,window.location.href);}catch(_error){return;}
+    const cta=new URL(CTA_URL,window.location.href);
+    if(target.origin===cta.origin&&target.pathname===cta.pathname)writeLeadHandoff();
+  },true);
 
   function renderStepper(){
     $('wzStepper').innerHTML=WZ_LABELS.map((label,i)=>`<button type="button" class="wz-step" data-step="${i}" aria-label="${label}"><span class="wz-dot">${i+1}</span><span>${label}</span></button>`).join('');

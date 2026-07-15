@@ -1,5 +1,5 @@
 'use strict';
-/* global KV_STATE, Chart, document */
+/* global KV_STATE, Chart, Storage, calculate, document, location, sessionStorage, window */
 
 const { test, expect } = require('@playwright/test');
 const http = require('http');
@@ -12,6 +12,7 @@ test.describe.configure({ mode: 'serial' });
 let server;
 let baseURL;
 let failCalculations = false;
+const LANE_A_ROOT = process.env.LANE_A_ROOT || path.resolve(__dirname, '..', '..', 'wp-lane-a');
 
 function bool(value, fallback) {
   if (value === null) return fallback;
@@ -75,14 +76,22 @@ test.beforeAll(async () => {
       return sendJson(response, { error: true, message: 'unknown_action' }, 400);
     }
     const relative = url.pathname === '/' ? 'kostenvergleich-waermepumpe.html' : decodeURIComponent(url.pathname.slice(1));
-    const file = path.resolve(__dirname, '..', relative);
-    const root = path.resolve(__dirname, '..') + path.sep;
+    const selectedRoot = relative === 'anfrage.html' && fs.existsSync(path.join(LANE_A_ROOT, 'anfrage.html'))
+      ? LANE_A_ROOT
+      : path.resolve(__dirname, '..');
+    const file = path.resolve(selectedRoot, relative);
+    const root = path.resolve(selectedRoot) + path.sep;
     if (!file.startsWith(root) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
       response.writeHead(404);
       return response.end('not found');
     }
     const type = file.endsWith('.html') ? 'text/html; charset=utf-8' : file.endsWith('.css') ? 'text/css' : file.endsWith('.js') ? 'text/javascript' : 'application/octet-stream';
     response.writeHead(200, { 'Content-Type': type, 'Cache-Control': 'no-store' });
+    if (relative === 'kostenvergleich-waermepumpe.html') {
+      const html = fs.readFileSync(file, 'utf8').replaceAll('https://www.herowerk.de/anfrage.html', '/anfrage.html');
+      response.end(html);
+      return;
+    }
     fs.createReadStream(file).pipe(response);
   });
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
@@ -325,4 +334,144 @@ test('O3 Kunde Light 375: lokaler Consent, Alt-/EU-Text, fünf Förderanker und 
   expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
   expect(light.consoleErrors).toEqual([]);
   expect(light.pageErrors).toEqual([]);
+});
+
+function recursiveKeys(value, found = []) {
+  if (!value || typeof value !== 'object') return found;
+  Object.entries(value).forEach(([key, nested]) => {
+    found.push(key);
+    recursiveKeys(nested, found);
+  });
+  return found;
+}
+
+test('O4 Writer: jeder Anfrage-CTA schreibt ausschließlich das v1-Contract-Schema', async ({ page }) => {
+  await installLocalConsent(page);
+  await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?theme=dark`, { waitUntil: 'domcontentloaded' });
+  await acceptConsent(page);
+  await page.waitForFunction(() => typeof KV_STATE !== 'undefined' && KV_STATE.last);
+  await page.locator('[data-wz-heizart="gas"]').click();
+  await page.locator('[data-wz-grp="vmode"][data-wz-val="unknown"]').click();
+  await page.locator('[data-wz-grp="geb"][data-wz-val="efh"]').click();
+  await page.locator('[data-wz-grp="bj"][data-wz-val="1978-1994"]').click();
+  await page.locator('[data-wz-grp="san"][data-wz-val="teilweise"]').click();
+  await page.waitForFunction(() => window.WZ_BRIDGE && KV_STATE.last && KV_STATE.last.inputsEcho.bedarf);
+  await page.locator('[data-wz-grp="altgas"][data-wz-val="ja"]').click();
+  await page.locator('[data-wz-grp="rohr"][data-wz-val="kunststoff"]').click();
+  await page.locator('[data-wz-grp="kbj"][data-wz-val="1990-2010"]').click();
+
+  await page.evaluate(() => document.addEventListener('click', (event) => {
+    const link = event.target.closest && event.target.closest('a[href]');
+    if (link && new URL(link.href, location.href).pathname === '/anfrage.html') event.preventDefault();
+  }));
+  async function expectWriterPayload(cta) {
+    await page.evaluate(() => sessionStorage.removeItem('hero_kv_lead'));
+    await cta.click({ force: true });
+    const payload = await page.evaluate(() => JSON.parse(sessionStorage.getItem('hero_kv_lead')));
+    expect(Object.keys(payload).sort()).toEqual(['ergebnis', 'gebaeude', 'heizungsart', 'kessel', 'quelle', 'v', 'verbrauch', 'zeitpunkt', 'zeitraum']);
+    expect(Object.keys(payload.verbrauch).sort()).toEqual(['eingabeWert', 'einheit', 'herkunft', 'kwh']);
+    expect(Object.keys(payload.gebaeude).sort()).toEqual(['bj', 'flaeche', 'geb', 'san']);
+    expect(Object.keys(payload.kessel).sort()).toEqual(['altgas', 'kbj', 'rohr']);
+    expect(Object.keys(payload.ergebnis).sort()).toEqual(['eigenanteil', 'quote', 'zuschuss']);
+    const response = await page.evaluate(() => KV_STATE.last);
+    expect(payload.ergebnis).toEqual({
+      eigenanteil: response.foerder.eigenanteilOhneEinkommen,
+      zuschuss: response.foerder.zuschussOhneEinkommen,
+      quote: response.foerder.quoteOhneEinkommen
+    });
+    expect(payload.verbrauch.herkunft).toBe('market');
+    expect(payload.gebaeude).toEqual({ geb: 'efh', bj: '1978-1994', san: 'teilweise', flaeche: 140 });
+    const forbidden = /eink|kind|proklima|zve|name|adresse|mail|telefon|phone|ip|plz/i;
+    expect(recursiveKeys(payload).filter((key) => forbidden.test(key))).toEqual([]);
+    expect(JSON.stringify(payload)).not.toMatch(/example@|\+49|30159/);
+    expect(new URL(page.url()).searchParams.has('hero_kv_lead')).toBe(false);
+    expect(new URL(page.url()).hash).toBe('');
+  }
+  await page.setViewportSize({ width: 1200, height: 812 });
+  await page.evaluate(() => {
+    window.__kvLastForO4Test = KV_STATE.last;
+    KV_STATE.last = null;
+    sessionStorage.setItem('hero_kv_lead', '{"stale":true}');
+  });
+  await page.locator('a.nav-cta[href="/anfrage.html"]').click();
+  expect(await page.evaluate(() => sessionStorage.getItem('hero_kv_lead'))).toBeNull();
+  await page.evaluate(() => { KV_STATE.last = window.__kvLastForO4Test; });
+  await expectWriterPayload(page.locator('a.nav-cta[href="/anfrage.html"]'));
+  await expectWriterPayload(page.locator('#wzStickyCta a[href="/anfrage.html"]'));
+  await page.setViewportSize({ width: 375, height: 812 });
+  await nextWizardStep(page);
+  await expectWriterPayload(page.locator('#wzBottomCta a[href="/anfrage.html"]'));
+
+  await nextWizardStep(page);
+  await expectWriterPayload(page.locator('#wzIncomeDiscreet a[href="/anfrage.html"]'));
+
+  await nextWizardStep(page);
+  await nextWizardStep(page);
+  await page.waitForFunction(() => document.querySelector('#wzResultCta a[href="/anfrage.html"]'));
+  await expectWriterPayload(page.locator('#wzResultCta a[href="/anfrage.html"]'));
+
+  await fetch(`${baseURL}/__fail-on`);
+  await page.evaluate(() => calculate({ showResults: true, scroll: false }));
+  await expect(page.locator('#kvStatus a[href="/anfrage.html"]')).toHaveCount(1);
+  await expectWriterPayload(page.locator('#kvStatus a[href="/anfrage.html"]'));
+  await fetch(`${baseURL}/__fail-off`);
+});
+
+test('O4 Writer fail-safe: setItem-Fehler löscht gültigen stale Key vor der Navigation', async ({ page }) => {
+  test.skip(!fs.existsSync(path.join(LANE_A_ROOT, 'anfrage.html')), 'Lane-A-Worktree für Cross-E2E fehlt');
+  await installLocalConsent(page);
+  await page.setViewportSize({ width: 1200, height: 812 });
+  await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?theme=dark`, { waitUntil: 'domcontentloaded' });
+  await acceptConsent(page);
+  await page.waitForFunction(() => typeof KV_STATE !== 'undefined' && KV_STATE.last && typeof KV_STATE.last.foerder.quoteOhneEinkommen === 'number');
+  await page.evaluate(() => {
+    const stale = {
+      v: 1,
+      quelle: 'kostenvergleich-waermepumpe',
+      zeitpunkt: '2026-07-15T20:00:00.000Z',
+      heizungsart: 'oel',
+      verbrauch: { kwh: 30000, eingabeWert: 3000, einheit: 'liter', herkunft: 'own' },
+      gebaeude: null,
+      kessel: { rohr: 'metall', kbj: 'vor1990', altgas: null },
+      zeitraum: 'h2-2026',
+      ergebnis: { eigenanteil: 17120, zuschuss: 12880, quote: 46 }
+    };
+    sessionStorage.setItem('hero_kv_lead', JSON.stringify(stale));
+    const nativeSetItem = Storage.prototype.setItem;
+    Storage.prototype.setItem = function(key, value) {
+      if (this === sessionStorage && key === 'hero_kv_lead') throw new Error('test_setitem_blocked');
+      return nativeSetItem.call(this, key, value);
+    };
+  });
+  await expect(page.locator('#wzStickyCta a[href="/anfrage.html"]')).toBeVisible();
+  await Promise.all([
+    page.waitForURL(`${baseURL}/anfrage.html`, { waitUntil: 'domcontentloaded' }),
+    page.locator('#wzStickyCta a[href="/anfrage.html"]').click()
+  ]);
+  await expect(page.locator('#leadHandoffBanner')).toHaveCount(0);
+  await expect(page.locator('.step.active')).toHaveAttribute('data-step', '0');
+  expect(await page.evaluate(() => sessionStorage.getItem('hero_kv_lead'))).toBeNull();
+});
+
+test('O4 Cross-Worktree E2E: echter CTA-Klick mit Key und direkter Aufruf ohne Key', async ({ page }) => {
+  test.skip(!fs.existsSync(path.join(LANE_A_ROOT, 'anfrage.html')), 'Lane-A-Worktree für Cross-E2E fehlt');
+  await installLocalConsent(page);
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?theme=dark`, { waitUntil: 'domcontentloaded' });
+  await acceptConsent(page);
+  await page.waitForFunction(() => typeof KV_STATE !== 'undefined' && KV_STATE.last);
+  await page.setViewportSize({ width: 1200, height: 812 });
+  await Promise.all([
+    page.waitForURL(`${baseURL}/anfrage.html`, { waitUntil: 'domcontentloaded' }),
+    page.locator('#wzStickyCta a[href="/anfrage.html"]').click()
+  ]);
+  await page.setViewportSize({ width: 375, height: 812 });
+  await expect(page.locator('#leadHandoffBanner')).toContainText('ohne deine Einkommensangabe gerechnet');
+  await expect(page.locator('#leadHandoffBanner')).toContainText('Quelle: Kostenvergleich Wärmepumpe.');
+  expect(await page.evaluate(() => sessionStorage.getItem('hero_kv_lead'))).toBeNull();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
+
+  await page.goto(`${baseURL}/anfrage.html`, { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#leadHandoffBanner')).toHaveCount(0);
+  await expect(page.locator('.step.active')).toHaveAttribute('data-step', '0');
 });
