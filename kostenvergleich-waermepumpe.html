@@ -39,9 +39,9 @@
 @font-face{font-family:'Barlow';font-style:normal;font-weight:700;font-display:swap;src:url('/fonts/barlow-700.woff2') format('woff2');}
 @font-face{font-family:'Barlow';font-style:normal;font-weight:800;font-display:swap;src:url('/fonts/barlow-800.woff2') format('woff2');}
 </style>
-<title>Wärmepumpe: Lohnt sich das? Der ehrliche Vorteils-Rechner | HeroWerk</title>
-<meta name="description" content="Vergleicht neue Öl- oder Gasheizung mit einer neuen Wärmepumpe über 20 Jahre: Anschaffung, Förderung, Betriebskosten, CO2-Preis. Mit aktueller KfW-Förderung.">
-<link rel="canonical" href="https://www.herowerk.de/wp-rechner">
+<title>Kosten-Vergleichsrechner: Öl und Gas oder Wärmepumpe | HeroWerk</title>
+<meta name="description" content="Der ehrliche Kostenvergleich über 20 Jahre: neue Öl- oder Gasheizung gegen Wärmepumpe. Anschaffung, Förderung, Heizkosten und CO2-Preis, mit aktueller KfW-Förderung.">
+<link rel="canonical" href="https://www.herowerk.de/kostenvergleich-waermepumpe">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23B7D900'/%3E%3C/svg%3E">
 <script src="/js/chart-4.4.1.umd.min.js"></script>
 <style>
@@ -222,6 +222,13 @@
   .tog input:focus-visible+.sl{outline:2px solid var(--hero-accent);outline-offset:2px;}
   .wz-optgrid{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
   .wz-optgrid.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));}
+  @media(max-width:600px){
+    .wz-optgrid.cols{grid-template-columns:1fr 1fr;gap:8px;}
+    .wz-optgrid .wz-optcard{padding:10px 12px;gap:8px;}
+    .wz-optgrid .wz-optcard .wz-opt-title{font-size:0.85rem;}
+    .wz-optgrid .wz-optcard .wz-opt-sub{font-size:0.72rem;}
+    .wz-optgrid .wz-optcard .wz-opt-check{width:18px;height:18px;}
+  }
   .wz-optcard{display:flex;align-items:center;gap:12px;background:var(--hero-card);border:2px solid var(--hero-separator);border-radius:14px;padding:14px 16px;cursor:pointer;text-align:left;width:100%;color:var(--hero-white);font-family:'Inter',sans-serif;}
   .wz-optcard:hover,.wz-optcard:focus-visible{border-color:var(--hero-accent);outline:none;}
   .wz-optcard.is-selected{border-color:var(--hero-accent);background:rgba(183,217,0,0.12);}
@@ -367,9 +374,9 @@
 </nav>
 <header class="page-head">
   <div class="page-head-inner">
-    <div class="kicker">Wärmepumpen-Rechner</div>
-    <h1>Was spart Ihre Wärmepumpe <span class="accent">wirklich?</span></h1>
-    <p class="lead">Förderung, Amortisation und monatliche Ersparnis, transparent gerechnet mit den Konditionen der BEG-Reform 2026.</p>
+    <div class="kicker">Kosten-Vergleichsrechner</div>
+    <h1>Neue Öl- oder Gasheizung <span class="accent">oder Wärmepumpe?</span></h1>
+    <p class="lead">Der ehrliche Vergleich über 20 Jahre: Anschaffung, Förderung und Heizkosten von Öl, Gas und Wärmepumpe, gerechnet nach der BEG-Reform 2026.</p>
     <span class="badge">Region Hannover</span>
   </div>
 </header>
@@ -415,7 +422,7 @@
           <input type="range" id="eta" min="65" max="98" step="1" value="85">
           <div class="wz-opt-sub" id="etaHerkunft" style="margin-top:6px;display:none"></div>
           <div class="wz-opt-sub" id="etaLive" style="margin-top:6px"></div>
-          <div class="wz-opt-sub" style="margin-top:6px">So lesen Sie das: Sie kaufen 1 Kilowattstunde Gas oder Öl ein. Ihr Kessel macht daraus zum Beispiel 0,85 Kilowattstunden Wärme, der Rest geht verloren. Die Wärmepumpe dreht das um: Aus 1 Kilowattstunde Strom macht sie rund 3,8 Kilowattstunden Wärme. Das ist ein Wirkungsgrad von 380 Prozent, und genau das ist die Magie hinter der Wärmepumpe.</div></div>
+          <div class="wz-opt-sub" style="margin-top:6px">So lesen Sie das: Sie kaufen 1 Kilowattstunde Gas oder Öl ein. Ihre Heizung macht daraus zum Beispiel 0,85 Kilowattstunden Wärme, der Rest geht verloren. Die Wärmepumpe dreht das um: Aus 1 Kilowattstunde Strom macht sie rund 3,8 Kilowattstunden Wärme. Das ist ein Wirkungsgrad von 380 Prozent, und genau das ist die Magie hinter der Wärmepumpe.</div></div>
       </div>
       <div class="card" id="wzWpCard">
         <h3>Neue Wärmepumpe</h3>
@@ -431,7 +438,7 @@
       <h3>Der ehrliche Vergleich: Wenn Ihre Heizung jetzt ausfällt <span class="ii" data-tooltip="Richtwerte inkl. Einbau (Verbraucherzentrale/co2online, marktabhängig): neue Gas-Brennwertheizung ca. 8.000 bis 15.000 €, neue Ölheizung ca. 12.000 bis 20.000 €. Diese Anschaffung würde ohnehin anfallen und bekommt keine Förderung.">i</span></h3>
       <div class="ib" style="margin-bottom:16px"><span class="d">Die meisten Eigentümer stehen nicht vor der Wahl „Wärmepumpe oder nichts", sondern <strong>„neue Heizung ODER neue Wärmepumpe"</strong>. Auch eine neue Gas- oder Ölheizung kostet Anschaffung und Einbau, bekommt aber keine Förderung und trägt steigende CO₂- und Biotreppe-Kosten. Deshalb zählt die <strong>Mehrinvestition</strong>, nicht der volle Wärmepumpen-Preis. Hinweis: In Kommunen mit beschlossener Wärmeplanung (Großstädte wie Hannover) ist der Einbau einer neuen reinen Gas-/Ölheizung nach GEG §71 nur noch eingeschränkt bzw. mit steigendem EE-Anteil zulässig. Der Rechner rechnet zugunsten der fossilen Variante nur mit der Biotreppe.</span></div>
       <div class="tg"><label class="tog"><input type="checkbox" id="neuFossilTog" checked onchange="toggleNeuFossil()"><span class="sl"></span></label>
-        <div class="tl">Neue fossile Anlage als realistischen Vergleich einrechnen<small>Vergleicht Investition + Folgekosten: neue Ölheizung gegen neue Gasheizung gegen neue Wärmepumpe. (Aktiviert zugleich die Biotreppe, da die Alternative ein neuer Kessel wäre.)</small></div></div>
+        <div class="tl">Neue fossile Anlage als realistischen Vergleich einrechnen<small>Vergleicht Investition + Folgekosten: neue Ölheizung gegen neue Gasheizung gegen neue Wärmepumpe. (Aktiviert zugleich die Biotreppe, da die Alternative eine neue Öl- oder Gasheizung wäre.)</small></div></div>
       <div id="neuFossilOpt">
         <div class="selg" id="vglGroup"><label>Wenn Sie heute eine neue Heizung einbauen müssten: Gas oder Öl? <span class="ii" data-tooltip="Diese Wahl steuert den Kern-Vergleich: Investition und Brennstoffpreis der neuen fossilen Alternative. Wo kein Gasanschluss möglich ist, ist Öl der realistische Vergleich.">i</span></label>
           <div class="wz-choice-grid"><button type="button" class="wz-choice" data-vgl-fuel="gas" aria-label="Vergleich mit neuer Gasheizung">Gas</button><button type="button" class="wz-choice" data-vgl-fuel="oel" aria-label="Vergleich mit neuer Ölheizung">Öl</button></div>
@@ -1441,6 +1448,7 @@ function calculate(){
   function renderStep1(){
     addStatic(`<p class="wz-intro">Drei Angaben zu Ihrer heutigen Heizung genügen. Alles Weitere belegen wir mit marktüblichen Richtwerten vor, die Sie jederzeit anpassen können.</p>
       <div class="selg"><label>Heizungsart bisher</label><div class="wz-choice-grid"><button type="button" class="wz-choice" data-wz-heizart="gas" aria-label="Gas">Gas</button><button type="button" class="wz-choice" data-wz-heizart="oel" aria-label="Öl">Öl</button></div></div>
+      <div id="wzSecVerbrauch" class="wz-hidden">
       <div class="selg"><label>Kennen Sie Ihren Jahresverbrauch?</label>
         <div class="wz-optgrid">
           ${wzOpt('vmode','known','Ich kenne meinen Jahresverbrauch','Eingabe in kWh, m³ Gas oder Liter Heizöl')}
@@ -1468,22 +1476,23 @@ function calculate(){
           <input type="range" id="wzFlSlider" min="60" max="800" step="10" value="140" aria-label="Wohnfläche in Quadratmetern"></div>
         <div class="ib" id="wzEstBox" style="display:none"><strong>Geschätzter Jahresverbrauch: <span id="wzEstVal"></span></strong><br><span class="d">Marktüblicher Richtwert aus Ihren Gebäudedaten. Genauer wird es mit dem Wert aus Ihrer letzten Jahresabrechnung.</span></div>
       </div>
-      <div class="selg" style="margin-top:16px"><label>Ihre Chance auf den Klimageschwindigkeitsbonus (bis 16 Prozent mehr Förderung)</label>
+      </div>
+      <div class="selg wz-hidden" id="wzSecBonus" style="margin-top:16px"><label>Ihre Chance auf den Klimageschwindigkeitsbonus (bis 16 Prozent mehr Förderung)</label>
         <div id="wzAltOel" class="wz-help"><div class="ib"><strong>Gute Nachricht:</strong> <span class="d">Für eine funktionsfähige Ölheizung gibt es den Klimabonus unabhängig vom Alter. Wir rechnen ihn ein.</span></div></div>
         <div id="wzAltGas" class="wz-help"><div class="wz-opt-sub" style="margin-bottom:8px">Ist Ihre Gasheizung mindestens 20 Jahre alt?</div><div class="wz-optgrid cols">
           ${wzOpt('altgas','ja','Ja, 20 Jahre oder älter','+16 % Klimabonus')}${wzOpt('altgas','nein','Nein, jünger','Kein Klimabonus')}${wzOpt('altgas','unklar','Weiß ich nicht','Wir rechnen ohne Bonus')}
         </div><div id="wzAltTeaser" class="ib ${WZ.step1.altgas==='unklar'?'':'wz-hidden'}"><span class="d">Wir rechnen ohne den Klimabonus von bis zu 16 Prozent. Trifft die Voraussetzung zu, steigt Ihre Förderung deutlich. Das klären wir im Gespräch in zwei Minuten.</span></div></div>
         <div id="wzAltHint" class="wz-opt-sub">Bitte wählen Sie zuerst oben Ihre Heizungsart.</div></div>
-      <div class="selg" style="margin-top:16px"><label>Was für ein Kessel hängt bei Ihnen? Zwei kurze Fragen genügen.</label>
+      <div class="selg wz-hidden" id="wzSecKessel" style="margin-top:16px"><label>Was für eine Heizung hängt bei Ihnen? Zwei kurze Fragen genügen.</label>
         <div class="wz-opt-sub" style="margin-bottom:8px">Schauen Sie auf das Abgasrohr Ihrer Heizung: Ist es aus Metall oder aus Kunststoff?</div>
         <div class="wz-optgrid cols">
-          ${wzOpt('rohr','metall','Metall-Abgasrohr','Typisch für ältere Heizwertkessel')}
-          ${wzOpt('rohr','kunststoff','Kunststoff-Abgasrohr','Typisch für Brennwertkessel')}
+          ${wzOpt('rohr','metall','Metall-Abgasrohr','Typisch für ältere Heizungen')}
+          ${wzOpt('rohr','kunststoff','Kunststoff-Abgasrohr','Typisch für Brennwert-Heizungen')}
           ${wzOpt('rohr','unklar','Weiß ich nicht','Wir rechnen mit einem Mittelwert')}
         </div>
         <div class="wz-opt-sub" style="margin:10px 0 8px">Aus welchem Jahr ist Ihre Heizung ungefähr?</div>
         <div class="wz-optgrid cols">
-          ${wzOpt('kbj','vor1990','Vor 1990','Alte Kesselgeneration')}
+          ${wzOpt('kbj','vor1990','Vor 1990','Alte Heizungs-Generation')}
           ${wzOpt('kbj','1990-2010','1990 bis 2010','Mittlere Generation')}
           ${wzOpt('kbj','nach2010','Nach 2010','Junge Generation')}
           ${wzOpt('kbj','unklar','Weiß ich nicht','Das Abgasrohr genügt uns')}
@@ -1511,7 +1520,7 @@ function calculate(){
   function wzApplyKnown(){
     const c=clampBedarf(wzSliderToKwh());
     WZ.step1.bedarf=c;WZ.step1.bedarfSource='own';
-    setControl('bedarf',c,['input','change']);touch('bedarf');updateNavState();
+    setControl('bedarf',c,['input','change']);touch('bedarf');updateNavState();updateStep1Reveal();
   }
   function wzUpdateEstimate(){
     const s=WZ.step1;
@@ -1525,7 +1534,7 @@ function calculate(){
     setControl('bedarf',kwh,['input','change']);
     $('wzEstVal').textContent=kwh.toLocaleString('de-DE')+' kWh';
     $('wzEstBox').style.display='block';
-    updateChips();updateNavState();
+    updateChips();updateNavState();updateStep1Reveal();
   }
   function wzAutoUnit(){
     if(WZ.step1.unitTouched)return;
@@ -1555,11 +1564,11 @@ function calculate(){
     if(!rohr)return null;
     if(rohr==='unklar')return {v:85,label:null};
     if(rohr==='metall'){
-      if(bj==='vor1990')return {v:70,label:'Heizwertkessel alter Generation (vor 1990)'};
-      return {v:80,label:'Heizwertkessel (Niedertemperaturkessel)'};
+      if(bj==='vor1990')return {v:70,label:'ältere Heizung ohne Brennwerttechnik (vor 1990)'};
+      return {v:80,label:'Heizung ohne Brennwerttechnik (Niedertemperaturkessel)'};
     }
-    if(bj==='nach2010')return {v:93,label:'Brennwertkessel junger Generation (nach 2010)'};
-    return {v:gas?86:90,label:'Brennwertkessel älterer Generation'};
+    if(bj==='nach2010')return {v:93,label:'Brennwert-Heizung junger Generation (nach 2010)'};
+    return {v:gas?86:90,label:'Brennwert-Heizung älterer Generation'};
   }
   function wzApplyEtaDefault(){
     const d=wzEtaDefault();const h=$('etaHerkunft');
@@ -1570,8 +1579,20 @@ function calculate(){
       if(own)h.textContent='Sie haben den Wert selbst eingestellt. Typisch für '+(d.label||'den Bestand insgesamt')+': rund '+d.v+' % der abgerechneten Energie.';
       else if(d.label)h.textContent='Vorbelegt aus Ihren Angaben: '+d.label+', typisch rund '+d.v+' % der abgerechneten Energie (Quellen: Verbraucherzentrale NRW 2020, BEE/ECONSULT-Feldstudien 2018, Stand 15.07.2026). Sie können den Regler jederzeit selbst anpassen.';
       else h.textContent='Wir rechnen mit einem marktüblichen Mittelwert von 85 %. Sie können den Regler jederzeit selbst anpassen.';}
-    if(d.label)WZ_MARKET_LABELS.eta='Aus Ihren Kessel-Angaben';else delete WZ_MARKET_LABELS.eta;
+    if(d.label)WZ_MARKET_LABELS.eta='Aus Ihren Heizungs-Angaben';else delete WZ_MARKET_LABELS.eta;
     updateChips();updateEtaLive();
+  }
+  function updateStep1Reveal(){
+    const s=WZ.step1;
+    const show=(id,on)=>{const el=$(id);if(el)el.classList.toggle('wz-hidden',!on);};
+    const hzOk=!!s.heizart;
+    const verbOk=hzOk&&!!s.vmode&&!!s.bedarf;
+    const bonusOk=verbOk&&(s.heizart==='oel'||!!s.altgas);
+    show('wzSecVerbrauch',hzOk);
+    show('wzSecBonus',verbOk);
+    show('wzSecKessel',bonusOk);
+    const eg=$('wzEtaGroup');
+    if(eg&&!isBerater())eg.classList.toggle('wz-hidden',!(bonusOk&&!!s.rohr));
   }
   function hydrateStep1(){
     qa($('wzStepBody'),'[data-wz-heizart]').forEach(b=>{b.classList.toggle('is-selected',b.dataset.wzHeizart===WZ.step1.heizart);b.addEventListener('click',()=>{WZ.step1.heizart=b.dataset.wzHeizart;setControl('heizart',WZ.step1.heizart,['change']);touch('heizart');wzAutoUnit();wzApplyEtaDefault();hydrateStep1();updateNavState();});});
@@ -1583,6 +1604,7 @@ function calculate(){
         $('wzVKnown').classList.toggle('is-visible',WZ.step1.vmode==='known');
         $('wzVUnknown').classList.toggle('is-visible',WZ.step1.vmode==='unknown');
         if(WZ.step1.vmode==='known'){wzSetVerbLabel();wzApplyKnown();}else{wzUpdateEstimate();}
+        updateStep1Reveal();
       });
     });
     $('wzVKnown').classList.toggle('is-visible',WZ.step1.vmode==='known');
@@ -1618,10 +1640,11 @@ function calculate(){
         b.classList.toggle('is-selected',b.dataset.wzVal===WZ.step1[grp]);
         b.addEventListener('click',()=>{WZ.step1[grp]=b.dataset.wzVal;
           qa($('wzStepBody'),`[data-wz-grp="${grp}"]`).forEach(x=>x.classList.toggle('is-selected',x.dataset.wzVal===WZ.step1[grp]));
-          wzApplyEtaDefault();
+          wzApplyEtaDefault();updateStep1Reveal();
         });
       });
     });
+    updateStep1Reveal();
   }
   function renderStep2(){
     addStatic(`<p class="wz-intro">Die ehrliche Vergleichsfrage lautet: neue Gas- oder Ölheizung oder neue Wärmepumpe? Beides kostet Anschaffung und Einbau. Prüfen Sie die Richtwerte und passen Sie Ihr Wärmepumpen-Angebot an, falls Ihnen schon eines vorliegt.</p>`);
