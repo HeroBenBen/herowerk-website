@@ -121,7 +121,6 @@
           "requiredCardHrefs": [
             "/foerderung-jetzt-mitnehmen",
             "/foerderung-hannover",
-            "/proklima-hannover",
             "/waermepumpe-altbau",
             "/gasheizung-tauschen-oder-reparieren",
             "/baubarkeitspruefung",
@@ -161,16 +160,11 @@
         },
         {
           "id": "faq[6]",
-          "question": "Was ist proKlima Hannover?",
-          "words": 81
-        },
-        {
-          "id": "faq[7]",
           "question": "Was ist der Fördervorschuss und warum ist er limitiert?",
           "words": 74
         },
         {
-          "id": "faq[8]",
+          "id": "faq[7]",
           "question": "Warum Wolf?",
           "words": 53
         },

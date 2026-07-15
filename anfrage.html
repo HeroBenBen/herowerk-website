@@ -416,7 +416,6 @@
     .plz-error {
       font-size: 12px; color: #dc2626; margin-top: 6px; display: none;
     }
-    .plz-result-text.plz-proklima,
     .plz-result-text.plz-region {
       color: var(--green);
     }
@@ -426,7 +425,6 @@
     .plz-result-text.plz-aussen {
       color: var(--bernstein);
     }
-    [data-theme='light'] .plz-result-text.plz-proklima,
     [data-theme='light'] .plz-result-text.plz-region {
       color: #4f6000;
     }
@@ -856,9 +854,8 @@
       <!-- Vaillant: Geräte-Nennung ohne Logo (keine Freigabe) -->
       <span class="partner-badge pb-vaillant">Vaillant</span>
 
-      <!-- KfW / proKlima: Förder-Nennung ohne Logo -->
+      <!-- KfW: Förder-Nennung ohne Logo -->
       <span class="partner-badge" id="partnerKfw">KfW 458</span>
-      <span class="partner-badge" id="partnerProklima">proKlima (Anträge bis 31.10.2026)</span>
     </div>
 
     <div class="trust-rating">
@@ -1079,11 +1076,27 @@
             </div>
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
+          <div class="answer-card" data-value="Holz- oder Pelletheizung" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><path d="M24 5c4 7 10 11 10 20a10 10 0 01-20 0c0-7 4-12 10-20z"/><path d="M24 18c2 4 5 6 5 10a5 5 0 01-10 0c0-4 2-7 5-10z"/></svg></div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">Holz- oder Pelletheizung</div>
+              <div class="answer-card-sub">Biomasseheizung</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
+          <div class="answer-card" data-value="Kohleheizung" onclick="selectAndAdvance(this)">
+            <div class="answer-card-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><path d="M10 31l7-16h17l6 16-8 8H18z"/><path d="M17 15l7 8 10-8M10 31h30"/></svg></div>
+            <div class="answer-card-text">
+              <div class="answer-card-label">Kohleheizung</div>
+              <div class="answer-card-sub">Funktionsfähige Kohleheizung</div>
+            </div>
+            <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          </div>
           <div class="answer-card" data-value="Sonstige Heizung" onclick="selectAndAdvance(this)">
             <div class="answer-card-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="18"/><path d="M18 19a6 6 0 1 1 9 5.2c-2 1.2-3 2.5-3 4.8"/><line x1="24" y1="35" x2="24" y2="35.5"/></svg></div>
             <div class="answer-card-text">
               <div class="answer-card-label">Sonstiges / Weiß nicht</div>
-              <div class="answer-card-sub">Pellets, Fernwärme o. ä.</div>
+              <div class="answer-card-sub">Fernwärme oder andere Heizung</div>
             </div>
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
@@ -1484,7 +1497,7 @@
       <!-- ──────────── SCHRITT 9: PLZ ──────────── -->
       <div class="step" data-step="9">
         <h2 class="step-question">In welcher PLZ befindet sich deine Immobilie?</h2>
-        <p class="step-hint" id="plzHint">Wir prüfen, ob du im proKlima-Fördergebiet liegst (+5 %, max. 1.500 €, zusätzlich zum KfW-Zuschuss, nur für Anträge bis 31.10.2026). Zusammen höchstens 60 % derselben Kosten, der KfW-Zuschuss allein darf darüber liegen.</p>
+        <p class="step-hint" id="plzHint">Wir prüfen, ob wir in deiner Region für dich da sind.</p>
         <div class="plz-input-wrap">
           <label class="plz-input-label" for="plzInput">Postleitzahl</label>
           <input type="text" id="plzInput" class="plz-input"
@@ -1628,20 +1641,18 @@
   window.__wpPfad = true;
 
   const plzMap = {'30159':'hannover','30161':'hannover','30163':'hannover','30165':'hannover','30167':'hannover','30169':'hannover','30171':'hannover','30173':'hannover','30175':'hannover','30177':'hannover','30179':'hannover','30419':'hannover','30449':'hannover','30451':'hannover','30453':'hannover','30455':'hannover','30457':'hannover','30459':'hannover','30519':'hannover','30521':'hannover','30539':'hannover','30559':'hannover','30625':'hannover','30627':'hannover','30629':'hannover','30655':'hannover','30657':'hannover','30659':'hannover','30669':'hannover','30851':'langenhagen','30853':'langenhagen','30855':'langenhagen','30926':'seelze','30880':'laatzen','30966':'hemmingen','30952':'ronnenberg','30900':'wedemark','30938':'burgwedel','30916':'isernhagen','30823':'garbsen','30826':'garbsen','30827':'garbsen','31275':'lehrte','31311':'uetze','30974':'wennigsen','30890':'barsinghausen','30989':'gehrden','31832':'springe','30982':'pattensen','31319':'sehnde','31535':'neustadt','31515':'wunstorf','31547':'rehburg-loccum','31542':'bad-nenndorf','31552':'rodenberg','31553':'sachsenhagen','31559':'hohnhorst','31867':'lauenau','31863':'coppenbrügge','31848':'bad-münder','31785':'hameln','31787':'hameln','31789':'hameln','31840':'hessisch-oldendorf','31675':'bückeburg','31655':'stadthagen','31683':'obernkirchen','31688':'nienstädt','31691':'helpsen','31694':'niedernwöhren','31699':'beckedorf','29221':'celle','29223':'celle','29225':'celle','29227':'celle','29229':'celle','31303':'burgdorf','31234':'edemissen','31226':'peine','31228':'peine','31246':'ilsede','31241':'ilsede','31249':'hohenhameln','31171':'nordstemmen','31174':'schellerten','31177':'harsum','31180':'giesen','31185':'söhlde','31061':'alfeld','31073':'grünenplan','31008':'elze','31028':'gronau','31020':'salzhemmendorf'};
-  const proklimaGemeinden = ['hannover','langenhagen','seelze','laatzen','hemmingen','ronnenberg'];
   function pruefePlz(raw){
     const val = String(raw||'').replace(/\D/g,'').slice(0,5);
     if (val.length < 5) return {status:'unvollstaendig', val};
     const gemeinde = plzMap[val];
     if (gemeinde){
       const label = gemeinde.charAt(0).toUpperCase()+gemeinde.slice(1);
-      return proklimaGemeinden.includes(gemeinde) ? {status:'proklima', val, gemeinde, label} : {status:'region', val, gemeinde, label};
+      return {status:'region', val, gemeinde, label};
     }
     if (val.startsWith('3') || val.startsWith('29') || val.startsWith('31')) return {status:'erweitert', val};
     return {status:'aussen', val};
   }
   function plzFeedback(result) {
-    if (result.status === 'proklima' && window.__wpPfad !== false) return '✓ ' + result.label + ', wir sind für dich da. proKlima-Fördergebiet, bis zu 5 % (max. 1.500 €) zusätzlich zum KfW-Zuschuss möglich, nur für Anträge bis 31.10.2026. Zusammen höchstens 60 % derselben Kosten (der KfW-Zuschuss allein darf darüber liegen).';
     if (result.status === 'region') return '✓ ' + result.label + ', wir sind für dich da.';
     if (result.status === 'erweitert') return '✓ PLZ ' + result.val + ' liegt möglicherweise in unserem Einzugsgebiet, wir prüfen die Verfügbarkeit.';
     if (result.status === 'aussen') return 'Diese PLZ liegt außerhalb unseres Einzugsgebiets (Region Hannover).';
@@ -1675,13 +1686,13 @@
       const el = document.getElementById(id);
       if (el) el.innerHTML = isWp ? wpHtml : neutralHtml;
     };
-    ['trustUspFoerderung', 'trustUspVorschuss', 'partnerKfw', 'partnerProklima', 'foerderFootnote'].forEach((id) => {
+    ['trustUspFoerderung', 'trustUspVorschuss', 'partnerKfw', 'foerderFootnote'].forEach((id) => {
       const el = document.getElementById(id);
       if (el) el.style.display = isWp ? '' : 'none';
     });
     setHtml('trustHeadline', 'Deine <em>Wärmepumpe</em><br>aus Meisterhand.', 'Deine Lösung<br>aus Meisterhand.');
     setText('trustSub', 'In wenigen Schritten zum kostenlosen Angebot. Wir prüfen deine Förderfähigkeit und melden uns innerhalb von 48 Stunden.', 'In wenigen Schritten zu deinem kostenlosen Angebot. Wir melden uns innerhalb von 48 Stunden.');
-    setText('plzHint', 'Wir prüfen, ob du im proKlima-Fördergebiet liegst (+5 %, max. 1.500 €, zusätzlich zum KfW-Zuschuss, nur für Anträge bis 31.10.2026). Zusammen höchstens 60 % derselben Kosten, der KfW-Zuschuss allein darf darüber liegen.', 'Wir prüfen, ob wir in deiner Region für dich da sind.');
+    setText('plzHint', 'Wir prüfen, ob wir in deiner Region für dich da sind.', 'Wir prüfen, ob wir in deiner Region für dich da sind.');
     setText('step1Question', 'Für welches Gebäude suchst du eine Wärmepumpe?', 'Für welches Gebäude suchst du eine Lösung?');
     setText('step7Hint', 'Nur Eigentümer oder bevollmächtigte Personen können Förderanträge stellen.', 'Wir beraten Eigentümer und Mieter gleichermaßen.');
     setText('step8Question', 'Wann soll die Wärmepumpe installiert werden?', 'Wann soll es losgehen?');
@@ -1814,8 +1825,11 @@
     answers['step3'] = val;
     btn.disabled = false;
     const isAlt = val === '20 Jahre oder älter' || val === '30 Jahre oder älter';
-    result.innerHTML = isAlt
-      ? '<strong>✓ Klimabonus (+16 %)</strong><br>Deine alte Heizung erhöht deinen KfW-Fördersatz auf bis zu 80 %.* Der Klimabonus beträgt 16 % für Anträge vom 21.07.2026 bis 31.01.2027 und sinkt danach je Halbjahr um 4 Punkte.'
+    const heizung = answers['step2'];
+    const funktionsBonus = ['Ölheizung', 'Kohleheizung', 'Nachtspeicher'].includes(heizung);
+    const altersBonus = ['Gasheizung', 'Holz- oder Pelletheizung'].includes(heizung) && isAlt;
+    result.innerHTML = funktionsBonus || altersBonus
+      ? '<strong>✓ Klimabonus (+16 %)</strong><br>Deine Heizung erfüllt die Voraussetzung für den Klimabonus. Er beträgt 16 % für Anträge vom 21.07.2026 bis 31.01.2027 und sinkt danach je Halbjahr um 4 Punkte.'
       : '✓ Eingetragen.';
     result.classList.add('show');
   }
@@ -1830,7 +1844,9 @@
     const age = 2026 - val;
     answers['step3'] = 'Baujahr ' + val + ' (' + age + ' Jahre alt)';
     btn.disabled = false;
-    const bonus = age >= 20;
+    const heizung = answers['step2'];
+    const bonus = ['Ölheizung', 'Kohleheizung', 'Nachtspeicher'].includes(heizung) ||
+      (['Gasheizung', 'Holz- oder Pelletheizung'].includes(heizung) && age >= 20);
     result.innerHTML = 'Deine Heizung ist <strong>' + age + ' Jahre alt</strong>.' +
       (bonus ? '<br><span class="alter-bonus"><svg class="alter-bonus-icon" aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-0.12em;flex:0 0 auto;"><path d="M13 2 5 13h6l-1 9 9-13h-6l1-7Z"></path></svg> Klimabonus +16 % (Anträge bis 31.01.2027)</span>' : '');
     result.classList.add('show');
@@ -2079,6 +2095,8 @@
       'gas-etage': 'Gasheizung',
       oel: 'Ölheizung',
       nachtspeicher: 'Nachtspeicher',
+      biomasse: 'Holz- oder Pelletheizung',
+      kohle: 'Kohleheizung',
       sonstige: 'Sonstige Heizung',
     };
     const bauMap = {

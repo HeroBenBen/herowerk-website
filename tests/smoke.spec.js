@@ -19,9 +19,9 @@ test('@smoke Startseite lädt mit Hero und Navigation', async ({ page }) => {
   await expect(page.locator('section.hero')).toBeVisible();
 });
 
-test('@smoke FAQ-Sektion auf Ratgeber vorhanden (8 Fragen)', async ({ page }) => {
+test('@smoke FAQ-Sektion auf Ratgeber vorhanden (7 Fragen)', async ({ page }) => {
   await page.goto('/ratgeber.html');
-  await expect(page.locator('#faq .faq-item')).toHaveCount(8);
+  await expect(page.locator('#faq .faq-item')).toHaveCount(7);
 });
 
 test('@smoke Funnel anfrage.html lädt, Schritt 1 aktiv', async ({ page }) => {
