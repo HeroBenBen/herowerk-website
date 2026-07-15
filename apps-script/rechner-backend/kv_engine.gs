@@ -488,6 +488,7 @@ function kvCalculate(inputs, params) {
 
     foerder: {
       periode: fInfo.periode, label: fInfo.label,
+      euDifferenzierung: fInfo.eu,
       grundPct: fInfo.grundPct, grund: fInfo.g,
       klimaPct: fInfo.klimaPct, klima: fInfo.k,
       einkommen: fInfo.e, effizienz: fInfo.eff,
@@ -616,18 +617,26 @@ function kvBootstrapPayload(params) {
     var p = params.perioden[key];
     return {
       key: key, label: p.label, klimaPct: p.klima, grenze: p.grenze,
-      euDifferenzierung: p.eu, cap: p.cap, proKlimaErlaubt: p.proKlimaErlaubt
+      euDifferenzierung: p.eu, cap: p.cap
     };
   });
+  // Die Engine behält proKlima vollständig für das eingefrorene
+  // Äquivalenz-Gate. Im öffentlichen Bootstrap gibt es dagegen weder einen
+  // Schalter noch ein Perioden- oder Hinweisfeld dazu (GF-Entscheid 15.07.).
+  var clientDefaults = {};
+  for (var key in KV_DEFAULTS) {
+    if (Object.prototype.hasOwnProperty.call(KV_DEFAULTS, key) && key !== 'proklimaTog') {
+      clientDefaults[key] = KV_DEFAULTS[key];
+    }
+  }
   return {
     service: 'kv_bootstrap',
     perioden: perioden,
-    defaults: KV_DEFAULTS,
+    defaults: clientDefaults,
     etaMatrix: KV_ETA_MATRIX,
     schaetzung: KV_SCHAETZUNG,
     hinweise: {
       kappung: 'Mehr als 80 Prozent Zuschuss gibt es nicht.',
-      proKlima: 'proKlima Hannover gilt nur für Anträge bis 31.10.2026.',
       unverbindlich: 'Unverbindliche Berechnung, ohne Gewähr.'
     }
   };

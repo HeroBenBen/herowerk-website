@@ -91,7 +91,7 @@ Ausnahmen (im Orakel selbst gerundet) sind je Feld markiert mit `[gerundet: …]
 ## 2. Response `action=kostenvergleich`
 
 **Diese Struktur ist die IMPLEMENTIERTE und äquivalenz-bewiesene** (`kv_engine.gs`,
-Gate-Protokoll `tests/kv_equivalence/PROTOKOLL.md`: 776/776 Vektoren, Delta 0).
+Gate-Protokoll `tests/kv_equivalence/PROTOKOLL.md`: 858/858 Vektoren, Delta 0).
 Sie ersetzt den unratifizierten Entwurfs-Vorschlag der Vorgänger-Runde
 (`engine.*`/`chartSerien`/`kpis[]`-Schema), der nie gegen das Orakel lief.
 
@@ -107,6 +107,7 @@ Feld mit `[gerundet]` markiert und der ungerundete Partner steht daneben.
   "foerder": {                     // kvFoerder() der gewählten Periode
     "periode": "h2-2026",
     "label": "21.07.2026 bis 31.01.2027",
+    "euDifferenzierung": false,     // serverseitige Periodeneigenschaft; alt und h2-2026 = false
     "grundPct": 30,                // 30 (EU/ohne EU-Differenzierung) | 15 (nicht-EU ab 2027)
     "grund": 30,                   // wirksam (0 wenn fGrund aus)
     "klimaPct": 16,                // Perioden-Klimabonus (Anzeige-Wert)
@@ -291,103 +292,89 @@ drin" · sonst → "Mehrpreis"-Satz.
 
 ## 3. Response `action=kv_bootstrap`
 
-Alles, was der Thin-Client zum **Rendern der UI ohne eigene Rechenlogik** braucht.
-Statisch aus dem Parameter-Layer (`KV_Parameter`/`KV_FoerderPerioden` + Bootstrap-Seeds), cachebar (CacheService, TTL wie Bestand).
+Der folgende Contract entspricht der implementierten Funktion
+`kvBootstrapPayload` in `kv_engine.gs`. Er ersetzt das frühere Entwurfs-Schema
+mit `controls`, `altPeriode`, `wizard` und `anzeigeKonstanten`; diese Felder
+existieren in der realen Payload nicht.
 
 ```jsonc
 {
   "service": "kv_bootstrap",
-  "aktivePeriode": "alt",           // Perioden-Automatik: was der Server HEUTE ansetzt
-                                    // (vor dem 21.07.2026 = "alt"). Der Client belegt damit vor,
-                                    // der Nutzer darf in der Treppe eine spätere Periode wählen.
-  "perioden": [                     // Reihenfolge = Anzeige-Reihenfolge (Treppe/Select); OHNE "alt"
-    { "key": "h2-2026", "label": "21.07.2026 bis 31.01.2027", "klimaPct": 16,
-      "grenze": 28000, "eu": false, "proklimaErlaubt": true }
+  "aktivePeriode": "alt",             // ergänzt durch kvBootstrap_ im Wiring
+  "perioden": [
+    {
+      "key": "h2-2026",
+      "label": "21.07.2026 bis 31.01.2027",
+      "klimaPct": 16,
+      "grenze": 28000,
+      "euDifferenzierung": false,
+      "cap": 80
+    }
   ],
-  "altPeriode": { "key": "alt", "label": "Anträge bis 20.07.2026 (Alt-Regelwerk)",
-    "grundPct": 30, "klimaPct": 20, "einkommensbonusPct": 30, "einkommensgrenze": 40000,
-    "effizienzPct": 5, "deckelPct": 70, "grenze": 30000, "proklimaErlaubt": true },
-  "controls": {                     // Defaults + Ranges aller Regler/Selects (aus Orakel-HTML)
-    "heizart":   { "typ": "select", "default": "gas", "optionen": ["gas", "oel"] },
-    "bedarf":    { "typ": "range", "min": 5000, "max": 80000, "step": 500, "default": 20000 },
-    "eta":       { "typ": "range", "min": 65, "max": 98, "step": 1, "default": 85 },
-    "invWP":     { "typ": "range", "min": 8000, "max": 65000, "step": 500, "default": 30000 },
-    "jaz":       { "typ": "range", "min": 2.5, "max": 5.0, "step": 0.1, "default": 3.8 },
-    "laufzeit":  { "typ": "range", "min": 5, "max": 25, "step": 1, "default": 20 },
-    "neuFossilTog": { "typ": "checkbox", "default": true },
-    "vglBrennstoff": { "typ": "select", "default": "gas", "optionen": ["gas", "oel"] },
-    "gasInvest": { "typ": "range", "min": 6000, "max": 20000, "step": 500, "default": 12000 },
-    "oelInvest": { "typ": "range", "min": 9000, "max": 28000, "step": 500, "default": 16000 },
-    "gaspreis":  { "typ": "range", "min": 6, "max": 20, "step": 0.5, "default": 12 },
-    "gasStg":    { "typ": "select", "default": 2.5, "optionen": [1.5, 2.5, 4.0] },
-    "oelpreis":  { "typ": "range", "min": 6, "max": 20, "step": 0.5, "default": 11 },
-    "oelStg":    { "typ": "select", "default": 2.5, "optionen": [1.5, 2.5, 4.0] },
-    "strompreis": { "typ": "range", "min": 20, "max": 45, "step": 0.5, "default": 32 },
-    "stromEntw": { "typ": "select", "default": 1.5, "optionen": [-0.5, 1.5, 3.0] },
-    "co2preis":  { "typ": "range", "min": 25, "max": 80, "step": 5, "default": 55 },
-    "co2Pfad":   { "typ": "select", "default": 250, "optionen": [150, 250, 300] },
-    "bioTog":    { "typ": "checkbox", "default": true },
-    "bioAufpreis": { "typ": "select", "default": 2.5, "optionen": [2.0, 2.5, 3.0] },
-    "fHalbjahr": { "typ": "select", "default": "h2-2026" },
-    "fGrund":    { "typ": "checkbox", "default": true },
-    "fEU":       { "typ": "checkbox", "default": true },
-    "fKlima":    { "typ": "checkbox", "default": true },
-    "fAlt20":    { "typ": "checkbox", "default": true },
-    "fEinkSlider": { "typ": "range", "min": 15000, "max": 120000, "step": 1000, "default": 60000 },
-    "fKind":     { "typ": "checkbox", "default": false },
-    "finanzTog": { "typ": "checkbox", "default": false },
-    "kredLZ":    { "typ": "range", "min": 5, "max": 20, "step": 1, "default": 10 },
-    "kredZins":  { "typ": "range", "min": 0.5, "max": 6.0, "step": 0.1, "default": 0.7 },
-    "immoTog":   { "typ": "checkbox", "default": false },
-    "hausW":     { "typ": "range", "min": 100000, "max": 800000, "step": 10000, "default": 350000 },
-    "immoP":     { "typ": "range", "min": 3, "max": 15, "step": 1, "default": 7 },
-    "dynTarifTog": { "typ": "checkbox", "default": false },
-    "dynAnteil": { "typ": "range", "min": 20, "max": 60, "step": 5, "default": 40 },
-    "dynSpread": { "typ": "range", "min": 5, "max": 20, "step": 1, "default": 10 }
+  "defaults": {
+    "heizart": "gas", "bedarf": 20000, "eta": 85,
+    "invWP": 30000, "jaz": 3.8, "laufzeit": 20,
+    "neuFossilTog": true, "vglBrennstoff": "gas",
+    "gasInvest": 12000, "oelInvest": 16000,
+    "gaspreis": 12, "gasStg": 2.5, "oelpreis": 11, "oelStg": 2.5,
+    "strompreis": 32, "stromEntw": 1.5, "co2preis": 55, "co2Pfad": 250,
+    "bioTog": true, "bioAufpreis": 2.5,
+    "fHalbjahr": "h2-2026", "fGrund": true, "fEU": true,
+    "fKlima": true, "fAlt20": true, "fEinkSlider": 60000,
+    "fKind": false, "fEffizienz": false,
+    "finanzTog": false, "kredLZ": 10, "kredZins": 0.7,
+    "immoTog": false, "hausW": 350000, "immoP": 7,
+    "dynTarifTog": false, "dynAnteil": 40, "dynSpread": 10,
+    "modus": "kunde"
   },
-  "etaMatrix": {                    // Kessel-Karten → eta-Default (Orakel wzEtaDefault) + Herkunftstexte
+  "etaMatrix": {
+    "fallback": { "wert": 85, "label": null, "text": "..." },
     "regeln": [
-      { "rohr": "unklar",      "kbj": "*",        "eta": 85, "label": null },
-      { "rohr": "metall",      "kbj": "vor1990",  "eta": 70, "label": "ältere Heizung ohne Brennwerttechnik (vor 1990)" },
-      { "rohr": "metall",      "kbj": "*",        "eta": 80, "label": "Heizung ohne Brennwerttechnik (Niedertemperaturkessel)" },
-      { "rohr": "kunststoff",  "kbj": "nach2010", "eta": 93, "label": "Brennwert-Heizung junger Generation (nach 2010)" },
-      { "rohr": "kunststoff",  "kbj": "*",        "etaGas": 86, "etaOel": 90, "label": "Brennwert-Heizung älterer Generation" }
+      { "rohr": "unklar", "kbj": null, "heizart": null, "wert": 85, "label": null },
+      { "rohr": "metall", "kbj": "vor1990", "heizart": null, "wert": 70, "label": "..." },
+      { "rohr": "metall", "kbj": "*", "heizart": null, "wert": 80, "label": "..." },
+      { "rohr": "kunststoff", "kbj": "nach2010", "heizart": null, "wert": 93, "label": "..." },
+      { "rohr": "kunststoff", "kbj": "*", "heizart": "gas", "wert": 86, "label": "..." },
+      { "rohr": "kunststoff", "kbj": "*", "heizart": "oel", "wert": 90, "label": "..." }
     ],
-    "quellenText": "Quellen: Verbraucherzentrale NRW 2020, BEE/ECONSULT-Feldstudien 2018, Stand 15.07.2026",
-    "mittelwertText": "Wir rechnen mit einem marktüblichen Mittelwert von 85 %."
+    "quelle": "...", "textVorbelegt": "...", "textEigen": "..."
   },
-  "schaetzung": {                   // Verbrauchs-Schätzstrecke (Orakel WZ_*-Konstanten)
-    "spezBedarf": { "vor1978": 180, "1978-1994": 140, "1995-2010": 100, "nach2010": 60 },
+  "schaetzung": {
+    "spezVerbrauch": { "vor1978": 180, "1978-1994": 140, "1995-2010": 100, "nach2010": 60 },
     "stufen": ["vor1978", "1978-1994", "1995-2010", "nach2010"],
     "gebaeudeFaktor": { "efh": 1.0, "dhh": 0.9, "rh": 0.85, "zfh": 0.95, "mfh": 0.85 },
-    "einheitenFaktor": 10,          // m³/Liter → kWh
-    "sanierungShift": { "nein": 0, "teilweise": 1, "umfassend": 2 },
-    "flaecheDefault": 140, "flaecheMin": 60, "flaecheMax": 800, "flaecheStep": 10,
-    "rundung": 500,                 // round(fläche*spez*faktor/500)*500, geclampt auf bedarf-Range
-    "fragen": {                     // Metadaten Schätz-/Kessel-Fragen (Titel/Sub wie Orakel Schritt 1)
-      "geb": [["efh","Einfamilienhaus","Freistehend"],["dhh","Doppelhaushälfte","Geteilte Wand"],["rh","Reihenhaus","Mittel- oder Endhaus"],["zfh","Zweifamilienhaus","2 Wohneinheiten"],["mfh","Mehrfamilienhaus","3 und mehr Wohneinheiten"]],
-      "bj":  [["vor1978","Vor 1978","Meist ungedämmt, hoher Bedarf"],["1978-1994","1978 bis 1994","Erste Dämmvorschriften"],["1995-2010","1995 bis 2010","Gute Dämmung"],["nach2010","Nach 2010","Sehr gute Dämmung"]],
-      "san": [["nein","Nein / Weiß ich nicht","Originalzustand"],["teilweise","Teilweise saniert","Zum Beispiel neue Fenster oder Dach gedämmt"],["umfassend","Umfassend saniert","Dach, Fassade und Fenster erneuert"]],
-      "rohr": [["metall","Metall-Abgasrohr","Typisch für ältere Heizungen"],["kunststoff","Kunststoff-Abgasrohr","Typisch für Brennwert-Heizungen"],["unklar","Weiß ich nicht","Wir rechnen mit einem Mittelwert"]],
-      "kbj": [["vor1990","Vor 1990","Alte Heizungs-Generation"],["1990-2010","1990 bis 2010","Mittlere Generation"],["nach2010","Nach 2010","Junge Generation"],["unklar","Weiß ich nicht","Das Abgasrohr genügt uns"]],
-      "altgas": [["ja","Ja, 20 Jahre oder älter","+16 % Klimabonus"],["nein","Nein, jünger","Kein Klimabonus"],["unklar","Weiß ich nicht","Wir rechnen ohne Bonus"]]
-    }
+    "sanierungSprung": { "nein": 0, "teilweise": 1, "umfassend": 2 },
+    "einheitFaktor": 10, "rundungKwh": 500,
+    "bedarfMin": 5000, "bedarfMax": 80000, "bedarfStep": 500,
+    "flaecheDefault": 140, "quelle": "..."
   },
-  "wizard": {
-    "labels": ["1 Ihre Heizung", "2 Ihr Vergleich", "3 Ihre Förderung", "4 Finanzierung", "5 Ihr Ergebnis"],
-    "trackIds": ["heizart","bedarf","eta","invWP","jaz","laufzeit","neuFossilTog","gasInvest","oelInvest","vglBrennstoff","fHalbjahr","fGrund","fEU","fKlima","fAlt20","fEinkSlider","fKind","finanzTog","kredLZ","kredZins"],
-    "marketLabels": { "invWP": "Richtwert HeroWerk-Einstiegsangebot", "vglBrennstoff": "Vorbelegt nach Ihrer Heizungsart", "kredZins": "KfW-Kondition Stand 14.07.2026", "_fallback": "Marktannahme", "_etaAusAngaben": "Aus Ihren Heizungs-Angaben" },
-    "ctaUrl": "https://www.herowerk.de/anfrage.html"
-  },
-  "anzeigeKonstanten": {            // reine Anzeige-Fakten für Info-/Annahmen-Texte
-    "co2fGas": 0.182, "co2fOel": 0.266, "etaNeuGas": 95, "etaNeuOel": 93,
-    "wartungWP": 350, "wartungFossil": 250,
-    "strommix": { "start": 350, "ziel": 100, "vonJahr": 2026, "bisJahr": 2040 },
-    "bioStufen": [{ "jahr": 2029, "pct": 15 }, { "jahr": 2035, "pct": 30 }, { "jahr": 2040, "pct": 60 }],
-    "co2FlugT": 0.5, "co2BaumKg": 12.5
+  "hinweise": {
+    "kappung": "Mehr als 80 Prozent Zuschuss gibt es nicht.",
+    "unverbindlich": "Unverbindliche Berechnung, ohne Gewähr."
   }
 }
 ```
+
+`aktivePeriode` kann vor dem Reform-Stichtag `alt` sein, obwohl `perioden` nur
+die sechs Reform-Zeilen der Treppe enthält. Der Client ergänzt dann eine
+temporäre Select-Option für den aktuell gültigen Zeitraum und verwendet ihren
+Schlüssel unverändert im `kostenvergleich`-Request. Nach der ersten Rechnung
+ersetzt er das neutrale Label mit `foerder.label` aus dem Server-Response.
+
+**Öffentliche proKlima-Grenze:** `perioden[].proKlimaErlaubt`,
+`defaults.proklimaTog` und `hinweise.proKlima` werden bewusst nicht ausgeliefert.
+Die gleichnamige Engine-Fähigkeit bleibt intern für das Äquivalenz-Gate erhalten.
+
+### 3.1 Verbrauchsschätzung ohne Client-Heuristik
+
+Es gibt keine dritte öffentliche Route. Der Thin-Client ruft
+`action=kostenvergleich` mit `bedarfModus=schaetzung` sowie `geb`, `bj`, `san`
+und `flaeche` auf. Das O5-Wiring validiert die vier Felder, ruft
+`kvSchaetzeBedarf` auf und überschreibt `inputs.bedarf` vor `kvCalculate`.
+Der normale Kostenvergleich-Response liefert den Wert in
+`inputsEcho.bedarf`. Ohne `bedarfModus=schaetzung` gewinnt die direkte
+`bedarf`-Eingabe. Damit stehen im ausgelieferten HTML keine Schätzkonstanten
+oder Schätzformeln.
 
 ## 4. Lead-Contract `hero_kv_lead` (sessionStorage beim CTA-Klick)
 
@@ -480,7 +467,7 @@ Pfade auseinander. Genau dafür sind beide Felder da.
 | Punkt | Stand |
 |---|---|
 | Abschnitt 1 (Request) | Defaults maschinell gegen die Orakel-HTML-Startwerte verifiziert (Regler `min`/`max`/`step`, `selected`-Option). |
-| Abschnitt 2 (Response) | Beschreibt die implementierte, äquivalenz-bewiesene Struktur (776/776, Delta 0). Ersetzt den Entwurfs-Vorschlag der Vorgänger-Runde. |
+| Abschnitt 2 (Response) | Beschreibt die implementierte, äquivalenz-bewiesene Struktur (858/858, Delta 0). Ersetzt den Entwurfs-Vorschlag der Vorgänger-Runde. |
 | Abschnitt 3 (Bootstrap) | Aus dem Entwurf übernommen und gegen das B1-Inventar geprüft; `aktivePeriode` ergänzt (Perioden-Automatik). |
 | Abschnitt 4 (Lead) | Aus dem Entwurf übernommen, Begründung und Transportweg ergänzt. |
 | Abschnitt 5 (Rundung) | Auf die implementierten Feldnamen umgestellt, um die im Orakel gerundeten Stellen vollständig erweitert. |

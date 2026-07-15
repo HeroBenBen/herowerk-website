@@ -106,6 +106,16 @@ function doGet(e) {
 function kostenvergleich_(p) {
   const params = kvGetParams_();            // Sheet + Cache, siehe kv_sheet_spec.md 4
   const inputs = kvMapRequest_(p, params);  // Request → typisierte Engine-Inputs
+  if (String(p.bedarfModus || '') === 'schaetzung') {
+    const geb = kvEnum_(p.geb, ['efh', 'dhh', 'rh', 'zfh', 'mfh'], '');
+    const bj = kvEnum_(p.bj, ['vor1978', '1978-1994', '1995-2010', 'nach2010'], '');
+    const san = kvEnum_(p.san, ['nein', 'teilweise', 'umfassend'], '');
+    const flaeche = kvNum_(p.flaeche, 0);
+    if (!geb || !bj || !san || flaeche < 60 || flaeche > 800) {
+      throw new Error('Ungültige Angaben für die Verbrauchsschätzung.');
+    }
+    inputs.bedarf = kvSchaetzeBedarf(geb, bj, san, flaeche, params);
+  }
   const out = kvCalculate(inputs, params);
   out.periodeAutomatik = inputs._periodeAutomatik;  // true = Server hat die Periode gesetzt
   return out;
@@ -135,6 +145,17 @@ function kvBootstrap_(p) {
 `kvBootstrapPayload` liefert bewusst NUR Anzeige- und Metadaten: Perioden-Labels,
 eta-Matrix mit Herkunftstexten, Defaults, Schätz-Fragen-Metadaten, Hinweistexte.
 **Keine Rechenlogik, keine Formeln, keine Preis-Pfade** (kv_contract.md 3).
+
+### 3.1 Gebäudeschätzung innerhalb `kostenvergleich`
+
+Die Gebäudeschätzung bleibt serverseitig und verwendet keine zusätzliche
+öffentliche Route. Der Client ruft `kostenvergleich` mit
+`bedarfModus=schaetzung` plus `geb`, `bj`, `san` und `flaeche` auf. Das Mapping
+in `kostenvergleich_` überschreibt den normalisierten `inputs.bedarf` vor
+`kvCalculate` mit dem Ergebnis von `kvSchaetzeBedarf`. Der Response bleibt der
+normale `kostenvergleich`-Contract; `inputsEcho.bedarf` ist der geschätzte Wert.
+Der Request enthält keine Einkommens-, Kinder- oder Personendaten über das für
+die Rechnung ohnehin nötige Maß hinaus.
 
 ## 4. Perioden-Automatik (der einzige Ort, der die Uhr lesen darf)
 
@@ -279,6 +300,8 @@ function kvMapRequest_(p, params) {
 | `kredZins` | `kredZins` | `kvNum_` | 0.7 |
 | `immoTog` / `hausW` / `immoP` | dito | `kvBool_` / `kvNum_` | false / 350000 / 7 |
 | `dynTarifTog` / `dynAnteil` / `dynSpread` | dito | `kvBool_` / `kvNum_` | false / 40 / 10 |
+| `bedarfModus` | Wrapper-Steuerung | exakt `schaetzung` aktiviert Server-Schätzung | direkte `bedarf`-Eingabe |
+| `geb` / `bj` / `san` / `flaeche` | `inputs.bedarf` über `kvSchaetzeBedarf` | Whitelists + `kvNum_`, nur bei `bedarfModus=schaetzung` | keine |
 
 **Einheiten:** Der Server rechnet ausschliesslich in kWh. Die Umrechnung
 m³ Gas bzw. Liter Heizöl × 10 macht der Client vor dem Request
@@ -308,6 +331,7 @@ Route (anders als bei `dimensionierung`, das seine eigene Umrechnung hat).
 | 5 | `&fHalbjahr=quatsch` | Server-Periode, kein Fehler, `periodeAutomatik: true` |
 | 6 | Sheet-Tab `KV_Parameter` umbenannt | Engine rechnet mit `KV_PARAMS_SEED` weiter (kein Kundenfehler) |
 | 7 | Sheet-Tab umbenannt UND Datum nach dem 21.07.2026 | `aktivePeriode` = `h2-2026`, NICHT `alt`. Der Seed-Fallback muss die Perioden-Automatik genauso tragen wie das Sheet (Befund B-1). Gate-Beleg: `node tests/kv_equivalence/run_perioden_automatik.js` |
+| 8 | `?action=kostenvergleich&bedarfModus=schaetzung&geb=efh&bj=1978-1994&san=teilweise&flaeche=140` | normaler `kostenvergleich`-Response, `inputsEcho.bedarf` aus `kvSchaetzeBedarf`, keine Schätzkonstanten im Client |
 
 Prüfung 2 und 3 sind die beiden Werte, an denen ein kaputtes Wiring zuerst
 auffällt.
