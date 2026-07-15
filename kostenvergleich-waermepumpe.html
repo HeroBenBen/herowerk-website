@@ -555,18 +555,8 @@
         <div style="font-size:0.82rem;color:var(--hero-muted);margin-top:8px;">
           Förderfähig (max. <span id="fGrenzeLbl">28.000 €</span>): <strong id="fBasis" style="color:var(--hero-white);">28.000 €</strong><br>
           Förderbetrag: <strong id="fBetrag" style="color:var(--hero-accent);">12.880 €</strong><br>
-          Netto nach KfW 458 (ohne proKlima): <strong id="fNetto" style="color:var(--hero-white);">17.120 €</strong>
+          Netto nach KfW 458: <strong id="fNetto" style="color:var(--hero-white);">17.120 €</strong>
         </div>
-      </div>
-    </div>
-    <div class="card">
-      <h3>Regionale Förderung</h3>
-      <!-- ProKlima Hannover -->
-      <div class="tg"><label class="tog"><input type="checkbox" id="proklimaTog" onchange="updateFoerderung()"><span class="sl"></span></label>
-        <div class="tl">proKlima Hannover: Wärmepumpen-Bonus
-          <small>proKlima enercity-Fonds, Fördergebiet: 6 Städte im proKlima-Gebiet (Details unten)</small></div></div>
-      <div id="proklimaOpt" style="display:none">
-        <div class="ib"><span class="d">Luft-Wasser-Wärmepumpe im Ein-/Zweifamilienhaus: <strong style="color:var(--hero-accent);">bis zu 5 % der förderfähigen Kosten, max. 1.500 €</strong> (Erdreich-WP bis 2.500 €). Voraussetzungen u. a. natürliches Kältemittel, hydraulischer Abgleich, Auslegungs-Vorlauf max. 55 °C. Fördergebiet: Hannover, Hemmingen, Laatzen, Langenhagen, Ronnenberg, Seelze. Weitere Voraussetzung: Bezug von Ökostrom oder eigene EE-Anlage über 2 kWp. Richtlinie befristet bis 31.10.2026 (für spätere Antragsperioden rechnet der Rechner ohne proKlima). Mit KfW 458 kombinierbar; die BEG-Kumulierungsgrenze von 60 % derselben Kosten ist im Rechner berücksichtigt. Vorbehaltlich verfügbarer Mittel (proKlima-Richtlinie 2026).</span></div>
       </div>
     </div>
   </div>
@@ -661,7 +651,7 @@
     <div class="abox" id="assBox"></div>
   </div>
 </div>
-<div class="footer">© 2026 <a href="https://www.herowerk.de">HeroWerk GmbH</a> · <a href="https://www.herowerk.de/impressum.html">Impressum</a> · <a href="https://www.herowerk.de/datenschutz.html">Datenschutz</a> · Diese Seite speichert nur Ihre Hell-/Dunkel-Auswahl im Browser (localStorage hero-theme), keine Eingaben. · Unverbindliche Modellrechnung auf Basis Ihrer Eingaben und dokumentierter Annahmen; keine Zusicherung von Einsparungen oder Förderungen. Die Förderentscheidung liegt beim Fördergeber (KfW/proKlima), kein Rechtsanspruch. Kein steuerlicher oder finanzieller Rat. Quellen: siehe Annahmen-Box im Ergebnisbereich.</div>
+<div class="footer">© 2026 <a href="https://www.herowerk.de">HeroWerk GmbH</a> · <a href="https://www.herowerk.de/impressum.html">Impressum</a> · <a href="https://www.herowerk.de/datenschutz.html">Datenschutz</a> · Diese Seite speichert nur Ihre Hell-/Dunkel-Auswahl im Browser (localStorage hero-theme), keine Eingaben. · Unverbindliche Modellrechnung auf Basis Ihrer Eingaben und dokumentierter Annahmen; keine Zusicherung von Einsparungen oder Förderungen. Die Förderentscheidung liegt beim Fördergeber (KfW), kein Rechtsanspruch. Kein steuerlicher oder finanzieller Rat. Quellen: siehe Annahmen-Box im Ergebnisbereich.</div>
 
 <script>
 // ===== SLIDER BINDINGS =====
@@ -747,11 +737,6 @@ function toggleFinanz(){document.getElementById('finanzOpt').style.display=docum
 document.getElementById('immoTog').addEventListener('change',toggleImmo);
 document.getElementById('dynTarifTog').addEventListener('change',toggleDynTarif);
 document.getElementById('finanzTog').addEventListener('change',toggleFinanz);
-
-// ProKlima toggles
-document.getElementById('proklimaTog').addEventListener('change',function(){
-  document.getElementById('proklimaOpt').style.display=this.checked?'block':'none'; updateFoerderung();
-});
 
 // ===== FÖRDERUNG (BEG-Reform 21.07.2026) =====
 // Klimabonus: 16 % ab 21.07.2026, danach -4 %-Pkt. je Halbjahr, ab H2 2028 entfallen.
@@ -879,17 +864,9 @@ function calculate(){
   const fq=fInfo.q/100;
   const fBasis=Math.min(investWP,fInfo.grenze);
   const fBetrag=fBasis*fq;
-  // proKlima: bis zu 5 % der förderfähigen Kosten, max. 1.500 € (L/W-WP im EZFH). Richtlinie befristet bis 31.10.2026 → nur in der ersten Antragsperiode angesetzt.
-  const pkAllowed=document.getElementById('fHalbjahr').value==='h2-2026';
-  const pkWP=(document.getElementById('proklimaTog').checked&&pkAllowed)?Math.min(Math.round(0.05*investWP),1500):0;
-  const pkPV=0;
-  const pkBat=0;
   const pvFoerd=0;
   const batFoerd=0;
-  // BEG-Kumulierungsgrenze: bei Kombination mit weiteren öffentlichen Mitteln max. 60 % derselben Kosten (KfW allein darf darüber liegen)
-  const kumCap=0.6*investWP;
-  let totalFoerd=fBetrag+pkWP+(pvOn?pvFoerd+pkPV:0)+(batOn?batFoerd+pkBat:0);
-  if(pkWP>0)totalFoerd=Math.max(fBetrag,Math.min(totalFoerd,kumCap));
+  const totalFoerd=fBetrag+(pvOn?pvFoerd:0)+(batOn?batFoerd:0);
   const nettoInvest=Math.max(0,investWP+pvInvest+batInvest-totalFoerd);
   // Investition, die eine neue fossile Anlage der gleichen Brennstoffart kosten würde
   const fossilInvest=vglFuel==='gas'?gasInvest:oelInvest;
@@ -1330,7 +1307,7 @@ function calculate(){
     ${finanzOn?`• <strong>Finanzierung:</strong> ${eur(kreditBetrag)}, ${kredLZ} J., ${(kredZins*100).toFixed(1).replace('.',',')}% nominal (KfW-Ergänzungskredit 358/359, Zins-Richtwert Stand 14.07.2026) → ${eur(Math.round(monRate))}/Mo. Rate<br>`:''}
     ${immoOn?`• <strong>Immobilienwert:</strong> ${eur(hausW)} × ${Math.round(immoP*100)}% = +${eur(immoWert)} Wertsteigerung (dena/ImmoScout24)<br>`:''}
     • <strong>Heizkosten:</strong> Fossil ${laufzeit}J.: ${eur(totFossil)} · WP-Strom ${laufzeit}J.: ${eur(totWPK)} · <strong>Mehrkosten fossil: ${eur(totMehr)}</strong><br>
-    • Förderung: KfW 458 ${Math.round(fq*100)}% (${eur(fBetrag)}) · Antragstellung ${fInfo.hj.label}, Bemessungsgrenze ${eur(fInfo.grenze)}, BEG-Reform 21.07.2026${pkWP>0?' · proKlima WP: '+eur(pkWP):''}${pkPV>0?' · proKlima PV: '+eur(pkPV):''}${pkBat>0?' · proKlima Bat: '+eur(pkBat):''}<br>
+    • Förderung: KfW 458 ${Math.round(fq*100)}% (${eur(fBetrag)}) · Antragstellung ${fInfo.hj.label}, Bemessungsgrenze ${eur(fInfo.grenze)}, BEG-Reform 21.07.2026<br>
     • <strong>Quellen:</strong> CO₂: Agora/UBA, EU-ETS2 · Energie: BMWK Energiepreisszenarien 2024 · Biotreppe: GEG §71(9) + GMG-Eckpunkte Feb. 2026 · Bio-Preise: Öko-Institut März 2026 + BDEW Gaspreisanalyse Jan. 2026 · Strommix: UBA/Agora · Förderung: KfW 458 / BEG-Reform 21.07.2026 (Stand 07/2026, ohne Gewähr)`;
 
   document.getElementById('results').classList.add('visible');
@@ -1341,7 +1318,7 @@ function calculate(){
 (function(){
   const CTA_URL='https://www.herowerk.de/anfrage.html';
   const WZ_LABELS=['1 Ihre Heizung','2 Ihr Vergleich','3 Ihre Förderung','4 Finanzierung','5 Ihr Ergebnis'];
-  const WZ_TRACK_IDS=['heizart','bedarf','eta','invWP','jaz','laufzeit','neuFossilTog','gasInvest','oelInvest','vglBrennstoff','fHalbjahr','fGrund','fEU','fKlima','fAlt20','fEinkSlider','fKind','proklimaTog','finanzTog','kredLZ','kredZins'];
+  const WZ_TRACK_IDS=['heizart','bedarf','eta','invWP','jaz','laufzeit','neuFossilTog','gasInvest','oelInvest','vglBrennstoff','fHalbjahr','fGrund','fEU','fKlima','fAlt20','fEinkSlider','fKind','finanzTog','kredLZ','kredZins'];
   const WZ={current:0,maxVisited:0,touched:new Set(),programmatic:false,incomeOpted:false,resultsBuilt:false,step1:{heizart:null,bedarf:null,bedarfSource:null,altgas:null,vmode:null,unit:'kwh',unitTouched:false,geb:null,bj:null,san:null,flaeche:140,rohr:null,kbj:null}};
   const $=id=>document.getElementById(id);
   const q=(root,sel)=>root?root.querySelector(sel):null;
@@ -1675,14 +1652,7 @@ function calculate(){
     const inv=parseFloat($('invWP').value);
     const basis=Math.min(inv,f.grenze);
     const betrag=Math.round(basis*f.q/100);
-    // proKlima (read-only Spiegel der Engine-Formel): nur Antragszeitraum bis 31.10.2026, max. 1.500, BEG-60-Prozent-Deckel
-    const pkTog=$('proklimaTog');
-    const pkOn=!!(pkTog&&pkTog.checked);
-    const pkAllowed=$('fHalbjahr')&&$('fHalbjahr').value==='h2-2026';
-    const pk=(pkOn&&pkAllowed)?Math.min(Math.round(0.05*inv),1500):0;
-    const zuschuss=pk>0?Math.max(betrag,Math.min(betrag+pk,Math.round(0.6*inv))):betrag;
-    const pkEff=zuschuss-betrag;
-    const eigen=inv-zuschuss;
+    const eigen=inv-betrag;
     const rows=[];
     rows.push(['Heizung heute',(WZ.step1.heizart==='oel'?'Öl':'Gas')+', '+Number($('bedarf').value).toLocaleString('de-DE')+' kWh']);
     const vgl=$('vglBrennstoff');
@@ -1692,8 +1662,6 @@ function calculate(){
     host.innerHTML=`<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accent);">${f.q} %</div><div style="font-size:0.8rem;color:var(--hero-muted);">Ihre Förderquote (KfW 458)</div></div>
       <div class="ln"><span class="lbl">Ihre Wärmepumpe</span><span class="vv">${inv.toLocaleString('de-DE')} €</span></div>
       <div class="ln"><span class="lbl">Ihr Zuschuss (KfW 458)</span><span class="vv" style="color:var(--hero-green)">−${betrag.toLocaleString('de-DE')} €</span></div>
-      ${pkEff>0?`<div class="ln"><span class="lbl">proKlima Hannover</span><span class="vv" style="color:var(--hero-green)">−${pkEff.toLocaleString('de-DE')} €</span></div>`:''}
-      ${(pkOn&&!pkAllowed)?`<div class="ln"><span class="lbl">proKlima: nur für Anträge bis 31.10.2026, in Ihrem Antragszeitraum nicht mehr enthalten</span><span class="vv">−0 €</span></div>`:''}
       <div class="ln" style="border-top:1px solid var(--hero-separator);margin-top:4px;padding-top:6px;"><span class="lbl"><strong>Ihr Eigenanteil</strong></span><span class="vv" style="color:var(--hero-accent);font-size:1.05rem;">${eigen.toLocaleString('de-DE')} €</span></div>
       <div style="font-size:0.68rem;color:var(--hero-muted);margin:8px 0 12px;">Förderfähig max. ${f.grenze.toLocaleString('de-DE')} €. Unverbindliche Berechnung, ohne Gewähr.</div>
       <div style="border-top:1px solid var(--hero-separator);padding-top:10px;margin-bottom:12px;">${rows.map(r=>`<div class="ln"><span class="lbl">${r[0]}</span><span class="vv" style="font-weight:600;font-size:0.8rem;">${r[1]}</span></div>`).join('')}</div>`;
@@ -1716,11 +1684,6 @@ function calculate(){
     }
     if(f.e>0)rows.push(`<div class="ln"><span class="lbl">Einkommensbonus (anrechenbares Einkommen ${f.anr.toLocaleString('de-DE')} €)</span><span class="vv">+${f.e} %</span></div>`);
     if(f.sum>80)rows.push(`<div class="ln"><span class="lbl">Gesetzlicher Deckel: mehr als 80 % gibt es nicht</span><span class="vv">80 %</span></div>`);
-    const pkTog=$('proklimaTog');
-    if(pkTog&&pkTog.checked){
-      if($('fHalbjahr')&&$('fHalbjahr').value==='h2-2026')rows.push(`<div class="ln"><span class="lbl">proKlima Hannover (enercity-Fonds): zusätzlich zum KfW-Zuschuss, 5 % der Kosten</span><span class="vv">+ bis 1.500 €</span></div>`);
-      else rows.push(`<div class="ln"><span class="lbl">proKlima Hannover: gilt nur für Anträge bis 31.10.2026, in Ihrem Antragszeitraum nicht mehr enthalten</span><span class="vv">+0 €</span></div>`);
-    }
     host.innerHTML=`<strong>So setzt sich Ihre Förderung zusammen:</strong>`+rows.join('');
   }
   function prepareIncomeDiscreet(){
@@ -1732,7 +1695,7 @@ function calculate(){
   function wireGlobalTracking(){
     document.addEventListener('input',e=>{if(WZ.programmatic)return;const id=e.target&&e.target.id;if(WZ_TRACK_IDS.includes(id)){if(id==='fEinkSlider'&&!WZ.incomeOpted)return;touch(id);}});
     document.addEventListener('change',e=>{if(WZ.programmatic)return;const id=e.target&&e.target.id;if(WZ_TRACK_IDS.includes(id)){if(id==='fEinkSlider'&&!WZ.incomeOpted)return;touch(id);}});
-    const WZ_FOERDER_IDS=['fHalbjahr','fEinkSlider','fKind','fGrund','fEU','fKlima','fAlt20','proklimaTog'];
+    const WZ_FOERDER_IDS=['fHalbjahr','fEinkSlider','fKind','fGrund','fEU','fKlima','fAlt20'];
     ['input','change'].forEach(t=>document.addEventListener(t,e=>{const id=e.target&&e.target.id;if(WZ_FOERDER_IDS.includes(id)){renderFoerderAufbau();renderLiveFoerder();}}));
   }
   const WZ_MARKET_LABELS={invWP:'Richtwert HeroWerk-Einstiegsangebot',vglBrennstoff:'Vorbelegt nach Ihrer Heizungsart',kredZins:'KfW-Kondition Stand 14.07.2026'};

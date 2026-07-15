@@ -72,7 +72,6 @@ Ausnahmen (im Orakel selbst gerundet) sind je Feld markiert mit `[gerundet: …]
 | `fAlt20` | bool | `1` | Klimabonus-Voraussetzung erfüllt (Öl/Kohle/Gasetagen/Nachtspeicher funktionsfähig ODER Gas/Biomasse ≥ 20 J.) |
 | `fEinkSlider` | number | `60000` | zu versteuerndes Haushaltseinkommen € (15000–120000) |
 | `fKind` | bool | `0` | mind. ein minderjähriges Kind (einmalig −10.000 € anrechenbar) |
-| `proklimaTog` | bool | `0` | proKlima Hannover Opt-in (nur Periode `h2-2026` bzw. `alt` wirksam) |
 | `fEffizienz` | bool | `0` | NUR Alt-Periode: R290-Effizienzbonus-Flag. In allen Reform-Perioden wirkungslos (`effizienz_pct=0`). Engine-Erweiterung für die Perioden-Automatik, ohne Orakel-Entsprechung. |
 
 ### 1.6 Finanzierung & Extras (Wizard Schritt 4 + Berater-Tab)
@@ -125,10 +124,10 @@ Feld mit `[gerundet]` markiert und der ungerundete Partner steht daneben.
     "betrag": 12880.0,             // basis*quote/100 — ENGINE, NICHT gerundet
     "anzeigeBetrag": 12880,        // [gerundet] Math.round(basis*quote/100) — Förderbox
     "netto": 17120,                // invWP − anzeigeBetrag (Anzeige-Pfad)
-    "proKlima": 0,                 // [gerundet] min(round(0.05*invWP), 1500), 0 wenn nicht erlaubt/aus
-    "proKlimaErlaubt": true,       // Periode lässt proKlima zu (Reform: nur h2-2026)
-    "proKlimaOptIn": false,        // Nutzer hat den Schalter an
-    "proKlimaEffektiv": 0,         // liveZuschuss − anzeigeBetrag (nach 60-Prozent-Deckel)
+    "proKlima": 0,                 // INTERN: Äquivalenzfeld, nie kundensichtbar; produktiv global aus
+    "proKlimaErlaubt": true,       // INTERN: Orakel-/Periodenreferenz, kein Client-Opt-in
+    "proKlimaOptIn": false,        // INTERN: produktives Mapping erzwingt false
+    "proKlimaEffektiv": 0,         // INTERN: Äquivalenzfeld nach 60-Prozent-Deckel
     "liveZuschuss": 12880,         // [gerundet] Live-Kachel: max(betrag, min(betrag+pk, round(0.6*invWP)))
     "liveEigenanteil": 17120,      // invWP − liveZuschuss
     "kumCap": 18000.0,             // 0.6*invWP — ENGINE, ungerundet
@@ -336,7 +335,6 @@ Statisch aus dem Parameter-Layer (`KV_Parameter`/`KV_FoerderPerioden` + Bootstra
     "fAlt20":    { "typ": "checkbox", "default": true },
     "fEinkSlider": { "typ": "range", "min": 15000, "max": 120000, "step": 1000, "default": 60000 },
     "fKind":     { "typ": "checkbox", "default": false },
-    "proklimaTog": { "typ": "checkbox", "default": false },
     "finanzTog": { "typ": "checkbox", "default": false },
     "kredLZ":    { "typ": "range", "min": 5, "max": 20, "step": 1, "default": 10 },
     "kredZins":  { "typ": "range", "min": 0.5, "max": 6.0, "step": 0.1, "default": 0.7 },
@@ -377,7 +375,7 @@ Statisch aus dem Parameter-Layer (`KV_Parameter`/`KV_FoerderPerioden` + Bootstra
   },
   "wizard": {
     "labels": ["1 Ihre Heizung", "2 Ihr Vergleich", "3 Ihre Förderung", "4 Finanzierung", "5 Ihr Ergebnis"],
-    "trackIds": ["heizart","bedarf","eta","invWP","jaz","laufzeit","neuFossilTog","gasInvest","oelInvest","vglBrennstoff","fHalbjahr","fGrund","fEU","fKlima","fAlt20","fEinkSlider","fKind","proklimaTog","finanzTog","kredLZ","kredZins"],
+    "trackIds": ["heizart","bedarf","eta","invWP","jaz","laufzeit","neuFossilTog","gasInvest","oelInvest","vglBrennstoff","fHalbjahr","fGrund","fEU","fKlima","fAlt20","fEinkSlider","fKind","finanzTog","kredLZ","kredZins"],
     "marketLabels": { "invWP": "Richtwert HeroWerk-Einstiegsangebot", "vglBrennstoff": "Vorbelegt nach Ihrer Heizungsart", "kredZins": "KfW-Kondition Stand 14.07.2026", "_fallback": "Marktannahme", "_etaAusAngaben": "Aus Ihren Heizungs-Angaben" },
     "ctaUrl": "https://www.herowerk.de/anfrage.html"
   },
@@ -386,9 +384,7 @@ Statisch aus dem Parameter-Layer (`KV_Parameter`/`KV_FoerderPerioden` + Bootstra
     "wartungWP": 350, "wartungFossil": 250,
     "strommix": { "start": 350, "ziel": 100, "vonJahr": 2026, "bisJahr": 2040 },
     "bioStufen": [{ "jahr": 2029, "pct": 15 }, { "jahr": 2035, "pct": 30 }, { "jahr": 2040, "pct": 60 }],
-    "co2FlugT": 0.5, "co2BaumKg": 12.5,
-    "proklima": { "pct": 5, "maxEur": 1500, "frist": "31.10.2026",
-      "gemeinden": ["hannover", "hemmingen", "laatzen", "langenhagen", "ronnenberg", "seelze"] }
+    "co2FlugT": 0.5, "co2BaumKg": 12.5
   }
 }
 ```

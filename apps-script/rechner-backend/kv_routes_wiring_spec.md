@@ -231,7 +231,9 @@ function kvMapRequest_(p, params) {
     fAlt20: kvBool_(p.fAlt20, d.fAlt20),
     fEinkSlider: kvNum_(p.fEinkSlider, d.fEinkSlider),
     fKind: kvBool_(p.fKind, d.fKind),
-    proklimaTog: kvBool_(p.proklimaTog, d.proklimaTog),
+    // Produktiv hart AUS: Ein mitgesendeter Client-Wert wird bewusst ignoriert.
+    // Die Engine-Fähigkeit bleibt für den Äquivalenzbeweis erhalten.
+    proklimaTog: false,
     fEffizienz: kvBool_(p.fEffizienz, d.fEffizienz),
 
     // Finanzierung und Extras
@@ -270,7 +272,8 @@ function kvMapRequest_(p, params) {
 | `fHalbjahr` | `fHalbjahr` | Whitelist gegen `params.perioden`, sonst Server-Periode | Server-Periode |
 | `fGrund` / `fEU` / `fKlima` / `fAlt20` | dito | `kvBool_` | true |
 | `fEinkSlider` | `fEinkSlider` | `kvNum_` | 60000 |
-| `fKind` / `proklimaTog` / `fEffizienz` | dito | `kvBool_` | false |
+| `fKind` / `fEffizienz` | dito | `kvBool_` | false |
+| `proklimaTog` | `proklimaTog` | produktiv fest `false`; Client-Wert wird ignoriert | false |
 | `finanzTog` | `finanzTog` | `kvBool_` | false |
 | `kredLZ` | `kredLZ` | `kvNum_` + `Math.round` | 10 |
 | `kredZins` | `kredZins` | `kvNum_` | 0.7 |

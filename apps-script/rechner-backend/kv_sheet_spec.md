@@ -36,6 +36,7 @@ Datumsformatierung ein `Date` statt der Zahl.
 |---|---|---|---|---|
 | `grund_pct_eu` | 30 | Prozent | Grundförderung mit EU-Wertschöpfung bzw. in Perioden ohne EU-Differenzierung | Orakel Z.107, KfW 458 |
 | `grund_pct_nicht_eu` | 15 | Prozent | Grundförderung ohne EU-Wertschöpfung (ab 2027) | Orakel Z.107, KfW-PM BEG-Reform |
+| `proklima_aktiv` | N | J/N | Globaler produktiver Kill-Switch: `N` verhindert jede Anrechnung; Prozent, Höchstbetrag und Periodenfelder bleiben ausschließlich als interne Engine-/Orakel-Referenz erhalten | GF-Decision 15.07.2026, Kanon 1.3 |
 | `proklima_pct` | 0.05 | Anteil | proKlima Hannover: Anteil der förderfähigen Kosten | Orakel Z.219, Kanon 1.3 |
 | `proklima_max` | 1500 | Euro | proKlima Hannover: Höchstbetrag | Orakel Z.219, Kanon 1.3 |
 | `kum_cap_pct` | 0.6 | Anteil | BEG-Kumulierungsgrenze bei weiteren öffentlichen Mitteln | Orakel Z.225, Kanon 1.3 |
@@ -159,6 +160,7 @@ function KV_PARAMETER_ROWS_() {
   return [
     ['grund_pct_eu', 30, 'Prozent', 'Grundförderung mit EU-Wertschöpfung', 'Orakel Z.107, KfW 458'],
     ['grund_pct_nicht_eu', 15, 'Prozent', 'Grundförderung ohne EU-Wertschöpfung (ab 2027)', 'Orakel Z.107, KfW-PM BEG-Reform'],
+    ['proklima_aktiv', 'N', 'J/N', 'Globaler produktiver Kill-Switch; interne Engine-Referenz bleibt erhalten', 'GF-Decision 15.07.2026, Kanon 1.3'],
     ['proklima_pct', 0.05, 'Anteil', 'proKlima Hannover: Anteil der förderfähigen Kosten', 'Orakel Z.219, Kanon 1.3'],
     ['proklima_max', 1500, 'Euro', 'proKlima Hannover: Höchstbetrag', 'Orakel Z.219, Kanon 1.3'],
     ['kum_cap_pct', 0.6, 'Anteil', 'BEG-Kumulierungsgrenze', 'Orakel Z.225, Kanon 1.3'],
@@ -268,6 +270,7 @@ function kvGetParams_() {
     periodenReihenfolge: reihenfolge,
     grundPctEu: num_(kv['grund_pct_eu'], 30),
     grundPctNichtEu: num_(kv['grund_pct_nicht_eu'], 15),
+    proKlimaAktiv: String(kv['proklima_aktiv'] || 'N').toUpperCase() === 'J',
     proKlimaPct: num_(kv['proklima_pct'], 0.05),
     proKlimaMax: num_(kv['proklima_max'], 1500),
     kumCapPct: num_(kv['kum_cap_pct'], 0.6),
