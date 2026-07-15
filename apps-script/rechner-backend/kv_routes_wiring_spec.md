@@ -141,27 +141,39 @@ eta-Matrix mit Herkunftstexten, Defaults, Schätz-Fragen-Metadaten, Hinweistexte
 Briefing Abschnitt 5: der Rechenkern kennt kein Datum, die Periode kommt als
 Eingabe. Nur dieser Wrapper liest die Server-Zeit. Damit ist ein Deploy vor dem
 Stichtag 21.07.2026 gefahrlos: die Engine liefert bis 20.07. das Alt-Regelwerk
-und schaltet danach von selbst um, ohne Deploy.
+und schaltet danach von selbst um, ohne Deploy. Diese Zusage gilt auf BEIDEN
+Parameter-Pfaden (Sheet und Seed-Fallback) und ist auf dem Seed-Pfad durch das
+Perioden-Gate belegt: 15.07.2026 → `alt`, 21.07.2026 → `h2-2026`, 01.02.2027 →
+`h1-2027`, 01.08.2028 → `h2-2028`, 01.01.2030 → `h1-2029`. Vor dem Fix X-1 war
+sie auf dem Seed-Pfad falsch (Abnahme-Befund B-1).
 
 ```javascript
 /**
  * Antragsperiode aus der Server-Zeit. EINZIGE Stelle mit new Date().
  * Zeitzone: das Apps-Script-Projekt läuft auf Europe/Berlin (appsscript.json).
- * Vergleich über ISO-Strings, damit keine Zeitzonen-Arithmetik nötig ist.
+ *
+ * Dieser Wrapper liest NUR die Uhr. Die Auswahl-Logik selbst steht als reine
+ * Funktion `kvPeriodeFuerDatum(heuteIso, params)` in kv_engine.gs und wird dort
+ * vom Perioden-Gate getestet (`tests/kv_equivalence/run_perioden_automatik.js`,
+ * 18 Stichtags-Fälle plus Jahresraster-Invariante). Hier wird sie NICHT
+ * dupliziert: doppelte Logik in einer .md war die Ursache des Befunds B-1
+ * (die Funktion lebte nur im Text und wurde von keinem Test berührt).
  */
 function kvPeriodeHeute_(params) {
   const heute = Utilities.formatDate(new Date(), 'Europe/Berlin', 'yyyy-MM-dd');
-  const keys = Object.keys(params.perioden);
-  for (let i = 0; i < keys.length; i++) {
-    const per = params.perioden[keys[i]];
-    const ab = per.gueltigAb || '';
-    const bis = per.gueltigBis || '';
-    if ((!ab || heute >= ab) && (!bis || heute <= bis)) return keys[i];
-  }
-  // Nach der letzten Periode: bei der letzten bleiben, statt zu werfen.
-  return params.periodenReihenfolge[params.periodenReihenfolge.length - 1];
+  return kvPeriodeFuerDatum(heute, params);
 }
 ```
+
+**Datenvertrag (Pflicht, sonst schaltet die Automatik nie um):** `kvPeriodeFuerDatum`
+entscheidet über `gueltigAb`/`gueltigBis` je Periode. Diese Felder müssen in BEIDEN
+Parameter-Quellen stehen: im Sheet-Tab `KV_FoerderPerioden` (Spalten B und C,
+kv_sheet_spec.md 2) UND in `KV_PARAMS_SEED.perioden` (kv_engine.gs). Der Seed ist
+der ausdrückliche Fallback, wenn ein Tab fehlt (kv_sheet_spec.md 4). Fehlen die
+Felder dort, liefert die Auswahl für jedes Datum die erste Perioden-Zeile, also
+dauerhaft das Alt-Regelwerk. Genau das war Befund B-1 der Abnahme. Beide Quellen
+sind seit dem Fix zeilengleich, das Perioden-Gate prüft den Seed-Pfad bei jedem
+Testlauf.
 
 **Regel für `fHalbjahr`:** schickt der Client keine Periode, setzt der Server
 `kvPeriodeHeute_`. Schickt der Client eine gültige Periode (der Nutzer klickt in
@@ -292,6 +304,7 @@ Route (anders als bei `dimensionierung`, das seine eigene Umrechnung hat).
 | 4 | `&origin=https://fremd.de` | `origin_not_allowed` |
 | 5 | `&fHalbjahr=quatsch` | Server-Periode, kein Fehler, `periodeAutomatik: true` |
 | 6 | Sheet-Tab `KV_Parameter` umbenannt | Engine rechnet mit `KV_PARAMS_SEED` weiter (kein Kundenfehler) |
+| 7 | Sheet-Tab umbenannt UND Datum nach dem 21.07.2026 | `aktivePeriode` = `h2-2026`, NICHT `alt`. Der Seed-Fallback muss die Perioden-Automatik genauso tragen wie das Sheet (Befund B-1). Gate-Beleg: `node tests/kv_equivalence/run_perioden_automatik.js` |
 
 Prüfung 2 und 3 sind die beiden Werte, an denen ein kaputtes Wiring zuerst
 auffällt.

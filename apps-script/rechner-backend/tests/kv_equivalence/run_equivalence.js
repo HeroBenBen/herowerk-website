@@ -23,6 +23,8 @@ const path = require('path');
 const { runOracle, extractScript, numbersOf, SHA_SOLL } = require('./oracle_runner');
 const V = require('./view_adapter');
 const { buildVectors } = require('./vectors');
+const { runPeriodenGate } = require('./run_perioden_automatik');
+const { runLiveboxGate } = require('./run_livebox_gate');
 
 // kv_engine.gs als Modul laden (.gs ist gueltiges JS, Node braucht nur den Hinweis)
 function loadEngine() {
@@ -182,6 +184,15 @@ function main() {
   console.log('Ergebnis: ' + (e.sha === SHA_SOLL ? 'PASS' : 'FAIL'));
   if (e.sha !== SHA_SOLL) process.exit(2);
 
+  // Gate 2: Perioden-Automatik auf dem Seed-Pfad (Fix X-1, Abnahme-Befund B-1).
+  console.log('');
+  const pg = runPeriodenGate(true);
+
+  // Gate 3: Live-Foerderbox (Fix X-3, Abnahme-Befund B-2). Kein Orakel-Lauf,
+  // Autoritaet ist Kanon Abschnitt 5, siehe Kopfkommentar von run_livebox_gate.js.
+  console.log('');
+  const lg = runLiveboxGate(true);
+
   const { list, achsStat } = buildVectors();
   const vecs = maxIdx > 0 ? list.slice(0, Number(process.argv[maxIdx + 1])) : list;
   console.log('\n== VEKTOREN ==');
@@ -213,7 +224,20 @@ function main() {
     });
     process.exit(1);
   }
-  console.log('\nGATE: PASS. Port ist orakel-aequivalent auf jeder ausgegebenen Zahl.');
+
+  // Zusage bewusst eng gefasst (Fix X-3): "jede ausgegebene Zahl" war zu stark,
+  // solange Flaechen ausgenommen sind. Was das Gate wirklich deckt, steht in
+  // PROTOKOLL.md Abschnitt 2 ("Verglichene Ausgabeflaechen") und Abschnitt 7
+  // ("Bewusst NICHT verglichen").
+  console.log('\nAEQUIVALENZ-GATE: PASS. Delta 0 auf den 11 verglichenen Anzeigeflaechen');
+  console.log('plus allen Chart-Serien von calculate() + updateFoerderung() (Berater-Modus).');
+  console.log('NICHT im Vergleich: fBadges-Flags, renderLiveFoerder, renderFoerderAufbau,');
+  console.log('cBreakLabels, Wizard-UI. Begruendung je Flaeche: PROTOKOLL.md Abschnitt 7.');
+  if (!pg.pass || !lg.pass) {
+    console.log('\nACHTUNG: Gate 2 oder Gate 3 ist ROT (siehe oben).');
+    process.exit(1);
+  }
+  console.log('Gate 2 (Perioden-Automatik): PASS. Gate 3 (Live-Foerderbox): PASS.');
 }
 
 if (require.main === module) main();

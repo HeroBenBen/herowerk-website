@@ -1,11 +1,21 @@
 ---
 type: reference
-tldr: "Aequivalenz-Beweis Lane B: kv_engine.gs (Port) liefert auf 776 Testvektoren exakt dieselben Zahlen wie das eingefrorene Orakel, Delta 0; Gate durch 5 Mutationstests als wirksam nachgewiesen."
+tldr: "Aequivalenz-Beweis Lane B: kv_engine.gs (Port) liefert auf 858 Testvektoren dieselben Zahlen wie das eingefrorene Orakel, Delta 0, auf 11 Anzeigeflaechen plus allen Chart-Serien; dazu Perioden-Gate (18 Stichtage) und Live-Foerderbox-Gate (12 Faelle). Bewusst nicht verglichene Flaechen sind in Abschnitt 7 einzeln benannt."
 datum: 2026-07-15
-status: B5 FERTIG (Gate PASS)
+status: B5 FERTIG (Gate PASS); Stand nach Fix-Lauf LANE-B2 (Abnahme-Befunde B-1/B-2/B-4, M9-Marge)
 ---
 
 # Äquivalenz-Protokoll (B4/B5) — kv_engine.gs gegen Orakel
+
+> **Was die Suite deckt (Kurzfassung, verbindlich):** Sie beweist, dass der Port
+> auf 858 Vektoren dieselben Zahlen liefert wie das Orakel, und zwar auf den 11
+> Anzeigeflächen von `calculate()` + `updateFoerderung()` im Berater-Modus plus
+> allen Chart-Serien. Sie beweist NICHT, dass jede Zahl des Orakels verglichen
+> wird: vier Flächen sind ausgenommen und in Abschnitt 7 einzeln mit Begründung
+> benannt. Dazu kommen zwei eigenständige Gates ohne Orakel-Bezug: die
+> Perioden-Automatik (Abschnitt 8) und die Live-Förderbox (Abschnitt 9).
+>
+> Ein Lauf, drei Gates: `node run_equivalence.js`.
 
 ## 1. SHA-Beweis (Gate 1)
 
@@ -50,20 +60,28 @@ unberührt. Der Rechenkern wird also vollständig, die UI-Schicht gar nicht gete
 (Orakel Z.469 bis 479). Dort wird auf volle Float-Gleichheit verglichen, nicht auf
 gerundete Anzeigewerte. Eine Abweichung im letzten Bit fiele auf.
 
-### Verglichene Ausgabeflächen
+### Verglichene Ausgabeflächen (11): die Zusage des Gates
 
-`foerderBox` (10 Felder als Strings) · `pathSummary` · `kpiGrid` (Zahlen + Labels) ·
-`dreiWegeBox` (+ display) · `cashflowBox` (+ display) · `co2Box` · `sensiBox` ·
-`immoBox` (+ display) · `detTbl` (alle Zeilen) · `assBox` ·
-Chart-Serien: `vermoegen`, `nullLinie`, `labels`, `cBreak` (alle Serien inkl.
-Splice-Reihenfolge), `heizFossil`, `heizWp`, `heizDiff`.
+`foerderBox` (10 Felder als Strings) · `foerderTreppe` (Quote je Reform-Periode) ·
+`pathSummary` · `kpiGrid` (Zahlen + Labels) · `dreiWegeBox` (+ display) ·
+`cashflowBox` (+ display) · `co2Box` · `sensiBox` · `immoBox` (+ display) ·
+`detTbl` (alle Zeilen) · `assBox`.
+
+Dazu alle Chart-Serien: `vermoegen`, `nullLinie`, `labels`, `cBreak` (alle Serien
+inkl. Splice-Reihenfolge), `heizFossil`, `heizWp`, `heizDiff`.
+
+Was hier NICHT steht, ist auch nicht verglichen. Die vier Lücken stehen in
+Abschnitt 7. (Frühere Fassungen dieses Protokolls zählten `fBadges` zur Förderbox
+und sprachen von „jeder ausgegebenen Zahl": beides war zu weit gefasst,
+Abnahme-Befunde B-2 und B-4.)
 
 ## 3. Testvektoren (B5)
 
-**Gesamt: 776.** Jede diskrete Achse einzeln vollständig durchpermutiert,
-plus Kreuzprodukte der Achsen, die sich im Orakel gegenseitig bedingen,
-plus 200 Zufallskombinationen mit festem Seed 42 (`mulberry32`, eigener
-deterministischer Generator im Testskript, NICHT `Math.random`).
+**Gesamt: 858** (gezählt aus dem tatsächlichen Lauf, nicht geschätzt). Jede
+diskrete Achse einzeln vollständig durchpermutiert, plus Kreuzprodukte der Achsen,
+die sich im Orakel gegenseitig bedingen, plus 200 Zufallskombinationen mit festem
+Seed 42 (`mulberry32`, eigener deterministischer Generator im Testskript, NICHT
+`Math.random`).
 
 | Gruppe | Vektoren | Inhalt |
 |---|---|---|
@@ -73,10 +91,32 @@ deterministischer Generator im Testskript, NICHT `Math.random`).
 | `togg:*` | 16 | neuFossil × vglBrennstoff × bio × finanz |
 | `togg2:*` | 16 | dynTarif × immo × proKlima × heizart |
 | `proklima:*` | 24 | Periode(6) × invWP(4), 60-Prozent-Deckel und 1.500-Kappung |
+| `deckel:*` | 82 | 60-Prozent-Kumulierungsdeckel beidseitig umzingelt (siehe unten) |
 | `einheit:*` | 5 | kWh / m³ / Liter (Client-Umrechnung ×10) |
 | `modus:*` | 2 | kunde / berater (reines Echo) |
 | `kante:*` | 7 | Break-even sofort/nie, Mehrinvest ≤ 0, Quote gekappt, kredLZ > laufzeit, Strompreis sinkend |
 | `rand#*` | 200 | Zufallskombination über ALLE Achsen, Seed 42 |
+
+Summe der Gruppen = 858. (Frühere Fassung: 776, ohne die Gruppe `deckel:*`.)
+
+### Die Deckel-Gruppe (`deckel:*`, 82 Vektoren)
+
+Anlass: die Mutation `kumCapPct 0.6 → 0.65` wurde von nur **2 von 776** Vektoren
+gefangen. Die Regel mit dem grössten Geld-Hebel hing an zwei Fällen.
+
+Wo liegt die Kante? Der Deckel beisst, sobald `fBetrag + pkWP > 0,6 × invWP`
+(Orakel Z.224 bis 226):
+
+| Bereich | Kante | Testfälle |
+|---|---|---|
+| `invWP ≤ 28.000` (pkWP = round(0,05 × inv)) | kürzt sich zu **Quote > 55 %**, unabhängig von invWP | Quoten 30/46 darunter, 56/60/70/76/80 darüber, je mit proKlima an und aus, je bei invWP 20.000 und 28.000 |
+| `invWP ≥ 30.000` (pkWP auf 1.500 gekappt) | **280 × q + 1.500 = 0,6 × invWP**, bei q=60 also invWP = 30.500 exakt | 30.400 (beisst) / **30.500 (exakt auf der Grenze)** / 30.600 (beisst nicht) |
+| Paket-Preise | Kanon Abschnitt 5 | 29.750 / 34.510 / 45.220 / 57.120, je Periode und je proKlima an/aus |
+
+Quote 55 selbst ist mit dem ganzzahligen Bonus-Raster der Reform-Perioden nicht
+erreichbar (mögliche Quoten in h2-2026: 0/10/16/26/30/40/46/56/60/70/76/80). Sie
+wird deshalb beidseitig eingeklemmt statt exakt getroffen; exakt getroffen wird
+die Kante im Invest-Raum bei 30.500 Euro.
 
 ### Achsen einzeln (vollständig durchpermutiert)
 
@@ -100,17 +140,32 @@ sha256 IST:  55344fe56a7043ffed5eec352eeeee0717d34ddebd34d57ecef0e7c88f61b9f3
 sha256 SOLL: 55344fe56a7043ffed5eec352eeeee0717d34ddebd34d57ecef0e7c88f61b9f3
 Ergebnis: PASS
 
+== PERIODEN-GATE (Seed-Pfad, ohne Sheet) ==
+Stichtags-Faelle: 18 / 18
+Invariante 'ab 2026-07-21 nie alt' (72 Monatsraster-Daten): PASS
+PERIODEN-GATE: PASS
+
+== LIVE-FOERDERBOX-GATE (Zuschuss/Eigenanteil/proKlima-effektiv) ==
+Faelle: 12 / 12
+LIVE-FOERDERBOX-GATE: PASS
+
 == VEKTOREN ==
-Gesamt: 776
+Gesamt: 858
 
 == ERGEBNIS ==
-Delta EXAKT 0: 776 / 776
+Delta EXAKT 0: 858 / 858
 Abweichend:    0
 
-GATE: PASS. Port ist orakel-aequivalent auf jeder ausgegebenen Zahl.
+AEQUIVALENZ-GATE: PASS. Delta 0 auf den 11 verglichenen Anzeigeflaechen
+plus allen Chart-Serien von calculate() + updateFoerderung() (Berater-Modus).
+NICHT im Vergleich: fBadges-Flags, renderLiveFoerder, renderFoerderAufbau,
+cBreakLabels, Wizard-UI. Begruendung je Flaeche: PROTOKOLL.md Abschnitt 7.
+Gate 2 (Perioden-Automatik): PASS. Gate 3 (Live-Foerderbox): PASS.
 ```
 
 Reproduktion: `node apps-script/rechner-backend/tests/kv_equivalence/run_equivalence.js`
+(führt alle drei Gates aus). Einzeln: `node run_perioden_automatik.js`,
+`node run_livebox_gate.js`.
 
 ## 5. Wirksamkeits-Nachweis des Gates (Mutationstest)
 
@@ -128,8 +183,25 @@ wiederhergestellt.
 | `klima h2-2026: 16 → 15` | 5 / 60 | ja |
 | Kontrolllauf nach Wiederherstellung | 60 / 60 | — |
 
-sha256 kv_engine.gs nach Wiederherstellung:
-`671c84ae9814866bd226f978e94f1e02190485a0c12ec46678ccdae5670071e9`
+sha256 kv_engine.gs nach Wiederherstellung (Stand Lane-B-Lauf, vor den Fixes
+X-1 bis X-4): `671c84ae9814866bd226f978e94f1e02190485a0c12ec46678ccdae5670071e9`
+
+### 5b. Wirksamkeit der Deckel-Gruppe (Fix X-2, eigener Mutationslauf LANE-B2)
+
+Der Deckel wurde dreimal verfälscht, je über den vollen Vektorsatz (858).
+Wiederherstellung nach jedem Lauf per `sha256` belegt.
+
+| Mutation | rote Vektoren | davon `deckel:*` | Aussage |
+|---|---|---|---|
+| `kumCapPct 0.6 → 0.65` | **8** (vorher: 2 von 776) | 6 | dieselbe Mutation wie M9 der Abnahme, Marge vervierfacht |
+| `kumCapPct 0.6 → 0.61` | **7** | 5 | auch eine Verfälschung um einen Prozentpunkt wird gefangen |
+| `kumCapPct 0.6 → 0.599` | **6** | 4 | Deckel SENKEN wird ebenfalls gefangen (Gegenrichtung) |
+
+Der Vektor `deckel:kante-inv30500/pktrue` (exakt auf der Kappungsgrenze) wird nur
+beim **Senken** des Deckels rot, nicht beim Anheben. Genau so muss sich ein Fall
+auf der Grenze verhalten: `fBetrag + pkWP` ist dort gleich `0,6 × invWP`, ein
+höherer Deckel ändert das Ergebnis nicht, ein niedrigerer sofort. Der Fall ist
+damit nachweislich kein Blindgänger.
 
 ## 6. Im Port gefixte Abweichungen
 
@@ -150,7 +222,54 @@ fällt:
 Diese fünf Befunde sind gleichzeitig die Präzisions-Vorgabe für den Thin-Client
 in B7: `view_adapter.js` ist die verbindliche Render-Vorlage.
 
-## 7. Bekannte Grenzen (ehrlich benannt)
+## 7. Bewusst NICHT verglichen (Abnahme-Befund B-2, eigene Nachmessung)
+
+Diese Orakel-Ausgaben werden vom Äquivalenz-Gate **nicht** berührt. Sie stehen
+hier vollständig, damit die Zusage des Gates (Abschnitt 2) nicht grösser wirkt,
+als sie ist.
+
+| Orakel-Ausgabe | Ort | Warum nicht verglichen | Risiko |
+|---|---|---|---|
+| `fBadges` | Z.139 bis 141, in `updateFoerderung` | Reine Anzeige-Formatierung ohne eigene Rechnung: der Text setzt `f.grundPct`, `f.hj.klima`, `f.e` zusammen, die alle einzeln über `fGrundPct` / `fKlimaPct` / `fEinkBonusLbl` verglichen werden. Eigenständig sind nur die aktiv/inaktiv-Flags (CSS-Klassen), also Optik. | keins für Zahlen; ein falsches Flag wäre ein UI-Fehler und fiele in B7 auf |
+| `renderLiveFoerder` → `wzLiveFoerder` | Z.1006 bis 1035 | **Rechen-relevant, deshalb NICHT einfach abgehakt, sondern durch Gate 3 abgedeckt** (Abschnitt 9). Ein echter Orakel-Vergleich ist mit diesem Harness unmöglich, eigene Messung: die Funktion liegt in der Wizard-IIFE (Z.676 bis 1180) und ist von aussen nicht aufrufbar; `#wzLiveFoerder` existiert im HTML nicht, sondern wird erst von `init()` im Kunden-Modus erzeugt (Z.723); und dort liefert sie leeren Text, solange `step1Valid()` falsch ist (Z.1008), was nur echte Wizard-Interaktion ändert. Ein Vergleich braucht einen wizard-fähigen DOM. → BLOCKED-1 in `LANE-B2.md`. | gedeckt durch Gate 3 gegen Kanon Abschnitt 5, siehe dortige Einschränkung |
+| `renderFoerderAufbau` | Z.1036 ff. | Läuft nur im Kunden-Modus (`wz-customer`), der Harness läuft `?modus=berater`. Zeigt die Bausteine der Quote (Grund/Klima/Einkommen), deren Zahlen alle über `foerderBox` verglichen werden. Eigene Rechnung: keine. | gering, gleiche Quellzahlen |
+| `cBreakLabels` | Chart-2-Serien-Namen | Reine Beschriftung („Energie + CO₂", „Wartung" …), keine Zahl. Der Port erzeugt sie gar nicht: die Serien-Namen sind Sache des Clients (B7). Die zugehörigen **Daten** werden auf voller Float-Gleichheit verglichen. | keins |
+| Wizard-Ausgaben (`wzEstVal`, `wzVerbVal`, `bedarfLive`, `etaLive`, `wzStepper` …) | diverse | Ausserhalb des Lane-B-Scope: Dimensionierung und UI, nicht Teil von `calculate()`. | Scope-Grenze, in B7 zu prüfen |
+
+## 8. Gate 2: Perioden-Automatik (`run_perioden_automatik.js`)
+
+Anlass: Abnahme-Befund B-1 (KRITISCH). Die Perioden-Auswahl lebte nur als
+Code-Block in `kv_routes_wiring_spec.md`, entschied über `gueltigAb`/`gueltigBis`
+und wurde von keinem Test berührt. Diese Felder fehlten im `KV_PARAMS_SEED`:
+auf dem Seed-Fallback-Pfad (`kv_sheet_spec.md` 4) lieferte die Funktion deshalb
+für **jedes** Datum `alt`, auch 2030.
+
+Fix: die Felder stehen jetzt im Seed (zeilengleich mit dem Sheet-Tab), und die
+Auswahl-Logik liegt als reine Funktion `kvPeriodeFuerDatum(heuteIso, params)` in
+`kv_engine.gs`, dort, wo die Tests greifen. Der Wrapper `kvPeriodeHeute_` in der
+Spec liest nur noch die Uhr und ruft sie auf. Keine doppelte Logik mehr.
+
+Geprüft wird der **reine Seed-Pfad** (ohne Sheet), genau dort sass der Defekt:
+18 Stichtags-Fälle (jede Periode an beiden Kanten) plus die Invariante, dass kein
+Datum ab dem 21.07.2026 jemals `alt` liefert (72 Monatsraster-Daten bis 2031).
+
+## 9. Gate 3: Live-Förderbox (`run_livebox_gate.js`)
+
+Deckt `liveZuschuss`, `liveEigenanteil`, `proKlimaEffektiv` ab (Abnahme-Befund
+B-2, die einzige rechen-relevante Lücke).
+
+**Autorität dieses Gates, unmissverständlich:** Es ist **kein** Orakel-Vergleich
+(Begründung in Abschnitt 7). Die Sollwerte stammen aus der ratifizierten
+Eigenanteils-Tabelle in **Kanon Abschnitt 5**, einer vom Port unabhängigen,
+abgenommenen Quelle, plus den drei Kappungs-Kanten aus Abschnitt 3. Das Gate
+fängt jede spätere Verfälschung dieser Zahlen. Es beweist **nicht**, dass die
+Erst-Transkription aus dem Orakel korrekt war; dafür bräuchte es den
+wizard-fähigen DOM aus BLOCKED-1.
+
+12 Fälle, alle PASS. Der Port reproduziert die vier Paket-Eigenanteile des Kanons
+(7.350 / 12.110 / 21.320 / 33.220) unabhängig nach.
+
+## 10. Bekannte Grenzen (ehrlich benannt)
 
 1. **Die Alt-Periode (`fHalbjahr=alt`) ist NICHT äquivalenz-geprüft.** Das Orakel
    kennt sie nicht, es gibt also kein Vergleichsobjekt. Ihre Werte stammen aus

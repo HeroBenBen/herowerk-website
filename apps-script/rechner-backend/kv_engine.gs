@@ -7,8 +7,10 @@
  *   55344fe56a7043ffed5eec352eeeee0717d34ddebd34d57ecef0e7c88f61b9f3
  *
  * Regeln dieses Moduls:
- *  - KEIN DOM, KEIN new Date(): die Periode kommt als Eingabe (inputs.fHalbjahr),
- *    die Perioden-Automatik (Server-Zeit lesen) liegt im Wrapper (Lane C).
+ *  - KEIN DOM, KEIN new Date(): die Periode kommt als Eingabe (inputs.fHalbjahr).
+ *    Die Perioden-AUSWAHL steht als reine Funktion kvPeriodeFuerDatum hier im
+ *    Modul (Datum als Argument, testbar). Nur das LESEN der Server-Zeit liegt im
+ *    Wrapper kvPeriodeHeute_ (kv_routes_wiring_spec.md 4, Lane C).
  *  - Apps-Script-V8-kompatibel (kein optional chaining, kein Spread in Objekten).
  *  - Alle Zahlen sind ungerundete Engine-Werte, AUSSER den Stellen, an denen das
  *    Orakel selbst rundet. Diese sind einzeln kommentiert mit "[Orakel rundet]".
@@ -24,6 +26,10 @@
 var KV_PARAMS_SEED = {
   // --- Perioden (= Sheet KV_FoerderPerioden). Orakel Z.96 bis 103 (FOERDER_HJ)
   //     plus Alt-Zeile aus Kanon Abschnitt 2 (Anträge bis 20.07.2026).
+  //     gueltigAb/gueltigBis (ISO) tragen die Perioden-Automatik und sind
+  //     zeilengleich mit dem Sheet-Tab KV_FoerderPerioden (kv_sheet_spec.md 2).
+  //     Sie MUESSEN hier stehen: der Seed ist der Fallback, wenn ein Tab fehlt
+  //     (kv_sheet_spec.md 4). Ohne sie bliebe die Engine ewig im Alt-Regelwerk.
   perioden: {
     // Alt-Regelwerk, Anträge bis 20.07.2026. Quelle: Kanon Abschnitt 2
     // (verifiziert gegen Code.gs origin/main 95c0e91, foerderung_ Z.157 bis 196).
@@ -31,6 +37,7 @@ var KV_PARAMS_SEED = {
     // Modelliert den selbstgenutzten Einzelfall (erste Wohneinheit).
     'alt': {
       label: 'bis 20.07.2026',
+      gueltigAb: '', gueltigBis: '2026-07-20',
       klima: 20,
       grenze: 30000,
       eu: false,
@@ -42,6 +49,7 @@ var KV_PARAMS_SEED = {
     },
     'h2-2026': {
       label: '21.07.2026 bis 31.01.2027',
+      gueltigAb: '2026-07-21', gueltigBis: '2027-01-31',
       klima: 16, grenze: 28000, eu: false, cap: 80, effizienzPct: 0,
       kindFreibetrag: 10000,
       einkStufen: [{ maxAnr: 30000, pct: 40 }, { maxAnr: 40000, pct: 30 }, { maxAnr: 50000, pct: 10 }],
@@ -49,6 +57,7 @@ var KV_PARAMS_SEED = {
     },
     'h1-2027': {
       label: '01.02. bis 31.07.2027',
+      gueltigAb: '2027-02-01', gueltigBis: '2027-07-31',
       klima: 12, grenze: 27250, eu: true, cap: 80, effizienzPct: 0,
       kindFreibetrag: 10000,
       einkStufen: [{ maxAnr: 30000, pct: 40 }, { maxAnr: 40000, pct: 30 }, { maxAnr: 50000, pct: 10 }],
@@ -56,6 +65,7 @@ var KV_PARAMS_SEED = {
     },
     'h2-2027': {
       label: '01.08.2027 bis 31.01.2028',
+      gueltigAb: '2027-08-01', gueltigBis: '2028-01-31',
       klima: 8, grenze: 26500, eu: true, cap: 80, effizienzPct: 0,
       kindFreibetrag: 10000,
       einkStufen: [{ maxAnr: 30000, pct: 40 }, { maxAnr: 40000, pct: 30 }, { maxAnr: 50000, pct: 10 }],
@@ -63,6 +73,7 @@ var KV_PARAMS_SEED = {
     },
     'h1-2028': {
       label: '01.02. bis 31.07.2028',
+      gueltigAb: '2028-02-01', gueltigBis: '2028-07-31',
       klima: 4, grenze: 25750, eu: true, cap: 80, effizienzPct: 0,
       kindFreibetrag: 10000,
       einkStufen: [{ maxAnr: 30000, pct: 40 }, { maxAnr: 40000, pct: 30 }, { maxAnr: 50000, pct: 10 }],
@@ -70,6 +81,7 @@ var KV_PARAMS_SEED = {
     },
     'h2-2028': {
       label: '01.08.2028 bis 31.01.2029',
+      gueltigAb: '2028-08-01', gueltigBis: '2029-01-31',
       klima: 0, grenze: 25000, eu: true, cap: 80, effizienzPct: 0,
       kindFreibetrag: 10000,
       einkStufen: [{ maxAnr: 30000, pct: 40 }, { maxAnr: 40000, pct: 30 }, { maxAnr: 50000, pct: 10 }],
@@ -77,6 +89,7 @@ var KV_PARAMS_SEED = {
     },
     'h1-2029': {
       label: '01.02. bis 31.07.2029',
+      gueltigAb: '2029-02-01', gueltigBis: '2029-07-31',
       klima: 0, grenze: 24250, eu: true, cap: 80, effizienzPct: 0,
       kindFreibetrag: 10000,
       einkStufen: [{ maxAnr: 30000, pct: 40 }, { maxAnr: 40000, pct: 30 }, { maxAnr: 50000, pct: 10 }],
@@ -157,6 +170,42 @@ function kvMixG(y, params) {
  * Für die 6 Reform-Perioden identisch zum Orakel (äquivalenz-geprüft, siehe
  * tests/kv_equivalence/PROTOKOLL.md).
  */
+/* ===================== PERIODEN-AUTOMATIK (datumsgesteuert) ===================== */
+
+/**
+ * Antragsperiode zu einem Datum. REINE Funktion: das Datum kommt als Eingabe,
+ * hier wird KEINE Uhr gelesen (Briefing Abschnitt 5). Die Server-Zeit liest
+ * ausschliesslich der Wrapper kvPeriodeHeute_ (kv_routes_wiring_spec.md 4), der
+ * genau diese Funktion aufruft. Damit lebt die Auswahl-Logik an EINER Stelle und
+ * wird vom Perioden-Gate getestet (tests/kv_equivalence/run_perioden_automatik.js).
+ *
+ * Vergleich ueber ISO-Strings (yyyy-MM-dd): lexikografisch = chronologisch, damit
+ * ist keine Zeitzonen-Arithmetik noetig.
+ *
+ * @param {string} heuteIso Datum als 'yyyy-MM-dd'
+ * @param {Object} params Parametersatz (KV_PARAMS_SEED oder Sheet-Spiegel)
+ * @return {string} Perioden-Schluessel
+ */
+function kvPeriodeFuerDatum(heuteIso, params) {
+  params = params || KV_PARAMS_SEED;
+  var heute = String(heuteIso || '');
+  var keys = Object.keys(params.perioden);
+  for (var i = 0; i < keys.length; i++) {
+    var per = params.perioden[keys[i]];
+    var ab = per.gueltigAb || '';
+    var bis = per.gueltigBis || '';
+    // Eine Periode ohne BEIDE Grenzen waere ein Datenfehler und wuerde jedes
+    // Datum fangen (Abnahme-Befund B-1). Darum wird sie uebersprungen, statt
+    // still das falsche Regelwerk zu liefern.
+    if (!ab && !bis) continue;
+    if ((!ab || heute >= ab) && (!bis || heute <= bis)) return keys[i];
+  }
+  // Nach der letzten definierten Periode: bei der letzten bleiben, statt zu
+  // werfen. NIE auf 'alt' zurueckfallen (das waere das Regelwerk von gestern).
+  var rf = params.periodenReihenfolge;
+  return rf[rf.length - 1];
+}
+
 function kvFoerder(inputs, params) {
   var hj = params.perioden[inputs.fHalbjahr];
   if (!hj) throw new Error('Unbekannte Förderperiode: ' + inputs.fHalbjahr);
@@ -663,6 +712,7 @@ if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     kvCalculate: kvCalculate,
     kvFoerder: kvFoerder,
+    kvPeriodeFuerDatum: kvPeriodeFuerDatum,
     kvBootstrapPayload: kvBootstrapPayload,
     kvSchaetzeBedarf: kvSchaetzeBedarf,
     kvBioAnteil: kvBioAnteil,

@@ -156,6 +156,61 @@ function buildVectors() {
     });
   });
 
+  // A4b) 60-Prozent-Kumulierungsdeckel GEZIELT umzingelt (Fix X-2, Abnahme-Befund M9).
+  //
+  // Anlass: die Mutation kumCapPct 0.6 → 0.65 wurde von nur 2 von 776 Vektoren
+  // gefangen. Die Regel mit dem groessten Geld-Hebel haing an zwei Faellen.
+  //
+  // Wo genau liegt die Kante? totalFoerd = max(fBetrag, min(fBetrag+pkWP, 0,6*inv)),
+  // der Deckel beisst also, sobald fBetrag + pkWP > 0,6*inv (Orakel Z.224 bis 226).
+  //  - Fuer inv <= 28.000 (Bemessungsgrenze h2-2026) ist pkWP = round(0,05*inv) und
+  //    fBetrag = inv*q/100. Die Bedingung kuerzt sich zu q/100 + 0,05 > 0,6, also
+  //    q > 55: die Kante liegt im QUOTEN-Raum bei 55 Prozent, unabhaengig von inv.
+  //    Quote 55 selbst ist mit dem ganzzahligen Bonus-Raster der Reform-Perioden
+  //    NICHT erreichbar (moegliche Quoten h2-2026: 0/10/16/26/30/40/46/56/60/70/76/80),
+  //    darum wird sie beidseitig eingeklemmt: 46 darunter, 56 knapp darueber.
+  //  - Fuer inv >= 30.000 ist pkWP auf 1.500 gekappt. Dann liegt die Kante im
+  //    INVEST-Raum: 280*q + 1.500 = 0,6*inv. Bei q=60 ergibt das inv = 30.500 exakt.
+  //    Das ist der Fall EXAKT AUF der Kappungsgrenze (fBetrag+pkWP = 0,6*inv = 18.300).
+  ACHSEN.fHalbjahr.forEach(hj => {
+    [true, false].forEach(pk => {
+      // Paket-Bruttos aus Kanon Abschnitt 5. Bei den ersten beiden liegt der
+      // KfW-Zuschuss allein ueber dem Deckel (proKlima bringt 0), bei den letzten
+      // beiden wirkt proKlima voll additiv. Beide Seiten der Regel, je Periode.
+      [29750, 34510, 45220, 57120].forEach(brutto => {
+        push('deckel:paket' + brutto + '/' + hj + '/pk' + pk,
+          { proklimaTog: pk, fHalbjahr: hj, invWP: brutto, fEinkSlider: 25000 });
+      });
+    });
+  });
+  // Quoten-Raum um die Kante q=55 (nur h2-2026: nur dort ist proKlima erlaubt,
+  // nur dort kann der Deckel ueberhaupt greifen). Je Quote mit proKlima an UND aus.
+  const DECKEL_QUOTEN = [
+    { q: 30, ov: { fKlima: false, fEinkSlider: 60000 } },  // 30 + 0 + 0
+    { q: 46, ov: { fKlima: true, fEinkSlider: 60000 } },   // 30 + 16 + 0
+    { q: 56, ov: { fKlima: true, fEinkSlider: 45000 } },   // 30 + 16 + 10, knapp ueber der Kante
+    { q: 60, ov: { fKlima: false, fEinkSlider: 35000 } },  // 30 + 0 + 30
+    { q: 70, ov: { fKlima: false, fEinkSlider: 25000 } },  // 30 + 0 + 40
+    { q: 76, ov: { fKlima: true, fEinkSlider: 35000 } },   // 30 + 16 + 30
+    { q: 80, ov: { fKlima: true, fEinkSlider: 25000 } }    // 30 + 16 + 40 = 86, gekappt auf 80
+  ];
+  DECKEL_QUOTEN.forEach(d => {
+    [true, false].forEach(pk => {
+      [20000, 28000].forEach(inv => {
+        push('deckel:q' + d.q + '/inv' + inv + '/pk' + pk,
+          Object.assign({ proklimaTog: pk, fHalbjahr: 'h2-2026', invWP: inv }, d.ov));
+      });
+    });
+  });
+  // Kante im Invest-Raum bei q=60: 30.500 liegt EXAKT auf 0,6*inv, 30.400 knapp
+  // darueber (Deckel beisst), 30.600 knapp darunter (proKlima voll).
+  [30400, 30500, 30600].forEach(inv => {
+    [true, false].forEach(pk => {
+      push('deckel:kante-inv' + inv + '/pk' + pk,
+        { proklimaTog: pk, fHalbjahr: 'h2-2026', invWP: inv, fKlima: false, fEinkSlider: 35000 });
+    });
+  });
+
   // A5) Einheiten-Varianten (Client-Umrechnung, Server sieht nur kWh)
   EINHEITEN_VEC.forEach(e => {
     push('einheit:' + e.unit + '/' + e.roh, { bedarf: e.bedarf });

@@ -112,6 +112,15 @@ Feldern.
 **Anzeige-Reihenfolge der Degressions-Treppe** = die 6 Reform-Zeilen in dieser
 Reihenfolge, OHNE `alt` (Orakel Z.67 iteriert nur über `FOERDER_HJ`).
 
+**Parität-Pflicht Sheet ↔ Seed:** Diese Tabelle ist zeilen- und feldgleich mit
+`KV_PARAMS_SEED.perioden` in `kv_engine.gs`, ausdrücklich einschliesslich
+`gueltig_ab`/`gueltig_bis` (dort `gueltigAb`/`gueltigBis`). Grund: der Seed ist
+der Fallback, wenn ein Tab fehlt (Abschnitt 4). Fehlen die Datumsfelder im Seed,
+fällt die Perioden-Automatik still und dauerhaft auf die erste Zeile (`alt`)
+zurück, während die Website Reform-Zahlen verspricht (Abnahme-Befund B-1). Wer
+hier eine Zeile ändert, ändert den Seed mit und lässt
+`node tests/kv_equivalence/run_perioden_automatik.js` laufen.
+
 ## 3. Seed-Funktion (Muster: `setupSheets` / `writeKeyValueDoc_`)
 
 Zur Übernahme in Code.gs durch den Controller. `kvSetupSheets()` bleibt bewusst
@@ -220,7 +229,10 @@ function kvGetParams_() {
   const shP = ss.getSheetByName('KV_Parameter');
   const shF = ss.getSheetByName('KV_FoerderPerioden');
   // Fällt ein Tab aus, rechnet die Engine mit dem geprüften Seed weiter,
-  // statt dem Kunden einen Fehler zu zeigen.
+  // statt dem Kunden einen Fehler zu zeigen. Der Seed trägt dieselben
+  // gueltigAb/gueltigBis-Felder wie dieser Tab (kv_engine.gs), sonst bliebe die
+  // Perioden-Automatik auf diesem Pfad dauerhaft im Alt-Regelwerk stehen
+  // (Abnahme-Befund B-1, gefixt und durch das Perioden-Gate abgesichert).
   if (!shP || !shF) return KV_PARAMS_SEED;
 
   const kv = {};
