@@ -48,7 +48,10 @@ test.beforeAll(async () => {
     fs.createReadStream(file).pipe(response);
   });
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
-  baseURL = `http://127.0.0.1:${server.address().port}`;
+  // server.address() ist typseitig string | AddressInfo | null; nach listen() auf
+  // einem TCP-Port ist es immer AddressInfo.
+  const address = /** @type {import('net').AddressInfo} */ (server.address());
+  baseURL = `http://127.0.0.1:${address.port}`;
 });
 
 test.afterAll(async () => {

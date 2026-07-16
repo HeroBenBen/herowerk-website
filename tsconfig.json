@@ -9,5 +9,10 @@
     "strict": false,
     "skipLibCheck": true
   },
-  "include": ["scripts/**/*.js", "tests/**/*.js", "playwright.config.js"]
+  "include": [
+    "scripts/**/*.js",
+    "tests/**/*.js",
+    "tests/**/*.d.ts",
+    "playwright.config.js"
+  ]
 }
