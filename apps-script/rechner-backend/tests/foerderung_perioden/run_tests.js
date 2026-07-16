@@ -21,6 +21,8 @@ const path = require('path');
 const vm = require('vm');
 
 const CODE_PATH = path.join(__dirname, '..', '..', 'Code.gs');
+const ENGINE_PATH = path.join(__dirname, '..', '..', 'kv_engine.gs');
+const engineSrc = fs.readFileSync(ENGINE_PATH, 'utf8');
 const src = fs.readFileSync(CODE_PATH, 'utf8');
 
 // --- Sandbox: alles, was den reinen Kern verunreinigen würde, wirft.
@@ -35,6 +37,7 @@ const sandbox = {
   Utilities: { sleep: verboten('Utilities') },
 };
 vm.createContext(sandbox);
+vm.runInContext(engineSrc, sandbox, { filename: 'kv_engine.gs' });
 vm.runInContext(src, sandbox, { filename: 'Code.gs' });
 
 const { foerderCalc_, periodeFuer_, einkommenNorm_, foerderFaehigeKostenGesamt_, FOERDER_ROWS_, getNum_, int_ } = sandbox;

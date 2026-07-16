@@ -613,6 +613,7 @@ function kvCalculate(inputs, params) {
  */
 function kvBootstrapPayload(params) {
   params = params || KV_PARAMS_SEED;
+  var schaetzung = params.schaetzung || KV_SCHAETZUNG;
   var perioden = params.periodenReihenfolge.map(function (key) {
     var p = params.perioden[key];
     return {
@@ -634,7 +635,7 @@ function kvBootstrapPayload(params) {
     perioden: perioden,
     defaults: clientDefaults,
     etaMatrix: KV_ETA_MATRIX,
-    schaetzung: KV_SCHAETZUNG,
+    schaetzung: schaetzung,
     hinweise: {
       kappung: 'Mehr als 80 Prozent Zuschuss gibt es nicht.',
       unverbindlich: 'Unverbindliche Berechnung, ohne Gewähr.'
@@ -707,7 +708,7 @@ var KV_SCHAETZUNG = {
  */
 function kvSchaetzeBedarf(geb, bj, san, flaeche, params) {
   params = params || KV_PARAMS_SEED;
-  var S = KV_SCHAETZUNG;
+  var S = params.schaetzung || KV_SCHAETZUNG;
   var idx = S.stufen.indexOf(bj);
   if (idx < 0) return null;
   var sprung = S.sanierungSprung[san] || 0;

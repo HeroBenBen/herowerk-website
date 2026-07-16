@@ -3,13 +3,15 @@ type: reference
 tldr: "Exakte Dispatcher-Zeilen für doGet (action kostenvergleich + kv_bootstrap) inklusive Origin-Gate, CacheService-Muster, Perioden-Automatik und Parameter-Mapping Request auf kvCalculate-inputs; enthält den Pflicht-Befund, dass das bestehende num_ Dezimalwerte um Faktor 10 verfälscht."
 datum: 2026-07-15
 quelle: "Code.gs origin/main 95c0e91 (read-only gelesen); kv_contract.md; kv_engine.gs"
-status: Lane-B-Deliverable B6, Übernahme durch den Controller (Lane C). Lane B hat Code.gs NICHT verändert.
+status: O-5 Repo-Wiring in Code.gs umgesetzt; Live-Sheet-Seed und Deploy bleiben HitL-Gates
 ---
 
 # KV-Routes-Wiring-Spec — Dispatcher für `kostenvergleich` und `kv_bootstrap`
 
-Lane B besitzt Code.gs nicht und hat es nur gelesen. Diese Datei enthält die
-Zeilen zur wörtlichen Übernahme durch Lane C bzw. den Controller.
+Diese Datei dokumentiert das in Code.gs umgesetzte Wiring. Das lokale VM-Gate
+`tests/kv_routes_wiring/run_tests.js` prüft beide neuen Routen gegen Fake-Sheet,
+Fake-Cache und feste Serverzeit. Es greift weder auf das Live-Sheet noch auf ein
+Apps-Script-Deployment zu.
 
 ## 0. STOPPER vor dem Wiring: `num_` verfälscht jeden Dezimalwert
 
@@ -157,6 +159,11 @@ normale `kostenvergleich`-Contract; `inputsEcho.bedarf` ist der geschätzte Wert
 Der Request enthält keine Einkommens-, Kinder- oder Personendaten über das für
 die Rechnung ohnehin nötige Maß hinaus.
 
+Die zehn `wz_*`-Zeilen aus `KV_Parameter` werden als `params.schaetzung`
+verdrahtet. `kvBootstrapPayload` liefert diesen Spiegel an den Client,
+`kvSchaetzeBedarf` rechnet mit demselben Objekt. `KV_SCHAETZUNG` bleibt nur der
+Seed-Fallback. Das adversariale Gate prüft beide Pfade und den Sanierungssprung.
+
 ## 4. Perioden-Automatik (der einzige Ort, der die Uhr lesen darf)
 
 Briefing Abschnitt 5: der Rechenkern kennt kein Datum, die Periode kommt als
@@ -186,7 +193,7 @@ function kvPeriodeHeute_(params) {
 }
 ```
 
-**Datenvertrag (Pflicht, sonst schaltet die Automatik nie um):** `kvPeriodeFuerDatum`
+**Datenvertrag (umgesetzt, sonst schaltet die Automatik nie um):** `kvPeriodeFuerDatum`
 entscheidet über `gueltigAb`/`gueltigBis` je Periode. Diese Felder müssen in BEIDEN
 Parameter-Quellen stehen: im Sheet-Tab `KV_FoerderPerioden` (Spalten B und C,
 kv_sheet_spec.md 2) UND in `KV_PARAMS_SEED.perioden` (kv_engine.gs). Der Seed ist
@@ -194,7 +201,10 @@ der ausdrückliche Fallback, wenn ein Tab fehlt (kv_sheet_spec.md 4). Fehlen die
 Felder dort, liefert die Auswahl für jedes Datum die erste Perioden-Zeile, also
 dauerhaft das Alt-Regelwerk. Genau das war Befund B-1 der Abnahme. Beide Quellen
 sind seit dem Fix zeilengleich, das Perioden-Gate prüft den Seed-Pfad bei jedem
-Testlauf.
+Testlauf. Zusätzlich reicht `foerderung_` denselben `kvGetParams_()`-Spiegel an
+`foerderCalc_` weiter. Damit wirkt eine Fake-Sheet-Mutation im VM-Gate auf
+`foerderung` und `kostenvergleich` identisch; `FOERDER_PERIODEN_()` ist nur noch
+der Adapter auf `KV_PARAMS_SEED` für den Fallback.
 
 **Regel für `fHalbjahr`:** schickt der Client keine Periode, setzt der Server
 `kvPeriodeHeute_`. Schickt der Client eine gültige Periode (der Nutzer klickt in
@@ -332,6 +342,11 @@ Route (anders als bei `dimensionierung`, das seine eigene Umrechnung hat).
 | 6 | Sheet-Tab `KV_Parameter` umbenannt | Engine rechnet mit `KV_PARAMS_SEED` weiter (kein Kundenfehler) |
 | 7 | Sheet-Tab umbenannt UND Datum nach dem 21.07.2026 | `aktivePeriode` = `h2-2026`, NICHT `alt`. Der Seed-Fallback muss die Perioden-Automatik genauso tragen wie das Sheet (Befund B-1). Gate-Beleg: `node tests/kv_equivalence/run_perioden_automatik.js` |
 | 8 | `?action=kostenvergleich&bedarfModus=schaetzung&geb=efh&bj=1978-1994&san=teilweise&flaeche=140` | normaler `kostenvergleich`-Response, `inputsEcho.bedarf` aus `kvSchaetzeBedarf`, keine Schätzkonstanten im Client |
+
+Lokales O-5-Gate: `node tests/kv_routes_wiring/run_tests.js`. Es prüft zusätzlich
+`jaz=3.8`, `kredZins=0.7`, `stromEntw=-0.5`, `gasStg=2.5` und
+`strompreis=32.5`, Origin vor Sheet-Zugriff, Cache-Key `kvparams:v1` mit TTL 300,
+fehlende Tabs mit gemeinsamem Seed, Alt-Parität und Bestandsdispatch.
 
 Prüfung 2 und 3 sind die beiden Werte, an denen ein kaputtes Wiring zuerst
 auffällt.

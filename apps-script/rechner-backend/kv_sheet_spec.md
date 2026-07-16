@@ -3,7 +3,7 @@ type: reference
 tldr: "Spezifikation der zwei neuen Sheet-Tabs KV_Parameter und KV_FoerderPerioden (alle Schlüssel mit Seed-Werten aus dem Orakel plus Alt-Periode) samt Seed-Funktion nach dem Muster setupSheets/writeKeyValueDoc_ aus Code.gs."
 datum: 2026-07-15
 quelle: "Orakel WP_Rechner_HeroWerk.html (Script-SHA 55344fe5…b9f3, PASS); Kanon Abschnitt 2 für die Alt-Zeile; Code.gs origin/main (read-only gelesen) für Tab- und Seed-Muster"
-status: Lane-B-Deliverable B6, Umsetzung im Sheet durch den Controller (kein Code.gs-Edit durch Lane B)
+status: O-5 Repo-Wiring umgesetzt; Live-Sheet-Seed und Read-back bleiben R15-Gate
 ---
 
 # KV-Sheet-Spec — Tabs `KV_Parameter` und `KV_FoerderPerioden`
@@ -16,8 +16,9 @@ im Code ist der **Fallback und Seed**, nicht die Quelle der Wahrheit: sobald die
 Tabs stehen, gewinnt das Sheet (ADR-04: Rechenlogik im Apps Script, Werte im
 privaten Sheet).
 
-**Alle Seed-Werte unten sind orakel-identisch** (Ausnahme: die Alt-Zeile, siehe
-BLOCKED-1). Der Äquivalenz-Beweis (tests/kv_equivalence/PROTOKOLL.md) gilt genau
+**Alle Seed-Werte unten sind orakel-identisch** (Ausnahme: die Alt-Zeile, die
+durch 33 Förderfälle inklusive 600er Alt-Matrix abgesichert ist). Der
+Äquivalenz-Beweis (tests/kv_equivalence/PROTOKOLL.md) gilt genau
 für diese Werte. Wer hier etwas ändert, ändert das Ergebnis: erst
 Änderungsprotokoll, dann Sheet (R9).
 
@@ -219,8 +220,10 @@ function KV_PERIODEN_ROWS_() {
 ## 4. Leser (Sheet → params-Objekt)
 
 Muster wie `getAllParameters_` / `getCatalog_` (Code.gs Z.458 bis 483): Cache
-zuerst, dann Sheet, dann `CACHE_TTL_SECONDS`. Der Leser baut exakt die Struktur
-von `KV_PARAMS_SEED`, damit `kvCalculate(inputs, params)` unverändert bleibt.
+zuerst, dann Sheet, dann `CACHE_TTL_SECONDS`. Der Leser baut die Struktur von
+`KV_PARAMS_SEED` und ergänzt `params.schaetzung`. Damit verwenden
+`kvBootstrapPayload` und `kvSchaetzeBedarf` dieselben zehn `wz_*`-Sheet-Treiber.
+Fehlt der Tab, bleibt `KV_SCHAETZUNG` der geprüfte Seed-Fallback.
 
 ```javascript
 function kvGetParams_() {
@@ -248,15 +251,15 @@ function kvGetParams_() {
       const key = String(r[0]);
       perioden[key] = {
         label: String(r[3]),
-        klima: num_(r[4], 0),
-        grenze: num_(r[5], 0),
+        klima: kvNum_(r[4], 0),
+        grenze: kvNum_(r[5], 0),
         eu: String(r[6]).toUpperCase() === 'J',
-        cap: num_(r[7], 80),
-        effizienzPct: num_(r[8], 0),
-        kindFreibetrag: num_(r[9], 0),
+        cap: kvNum_(r[7], 80),
+        effizienzPct: kvNum_(r[8], 0),
+        kindFreibetrag: kvNum_(r[9], 0),
         einkStufen: String(r[10]).split(';').filter(String).map(function (s) {
           const p = s.split(':');
-          return { maxAnr: Number(p[0]), pct: Number(p[1]) };
+          return { maxAnr: kvNum_(p[0], 0), pct: kvNum_(p[1], 0) };
         }),
         proKlimaErlaubt: String(r[11]).toUpperCase() === 'J',
         gueltigAb: String(r[1] || ''),
@@ -268,36 +271,60 @@ function kvGetParams_() {
   const p = {
     perioden: perioden,
     periodenReihenfolge: reihenfolge,
-    grundPctEu: num_(kv['grund_pct_eu'], 30),
-    grundPctNichtEu: num_(kv['grund_pct_nicht_eu'], 15),
+    grundPctEu: kvNum_(kv['grund_pct_eu'], 30),
+    grundPctNichtEu: kvNum_(kv['grund_pct_nicht_eu'], 15),
     proKlimaAktiv: String(kv['proklima_aktiv'] || 'N').toUpperCase() === 'J',
-    proKlimaPct: num_(kv['proklima_pct'], 0.05),
-    proKlimaMax: num_(kv['proklima_max'], 1500),
-    kumCapPct: num_(kv['kum_cap_pct'], 0.6),
-    co2f: { gas: num_(kv['co2f_gas'], 0.182), oel: num_(kv['co2f_oel'], 0.266) },
+    proKlimaPct: kvNum_(kv['proklima_pct'], 0.05),
+    proKlimaMax: kvNum_(kv['proklima_max'], 1500),
+    kumCapPct: kvNum_(kv['kum_cap_pct'], 0.6),
+    co2f: { gas: kvNum_(kv['co2f_gas'], 0.182), oel: kvNum_(kv['co2f_oel'], 0.266) },
     bioStufen: [
-      { y: num_(kv['bio_stufe_1_jahr'], 2029), p: num_(kv['bio_stufe_1_anteil'], 0.15) },
-      { y: num_(kv['bio_stufe_2_jahr'], 2035), p: num_(kv['bio_stufe_2_anteil'], 0.30) },
-      { y: num_(kv['bio_stufe_3_jahr'], 2040), p: num_(kv['bio_stufe_3_anteil'], 0.60) }
+      { y: kvNum_(kv['bio_stufe_1_jahr'], 2029), p: kvNum_(kv['bio_stufe_1_anteil'], 0.15) },
+      { y: kvNum_(kv['bio_stufe_2_jahr'], 2035), p: kvNum_(kv['bio_stufe_2_anteil'], 0.30) },
+      { y: kvNum_(kv['bio_stufe_3_jahr'], 2040), p: kvNum_(kv['bio_stufe_3_anteil'], 0.60) }
     ],
-    etaNeu: { gas: num_(kv['eta_neu_gas'], 0.95), oel: num_(kv['eta_neu_oel'], 0.93) },
+    etaNeu: { gas: kvNum_(kv['eta_neu_gas'], 0.95), oel: kvNum_(kv['eta_neu_oel'], 0.93) },
     strommix: {
-      startY: num_(kv['strommix_start_jahr'], 2026), startG: num_(kv['strommix_start_g'], 350),
-      endY: num_(kv['strommix_end_jahr'], 2040), endG: num_(kv['strommix_end_g'], 100)
+      startY: kvNum_(kv['strommix_start_jahr'], 2026), startG: kvNum_(kv['strommix_start_g'], 350),
+      endY: kvNum_(kv['strommix_end_jahr'], 2040), endG: kvNum_(kv['strommix_end_g'], 100)
     },
-    wartungWp: num_(kv['wartung_wp'], 350),
-    wartungFossil: num_(kv['wartung_fossil'], 250),
-    startY: num_(kv['start_jahr'], 2026),
-    co2ZielSchritte: num_(kv['co2_ziel_schritte'], 19),
-    kredLZDefault: num_(kv['kred_lz_default'], 10),
-    kredZinsDefault: num_(kv['kred_zins_default'], 0.035),
+    wartungWp: kvNum_(kv['wartung_wp'], 350),
+    wartungFossil: kvNum_(kv['wartung_fossil'], 250),
+    startY: kvNum_(kv['start_jahr'], 2026),
+    co2ZielSchritte: kvNum_(kv['co2_ziel_schritte'], 19),
+    kredLZDefault: kvNum_(kv['kred_lz_default'], 10),
+    kredZinsDefault: kvNum_(kv['kred_zins_default'], 0.035),
     sensi: {
-      best: { fossil: num_(kv['sensi_best_fossil'], 0.015), strom: num_(kv['sensi_best_strom'], -0.01) },
+      best: { fossil: kvNum_(kv['sensi_best_fossil'], 0.015), strom: kvNum_(kv['sensi_best_strom'], -0.01) },
       base: { fossil: 0, strom: 0 },
-      worst: { fossil: num_(kv['sensi_worst_fossil'], -0.015), strom: num_(kv['sensi_worst_strom'], 0.015) }
+      worst: { fossil: kvNum_(kv['sensi_worst_fossil'], -0.015), strom: kvNum_(kv['sensi_worst_strom'], 0.015) }
     },
-    co2FlugT: num_(kv['co2_flug_t'], 0.5),
-    co2BaumKg: num_(kv['co2_baum_kg'], 12.5)
+    co2FlugT: kvNum_(kv['co2_flug_t'], 0.5),
+    co2BaumKg: kvNum_(kv['co2_baum_kg'], 12.5),
+    schaetzung: {
+      spezVerbrauch: {
+        vor1978: kvNum_(kv['wz_spez_vor1978'], 180),
+        '1978-1994': kvNum_(kv['wz_spez_1978_1994'], 140),
+        '1995-2010': kvNum_(kv['wz_spez_1995_2010'], 100),
+        nach2010: kvNum_(kv['wz_spez_nach2010'], 60)
+      },
+      stufen: KV_SCHAETZUNG.stufen.slice(),
+      gebaeudeFaktor: {
+        efh: kvNum_(kv['wz_gebf_efh'], 1.0),
+        dhh: kvNum_(kv['wz_gebf_dhh'], 0.9),
+        rh: kvNum_(kv['wz_gebf_rh'], 0.85),
+        zfh: kvNum_(kv['wz_gebf_zfh'], 0.95),
+        mfh: kvNum_(kv['wz_gebf_mfh'], 0.85)
+      },
+      sanierungSprung: KV_SCHAETZUNG.sanierungSprung,
+      einheitFaktor: kvNum_(kv['wz_unit_faktor'], 10),
+      rundungKwh: KV_SCHAETZUNG.rundungKwh,
+      bedarfMin: KV_SCHAETZUNG.bedarfMin,
+      bedarfMax: KV_SCHAETZUNG.bedarfMax,
+      bedarfStep: KV_SCHAETZUNG.bedarfStep,
+      flaecheDefault: KV_SCHAETZUNG.flaecheDefault,
+      quelle: KV_SCHAETZUNG.quelle
+    }
   };
   cache.put('kvparams:v1', JSON.stringify(p), CACHE_TTL_SECONDS);
   return p;
@@ -313,10 +340,10 @@ Der vollständige Kontrollwert-Satz steht in `tests/kv_equivalence/PROTOKOLL.md`
 
 ## 6. Offene Punkte
 
-- **BLOCKED-1:** Die `alt`-Zeile ist NICHT orakel-geprüft (das Orakel kennt keine
-  Alt-Periode). Sie braucht eine eigene fachliche Abnahme gegen den Alt-Code
-  `foerderung_` in Code.gs, bevor die Perioden-Automatik scharf geschaltet wird.
-- **BLOCKED-2:** Kanon 2 kennt eine Wohneinheiten-Staffel (30.000 / 15.000 / 8.000)
+- **ERLEDIGT:** Die `alt`-Zeile ist gegen den Alt-Code abgesichert. Das Gate
+  `tests/foerderung_perioden/run_tests.js` prüft 33 Fälle, darunter eine Matrix
+  mit 600 Kombinationen und Delta exakt 0.
+- **Scope-Grenze:** Kanon 2 kennt eine Wohneinheiten-Staffel (30.000 / 15.000 / 8.000)
   und einen Deckel 35 % für vermietete Einheiten. Der Rechner hat keine
   WE-Eingabe; der Port modelliert den selbstgenutzten Einzelfall. Entscheidung
   des Controllers nötig (Empfehlung: Beschränkung auf selbstgenutztes EZFH

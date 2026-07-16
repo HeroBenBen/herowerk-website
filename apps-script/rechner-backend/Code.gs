@@ -25,6 +25,8 @@ function doGet(e) {
     if (action === 'dimensionierung') return json_(dimensionierung_(params));
     if (action === 'foerderung') return json_(foerderung_(params));
     if (action === 'preise') return json_(preise_(params));
+    if (action === 'kostenvergleich') return json_(kostenvergleich_(params));
+    if (action === 'kv_bootstrap') return json_(kvBootstrap_(params));
     return json_(health_());
   } catch (err) {
     return json_({ error: true, message: err && err.message ? err.message : String(err), service: SERVICE_NAME, ready: false });
@@ -167,27 +169,19 @@ function catalogResult_(item, priceRows) {
 // bewusst weiter im Code. Das ist KEIN Verstoß: sie sind die Parameter der Alt-Periode und gelten für Anträge
 // bis 20.07.2026. Verboten sind sie nur als Aussage über die Reform (Kunden-Texte), dort sind sie ersetzt.
 function FOERDER_PERIODEN_() {
-  // bis/von als YYYYMMDD-Integer: locale- und zeitzonenfreier Vergleich.
-  return [
-    // Alt-Regelwerk (Kanon 2). klima/grenze etc. kommen im Alt-Zweig aus den Förder_Parameter-Schlüsseln.
-    { id: 'alt', von: 0, bis: 20260720, reform: false, label: 'Anträge bis 20.07.2026' },
-    // Reform (Kanon 1.1 = Orakel FOERDER_HJ, wörtlich).
-    { id: 'h2-2026', von: 20260721, bis: 20270131, reform: true, klima: 16, grenze: 28000, eu: false, label: '21.07.2026 bis 31.01.2027' },
-    { id: 'h1-2027', von: 20270201, bis: 20270731, reform: true, klima: 12, grenze: 27250, eu: true, label: '01.02. bis 31.07.2027' },
-    { id: 'h2-2027', von: 20270801, bis: 20280131, reform: true, klima: 8, grenze: 26500, eu: true, label: '01.08.2027 bis 31.01.2028' },
-    { id: 'h1-2028', von: 20280201, bis: 20280731, reform: true, klima: 4, grenze: 25750, eu: true, label: '01.02. bis 31.07.2028' },
-    { id: 'h2-2028', von: 20280801, bis: 20290131, reform: true, klima: 0, grenze: 25000, eu: true, label: '01.08.2028 bis 31.01.2029' },
-    { id: 'h1-2029', von: 20290201, bis: 20290731, reform: true, klima: 0, grenze: 24250, eu: true, label: '01.02. bis 31.07.2029' }
-  ];
+  // Ein gemeinsamer Seed für beide Rechner: KV_PARAMS_SEED. Die produktive
+  // Quelle ist KV_FoerderPerioden über kvGetParams_(); dieser Adapter bleibt
+  // nur Fallback für reine Kern-Tests und fehlende KV-Tabs.
+  return foerderPeriodenAusKv_(KV_PARAMS_SEED);
 }
 
 // Datum (Date) -> Perioden-Objekt. Jenseits von h1-2029 (Orakel-Horizont) klemmt die Funktion auf die letzte
 // bekannte Periode und markiert sie via ueberHorizont: Kanon A3 verbietet, die 750-Euro-Degression
 // fortzuschreiben. Der Kern hängt daran einen Hinweis auf die projektgenaue Rechnung.
-function periodeFuer_(heute) {
+function periodeFuer_(heute, periodenQuelle) {
   const d = heute instanceof Date ? heute : new Date(heute);
   const ymd = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
-  const perioden = FOERDER_PERIODEN_();
+  const perioden = periodenQuelle || FOERDER_PERIODEN_();
   for (let i = 0; i < perioden.length; i++) {
     if (ymd >= perioden[i].von && ymd <= perioden[i].bis) return perioden[i];
   }
@@ -239,8 +233,8 @@ function foerderFaehigeKostenGesamt_(we, f) {
  * @param {Object} f      Förder-Parameter (Schlüssel/Wert aus Förder_Parameter).
  * @param {Date}   heute  Antragsdatum = Stichtag der Perioden-Automatik (Eingabe, nie intern gelesen).
  */
-function foerderCalc_(p, f, heute) {
-  const per = periodeFuer_(heute);
+function foerderCalc_(p, f, heute, periodenQuelle) {
+  const per = periodeFuer_(heute, periodenQuelle);
   const we = int_(p.we, 1);
   const selbstWE = int_(p.selbstWE, 1);
   const heizung = String(p.heizung || 'gas');
@@ -366,6 +360,7 @@ function foerderCalc_(p, f, heute) {
 // Wrapper: holt Sheet-Parameter + Preis + Server-Zeit und ruft den reinen Kern. Einziger Ort mit new Date().
 function foerderung_(p) {
   const f = getAllParameters_().foerder;
+  const kvParams = kvGetParams_();
   const marke = String(p.marke || 'wolf').toLowerCase();
   const prices = getPrices_(marke);
   const wpTyp = String(p.wpTyp || 'm').toLowerCase();
@@ -373,9 +368,314 @@ function foerderung_(p) {
   const args = {};
   for (const k in p) args[k] = p[k];
   args.preis = preis;
-  const out = foerderCalc_(args, f, new Date());
+  const out = foerderCalc_(args, f, new Date(), foerderPeriodenAusKv_(kvParams));
   if (marke === 'vaillant') out.vorlaeufig = true;
   return out;
+}
+
+// ===== KOSTENVERGLEICH: Apps-Script-Wiring (ADR-04) =====
+
+/**
+ * Gemeinsamer Perioden-Adapter für Förderrechner und Kostenvergleich.
+ * Das Sheet-Objekt und KV_PARAMS_SEED haben dieselbe Struktur; die bestehende
+ * Förderrechnung erhält daraus ihren rückwärtskompatiblen Perioden-Vertrag.
+ */
+function foerderPeriodenAusKv_(params) {
+  const keys = ['alt'].concat(params.periodenReihenfolge || []);
+  return keys.map(function (id) {
+    const p = params.perioden[id];
+    const isoNum = function (v, fallback) {
+      const s = String(v || '').replace(/-/g, '');
+      return s ? kvNum_(s, fallback) : fallback;
+    };
+    return {
+      id: id,
+      von: isoNum(p.gueltigAb, 0),
+      bis: isoNum(p.gueltigBis, 99991231),
+      reform: id !== 'alt',
+      klima: kvNum_(p.klima, 0),
+      grenze: kvNum_(p.grenze, 0),
+      eu: !!p.eu,
+      label: id === 'alt' ? 'Anträge bis 20.07.2026' : String(p.label || '')
+    };
+  });
+}
+
+function kostenvergleich_(p) {
+  const params = kvGetParams_();
+  const inputs = kvMapRequest_(p, params);
+  if (String(p.bedarfModus || '') === 'schaetzung') {
+    const geb = kvEnum_(p.geb, ['efh', 'dhh', 'rh', 'zfh', 'mfh'], '');
+    const bj = kvEnum_(p.bj, ['vor1978', '1978-1994', '1995-2010', 'nach2010'], '');
+    const san = kvEnum_(p.san, ['nein', 'teilweise', 'umfassend'], '');
+    const flaeche = kvNum_(p.flaeche, 0);
+    if (!geb || !bj || !san || flaeche < 60 || flaeche > 800) {
+      throw new Error('Ungültige Angaben für die Verbrauchsschätzung.');
+    }
+    inputs.bedarf = kvSchaetzeBedarf(geb, bj, san, flaeche, params);
+  }
+  const out = kvCalculate(inputs, params);
+  out.periodeAutomatik = inputs._periodeAutomatik;
+  return out;
+}
+
+function kvBootstrap_(p) {
+  const params = kvGetParams_();
+  const out = kvBootstrapPayload(params);
+  out.aktivePeriode = kvPeriodeHeute_(params);
+  return out;
+}
+
+function kvPeriodeHeute_(params) {
+  const heute = Utilities.formatDate(new Date(), 'Europe/Berlin', 'yyyy-MM-dd');
+  return kvPeriodeFuerDatum(heute, params);
+}
+
+function kvMapRequest_(p, params) {
+  const d = KV_DEFAULTS;
+  const periodeServer = kvPeriodeHeute_(params);
+  const periodenKeys = Object.keys(params.perioden);
+  const periodeReq = String(p.fHalbjahr || '').trim();
+  const periode = periodenKeys.indexOf(periodeReq) >= 0 ? periodeReq : periodeServer;
+
+  return {
+    _periodeAutomatik: periodenKeys.indexOf(periodeReq) < 0,
+    modus: kvEnum_(p.modus, ['kunde', 'berater'], d.modus),
+    heizart: kvEnum_(p.heizart, ['gas', 'oel'], d.heizart),
+    bedarf: kvNum_(p.bedarf, d.bedarf),
+    eta: kvNum_(p.eta, d.eta),
+    invWP: kvNum_(p.invWP, d.invWP),
+    jaz: kvNum_(p.jaz, d.jaz),
+    laufzeit: Math.round(kvNum_(p.laufzeit, d.laufzeit)),
+    neuFossilTog: kvBool_(p.neuFossilTog, d.neuFossilTog),
+    vglBrennstoff: kvEnum_(p.vglBrennstoff, ['gas', 'oel'], d.vglBrennstoff),
+    gasInvest: kvNum_(p.gasInvest, d.gasInvest),
+    oelInvest: kvNum_(p.oelInvest, d.oelInvest),
+    gaspreis: kvNum_(p.gaspreis, d.gaspreis),
+    gasStg: kvNum_(p.gasStg, d.gasStg),
+    oelpreis: kvNum_(p.oelpreis, d.oelpreis),
+    oelStg: kvNum_(p.oelStg, d.oelStg),
+    strompreis: kvNum_(p.strompreis, d.strompreis),
+    stromEntw: kvNum_(p.stromEntw, d.stromEntw),
+    co2preis: kvNum_(p.co2preis, d.co2preis),
+    co2Pfad: kvNum_(p.co2Pfad, d.co2Pfad),
+    bioTog: kvBool_(p.bioTog, d.bioTog),
+    bioAufpreis: kvNum_(p.bioAufpreis, d.bioAufpreis),
+    fHalbjahr: periode,
+    fGrund: kvBool_(p.fGrund, d.fGrund),
+    fEU: kvBool_(p.fEU, d.fEU),
+    fKlima: kvBool_(p.fKlima, d.fKlima),
+    fAlt20: kvBool_(p.fAlt20, d.fAlt20),
+    fEinkSlider: kvNum_(p.fEinkSlider, d.fEinkSlider),
+    fKind: kvBool_(p.fKind, d.fKind),
+    proklimaTog: false,
+    fEffizienz: kvBool_(p.fEffizienz, d.fEffizienz),
+    finanzTog: kvBool_(p.finanzTog, d.finanzTog),
+    kredLZ: Math.round(kvNum_(p.kredLZ, d.kredLZ)),
+    kredZins: kvNum_(p.kredZins, d.kredZins),
+    immoTog: kvBool_(p.immoTog, d.immoTog),
+    hausW: kvNum_(p.hausW, d.hausW),
+    immoP: kvNum_(p.immoP, d.immoP),
+    dynTarifTog: kvBool_(p.dynTarifTog, d.dynTarifTog),
+    dynAnteil: kvNum_(p.dynAnteil, d.dynAnteil),
+    dynSpread: kvNum_(p.dynSpread, d.dynSpread)
+  };
+}
+
+function kvNum_(v, fallback) {
+  if (typeof v === 'number') return v;
+  const s = String(v === undefined || v === null ? '' : v).trim().replace(',', '.');
+  if (s === '') return fallback;
+  const n = parseFloat(s);
+  return isNaN(n) ? fallback : n;
+}
+
+function kvBool_(v, fallback) {
+  if (v === undefined || v === null || v === '') return fallback;
+  const s = String(v).trim().toLowerCase();
+  return s === '1' || s === 'true' || s === 'ja';
+}
+
+function kvEnum_(v, erlaubt, fallback) {
+  const s = String(v === undefined || v === null ? '' : v).trim();
+  return erlaubt.indexOf(s) >= 0 ? s : fallback;
+}
+
+function kvGetParams_() {
+  const cache = CacheService.getScriptCache();
+  const cached = cache.get('kvparams:v1');
+  if (cached) return JSON.parse(cached);
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const shP = ss.getSheetByName('KV_Parameter');
+  const shF = ss.getSheetByName('KV_FoerderPerioden');
+  if (!shP || !shF) return KV_PARAMS_SEED;
+
+  const kv = {};
+  shP.getRange(2, 1, Math.max(shP.getLastRow() - 1, 1), 2).getValues()
+    .forEach(function (r) { if (r[0]) kv[String(r[0])] = r[1]; });
+
+  const perioden = {}, reihenfolge = [];
+  shF.getRange(2, 1, Math.max(shF.getLastRow() - 1, 1), 13).getValues()
+    .forEach(function (r) {
+      if (!r[0]) return;
+      const key = String(r[0]);
+      perioden[key] = {
+        label: String(r[3]),
+        klima: kvNum_(r[4], 0),
+        grenze: kvNum_(r[5], 0),
+        eu: String(r[6]).toUpperCase() === 'J',
+        cap: kvNum_(r[7], 80),
+        effizienzPct: kvNum_(r[8], 0),
+        kindFreibetrag: kvNum_(r[9], 0),
+        einkStufen: String(r[10]).split(';').filter(String).map(function (s) {
+          const teile = s.split(':');
+          return { maxAnr: kvNum_(teile[0], 0), pct: kvNum_(teile[1], 0) };
+        }),
+        proKlimaErlaubt: String(r[11]).toUpperCase() === 'J',
+        gueltigAb: String(r[1] || ''),
+        gueltigBis: String(r[2] || '')
+      };
+      if (key !== 'alt') reihenfolge.push(key);
+    });
+
+  const p = {
+    perioden: perioden,
+    periodenReihenfolge: reihenfolge,
+    grundPctEu: kvNum_(kv.grund_pct_eu, 30),
+    grundPctNichtEu: kvNum_(kv.grund_pct_nicht_eu, 15),
+    proKlimaAktiv: String(kv.proklima_aktiv || 'N').toUpperCase() === 'J',
+    proKlimaPct: kvNum_(kv.proklima_pct, 0.05),
+    proKlimaMax: kvNum_(kv.proklima_max, 1500),
+    kumCapPct: kvNum_(kv.kum_cap_pct, 0.6),
+    co2f: { gas: kvNum_(kv.co2f_gas, 0.182), oel: kvNum_(kv.co2f_oel, 0.266) },
+    bioStufen: [
+      { y: kvNum_(kv.bio_stufe_1_jahr, 2029), p: kvNum_(kv.bio_stufe_1_anteil, 0.15) },
+      { y: kvNum_(kv.bio_stufe_2_jahr, 2035), p: kvNum_(kv.bio_stufe_2_anteil, 0.30) },
+      { y: kvNum_(kv.bio_stufe_3_jahr, 2040), p: kvNum_(kv.bio_stufe_3_anteil, 0.60) }
+    ],
+    etaNeu: { gas: kvNum_(kv.eta_neu_gas, 0.95), oel: kvNum_(kv.eta_neu_oel, 0.93) },
+    strommix: {
+      startY: kvNum_(kv.strommix_start_jahr, 2026), startG: kvNum_(kv.strommix_start_g, 350),
+      endY: kvNum_(kv.strommix_end_jahr, 2040), endG: kvNum_(kv.strommix_end_g, 100)
+    },
+    wartungWp: kvNum_(kv.wartung_wp, 350),
+    wartungFossil: kvNum_(kv.wartung_fossil, 250),
+    startY: kvNum_(kv.start_jahr, 2026),
+    co2ZielSchritte: kvNum_(kv.co2_ziel_schritte, 19),
+    kredLZDefault: kvNum_(kv.kred_lz_default, 10),
+    kredZinsDefault: kvNum_(kv.kred_zins_default, 0.035),
+    sensi: {
+      best: { fossil: kvNum_(kv.sensi_best_fossil, 0.015), strom: kvNum_(kv.sensi_best_strom, -0.01) },
+      base: { fossil: 0, strom: 0 },
+      worst: { fossil: kvNum_(kv.sensi_worst_fossil, -0.015), strom: kvNum_(kv.sensi_worst_strom, 0.015) }
+    },
+    co2FlugT: kvNum_(kv.co2_flug_t, 0.5),
+    co2BaumKg: kvNum_(kv.co2_baum_kg, 12.5),
+    schaetzung: {
+      spezVerbrauch: {
+        vor1978: kvNum_(kv.wz_spez_vor1978, 180),
+        '1978-1994': kvNum_(kv.wz_spez_1978_1994, 140),
+        '1995-2010': kvNum_(kv.wz_spez_1995_2010, 100),
+        nach2010: kvNum_(kv.wz_spez_nach2010, 60)
+      },
+      stufen: KV_SCHAETZUNG.stufen.slice(),
+      gebaeudeFaktor: {
+        efh: kvNum_(kv.wz_gebf_efh, 1.0),
+        dhh: kvNum_(kv.wz_gebf_dhh, 0.9),
+        rh: kvNum_(kv.wz_gebf_rh, 0.85),
+        zfh: kvNum_(kv.wz_gebf_zfh, 0.95),
+        mfh: kvNum_(kv.wz_gebf_mfh, 0.85)
+      },
+      sanierungSprung: KV_SCHAETZUNG.sanierungSprung,
+      einheitFaktor: kvNum_(kv.wz_unit_faktor, 10),
+      rundungKwh: KV_SCHAETZUNG.rundungKwh,
+      bedarfMin: KV_SCHAETZUNG.bedarfMin,
+      bedarfMax: KV_SCHAETZUNG.bedarfMax,
+      bedarfStep: KV_SCHAETZUNG.bedarfStep,
+      flaecheDefault: KV_SCHAETZUNG.flaecheDefault,
+      quelle: KV_SCHAETZUNG.quelle
+    }
+  };
+  cache.put('kvparams:v1', JSON.stringify(p), CACHE_TTL_SECONDS);
+  return p;
+}
+
+function kvSetupSheets() {
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  writeKeyValueDoc_(ss, 'KV_Parameter', KV_PARAMETER_ROWS_());
+  kvWriteFoerderPerioden_(ss, 'KV_FoerderPerioden', KV_PERIODEN_ROWS_());
+  CacheService.getScriptCache().remove('kvparams:v1');
+}
+
+function kvWriteFoerderPerioden_(ss, name, rows) {
+  const sh = ss.getSheetByName(name) || ss.insertSheet(name);
+  sh.clear();
+  sh.getRange(1, 1, 1, 13).setValues([['key', 'gueltig_ab', 'gueltig_bis', 'label',
+    'klima_pct', 'grenze', 'eu_differenzierung', 'cap', 'effizienz_pct',
+    'kind_freibetrag', 'eink_stufen', 'proklima_erlaubt', 'quelle']]);
+  sh.getRange(2, 2, rows.length, 2).setNumberFormat('@');
+  sh.getRange(2, 11, rows.length, 1).setNumberFormat('@');
+  sh.getRange(2, 1, rows.length, 13).setValues(rows);
+  sh.setFrozenRows(1);
+}
+
+function KV_PARAMETER_ROWS_() {
+  return [
+    ['grund_pct_eu', 30, 'Prozent', 'Grundförderung mit EU-Wertschöpfung', 'Orakel Z.107, KfW 458'],
+    ['grund_pct_nicht_eu', 15, 'Prozent', 'Grundförderung ohne EU-Wertschöpfung ab 2027', 'Orakel Z.107, KfW-PM BEG-Reform'],
+    ['proklima_aktiv', 'N', 'J/N', 'Globaler produktiver Kill-Switch; interne Engine-Referenz bleibt erhalten', 'GF-Decision 15.07.2026, Kanon 1.3'],
+    ['proklima_pct', 0.05, 'Anteil', 'proKlima Hannover: Anteil der förderfähigen Kosten', 'Orakel Z.219, Kanon 1.3'],
+    ['proklima_max', 1500, 'Euro', 'proKlima Hannover: Höchstbetrag', 'Orakel Z.219, Kanon 1.3'],
+    ['kum_cap_pct', 0.6, 'Anteil', 'BEG-Kumulierungsgrenze', 'Orakel Z.225, Kanon 1.3'],
+    ['co2f_gas', 0.182, 'kg/kWh', 'CO₂-Faktor Gas, brennwertbezogen', 'Orakel Z.148, UBA'],
+    ['co2f_oel', 0.266, 'kg/kWh', 'CO₂-Faktor Heizöl', 'Orakel Z.148, UBA'],
+    ['bio_stufe_1_jahr', 2029, 'Jahr', 'Biotreppe Stufe 1 ab', 'Orakel Z.151, GEG §71(9)'],
+    ['bio_stufe_1_anteil', 0.15, 'Anteil', 'Biotreppe Stufe 1', 'Orakel Z.151, GEG §71(9)'],
+    ['bio_stufe_2_jahr', 2035, 'Jahr', 'Biotreppe Stufe 2 ab', 'Orakel Z.151, GMG-Eckpunkte Februar 2026'],
+    ['bio_stufe_2_anteil', 0.30, 'Anteil', 'Biotreppe Stufe 2', 'Orakel Z.151'],
+    ['bio_stufe_3_jahr', 2040, 'Jahr', 'Biotreppe Stufe 3 ab', 'Orakel Z.151'],
+    ['bio_stufe_3_anteil', 0.60, 'Anteil', 'Biotreppe Stufe 3', 'Orakel Z.151, Öko-Institut März 2026'],
+    ['eta_neu_gas', 0.95, 'Anteil', 'Nutzungsgrad neuer Gas-Brennwertkessel', 'Orakel Z.236'],
+    ['eta_neu_oel', 0.93, 'Anteil', 'Nutzungsgrad neuer Öl-Brennwertkessel', 'Orakel Z.236'],
+    ['strommix_start_jahr', 2026, 'Jahr', 'Strommix-Pfad Startjahr', 'Orakel Z.158, UBA/Agora'],
+    ['strommix_start_g', 350, 'g/kWh', 'Strommix Startwert', 'Orakel Z.158, UBA'],
+    ['strommix_end_jahr', 2040, 'Jahr', 'Strommix-Pfad Endjahr', 'Orakel Z.158, Agora'],
+    ['strommix_end_g', 100, 'g/kWh', 'Strommix Endwert', 'Orakel Z.158, Agora'],
+    ['wartung_wp', 350, 'Euro/Jahr', 'Wartungskosten Wärmepumpe', 'Orakel Z.271'],
+    ['wartung_fossil', 250, 'Euro/Jahr', 'Wartungskosten fossile Heizung', 'Orakel Z.257'],
+    ['start_jahr', 2026, 'Jahr', 'Jahr 1 der Betrachtung', 'Orakel Z.243'],
+    ['co2_ziel_schritte', 19, 'Anzahl', 'Schritte bis zum CO₂-Zieljahr 2045', 'Orakel Z.240'],
+    ['kred_lz_default', 10, 'Jahre', 'Kredit-Laufzeit bei Finanzierung AUS', 'Orakel Z.178'],
+    ['kred_zins_default', 0.035, 'Anteil', 'Kredit-Zins bei Finanzierung AUS', 'Orakel Z.179'],
+    ['sensi_best_fossil', 0.015, 'Prozentpunkte/Jahr', 'Best Case: fossil steigt schneller', 'Orakel Z.359'],
+    ['sensi_best_strom', -0.01, 'Prozentpunkte/Jahr', 'Best Case: Strom steigt langsamer', 'Orakel Z.359'],
+    ['sensi_worst_fossil', -0.015, 'Prozentpunkte/Jahr', 'Worst Case: fossil steigt langsamer', 'Orakel Z.361'],
+    ['sensi_worst_strom', 0.015, 'Prozentpunkte/Jahr', 'Worst Case: Strom steigt schneller', 'Orakel Z.361'],
+    ['co2_flug_t', 0.5, 't CO₂', 'Vergleichsgröße Kurzstreckenflug', 'Orakel Z.338, UBA-Rechner'],
+    ['co2_baum_kg', 12.5, 'kg CO₂/Jahr', 'Vergleichsgröße Baum-Bindung', 'Orakel Z.338, Forst-Durchschnitt'],
+    ['wz_spez_vor1978', 180, 'kWh/m²a', 'Schätzung spezifischer Verbrauch', 'Orakel Z.778'],
+    ['wz_spez_1978_1994', 140, 'kWh/m²a', 'Schätzung spezifischer Verbrauch', 'Orakel Z.778'],
+    ['wz_spez_1995_2010', 100, 'kWh/m²a', 'Schätzung spezifischer Verbrauch', 'Orakel Z.778'],
+    ['wz_spez_nach2010', 60, 'kWh/m²a', 'Schätzung spezifischer Verbrauch', 'Orakel Z.778'],
+    ['wz_gebf_efh', 1.0, 'Faktor', 'Gebäudefaktor Einfamilienhaus', 'Orakel Z.780'],
+    ['wz_gebf_dhh', 0.9, 'Faktor', 'Gebäudefaktor Doppelhaushälfte', 'Orakel Z.780'],
+    ['wz_gebf_rh', 0.85, 'Faktor', 'Gebäudefaktor Reihenhaus', 'Orakel Z.780'],
+    ['wz_gebf_zfh', 0.95, 'Faktor', 'Gebäudefaktor Zweifamilienhaus', 'Orakel Z.780'],
+    ['wz_gebf_mfh', 0.85, 'Faktor', 'Gebäudefaktor Mehrfamilienhaus', 'Orakel Z.780'],
+    ['wz_unit_faktor', 10, 'kWh je m³/Liter', 'Umrechnung m³ Gas oder Liter Heizöl in kWh', 'Orakel Z.781']
+  ];
+}
+
+function KV_PERIODEN_ROWS_() {
+  return [
+    ['alt', '', '2026-07-20', 'bis 20.07.2026', 20, 30000, 'N', 70, 5, 0, '40000:30', 'J', 'Kanon Abschnitt 2'],
+    ['h2-2026', '2026-07-21', '2027-01-31', '21.07.2026 bis 31.01.2027', 16, 28000, 'N', 80, 0, 10000, '30000:40;40000:30;50000:10', 'J', 'Orakel Z.97, KfW 458'],
+    ['h1-2027', '2027-02-01', '2027-07-31', '01.02. bis 31.07.2027', 12, 27250, 'J', 80, 0, 10000, '30000:40;40000:30;50000:10', 'N', 'Orakel Z.98'],
+    ['h2-2027', '2027-08-01', '2028-01-31', '01.08.2027 bis 31.01.2028', 8, 26500, 'J', 80, 0, 10000, '30000:40;40000:30;50000:10', 'N', 'Orakel Z.99'],
+    ['h1-2028', '2028-02-01', '2028-07-31', '01.02. bis 31.07.2028', 4, 25750, 'J', 80, 0, 10000, '30000:40;40000:30;50000:10', 'N', 'Orakel Z.100'],
+    ['h2-2028', '2028-08-01', '2029-01-31', '01.08.2028 bis 31.01.2029', 0, 25000, 'J', 80, 0, 10000, '30000:40;40000:30;50000:10', 'N', 'Orakel Z.101'],
+    ['h1-2029', '2029-02-01', '2029-07-31', '01.02. bis 31.07.2029', 0, 24250, 'J', 80, 0, 10000, '30000:40;40000:30;50000:10', 'N', 'Orakel Z.102']
+  ];
 }
 
 function setupSheets() {
