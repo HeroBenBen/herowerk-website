@@ -10,3 +10,7 @@ package-lock.json
 # standalone Apps-Script-Projekt laeuft (Port von js/site.js, Tier-4 2026-06-17).
 # NICHT umformatieren -> Repo-Kopie bleibt identisch zum deployten/verifizierten Stand.
 apps-script/
+# Vendor-Minifikat Chart.js 4.4.1 (UMD, 200.807 B in einer einzigen Zeile).
+# Fremdcode, von keiner Aenderung angefasst. Umformatieren wuerde den Einzeiler
+# in tausende Zeilen aufblasen, ohne dass ihn je jemand liest.
+js/chart-4.4.1.umd.min.js

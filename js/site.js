@@ -1359,10 +1359,9 @@ function paRenderCards() {
   if (!container) return;
   container.innerHTML = paData
     .map((d, i) => {
-      const priceHtml =
-        paHasNumber(d.eigen)
-          ? `<div class="pa-price-compact">ab ${d.eigen.toLocaleString('de-DE')} €</div><div class="pa-label">Eigenanteil*</div>`
-          : `<div class="pa-price-compact" style="font-size:17px;">Auf Anfrage</div><div class="pa-label">projektgenau</div>`;
+      const priceHtml = paHasNumber(d.eigen)
+        ? `<div class="pa-price-compact">ab ${d.eigen.toLocaleString('de-DE')} €</div><div class="pa-label">Eigenanteil*</div>`
+        : `<div class="pa-price-compact" style="font-size:17px;">Auf Anfrage</div><div class="pa-label">projektgenau</div>`;
 
       const defaultClass = i === 0 ? ' pa-default-highlight' : '';
       const iconHtml = d.icon
@@ -1857,7 +1856,7 @@ async function calculateFoerder() {
       ? 'nein'
       : 'ka';
   hwMergeLeadPrefill({
-    foerderquote_pct: (effektivSatz || kfwSatz) || null,
+    foerderquote_pct: effektivSatz || kfwSatz || null,
     foerderbetrag_eur: Math.round(gesamtZuschuss) || null,
     einkommen_unter_40k: selbstWE > 0 ? einkommenFlag : 'ka',
   });
