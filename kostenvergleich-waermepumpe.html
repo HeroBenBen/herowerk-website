@@ -716,7 +716,7 @@ document.getElementById('heizart').addEventListener('change',()=>{if(!vglTouched
 syncVglUI();
 // ===== THIN CLIENT: API-ZUSTAND, LIVE-BERECHNUNG, RENDERING =====
 const KV_API='/api/rechner';
-const KV_STATE={bootstrap:null,last:null,seq:0,controller:null,timer:null,lastParams:null};
+const KV_STATE={bootstrap:null,last:null,seq:0,controller:null,timer:null,lastParams:null,applyingBootstrap:false};
 const KV_INPUT_IDS=['heizart','bedarf','eta','invWP','jaz','laufzeit','neuFossilTog','vglBrennstoff','gasInvest','oelInvest','gaspreis','gasStg','oelpreis','oelStg','strompreis','stromEntw','co2preis','co2Pfad','bioTog','bioAufpreis','fHalbjahr','fGrund','fEU','fKlima','fAlt20','fEinkSlider','fKind','finanzTog','kredLZ','kredZins','immoTog','hausW','immoP','dynTarifTog','dynAnteil','dynSpread'];
 function eur(v){return Math.round(Number(v)||0).toLocaleString('de-DE')+' €';}
 function eurSigned(v){const n=Number(v)||0;return n>0?eur(n):'−'+eur(Math.abs(n));}
@@ -751,7 +751,9 @@ async function kvFetch(params,signal){
 }
 function kvApplyBootstrap(data){
   KV_STATE.bootstrap=data;
-  Object.entries(data.defaults||{}).forEach(([id,value])=>{const el=document.getElementById(id);if(!el)return;if(el.type==='checkbox')el.checked=!!value;else el.value=value;el.dispatchEvent(new Event('input',{bubbles:true}));});
+  KV_STATE.applyingBootstrap=true;
+  try{Object.entries(data.defaults||{}).forEach(([id,value])=>{const el=document.getElementById(id);if(!el)return;if(el.type==='checkbox')el.checked=!!value;else el.value=value;el.dispatchEvent(new Event('input',{bubbles:true}));});}
+  finally{KV_STATE.applyingBootstrap=false;}
   const sel=document.getElementById('fHalbjahr');
   if(sel&&Array.isArray(data.perioden)){
     const activeKnown=data.perioden.some(p=>p.key===data.aktivePeriode);
@@ -1125,7 +1127,7 @@ kvLoadBootstrap();
     if(h){h.style.display='block';
       if(own)h.textContent='Sie haben den Wert selbst eingestellt. Typisch für '+(d.label||'den Bestand insgesamt')+': rund '+d.v+' % der abgerechneten Energie.';
       else if(d.label)h.textContent=(KV_STATE.bootstrap.etaMatrix.textVorbelegt||'Vorbelegt aus Ihren Angaben: {label}, typisch rund {wert} %.').replace('{label}',d.label).replace('{wert}',d.v);
-      else h.textContent=d.text||KV_STATE.bootstrap.etaMatrix.fallback.text;}
+      else{const matrix=KV_STATE.bootstrap.etaMatrix;h.textContent=(d.text||matrix.fallback.text)+(matrix.quelle?' Quelle: '+matrix.quelle+'.':'');}}
     if(d.label)WZ_MARKET_LABELS.eta='Aus Ihren Heizungs-Angaben';else delete WZ_MARKET_LABELS.eta;
     updateChips();updateEtaLive();
   }
@@ -1259,8 +1261,8 @@ kvLoadBootstrap();
     block.appendChild(d);
   }
   function wireGlobalTracking(){
-    document.addEventListener('input',e=>{if(WZ.programmatic)return;const id=e.target&&e.target.id;if(WZ_TRACK_IDS.includes(id)){if(id==='fEinkSlider'&&!WZ.incomeOpted)return;touch(id);}});
-    document.addEventListener('change',e=>{if(WZ.programmatic)return;const id=e.target&&e.target.id;if(WZ_TRACK_IDS.includes(id)){if(id==='fEinkSlider'&&!WZ.incomeOpted)return;touch(id);}});
+    document.addEventListener('input',e=>{if(WZ.programmatic||KV_STATE.applyingBootstrap)return;const id=e.target&&e.target.id;if(WZ_TRACK_IDS.includes(id)){if(id==='fEinkSlider'&&!WZ.incomeOpted)return;touch(id);}});
+    document.addEventListener('change',e=>{if(WZ.programmatic||KV_STATE.applyingBootstrap)return;const id=e.target&&e.target.id;if(WZ_TRACK_IDS.includes(id)){if(id==='fEinkSlider'&&!WZ.incomeOpted)return;touch(id);}});
     const WZ_FOERDER_IDS=['fHalbjahr','fEinkSlider','fKind','fGrund','fEU','fKlima','fAlt20'];
     ['input','change'].forEach(t=>document.addEventListener(t,e=>{const id=e.target&&e.target.id;if(WZ_FOERDER_IDS.includes(id)){renderFoerderAufbau();renderLiveFoerder();}}));
   }

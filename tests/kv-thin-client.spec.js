@@ -336,6 +336,56 @@ test('O3 Kunde Light 375: lokaler Consent, Alt-/EU-Text, fünf Förderanker und 
   expect(light.pageErrors).toEqual([]);
 });
 
+test('O8 Bootstrap markiert eta nicht als Nutzerangabe und die Kesselmatrix greift', async ({ page }) => {
+  await installLocalConsent(page);
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?theme=dark`, { waitUntil: 'domcontentloaded' });
+  await acceptConsent(page);
+  await page.waitForFunction(() => typeof KV_STATE !== 'undefined' && KV_STATE.last);
+  await expect(page.locator('#wzChip_eta')).not.toHaveText('Ihre Angabe');
+
+  const select = async (group, value) => page.locator(`[data-wz-grp="${group}"][data-wz-val="${value}"]`).click();
+  const expectEta = async (value) => {
+    await expect.poll(async () => Number(await page.locator('#eta').inputValue())).toBe(value);
+  };
+  await page.locator('[data-wz-heizart="gas"]').click();
+  await select('vmode', 'known');
+  await select('altgas', 'ja');
+
+  const cases = [
+    ['metall', 'vor1990', 70, 70],
+    ['metall', '1990-2010', 80, 80],
+    ['kunststoff', '1990-2010', 86, 90],
+    ['kunststoff', 'nach2010', 93, 93],
+    ['unklar', null, 85, 85]
+  ];
+  for (const [rohr, baujahr, gas, oel] of cases) {
+    await select('rohr', rohr);
+    if (baujahr) await select('kbj', baujahr);
+    await expectEta(gas);
+    await expect(page.locator('#wzChip_eta')).not.toHaveText('Ihre Angabe');
+    await expect(page.locator('#etaHerkunft')).toContainText('Stand 15.07.2026');
+    await expect(page.locator('#etaHerkunft')).toContainText('Verbraucherzentrale NRW 2020');
+    await page.locator('[data-wz-heizart="oel"]').click();
+    await expectEta(oel);
+    await expect(page.locator('#etaHerkunft')).toContainText('Stand 15.07.2026');
+    await expect(page.locator('#etaHerkunft')).toContainText('Verbraucherzentrale NRW 2020');
+    await page.locator('[data-wz-heizart="gas"]').click();
+    await expectEta(gas);
+  }
+
+  await page.locator('#eta').evaluate((element) => {
+    element.value = '77';
+    element.dispatchEvent(new Event('input', { bubbles: true }));
+    element.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+  await expect(page.locator('#wzChip_eta')).toHaveText('Ihre Angabe');
+  await select('rohr', 'metall');
+  await select('kbj', 'vor1990');
+  await expectEta(77);
+  await expect(page.locator('#etaHerkunft')).toContainText('selbst eingestellt');
+});
+
 function recursiveKeys(value, found = []) {
   if (!value || typeof value !== 'object') return found;
   Object.entries(value).forEach(([key, nested]) => {
