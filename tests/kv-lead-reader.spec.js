@@ -95,8 +95,8 @@ test('O4 Reader: gültiger v1-Key übernimmt technische Angaben und löscht den 
   await expect(page.locator('#leadHandoffBanner')).toContainText('Einfamilienhaus');
   await expect(page.locator('#leadHandoffBanner')).toContainText('Gasheizung');
   await expect(page.locator('#leadHandoffBanner')).toContainText('20 Jahre oder älter');
-  await expect(page.locator('#leadHandoffBanner')).toContainText('1978–1994');
-  await expect(page.locator('#leadHandoffBanner')).toContainText('100–150 m²');
+  await expect(page.locator('#leadHandoffBanner')).toContainText('1978-1994');
+  await expect(page.locator('#leadHandoffBanner')).toContainText('100-150 m²');
   await expect(page.locator('.step.active')).toHaveAttribute('data-step', '9');
   const mapped = await page.evaluate(() =>
     Object.fromEntries(buildHubSpotPayload({}).fields.map((field) => [field.name, field.value]))
@@ -104,8 +104,8 @@ test('O4 Reader: gültiger v1-Key übernimmt technische Angaben und löscht den 
   expect(mapped.gebaeudetyp).toBe('Einfamilienhaus');
   expect(mapped.heizung_aktuell).toBe('Gasheizung');
   expect(mapped.heizungsalter).toBe('20 Jahre oder älter');
-  expect(mapped.baujahr).toBe('1978–1994');
-  expect(mapped.wohnflaeche).toBe('100–150 m²');
+  expect(mapped.baujahr).toBe('1978-1994');
+  expect(mapped.wohnflaeche).toBe('100-150 m²');
   expect(mapped.energiebedarf_kwh).toBe('20000');
   expect(mapped.foerderquote_pct).toBe('46');
   expect(mapped.foerderbetrag_eur).toBe('12880');
