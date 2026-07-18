@@ -1,5 +1,5 @@
 /**
- * HeroWerk_Rechner_Backend — Code.gs (standalone Google Apps Script Web App)
+ * HeroWerk_Rechner_Backend - Code.gs (standalone Google Apps Script Web App)
  * Serverseitiger Spiegel der js/site.js-Rechnerlogik: Dimensionierung (wizCalculate),
  * KfW-458-Förderung (calculateFoerder), Wizard-Sofort-Förderblock und wizToFoerder.
  * Quelle/Port: HeroBenBen/herowerk-website js/site.js @ origin/main 0ea5151.
@@ -9,7 +9,7 @@
  */
 
 /**
- * HeroWerk_Rechner_Backend — standalone Apps Script Web App.
+ * HeroWerk_Rechner_Backend - standalone Apps Script Web App.
  * Server-side mirror of js/site.js calculator logic without DOM/UI code.
  */
 const SHEET_ID = '176a2khhd3eIJJwe23JXfuEaTTjY-qrkccxb-F52yoVA';
@@ -69,7 +69,7 @@ function dimensionierung_(p) {
   // (zone.nat → Geräte-Grenze über die Leistungskurve in matchCatalog_).
   const heizlast = bedarfKwh / getNum_(d, 'volllaststunden', 1800);
 
-  // Warmwasser: VDI 4645 personenbasiert (+0,25 kW × Personen) — WW skaliert mit Personen, nicht
+  // Warmwasser: VDI 4645 personenbasiert (+0,25 kW × Personen) - WW skaliert mit Personen, nicht
   // mit Heizlast. RAUS oberhalb der Standard-VWL-125-Klasse (heizlast > ww_max_heizlast_kw) →
   // Brauchwasser-WP. Der Wizard sendet die Personenzahl (>=1) mit, sobald Warmwasser=ja gewählt ist;
   // der frühere ×1,10-Fallback entfällt damit. Dimensioniert wird am Emitter-Vorlauf, nie wegen WW auf W55.
@@ -102,7 +102,7 @@ function dimensionierung_(p) {
 
 // Geräte-Auswahl: kleinste Maschine, deren Grenze (an der exakten PLZ-NAT, am Emitter-Vorlauf) die
 // Auslegung deckt. Toleranz (KASKADEN_TOLERANZ_KW) greift NUR an der Single↔Kaskade-Schwelle (Kurven-
-// Ablesegenauigkeit ±0,3–0,5 kW; keine 5%-Aufweichung).
+// Ablesegenauigkeit ±0,3-0,5 kW; keine 5%-Aufweichung).
 var KASKADEN_TOLERANZ_KW = 0.5;
 // Geräte-Grenze an der exakten Normaußentemperatur: linear interpoliert zwischen dem A-11-Stützpunkt
 // (grenze…, NAT -11 °C) und dem A-10-Stützpunkt (grenze…a10, NAT -10 °C). VDI 4645: Auslegung an der
@@ -237,10 +237,10 @@ function writeKalkulationWolf_(ss) {
     ['l','vorläufig',45220,'1 WE, Selbstnutzer, 70 % Best-Case',30000,0.70,'=ROUND(MIN(C4,E4)*F4,0)',1500,'=C4-G4','=C4-G4-H4','produkte_HERO.json / Web-Stand; Finanzmodell-Abgleich offen'],
     ['xl','vorläufig',57120,'2 WE: 1 selbst 70 % + 1 vermietet 35 %',45000,'gemischt','=ROUND((E5/2)*0.70,0)+ROUND((E5/2)*0.35,0)',1500,'=C5-G5','=C5-G5-H5','produkte_HERO.json / Web-Stand; Finanzmodell-Abgleich offen'],
     ['xxl','vorläufig',82223,'6 WE: 1 selbst 70 % + 5 vermietet 35 %',105000,'gemischt','=ROUND(30000*0.70,0)+ROUND(5*15000*0.35,0)','', '=C6-G6', '', 'produkte_HERO.json / Web-Stand; Finanzmodell-Abgleich offen'],
-    ['Material','PLATZHALTER','','','','','','','','','aus Finanzmodell — folgt (Benjamin-Update)'],
-    ['Lohn','PLATZHALTER','','','','','','','','','aus Finanzmodell — folgt (Benjamin-Update)'],
-    ['Overhead','PLATZHALTER','','','','','','','','','aus Finanzmodell — folgt (Benjamin-Update)'],
-    ['Marge','PLATZHALTER','','','','','','','','','aus Finanzmodell — folgt (Benjamin-Update)']
+    ['Material','PLATZHALTER','','','','','','','','','aus Finanzmodell - folgt (Benjamin-Update)'],
+    ['Lohn','PLATZHALTER','','','','','','','','','aus Finanzmodell - folgt (Benjamin-Update)'],
+    ['Overhead','PLATZHALTER','','','','','','','','','aus Finanzmodell - folgt (Benjamin-Update)'],
+    ['Marge','PLATZHALTER','','','','','','','','','aus Finanzmodell - folgt (Benjamin-Update)']
   ];
   sh.getRange(2, 1, rows.length, 11).setValues(rows);
   sh.setFrozenRows(1);
@@ -406,10 +406,10 @@ function round1_(v) { return Math.round(v * 10) / 10; }
 function key_(s) { return String(s).replace(/-/g, '_'); }
 
 function FOERDER_ROWS_() { return [
-  ['grundfoerderung_pct',30,'%', 'KfW-Grundförderung','ADR-04 Anhang A / js/site.js calculateFoerder'], ['klimabonus_pct',20,'%', 'Klimageschwindigkeitsbonus','ADR-04 Anhang A'], ['einkommensbonus_pct',30,'%', 'Einkommensbonus bis Einkommensgrenze','ADR-04 Anhang A'], ['effizienzbonus_pct',5,'%', 'Effizienzbonus R290','ADR-04 Anhang A'], ['deckel_selbst_pct',70,'%', 'Maximaler Satz Selbstnutzer','ADR-04 Anhang A'], ['deckel_vermietet_pct',35,'%', 'Maximaler Satz vermietet','ADR-04 Anhang A'], ['gas_klimabonus_min_alter',20,'Jahre', 'Mindestalter Gas-Zentralheizung für Klimabonus','js/site.js getHeizungsalter/calculateFoerder'], ['einkommensgrenze_eur',40000,'EUR', 'Grenze Einkommensbonus','ADR-04 Anhang A'], ['foerderfaehig_we1',30000,'EUR', 'Förderfähige Kosten 1. WE','js/site.js foerderFaehigeKostenGesamt'], ['foerderfaehig_we2bis6',15000,'EUR/WE', 'Förderfähige Kosten 2.–6. WE','js/site.js foerderFaehigeKostenGesamt'], ['foerderfaehig_we7plus',8000,'EUR/WE', 'Förderfähige Kosten ab 7. WE','js/site.js foerderFaehigeKostenGesamt'], ['proklima_pct',5,'%', 'proKlima-Satz','ADR-04 Anhang A'], ['proklima_max_eur',1500,'EUR', 'proKlima-Höchstbetrag','ADR-04 Anhang A'], ['proklima_gemeinden','hannover,seelze,langenhagen,laatzen,hemmingen,ronnenberg','CSV', 'proKlima-Fördergebiet','ADR-04 Anhang A']
+  ['grundfoerderung_pct',30,'%', 'KfW-Grundförderung','ADR-04 Anhang A / js/site.js calculateFoerder'], ['klimabonus_pct',20,'%', 'Klimageschwindigkeitsbonus','ADR-04 Anhang A'], ['einkommensbonus_pct',30,'%', 'Einkommensbonus bis Einkommensgrenze','ADR-04 Anhang A'], ['effizienzbonus_pct',5,'%', 'Effizienzbonus R290','ADR-04 Anhang A'], ['deckel_selbst_pct',70,'%', 'Maximaler Satz Selbstnutzer','ADR-04 Anhang A'], ['deckel_vermietet_pct',35,'%', 'Maximaler Satz vermietet','ADR-04 Anhang A'], ['gas_klimabonus_min_alter',20,'Jahre', 'Mindestalter Gas-Zentralheizung für Klimabonus','js/site.js getHeizungsalter/calculateFoerder'], ['einkommensgrenze_eur',40000,'EUR', 'Grenze Einkommensbonus','ADR-04 Anhang A'], ['foerderfaehig_we1',30000,'EUR', 'Förderfähige Kosten 1. WE','js/site.js foerderFaehigeKostenGesamt'], ['foerderfaehig_we2bis6',15000,'EUR/WE', 'Förderfähige Kosten 2.-6. WE','js/site.js foerderFaehigeKostenGesamt'], ['foerderfaehig_we7plus',8000,'EUR/WE', 'Förderfähige Kosten ab 7. WE','js/site.js foerderFaehigeKostenGesamt'], ['proklima_pct',5,'%', 'proKlima-Satz','ADR-04 Anhang A'], ['proklima_max_eur',1500,'EUR', 'proKlima-Höchstbetrag','ADR-04 Anhang A'], ['proklima_gemeinden','hannover,seelze,langenhagen,laatzen,hemmingen,ronnenberg','CSV', 'proKlima-Fördergebiet','ADR-04 Anhang A']
 ]; }
 function DIMENSION_ROWS_() { return [
-  ['spez_bedarf_vor1978',180,'kWh/m²a','spezifischer Bedarf vor 1978','js/site.js wizCalculate'], ['spez_bedarf_1978_1994',140,'kWh/m²a','spezifischer Bedarf 1978–1994','js/site.js wizCalculate'], ['spez_bedarf_1995_2010',100,'kWh/m²a','spezifischer Bedarf 1995–2010','js/site.js wizCalculate'], ['spez_bedarf_nach2010',60,'kWh/m²a','spezifischer Bedarf nach 2010','js/site.js wizCalculate'], ['gebaeudef_efh',1.0,'Faktor','Gebäudefaktor EFH','js/site.js wizCalculate'], ['gebaeudef_dhh',0.9,'Faktor','Gebäudefaktor DHH','js/site.js wizCalculate'], ['gebaeudef_rh',0.85,'Faktor','Gebäudefaktor RH','js/site.js wizCalculate'], ['gebaeudef_rh_end',0.85,'Faktor','Gebäudefaktor Reihenendhaus','js/site.js wizCalculate'], ['gebaeudef_zfh',0.95,'Faktor','Gebäudefaktor ZFH','js/site.js wizCalculate'], ['gebaeudef_mfh',0.85,'Faktor','Gebäudefaktor MFH','js/site.js wizCalculate'], ['jaz_vor1978',3.0,'JAZ','JAZ vor 1978','js/site.js wizCalculate'], ['jaz_1978_1994',3.3,'JAZ','JAZ 1978–1994','js/site.js wizCalculate'], ['jaz_1995_2010',3.8,'JAZ','JAZ 1995–2010','js/site.js wizCalculate'], ['jaz_nach2010',4.2,'JAZ','JAZ nach 2010','js/site.js wizCalculate'], ['volllaststunden',1800,'h/a','Volllaststunden-Faktor','js/site.js wizCalculate'], ['ww_zuschlag_faktor',1.10,'Faktor','Warmwasser-Zuschlag Wärmepumpe','js/site.js wizCalculate'], ['oel_faktor',10,'kWh/L','Umrechnung Heizöl','js/site.js OEL_FAKTOR'], ['gas_faktor',10,'kWh/m³','Umrechnung Gas','js/site.js GAS_FAKTOR']
+  ['spez_bedarf_vor1978',180,'kWh/m²a','spezifischer Bedarf vor 1978','js/site.js wizCalculate'], ['spez_bedarf_1978_1994',140,'kWh/m²a','spezifischer Bedarf 1978-1994','js/site.js wizCalculate'], ['spez_bedarf_1995_2010',100,'kWh/m²a','spezifischer Bedarf 1995-2010','js/site.js wizCalculate'], ['spez_bedarf_nach2010',60,'kWh/m²a','spezifischer Bedarf nach 2010','js/site.js wizCalculate'], ['gebaeudef_efh',1.0,'Faktor','Gebäudefaktor EFH','js/site.js wizCalculate'], ['gebaeudef_dhh',0.9,'Faktor','Gebäudefaktor DHH','js/site.js wizCalculate'], ['gebaeudef_rh',0.85,'Faktor','Gebäudefaktor RH','js/site.js wizCalculate'], ['gebaeudef_rh_end',0.85,'Faktor','Gebäudefaktor Reihenendhaus','js/site.js wizCalculate'], ['gebaeudef_zfh',0.95,'Faktor','Gebäudefaktor ZFH','js/site.js wizCalculate'], ['gebaeudef_mfh',0.85,'Faktor','Gebäudefaktor MFH','js/site.js wizCalculate'], ['jaz_vor1978',3.0,'JAZ','JAZ vor 1978','js/site.js wizCalculate'], ['jaz_1978_1994',3.3,'JAZ','JAZ 1978-1994','js/site.js wizCalculate'], ['jaz_1995_2010',3.8,'JAZ','JAZ 1995-2010','js/site.js wizCalculate'], ['jaz_nach2010',4.2,'JAZ','JAZ nach 2010','js/site.js wizCalculate'], ['volllaststunden',1800,'h/a','Volllaststunden-Faktor','js/site.js wizCalculate'], ['ww_zuschlag_faktor',1.10,'Faktor','Warmwasser-Zuschlag Wärmepumpe','js/site.js wizCalculate'], ['oel_faktor',10,'kWh/L','Umrechnung Heizöl','js/site.js OEL_FAKTOR'], ['gas_faktor',10,'kWh/m³','Umrechnung Gas','js/site.js GAS_FAKTOR']
 ]; }
-function WOLF_PRODUCTS_() { return [{klasse:'s',modell:'Wolf CHA-07',hausgroesse:'bis ca. 120 m²',kw:'5–7 kW'},{klasse:'m',modell:'Wolf CHA-10',hausgroesse:'ca. 120–180 m²',kw:'9–12 kW'},{klasse:'l',modell:'Wolf CHA-16/20',hausgroesse:'ca. 180–280 m²',kw:'14–16 kW'},{klasse:'xl',modell:'Wolf CHA-20/24',hausgroesse:'ab 250 m² / 2 WE',kw:'18–24 kW'},{klasse:'xxl',modell:'2× Wolf CHA-16',hausgroesse:'Ref. 6 WE MFH',kw:'2× 16 kW (32 kW)'}]; }
+function WOLF_PRODUCTS_() { return [{klasse:'s',modell:'Wolf CHA-07',hausgroesse:'bis ca. 120 m²',kw:'5-7 kW'},{klasse:'m',modell:'Wolf CHA-10',hausgroesse:'ca. 120-180 m²',kw:'9-12 kW'},{klasse:'l',modell:'Wolf CHA-16/20',hausgroesse:'ca. 180-280 m²',kw:'14-16 kW'},{klasse:'xl',modell:'Wolf CHA-20/24',hausgroesse:'ab 250 m² / 2 WE',kw:'18-24 kW'},{klasse:'xxl',modell:'2× Wolf CHA-16',hausgroesse:'Ref. 6 WE MFH',kw:'2× 16 kW (32 kW)'}]; }
 function VAILLANT_PRODUCTS_() { return [{klasse:'s',modell:'',hausgroesse:'',kw:''},{klasse:'m',modell:'',hausgroesse:'',kw:''},{klasse:'l',modell:'',hausgroesse:'',kw:''},{klasse:'xl',modell:'',hausgroesse:'',kw:''},{klasse:'xxl',modell:'',hausgroesse:'',kw:''}]; }

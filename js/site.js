@@ -30,7 +30,7 @@ const wizData = {
 };
 let wizStep = 1;
 // Server-seitiger Proxy auf UNSERER Domain (api/rechner.php). Der echte Apps-Script-Endpunkt
-// steht nur noch server-seitig im PHP — nicht mehr im Browser sichtbar/direkt aufrufbar; die
+// steht nur noch server-seitig im PHP - nicht mehr im Browser sichtbar/direkt aufrufbar; die
 // Besucher-IP geht an unseren Server statt an Google. Same-Origin -> kein CORS. Alle Aufruf-
 // stellen haengen wie bisher '?...' an, daher bleibt die Rechner-Logik unveraendert.
 const RECHNER_API = '/api/rechner';
@@ -216,7 +216,7 @@ function checkPlz(input) {
     wizData.gemeinde = gemeinde;
     setWizardNextDisabled(nextBtn, false);
   } else if (val.startsWith('3') || val.startsWith('29') || val.startsWith('31')) {
-    // Erweitertes Einzugsgebiet — Verfügbarkeit prüfen
+    // Erweitertes Einzugsgebiet - Verfügbarkeit prüfen
     resultEl.innerHTML =
       SVG_CHECK +
       '<span style="color:var(--g300);">Deine PLZ ' +
@@ -253,7 +253,7 @@ document.querySelectorAll('.wizard-options').forEach((group) => {
           rhSub.style.display = 'block';
           rhAbsage.style.display = 'none';
           setWizardNextDisabled(step2Next, true);
-          return; // Don't auto-advance — wait for sub-option
+          return; // Don't auto-advance - wait for sub-option
         } else {
           rhSub.style.display = 'none';
           rhAbsage.style.display = 'none';
@@ -275,7 +275,7 @@ document.querySelectorAll('.wizard-options').forEach((group) => {
           if (wwNext) {
             setWizardNextDisabled(wwNext, !personGewaehlt);
           }
-          return; // nicht auto-advancen — Personenzahl-Auswahl + Weiter abwarten
+          return; // nicht auto-advancen - Personenzahl-Auswahl + Weiter abwarten
         }
         persBlock.style.display = 'none';
         if (wwNext) {
@@ -540,7 +540,7 @@ async function wizCalculate() {
     ? parseInt(document.getElementById('wzVerbrauchSlider').value) || 0
     : 0;
 
-  // Lead-Prefill für die abgespeckte Leadstrecke (/anfrage) stagen — überlebt auch den
+  // Lead-Prefill für die abgespeckte Leadstrecke (/anfrage) stagen - überlebt auch den
   // Umweg über /foerderung; wird einmalig auf /anfrage konsumiert.
   try {
     sessionStorage.setItem(
@@ -655,7 +655,7 @@ function renderWizServerResult(data) {
     </div>`;
 }
 
-// Marken-Schriftzug fuer die Ergebnis-Panels — alle Marken (Wolf, Vaillant) als Text,
+// Marken-Schriftzug fuer die Ergebnis-Panels - alle Marken (Wolf, Vaillant) als Text,
 // kein Hersteller-Logo. Gleichbehandlung + keine optische Bevorzugung (GF 2026-06-29);
 // currentColor = theme-aware (weiss auf dunkel, Schiefer auf hell).
 function brandLogo(key, label) {
@@ -713,7 +713,7 @@ function formatKw(value) {
 }
 
 // Optik-Vorschau ohne Backend: rendert das Ergebnis mit Beispielwerten.
-// Aktiv NUR auf Vercel-Preview-Hosts via ?demo — niemals auf herowerk.de.
+// Aktiv NUR auf Vercel-Preview-Hosts via ?demo - niemals auf herowerk.de.
 function wizDemo() {
   if (!document.getElementById('wizResult')) return;
   const demoData = {
@@ -767,7 +767,7 @@ function wizReset() {
 // ===== WIZARD → FÖRDERRECHNER: Datenübernahme =====
 function wizToFoerder() {
   // Förderrechner liegt auf /foerderung (auf dieser Seite nicht eingebettet). Ist er hier
-  // nicht vorhanden, direkt dorthin navigieren — sonst lief die Vorbefüllung ins Leere und
+  // nicht vorhanden, direkt dorthin navigieren - sonst lief die Vorbefüllung ins Leere und
   // der Button wirkte "nicht verlinkt" (Navigation am Funktionsende wurde nie erreicht).
   if (!document.getElementById('foerder')) {
     // Werte für die Förderrechner-Seite mitnehmen -> dort Vorbefüllung nach dem Laden.
@@ -856,7 +856,7 @@ function formatKostenInput(el) {
 }
 
 // ===== PREISANKER: Expand/Collapse-Karten mit Tech-Specs =====
-// Produktdaten — Inline-Fallback für lokale Entwicklung (file://)
+// Produktdaten - Inline-Fallback für lokale Entwicklung (file://)
 // Preise = Single Source: live aus dem Sheet über den Rechner-Server (action=preise).
 // Präsentation (Specs/Bilder/Modell/Icons) bleibt statisch in paDataFallback; nur die
 // Preisfelder (preis/eigen/info) werden mit Live-Werten überschrieben.
@@ -866,10 +866,10 @@ let paPrices = { wolf: [], vaillant: [] };
 const PA_KLASSEN = ['s', 'm', 'l', 'xl', 'xxl'];
 const FOERDER_PACKAGE_FALLBACK = {
   wolf: [
-    { klasse: 's', modell: 'Wolf CHA-07', kw: '5–7 kW', brutto: 29568 },
-    { klasse: 'm', modell: 'Wolf CHA-10', kw: '9–12 kW', brutto: 33721 },
-    { klasse: 'l', modell: 'Wolf CHA-16/20', kw: '14–16 kW', brutto: 41360 },
-    { klasse: 'xl', modell: 'Wolf CHA-20/24', kw: '18–24 kW', brutto: 48972 },
+    { klasse: 's', modell: 'Wolf CHA-07', kw: '5-7 kW', brutto: 29568 },
+    { klasse: 'm', modell: 'Wolf CHA-10', kw: '9-12 kW', brutto: 33721 },
+    { klasse: 'l', modell: 'Wolf CHA-16/20', kw: '14-16 kW', brutto: 41360 },
+    { klasse: 'xl', modell: 'Wolf CHA-20/24', kw: '18-24 kW', brutto: 48972 },
     { klasse: 'xxl', modell: '2× Wolf CHA-16', kw: '32 kW', brutto: 89419 },
   ],
   vaillant: [
@@ -1089,7 +1089,7 @@ const paDataFallback = [
     label: 'Kompaktes Wohnhaus',
     hausgroesse: 'bis ca. 120 m²',
     modell: 'Wolf CHA-07',
-    kw: 'A-7/W35: 2,4–6,8 kW',
+    kw: 'A-7/W35: 2,4-6,8 kW',
     icon: '<svg width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 4L4 14h3v12h18V14h3L16 4z"/><rect x="13" y="19" width="6" height="7"/></svg>',
     img: 'cha-sanierung.jpg',
     desc: 'Gut gedämmtes Haus mit niedrigem Wärmebedarf',
@@ -1097,7 +1097,7 @@ const paDataFallback = [
     eigen: 7350,
     info: 'Richtpreis: ab 29.750 € brutto · KfW: bis -22.400 €',
     specs: [
-      ['Heizleistung A-7/W35', '2,4–6,8 kW'],
+      ['Heizleistung A-7/W35', '2,4-6,8 kW'],
       ['Heizstab (optional)', '9 kW'],
       ['Kältemittel', 'R290 (Propan, natürlich)'],
       ['Bauart', 'Monoblock (Außenaufstellung)'],
@@ -1114,9 +1114,9 @@ const paDataFallback = [
   {
     name: 'Standard',
     label: 'Einfamilienhaus',
-    hausgroesse: 'ca. 120–180 m²',
+    hausgroesse: 'ca. 120-180 m²',
     modell: 'Wolf CHA-10',
-    kw: 'A-7/W35: 2,3–9,8 kW',
+    kw: 'A-7/W35: 2,3-9,8 kW',
     icon: '<svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 3L3 14h3v14h20V14h3L16 3z"/><rect x="12" y="18" width="8" height="10"/></svg>',
     img: 'cha-neubau-dunkel.jpg',
     desc: 'Der Klassiker. Für die meisten Einfamilienhäuser',
@@ -1124,7 +1124,7 @@ const paDataFallback = [
     eigen: 12110,
     info: 'Richtpreis: ab 34.510 € brutto · KfW: bis -22.400 €',
     specs: [
-      ['Heizleistung A-7/W35', '2,3–9,8 kW'],
+      ['Heizleistung A-7/W35', '2,3-9,8 kW'],
       ['Heizstab (optional)', '9 kW'],
       ['Kältemittel', 'R290 (Propan, natürlich)'],
       ['Bauart', 'Monoblock (Außenaufstellung)'],
@@ -1141,9 +1141,9 @@ const paDataFallback = [
   {
     name: 'Komfort',
     label: 'Großzügiges Zuhause',
-    hausgroesse: 'ca. 180–280 m²',
+    hausgroesse: 'ca. 180-280 m²',
     modell: 'Wolf CHA-16/20',
-    kw: 'A-7/W35: 3,7–16,7 kW',
+    kw: 'A-7/W35: 3,7-16,7 kW',
     icon: '<svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 3L3 16h3v16h24V16h3L18 3z"/><rect x="10" y="19" width="6" height="13"/><rect x="20" y="12" width="5" height="5"/><rect x="20" y="22" width="6" height="10"/></svg>',
     img: 'cha-komfort-neubau.jpg',
     desc: 'Für größere Häuser mit höherem Wärmebedarf',
@@ -1151,7 +1151,7 @@ const paDataFallback = [
     eigen: 22820,
     info: 'Richtpreis: ab 45.220 € brutto · KfW: bis -22.400 €',
     specs: [
-      ['Heizleistung A-7/W35', '3,7–16,7 kW'],
+      ['Heizleistung A-7/W35', '3,7-16,7 kW'],
       ['Heizstab (optional)', '9 kW'],
       ['Kältemittel', 'R290 (Propan, natürlich)'],
       ['Bauart', 'Monoblock (Außenaufstellung)'],
@@ -1170,7 +1170,7 @@ const paDataFallback = [
     label: 'Zwei Familien unter einem Dach',
     hausgroesse: 'ab 250 m² / 2 WE',
     modell: 'Wolf CHA-20/24',
-    kw: 'A-7/W35: 3,7–19,6 kW',
+    kw: 'A-7/W35: 3,7-19,6 kW',
     icon: '<svg width="38" height="38" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 3L3 17h3v19h28V17h3L20 3z"/><line x1="20" y1="17" x2="20" y2="36"/><rect x="8" y="22" width="6" height="10"/><rect x="26" y="22" width="6" height="10"/></svg>',
     img: 'cha-mfh-saniert.jpg',
     desc: 'Zweifamilienhaus oder großes Einfamilienhaus',
@@ -1178,7 +1178,7 @@ const paDataFallback = [
     eigen: 34720,
     info: 'Richtpreis: ab 57.120 € brutto · KfW: bis -22.400 €',
     specs: [
-      ['Heizleistung A-7/W35', '3,7–19,6 kW'],
+      ['Heizleistung A-7/W35', '3,7-19,6 kW'],
       ['Heizstab (optional)', '9 kW'],
       ['Kältemittel', 'R290 (Propan, natürlich)'],
       ['Bauart', 'Monoblock (Außenaufstellung)'],
@@ -1252,7 +1252,7 @@ const paDataFallbackVaillant = [
   {
     name: 'Standard',
     label: 'Einfamilienhaus',
-    hausgroesse: 'ca. 80–100 m²',
+    hausgroesse: 'ca. 80-100 m²',
     modell: 'Vaillant aroTHERM plus VWL 75/8.1 A',
     kw: 'A-7/W35: 6,94 kW',
     icon: paDataFallback[1].icon,
@@ -1277,7 +1277,7 @@ const paDataFallbackVaillant = [
   {
     name: 'Komfort',
     label: 'Großzügiges Zuhause',
-    hausgroesse: 'ca. 100–150 m²',
+    hausgroesse: 'ca. 100-150 m²',
     modell: 'Vaillant aroTHERM plus VWL 105/8.1 A',
     kw: 'A-7/W35: 10,58 kW',
     icon: paDataFallback[2].icon,
@@ -1302,7 +1302,7 @@ const paDataFallbackVaillant = [
   {
     name: 'Premium',
     label: 'Großes Zuhause',
-    hausgroesse: 'ca. 150–175 m²',
+    hausgroesse: 'ca. 150-175 m²',
     modell: 'Vaillant aroTHERM plus VWL 125/8.1 A',
     kw: 'A-7/W35: 12,14 kW',
     icon: paDataFallback[3].icon,
@@ -1487,7 +1487,7 @@ function paZoom(idx) {
   // Pfeil positionieren
   requestAnimationFrame(() => paPositionArrow(idx));
 
-  // Bild pro Modell — Ambiente-Bilder als Cover
+  // Bild pro Modell - Ambiente-Bilder als Cover
   const imgContainer = document.querySelector('.pa-detail-img');
   if (imgContainer) {
     const imgSrc = paData[idx].img || 'cha-sanierung.jpg';
@@ -1539,7 +1539,7 @@ const SVG_WARN =
 const SVG_CHECK_SM =
   '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;"><polyline points="20 6 9 17 4 12"/></svg>';
 
-// ===== FÖRDERRECHNER (KfW 458 — korrekte Pro-WE-Aufteilung) =====
+// ===== FÖRDERRECHNER (KfW 458 - korrekte Pro-WE-Aufteilung) =====
 
 // --- Heizungsalter: Baujahr-Feld ein-/ausblenden + Hinweistext ---
 // --- Heizungsalter: Modus-Toggle (Alter-Dropdown vs. Baujahr-Input) ---
@@ -1883,7 +1883,7 @@ document.getElementById('gemeinde')?.addEventListener('change', function () {
   calculateFoerder();
 });
 document.getElementById('foerderWpTyp')?.addEventListener('change', calculateFoerder);
-// Initialer Aufruf — nur wenn der Förderrechner auf dieser Seite vorhanden ist.
+// Initialer Aufruf - nur wenn der Förderrechner auf dieser Seite vorhanden ist.
 // Die folgenden Funktionen lesen .value direkter Förderrechner-Elemente; auf
 // Seiten ohne Rechner (z. B. Startseite) würde der Top-Level-Aufruf sonst eine
 // TypeError werfen und die restliche site.js-Ausführung abbrechen.
@@ -1908,13 +1908,13 @@ function calculateHeiz() {
   const energiePreise = { gas: 0.12, oel: 0.11, nachtspeicher: 0.32 };
   const heizLabels = { gas: 'Gas', oel: 'Öl', nachtspeicher: 'Nachtspeicher' };
 
-  // Spezifischer Energiebedarf nach Baujahr (kWh/m²) — konsistent mit Wizard
+  // Spezifischer Energiebedarf nach Baujahr (kWh/m²) - konsistent mit Wizard
   const spezBedarfMap = { vor1978: 180, '1978-1994': 140, '1995-2010': 100, nach2010: 60 };
   const spezVerbrauch = spezBedarfMap[baujahr] || 140;
   const verbrauch = flaeche * spezVerbrauch;
   const kostenAlt = verbrauch * energiePreise[heizTyp];
 
-  // JAZ nach Baujahr (konservativ) — konsistent mit Wizard
+  // JAZ nach Baujahr (konservativ) - konsistent mit Wizard
   const jazMap = { vor1978: 3.0, '1978-1994': 3.3, '1995-2010': 3.8, nach2010: 4.2 };
   const jaz = jazMap[baujahr] || 3.5;
 
