@@ -357,7 +357,31 @@ function foerderCalc_(p, f, heute, periodenQuelle) {
   };
 }
 
-// Wrapper: holt Sheet-Parameter + Preis + Server-Zeit und ruft den reinen Kern. Einziger Ort mit new Date().
+// ===== Option B (Benjamin, 19.07.2026): Alt-Foerderung ist nicht mehr beantragbar =====
+// Das KfW-Portal ist bis zum Reform-Stichtag (21.07.2026) geschlossen; die Alt-Foerderung
+// (Klimabonus 20 %, 30.000 EUR foerderfaehig, Deckel 70 %) kann kein Kunde mehr beantragen.
+// Beide uhrlesenden Wrapper (foerderung_ und kvPeriodeHeute_) melden darum nie ein Datum VOR
+// dem Stichtag an die Perioden-Auswahl: die Live-Seite rechnet ab sofort mit dem Reform-Regelwerk.
+// Der reine Kern (foerderCalc_/periodeFuer_/kvPeriodeFuerDatum) und die explizite
+// fHalbjahr:'alt'-Abfrage (Kostenvergleich, Regressionstests, Aequivalenz-Beweis) bleiben
+// unveraendert; nur die live gelesene Uhr bekommt den Stichtag-Boden.
+function reformStichtagIso_(params) {
+  const rf = (params && params.periodenReihenfolge) || [];
+  for (let i = 0; i < rf.length; i++) {
+    const per = params.perioden[rf[i]];
+    if (per && per.gueltigAb) return String(per.gueltigAb); // erste Reform-Periode = fruehester Stichtag
+  }
+  return '2026-07-21'; // Fallback, falls Perioden-Reihenfolge unerwartet leer ist
+}
+
+// Server-Datum als 'yyyy-MM-dd', nach unten geklemmt auf den Reform-Stichtag (Option B).
+function heuteAbStichtagIso_(params) {
+  const heute = Utilities.formatDate(new Date(), 'Europe/Berlin', 'yyyy-MM-dd');
+  const stichtag = reformStichtagIso_(params);
+  return heute < stichtag ? stichtag : heute;
+}
+
+// Wrapper: holt Sheet-Parameter + Preis + Server-Zeit (Stichtag-geklemmt, Option B) und ruft den reinen Kern.
 function foerderung_(p) {
   const f = getAllParameters_().foerder;
   const kvParams = kvGetParams_();
@@ -368,7 +392,9 @@ function foerderung_(p) {
   const args = {};
   for (const k in p) args[k] = p[k];
   args.preis = preis;
-  const out = foerderCalc_(args, f, new Date(), foerderPeriodenAusKv_(kvParams));
+  // Option B: nie vor dem Reform-Stichtag; ISO + Mittag, damit periodeFuer_ den Tag zeitzonenrobust nimmt.
+  const heuteEff = heuteAbStichtagIso_(kvParams) + 'T12:00:00';
+  const out = foerderCalc_(args, f, heuteEff, foerderPeriodenAusKv_(kvParams));
   if (marke === 'vaillant') out.vorlaeufig = true;
   return out;
 }
@@ -427,7 +453,7 @@ function kvBootstrap_(p) {
 }
 
 function kvPeriodeHeute_(params) {
-  const heute = Utilities.formatDate(new Date(), 'Europe/Berlin', 'yyyy-MM-dd');
+  const heute = heuteAbStichtagIso_(params); // Option B: Alt-Periode nie live, Stichtag-Boden
   return kvPeriodeFuerDatum(heute, params);
 }
 

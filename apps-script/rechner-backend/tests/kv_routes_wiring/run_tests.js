@@ -229,7 +229,13 @@ const foerderAlt = call({
   action: 'foerderung', einkommen: 'ueber50', preisManuell: '30000', heizungsalter: '20',
   gemeinde: 'hannover', proklimaOptin: 'ja',
 });
-check('Alt-Parität 1 WE selbstgenutzt ohne proKlima', {
+// Option B (Benjamin 19.07.2026): Uhr steht auf 2026-07-15 (vor dem Stichtag). Der Kostenvergleich mit
+// EXPLIZITEM fHalbjahr:'alt' liefert weiter das Alt-Regelwerk (55 % / 16.500, historische/vergleichende
+// Abfrage bleibt moeglich). Der kundenseitige Foerderrechner-Wrapper foerderung_ liest die Uhr und wird
+// auf den Reform-Stichtag geklemmt: er liefert nie mehr die nicht beantragbare Alt-Foerderung, sondern
+// die Reform (46 % / 12.880). Die Alt-Paritaet des reinen Kerns bleibt separat gesichert
+// (foerderung_perioden 33/33, perioden_automatik 18/18).
+check('Option B: Wrapper serviert nie Alt, kostenvergleich(fHalbjahr=alt) schon', {
   kvQuote: kvAlt.foerder.quote,
   kvBetrag: kvAlt.foerder.anzeigeBetrag,
   kvPro: kvAlt.foerder.proKlimaEffektiv,
@@ -237,7 +243,7 @@ check('Alt-Parität 1 WE selbstgenutzt ohne proKlima', {
   foerderQuote: foerderAlt.kfwSatz,
   foerderBetrag: foerderAlt.zuschussGesamt,
   foerderPro: foerderAlt.proklimaZuschuss,
-}, { kvQuote: 55, kvBetrag: 16500, kvPro: 0, kvProInput: false, foerderQuote: 55, foerderBetrag: 16500, foerderPro: 0 });
+}, { kvQuote: 55, kvBetrag: 16500, kvPro: 0, kvProInput: false, foerderQuote: 46, foerderBetrag: 12880, foerderPro: 0 });
 
 clockIso = '2026-08-15';
 reset();
