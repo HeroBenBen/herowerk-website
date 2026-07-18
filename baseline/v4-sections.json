@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-17",
+  "generated": "2026-07-18",
   "rule": "section-id primär, H2-Fallback, FAQ separat; Fail bei >30% Wort-Abweichung",
   "threshold": 0.3,
   "pages": [
@@ -8,15 +8,15 @@
       "sections": [
         {
           "id": "class:hero",
-          "words": 80
+          "words": 174
         },
         {
           "id": "foerdervorschuss",
-          "words": 54
+          "words": 94
         },
         {
           "id": "schnellstart",
-          "words": 26
+          "words": 25
         },
         {
           "id": "foerderung-start",
@@ -40,8 +40,20 @@
       "file": "preise.html",
       "sections": [
         {
+          "id": "preise-intro",
+          "words": 152
+        },
+        {
           "id": "preise",
-          "words": 185
+          "words": 252
+        },
+        {
+          "id": "verbindlicher-preis",
+          "words": 152
+        },
+        {
+          "id": "marken-orientierung",
+          "words": 211
         },
         {
           "id": "class:detail-final-cta",
@@ -54,7 +66,7 @@
       "sections": [
         {
           "id": "wizard",
-          "words": 489
+          "words": 579
         },
         {
           "id": "class:detail-final-cta",
@@ -67,16 +79,20 @@
       "sections": [
         {
           "id": "foerder",
-          "words": 279
+          "words": 349
         },
         {
           "id": "class:section",
-          "words": 333
+          "words": 339
+        },
+        {
+          "id": "foerder-ablauf",
+          "words": 551
         },
         {
           "id": "faq[1]",
           "question": "Muss ich die Förderung selbst beantragen?",
-          "words": 38
+          "words": 120
         },
         {
           "id": "faq[2]",
@@ -103,7 +119,7 @@
       "sections": [
         {
           "id": "prozess",
-          "words": 155
+          "words": 179
         },
         {
           "id": "class:detail-final-cta",
@@ -116,16 +132,36 @@
       "sections": [
         {
           "id": "blog",
-          "words": 147,
-          "mode": "card-hub",
-          "requiredCardHrefs": [
+          "words": 420,
+          "cardHrefs": [
+            "/waermepumpe-altbau",
+            "/wp-kosten-hannover",
+            "/waermepumpenstrom-hannover",
+            "/wertsteigerung-waermepumpe",
+            "/gasheizung-tauschen-oder-reparieren",
             "/foerderung-jetzt-mitnehmen",
             "/foerderung-hannover",
-            "/waermepumpe-altbau",
-            "/gasheizung-tauschen-oder-reparieren",
+            "/foerdervorschuss",
+            "/waermepumpe-laerm",
+            "/propan-waermepumpe",
             "/baubarkeitspruefung",
             "/waermepumpe-hannover",
+            "/dimensionierung-verstehen"
+          ],
+          "mode": "card-hub",
+          "requiredCardHrefs": [
+            "/waermepumpe-altbau",
+            "/wp-kosten-hannover",
+            "/waermepumpenstrom-hannover",
+            "/wertsteigerung-waermepumpe",
+            "/gasheizung-tauschen-oder-reparieren",
+            "/foerderung-jetzt-mitnehmen",
+            "/foerderung-hannover",
             "/foerdervorschuss",
+            "/waermepumpe-laerm",
+            "/propan-waermepumpe",
+            "/baubarkeitspruefung",
+            "/waermepumpe-hannover",
             "/dimensionierung-verstehen"
           ]
         },
@@ -136,7 +172,7 @@
         {
           "id": "faq[1]",
           "question": "Was kostet eine Wärmepumpe bei HeroWerk?",
-          "words": 71
+          "words": 81
         },
         {
           "id": "faq[2]",
@@ -151,7 +187,7 @@
         {
           "id": "faq[4]",
           "question": "Wie hoch ist die KfW-Förderung wirklich?",
-          "words": 65
+          "words": 167
         },
         {
           "id": "faq[5]",
@@ -161,12 +197,12 @@
         {
           "id": "faq[6]",
           "question": "Was ist der Fördervorschuss und warum ist er limitiert?",
-          "words": 74
+          "words": 94
         },
         {
           "id": "faq[7]",
-          "question": "Warum Wolf?",
-          "words": 53
+          "question": "Warum setzen wir auf R290-Geräte von Wolf und Vaillant?",
+          "words": 141
         },
         {
           "id": "faq[frame]",
@@ -196,7 +232,7 @@
         },
         {
           "id": "h2-block[1]",
-          "words": 81
+          "words": 166
         },
         {
           "id": "h2-block[2]",
@@ -208,7 +244,7 @@
         },
         {
           "id": "h2-block[4]",
-          "words": 31
+          "words": 38
         },
         {
           "id": "h2-block[5]",
@@ -236,15 +272,15 @@
         },
         {
           "id": "h2-block[11]",
-          "words": 26
+          "words": 27
         },
         {
           "id": "h2-block[12]",
-          "words": 63
+          "words": 81
         },
         {
           "id": "h2-block[13]",
-          "words": 46
+          "words": 58
         }
       ]
     }
