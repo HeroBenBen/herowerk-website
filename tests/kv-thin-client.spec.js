@@ -376,8 +376,8 @@ test('O8 Bootstrap markiert eta nicht als Nutzerangabe und die Kesselmatrix grei
 
   await page.locator('#eta').evaluate((element) => {
     element.value = '77';
-    element.dispatchEvent(new Event('input', { bubbles: true }));
-    element.dispatchEvent(new Event('change', { bubbles: true }));
+    element.dispatchEvent(new window.Event('input', { bubbles: true }));
+    element.dispatchEvent(new window.Event('change', { bubbles: true }));
   });
   await expect(page.locator('#wzChip_eta')).toHaveText('Ihre Angabe');
   await select('rohr', 'metall');
