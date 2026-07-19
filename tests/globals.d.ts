@@ -25,3 +25,13 @@ declare function calculate(options?: any): any;
 
 /** Chart.js 4.4.1 UMD-Global. Fundstelle: <script src="/js/chart-4.4.1.umd.min.js"> */
 declare const Chart: any;
+
+interface Window {
+  /** WP-Rechner Thin Client: Wizard-Bridge-Handle (schaetzungsbasierter Bedarf). Fundstelle: kostenvergleich-waermepumpe.html:1076/1083 */
+  WZ_BRIDGE?: any;
+  /** WP-Rechner Thin Client: Test-Zwischenspeicher fuer den O4-Lead-Roundtrip. Fundstelle: tests/kv-thin-client.spec.js:595 */
+  __kvLastForO4Test?: any;
+}
+
+/** Apps-Script-Engine als CommonJS-Modul in Perioden-/Aequivalenztests geladen. module.exports Fundstelle: apps-script/rechner-backend/kv_engine.gs:721 */
+declare module '*.gs';
