@@ -2859,14 +2859,6 @@ section {
   color: var(--g400);
   font-size: 12px;
 }
-.pa-detail-cta .pa-proklima-badge {
-  background: rgba(232, 168, 56, 0.12);
-  color: var(--bernstein);
-  font-size: 13px;
-  font-weight: 600;
-  padding: 8px 12px;
-  border-radius: 8px;
-}
 .pa-detail-cta .pa-info {
   color: var(--g400);
   font-size: 12px;
@@ -2979,10 +2971,6 @@ section {
   }
   .pa-detail-cta .pa-price-sub {
     font-size: 14px;
-  }
-  .pa-detail-cta .pa-proklima-badge {
-    font-size: 15px;
-    padding: 10px 14px;
   }
   .pa-detail-cta .pa-info {
     font-size: 14px;
@@ -3622,15 +3610,11 @@ section {
 [data-theme='light'] .guide-logo-row img {
   box-shadow: none;
 }
-[data-theme='light'] .guide-logo-kfw,
-[data-theme='light'] .guide-logo-proklima {
+[data-theme='light'] .guide-logo-kfw {
   filter: none;
 }
 [data-theme='dark'] .guide-logo-kfw {
   filter: brightness(0) invert(1);
-}
-[data-theme='dark'] .guide-logo-proklima {
-  filter: none;
 }
 [data-theme='light'] .ratgeber-side-panel {
   background: var(--color-surface-secondary);
@@ -3945,13 +3929,6 @@ section {
   font-family: 'Barlow', sans-serif;
   font-size: 12px;
   letter-spacing: 0.05em;
-}
-.badge-proklima {
-  background: #2e7d32;
-  color: #ffffff;
-  font-family: 'Barlow', sans-serif;
-  font-size: 12px;
-  letter-spacing: 0.03em;
 }
 .trust-strip-sub {
   font-size: 12px;

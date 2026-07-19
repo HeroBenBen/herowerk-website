@@ -3,6 +3,47 @@
 const { test, expect } = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default;
 
+// O21: Auf einer Vercel-Preview laeuft kein PHP, deshalb liefert /api/rechner
+// (Proxy api/rechner.php) fuer action=preise und action=foerderung 404. Ohne Live-Preise
+// bleibt #wolfMinEigen auf dem Platzhalter und der Foerderrechner rechnet nicht. Die zwei
+// @smoke-Tests mocken genau diese zwei Routen mit kanonischen Werten (Wolf-Eigenanteile aus
+// produkte_HERO.json, Vaillant-VWL-75-Paket 32.755 brutto). Produktion laeuft auf IONOS,
+// dort antwortet der Proxy real; der Mock prueft die Client-Render-Kette, nicht die Preise.
+const KV_PREISE_FIXTURE = {
+  wolf: [
+    { klasse: 's', brutto: 29750, eigen: 7350 },
+    { klasse: 'm', brutto: 34510, eigen: 12110 },
+    { klasse: 'l', brutto: 45220, eigen: 22820 },
+    { klasse: 'xl', brutto: 57120, eigen: 34720 },
+    { klasse: 'xxl', brutto: 82223, eigen: null },
+  ],
+  vaillant: [
+    { klasse: 's', brutto: 28963, eigen: 7350 },
+    { klasse: 'm', brutto: 32755, eigen: 11755 },
+    { klasse: 'l', brutto: 40276, eigen: 22820 },
+    { klasse: 'xl', brutto: 46159, eigen: 34720 },
+    { klasse: 'xxl', brutto: 79060, eigen: null },
+  ],
+};
+
+const KV_FOERDER_FIXTURE = {
+  preis: 32755,
+  eigenanteil: 11755,
+  zuschussGesamt: 21000,
+  kfwSatz: 64,
+  effektivSatz: 64,
+  periodeLabel: '21.07.2026 bis 31.01.2027',
+  hinweis: '',
+};
+
+async function kvFulfillJson(route, payload) {
+  await route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify(payload),
+  });
+}
+
 test('@smoke Theme-Toggle setzt Light- und Dark-Mode per URL/LocalStorage', async ({ page }) => {
   await page.goto('/?theme=light');
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
@@ -13,6 +54,7 @@ test('@smoke Theme-Toggle setzt Light- und Dark-Mode per URL/LocalStorage', asyn
 test('@smoke Hersteller-Vorauswahl zeigt Wolf- und Vaillant-Karten im gemeinsamen Panel', async ({
   page,
 }) => {
+  await page.route(/[?&]action=preise/, (route) => kvFulfillJson(route, KV_PREISE_FIXTURE));
   await page.goto('/preise.html?theme=dark');
   // Drift-fest: prueft, dass die Live-Preis-Verdrahtung (action=preise, Single Source)
   // einen echten Eigenanteil rendert — nicht den "ab … Eigenanteil*"-Platzhalter. Kein
@@ -28,6 +70,7 @@ test('@smoke Hersteller-Vorauswahl zeigt Wolf- und Vaillant-Karten im gemeinsame
 test('@smoke Förderrechner-Paketliste nutzt Wolf und Vaillant aus der Preisliste', async ({
   page,
 }) => {
+  await page.route(/[?&]action=foerderung/, (route) => kvFulfillJson(route, KV_FOERDER_FIXTURE));
   await page.goto('/foerderung.html?theme=dark');
   await page.waitForLoadState('networkidle');
   await expect(page.locator('#foerderWpTyp optgroup')).toHaveCount(2);
