@@ -43,7 +43,10 @@ function mapInputs(query) {
 }
 
 function sendJson(response, value, status = 200) {
-  response.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
+  response.writeHead(status, {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Cache-Control': 'no-store',
+  });
   response.end(JSON.stringify(value));
 }
 
@@ -75,27 +78,39 @@ test.beforeAll(async () => {
       }
       return sendJson(response, { error: true, message: 'unknown_action' }, 400);
     }
-    const relative = url.pathname === '/' ? 'kostenvergleich-waermepumpe.html' : decodeURIComponent(url.pathname.slice(1));
-    const selectedRoot = relative === 'anfrage.html' && fs.existsSync(path.join(LANE_A_ROOT, 'anfrage.html'))
-      ? LANE_A_ROOT
-      : path.resolve(__dirname, '..');
+    const relative =
+      url.pathname === '/'
+        ? 'kostenvergleich-waermepumpe.html'
+        : decodeURIComponent(url.pathname.slice(1));
+    const selectedRoot =
+      relative === 'anfrage.html' && fs.existsSync(path.join(LANE_A_ROOT, 'anfrage.html'))
+        ? LANE_A_ROOT
+        : path.resolve(__dirname, '..');
     const file = path.resolve(selectedRoot, relative);
     const root = path.resolve(selectedRoot) + path.sep;
     if (!file.startsWith(root) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
       response.writeHead(404);
       return response.end('not found');
     }
-    const type = file.endsWith('.html') ? 'text/html; charset=utf-8' : file.endsWith('.css') ? 'text/css' : file.endsWith('.js') ? 'text/javascript' : 'application/octet-stream';
+    const type = file.endsWith('.html')
+      ? 'text/html; charset=utf-8'
+      : file.endsWith('.css')
+        ? 'text/css'
+        : file.endsWith('.js')
+          ? 'text/javascript'
+          : 'application/octet-stream';
     response.writeHead(200, { 'Content-Type': type, 'Cache-Control': 'no-store' });
     if (relative === 'kostenvergleich-waermepumpe.html') {
-      const html = fs.readFileSync(file, 'utf8').replaceAll('https://www.herowerk.de/anfrage.html', '/anfrage.html');
+      const html = fs
+        .readFileSync(file, 'utf8')
+        .replaceAll('https://www.herowerk.de/anfrage.html', '/anfrage.html');
       response.end(html);
       return;
     }
     fs.createReadStream(file).pipe(response);
   });
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
-  baseURL = `http://127.0.0.1:${server.address().port}`;
+  baseURL = `http://127.0.0.1:${/** @type {import('net').AddressInfo} */ (server.address()).port}`;
 });
 
 test.afterAll(async () => {
@@ -111,7 +126,7 @@ async function installLocalConsent(page) {
         var box=document.createElement('div');box.id='cmpbox';box.setAttribute('role','dialog');box.style.cssText='position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center';
         var card=document.createElement('div');card.style.cssText='background:#fff;color:#1C2B36;padding:24px;border-radius:12px;max-width:320px';card.innerHTML='<p>Lokaler Test-Consent</p><button type="button" id="cmpwelcomebtnyes">Alle akzeptieren</button>';box.appendChild(card);document.body.appendChild(box);
         document.getElementById('cmpwelcomebtnyes').addEventListener('click',function(){box.remove();});
-      });`
+      });`,
     });
   });
 }
@@ -170,12 +185,26 @@ async function nextWizardStep(page) {
 }
 
 async function chart2Labels(page) {
-  return page.evaluate(() => Chart.getChart('cBreak').data.datasets.map((dataset) => dataset.label));
+  return page.evaluate(() =>
+    Chart.getChart('cBreak').data.datasets.map((dataset) => dataset.label)
+  );
 }
 
 test('O3 Contract: Source, Bootstrap und serverseitige Periodeneigenschaft', async () => {
-  const source = fs.readFileSync(path.resolve(__dirname, '..', 'kostenvergleich-waermepumpe.html'), 'utf8');
-  for (const forbidden of ['FOERDER_HJ', 'WZ_SPEZ', 'WZ_STUFEN', 'WZ_GEBF', 'ETA_NEU', 'findPathValue', 'findKpiValue', 'findDreiWegeTotal']) {
+  const source = fs.readFileSync(
+    path.resolve(__dirname, '..', 'kostenvergleich-waermepumpe.html'),
+    'utf8'
+  );
+  for (const forbidden of [
+    'FOERDER_HJ',
+    'WZ_SPEZ',
+    'WZ_STUFEN',
+    'WZ_GEBF',
+    'ETA_NEU',
+    'findPathValue',
+    'findKpiValue',
+    'findDreiWegeTotal',
+  ]) {
     expect(source).not.toContain(forbidden);
   }
   expect((source.match(/80 %|80 Prozent/g) || []).length).toBe(7); // fünf Förderung + zwei Wirkungsgrad
@@ -185,26 +214,48 @@ test('O3 Contract: Source, Bootstrap und serverseitige Periodeneigenschaft', asy
   const bootstrap = await fetch(`${baseURL}/api/rechner?action=kv_bootstrap`);
   const bootstrapText = await bootstrap.text();
   expect(bootstrapText).not.toMatch(/proklima/i);
-  const alt = engine.kvCalculate({ ...engine.KV_DEFAULTS, fHalbjahr: 'alt', proklimaTog: false }, engine.KV_PARAMS_SEED);
-  const h22026 = engine.kvCalculate({ ...engine.KV_DEFAULTS, fHalbjahr: 'h2-2026', proklimaTog: false }, engine.KV_PARAMS_SEED);
-  const h12027 = engine.kvCalculate({ ...engine.KV_DEFAULTS, fHalbjahr: 'h1-2027', proklimaTog: false }, engine.KV_PARAMS_SEED);
+  const alt = engine.kvCalculate(
+    { ...engine.KV_DEFAULTS, fHalbjahr: 'alt', proklimaTog: false },
+    engine.KV_PARAMS_SEED
+  );
+  const h22026 = engine.kvCalculate(
+    { ...engine.KV_DEFAULTS, fHalbjahr: 'h2-2026', proklimaTog: false },
+    engine.KV_PARAMS_SEED
+  );
+  const h12027 = engine.kvCalculate(
+    { ...engine.KV_DEFAULTS, fHalbjahr: 'h1-2027', proklimaTog: false },
+    engine.KV_PARAMS_SEED
+  );
   expect(alt.foerder.euDifferenzierung).toBe(false);
   expect(h22026.foerder.euDifferenzierung).toBe(false);
   expect(h12027.foerder.euDifferenzierung).toBe(true);
 
-  const estimated = await fetch(`${baseURL}/api/rechner?action=kostenvergleich&bedarfModus=schaetzung&geb=efh&bj=1978-1994&san=teilweise&flaeche=140&fHalbjahr=h2-2026`);
+  const estimated = await fetch(
+    `${baseURL}/api/rechner?action=kostenvergleich&bedarfModus=schaetzung&geb=efh&bj=1978-1994&san=teilweise&flaeche=140&fHalbjahr=h2-2026`
+  );
   const estimatedJson = await estimated.json();
-  expect(estimatedJson.inputsEcho.bedarf).toBe(engine.kvSchaetzeBedarf('efh', '1978-1994', 'teilweise', 140, engine.KV_PARAMS_SEED));
+  expect(estimatedJson.inputsEcho.bedarf).toBe(
+    engine.kvSchaetzeBedarf('efh', '1978-1994', 'teilweise', 140, engine.KV_PARAMS_SEED)
+  );
 });
 
-test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry', async ({ page }) => {
+test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry', async ({
+  page,
+}) => {
   await installLocalConsent(page);
   const dark = collectErrors(page);
 
   await page.setViewportSize({ width: 375, height: 812 });
-  await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?modus=berater&theme=dark`, { waitUntil: 'domcontentloaded' });
+  await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?modus=berater&theme=dark`, {
+    waitUntil: 'domcontentloaded',
+  });
   await acceptConsent(page);
-  await page.waitForFunction(() => typeof KV_STATE !== 'undefined' && KV_STATE.last && KV_STATE.last.service === 'kostenvergleich');
+  await page.waitForFunction(
+    () =>
+      typeof KV_STATE !== 'undefined' &&
+      KV_STATE.last &&
+      KV_STATE.last.service === 'kostenvergleich'
+  );
   expect(await page.locator('#fHalbjahr').inputValue()).toBe('alt');
   expect(await page.evaluate(() => KV_STATE.last.foerder.periode)).toBe('alt');
   await clickTab(page, 'Förderung');
@@ -217,7 +268,9 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
   await expect(page.locator('#kpiGrid')).toContainText('Jahr 6');
   await expect(page.locator('#pathSummary')).toContainText('45.389 €');
   await expect(page.locator('#dreiWegeBox')).toContainText('45.389 €');
-  await expect(page.getByRole('region', { name: 'Drei-Wege-Kostenvergleich, horizontal scrollbar' })).toBeVisible();
+  await expect(
+    page.getByRole('region', { name: 'Drei-Wege-Kostenvergleich, horizontal scrollbar' })
+  ).toBeVisible();
   await expect(page.locator('#sensiBox')).toContainText('45.389 €');
   expect(await page.evaluate(() => Math.round(KV_STATE.last.ergebnis.wpNG))).toBe(45389);
   expect(await page.locator('#kpiGrid .ml').allTextContents()).toEqual([
@@ -225,13 +278,23 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
     'Mehrpreis gegenüber neuer Gasheizung',
     'Ausgeglichen ab',
     'Einsparung 20 J.',
-    'CO₂ eingespart'
+    'CO₂ eingespart',
   ]);
   await expect(page.locator('#cashflowBox')).toBeHidden();
   await expect(page.locator('#immoBox')).toBeHidden();
-  expect(await chart2Labels(page)).toEqual(['Energie und CO₂', 'Bio-Aufschlag', 'Wartungsdifferenz']);
-  expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
-  expect(await page.evaluate(() => document.documentElement.getAttribute('data-theme'))).toBe('dark');
+  expect(await chart2Labels(page)).toEqual([
+    'Energie und CO₂',
+    'Bio-Aufschlag',
+    'Wartungsdifferenz',
+  ]);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth
+    )
+  ).toBe(0);
+  expect(await page.evaluate(() => document.documentElement.getAttribute('data-theme'))).toBe(
+    'dark'
+  );
 
   await clickTab(page, 'Energie');
   await clickToggle(page, 'bioTog', false);
@@ -240,16 +303,29 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
   await clickTab(page, 'Extras');
   await clickToggle(page, 'dynTarifTog', true);
   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.dynTarif.aktiv === true);
-  expect(await chart2Labels(page)).toEqual(['Energie und CO₂', 'Dynamischer Tarif', 'Wartungsdifferenz']);
+  expect(await chart2Labels(page)).toEqual([
+    'Energie und CO₂',
+    'Dynamischer Tarif',
+    'Wartungsdifferenz',
+  ]);
   await expect(page.locator('#kpiGrid .ml', { hasText: 'Dyn. Tarif Ersparnis/J.' })).toHaveCount(1);
   await clickTab(page, 'Energie');
   await clickToggle(page, 'bioTog', true);
   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.system.bioOn === true);
-  expect(await chart2Labels(page)).toEqual(['Energie und CO₂', 'Dynamischer Tarif', 'Bio-Aufschlag', 'Wartungsdifferenz']);
+  expect(await chart2Labels(page)).toEqual([
+    'Energie und CO₂',
+    'Dynamischer Tarif',
+    'Bio-Aufschlag',
+    'Wartungsdifferenz',
+  ]);
   await clickTab(page, 'Extras');
   await clickToggle(page, 'dynTarifTog', false);
   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.dynTarif.aktiv === false);
-  expect(await chart2Labels(page)).toEqual(['Energie und CO₂', 'Bio-Aufschlag', 'Wartungsdifferenz']);
+  expect(await chart2Labels(page)).toEqual([
+    'Energie und CO₂',
+    'Bio-Aufschlag',
+    'Wartungsdifferenz',
+  ]);
 
   await clickToggle(page, 'immoTog', true);
   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.immo.aktiv === true);
@@ -260,15 +336,27 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
   await clickToggle(page, 'finanzTog', true);
   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.finanzierung.aktiv === true);
   await expect(page.locator('#cashflowBox')).toBeVisible();
-  await expect(page.locator('#kpiGrid .ml', { hasText: 'Monatl. Vorteil (finanziert)' })).toHaveCount(1);
+  await expect(
+    page.locator('#kpiGrid .ml', { hasText: 'Monatl. Vorteil (finanziert)' })
+  ).toHaveCount(1);
 
   await clickTab(page, 'Ihre Situation');
   await rangeToEnd(page, 'invWP');
   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.inputsEcho.invWP === 65000);
-  await expect(page.locator('#kpiGrid .ml', { hasText: 'Monatl. Vorteil (finanziert)' }).locator('..').locator('.mv')).toHaveText('−295 €/Mo.');
+  await expect(
+    page
+      .locator('#kpiGrid .ml', { hasText: 'Monatl. Vorteil (finanziert)' })
+      .locator('..')
+      .locator('.mv')
+  ).toHaveText('−295 €/Mo.');
   await rangeFromStart(page, 'invWP', 8);
   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.inputsEcho.invWP === 12000);
-  await expect(page.locator('#kpiGrid .ml', { hasText: 'Mehrpreis gegenüber neuer Gasheizung' }).locator('..').locator('.mv')).toHaveText('−5.520 €');
+  await expect(
+    page
+      .locator('#kpiGrid .ml', { hasText: 'Mehrpreis gegenüber neuer Gasheizung' })
+      .locator('..')
+      .locator('.mv')
+  ).toHaveText('−5.520 €');
 
   await rangeToEnd(page, 'invWP');
   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.inputsEcho.invWP === 65000);
@@ -279,7 +367,12 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
   await expect(page.locator('#pathSummary')).not.toContainText('Anschaffung Neue Gasheizung');
   await expect(page.locator('#pathSummary')).not.toContainText('Echter Mehrpreis');
   await expect(page.locator('#kpiGrid .ml', { hasText: 'Mehrpreis gegenüber' })).toHaveCount(0);
-  await expect(page.locator('#kpiGrid .ml', { hasText: 'Monatl. Cashflow (1. J.)' }).locator('..').locator('.mv')).toHaveText('−377 €/Mo.');
+  await expect(
+    page
+      .locator('#kpiGrid .ml', { hasText: 'Monatl. Cashflow (1. J.)' })
+      .locator('..')
+      .locator('.mv')
+  ).toHaveText('−377 €/Mo.');
 
   await clickTab(page, 'Finanzierung');
   await clickToggle(page, 'finanzTog', false);
@@ -295,14 +388,20 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
   await page.locator('#kvRetry').click();
   await expect(page.locator('#kvRetry')).toHaveCount(0);
   expect(dark.pageErrors).toEqual([]);
-  expect(dark.consoleErrors.filter((message) => !/503|Failed to load resource/i.test(message))).toEqual([]);
+  expect(
+    dark.consoleErrors.filter((message) => !/503|Failed to load resource/i.test(message))
+  ).toEqual([]);
 });
 
-test('O3 Kunde Light 375: lokaler Consent, Alt-/EU-Text, fünf Förderanker und Vollflow', async ({ page }) => {
+test('O3 Kunde Light 375: lokaler Consent, Alt-/EU-Text, fünf Förderanker und Vollflow', async ({
+  page,
+}) => {
   await installLocalConsent(page);
   const light = collectErrors(page);
   await page.setViewportSize({ width: 375, height: 812 });
-  await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?theme=light`, { waitUntil: 'domcontentloaded' });
+  await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?theme=light`, {
+    waitUntil: 'domcontentloaded',
+  });
   await acceptConsent(page);
   await page.waitForFunction(() => typeof KV_STATE !== 'undefined' && KV_STATE.last);
   await expect(page.locator('body')).toHaveClass(/wz-customer/);
@@ -311,14 +410,23 @@ test('O3 Kunde Light 375: lokaler Consent, Alt-/EU-Text, fünf Förderanker und 
   await page.locator('[data-wz-grp="altgas"][data-wz-val="ja"]').click();
   await nextWizardStep(page);
   await nextWizardStep(page);
-  await expect(page.locator('#wzFoerderAufbau')).toContainText('Grundförderung: bekommt jeder Heizungstausch');
+  await expect(page.locator('#wzFoerderAufbau')).toContainText(
+    'Grundförderung: bekommt jeder Heizungstausch'
+  );
   await expect(page.locator('#wzFoerderAufbau')).not.toContainText('EU-Gerät');
   await page.locator('#fHalbjahr').selectOption('h1-2027');
-  await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.foerder.periode === 'h1-2027' && KV_STATE.last.foerder.euDifferenzierung === true);
+  await page.waitForFunction(
+    () =>
+      KV_STATE.last &&
+      KV_STATE.last.foerder.periode === 'h1-2027' &&
+      KV_STATE.last.foerder.euDifferenzierung === true
+  );
   await expect(page.locator('#wzFoerderAufbau')).toContainText('Ihr EU-Gerät bekommt 15 % zurück');
   await page.locator('#fHalbjahr').selectOption('h2-2026');
   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.foerder.periode === 'h2-2026');
-  await expect(page.locator('#wzFoerderAufbau')).toContainText('Grundförderung: bekommt jeder Heizungstausch');
+  await expect(page.locator('#wzFoerderAufbau')).toContainText(
+    'Grundförderung: bekommt jeder Heizungstausch'
+  );
   await expect(page.locator('#wzFoerderAufbau')).not.toContainText('EU-Gerät');
   await rangeFromStart(page, 'fEinkSlider', 10);
   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.foerder.quote === 80);
@@ -330,21 +438,32 @@ test('O3 Kunde Light 375: lokaler Consent, Alt-/EU-Text, fünf Förderanker und 
   await nextWizardStep(page);
   await expect(page.locator('#wzHero')).toBeVisible();
   await expect(page.locator('#results')).toHaveClass(/visible/);
-  expect(await page.evaluate(() => document.documentElement.getAttribute('data-theme'))).toBe('light');
-  expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
+  expect(await page.evaluate(() => document.documentElement.getAttribute('data-theme'))).toBe(
+    'light'
+  );
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth
+    )
+  ).toBe(0);
   expect(light.consoleErrors).toEqual([]);
   expect(light.pageErrors).toEqual([]);
 });
 
-test('O8 Bootstrap markiert eta nicht als Nutzerangabe und die Kesselmatrix greift', async ({ page }) => {
+test('O8 Bootstrap markiert eta nicht als Nutzerangabe und die Kesselmatrix greift', async ({
+  page,
+}) => {
   await installLocalConsent(page);
   await page.setViewportSize({ width: 375, height: 812 });
-  await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?theme=dark`, { waitUntil: 'domcontentloaded' });
+  await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?theme=dark`, {
+    waitUntil: 'domcontentloaded',
+  });
   await acceptConsent(page);
   await page.waitForFunction(() => typeof KV_STATE !== 'undefined' && KV_STATE.last);
   await expect(page.locator('#wzChip_eta')).not.toHaveText('Ihre Angabe');
 
-  const select = async (group, value) => page.locator(`[data-wz-grp="${group}"][data-wz-val="${value}"]`).click();
+  const select = async (group, value) =>
+    page.locator(`[data-wz-grp="${group}"][data-wz-val="${value}"]`).click();
   const expectEta = async (value) => {
     await expect.poll(async () => Number(await page.locator('#eta').inputValue())).toBe(value);
   };
@@ -357,7 +476,7 @@ test('O8 Bootstrap markiert eta nicht als Nutzerangabe und die Kesselmatrix grei
     ['metall', '1990-2010', 80, 80],
     ['kunststoff', '1990-2010', 86, 90],
     ['kunststoff', 'nach2010', 93, 93],
-    ['unklar', null, 85, 85]
+    ['unklar', null, 85, 85],
   ];
   for (const [rohr, baujahr, gas, oel] of cases) {
     await select('rohr', rohr);
@@ -375,7 +494,7 @@ test('O8 Bootstrap markiert eta nicht als Nutzerangabe und die Kesselmatrix grei
   }
 
   await page.locator('#eta').evaluate((element) => {
-    element.value = '77';
+    /** @type {HTMLInputElement} */ (element).value = '77';
     element.dispatchEvent(new window.Event('input', { bubbles: true }));
     element.dispatchEvent(new window.Event('change', { bubbles: true }));
   });
@@ -395,9 +514,13 @@ function recursiveKeys(value, found = []) {
   return found;
 }
 
-test('O4 Writer: jeder Anfrage-CTA schreibt ausschließlich das v1-Contract-Schema', async ({ page }) => {
+test('O4 Writer: jeder Anfrage-CTA schreibt ausschließlich das v1-Contract-Schema', async ({
+  page,
+}) => {
   await installLocalConsent(page);
-  await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?theme=dark`, { waitUntil: 'domcontentloaded' });
+  await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?theme=dark`, {
+    waitUntil: 'domcontentloaded',
+  });
   await acceptConsent(page);
   await page.waitForFunction(() => typeof KV_STATE !== 'undefined' && KV_STATE.last);
   await page.locator('[data-wz-heizart="gas"]').click();
@@ -405,21 +528,46 @@ test('O4 Writer: jeder Anfrage-CTA schreibt ausschließlich das v1-Contract-Sche
   await page.locator('[data-wz-grp="geb"][data-wz-val="efh"]').click();
   await page.locator('[data-wz-grp="bj"][data-wz-val="1978-1994"]').click();
   await page.locator('[data-wz-grp="san"][data-wz-val="teilweise"]').click();
-  await page.waitForFunction(() => window.WZ_BRIDGE && KV_STATE.last && KV_STATE.last.inputsEcho.bedarf);
+  await page.waitForFunction(
+    () => window.WZ_BRIDGE && KV_STATE.last && KV_STATE.last.inputsEcho.bedarf
+  );
   await page.locator('[data-wz-grp="altgas"][data-wz-val="ja"]').click();
   await page.locator('[data-wz-grp="rohr"][data-wz-val="kunststoff"]').click();
   await page.locator('[data-wz-grp="kbj"][data-wz-val="1990-2010"]').click();
 
-  await page.evaluate(() => document.addEventListener('click', (event) => {
-    const link = event.target.closest && event.target.closest('a[href]');
-    if (link && new URL(link.href, location.href).pathname === '/anfrage.html') event.preventDefault();
-  }));
+  await page.evaluate(() =>
+    document.addEventListener('click', (event) => {
+      const el = /** @type {Element} */ (event.target);
+      const link = el.closest && el.closest('a[href]');
+      if (
+        link &&
+        new URL(/** @type {HTMLAnchorElement} */ (link).href, location.href).pathname ===
+          '/anfrage.html'
+      )
+        event.preventDefault();
+    })
+  );
   async function expectWriterPayload(cta) {
     await page.evaluate(() => sessionStorage.removeItem('hero_kv_lead'));
     await cta.click({ force: true });
     const payload = await page.evaluate(() => JSON.parse(sessionStorage.getItem('hero_kv_lead')));
-    expect(Object.keys(payload).sort()).toEqual(['ergebnis', 'gebaeude', 'heizungsart', 'kessel', 'quelle', 'v', 'verbrauch', 'zeitpunkt', 'zeitraum']);
-    expect(Object.keys(payload.verbrauch).sort()).toEqual(['eingabeWert', 'einheit', 'herkunft', 'kwh']);
+    expect(Object.keys(payload).sort()).toEqual([
+      'ergebnis',
+      'gebaeude',
+      'heizungsart',
+      'kessel',
+      'quelle',
+      'v',
+      'verbrauch',
+      'zeitpunkt',
+      'zeitraum',
+    ]);
+    expect(Object.keys(payload.verbrauch).sort()).toEqual([
+      'eingabeWert',
+      'einheit',
+      'herkunft',
+      'kwh',
+    ]);
     expect(Object.keys(payload.gebaeude).sort()).toEqual(['bj', 'flaeche', 'geb', 'san']);
     expect(Object.keys(payload.kessel).sort()).toEqual(['altgas', 'kbj', 'rohr']);
     expect(Object.keys(payload.ergebnis).sort()).toEqual(['eigenanteil', 'quote', 'zuschuss']);
@@ -427,10 +575,15 @@ test('O4 Writer: jeder Anfrage-CTA schreibt ausschließlich das v1-Contract-Sche
     expect(payload.ergebnis).toEqual({
       eigenanteil: response.foerder.eigenanteilOhneEinkommen,
       zuschuss: response.foerder.zuschussOhneEinkommen,
-      quote: response.foerder.quoteOhneEinkommen
+      quote: response.foerder.quoteOhneEinkommen,
     });
     expect(payload.verbrauch.herkunft).toBe('market');
-    expect(payload.gebaeude).toEqual({ geb: 'efh', bj: '1978-1994', san: 'teilweise', flaeche: 140 });
+    expect(payload.gebaeude).toEqual({
+      geb: 'efh',
+      bj: '1978-1994',
+      san: 'teilweise',
+      flaeche: 140,
+    });
     const forbidden = /eink|kind|proklima|zve|name|adresse|mail|telefon|phone|ip|plz/i;
     expect(recursiveKeys(payload).filter((key) => forbidden.test(key))).toEqual([]);
     expect(JSON.stringify(payload)).not.toMatch(/example@|\+49|30159/);
@@ -445,7 +598,9 @@ test('O4 Writer: jeder Anfrage-CTA schreibt ausschließlich das v1-Contract-Sche
   });
   await page.locator('a.nav-cta[href="/anfrage.html"]').click();
   expect(await page.evaluate(() => sessionStorage.getItem('hero_kv_lead'))).toBeNull();
-  await page.evaluate(() => { KV_STATE.last = window.__kvLastForO4Test; });
+  await page.evaluate(() => {
+    KV_STATE.last = window.__kvLastForO4Test;
+  });
   await expectWriterPayload(page.locator('a.nav-cta[href="/anfrage.html"]'));
   await expectWriterPayload(page.locator('#wzStickyCta a[href="/anfrage.html"]'));
   await page.setViewportSize({ width: 375, height: 812 });
@@ -467,13 +622,25 @@ test('O4 Writer: jeder Anfrage-CTA schreibt ausschließlich das v1-Contract-Sche
   await fetch(`${baseURL}/__fail-off`);
 });
 
-test('O4 Writer fail-safe: setItem-Fehler löscht gültigen stale Key vor der Navigation', async ({ page }) => {
-  test.skip(!fs.existsSync(path.join(LANE_A_ROOT, 'anfrage.html')), 'Lane-A-Worktree für Cross-E2E fehlt');
+test('O4 Writer fail-safe: setItem-Fehler löscht gültigen stale Key vor der Navigation', async ({
+  page,
+}) => {
+  test.skip(
+    !fs.existsSync(path.join(LANE_A_ROOT, 'anfrage.html')),
+    'Lane-A-Worktree für Cross-E2E fehlt'
+  );
   await installLocalConsent(page);
   await page.setViewportSize({ width: 1200, height: 812 });
-  await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?theme=dark`, { waitUntil: 'domcontentloaded' });
+  await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?theme=dark`, {
+    waitUntil: 'domcontentloaded',
+  });
   await acceptConsent(page);
-  await page.waitForFunction(() => typeof KV_STATE !== 'undefined' && KV_STATE.last && typeof KV_STATE.last.foerder.quoteOhneEinkommen === 'number');
+  await page.waitForFunction(
+    () =>
+      typeof KV_STATE !== 'undefined' &&
+      KV_STATE.last &&
+      typeof KV_STATE.last.foerder.quoteOhneEinkommen === 'number'
+  );
   await page.evaluate(() => {
     const stale = {
       v: 1,
@@ -484,42 +651,58 @@ test('O4 Writer fail-safe: setItem-Fehler löscht gültigen stale Key vor der Na
       gebaeude: null,
       kessel: { rohr: 'metall', kbj: 'vor1990', altgas: null },
       zeitraum: 'h2-2026',
-      ergebnis: { eigenanteil: 17120, zuschuss: 12880, quote: 46 }
+      ergebnis: { eigenanteil: 17120, zuschuss: 12880, quote: 46 },
     };
     sessionStorage.setItem('hero_kv_lead', JSON.stringify(stale));
     const nativeSetItem = Storage.prototype.setItem;
-    Storage.prototype.setItem = function(key, value) {
-      if (this === sessionStorage && key === 'hero_kv_lead') throw new Error('test_setitem_blocked');
+    Storage.prototype.setItem = function (key, value) {
+      if (this === sessionStorage && key === 'hero_kv_lead')
+        throw new Error('test_setitem_blocked');
       return nativeSetItem.call(this, key, value);
     };
   });
   await expect(page.locator('#wzStickyCta a[href="/anfrage.html"]')).toBeVisible();
   await Promise.all([
     page.waitForURL(`${baseURL}/anfrage.html`, { waitUntil: 'domcontentloaded' }),
-    page.locator('#wzStickyCta a[href="/anfrage.html"]').click()
+    page.locator('#wzStickyCta a[href="/anfrage.html"]').click(),
   ]);
   await expect(page.locator('#leadHandoffBanner')).toHaveCount(0);
   await expect(page.locator('.step.active')).toHaveAttribute('data-step', '0');
   expect(await page.evaluate(() => sessionStorage.getItem('hero_kv_lead'))).toBeNull();
 });
 
-test('O4 Cross-Worktree E2E: echter CTA-Klick mit Key und direkter Aufruf ohne Key', async ({ page }) => {
-  test.skip(!fs.existsSync(path.join(LANE_A_ROOT, 'anfrage.html')), 'Lane-A-Worktree für Cross-E2E fehlt');
+test('O4 Cross-Worktree E2E: echter CTA-Klick mit Key und direkter Aufruf ohne Key', async ({
+  page,
+}) => {
+  test.skip(
+    !fs.existsSync(path.join(LANE_A_ROOT, 'anfrage.html')),
+    'Lane-A-Worktree für Cross-E2E fehlt'
+  );
   await installLocalConsent(page);
   await page.setViewportSize({ width: 375, height: 812 });
-  await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?theme=dark`, { waitUntil: 'domcontentloaded' });
+  await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?theme=dark`, {
+    waitUntil: 'domcontentloaded',
+  });
   await acceptConsent(page);
   await page.waitForFunction(() => typeof KV_STATE !== 'undefined' && KV_STATE.last);
   await page.setViewportSize({ width: 1200, height: 812 });
   await Promise.all([
     page.waitForURL(`${baseURL}/anfrage.html`, { waitUntil: 'domcontentloaded' }),
-    page.locator('#wzStickyCta a[href="/anfrage.html"]').click()
+    page.locator('#wzStickyCta a[href="/anfrage.html"]').click(),
   ]);
   await page.setViewportSize({ width: 375, height: 812 });
-  await expect(page.locator('#leadHandoffBanner')).toContainText('ohne deine Einkommensangabe gerechnet');
-  await expect(page.locator('#leadHandoffBanner')).toContainText('Quelle: Kostenvergleich Wärmepumpe.');
+  await expect(page.locator('#leadHandoffBanner')).toContainText(
+    'ohne deine Einkommensangabe gerechnet'
+  );
+  await expect(page.locator('#leadHandoffBanner')).toContainText(
+    'Quelle: Kostenvergleich Wärmepumpe.'
+  );
   expect(await page.evaluate(() => sessionStorage.getItem('hero_kv_lead'))).toBeNull();
-  expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth
+    )
+  ).toBe(0);
 
   await page.goto(`${baseURL}/anfrage.html`, { waitUntil: 'domcontentloaded' });
   await expect(page.locator('#leadHandoffBanner')).toHaveCount(0);
