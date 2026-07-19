@@ -1738,7 +1738,7 @@ async function calculateFoerder() {
   const selbstWE = parseInt(document.getElementById('selbstnutzung').value);
   const heizung = document.getElementById('heizung').value;
   const einkommen = document.getElementById('einkommen').value;
-  const gemeinde = document.getElementById('gemeinde').value;
+  const gemeinde = document.getElementById('gemeinde')?.value || '';
   const selectedPackage = foerderGetSelectedPackage();
   const wpTyp = selectedPackage.klasse;
   foerderMarke = selectedPackage.marke;
