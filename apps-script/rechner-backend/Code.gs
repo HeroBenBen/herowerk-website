@@ -27,6 +27,7 @@ function doGet(e) {
     if (action === 'preise') return json_(preise_(params));
     if (action === 'kostenvergleich') return json_(kostenvergleich_(params));
     if (action === 'kv_bootstrap') return json_(kvBootstrap_(params));
+    if (action === 'fv_plaetze') return json_(fvPlaetze_());
     return json_(health_());
   } catch (err) {
     return json_({ error: true, message: err && err.message ? err.message : String(err), service: SERVICE_NAME, ready: false });
@@ -881,6 +882,28 @@ function readKv_(ss, name) {
   const values = sh.getDataRange().getValues();
   const out = {};
   for (let i = 1; i < values.length; i++) if (values[i][0] !== '') out[String(values[i][0])] = values[i][1];
+  return out;
+}
+// Fördervorschuss-Plätze (GF-Auftrag 23.07.2026): liest das Blatt "Fördervorschuss"
+// (schluessel/wert: gesamt, belegt) und liefert frei = gesamt - belegt. Gepflegt wird
+// nur die Zelle "belegt"; die Website zieht nach Cache-Ablauf nach. Fail-closed:
+// ohne konsistente Zahlen frei = null, nie ein Ersatzwert.
+function fvPlaetze_() {
+  const cache = CacheService.getScriptCache();
+  const cached = cache.get('fvplaetze:v1');
+  if (cached) return JSON.parse(cached);
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const out = { gesamt: null, frei: null };
+  if (ss.getSheetByName('Fördervorschuss')) {
+    const kv = readKv_(ss, 'Fördervorschuss');
+    const gesamt = num_(kv.gesamt, NaN);
+    const belegt = num_(kv.belegt, NaN);
+    if (isFinite(gesamt) && isFinite(belegt) && gesamt > 0 && belegt >= 0 && belegt <= gesamt) {
+      out.gesamt = gesamt;
+      out.frei = gesamt - belegt;
+    }
+  }
+  cache.put('fvplaetze:v1', JSON.stringify(out), CACHE_TTL_SECONDS);
   return out;
 }
 function getPrices_(marke) {

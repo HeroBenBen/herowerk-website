@@ -2184,3 +2184,34 @@ if (document.readyState === 'loading') {
 } else {
   hwApplyFoerderHandoff();
 }
+
+// ===== FÖRDERVORSCHUSS-PLÄTZE (GF-Auftrag 23.07.2026) =====
+// Zeigt freie Plätze aus dem Blatt "Fördervorschuss" (Route action=fv_plaetze,
+// frei = gesamt - belegt, Cache serverseitig). Fail-closed: ohne gültige Zahl
+// bleibt die Anzeige verborgen und der statische Seitentext trägt allein.
+async function fvPlaetzeLoad() {
+  const el = document.getElementById('fvPlaetzeAnzeige');
+  if (!el) return;
+  try {
+    const response = await fetch(RECHNER_API + '?action=fv_plaetze&origin=https://herowerk.de');
+    if (!response.ok) throw new Error(response.status);
+    const data = await response.json();
+    const frei =
+      data && typeof data.frei === 'number' && Number.isFinite(data.frei) ? data.frei : null;
+    if (frei === null || frei < 0) return;
+    const gesamt =
+      data && typeof data.gesamt === 'number' && Number.isFinite(data.gesamt) ? data.gesamt : null;
+    el.textContent =
+      frei > 0
+        ? 'Freie Fördervorschuss-Plätze aktuell: ' + frei + (gesamt ? ' von ' + gesamt : '') + '.'
+        : 'Aktuell sind alle Fördervorschuss-Plätze vergeben; Plätze rücken nach. Frag gern trotzdem an.';
+    el.style.display = '';
+  } catch (e) {
+    console.info('FV-Plätze nicht verfügbar, Anzeige bleibt aus', e);
+  }
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', fvPlaetzeLoad);
+} else {
+  fvPlaetzeLoad();
+}
