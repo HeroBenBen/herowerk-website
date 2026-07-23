@@ -143,7 +143,11 @@ function catalogResult_(item, priceRows) {
   // (auch XL/XXL mit gemischter WE-Foerderung). eigenanteil = ohne proKlima (Hauptwert,
   // standortunabhaengig); eigenanteilProklima = mit proKlima (nur als 'moeglich'-Hinweis, < eigen).
   const pr = (priceRows || []).filter(function (r) { return r.brutto === item.brutto; })[0];
-  const eigen = pr ? pr.eigen : Math.max(0, item.brutto - Math.round(Math.min(item.brutto, 30000) * 0.70));
+  // FAIL-CLOSED (P-16, 23.07.2026): Ohne Preistafel-Treffer (Preisquellen-Divergenz) wird KEIN
+  // Eigenanteil ausgewiesen (null); der Aufrufer (renderBrandCard) zeigt dann "auf Anfrage".
+  // Die fruehere Notrechnung brutto - ROUND(MIN(brutto;30000)*0,70) war Vor-Reform-Regelwerk
+  // und haette bei jeder kuenftigen Divergenz still falsche Zahlen geliefert.
+  const eigen = pr ? pr.eigen : null;
   const eigenProklima = pr && pr.proklima > 0 && pr.proklima < pr.eigen ? pr.proklima : null;
   return {
     deckt: true,
@@ -221,10 +225,14 @@ function einkommensbonusPct_(einkommenNorm, kind, f) {
   return 0;
 }
 
-function foerderFaehigeKostenGesamt_(we, f) {
-  if (we <= 1) return getNum_(f, 'foerderfaehig_we1', 30000);
-  if (we <= 6) return getNum_(f, 'foerderfaehig_we1', 30000) + (we - 1) * getNum_(f, 'foerderfaehig_we2bis6', 15000);
-  return getNum_(f, 'foerderfaehig_we1', 30000) + 5 * getNum_(f, 'foerderfaehig_we2bis6', 15000) + (we - 6) * getNum_(f, 'foerderfaehig_we7plus', 8000);
+// WE-Staffel-Summe (Kanon 1.4): erste WE = ersteWE (Reform: Perioden-Grenze, nur sie sinkt per
+// Degression) bzw. ohne dritten Parameter der Alt-Wert aus Foerder_Parameter; WE 2-6 je 15.000,
+// ab WE 7 je 8.000, reform-unveraendert.
+function foerderFaehigeKostenGesamt_(we, f, ersteWE) {
+  const g1 = ersteWE !== undefined ? ersteWE : getNum_(f, 'foerderfaehig_we1', 30000);
+  if (we <= 1) return g1;
+  if (we <= 6) return g1 + (we - 1) * getNum_(f, 'foerderfaehig_we2bis6', 15000);
+  return g1 + 5 * getNum_(f, 'foerderfaehig_we2bis6', 15000) + (we - 6) * getNum_(f, 'foerderfaehig_we7plus', 8000);
 }
 
 /**
@@ -285,9 +293,10 @@ function foerderCalc_(p, f, heute, periodenQuelle) {
     satzSelbst = Math.min(satzSelbst, getNum_(f, 'reform_deckel_pct', 80));
     // Vermietete WE: nur Grundförderung (Kanon A1 [abgeleitet], W-4-Vorbehalt).
     satzVermietet = grundPct;
-    // Bemessungsgrenze der ERSTEN Wohneinheit. Kanon A2: für weitere WE ist KEINE Staffel belegt ->
-    // keine erfundenen Zahlen, konservativ die Grenze der ersten WE + Hinweis auf die projektgenaue Rechnung.
-    foerderFaehigGesamt = per.grenze;
+    // Bemessungsgrenze nach WE-Staffel (Kanon 1.4 / K-1.1; GF-Entscheid E1=A, 23.07.2026): erste WE =
+    // Perioden-Grenze (die Degression trifft NUR die erste WE), WE 2-6 je 15.000, ab WE 7 je 8.000,
+    // reform-unveraendert. Ersetzt die fruehere konservative Ein-WE-Naeherung (Kanon-A2-Stand vor K-1).
+    foerderFaehigGesamt = foerderFaehigeKostenGesamt_(we, f, per.grenze);
     if (we > 1) hinweise.push('Bei mehreren Wohneinheiten gelten gestaffelte Grenzen je Wohneinheit. Wir rechnen dein Projekt genau durch.');
     if (per.ueberHorizont) hinweise.push('Für Anträge nach dem 31.07.2029 stehen die Fördersätze noch nicht fest. Wir rechnen dein Projekt genau durch.');
     bausteine = ['Grundförderung ' + grundPct + '%'];
@@ -295,12 +304,38 @@ function foerderCalc_(p, f, heute, periodenQuelle) {
     if (selbstWE > 0 && einkommensbonusPct > 0) bausteine.splice(1, 0, 'Einkommensbonus +' + einkommensbonusPct + '%');
   }
 
-  // --- Zuschuss-Rechnung: Struktur in beiden Perioden identisch, nur die Parameter unterscheiden sich.
-  const foerderProWE = foerderFaehigGesamt / we;
-  const kostenProWE = Math.min(foerderProWE, preis / we);
+  // --- Zuschuss-Rechnung.
+  // REFORM (GF-Entscheid E1=A, 23.07.2026): Die GRENZE gilt je WE einzeln (Kanon 1.4), die Kosten
+  // verteilen sich gleichmaessig (preis/we). Die hoechste Grenze (erste WE) gehoert der selbst-
+  // genutzten WE des Antragstellers (kundenguenstig; Boni sind Selbstnutzer-gebunden). Rundung
+  // EINMAL je Topf, damit der we=1-Pfad ziffer-identisch zum Bestand bleibt (tests/we_staffel).
+  // ALT: wortgleich der historische Rechenweg (Mittelung). Alt ist seit 21.07.2026 nicht mehr
+  // beantragbar (Option B, 19.07.); der Zweig konserviert die damalige Live-Logik fuer
+  // Kostenvergleich und Regressions-Beweis (C-R1 bis C-R3) und trifft KEINE Rechts-Aussage.
   const vermieteteWE = we - selbstWE;
-  const zuschussSelbst = selbstWE > 0 ? Math.round(kostenProWE * (satzSelbst / 100)) : 0;
-  const zuschussVermietet = vermieteteWE > 0 ? Math.round(kostenProWE * (satzVermietet / 100) * vermieteteWE) : 0;
+  let zuschussSelbst, zuschussVermietet, bemessungsBasis;
+  if (per.reform) {
+    const grenzeWE2bis6 = getNum_(f, 'foerderfaehig_we2bis6', 15000);
+    const grenzeWE7plus = getNum_(f, 'foerderfaehig_we7plus', 8000);
+    const kostenJeWE = preis / we;
+    let basisSelbst = 0;
+    let basisVermietet = 0;
+    for (let i = 0; i < we; i++) {
+      const grenzeWE = i === 0 ? per.grenze : (i < 6 ? grenzeWE2bis6 : grenzeWE7plus);
+      const basisWE = Math.min(grenzeWE, kostenJeWE);
+      if (i < selbstWE) basisSelbst += basisWE;
+      else basisVermietet += basisWE;
+    }
+    bemessungsBasis = basisSelbst + basisVermietet;
+    zuschussSelbst = selbstWE > 0 ? Math.round(basisSelbst * (satzSelbst / 100)) : 0;
+    zuschussVermietet = vermieteteWE > 0 ? Math.round(basisVermietet * (satzVermietet / 100)) : 0;
+  } else {
+    const foerderProWE = foerderFaehigGesamt / we;
+    const kostenProWE = Math.min(foerderProWE, preis / we);
+    bemessungsBasis = kostenProWE * we;
+    zuschussSelbst = selbstWE > 0 ? Math.round(kostenProWE * (satzSelbst / 100)) : 0;
+    zuschussVermietet = vermieteteWE > 0 ? Math.round(kostenProWE * (satzVermietet / 100) * vermieteteWE) : 0;
+  }
   const zuschussGesamt = zuschussSelbst + zuschussVermietet;
 
   // --- proKlima (Kanon 1.3, primärquellen-verifiziert).
@@ -351,6 +386,7 @@ function foerderCalc_(p, f, heute, periodenQuelle) {
     periode: per.id,
     periodeLabel: per.label,
     grenze: foerderFaehigGesamt,
+    bemessungsBasis: bemessungsBasis,
     einkommensbonusPct: selbstWE > 0 ? einkommensbonusPct : 0,
     hinweis: hinweise.join(' '),
     proklimaGekappt: proklimaGekappt

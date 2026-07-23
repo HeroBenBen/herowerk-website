@@ -365,18 +365,20 @@ pruefe('C-15', 'Reform h2-2026 | vermietet = nur Grundförderung 30 %', foerderC
   bausteine: ['Grundförderung 30%'],
 });
 
-// C-16 | Reform h2-2026, 2 WE (1 selbst + 1 vermietet): Grenze der ERSTEN WE, keine erfundene Staffel (Kanon A2).
-// Rechenweg: ffk gesamt = 28.000 (Grenze 1. WE). ffk/WE = 14.000. Basis/WE = min(14.000; 34.510/2 = 17.255) = 14.000.
-// selbst: 30 + 16 + 40 = 86 -> 80 -> round(14.000 × 0,80) = 11.200.
-// vermietet: 30 -> round(14.000 × 0,30 × 1) = 4.200. Summe = 15.400.
-// Eigenanteil = 34.510 - 15.400 = 19.110. effektiv = round(15.400/34.510×100) = round(44,62) = 45.
-// Pflicht: Hinweis auf die projektgenaue Rechnung (E-08).
-pruefe('C-16', 'Reform h2-2026 | 2 WE | Grenze 1. WE + Mehr-WE-Hinweis', foerderCalc_(p({ we: '2', selbstWE: '1', einkommen: 'bis30', preis: 34510 }), F, d('2026-08-01')), {
+// C-16 | Reform h2-2026, 2 WE (1 selbst + 1 vermietet): echte WE-Staffel je WE (Kanon 1.4 / K-1.1,
+// GF-Entscheid E1=A vom 23.07.2026; ersetzt die fruehere konservative Ein-WE-Naeherung).
+// Rechenweg: Kosten je WE = 34.510/2 = 17.255. WE1 (selbst): min(28.000; 17.255) = 17.255 ->
+// round(17.255 × 0,80) = 13.804. WE2 (vermietet): min(15.000; 17.255) = 15.000 -> round(15.000 × 0,30) = 4.500.
+// Summe = 18.304. grenze = 28.000 + 15.000 = 43.000. Eigenanteil = 34.510 - 18.304 = 16.206.
+// effektiv = round(18.304/34.510×100) = round(53,04) = 53.
+// Pflicht: Hinweis auf die projektgenaue Rechnung (E-08) bleibt.
+pruefe('C-16', 'Reform h2-2026 | 2 WE | echte WE-Staffel + Mehr-WE-Hinweis', foerderCalc_(p({ we: '2', selbstWE: '1', einkommen: 'bis30', preis: 34510 }), F, d('2026-08-01')), {
   kfwSatz: 80,
-  zuschussGesamt: 15400,
-  eigenanteil: 19110,
-  effektivSatz: 45,
-  grenze: 28000,
+  zuschussGesamt: 18304,
+  eigenanteil: 16206,
+  effektivSatz: 53,
+  grenze: 43000,
+  bemessungsBasis: 32255,
   hinweis: 'Bei mehreren Wohneinheiten gelten gestaffelte Grenzen je Wohneinheit. Wir rechnen dein Projekt genau durch.',
 });
 
@@ -577,7 +579,9 @@ pruefe('C-28', 'proKlima | explizites J erhält Alt-Fähigkeit', foerderCalc_(p(
 {
   const out = foerderCalc_(p({ einkommen: 'bis30', preis: 34510 }), F, d('2026-08-01'));
   const bestand = ['kfwSatz', 'zuschussGesamt', 'proklimaZuschuss', 'eigenanteil', 'effektivSatz', 'preis', 'klimaBonus', 'bausteine'];
-  const neu = ['periode', 'periodeLabel', 'grenze', 'einkommensbonusPct', 'hinweis', 'proklimaGekappt'];
+  // bemessungsBasis: additiv seit 23.07.2026 (E1=A) — tatsaechlich angesetzte Kosten-Summe ueber
+  // alle WE (Σ min(Grenze je WE; Kosten je WE)); Konsument: konfFoerderung_ (basis_pro_we).
+  const neu = ['periode', 'periodeLabel', 'grenze', 'bemessungsBasis', 'einkommensbonusPct', 'hinweis', 'proklimaGekappt'];
   const keys = Object.keys(out).sort();
   pruefe('C-21', 'Response-Vertrag: Bestand + additive Felder, nichts sonst', {
     fehlendeBestandsfelder: bestand.filter((k) => !(k in out)),

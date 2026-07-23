@@ -675,9 +675,15 @@ function renderBrandCard(key, label, brand, bedarf) {
       <div class="fr-row"><span>Auslegung</span><span class="fr-val">im Vor-Ort-Termin</span></div>
     </button>`;
   }
+  // FAIL-CLOSED (P-16): Ohne Preistafel-Treffer liefert das Backend eigenanteil = null -> "auf
+  // Anfrage" statt einer stillen Notrechnung oder "ab 0 EUR".
+  const eigenSatz =
+    brand.eigenanteil == null
+      ? '<div class="fr-satz" style="font-size:24px;line-height:1.2;">Preis auf Anfrage</div><div class="fr-label" style="margin-bottom:0;">Eigenanteil im Vor-Ort-Termin</div>'
+      : `<div class="fr-satz" style="font-size:40px;">ab ${formatEuro(brand.eigenanteil)}</div><div class="fr-label" style="margin-bottom:0;">geschätzter Eigenanteil nach max. Förderung (80 %)*</div>`;
   return `<button type="button" class="${cls}" onclick="wizSelectMarke('${key}')" style="text-align:left;font:inherit;">
     ${head}
-    <div class="wiz-brand-satz"><div class="fr-satz" style="font-size:40px;">ab ${formatEuro(brand.eigenanteil)}</div><div class="fr-label" style="margin-bottom:0;">geschätzter Eigenanteil nach max. Förderung (80 %)*</div></div>
+    <div class="wiz-brand-satz">${eigenSatz}</div>
     <div class="fr-row"><span>Empfohlenes Modell</span><span class="fr-val">${modellZweizeilig(brand.modell)}</span></div>
     <div class="fr-row"><span>Deckt deinen Bedarf</span><span class="fr-val">${formatKw(bedarf)} kW${brand.kaskade ? ' · Kaskade' : ''} ✓</span></div>
     <div class="fr-row"><span>Brutto-Richtpreis vor Förderung</span><span class="fr-val">ab ${formatEuro(brand.brutto)}</span></div>
