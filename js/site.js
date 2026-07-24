@@ -730,8 +730,8 @@ function wizDemo() {
       wolf: {
         deckt: true,
         modell: 'Wolf CHA-10',
-        brutto: 33721,
-        eigenanteil: 11321,
+        brutto: 35349,
+        eigenanteil: 12949,
         kaskade: false,
       },
       vaillant: {
@@ -872,10 +872,10 @@ let paPrices = { wolf: [], vaillant: [] };
 const PA_KLASSEN = ['s', 'm', 'l', 'xl', 'xxl'];
 const FOERDER_PACKAGE_FALLBACK = {
   wolf: [
-    { klasse: 's', modell: 'Wolf CHA-07', kw: '5-7 kW', brutto: 29568 },
-    { klasse: 'm', modell: 'Wolf CHA-10', kw: '9-12 kW', brutto: 33721 },
-    { klasse: 'l', modell: 'Wolf CHA-16/20', kw: '14-16 kW', brutto: 41360 },
-    { klasse: 'xl', modell: 'Wolf CHA-20/24', kw: '18-24 kW', brutto: 48972 },
+    { klasse: 's', modell: 'Wolf CHA-07', kw: '5-7 kW', brutto: 30026 },
+    { klasse: 'm', modell: 'Wolf CHA-10', kw: '9-12 kW', brutto: 35349 },
+    { klasse: 'l', modell: 'Wolf CHA-16/20', kw: '14-16 kW', brutto: 41718 },
+    { klasse: 'xl', modell: 'Wolf CHA-20/24', kw: '18-24 kW', brutto: 48815 },
     { klasse: 'xxl', modell: '2× Wolf CHA-16', kw: '32 kW', brutto: 89419 },
   ],
   vaillant: [
@@ -1099,9 +1099,9 @@ const paDataFallback = [
     icon: '<svg width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 4L4 14h3v12h18V14h3L16 4z"/><rect x="13" y="19" width="6" height="7"/></svg>',
     img: 'cha-sanierung.jpg',
     desc: 'Gut gedämmtes Haus mit niedrigem Wärmebedarf',
-    preis: 29750,
-    eigen: 7350,
-    info: 'Richtpreis: ab 29.750 € brutto · KfW: bis -22.400 €',
+    preis: 30026,
+    eigen: 7626,
+    info: 'Richtpreis: ab 30.026 € brutto · KfW: bis -22.400 €',
     specs: [
       ['Heizleistung A-7/W35', '2,4-6,8 kW'],
       ['Heizstab (optional)', '9 kW'],
@@ -1126,9 +1126,9 @@ const paDataFallback = [
     icon: '<svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 3L3 14h3v14h20V14h3L16 3z"/><rect x="12" y="18" width="8" height="10"/></svg>',
     img: 'cha-neubau-dunkel.jpg',
     desc: 'Der Klassiker. Für die meisten Einfamilienhäuser',
-    preis: 34510,
-    eigen: 12110,
-    info: 'Richtpreis: ab 34.510 € brutto · KfW: bis -22.400 €',
+    preis: 35349,
+    eigen: 12949,
+    info: 'Richtpreis: ab 35.349 € brutto · KfW: bis -22.400 €',
     specs: [
       ['Heizleistung A-7/W35', '2,3-9,8 kW'],
       ['Heizstab (optional)', '9 kW'],
@@ -1153,9 +1153,9 @@ const paDataFallback = [
     icon: '<svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 3L3 16h3v16h24V16h3L18 3z"/><rect x="10" y="19" width="6" height="13"/><rect x="20" y="12" width="5" height="5"/><rect x="20" y="22" width="6" height="10"/></svg>',
     img: 'cha-komfort-neubau.jpg',
     desc: 'Für größere Häuser mit höherem Wärmebedarf',
-    preis: 45220,
-    eigen: 22820,
-    info: 'Richtpreis: ab 45.220 € brutto · KfW: bis -22.400 €',
+    preis: 41718,
+    eigen: 19318,
+    info: 'Richtpreis: ab 41.718 € brutto · KfW: bis -22.400 €',
     specs: [
       ['Heizleistung A-7/W35', '3,7-16,7 kW'],
       ['Heizstab (optional)', '9 kW'],
@@ -1180,9 +1180,9 @@ const paDataFallback = [
     icon: '<svg width="38" height="38" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 3L3 17h3v19h28V17h3L20 3z"/><line x1="20" y1="17" x2="20" y2="36"/><rect x="8" y="22" width="6" height="10"/><rect x="26" y="22" width="6" height="10"/></svg>',
     img: 'cha-mfh-saniert.jpg',
     desc: 'Zweifamilienhaus oder großes Einfamilienhaus',
-    preis: 57120,
-    eigen: 34720,
-    info: 'Richtpreis: ab 57.120 € brutto · KfW: bis -22.400 €',
+    preis: 48815,
+    eigen: 24789,
+    info: 'Richtpreis: ab 48.815 € brutto · KfW: bis -24.026 €',
     specs: [
       ['Heizleistung A-7/W35', '3,7-19,6 kW'],
       ['Heizstab (optional)', '9 kW'],
@@ -1208,11 +1208,11 @@ const paDataFallback = [
     icon: '<svg width="40" height="40" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="14" width="16" height="26"/><rect x="24" y="8" width="16" height="32"/><rect x="8" y="20" width="4" height="4"/><rect x="8" y="28" width="4" height="4"/><rect x="28" y="14" width="4" height="4"/><rect x="28" y="22" width="4" height="4"/><rect x="28" y="30" width="4" height="4"/><rect x="34" y="14" width="3" height="4"/><rect x="34" y="22" width="3" height="4"/></svg>',
     img: 'cha-kaskade-mfh.jpg',
     desc: 'Referenz: 6 WE MFH mit 2er-Kaskade*',
-    preis: 82223,
+    preis: 89419,
     // Mehr-WE-Projekt: Die Staffel ist nach Kanon 1.4 belegt. Ohne definierte
     // Paket-Konstellation bleibt der Eigenanteil trotzdem bewusst ohne Zahl.
     eigen: null,
-    info: 'Für die erste Wohneinheit sind 28.000 Euro förderfähig, für die zweite bis sechste Wohneinheit je 15.000 Euro, ab der siebten je 8.000 Euro. Die Grenzen der weiteren Wohneinheiten bleiben auch nach der Reform unverändert, nur die Grenze der ersten Wohneinheit sinkt. Den Eigenanteil der Kaskade rechnen wir projektgenau, weil die Paket-Konstellation nicht definiert ist.',
+    info: 'Für die erste Wohneinheit sind 28.000 Euro förderfähig, für die zweite bis sechste Wohneinheit je 15.000 Euro, ab der siebten je 8.000 Euro. Die Grenzen der weiteren Wohneinheiten bleiben auch nach der Reform unverändert, nur die Grenze der ersten Wohneinheit sinkt. Der ausgewiesene Eigenanteil ist eine Mehrfamilienhaus-Referenz mit sechs Wohneinheiten (erste selbstgenutzt, weitere vermietet); den verbindlichen Eigenanteil rechnen wir projektgenau.',
     specs: [
       ['Heizleistung A-7/W35', '33,4 kW (2× 16,7)'],
       ['Kältemittel', 'R290 (Propan, natürlich)'],
@@ -1423,7 +1423,7 @@ function paUpdateDetail(d) {
         ? (isVaillantCard
             ? 'Referenzkonfiguration: 2× Vaillant VWL 125/8.1 A Kaskade. '
             : 'Referenzkonfiguration: 6 WE MFH, 2× Wolf CHA-16/20 Kaskade. ') +
-          'Für die erste Wohneinheit sind 28.000 Euro förderfähig, für die zweite bis sechste Wohneinheit je 15.000 Euro, ab der siebten je 8.000 Euro. Die Grenzen der weiteren Wohneinheiten bleiben auch nach der Reform unverändert, nur die Grenze der ersten Wohneinheit sinkt. Den Eigenanteil der Kaskade rechnen wir projektgenau, weil die Paket-Konstellation nicht definiert ist.'
+          'Für die erste Wohneinheit sind 28.000 Euro förderfähig, für die zweite bis sechste Wohneinheit je 15.000 Euro, ab der siebten je 8.000 Euro. Die Grenzen der weiteren Wohneinheiten bleiben auch nach der Reform unverändert, nur die Grenze der ersten Wohneinheit sinkt. Der ausgewiesene Eigenanteil ist eine Mehrfamilienhaus-Referenz mit sechs Wohneinheiten (erste selbstgenutzt, weitere vermietet); den verbindlichen Eigenanteil rechnen wir projektgenau.'
         : 'Für die erste Wohneinheit sind 28.000 Euro förderfähig, für die zweite bis sechste Wohneinheit je 15.000 Euro, ab der siebten je 8.000 Euro. Die Grenzen der weiteren Wohneinheiten bleiben auch nach der Reform unverändert, nur die Grenze der ersten Wohneinheit sinkt. Für vermietete Wohneinheiten gilt die Grundförderung 30 Prozent.';
       contextHint = `<div style="color:var(--bernstein);font-size:11px;font-style:italic;margin-top:6px;padding:8px;background:rgba(232,168,56,0.08);border-radius:6px;">${referenceText}</div>`;
     }
@@ -2183,4 +2183,35 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', hwApplyFoerderHandoff);
 } else {
   hwApplyFoerderHandoff();
+}
+
+// ===== FÖRDERVORSCHUSS-PLÄTZE (GF-Auftrag 23.07.2026) =====
+// Zeigt freie Plätze aus dem Blatt "Fördervorschuss" (Route action=fv_plaetze,
+// frei = gesamt - belegt, Cache serverseitig). Fail-closed: ohne gültige Zahl
+// bleibt die Anzeige verborgen und der statische Seitentext trägt allein.
+async function fvPlaetzeLoad() {
+  const el = document.getElementById('fvPlaetzeAnzeige');
+  if (!el) return;
+  try {
+    const response = await fetch(RECHNER_API + '?action=fv_plaetze&origin=https://herowerk.de');
+    if (!response.ok) throw new Error(response.status);
+    const data = await response.json();
+    const frei =
+      data && typeof data.frei === 'number' && Number.isFinite(data.frei) ? data.frei : null;
+    if (frei === null || frei < 0) return;
+    const gesamt =
+      data && typeof data.gesamt === 'number' && Number.isFinite(data.gesamt) ? data.gesamt : null;
+    el.textContent =
+      frei > 0
+        ? 'Freie Fördervorschuss-Plätze aktuell: ' + frei + (gesamt ? ' von ' + gesamt : '') + '.'
+        : 'Aktuell sind alle Fördervorschuss-Plätze vergeben; Plätze rücken nach. Frag gern trotzdem an.';
+    el.style.display = '';
+  } catch (e) {
+    console.info('FV-Plätze nicht verfügbar, Anzeige bleibt aus', e);
+  }
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', fvPlaetzeLoad);
+} else {
+  fvPlaetzeLoad();
 }
