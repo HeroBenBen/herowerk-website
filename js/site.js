@@ -1212,7 +1212,7 @@ const paDataFallback = [
     // Mehr-WE-Projekt: Die Staffel ist nach Kanon 1.4 belegt. Ohne definierte
     // Paket-Konstellation bleibt der Eigenanteil trotzdem bewusst ohne Zahl.
     eigen: null,
-    info: 'Für die erste Wohneinheit sind 28.000 Euro förderfähig, für die zweite bis sechste Wohneinheit je 15.000 Euro, ab der siebten je 8.000 Euro. Die Grenzen der weiteren Wohneinheiten bleiben auch nach der Reform unverändert, nur die Grenze der ersten Wohneinheit sinkt. Den Eigenanteil der Kaskade rechnen wir projektgenau, weil die Paket-Konstellation nicht definiert ist.',
+    info: 'Für die erste Wohneinheit sind 28.000 Euro förderfähig, für die zweite bis sechste Wohneinheit je 15.000 Euro, ab der siebten je 8.000 Euro. Die Grenzen der weiteren Wohneinheiten bleiben auch nach der Reform unverändert, nur die Grenze der ersten Wohneinheit sinkt. Der ausgewiesene Eigenanteil ist eine Mehrfamilienhaus-Referenz mit sechs Wohneinheiten (erste selbstgenutzt, weitere vermietet); den verbindlichen Eigenanteil rechnen wir projektgenau.',
     specs: [
       ['Heizleistung A-7/W35', '33,4 kW (2× 16,7)'],
       ['Kältemittel', 'R290 (Propan, natürlich)'],
@@ -1423,7 +1423,7 @@ function paUpdateDetail(d) {
         ? (isVaillantCard
             ? 'Referenzkonfiguration: 2× Vaillant VWL 125/8.1 A Kaskade. '
             : 'Referenzkonfiguration: 6 WE MFH, 2× Wolf CHA-16/20 Kaskade. ') +
-          'Für die erste Wohneinheit sind 28.000 Euro förderfähig, für die zweite bis sechste Wohneinheit je 15.000 Euro, ab der siebten je 8.000 Euro. Die Grenzen der weiteren Wohneinheiten bleiben auch nach der Reform unverändert, nur die Grenze der ersten Wohneinheit sinkt. Den Eigenanteil der Kaskade rechnen wir projektgenau, weil die Paket-Konstellation nicht definiert ist.'
+          'Für die erste Wohneinheit sind 28.000 Euro förderfähig, für die zweite bis sechste Wohneinheit je 15.000 Euro, ab der siebten je 8.000 Euro. Die Grenzen der weiteren Wohneinheiten bleiben auch nach der Reform unverändert, nur die Grenze der ersten Wohneinheit sinkt. Der ausgewiesene Eigenanteil ist eine Mehrfamilienhaus-Referenz mit sechs Wohneinheiten (erste selbstgenutzt, weitere vermietet); den verbindlichen Eigenanteil rechnen wir projektgenau.'
         : 'Für die erste Wohneinheit sind 28.000 Euro förderfähig, für die zweite bis sechste Wohneinheit je 15.000 Euro, ab der siebten je 8.000 Euro. Die Grenzen der weiteren Wohneinheiten bleiben auch nach der Reform unverändert, nur die Grenze der ersten Wohneinheit sinkt. Für vermietete Wohneinheiten gilt die Grundförderung 30 Prozent.';
       contextHint = `<div style="color:var(--bernstein);font-size:11px;font-style:italic;margin-top:6px;padding:8px;background:rgba(232,168,56,0.08);border-radius:6px;">${referenceText}</div>`;
     }
