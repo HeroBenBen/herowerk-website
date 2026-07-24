@@ -289,7 +289,8 @@
   .nav-logo{height:44px;width:auto;display:block;}
   .topnav-brand{display:inline-flex;align-items:center;}
   .topnav-actions{display:flex;gap:12px;align-items:center;}
-  .theme-toggle{background:transparent;color:var(--hero-muted);border:1px solid var(--hero-separator);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;}
+  .theme-toggle{display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;background:transparent;color:var(--hero-muted);border:1px solid var(--hero-separator);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;}
+  .theme-toggle-icon{flex:0 0 auto;}
   .theme-toggle:hover,.theme-toggle:focus-visible{color:var(--hero-white);border-color:var(--hero-accent);outline:none;}
   .nav-cta{background:#B7D900;color:#1C2B36;padding:8px 20px;border-radius:6px;font-weight:700;font-size:13px;text-decoration:none;white-space:nowrap;font-family:'Barlow',sans-serif;}
   .page-head{padding:40px 24px 28px;border-bottom:1px solid rgba(183,217,0,0.10);}
@@ -1349,6 +1350,8 @@ function wzApplyChartTheme(){
 }
 (function(){
   const KEY='hero-theme';const allowed=['dark','light'];
+  const WZ_MOON='<svg class="theme-toggle-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  const WZ_SUN='<svg class="theme-toggle-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
   const params=new URLSearchParams(window.location.search);
   const fromUrl=params.get('theme');const fromStorage=localStorage.getItem(KEY);
   const prefersLight=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches;
@@ -1356,7 +1359,7 @@ function wzApplyChartTheme(){
   function applyTheme(theme,persist){
     const next=allowed.includes(theme)?theme:'dark';
     document.documentElement.setAttribute('data-theme',next);
-    document.querySelectorAll('[data-theme-toggle]').forEach(b=>{const label=next==='dark'?'Light':'Dark';b.setAttribute('aria-label',label+'-Mode aktivieren');b.textContent=label+'-Mode';});
+    document.querySelectorAll('[data-theme-toggle]').forEach(b=>{const label=next==='dark'?'Light':'Dark';b.setAttribute('aria-label',label+'-Mode aktivieren');b.innerHTML=(next==='dark'?WZ_MOON:WZ_SUN)+'<span class="theme-toggle-label">'+label+'-Mode</span>';});
     if(persist)localStorage.setItem(KEY,next);
     wzApplyChartTheme();
   }
