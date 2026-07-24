@@ -54,7 +54,7 @@
   <!-- NAVIGATION -->
   <nav>
     <div class="nav-inner">
-      <a href="/" style="display:inline-block;"><img src="herowerk-logo-stacked.png" alt="HeroWerk, Meisterbetrieb für Wärmepumpen" class="nav-logo logo-dark" width="607" height="337" decoding="async"><img src="herowerk-logo-stacked-light.png" alt="" aria-hidden="true" class="nav-logo logo-light" width="607" height="337" decoding="async"></a>
+      <a href="/" style="display:inline-block;"><img src="herowerk-logo-stacked.png?v=v4" alt="HeroWerk, Meisterbetrieb für Wärmepumpen" class="nav-logo logo-dark" width="607" height="337" decoding="async"><img src="herowerk-logo-stacked-light.png?v=v4" alt="" aria-hidden="true" class="nav-logo logo-light" width="607" height="337" decoding="async"></a>
       <div class="nav-links">
         <a href="/" style="display:inline-flex;align-items:center;gap:5px;">Startseite</a>
         <a href="/preise">Preise</a>
@@ -122,7 +122,6 @@
           <div class="form-group"><label for="kontaktPlz">PLZ <span class="form-optional">optional</span></label><input id="kontaktPlz" type="text" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{5}" maxlength="5" placeholder="30449"></div>
           <div class="form-group"><label for="kontaktOrt">Ort <span class="form-optional">optional</span></label><input id="kontaktOrt" type="text" autocomplete="address-level2" placeholder="Hannover"></div>
         </div>
-        <div class="form-group"><label for="kontaktZeitrahmen">Zeitrahmen <span class="form-optional">optional</span></label><select id="kontaktZeitrahmen"><option value="">Wann soll es losgehen?</option><option value="3 Monate">In den nächsten 3 Monaten</option><option value="6 Monate">In den nächsten 6 Monaten</option><option value="12 Monate">In den nächsten 12 Monaten</option><option value="Unklar">Noch unklar</option></select></div>
         <div class="form-group"><label for="kontaktNachricht">Nachricht</label><textarea id="kontaktNachricht" name="nachricht" placeholder="Wobei können wir helfen?" required></textarea></div>
         <div class="form-checkbox">
           <input type="checkbox" id="kontaktDsgvo" name="dsgvo" value="zugestimmt" required>
@@ -196,10 +195,10 @@
     </a>
   </div>
 
-  <!-- W2: optionale Zusatzfelder (Adresse + Zeitrahmen) in `nachricht` einbetten,
-       BEVOR site.js den Submit übernimmt. Felder haben kein `name`-Attribut →
-       Form-Payload bleibt HubSpot-schema-konform (kein neues Property). Adresse
-       als einzeilige Zusammenfassung „Straße Nr, PLZ Ort". -->
+  <!-- W2: optionale Adressfelder in `nachricht` einbetten, BEVOR site.js den
+       Submit übernimmt. Felder haben kein `name`-Attribut → Form-Payload bleibt
+       HubSpot-schema-konform (kein neues Property). Adresse als einzeilige
+       Zusammenfassung „Straße Nr, PLZ Ort". -->
   <script>
     (function () {
       var form = document.getElementById('kontaktForm');
@@ -208,7 +207,6 @@
       var hausnr = document.getElementById('kontaktHausnr');
       var plz = document.getElementById('kontaktPlz');
       var ort = document.getElementById('kontaktOrt');
-      var zr = document.getElementById('kontaktZeitrahmen');
       var msg = document.getElementById('kontaktNachricht');
       form.addEventListener(
         'submit',
@@ -223,7 +221,6 @@
           var address = [street, city].filter(Boolean).join(', ');
           var extras = [];
           if (address) extras.push('Adresse: ' + address);
-          if (zr && zr.value) extras.push('Zeitrahmen: ' + zr.value);
           if (!extras.length) return;
           var existing = msg.value.trim();
           msg.value = extras.join(' · ') + (existing ? '\n\n' + existing : '');
