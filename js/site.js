@@ -36,6 +36,34 @@ window.addEventListener('scroll', () => {
   document.querySelector('nav')?.classList.toggle('scrolled', window.scrollY > 50);
 });
 
+// ===== AUSGLEICH FUER DIE FESTE MOBILE LEISTE =====
+// Die Leiste unten ist fixiert; der Seitenkoerper muss ihre Hoehe als
+// padding-bottom reservieren, sonst liegt Inhalt am Seitenende dauerhaft
+// darunter. Die Hoehe ist NICHT konstant: sie haengt am Textumbruch der beiden
+// Knoepfe. Messung 25.07.2026 gegen die Live-Seite: 93,78 px bei 320/360/375 px
+// (zweizeiliges "Kostenlose Beratung") gegen 73,39 px bei 390/414 px. Der fest
+// verdrahtete Ausgleich von 84 px war damit in BEIDE Richtungen falsch - unten
+// 9,78 px zu wenig (Inhalt verdeckt), oben 10,61 px zu viel (Leerraum).
+// Deshalb wird die Hoehe zur Laufzeit gelesen statt geschaetzt. Der env()-Anteil
+// der Notch-Sicherheitszone steckt bereits in der gemessenen Hoehe, weil
+// getBoundingClientRect die Innenabstaende einschliesst.
+(function syncMobileBarHeight() {
+  const root = document.documentElement;
+  const bar = document.querySelector('.mobile-bottom-bar');
+  const apply = () => {
+    // Ohne Leiste (Rechtsseiten, Funnel) oder wenn sie ausgeblendet ist:
+    // kein Reserveraum. Aufrunden, damit kein Sub-Pixel-Rest offen bleibt.
+    const hoehe = bar ? bar.getBoundingClientRect().height : 0;
+    root.style.setProperty('--mobile-bar-h', (hoehe > 0 ? Math.ceil(hoehe) : 0) + 'px');
+  };
+  apply();
+  // Umbruch aendert sich bei Drehung, Breitenwechsel und nachgeladener Schrift.
+  if (bar && typeof ResizeObserver === 'function') new ResizeObserver(apply).observe(bar);
+  window.addEventListener('resize', apply);
+  window.addEventListener('orientationchange', apply);
+  document.fonts?.ready?.then(apply);
+})();
+
 // ===== WIZARD (Dimensionierungsrechner) =====
 const wizData = {
   gemeinde: '',

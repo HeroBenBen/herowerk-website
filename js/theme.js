@@ -1,5 +1,12 @@
 (function () {
   'use strict';
+  // Sofort am <html> setzen, noch waehrend der Kopf geparst wird: die Modus-
+  // Umschalter sind reine Skript-Bedienelemente (Sinnbild und Klick-Verhalten
+  // entstehen erst hier). Ohne Skript sollen sie gar nicht erscheinen, sonst
+  // steht dort ein toter Knopf - bei schmalen Bildschirmen frisst er zusaetzlich
+  // die Breite, die das Logo braucht. Die Marke wird VOR dem ersten Bild gesetzt,
+  // deshalb entsteht kein Nachrutschen der Kopfzeile.
+  document.documentElement.classList.add('js-an');
   const KEY = 'hero-theme';
   const allowed = ['dark', 'light'];
   // Mond = aktueller Dunkel-Modus, Sonne = aktueller Hell-Modus (G3-N N-2).
@@ -11,6 +18,13 @@
   const params = new URLSearchParams(window.location.search);
   const fromUrl = params.get('theme');
   const fromStorage = localStorage.getItem(KEY);
+  // GF-Entscheid 26.07.: Dunkel bleibt fuer JEDEN Besucher der Start, auch auf
+  // dem Telefon. Der dunkle Auftritt ist der Haupt-Markenkontakt und das
+  // Unterscheidungsmerkmal; die Geraete-Einstellung darf ihn nicht abloesen,
+  // sonst bekaeme die Mehrheit die schwaechere Fassung zu sehen. Wer hell
+  // will, schaltet um - der Umschalter steht dafuer im Klappmenue.
+  // Reihenfolge deshalb unveraendert: Adresszeile, bewusste Wahl, sonst dunkel.
+  // KEIN prefers-color-scheme. Bewusst so, nicht vergessen.
   const initial = allowed.includes(fromUrl)
     ? fromUrl
     : allowed.includes(fromStorage)
