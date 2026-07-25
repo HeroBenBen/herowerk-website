@@ -37,14 +37,20 @@ for arg in "$@"; do
   esac
 done
 
-# Assets, die tatsaechlich ausgeliefert werden. Build-/Test-/Konfig-Bereiche
-# sind ausgeschlossen: sie werden von keiner HTML-Seite referenziert.
+# Assets, die ausgeliefert werden. Medien sind ab 25.07. mit drin: .htaccess
+# cacht image/webp, image/jpeg, image/png, image/svg+xml, font/woff2 und
+# video/mp4 ebenfalls ein Jahr, ein In-Place-Tausch eines Hero-Bildes wuerde
+# also denselben Fehler reproduzieren wie der Logo-Tausch am 24.07. (R14-Befund).
+# Build-, Test- und Konfig-Bereiche sind ausgeschlossen: sie werden von keiner
+# HTML-Seite referenziert.
 # bash 3.2 auf macOS kennt kein mapfile - deshalb klassisch einlesen.
 ASSETS=()
 while IFS= read -r line; do
   ASSETS+=("$line")
 done < <(
-  cd "$ROOT" && find . \( -name '*.js' -o -name '*.css' \) \
+  cd "$ROOT" && find . \( -name '*.js' -o -name '*.css' \
+      -o -name '*.png' -o -name '*.jpg' -o -name '*.jpeg' -o -name '*.webp' \
+      -o -name '*.svg' -o -name '*.mp4' -o -name '*.woff' -o -name '*.woff2' \) \
     -not -path './.git/*' \
     -not -path './node_modules/*' \
     -not -path './scripts/*' \
@@ -92,7 +98,10 @@ for rel in "${ASSETS[@]}"; do
         my $dst = $src;
         # Quote + optionaler Pfad-Praefix + exakter Asset-Pfad + optionale Alt-Version.
         # Der Praefix laesst nur ./ ../ / zu, damit Fremd-URLs nicht matchen.
-        my $n = ($dst =~ s{(["\x27])((?:\.\./|\./|/)*)\Q$rel\E(?:\?v=[0-9a-f]+)?\1}
+        # Alt-Version bewusst als [^"\x27]* statt [0-9a-f]+: sonst ist das Gate
+        # blind fuer handgesetzte Marken wie ?v=v4 oder ?v=2026-07-25 und meldet
+        # sie als "aktuell" (R14-Befund 25.07., am lebenden Objekt nachgestellt).
+        my $n = ($dst =~ s{(["\x27])((?:\.\./|\./|/)*)\Q$rel\E(?:\?v=[^"\x27]*)?\1}
                           {$1$2$rel?v=$hash$1}g);
         exit 0 if $dst eq $src;
         if ($ENV{MODE} ne "check") {

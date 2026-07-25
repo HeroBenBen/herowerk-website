@@ -7,9 +7,31 @@ document.querySelectorAll('[data-faq-runtime-answer]').forEach((el) => {
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 function toggleMenu() {
-  mobileMenu?.classList.toggle('open');
+  const offen = mobileMenu?.classList.toggle('open');
+  hamburger?.setAttribute('aria-expanded', offen ? 'true' : 'false');
 }
 hamburger?.addEventListener('click', toggleMenu);
+
+// Tastaturbedienbarkeit des Menue-Oeffners (R14-Befund 25.07., WCAG 2.1.1
+// Level A): Der Oeffner ist ein <div> ohne Rolle und ohne Tabindex, also per
+// Tastatur nicht erreichbar - auf schmalen Bildschirmen ist damit die gesamte
+// Navigation gesperrt. Attribute werden hier per Skript gesetzt statt in 30
+// HTML-Dateien, weil das Menue ohnehin nur mit JavaScript funktioniert (gleiche
+// Begruendung wie bei den Auswahlkacheln in js/theme.js).
+if (hamburger) {
+  if (!hamburger.hasAttribute('role')) hamburger.setAttribute('role', 'button');
+  if (!hamburger.hasAttribute('tabindex')) hamburger.setAttribute('tabindex', '0');
+  if (!hamburger.hasAttribute('aria-label')) hamburger.setAttribute('aria-label', 'Menü');
+  if (!hamburger.hasAttribute('aria-expanded')) hamburger.setAttribute('aria-expanded', 'false');
+  if (mobileMenu?.id && !hamburger.hasAttribute('aria-controls')) {
+    hamburger.setAttribute('aria-controls', mobileMenu.id);
+  }
+  hamburger.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    toggleMenu();
+  });
+}
 window.addEventListener('scroll', () => {
   document.querySelector('nav')?.classList.toggle('scrolled', window.scrollY > 50);
 });
@@ -2198,7 +2220,10 @@ const FV_SLOTS_MAX = 24;
 // und waren falsch. Jetzt dieselbe Quelle wie /foerdervorschuss.
 // Fail-closed: bei unplausiblen Werten bleibt der Block verborgen (kein Teil-Render).
 function fvPlaetzeHomeRender(box, frei, gesamt) {
-  if (gesamt === null || gesamt <= 0 || frei > gesamt) return;
+  // Ganzzahl-Gate (R14-Befund 25.07.): Number.isFinite laesst 12.5 durch, was
+  // 13 Punkte zeichnen und "1.5 von 12.5 frei" anzeigen wuerde.
+  if (!Number.isInteger(frei) || !Number.isInteger(gesamt)) return;
+  if (gesamt <= 0 || frei > gesamt) return;
   const belegt = gesamt - frei;
 
   const count = box.querySelector('#fvHomeCount');
