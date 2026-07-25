@@ -266,6 +266,9 @@ html:not(.js-an) [data-theme-toggle] {
 }
 
 @media (max-width: 960px) {
+  /* Sichtbar von 600 bis 960 px (Tablet). Unter 600 px blendet css/site.css
+     ihn aus, dort traegt das Klappmenue den Umschalter - siehe dortigen
+     Block "TELEFON-KOPFZEILE". */
   .nav-theme-standalone {
     display: inline-flex;
     align-items: center;

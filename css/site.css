@@ -286,27 +286,15 @@ nav.scrolled {
   .mobile-phone-cta svg {
     flex: 0 0 auto;
   }
-  /* Der Umschalter in der Kopfzeile traegt dieselbe Trefferflaeche wie die
-     Rufnummer. Vorher 114 x 34 px, also unter 44 x 44 (WCAG 2.5.5) - und beim
-     Zusammenschrumpfen auf das reine Sinnbild waere er auf 40 x 34 gefallen
-     [gemessen 26.07.2026 im Alt- UND Neustand]. Beide Pillen sind jetzt gleich
-     hoch, was nebenbei die Kopfzeile ruhiger macht. */
-  /* Selektor mit Elementnamen (0,1,1): tokens.css wird NACH dieser Datei
-     geladen und setzt dort .theme-toggle mit min-height 34px und der
-     font-Kurzform. Bei gleicher Spezifitaet gewaenne die spaetere Datei
-     [gemessen 26.07.2026: min-height 44 blieb wirkungslos, Knopf 44 x 34]. */
+  /* Umschalter in der Kopfzeile (gilt ab 600 px, siehe Telefon-Regel unten).
+     Trefferflaeche 44 x 44 statt vorher 114 x 34 (WCAG 2.5.5). Selektor mit
+     Elementnamen (0,1,1), weil tokens.css NACH dieser Datei geladen wird und
+     dort .theme-toggle min-height 34px setzt; bei gleicher Spezifitaet gewaenne
+     die spaetere Datei [gemessen 26.07.2026].
+     Rangfolge: die Rufnummer ist ein Umsatzweg, der Umschalter eine
+     Voreinstellung. Deshalb neutraler Kreis mit reinem Sinnbild; Gruen und das
+     Wort bleiben allein der Rufnummer. Zugaenglicher Name im aria-label. */
   button.nav-theme-standalone {
-    /* Rangfolge in der Kopfzeile: die Rufnummer ist ein Umsatzweg, der
-       Modus-Umschalter eine Voreinstellung. Vorher bissen sie sich in beide
-       Richtungen [gemessen 26.07.2026]: im Hell-Modus war der Umschalter
-       vollflaechig gruen und damit lauter als die Rufnummer, im Dunkel-Modus
-       waren beide bis auf das Wort identisch, gleich hoch und der Umschalter
-       sogar breiter (114 gegen 100 px) - zwei gleichrangige Knoepfe.
-       Jetzt: gleiche Familie ueber die Form (beide Pille, beide 44 px hoch),
-       Rangfolge ueber Farbe und Groesse. Der Umschalter ist ein neutraler
-       44er-Kreis mit reinem Sinnbild, Gruen und das Wort bleiben allein der
-       Rufnummer. Sein zugaenglicher Name steht im aria-label aus js/theme.js,
-       geht also nicht verloren. */
     width: 44px;
     min-width: 44px;
     max-width: 44px;
@@ -321,9 +309,6 @@ nav.scrolled {
   .nav-theme-standalone .theme-toggle-label {
     display: none;
   }
-  /* Sinnbild traegt den Kreis allein, deshalb groesser als in der Text-Pille
-     (dort 14 px neben dem Wort). Die Sonne behaelt ihren Groessenausgleich
-     gegenueber dem Mond aus tokens.css. */
   .nav-theme-standalone .theme-toggle-icon {
     width: 20px;
     height: 20px;
@@ -339,11 +324,8 @@ nav.scrolled {
   }
   /* Fokusring: der geerbte Ring rgba(183,217,0,0.45) erreicht gegen den
      Kopfzeilen-Grund nur 1,19 hell und 2,96 dunkel gegen die Norm 3,0
-     (WCAG 1.4.11) [gemessen 26.07.2026]. Das war schon vorher so, wiegt hier
-     aber schwerer: der Knopf hat im Hell-Modus seine gruene Vollflaeche
-     verloren, der Ring ist jetzt der einzige Zustandshinweis auf einem sehr
-     leisen Kreis. --color-text-primary ist in beiden Modi der Gegenpol zum
-     Grund (dunkel Weiss, hell Schiefer) und traegt deshalb beidseitig. */
+     (WCAG 1.4.11) [gemessen 26.07.2026]. --color-text-primary ist in beiden
+     Modi der Gegenpol zum Grund und traegt deshalb beidseitig: 12,86 / 14,50. */
   button.nav-theme-standalone:focus-visible {
     outline: 3px solid var(--color-text-primary);
     outline-offset: 2px;
@@ -352,6 +334,37 @@ nav.scrolled {
      Seitenverhaeltnis verlieren (object-fit war fill). */
   .nav-logo {
     object-fit: contain;
+  }
+}
+
+/* ══ TELEFON-KOPFZEILE (GF-Entscheid 26.07.) ══
+   Unter 600 px traegt die Kopfzeile nur noch Marke, Rufnummer und Menue.
+   Der Umschalter steht dort im Klappmenue (im Markup jeder Seite vorhanden),
+   der freigewordene Platz geht an die Marke: 79 x 44 -> 104 x 58 px.
+   WARUM 600: gemessen an der Geraeteliste liegt zwischen dem breitesten
+   Telefon (iPhone 15 Pro Max, 430 px) und dem schmalsten Tablet (Nexus 7,
+   600 px) KEIN Geraet. Die Grenze sitzt also im Leerraum und kann kein Geraet
+   knapp verfehlen; die Regel heisst schlicht "Telefon schlank, Tablet wie
+   bisher". Bei 480 waeren Galaxy A55 und Nokia N9 auf der falschen Seite.
+   WICHTIG: Der Modus bleibt davon UNBERUEHRT. Dunkel ist fuer jeden Besucher
+   der Start, auch hier - der dunkle Auftritt ist der Haupt-Markenkontakt
+   (GF 26.07.). Kein prefers-color-scheme, siehe js/theme.js. */
+@media (max-width: 599px) {
+  /* Selektor mit Elementnamen (0,1,1): tokens.css wird NACH dieser Datei
+     geladen und stellt den Knopf dort bis 960 px auf inline-flex. Bei gleicher
+     Spezifitaet gewaenne die spaetere Datei - genau das ist beim ersten Anlauf
+     passiert [gemessen 26.07.2026: Knopf blieb bei 320 bis 599 px sichtbar]. */
+  button.nav-theme-standalone {
+    display: none;
+  }
+  .nav-logo {
+    height: 58px;
+  }
+  /* Der Umschalter im Klappmenue ist auf dem Telefon jetzt der einzige, also
+     bekommt er dieselbe Trefferflaeche wie die uebrigen Bedienelemente.
+     Vorher 34 px hoch [gemessen 26.07.2026]. */
+  .mobile-menu button.theme-toggle {
+    min-height: 44px;
   }
   /* Das Einwilligungs-Symbol des Anbieters sitzt fest unten links (10 px vom
      Rand, 26 x 26, z-index 7999999) und liegt damit UEBER der Leiste. Solange
