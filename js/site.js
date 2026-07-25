@@ -2227,11 +2227,18 @@ function fvPlaetzeHomeRender(box, frei, gesamt) {
   const belegt = gesamt - frei;
 
   const count = box.querySelector('#fvHomeCount');
+  const unit = box.querySelector('#fvHomeUnit');
   const slots = box.querySelector('#fvHomeSlots');
   const label = box.querySelector('#fvHomeLabel');
-  if (!count || !slots || !label) return;
+  if (!count || !unit || !slots || !label) return;
 
-  count.textContent = String(frei);
+  // Die grosse Zahl trägt das Kontingent, nicht die Restmenge (GF-Korrektur
+  // 25.07.): Eine alleinstehende "1" wird als Zahl gelesen, nicht als Knappheit.
+  // Erst die Relation macht sie zum Verknappungssignal - grosse Gesamtzahl,
+  // darunter die fast volle Punktereihe, darunter die Aufteilung mit Betonung
+  // auf dem, was noch zu holen ist.
+  count.textContent = String(gesamt);
+  unit.textContent = gesamt === 1 ? 'Platz' : 'Plätze';
 
   slots.textContent = '';
   if (gesamt <= FV_SLOTS_MAX) {
@@ -2242,14 +2249,25 @@ function fvPlaetzeHomeRender(box, frei, gesamt) {
     }
   }
 
+  // Reihenfolge bewusst "belegt zuerst, verfügbar zuletzt": der Blick bleibt auf
+  // dem letzten Element hängen, und hervorgehoben ist das, was noch zu holen ist.
   label.textContent = '';
+  // Grosse Zahl und Einheit sind fuer Screenreader ausgeblendet (rein optisch),
+  // deshalb traegt das Label die vollstaendige Aussage unhoerbar mit.
+  const sr = document.createElement('span');
+  sr.className = 'sr-only';
+  sr.textContent = 'Von ' + gesamt + ' Fördervorschuss-Plätzen: ';
+  label.appendChild(sr);
   if (frei > 0) {
+    label.appendChild(document.createTextNode(belegt + ' belegt · '));
     const strong = document.createElement('strong');
-    strong.textContent = frei + ' von ' + gesamt;
+    strong.textContent = frei === 1 ? 'nur noch 1 verfügbar' : 'noch ' + frei + ' verfügbar';
     label.appendChild(strong);
-    label.appendChild(document.createTextNode(' frei · ' + belegt + ' belegt'));
   } else {
-    label.textContent = 'Aktuell alle ' + gesamt + ' Plätze vergeben · Plätze rücken nach';
+    label.appendChild(document.createTextNode('alle belegt · '));
+    const strong = document.createElement('strong');
+    strong.textContent = 'Plätze rücken nach';
+    label.appendChild(strong);
   }
 
   box.hidden = false;
