@@ -3,6 +3,7 @@
 'use strict';
 const { test, expect } = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default;
+const { gotoWithConsentRejected } = require('./helpers/consent');
 
 const PAGES = [
   '/',
@@ -21,7 +22,7 @@ const THEMES = ['dark', 'light'];
 for (const path of PAGES) {
   for (const theme of THEMES) {
     test(`@a11y axe-core 0 Violations auf ${path}?theme=${theme}`, async ({ page }) => {
-      await page.goto(`${path}?theme=${theme}`, { waitUntil: 'networkidle' });
+      await gotoWithConsentRejected(page, `${path}?theme=${theme}`, { waitUntil: 'networkidle' });
       await page.evaluate('document.fonts.ready');
       await page.waitForTimeout(250);
       const results = await new AxeBuilder({ page }).analyze();

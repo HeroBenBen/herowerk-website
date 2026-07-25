@@ -7,7 +7,8 @@
     "test:smoke": "playwright test --grep @smoke",
     "test:visual": "playwright test --grep @visual",
     "baseline:generate": "node scripts/content-fidelity-check.js --generate",
-    "verify:assets": "scripts/version-assets.sh --check"
+    "verify:assets": "scripts/version-assets.sh --check",
+    "verify:consent": "node scripts/consent-integration-check.js"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",
