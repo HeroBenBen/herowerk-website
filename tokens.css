@@ -280,8 +280,13 @@ body {
 }
 
 /* Light theme needs darker accent text on sand/white surfaces, but not on
-   chartreuse-filled controls where the existing slate text remains correct. */
-[data-theme='light'] a:not(.btn-primary):not(.nav-cta):not(.pa-header-cta),
+   chartreuse-filled controls where the existing slate text remains correct.
+   .mob-bar-cta fehlte in dieser Ausnahmeliste, obwohl sie genau so ein
+   gruen gefuelltes Bedienelement ist: dadurch bekam sie #4f6000 auf
+   Chartreuse und damit 4,30:1 statt der geforderten 4,5:1 [gemessen
+   26.07.2026; Vorbestand, im Alt- und Neustand identisch]. Nachgetragen,
+   die Schiefer-Farbe liefert css/site.css. */
+[data-theme='light'] a:not(.btn-primary):not(.nav-cta):not(.pa-header-cta):not(.mob-bar-cta),
 [data-theme='light']
   [style*='var(--green)']:not([style*='background:var(--green)']):not(
     [style*='background: var(--green)']

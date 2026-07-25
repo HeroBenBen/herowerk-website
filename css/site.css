@@ -258,17 +258,47 @@ nav.scrolled {
   .hamburger {
     display: block;
   }
+  /* Rufnummer in der Kopfzeile. Seit dem Wegfall des Telefonknopfs aus der
+     festen Leiste (GF-Entscheid 26.07.) ist das der einzige dauerhaft sichtbare
+     Anrufweg, deshalb beschriftet statt nur Symbol und auf Normgroesse.
+     Vorher gemessen: 36 x 40 px, also unter dem Mindestmass von 44 x 44 px
+     (WCAG 2.5.5) und ohne sichtbaren Text. */
   .mobile-phone-cta {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+    gap: 6px;
+    flex: 0 0 auto;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(183, 217, 0, 0.35);
     background: rgba(183, 217, 0, 0.15);
     color: var(--green);
     margin-right: 8px;
     text-decoration: none;
+    white-space: nowrap;
+    font:
+      700 12px/1 'Inter',
+      sans-serif;
+  }
+  .mobile-phone-cta svg {
+    flex: 0 0 auto;
+  }
+  /* Unter 400 px reicht die Breite nicht fuer beide Beschriftungen. Dann traegt
+     der Modus-Umschalter nur noch sein Sinnbild; seinen zugaenglichen Namen
+     liefert weiterhin das aria-label aus js/theme.js, nicht der sichtbare Text.
+     Der Anrufweg behaelt seine Beschriftung, weil er Umsatz traegt und der
+     Umschalter eine reine Voreinstellung ist. */
+  @media (max-width: 400px) {
+    .nav-theme-standalone .theme-toggle-label {
+      display: none;
+    }
+    .nav-theme-standalone {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
   }
   .mobile-menu.open {
     display: flex;
@@ -331,6 +361,17 @@ nav.scrolled {
     color: var(--nacht);
     position: relative;
     overflow: hidden;
+  }
+  /* Im Hell-Modus loest --nacht zu --color-accent-on-light (#4f6000) auf. Dieser
+     Ton ist fuer Text auf HELLEM Grund gedacht (dort 6,99:1), auf der gesaettigten
+     gruenen Flaeche erreicht er aber nur 4,30:1 und verfehlt damit die Norm von
+     4,5:1 fuer 14px fett [gemessen 26.07.2026, Alt- und Neustand identisch, also
+     Vorbestand]. Alle uebrigen gruenen Knoepfe nutzen im Hell-Modus bereits
+     Schiefer und erreichen 8,93:1 (.btn-primary, .nav-cta, gemessen). Diese Leiste
+     war der einzige Ausreisser; seit sie die alleinige Aktion traegt, wird sie
+     angeglichen statt beobachtet. */
+  [data-theme='light'] .mob-bar-cta {
+    color: #1c2b36;
   }
   .mob-bar-cta::after {
     content: '';
