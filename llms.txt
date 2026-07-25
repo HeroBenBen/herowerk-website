@@ -1,0 +1,119 @@
+# HeroWerk
+
+> Meisterbetrieb für Wärmepumpen in der Region Hannover. Wir planen, liefern
+> und installieren Luft-Wasser-Wärmepumpen für Ein- und Zweifamilienhäuser,
+> übernehmen die Förderberatung und strecken die KfW-Förderung auf Wunsch vor,
+> damit Kundinnen und Kunden nicht monatelang auf die Auszahlung warten müssen.
+
+HeroWerk GmbH i.G., Region Hannover. Telefon 05131 - 50 59 750,
+E-Mail info@herowerk.de, Web https://www.herowerk.de/
+
+## Was wir machen
+
+- Komplettinstallation von Luft-Wasser-Wärmepumpen, alles aus einer Hand:
+  Heizlastberechnung, Gerät, Hydraulik, Elektro, Inbetriebnahme, Förderantrag.
+- Herstellermarken: Wolf und Vaillant.
+- Fünf Jahre Garantie auf die Anlage.
+- Von der Beauftragung bis zur Inbetriebnahme in der Regel sechs Wochen; das
+  ist ein Richtwert, kein zugesichertes Datum.
+- Zielgruppe sind Ein- und Zweifamilienhäuser, Bestand wie Neubau.
+
+## Förderung (Stand der Reform, Anträge ab 21.07.2026)
+
+Die staatliche Förderung ist ein Zuschuss der KfW nach der Bundesförderung für
+effiziente Gebäude, Einzelmaßnahmen. Sie setzt sich aus Bausteinen zusammen:
+
+- Grundförderung: 30 Prozent
+- Klimageschwindigkeitsbonus: 16 Prozent für Anträge im Zeitraum 21.07.2026
+  bis 31.01.2027; danach sinkt er halbjährlich
+- Einkommensbonus: 40 Prozent bei anrechenbarem zu versteuerndem
+  Haushaltseinkommen bis 30.000 Euro
+- Höchstsatz in Summe: 80 Prozent
+
+Der Höchstsatz von 80 Prozent ist ein Bestfall und nicht der Regelfall. Er
+setzt voraus: selbstnutzende Eigentümer, eine funktionsfähige Öl-, Kohle-,
+Gasetagen- oder Nachtspeicherheizung oder eine mindestens 20 Jahre alte Gas-
+oder Biomasseheizung, ein anrechenbares zu versteuerndes Haushaltseinkommen
+bis 30.000 Euro (bei mindestens einem minderjährigen Kind werden einmalig
+10.000 Euro abgezogen) und ein Antrag im Zeitraum 21.07.2026 bis 31.01.2027.
+
+Gerechnet wird der Prozentsatz nicht auf die Rechnungssumme, sondern auf die
+förderfähigen Kosten. Diese sind gedeckelt:
+
+- erste Wohneinheit: 28.000 Euro für Anträge vom 21.07.2026 bis 31.01.2027;
+  diese Grenze sinkt ab dem 01.02.2027 halbjährlich um jeweils 750 Euro
+- zweite bis sechste Wohneinheit: je 15.000 Euro, unverändert, sinkt nicht
+- ab der siebten Wohneinheit: je 8.000 Euro, unverändert, sinkt nicht
+
+Daraus folgt der höchstmögliche Zuschuss für die erste Wohneinheit im
+Antragszeitraum 21.07.2026 bis 31.01.2027: **22.400 Euro** (80 Prozent von
+28.000 Euro). Ein teureres Projekt erhöht den Zuschuss nicht.
+
+Die Absenkung um 750 Euro je Halbjahr betrifft ausschließlich die erste
+Wohneinheit. Die Grenzen der weiteren Wohneinheiten bleiben davon unberührt.
+
+## Fördervorschuss
+
+Die Förderung fließt nicht zum Einbau, sondern erst eine Weile danach. Wer
+diese Lücke nicht selbst überbrücken will, kann bei uns den Fördervorschuss
+nutzen: Die Anzahlung umfasst nur den Eigenanteil. Für den geförderten Teil
+gibt es eine ganz normale Endrechnung mit einem bewusst weit nach hinten
+gesetzten Zahlungsziel, sodass die Förderung bis dahin in aller Regel beim
+Kunden eingegangen ist. Kein eigener Kredit, keine Zinsen, keine Gebühr.
+
+Wichtig zur Einordnung: Der Kunde bleibt Vertragspartner von HeroWerk, nicht
+der KfW. Er beantragt die Förderung selbst und erhält sie selbst auf sein
+Konto. Wir erlassen nichts und zahlen nichts aus.
+
+Das Kontingent ist begrenzt, weil wir aus eigenen Mitteln vorfinanzieren. Wie
+viele Plätze aktuell frei sind, steht tagesaktuell auf der Startseite und auf
+https://www.herowerk.de/foerdervorschuss
+
+## Preise
+
+Preise nennen wir nicht in dieser Datei, weil sie sich mit Gerätepreisen und
+Fördersätzen ändern und hier sofort veralten würden. Die jeweils gültigen
+Richtpreise je Anlagengröße stehen auf https://www.herowerk.de/preise und
+werden aus derselben Quelle gespeist wie unser Förderrechner. Eine individuelle
+Einschätzung liefert https://www.herowerk.de/rechner in wenigen Schritten.
+
+## Seiten
+
+- [Startseite](https://www.herowerk.de/): Überblick, Richtpreis-Beispiel, Kontingent Fördervorschuss
+- [Preise](https://www.herowerk.de/preise): Richtpreise je Anlagengröße, Wolf und Vaillant
+- [Förderrechner](https://www.herowerk.de/rechner): individuelle Förderhöhe und Eigenanteil
+- [Dimensionierung](https://www.herowerk.de/dimensionierung): passende Anlagengröße in sechs Fragen
+- [Dimensionierung verstehen](https://www.herowerk.de/dimensionierung-verstehen): wie Heizlast und Auslegung zusammenhängen
+- [Förderung](https://www.herowerk.de/foerderung): Fördersätze, Boni, Voraussetzungen
+- [Förderung jetzt mitnehmen](https://www.herowerk.de/foerderung-jetzt-mitnehmen): warum ein früher Antrag mehr bringt
+- [Förderung Hannover](https://www.herowerk.de/foerderung-hannover): regionale Einordnung
+- [Fördervorschuss](https://www.herowerk.de/foerdervorschuss): Ablauf, Voraussetzungen, freie Plätze
+- [Ablauf](https://www.herowerk.de/prozess): von der Anfrage bis zur Inbetriebnahme
+- [Baubarkeitsprüfung](https://www.herowerk.de/baubarkeitspruefung): ob das Haus geeignet ist
+- [Kostenvergleich](https://www.herowerk.de/kostenvergleich-waermepumpe): Wärmepumpe gegen Gas und Öl über die Laufzeit
+- [Was eine Wärmepumpe kostet](https://www.herowerk.de/wp-kosten-hannover): Kostenbestandteile im Detail
+- [Wärmepumpe im Altbau](https://www.herowerk.de/waermepumpe-altbau): Voraussetzungen im Bestand
+- [Wärmepumpe Hannover](https://www.herowerk.de/waermepumpe-hannover): regionale Übersicht
+- [Wärmepumpenstrom](https://www.herowerk.de/waermepumpenstrom-hannover): Stromtarife und Betriebskosten
+- [Lautstärke](https://www.herowerk.de/waermepumpe-laerm): Schallwerte und Aufstellung
+- [Propan-Wärmepumpe](https://www.herowerk.de/propan-waermepumpe): Kältemittel R290 erklärt
+- [Wertsteigerung](https://www.herowerk.de/wertsteigerung-waermepumpe): Wirkung auf den Immobilienwert
+- [Gasheizung tauschen oder reparieren](https://www.herowerk.de/gasheizung-tauschen-oder-reparieren): Entscheidungshilfe
+- [Ratgeber](https://www.herowerk.de/ratgeber): alle Fachartikel
+- [Kontakt](https://www.herowerk.de/kontakt): Telefon, E-Mail, Formular
+- [Anfrage](https://www.herowerk.de/anfrage): unverbindliches Angebot anfordern
+- [Karriere](https://www.herowerk.de/karriere): offene Stellen
+- [Hinweise](https://www.herowerk.de/hinweise): Förderhinweise, Garantiebedingungen
+- [Impressum](https://www.herowerk.de/impressum)
+- [Datenschutz](https://www.herowerk.de/datenschutz)
+- [Barrierefreiheit](https://www.herowerk.de/barrierefreiheit)
+
+## Hinweise zur Nutzung dieser Angaben
+
+Alle Förderangaben geben den Stand der BEG-EM-Reform für Anträge ab dem
+21.07.2026 wieder. Fördersätze, Boni und Kostengrenzen ändern sich zu
+Stichtagen; maßgeblich ist stets die zum Antragszeitpunkt geltende Richtlinie
+sowie der Bescheid der KfW. Diese Datei ist keine Förderzusage und ersetzt
+keine individuelle Beratung.
+
+Stand: 25.07.2026

@@ -1,4 +1,38 @@
 User-agent: *
 Allow: /
 
+# KI-Crawler ausdruecklich erlaubt (GF-Entscheid E5, 23.07.2026).
+# Begruendung: Wer eine Waermepumpe plant, fragt zunehmend einen KI-Assistenten
+# statt einer Suchmaschine. Wir wollen in diesen Antworten vorkommen. Die
+# verdichteten Kernfakten fuer solche Systeme stehen in /llms.txt.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
 Sitemap: https://www.herowerk.de/sitemap.xml
