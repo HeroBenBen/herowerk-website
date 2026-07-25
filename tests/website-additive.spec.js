@@ -2,6 +2,7 @@
 'use strict';
 const { test, expect } = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default;
+const { gotoWithConsentRejected } = require('./helpers/consent');
 
 // O21: Auf einer Vercel-Preview laeuft kein PHP, deshalb liefert /api/rechner
 // (Proxy api/rechner.php) fuer action=preise und action=foerderung 404. Ohne Live-Preise
@@ -45,7 +46,7 @@ async function kvFulfillJson(route, payload) {
 }
 
 test('@smoke Theme-Toggle setzt Light- und Dark-Mode per URL/LocalStorage', async ({ page }) => {
-  await page.goto('/?theme=light');
+  await gotoWithConsentRejected(page, '/?theme=light');
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
   await page.locator('[data-theme-toggle]').filter({ visible: true }).first().click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
@@ -55,7 +56,7 @@ test('@smoke Hersteller-Vorauswahl zeigt Wolf- und Vaillant-Karten im gemeinsame
   page,
 }) => {
   await page.route(/[?&]action=preise/, (route) => kvFulfillJson(route, KV_PREISE_FIXTURE));
-  await page.goto('/preise.html?theme=dark');
+  await gotoWithConsentRejected(page, '/preise.html?theme=dark');
   // Drift-fest: prueft, dass die Live-Preis-Verdrahtung (action=preise, Single Source)
   // einen echten Eigenanteil rendert — nicht den "ab … Eigenanteil*"-Platzhalter. Kein
   // hartkodierter Sheet-Preis (der bei jeder Preisaenderung driftet).
@@ -71,7 +72,7 @@ test('@smoke Förderrechner-Paketliste nutzt Wolf und Vaillant aus der Preislist
   page,
 }) => {
   await page.route(/[?&]action=foerderung/, (route) => kvFulfillJson(route, KV_FOERDER_FIXTURE));
-  await page.goto('/foerderung.html?theme=dark');
+  await gotoWithConsentRejected(page, '/foerderung.html?theme=dark');
   await page.waitForLoadState('networkidle');
   await expect(page.locator('#foerderWpTyp optgroup')).toHaveCount(2);
   await expect(page.locator('#foerderWpTyp option')).toHaveCount(10);
@@ -93,7 +94,10 @@ test('@smoke Funnel sendet HubSpot-Form-Payload (Standard-Properties, Mock)', as
       await route.fulfill({ status: 200, contentType: 'application/json', body: '{}' });
     }
   );
-  await page.goto('/anfrage.html?utm_source=playwright&utm_medium=smoke&utm_campaign=t1-11');
+  await gotoWithConsentRejected(
+    page,
+    '/anfrage.html?utm_source=playwright&utm_medium=smoke&utm_campaign=t1-11'
+  );
   // Neuer erster Schritt: Interesse-Tor. Waermepumpe waehlen + weiter (volle WP-Strecke).
   await page.locator('.step[data-step="0"] .answer-card[data-value="Wärmepumpe"]').click();
   await page.locator('#interesseNextBtn').click();
@@ -141,7 +145,7 @@ for (const path of [
   '/hinweise.html?theme=light',
 ]) {
   test(`@a11y axe-core 0 Violations auf ${path}`, async ({ page }) => {
-    await page.goto(path, { waitUntil: 'networkidle' });
+    await gotoWithConsentRejected(page, path, { waitUntil: 'networkidle' });
     await page.evaluate('document.fonts.ready');
     await page.waitForTimeout(250);
     const results = await new AxeBuilder({ page }).analyze();
