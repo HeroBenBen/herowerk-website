@@ -55,7 +55,7 @@
   <!-- NAVIGATION -->
   <nav>
     <div class="nav-inner">
-      <a href="/" style="display:inline-block;"><img src="herowerk-logo-stacked.png?v=v4" alt="HeroWerk, Meisterbetrieb für Wärmepumpen" class="nav-logo logo-dark" width="607" height="337" decoding="async"><img src="herowerk-logo-stacked-light.png?v=v4" alt="" aria-hidden="true" class="nav-logo logo-light" width="607" height="337" decoding="async"></a>
+      <a href="/" style="display:inline-block;"><img src="herowerk-logo-stacked.png?v=3805a3a2a6" alt="HeroWerk, Meisterbetrieb für Wärmepumpen" class="nav-logo logo-dark" width="607" height="337" decoding="async"><img src="herowerk-logo-stacked-light.png?v=8c40e63d7e" alt="" aria-hidden="true" class="nav-logo logo-light" width="607" height="337" decoding="async"></a>
       <div class="nav-links">
         <a href="/" style="display:inline-flex;align-items:center;gap:5px;">Startseite</a>
         <a href="/preise">Preise</a>
@@ -110,11 +110,12 @@
       <p>Bereits umgesetzt sind unter anderem:</p>
       <ul>
         <li>durchgehende Sprachauszeichnung der Seiten in Deutsch</li>
-        <li>echte Beschriftungen an allen Formularfeldern, nicht nur graue Platzhaltertexte</li>
+        <li>Beschriftungen an den Formularfeldern statt nur grauer Platzhaltertexte; an wenigen Feldern wird die Beschriftung derzeit noch per Skript aus dem Umfeld ergänzt statt fest im Seitenquelltext zu stehen</li>
         <li>aufklappbare Bereiche als echte Schaltflächen mit Zustandsanzeige, per Tastatur bedienbar</li>
         <li>ein Hell- und ein Dunkel-Modus, umschaltbar über eine Schaltfläche in der Navigation</li>
         <li>Zoomen und Vergrößern ist auf keiner Seite gesperrt</li>
         <li>sichtbare Fokus-Markierung beim Navigieren mit der Tastatur</li>
+        <li>die Auswahlkacheln der Anfragestrecke und der Menü-Öffner auf schmalen Bildschirmen lassen sich per Tastatur ansteuern und mit Eingabe- oder Leertaste auslösen</li>
         <li>eine Hauptinhalts-Kennzeichnung, die Screenreader direkt anspringen können</li>
       </ul>
 
@@ -125,6 +126,7 @@
         <li><strong>Anfragestrecke:</strong> Der Fortschritt zwischen den Schritten wird für Screenreader noch nicht angesagt, und Fehlermeldungen sind noch nicht durchgängig mit dem betroffenen Feld verknüpft.</li>
         <li><strong>Pflichtfeld-Kennzeichnung:</strong> Pflichtfelder sind visuell erkennbar, aber noch nicht überall maschinenlesbar ausgezeichnet.</li>
         <li><strong>Hintergrundvideo auf der Startseite:</strong> Es gibt noch keine sichtbare Möglichkeit, das Video anzuhalten. Für Menschen, die auf Bewegungsreduzierung angewiesen sind, ist das eine Belastung.</li>
+        <li><strong>Abhängigkeit von JavaScript:</strong> Ein Teil der Zugänglichkeit, etwa die Tastaturbedienung der Auswahlkacheln und einzelne Feldbeschriftungen, wird beim Laden per Skript ergänzt. Ist JavaScript abgeschaltet, fehlen diese Ergänzungen. Wir ziehen sie schrittweise fest in den Seitenquelltext.</li>
         <li><strong>Farbkontraste:</strong> Einzelne Textstellen erreichen im Hell-Modus möglicherweise noch nicht die geforderten Kontrastwerte. Eine vollständige Messung beider Modi läuft.</li>
         <li><strong>Einwilligungsdialog für Cookies:</strong> Der Dialog stammt von einem externen Anbieter. Seine Tastaturbedienung prüfen wir derzeit; auf seinen inneren Aufbau haben wir nur eingeschränkt Einfluss.</li>
         <li><strong>Kostenvergleichs-Rechner:</strong> Die dortigen Diagramme geben ihre Werte noch nicht in Textform aus. Die zugrunde liegenden Zahlen stehen aber in den begleitenden Texten.</li>
@@ -138,7 +140,7 @@
         <li>Formular: <a href="/kontakt">Kontaktseite</a></li>
       </ul>
       <p>Bitte beschreiben Sie kurz, auf welcher Seite das Problem auftrat und womit Sie unterwegs waren, zum Beispiel welcher Browser und welches Hilfsmittel. Wir melden uns innerhalb von fünf Werktagen zurück.</p>
-      <p>Sollten Sie mit unserer Antwort nicht zufrieden sein, können Sie sich an die zuständige Marktüberwachungsstelle der Länder für die Barrierefreiheit von Produkten und Dienstleistungen wenden.</p>
+      <p>Sollten Sie mit unserer Antwort nicht zufrieden sein, können Sie sich nach § 21 des Barrierefreiheitsstärkungsgesetzes an die <strong>Marktüberwachungsstelle der Länder für die Barrierefreiheit von Produkten und Dienstleistungen (MLBF)</strong> wenden, Alt-Moabit 101 D, 10559 Berlin, <a href="https://www.marktueberwachung-barrierefreiheit.de" rel="noopener">www.marktueberwachung-barrierefreiheit.de</a>.</p>
 
       <h2>Wie diese Erklärung entstanden ist</h2>
       <p>Grundlage sind eine externe Prüfung der Seite vom 22.07.2026 sowie eigene Messungen mit Browser-Werkzeugen und automatisierten Tests. Diese Erklärung wurde am 25.07.2026 erstellt und wird fortgeschrieben, sobald die oben genannten Punkte erledigt sind.</p>
@@ -192,7 +194,7 @@
     </div>
   </footer>
 
-  <script src="js/site.js?v=031eedca38" defer></script>
+  <script src="js/site.js?v=80360a04da" defer></script>
 
   <!-- MOBILE BOTTOM BAR -->
   <div class="mobile-bottom-bar" role="navigation" aria-label="Mobile Schnellnavigation">
