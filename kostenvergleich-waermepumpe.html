@@ -12,6 +12,12 @@
   <!-- ============================================================== -->
   <!-- (b) Google Consent Mode v2 — Default: alles verweigert -->
   <script>
+    /* Diese Seite fuehrt eine eigene Kopie der Umschalt-Logik und wird von
+       js/theme.js nicht erreicht. Damit sie sich wie die uebrigen 25 Seiten
+       verhaelt, wird die Marke js-an hier ebenso frueh gesetzt: ohne Skript
+       stand hier sonst ein toter Umschalter ohne zugaenglichen Namen
+       [gemessen 26.07.2026: 98 x 31 px, aria-label null]. */
+    document.documentElement.classList.add('js-an');
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('consent', 'default', {
@@ -289,7 +295,11 @@
   .nav-logo{height:44px;width:auto;display:block;}
   .topnav-brand{display:inline-flex;align-items:center;}
   .topnav-actions{display:flex;gap:12px;align-items:center;}
-  .theme-toggle{display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;background:transparent;color:var(--hero-muted);border:1px solid var(--hero-separator);border-radius:999px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;}
+  /* Ohne Skript kein toter Umschalter (Sinnbild und Verhalten entstehen erst
+     im Skript unten); Marke js-an wird im Kopf gesetzt. Gleiche Regel wie in
+     tokens.css fuer die uebrigen Seiten. */
+  html:not(.js-an) [data-theme-toggle]{display:none;}
+  .theme-toggle{display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;background:transparent;color:var(--hero-muted);border:1px solid var(--hero-separator);border-radius:999px;padding:7px 14px;min-height:44px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;}
   .theme-toggle-icon{flex:0 0 auto;}
   /* Optische Groessenangleichung Sonne an Mond, siehe tokens.css (G3-N2). */
   .theme-toggle-icon--sun{transform:scale(0.83);}

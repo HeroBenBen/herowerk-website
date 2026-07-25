@@ -337,6 +337,17 @@ nav.scrolled {
     border-color: var(--color-text-primary);
     background: transparent;
   }
+  /* Fokusring: der geerbte Ring rgba(183,217,0,0.45) erreicht gegen den
+     Kopfzeilen-Grund nur 1,19 hell und 2,96 dunkel gegen die Norm 3,0
+     (WCAG 1.4.11) [gemessen 26.07.2026]. Das war schon vorher so, wiegt hier
+     aber schwerer: der Knopf hat im Hell-Modus seine gruene Vollflaeche
+     verloren, der Ring ist jetzt der einzige Zustandshinweis auf einem sehr
+     leisen Kreis. --color-text-primary ist in beiden Modi der Gegenpol zum
+     Grund (dunkel Weiss, hell Schiefer) und traegt deshalb beidseitig. */
+  button.nav-theme-standalone:focus-visible {
+    outline: 3px solid var(--color-text-primary);
+    outline-offset: 2px;
+  }
   /* Zweite Sicherung gegen Verzerrung: das Logo darf schrumpfen, aber nie sein
      Seitenverhaeltnis verlieren (object-fit war fill). */
   .nav-logo {
