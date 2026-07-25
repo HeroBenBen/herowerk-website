@@ -1201,6 +1201,16 @@ section {
   color: var(--bernstein);
   font-weight: 700;
 }
+/* Handlungsaufruf in der Kontingentkarte (GF-Entscheid 25.07.): schmaler als der
+   Haupt-Knopf im Textblock links, damit die beiden nicht um dieselbe
+   Aufmerksamkeit konkurrieren, aber direkt unter der Zahl - dort, wo der Reiz
+   entsteht. */
+.fv-badge-cta {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 11px 22px;
+  font-size: 14px;
+}
 .btn-dark {
   background: var(--nacht);
   color: var(--bernstein);

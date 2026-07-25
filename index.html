@@ -46,7 +46,7 @@
   <meta name="twitter:description" content="Wärmepumpen-Installation in der Region Hannover mit Richtpreisen, Förderung und Beratung.">
   <meta name="twitter:image" content="https://www.herowerk.de/hero-paar-terrasse.png">
   <script src="js/theme.js?v=a0a4fe03d1"></script>
-  <link rel="stylesheet" href="css/site.css?v=7a81bc3472">
+  <link rel="stylesheet" href="css/site.css?v=ca2eeb7f2d">
   <link rel="preload" href="tokens.css?v=7eafe49cef" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="tokens.css?v=7eafe49cef"></noscript>
   <script type="application/ld+json">
@@ -208,6 +208,13 @@
           <div class="fv-slots" id="fvHomeSlots" aria-hidden="true"></div>
           <div class="fv-slot-label" id="fvHomeLabel"></div>
         </div>
+        <!-- Handlungsaufruf direkt am Reiz (GF-Entscheid 25.07.): Ohne ihn muss der
+             Blick zum Textblock links zurueckwandern, um zu handeln. Bewusst
+             AUSSERHALB des fail-closed-Blocks, damit er auch dann steht, wenn die
+             Zahlen mal nicht kommen - ein Handlungsaufruf ist nie falsch. -->
+        <a href="/anfrage?fv=1" class="btn-primary fv-badge-cta" id="fvHomeCta"
+          >Platz sichern →</a
+        >
         <div class="fv-badge-note">Limitiert, wir finanzieren aus eigenen Mitteln.</div>
       </aside>
     </div>
@@ -392,7 +399,7 @@
     </div>
   </footer>
 
-  <script src="js/site.js?v=ebf6f2ccf6" defer></script>
+  <script src="js/site.js?v=289e750688" defer></script>
 
   <!-- MOBILE BOTTOM BAR -->
   <div class="mobile-bottom-bar" role="navigation" aria-label="Mobile Schnellnavigation">

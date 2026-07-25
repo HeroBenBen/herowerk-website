@@ -2270,6 +2270,11 @@ function fvPlaetzeHomeRender(box, frei, gesamt) {
     label.appendChild(strong);
   }
 
+  // Sind alle Plaetze weg, waere "Platz sichern" ein Versprechen, das wir nicht
+  // halten koennen. Der Knopf bleibt, aber sagt die Wahrheit.
+  const cta = document.getElementById('fvHomeCta');
+  if (cta) cta.textContent = frei > 0 ? 'Platz sichern →' : 'Trotzdem anfragen →';
+
   box.hidden = false;
 }
 
