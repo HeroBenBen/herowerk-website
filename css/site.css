@@ -342,9 +342,12 @@ nav.scrolled {
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
     animation: btnShimmer 2.5s ease-in-out infinite;
   }
-  /* Platz für Bottom Bar — skaliert mit Notch-Sicherheitszone (statt fixem 76px) */
+  /* Platz für Bottom Bar. --mobile-bar-h setzt js/site.js aus der TATSÄCHLICH
+     gemessenen Leistenhöhe (der Textumbruch der Knöpfe ändert sie: 94px bei
+     ≤375px, 74px ab 390px). Der calc()-Wert bleibt als Rückfall stehen, falls
+     JavaScript ausfällt — dann gilt wieder das bisherige Verhalten. */
   body {
-    padding-bottom: calc(74px + max(10px, env(safe-area-inset-bottom)));
+    padding-bottom: var(--mobile-bar-h, calc(74px + max(10px, env(safe-area-inset-bottom))));
   }
   /* Funnel-Seiten (Rechner) haben eigene Navigation → redundanten fixen Banner ausblenden */
   body.page-funnel .mobile-bottom-bar {
