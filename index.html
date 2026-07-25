@@ -28,7 +28,7 @@
   <!-- (b) consentmanager CMP (Autoblocking) Konto 104033 / CMP 173772 (live d94854dc5273c) -->
   <script type="text/javascript" data-cmp-ab="1" src="https://cdn.consentmanager.net/delivery/autoblocking/d94854dc5273c.js" data-cmp-host="a.delivery.consentmanager.net" data-cmp-cdn="cdn.consentmanager.net" data-cmp-codesrc="0"></script>
   <!-- (c) Opt-in-Loader: injiziert GA4 (G-1XT9BLBDW8) + Meta-Pixel (1348888427192043) ERST nach Consent -->
-  <script src="js/consent.js"></script>
+  <script src="js/consent.js?v=5e2ae31749"></script>
   <!-- ============================================================== -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="/favicon.ico" sizes="any" type="image/x-icon">
@@ -45,10 +45,10 @@
   <meta name="twitter:title" content="Wärmepumpe Region Hannover | HeroWerk">
   <meta name="twitter:description" content="Wärmepumpen-Installation in der Region Hannover mit Richtpreisen, Förderung und Beratung.">
   <meta name="twitter:image" content="https://www.herowerk.de/hero-paar-terrasse.png">
-  <script src="js/theme.js"></script>
-  <link rel="stylesheet" href="css/site.css">
-  <link rel="preload" href="tokens.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="tokens.css"></noscript>
+  <script src="js/theme.js?v=a0a4fe03d1"></script>
+  <link rel="stylesheet" href="css/site.css?v=11a546000e">
+  <link rel="preload" href="tokens.css?v=7eafe49cef" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="tokens.css?v=7eafe49cef"></noscript>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -199,10 +199,15 @@
         <p class="fv-disclaimer">* Fördervorschuss nur mit beauftragtem Einbau, freiem Kontingent und geprüftem Förderanspruch. <a href="/foerdervorschuss#voraussetzungen" class="fv-disclaimer-link">Voraussetzungen</a><br>** Maximalfall: Selbstnutzer, Klimabonus-Voraussetzung, Einkommen bis 30.000 Euro, Antrag im Zeitraum 21.07.2026 bis 31.01.2027, höchstens 22.400 Euro Zuschuss. <a href="#foerder-hinweis" class="fv-disclaimer-link">Alle Bedingungen</a></p>
       </div>
       <aside class="fv-badge-box" aria-label="Fördervorschuss Kontingent">
-        <div class="fv-count">12</div>
-        <div class="fv-slots" aria-hidden="true"><span class="fv-slot taken"></span><span class="fv-slot taken"></span><span class="fv-slot taken"></span><span class="fv-slot taken"></span><span class="fv-slot taken"></span><span class="fv-slot"></span><span class="fv-slot"></span><span class="fv-slot"></span><span class="fv-slot"></span><span class="fv-slot"></span><span class="fv-slot"></span><span class="fv-slot"></span></div>
-        <div class="fv-slot-label"><strong>5 von 12</strong> belegt · 7 frei</div>
-        <div class="fv-badge-note">Limitiert, wir finanzieren aus eigenen Mitteln. Verfügbar ab Q3 2026.</div>
+        <!-- Kontingent kommt live aus action=fv_plaetze (G3-N2). Fail-closed: ohne
+             gueltige Zahl bleibt der Block verborgen, der Limitiert-Hinweis traegt allein.
+             Keine statischen Zahlen im Markup - genau die waren am 25.07. falsch. -->
+        <div id="fvHomeKontingent" role="status" aria-live="polite" hidden>
+          <div class="fv-count" id="fvHomeCount" aria-hidden="true"></div>
+          <div class="fv-slots" id="fvHomeSlots" aria-hidden="true"></div>
+          <div class="fv-slot-label" id="fvHomeLabel"></div>
+        </div>
+        <div class="fv-badge-note">Limitiert, wir finanzieren aus eigenen Mitteln.</div>
       </aside>
     </div>
   </section>
@@ -385,7 +390,7 @@
     </div>
   </footer>
 
-  <script src="js/site.js" defer></script>
+  <script src="js/site.js?v=031eedca38" defer></script>
 
   <!-- MOBILE BOTTOM BAR -->
   <div class="mobile-bottom-bar" role="navigation" aria-label="Mobile Schnellnavigation">

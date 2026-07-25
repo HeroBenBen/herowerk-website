@@ -219,6 +219,15 @@ body {
 .theme-toggle-icon {
   flex: 0 0 auto;
 }
+/* Optische Groessenangleichung Mond/Sonne (G3-N2, gemessen 25.07.2026):
+   Bei identischer 14px-Box traegt der Mond 11,64px sichtbare Tinte (83,2 %),
+   die Sonne wegen ihrer Strahlen bis an den viewBox-Rand volle 14,00px (100 %).
+   Die Sonne wirkt dadurch rund 20 % groesser und stoesst ohne Spielraum an die
+   Kante. scale(0.83) bringt sie auf 11,62px = Mond-Niveau; die Box bleibt 14px,
+   damit die Pill beim Umschalten nicht in der Breite springt. */
+.theme-toggle-icon--sun {
+  transform: scale(0.83);
+}
 .theme-toggle:hover {
   border-color: var(--green);
   background: rgba(183, 217, 0, 0.18);

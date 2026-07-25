@@ -55,6 +55,11 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npx tsc --noEmit  # JSDoc-Type-Check via tsconfig.json mit allowJs+checkJs
+      # Cache-Busting-Gate (G3-N2, 25.07.2026): jede lokale CSS-/JS-Referenz muss
+      # den aktuellen Inhalts-Fingerabdruck tragen. Ohne das liefert der 1-Jahres-
+      # Cache aus .htaccess Bestandsbesuchern alte Dateien aus (zweimal real
+      # passiert: Lead-Handoff 04.07., Umschalter-Optik 25.07.).
+      - run: npm run verify:assets
 
   # Job 2: Lighthouse-CI (Mobile + Desktop, beide Themes)
   lighthouse:
