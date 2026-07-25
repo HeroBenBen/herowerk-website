@@ -286,19 +286,71 @@ nav.scrolled {
   .mobile-phone-cta svg {
     flex: 0 0 auto;
   }
-  /* Unter 400 px reicht die Breite nicht fuer beide Beschriftungen. Dann traegt
-     der Modus-Umschalter nur noch sein Sinnbild; seinen zugaenglichen Namen
-     liefert weiterhin das aria-label aus js/theme.js, nicht der sichtbare Text.
-     Der Anrufweg behaelt seine Beschriftung, weil er Umsatz traegt und der
-     Umschalter eine reine Voreinstellung ist. */
-  @media (max-width: 400px) {
-    .nav-theme-standalone .theme-toggle-label {
-      display: none;
-    }
-    .nav-theme-standalone {
-      padding-left: 10px;
-      padding-right: 10px;
-    }
+  /* Der Umschalter in der Kopfzeile traegt dieselbe Trefferflaeche wie die
+     Rufnummer. Vorher 114 x 34 px, also unter 44 x 44 (WCAG 2.5.5) - und beim
+     Zusammenschrumpfen auf das reine Sinnbild waere er auf 40 x 34 gefallen
+     [gemessen 26.07.2026 im Alt- UND Neustand]. Beide Pillen sind jetzt gleich
+     hoch, was nebenbei die Kopfzeile ruhiger macht. */
+  /* Selektor mit Elementnamen (0,1,1): tokens.css wird NACH dieser Datei
+     geladen und setzt dort .theme-toggle mit min-height 34px und der
+     font-Kurzform. Bei gleicher Spezifitaet gewaenne die spaetere Datei
+     [gemessen 26.07.2026: min-height 44 blieb wirkungslos, Knopf 44 x 34]. */
+  button.nav-theme-standalone {
+    /* Rangfolge in der Kopfzeile: die Rufnummer ist ein Umsatzweg, der
+       Modus-Umschalter eine Voreinstellung. Vorher bissen sie sich in beide
+       Richtungen [gemessen 26.07.2026]: im Hell-Modus war der Umschalter
+       vollflaechig gruen und damit lauter als die Rufnummer, im Dunkel-Modus
+       waren beide bis auf das Wort identisch, gleich hoch und der Umschalter
+       sogar breiter (114 gegen 100 px) - zwei gleichrangige Knoepfe.
+       Jetzt: gleiche Familie ueber die Form (beide Pille, beide 44 px hoch),
+       Rangfolge ueber Farbe und Groesse. Der Umschalter ist ein neutraler
+       44er-Kreis mit reinem Sinnbild, Gruen und das Wort bleiben allein der
+       Rufnummer. Sein zugaenglicher Name steht im aria-label aus js/theme.js,
+       geht also nicht verloren. */
+    width: 44px;
+    min-width: 44px;
+    max-width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+    font-size: 0;
+    background: transparent;
+    border-color: var(--color-border-strong);
+    color: var(--color-text-secondary);
+  }
+  .nav-theme-standalone .theme-toggle-label {
+    display: none;
+  }
+  /* Sinnbild traegt den Kreis allein, deshalb groesser als in der Text-Pille
+     (dort 14 px neben dem Wort). Die Sonne behaelt ihren Groessenausgleich
+     gegenueber dem Mond aus tokens.css. */
+  .nav-theme-standalone .theme-toggle-icon {
+    width: 20px;
+    height: 20px;
+  }
+  [data-theme='light'] button.nav-theme-standalone {
+    background: transparent;
+    border-color: var(--color-border-strong);
+    color: var(--color-text-secondary);
+  }
+  button.nav-theme-standalone:hover {
+    border-color: var(--color-text-primary);
+    background: transparent;
+  }
+  /* Zweite Sicherung gegen Verzerrung: das Logo darf schrumpfen, aber nie sein
+     Seitenverhaeltnis verlieren (object-fit war fill). */
+  .nav-logo {
+    object-fit: contain;
+  }
+  /* Das Einwilligungs-Symbol des Anbieters sitzt fest unten links (10 px vom
+     Rand, 26 x 26, z-index 7999999) und liegt damit UEBER der Leiste. Solange
+     dort zwei Knoepfe standen, traf es den sekundaeren; seit die Leiste nur
+     noch eine Aktion traegt, fing es Tipps auf den einzigen Umsatz-Knopf ab
+     (20 x 26 px in dessen linker unterer Ecke, Trefferprobe 26.07.2026 landete
+     auf dem Symbol statt auf dem Knopf). Es wird deshalb ueber die Leiste
+     gehoben - beide bleiben vollstaendig bedienbar. */
+  .cmpboxrecall {
+    bottom: calc(var(--mobile-bar-h, 84px) + 8px) !important;
   }
   .mobile-menu.open {
     display: flex;

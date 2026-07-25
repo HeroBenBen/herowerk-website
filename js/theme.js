@@ -1,5 +1,12 @@
 (function () {
   'use strict';
+  // Sofort am <html> setzen, noch waehrend der Kopf geparst wird: die Modus-
+  // Umschalter sind reine Skript-Bedienelemente (Sinnbild und Klick-Verhalten
+  // entstehen erst hier). Ohne Skript sollen sie gar nicht erscheinen, sonst
+  // steht dort ein toter Knopf - bei schmalen Bildschirmen frisst er zusaetzlich
+  // die Breite, die das Logo braucht. Die Marke wird VOR dem ersten Bild gesetzt,
+  // deshalb entsteht kein Nachrutschen der Kopfzeile.
+  document.documentElement.classList.add('js-an');
   const KEY = 'hero-theme';
   const allowed = ['dark', 'light'];
   // Mond = aktueller Dunkel-Modus, Sonne = aktueller Hell-Modus (G3-N N-2).

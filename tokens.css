@@ -216,6 +216,13 @@ body {
   cursor: pointer;
   min-height: 34px;
 }
+/* Ohne Skript erscheinen die Umschalter gar nicht: js/theme.js erzeugt ihr
+   Sinnbild und ihr Verhalten, ohne das waeren sie tote Knoepfe. Die Marke
+   js-an setzt das Skript sofort beim Parsen des Kopfes, also vor dem ersten
+   Bild - kein Nachrutschen der Kopfzeile. */
+html:not(.js-an) [data-theme-toggle] {
+  display: none;
+}
 .theme-toggle-icon {
   flex: 0 0 auto;
 }
