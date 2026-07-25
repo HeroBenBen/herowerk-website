@@ -27,6 +27,17 @@ DirectoryIndex index.html
   # /funnel -> /anfrage (permanent, aus vercel.json)
   RewriteRule ^funnel/?$ /anfrage [L,R=301]
 
+  # /proklima-hannover -> /foerderung (permanent, GF-Entscheid 25.07.2026)
+  # proKlima ist seit dem GF-Entscheid 15.07.2026 aus der Kundenkommunikation
+  # genommen (Kanon Abschnitt 6 Punkt 11: KEINE Nennung in der Kundenoberflaeche).
+  # Die Seite war danach als Waisenseite live erreichbar und indexierbar; ein
+  # blosses noindex haette sie nur unauffindbar gemacht, nicht unerreichbar.
+  # Diese Regel steht bewusst VOR der cleanUrls-Kette und faengt beide Formen
+  # (mit und ohne .html) in EINEM Sprung, damit keine Redirect-Kette entsteht.
+  # Kehrt proKlima zurueck: diese Regel entfernen und die Datei aus archive/
+  # zurueckholen. Geloescht wird nichts (R0).
+  RewriteRule ^proklima-hannover(\.html)?/?$ /foerderung [L,R=301]
+
   # --- API: server-seitige Proxys (Rechner + Stellen-Feed) ---
   # /api/rechner und /api/jobs (saubere URLs, ohne .php) -> intern an die jeweilige .php-Datei.
   # MUSS vor der cleanUrls-.html-Regel stehen, damit der /api/-Pfad NICHT als .html-Seite
