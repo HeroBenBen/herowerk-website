@@ -2189,9 +2189,51 @@ if (document.readyState === 'loading') {
 // Zeigt freie Plätze aus dem Blatt "Fördervorschuss" (Route action=fv_plaetze,
 // frei = gesamt - belegt, Cache serverseitig). Fail-closed: ohne gültige Zahl
 // bleibt die Anzeige verborgen und der statische Seitentext trägt allein.
+// Obergrenze der gezeichneten Punkte-Reihe: darueber wird sie weggelassen,
+// statt die Karte mit Punkten zu fluten (Kontingent kann im Blatt wachsen).
+const FV_SLOTS_MAX = 24;
+
+// Startseiten-Kontingentkarte (G3-N2, Benjamin-Fund 25.07.): grosse Zahl, Punkte-
+// Belegung und Label kamen bis dahin hartcodiert aus dem Markup ("5 von 12 belegt")
+// und waren falsch. Jetzt dieselbe Quelle wie /foerdervorschuss.
+// Fail-closed: bei unplausiblen Werten bleibt der Block verborgen (kein Teil-Render).
+function fvPlaetzeHomeRender(box, frei, gesamt) {
+  if (gesamt === null || gesamt <= 0 || frei > gesamt) return;
+  const belegt = gesamt - frei;
+
+  const count = box.querySelector('#fvHomeCount');
+  const slots = box.querySelector('#fvHomeSlots');
+  const label = box.querySelector('#fvHomeLabel');
+  if (!count || !slots || !label) return;
+
+  count.textContent = String(frei);
+
+  slots.textContent = '';
+  if (gesamt <= FV_SLOTS_MAX) {
+    for (let i = 0; i < gesamt; i++) {
+      const dot = document.createElement('span');
+      dot.className = i < belegt ? 'fv-slot taken' : 'fv-slot';
+      slots.appendChild(dot);
+    }
+  }
+
+  label.textContent = '';
+  if (frei > 0) {
+    const strong = document.createElement('strong');
+    strong.textContent = frei + ' von ' + gesamt;
+    label.appendChild(strong);
+    label.appendChild(document.createTextNode(' frei · ' + belegt + ' belegt'));
+  } else {
+    label.textContent = 'Aktuell alle ' + gesamt + ' Plätze vergeben · Plätze rücken nach';
+  }
+
+  box.hidden = false;
+}
+
 async function fvPlaetzeLoad() {
   const el = document.getElementById('fvPlaetzeAnzeige');
-  if (!el) return;
+  const box = document.getElementById('fvHomeKontingent');
+  if (!el && !box) return;
   try {
     const response = await fetch(RECHNER_API + '?action=fv_plaetze&origin=https://herowerk.de');
     if (!response.ok) throw new Error(response.status);
@@ -2201,11 +2243,14 @@ async function fvPlaetzeLoad() {
     if (frei === null || frei < 0) return;
     const gesamt =
       data && typeof data.gesamt === 'number' && Number.isFinite(data.gesamt) ? data.gesamt : null;
-    el.textContent =
-      frei > 0
-        ? 'Freie Fördervorschuss-Plätze aktuell: ' + frei + (gesamt ? ' von ' + gesamt : '') + '.'
-        : 'Aktuell sind alle Fördervorschuss-Plätze vergeben; Plätze rücken nach. Frag gern trotzdem an.';
-    el.style.display = '';
+    if (el) {
+      el.textContent =
+        frei > 0
+          ? 'Freie Fördervorschuss-Plätze aktuell: ' + frei + (gesamt ? ' von ' + gesamt : '') + '.'
+          : 'Aktuell sind alle Fördervorschuss-Plätze vergeben; Plätze rücken nach. Frag gern trotzdem an.';
+      el.style.display = '';
+    }
+    if (box) fvPlaetzeHomeRender(box, frei, gesamt);
   } catch (e) {
     console.info('FV-Plätze nicht verfügbar, Anzeige bleibt aus', e);
   }
