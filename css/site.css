@@ -341,11 +341,15 @@ nav.scrolled {
    Unter 600 px traegt die Kopfzeile nur noch Marke, Rufnummer und Menue.
    Der Umschalter steht dort im Klappmenue (im Markup jeder Seite vorhanden),
    der freigewordene Platz geht an die Marke: 79 x 44 -> 104 x 58 px.
-   WARUM 600: gemessen an der Geraeteliste liegt zwischen dem breitesten
-   Telefon (iPhone 15 Pro Max, 430 px) und dem schmalsten Tablet (Nexus 7,
-   600 px) KEIN Geraet. Die Grenze sitzt also im Leerraum und kann kein Geraet
-   knapp verfehlen; die Regel heisst schlicht "Telefon schlank, Tablet wie
-   bisher". Bei 480 waeren Galaxy A55 und Nokia N9 auf der falschen Seite.
+   WARUM 600: an der Geraeteliste gemessen liegt zwischen 431 und 599 px KEIN
+   TABLET - dort finden sich nur Telefone (Galaxy A55 und Nokia N9 mit je
+   480 px) sowie Telefone im Querformat (533, 568 px). Das schmalste Tablet ist
+   der Nexus 7 mit 600 px. Die Grenze trennt also sauber Telefon von Tablet,
+   und die Regel heisst schlicht "Telefon schlank, Tablet wie bisher".
+   Bei einer Grenze von 480 waeren Galaxy A55 und Nokia N9 auf der Tablet-Seite
+   gelandet, obwohl es Telefone sind.
+   KORREKTUR 26.07.: Hier stand zuerst "zwischen 430 und 600 liegt kein
+   Geraet". Das war falsch und widersprach sich zwei Zeilen spaeter selbst.
    WICHTIG: Der Modus bleibt davon UNBERUEHRT. Dunkel ist fuer jeden Besucher
    der Start, auch hier - der dunkle Auftritt ist der Haupt-Markenkontakt
    (GF 26.07.). Kein prefers-color-scheme, siehe js/theme.js. */
@@ -366,6 +370,18 @@ nav.scrolled {
   .mobile-menu button.theme-toggle {
     min-height: 44px;
   }
+}
+
+/* ENDE Telefon-Block. Alles Folgende gilt wieder bis 960 px.
+   ACHTUNG, hier ist schon einmal etwas schiefgegangen: beim ersten Anlauf war
+   der 960er-Block weiter oben geschlossen und wieder hier geoeffnet worden.
+   Dadurch rutschten ZWOELF Regeln in den Telefon-Block, darunter
+   .mobile-menu.open und die gesamte feste Leiste. Zwischen 600 und 960 px gab
+   es danach null Navigationslinks, das Klappmenue oeffnete nicht mehr und die
+   Leiste war weg [gemessen 26.07.2026 gegen den Altstand]. Die Klammer-Bilanz
+   war dabei ausgeglichen - sie beweist nur die Anzahl, nicht die Verschachtelung.
+   Wer hier etwas einfuegt: gehoert es wirklich nur aufs Telefon? */
+@media (max-width: 960px) {
   /* Das Einwilligungs-Symbol des Anbieters sitzt fest unten links (10 px vom
      Rand, 26 x 26, z-index 7999999) und liegt damit UEBER der Leiste. Solange
      dort zwei Knoepfe standen, traf es den sekundaeren; seit die Leiste nur
