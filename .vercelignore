@@ -1,1 +1,4 @@
 archive/
+
+# Messberichte gehoeren nicht in eine oeffentlich erreichbare Vorschau.
+reports/

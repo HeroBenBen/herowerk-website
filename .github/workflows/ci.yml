@@ -68,8 +68,10 @@ jobs:
       # Trefferflaechen, Ueberlauf) sagen nichts ueber Fluchten und Proportionen.
       # Am 26.07. ragte ein Knopf auf jeder Telefonbreite 29 px aus seiner Karte,
       # obwohl vier unabhaengige Abnahmen gruen gemeldet hatten. Das Gate prueft
-      # je Seite und Breite: Container-Ueberstand, Aussenbreite statt
-      # Inhaltsbreite, Seitenrand-Treue, Symmetrie, Kanten-Inventar.
+      # je Seite und Breite hart: Container-Ueberstand, Aussenbreite statt
+      # Inhaltsbreite, Seitenrand-Treue, Symmetrie zentrierter Bloecke. Das
+      # Kanten-Inventar laeuft als Bericht OHNE Fehlerabbruch, solange die
+      # Kanten-Erwartung nicht ratifiziert ist (scripts/raster-expect.json).
       - run: npx playwright install --with-deps chromium
       - run: npm run verify:raster
 
