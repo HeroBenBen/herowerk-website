@@ -1,0 +1,113 @@
+{
+  "_doku": "Erwartungsdatei fuer scripts/verify-raster.mjs (Fluchten-Pruefgate, GF-Auftrag 26.07.2026). Regel 1 (Container-Ueberstand) ist IMMER hart. Regeln 2 bis 5 sind hart, sobald 'streng' auf true steht; bis zur Ratifikation der Kanten-Erwartung durch Benjamin laeuft Regel 2 als Bericht ohne Fehlerabbruch. Jede Ausnahme braucht eine Begruendung im Feld 'grund' - eine Ausnahme ohne Grund ist eine stille Aufweichung.",
+  "breiten": [
+    320,
+    360,
+    375,
+    390,
+    414
+  ],
+  "seiten": [
+    {
+      "pfad": "/index.html",
+      "name": "Startseite"
+    },
+    {
+      "pfad": "/preise.html",
+      "name": "Preise"
+    },
+    {
+      "pfad": "/foerderung.html",
+      "name": "Foerderung"
+    },
+    {
+      "pfad": "/foerdervorschuss.html",
+      "name": "Foerdervorschuss"
+    },
+    {
+      "pfad": "/anfrage.html",
+      "name": "Anfrage"
+    },
+    {
+      "pfad": "/rechner.html",
+      "name": "Rechner"
+    },
+    {
+      "pfad": "/kontakt.html",
+      "name": "Kontakt"
+    },
+    {
+      "pfad": "/barrierefreiheit.html",
+      "name": "Barrierefreiheit"
+    }
+  ],
+  "toleranzPx": 0.5,
+  "regeln": {
+    "r1_container_ueberstand": {
+      "aktiv": true,
+      "streng": true,
+      "beschreibung": "Kein sichtbares Kind ragt ueber die Kante seines Containers hinaus.",
+      "ausnahmen": []
+    },
+    "r2_kanten_inventar": {
+      "aktiv": true,
+      "streng": false,
+      "beschreibung": "Linke Kanten aller sichtbaren Bloecke in den ersten zwei Bildschirmen. Erwartung je Breite unten; nicht hinterlegte Kanten sind ein Befund.",
+      "grundKeineStrenge": "Kanten-Erwartung noch nicht mit Benjamin ratifiziert (Uebergabe 26.07., BLOCKED-Kriterium Einheit 2). Bis dahin Bericht ohne Fehlerabbruch.",
+      "erwarteteKanten": [],
+      "mindestBlockBreitePx": 24,
+      "mindestBlockHoehePx": 4
+    },
+    "r3_volle_aussenbreite": {
+      "aktiv": true,
+      "streng": true,
+      "beschreibung": "Ein Kind nimmt die AUSSENbreite seines Containers statt der Inhaltsbreite, obwohl der Container Innenabstand hat. Genau dieses Muster hat den 29-px-Ueberstand erzeugt.",
+      "ausnahmen": []
+    },
+    "r4_seitenrand_treue": {
+      "aktiv": true,
+      "streng": true,
+      "beschreibung": "Alle vollbreiten Inhaltscontainer und alle fest positionierten Elemente halten denselben Seitenrand.",
+      "seitenrandPx": 24,
+      "grundSeitenrand": "Hausmass der Seite: section { padding: 100px 24px } und .nav-inner { padding: 0 24px } in css/site.css. Abweichungen (Startseiten-Banner 20 px, feste Leiste 16 px) sind Drift, nicht Absicht.",
+      "festeElemente": [
+        {
+          "wahl": ".mobile-bottom-bar a",
+          "grund": "Die feste Leiste unten traegt den einzigen Umsatz-Knopf und muss mit dem Seiteninhalt fluchten."
+        }
+      ],
+      "inhaltsContainer": [
+        {
+          "wahl": "section > .section-inner",
+          "grund": "Standard-Inhaltscontainer aller Abschnitte."
+        },
+        {
+          "wahl": "section > .hero-inner",
+          "grund": "Inhaltscontainer des Kopfbereichs."
+        },
+        {
+          "wahl": "section > .fv-inner",
+          "grund": "Inhaltscontainer des Foerdervorschuss-Banners."
+        }
+      ]
+    },
+    "r5_symmetrie": {
+      "aktiv": true,
+      "streng": true,
+      "beschreibung": "Linker und rechter Aussenabstand eines zentrierten Blocks duerfen sich um hoechstens 1 px unterscheiden.",
+      "maxAbweichungPx": 1,
+      "ausnahmen": [],
+      "erkennungsFensterPx": 8
+    }
+  },
+  "ignorierteWurzeln": [
+    {
+      "wahl": "[id^=\"cmp\"]",
+      "grund": "Einwilligungsdialog des Anbieters, fremdes Markup ausserhalb unseres Rasters."
+    },
+    {
+      "wahl": "[class^=\"cmp\"]",
+      "grund": "wie oben"
+    }
+  ]
+}

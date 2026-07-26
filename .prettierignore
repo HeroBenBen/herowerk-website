@@ -14,3 +14,7 @@ apps-script/
 # Fremdcode, von keiner Aenderung angefasst. Umformatieren wuerde den Einzeiler
 # in tausende Zeilen aufblasen, ohne dass ihn je jemand liest.
 js/chart-4.4.1.umd.min.js
+# Maschinell erzeugte Messberichte (scripts/verify-raster.mjs u. a.). Sie werden
+# bei jedem Lauf neu geschrieben; sie zu formatieren wuerde das Gate bei jedem
+# Lauf gegen sich selbst laufen lassen.
+reports/

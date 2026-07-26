@@ -64,6 +64,14 @@ jobs:
       # CMP-Autoblocking das erste Skript sein. Beide CSP-Quellen müssen den
       # Delivery-Host unter script-src erlauben; connect-src allein reicht nicht.
       - run: npm run verify:consent
+      # Fluchten-Gate (GF-Auftrag 26.07.2026): Norm-Messungen (Kontrast,
+      # Trefferflaechen, Ueberlauf) sagen nichts ueber Fluchten und Proportionen.
+      # Am 26.07. ragte ein Knopf auf jeder Telefonbreite 29 px aus seiner Karte,
+      # obwohl vier unabhaengige Abnahmen gruen gemeldet hatten. Das Gate prueft
+      # je Seite und Breite: Container-Ueberstand, Aussenbreite statt
+      # Inhaltsbreite, Seitenrand-Treue, Symmetrie, Kanten-Inventar.
+      - run: npx playwright install --with-deps chromium
+      - run: npm run verify:raster
 
   # Job 2: Lighthouse-CI (Mobile + Desktop, beide Themes)
   lighthouse:
