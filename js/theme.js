@@ -44,7 +44,11 @@
         const dunkel = next === 'dark';
         button.setAttribute('role', 'switch');
         button.setAttribute('aria-checked', dunkel ? 'true' : 'false');
-        button.setAttribute('aria-label', 'Dunkle Ansicht');
+        // Der zugaengliche Name MUSS die sichtbaren Beschriftungen "Hell" und
+        // "Dunkel" enthalten (WCAG 2.5.3 Label in Name, Stufe A), sonst trifft
+        // Sprachsteuerung das Element nicht. R14-Befund 26.07.2026: der Name
+        // lautete "Dunkle Ansicht" und enthielt "Dunkel" nicht als Wort.
+        button.setAttribute('aria-label', 'Ansicht: Hell oder Dunkel');
         button.innerHTML =
           `<span class="tt-feld" data-aktiv="${dunkel ? 'false' : 'true'}">${SUN_ICON}Hell</span>` +
           `<span class="tt-feld" data-aktiv="${dunkel ? 'true' : 'false'}">${MOON_ICON}Dunkel</span>`;
@@ -89,8 +93,17 @@
     applyTheme(document.documentElement.getAttribute('data-theme') || initial, false);
     ensureAccessibleControls();
     document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
-      button.addEventListener('click', () => {
+      button.addEventListener('click', (event) => {
         const current = document.documentElement.getAttribute('data-theme') || 'dark';
+        // Beim Zwei-Feld-Schalter ist ein Tipp auf das BEREITS aktive Feld
+        // folgenlos. R14-Befund 26.07.2026: er schaltete davon weg, das
+        // Bedienelement sah aus wie ein Waehler und verhielt sich wie ein
+        // Kippschalter. Ein Tipp neben die Felder (auf die Schiene) schaltet
+        // weiterhin um, damit die ganze Flaeche bedienbar bleibt.
+        if (button.hasAttribute('data-theme-switch')) {
+          const feld = event.target instanceof Element ? event.target.closest('.tt-feld') : null;
+          if (feld && feld.dataset.aktiv === 'true') return;
+        }
         applyTheme(current === 'dark' ? 'light' : 'dark', true);
       });
     });

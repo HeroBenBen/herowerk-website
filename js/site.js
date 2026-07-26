@@ -9,6 +9,12 @@ const mobileMenu = document.getElementById('mobileMenu');
 function toggleMenu() {
   const offen = mobileMenu?.classList.toggle('open');
   hamburger?.setAttribute('aria-expanded', offen ? 'true' : 'false');
+  // Die feste Leiste unten liegt mit z-index 1000 UEBER dem Menue (999).
+  // R14-Befund 26.07.2026, selbst nachgemessen bei 320 x 568 px: sie verdeckte
+  // 41,4 von 52 px des Termin-Knopfs, und document.elementFromPoint in dessen
+  // Mitte traf die Leiste statt den Knopf. Solange das Menue offen ist, ist es
+  // die Navigation; die Leiste tritt zurueck.
+  document.documentElement.classList.toggle('menue-offen', !!offen);
 }
 hamburger?.addEventListener('click', toggleMenu);
 
@@ -50,20 +56,25 @@ if (mobileMenu) {
   mobileMenu.addEventListener(
     'touchstart',
     (event) => {
+      // MUSS als erstes stehen, vor jedem Waechter. R14-Befund 26.07.2026:
+      // stand das Zuruecksetzen hinter den Waechtern, ueberlebte ein gesetztes
+      // "gewischt" die naechste Beruehrung und der Klick-Abfang unten
+      // verschluckte einen echten Tipp. Gemessen: Tipp auf /foerderung nach
+      // vorherigem Wischen bei scrollTop 40 loeste NICHT aus.
+      gewischt = false;
       if (event.touches.length !== 1) {
         start = null;
         return;
       }
-      // Das Menue hat auf kurzen Bildschirmen einen eigenen Bildlauf. Ein
-      // Hochwischen mitten im Bildlauf ist ein Scrollen, kein Schliessen.
-      // Deshalb zaehlt die Geste nur, wenn oben angeschlagen ist.
-      if (mobileMenu.scrollTop > 0) {
+      // Ein scrollbares Menue gehoert dem Bildlauf, nicht der Geste. Sonst
+      // schliesst die erste Aufwaertsbewegung aus der Ruhelage das Menue,
+      // statt zum letzten Eintrag zu scrollen.
+      if (mobileMenu.scrollHeight > mobileMenu.clientHeight + 1) {
         start = null;
         return;
       }
       const t = event.touches[0];
       start = { x: t.clientX, y: t.clientY, zeit: Date.now() };
-      gewischt = false;
     },
     { passive: true }
   );

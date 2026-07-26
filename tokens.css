@@ -315,8 +315,7 @@ html:not(.js-an) [data-theme-toggle] {
    [data-theme='light'] .mobile-menu .mm-nav a laege bei (0,3,1) und wuerde
    verlieren - genau das ist beim ersten Versuch passiert, der Text blieb
    oliv. Die drei :not() unten heben die Regel auf (0,6,1). */
-[data-theme='light'] .mobile-menu .mm-nav a:not(.nav-cta):not(.nav-cta-call):not(.btn-primary),
-[data-theme='light'] .mobile-menu a.nav-cta-call:not(.nav-cta):not(.btn-primary):not(.mob-bar-cta) {
+[data-theme='light'] .mobile-menu .mm-nav a:not(.nav-cta):not(.nav-cta-call):not(.btn-primary) {
   color: var(--color-text-primary) !important;
 }
 [data-theme='light']

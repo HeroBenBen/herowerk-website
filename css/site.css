@@ -420,9 +420,13 @@ nav.scrolled {
     top: 64px;
     left: 0;
     right: 0;
-    /* Gleiche Flaeche wie die Kopfzeile, aus der das Menue faehrt. Vorher
-       var(--nacht) #0a0a0a gegen die Leiste rgba(28,43,54,0.97): das Menue
-       war dunkler als sein eigener Traeger und wirkte aufgeklebt. */
+    /* Im Dunkel-Modus dieselbe Flaeche wie die Kopfzeile, aus der das Menue
+       faehrt: rgb(28,43,54) gegen rgba(28,43,54,0.99). Vorher var(--nacht)
+       #0a0a0a, das Menue war also dunkler als sein eigener Traeger und wirkte
+       aufgeklebt. Im Hell-Modus bleibt eine sichtbare Kante (Kopfzeile Sand
+       rgba(244,241,234,0.97) gegen Panel Weiss, Kontrast 1,24), weil
+       tokens.css das Panel dort bewusst mit Leiste und Fusszeile
+       zusammenfasst. Bewusst so belassen [R14-Befund 26.07.2026]. */
     background: var(--color-surface-secondary, #1c2b36);
     padding: 8px 12px 20px;
     gap: 0;
@@ -486,8 +490,12 @@ nav.scrolled {
     content: '';
     position: absolute;
     top: 0;
-    left: 12px;
-    right: 12px;
+    /* Buendig mit den beiden anderen Trennlinien im Menue. Die Zeile selbst
+       sitzt bereits 12 px eingerueckt; mit left/right 12 waere die Haarlinie
+       um 12 px je Seite versetzt gelaufen [R14-Befund 26.07.2026: 24 bis 351
+       gegen 12 bis 363]. */
+    left: 0;
+    right: 0;
     height: 1px;
     background: var(--color-border-subtle, #2d3a47);
   }
@@ -512,11 +520,18 @@ nav.scrolled {
     outline: 3px solid var(--color-text-primary, #ffffff);
     outline-offset: -3px;
   }
+  /* Auf der Lime-Flaeche waere der helle Ring im Dunkel-Modus bei 1,62
+     [R14-Befund 26.07.2026, selbst nachgemessen]. Dort traegt die dunkle
+     Schriftfarbe des Knopfs: 8,93 in beiden Modi. */
+  .mobile-menu a.nav-cta:focus-visible {
+    outline-color: var(--color-accent-primary-text, #1c2b36);
+  }
 
   /* ── Handlungszone ─────────────────────────────────────────────────────
-     Genau EIN gefuellter Knopf. Anrufen bleibt als neutraler Umriss, damit
-     die Markenfarbe nicht zweimal nebeneinander steht und sich selbst
-     entwertet. */
+     Genau EIN Knopf. "Anrufen" ist per GF-Entscheid 26.07.2026 aus dem
+     Klappmenue entfernt; der Anrufweg liegt in der Kopfzeile
+     (.mobile-phone-cta, beschriftet, 44 px) und in der festen Leiste. Damit
+     steht die Markenfarbe hier genau einmal und entwertet sich nicht selbst. */
   .mobile-menu .mm-aktionen {
     display: flex;
     flex-direction: column;
@@ -540,17 +555,6 @@ nav.scrolled {
   .mobile-menu a.nav-cta::after {
     display: none;
   }
-  .mobile-menu a.nav-cta-call {
-    justify-content: center;
-    min-height: 48px;
-    padding: 0 24px;
-    border-radius: 8px;
-    background: transparent;
-    border: 2px solid var(--color-border-strong, #5a6470);
-    color: var(--color-text-primary, #ffffff);
-    font-size: 15px;
-    font-weight: 600;
-  }
 
   /* ── Modus-Umschalter als Zwei-Feld-Schalter ───────────────────────────
      Bauform bewusst gewaehlt: beide Zustaende stehen gleichzeitig da, der
@@ -565,7 +569,13 @@ nav.scrolled {
     padding: 3px;
     min-height: 44px;
     border-radius: 999px;
-    border: 1px solid var(--color-border-subtle, #2d3a47);
+    /* Die Schiene selbst kommt gegen das Panel nur auf 1,24 (hell) und 1,25
+       (dunkel), waere als Bedienelement also unsichtbar. Genau der Vorwurf,
+       mit dem der Kachel-Entwurf verworfen wurde, deshalb traegt hier die
+       Umrandung das Element. Nicht border-strong: das misst im Dunkel-Modus
+       nur 2,41 und verfehlt die Norm 3,0 (WCAG 1.4.11). text-tertiary traegt
+       in beiden Modi, gemessen 5,91 dunkel und 6,01 hell. */
+    border: 1px solid var(--color-text-tertiary, #a0a6ad);
     background: var(--color-surface-tertiary, #2d3a47);
     font-family: inherit;
     cursor: pointer;
@@ -594,6 +604,15 @@ nav.scrolled {
   .mobile-menu .tt-feld svg {
     flex: 0 0 auto;
   }
+  /* Solange das Klappmenue offen ist, tritt die feste Leiste zurueck. Sie
+     liegt mit z-index 1000 ueber dem Menue (999) und verdeckte bei 320 x 568
+     px 41,4 von 52 px des Termin-Knopfs; ein Tipp in dessen Mitte traf die
+     Leiste [R14-Befund 26.07.2026, selbst nachgemessen]. Die Klasse setzt
+     toggleMenu() in js/site.js. */
+  html.menue-offen .mobile-bottom-bar {
+    display: none;
+  }
+
   /* Sticky Bottom Bar mit Anrufen + Beratung */
   .mobile-bottom-bar {
     display: flex;
