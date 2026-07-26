@@ -177,9 +177,10 @@
       "mindestAnteilBreite": 0.6
     },
     "r5_symmetrie": {
-      "aktiv": true,
-      "streng": true,
-      "beschreibung": "Bloecke, die das Stylesheet waagerecht zentriert (margin auto), muessen links und rechts denselben Aussenabstand haben. Erkennung ueber die Regeln des Stylesheets, nicht ueber eine Pixel-Heuristik.",
+      "aktiv": false,
+      "streng": false,
+      "beschreibung": "ABGESCHALTET. Symmetrie zentrierter Bloecke.",
+      "grundAbschaltung": "Drei Fassungen gebaut, keine traegt. (1) 'Container ist reiner Blockcontainer': erreichte KEIN Element, weil zentrierte Bloecke hier in Flex- und Rasterschachteln stehen. (2) 'Luecken aehnlich gross' (Verhaeltnis): 316 Scheinbefunde, weil in einer Flex-Reihe jedes Element zufaellig aehnliche Luecken hat. (3) Erkennung ueber margin:auto in den Regeln des Stylesheets: fand lokal 5 Elemente und live 0, also unzuverlaessig; ausserdem sind auto-Raender per Definition symmetrisch, eine Asymmetrie kann dort gar nicht entstehen. Eine Regel, die entweder falsch anschlaegt oder nie prueft, meldet PASS ohne etwas zu belegen und ist gefaehrlicher als eine abgeschaltete. Deshalb bewusst AUS, mit Beleg, statt gruen zu wirken. Wiederaufnahme nur mit einem Fall, den sie nachweislich faengt.",
       "maxAbweichungPx": 1,
       "ausnahmen": []
     }
