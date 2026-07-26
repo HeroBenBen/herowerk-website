@@ -32,6 +32,74 @@ if (hamburger) {
     toggleMenu();
   });
 }
+
+// ===== WISCHGESTE ZUM SCHLIESSEN DES KLAPPMENUES (GF-Auftrag 26.07.2026) =====
+// Das Menue haengt oben an der Kopfzeile, deshalb schliesst es nach OBEN.
+// Nach rechts waere die Alternative gewesen, das kollidiert aber auf iOS und
+// Android mit der Zurueck-Geste des Browsers.
+// Ohne Fremdbibliothek, reine Zeigerereignisse. Die Geste ist eine ZUSATZ-
+// bedienung: Oeffner-Tipp, Enter und Leertaste bleiben unveraendert, das Menue
+// ist also auch ohne Touch vollstaendig bedienbar (WCAG 2.1.1 und 2.5.1).
+if (mobileMenu) {
+  const SCHWELLE_HOCH = 60; // px, die der Finger nach oben zurueckgelegt haben muss
+  const MAX_SEITLICH = 45; // px seitliche Abweichung, darueber ist es kein Hochwischen
+  const MAX_DAUER = 800; // ms, laenger ist ein Halten und kein Wischen
+  let start = null;
+  let gewischt = false;
+
+  mobileMenu.addEventListener(
+    'touchstart',
+    (event) => {
+      if (event.touches.length !== 1) {
+        start = null;
+        return;
+      }
+      // Das Menue hat auf kurzen Bildschirmen einen eigenen Bildlauf. Ein
+      // Hochwischen mitten im Bildlauf ist ein Scrollen, kein Schliessen.
+      // Deshalb zaehlt die Geste nur, wenn oben angeschlagen ist.
+      if (mobileMenu.scrollTop > 0) {
+        start = null;
+        return;
+      }
+      const t = event.touches[0];
+      start = { x: t.clientX, y: t.clientY, zeit: Date.now() };
+      gewischt = false;
+    },
+    { passive: true }
+  );
+
+  mobileMenu.addEventListener(
+    'touchend',
+    (event) => {
+      if (!start || !mobileMenu.classList.contains('open')) return;
+      const t = event.changedTouches && event.changedTouches[0];
+      if (!t) return;
+      const dy = t.clientY - start.y;
+      const dx = Math.abs(t.clientX - start.x);
+      const dauer = Date.now() - start.zeit;
+      start = null;
+      if (dy > -SCHWELLE_HOCH || dx > MAX_SEITLICH || dauer > MAX_DAUER) return;
+      gewischt = true;
+      toggleMenu();
+    },
+    { passive: true }
+  );
+
+  // Ein Hochwischen, das auf einem Link endet, darf diesen Link nicht
+  // ausloesen. Der Klick kommt nach dem touchend, deshalb wird genau der eine
+  // folgende Klick in der Erfassungsphase abgefangen.
+  mobileMenu.addEventListener(
+    'click',
+    (event) => {
+      if (!gewischt) return;
+      gewischt = false;
+      event.preventDefault();
+      event.stopPropagation();
+    },
+    true
+  );
+}
+
 window.addEventListener('scroll', () => {
   document.querySelector('nav')?.classList.toggle('scrolled', window.scrollY > 50);
 });

@@ -35,6 +35,21 @@
     const next = allowed.includes(theme) ? theme : 'dark';
     document.documentElement.setAttribute('data-theme', next);
     document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+      // Zwei-Feld-Schalter (nur im Klappmenue, Kennzeichen data-theme-switch).
+      // Fachbefund 26.07.2026: die einfeldrige Fassung zeigt im Dunkel-Modus
+      // einen Mond neben dem Wort "Light-Mode" und behauptet damit im selben
+      // Atemzug Zustand UND Absicht. Beim Zwei-Feld-Schalter stehen beide
+      // Zustaende gleichzeitig da, der aktive ist gefuellt, nichts zu raten.
+      if (button.hasAttribute('data-theme-switch')) {
+        const dunkel = next === 'dark';
+        button.setAttribute('role', 'switch');
+        button.setAttribute('aria-checked', dunkel ? 'true' : 'false');
+        button.setAttribute('aria-label', 'Dunkle Ansicht');
+        button.innerHTML =
+          `<span class="tt-feld" data-aktiv="${dunkel ? 'false' : 'true'}">${SUN_ICON}Hell</span>` +
+          `<span class="tt-feld" data-aktiv="${dunkel ? 'true' : 'false'}">${MOON_ICON}Dunkel</span>`;
+        return;
+      }
       const label = next === 'dark' ? 'Light' : 'Dark';
       const icon = next === 'dark' ? MOON_ICON : SUN_ICON;
       button.setAttribute('aria-label', `${label}-Mode aktivieren`);
