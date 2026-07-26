@@ -1430,7 +1430,7 @@ function paRenderCards() {
         ? `<div class="pa-price-brutto">Komplett installiert ${d.preis.toLocaleString('de-DE')} €</div>`
         : '';
       const priceHtml = paHasNumber(d.eigen)
-        ? `${bruttoHtml}<div class="pa-price-compact">ab ${d.eigen.toLocaleString('de-DE')} €</div><div class="pa-label">Dein Anteil</div><div class="pa-price-bedingung">bei voller F\u00f6rderung<a href="#preis-bedingungen" onclick="event.stopPropagation();">*</a></div>`
+        ? `${bruttoHtml}<div class="pa-price-compact">ab ${d.eigen.toLocaleString('de-DE')} €</div><div class="pa-label">Dein Anteil</div><div class="pa-price-bedingung">bei voller F\u00f6rderung*</div>`
         : `<div class="pa-price-compact" style="font-size:17px;">Auf Anfrage</div><div class="pa-label">projektgenau</div>`;
 
       const defaultClass = i === 0 ? ' pa-default-highlight' : '';
@@ -1523,10 +1523,15 @@ let paOpenIdx = -1;
 // Bewusst ueber paZoom, damit Detailbereich, Pfeil und Zustandsklassen exakt
 // denselben Weg nehmen wie bei einem echten Klick.
 function paOeffneStandardkarte() {
-  if (paOpenIdx !== -1) return;
   const karten = document.querySelectorAll('.pa-card');
   if (!karten.length) return;
-  requestAnimationFrame(() => paZoom(0));
+  // Die Pruefung steht IM Callback, nicht davor: zwei Aufrufe im selben Frame
+  // (Doppelklick auf den Markenreiter) planten sonst zwei Callbacks, der erste
+  // oeffnete und der zweite klappte wieder zu. Von der Abnahme gemessen.
+  requestAnimationFrame(() => {
+    if (paOpenIdx !== -1) return;
+    paZoom(0);
+  });
 }
 
 function paZoom(idx) {
@@ -1583,9 +1588,15 @@ function paZoom(idx) {
   }
 }
 
-// Klick außerhalb → alles zuklappen
+// Klick außerhalb → alles zuklappen.
+// Der Einwilligungsdialog ist ausgenommen: er liegt beim Erstbesuch ueber der
+// ganzen Seite, und sein Wegklicken ist der erste Klick jedes neuen Besuchers.
+// Ohne diese Ausnahme schloss er die eben erst geoeffnete Standardkarte sofort
+// wieder, und zwar genau fuer die Zielgruppe, fuer die sie offen sein soll.
+// Von der Abnahme 26.07.2026 gemessen und gefunden.
 document.addEventListener('click', (e) => {
   if (paOpenIdx === -1) return;
+  if (e.target.closest('[id^="cmp"], [class^="cmp"]')) return;
   if (
     !e.target.closest('.pa-card') &&
     !e.target.closest('.pa-detail') &&

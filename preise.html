@@ -46,7 +46,7 @@
   <meta name="twitter:description" content="Richtpreise und Eigenanteile für Wärmepumpen in der Region Hannover.">
   <meta name="twitter:image" content="https://www.herowerk.de/hero-paar-terrasse.png">
   <script src="js/theme.js?v=701a3907e2"></script>
-  <link rel="stylesheet" href="css/site.css?v=3ebfbd0d1f">
+  <link rel="stylesheet" href="css/site.css?v=cf1d283fed">
   <link rel="preload" href="tokens.css?v=4e45ecd1e4" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="tokens.css?v=4e45ecd1e4"></noscript>
 </head>
@@ -93,7 +93,7 @@
       <h1 class="section-title" style="color:var(--white);">So findest du deinen Preis</h1>
       <p class="section-lead">Preise für Wärmepumpen sind am Markt oft undurchsichtig, mal zu hoch, mal zu niedrig. Wir machen es anders: ehrlich und nachvollziehbar. Kurz zur Einordnung, dann ergeben die Zahlen weiter unten gleich Sinn:</p>
       <ul class="w3-intro-list">
-        <li><strong>Die Preise sind dein Eigenanteil nach Förderung</strong>, nicht der volle Anlagenpreis. Es sind Beispiel-Richtwerte zur Orientierung; den verbindlichen Preis nennen wir dir nach dem Vor-Ort-Termin.</li>
+        <li><strong>Jede Karte zeigt zwei Zahlen:</strong> oben den kompletten Preis mit Einbau, darunter deinen Anteil bei voller F&ouml;rderung. Es sind Beispiel-Richtwerte zur Orientierung; den verbindlichen Preis nennen wir dir nach dem Vor-Ort-Termin.</li>
         <li><strong>Du hast die Wahl zwischen Wolf und Vaillant.</strong> Über den Preiskarten kannst du zwischen beiden umschalten. Welche Marke zu dir passt, dazu liest du weiter unten eine kurze Orientierung.</li>
         <li><strong>Jede Karte ist anklickbar.</strong> Dann öffnen sich die technischen Details zum jeweiligen Modell.</li>
       </ul>
@@ -107,7 +107,7 @@
         <div class="pa-header-left">
           <div class="section-tag" style="color:var(--green);">Dein Eigenanteil</div>
           <h2 class="section-title" style="color: var(--white); margin-bottom: 8px;">Was zahlst du wirklich?</h2>
-          <p style="color:var(--g300);font-size:15px;margin:0;">Preise zeigen deinen <strong style="color:var(--green);">Eigenanteil nach Förderung</strong>. Klicke für technische Details.</p>
+          <p style="color:var(--g300);font-size:15px;margin:0;">Jede Karte zeigt den kompletten Preis und <strong style="color:var(--green);">deinen Anteil bei voller F&ouml;rderung</strong>. Klicke f&uuml;r technische Details.</p>
         </div>
         <a href="/dimensionierung" class="pa-header-cta">
           <div class="pa-cta-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
@@ -122,11 +122,11 @@
       <div class="manufacturer-tabs" role="tablist" aria-label="Hersteller-Vorauswahl">
         <button type="button" class="manufacturer-tab active" id="manufacturerWolf" role="tab" aria-selected="true" aria-controls="wolfPricePanel" data-manufacturer="wolf">
           <span class="manufacturer-name">Wolf CHA</span>
-          <span class="manufacturer-price" id="wolfMinEigen">ab … Eigenanteil*</span>
+          <span class="manufacturer-price" id="wolfMinEigen">ab … dein Anteil*</span>
         </button>
         <button type="button" class="manufacturer-tab" id="manufacturerVaillant" role="tab" aria-selected="false" aria-controls="wolfPricePanel" data-manufacturer="vaillant">
           <span class="manufacturer-name">Vaillant aroTHERM plus</span>
-          <span class="manufacturer-price" id="vaillantMinEigen">ab … Eigenanteil*</span>
+          <span class="manufacturer-price" id="vaillantMinEigen">ab … dein Anteil*</span>
         </button>
       </div>
 
@@ -138,6 +138,10 @@
 
 
       <!-- Detail-Panel: Bild+CTA links, Specs rechts -->
+      <p class="pa-bedingungen-verweis">
+        Was hei&szlig;t <em>bei voller F&ouml;rderung</em>?
+        <a href="#preis-bedingungen">Alle Bedingungen im Klartext</a>
+      </p>
       <div class="pa-detail" id="paDetail">
         <div class="pa-detail-arrow" id="paDetailArrow"></div>
         <div class="pa-detail-inner" id="paDetailInner">
@@ -191,20 +195,22 @@
         <p><strong>Was die beiden Preise bedeuten</strong></p>
         <p>
           Der obere Preis ist der komplette Preis. Er enth&auml;lt Ger&auml;t, Einbau und Inbetriebnahme.
-          Der untere Preis ist dein Anteil. Er gilt bei der h&ouml;chsten F&ouml;rderung: 80 Prozent.
+          Der untere Preis ist dein Anteil im Bestfall. Er gilt bei der h&ouml;chsten KfW-F&ouml;rderung: 80 Prozent.
           Diese 80 Prozent bestehen aus 30 Prozent Grundf&ouml;rderung, 16 Prozent Klimabonus und
           40 Prozent Einkommensbonus.
         </p>
         <p>Die h&ouml;chste F&ouml;rderung bekommst du, wenn alle vier Punkte stimmen:</p>
         <ul>
-          <li>Du wohnst selbst in dem Haus.</li>
+          <li>Du bist Eigent&uuml;mer und wohnst selbst in dem Haus.</li>
           <li>
-            Deine alte Heizung ist eine &Ouml;l-, Kohle-, Gasetagen- oder Nachtspeicherheizung.
-            Oder eine Gas- oder Holzheizung, die mindestens 20 Jahre alt ist.
+            Deine alte Heizung l&auml;uft noch. Sie ist eine &Ouml;l-, Kohle-, Gasetagen- oder
+            Nachtspeicherheizung. Oder eine Gas- oder Biomasseheizung, zum Beispiel eine
+            Holzheizung, die mindestens 20 Jahre alt ist.
           </li>
           <li>
-            Dein Haushalt hat h&ouml;chstens 30.000 Euro zu versteuerndes Einkommen im Jahr.
-            Mit mindestens einem Kind unter 18 Jahren ziehen wir einmalig 10.000 Euro ab.
+            Dein Haushalt hat h&ouml;chstens 30.000 Euro anrechenbares zu versteuerndes Einkommen
+            im Jahr. Mit mindestens einem Kind unter 18 Jahren zieht die KfW einmalig
+            10.000 Euro ab.
           </li>
           <li>
             Du stellst den Antrag zwischen dem 21.07.2026 und dem 31.01.2027.
@@ -212,9 +218,11 @@
           </li>
         </ul>
         <p>
-          Mehr als 22.400 Euro Zuschuss gibt es nicht. Das sind 80 Prozent von h&ouml;chstens
-          28.000 Euro f&ouml;rderf&auml;higen Kosten der ersten Wohneinheit.
-          F&uuml;r vermietete Wohneinheiten gilt die Grundf&ouml;rderung von 30 Prozent.
+          F&uuml;r die erste Wohnung zahlt die KfW h&ouml;chstens 22.400 Euro. Das sind 80 Prozent
+          von h&ouml;chstens 28.000 Euro, die sie f&uuml;r diese Wohnung anrechnet.
+          Hat dein Haus mehrere Wohnungen, kommt f&uuml;r jede weitere ein Betrag dazu. Deshalb ist
+          der Zuschuss bei Premium und Kaskade h&ouml;her.
+          F&uuml;r vermietete Wohnungen gilt die Grundf&ouml;rderung von 30 Prozent.
         </p>
         <p>
           <strong>Stimmt ein Punkt nicht, wird dein Anteil h&ouml;her. Deinen echten Anteil rechnen
@@ -232,8 +240,9 @@
           Wohneinheiten bleiben auch nach der Reform unver&auml;ndert.
         </p>
         <p>
-          Alle Preise sind Brutto inklusive Mehrwertsteuer und gelten f&uuml;r ein Standardprojekt.
-          Den verbindlichen Preis nennen wir nach dem Vor-Ort-Termin. Angaben ohne Gew&auml;hr.
+          In allen Preisen ist die Mehrwertsteuer schon enthalten. Sie gelten f&uuml;r einen Einbau
+          ohne Besonderheiten. Den verbindlichen Preis nennen wir nach dem Vor-Ort-Termin.
+          Den Eigenanteil der Kaskade rechnen wir projektgenau. Angaben ohne Gew&auml;hr.
         </p>
       </div>
 
@@ -339,7 +348,7 @@
     </div>
   </footer>
 
-  <script src="js/site.js?v=2ade3c64b4" defer></script>
+  <script src="js/site.js?v=bc7adb5646" defer></script>
 
   <!-- MOBILE BOTTOM BAR -->
   <div class="mobile-bottom-bar" role="navigation" aria-label="Mobile Schnellnavigation">
