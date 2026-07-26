@@ -242,7 +242,7 @@ function messen(cfg) {
       // aehnlich gross" hat 316 Scheinbefunde erzeugt, weil in einer Flex-Reihe
       // jedes Element zufaellig aehnliche Luecken hat, ohne zentriert zu sein.
       const istBlock = /^(block|flex|grid|table|table-cell)$/.test(cs.display);
-      const zentriert = istBlock && istZentriert(el);
+      const zentriert = (cfg.regeln.r5_symmetrie.aktiv ?? true) && istBlock && istZentriert(el);
       if (zentriert) erg.abdeckung.r5++;
       if (zentriert && Math.abs(gapL - gapR) > (cfg.regeln.r5_symmetrie.maxAbweichungPx ?? 1)) {
         erg.r5.push({
@@ -465,7 +465,10 @@ for (const [regel, titel] of [
   ['R1', 'Regel 1: Container-Ueberstand (hart)'],
   ['R3', 'Regel 3: Kind nimmt die Aussenbreite statt der Inhaltsbreite (hart)'],
   ['R4', 'Regel 4: Seitenrand-Treue fester Elemente (hart)'],
-  ['R5', 'Regel 5: Symmetrie zentrierter Bloecke (hart)'],
+  [
+    'R5',
+    `Regel 5: Symmetrie zentrierter Bloecke (${konfig.regeln.r5_symmetrie.aktiv ? 'hart' : 'ABGESCHALTET, siehe raster-expect.json'})`,
+  ],
   ['R2', 'Regel 2: Kanten-Inventar'],
 ]) {
   const liste = nachRegel(regel);
@@ -528,7 +531,7 @@ const summe = (k) => abdeckung.reduce((a, b) => a + b[k], 0);
 console.log(
   `Abdeckung: ${summe('sichtbar')} sichtbare Elemente, davon ${summe('r1r3')} in Regel 1+3, ${summe('r4')} in Regel 4, ${summe('r5')} in Regel 5.`
 );
-if (summe('r5') === 0)
+if (summe('r5') === 0 && (konfig.regeln.r5_symmetrie.aktiv ?? true))
   console.log(
     '  WARNUNG: Regel 5 hat kein einziges Element geprueft. Eine Regel ohne Pruefgegenstand meldet PASS, ohne etwas zu belegen.'
   );
