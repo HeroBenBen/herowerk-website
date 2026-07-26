@@ -14,7 +14,8 @@ apps-script/
 # Fremdcode, von keiner Aenderung angefasst. Umformatieren wuerde den Einzeiler
 # in tausende Zeilen aufblasen, ohne dass ihn je jemand liest.
 js/chart-4.4.1.umd.min.js
-# Maschinell erzeugte Messberichte (scripts/verify-raster.mjs u. a.). Sie werden
-# bei jedem Lauf neu geschrieben; sie zu formatieren wuerde das Gate bei jedem
-# Lauf gegen sich selbst laufen lassen.
-reports/
+# Maschinell erzeugter Messbericht des Fluchten-Gates. Er wird bei jedem Lauf neu
+# geschrieben; ihn zu formatieren wuerde das Gate gegen sich selbst laufen lassen.
+# BEWUSST eng gefasst: reports/ enthaelt 13 handgeschriebene Dokumente, die
+# weiter von Prettier geprueft werden sollen.
+reports/*_Raster-Befund_HERO.md

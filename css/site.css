@@ -5919,8 +5919,12 @@ html[data-theme='light'] .section-tag {
 
 /* B1 · Handlungsaufruf IN der Kontingentkarte.
    Er erbte `min-width: 220px` von `.fv-banner .btn-primary`. Der Inhaltsbereich
-   der Karte misst 162 px, der Knopf ragte dadurch auf JEDER Breite um 29 px
-   nach links UND nach rechts sichtbar aus der Karte (Karte hat overflow:visible).
+   der Karte misst 162 px, der Knopf ist also 58 px zu breit. Er beginnt an der
+   linken Inhaltskante und ragt deshalb auf JEDER Breite 29 px nach RECHTS
+   sichtbar aus der Karte (Karte hat overflow:visible), links buendig.
+   KORREKTUR 26.07. spaet: die erste Fassung dieses Kommentars sprach von
+   29 px auf BEIDEN Seiten. Falsch, der eigene Befundbericht sagt in allen fuenf
+   Breiten "links 0 px, rechts 29 px". Von der Abnahme gefunden.
    Hoehere Spezifitaet noetig, weil `.fv-banner .btn-primary` zwei Klassen traegt. */
 .fv-banner .btn-primary.fv-badge-cta {
   min-width: 0;
@@ -5987,6 +5991,15 @@ html[data-theme='light'] .section-tag {
   .fv-banner,
   .detail-final-cta,
   .home-feature,
+  .usp-strip {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+/* Die feste Leiste ist ab 960 px abwaerts sichtbar, nicht erst ab 860. Stand sie
+   im 860er-Block, lebte die alte 16-px-Drift im Band 861 bis 960 px weiter,
+   also genau ausserhalb aller Gate-Breiten. Von der Abnahme gefunden. */
+@media (max-width: 960px) {
   .mobile-bottom-bar {
     padding-left: 24px;
     padding-right: 24px;
@@ -6025,11 +6038,58 @@ html[data-theme='light'] .section-tag {
   .home-feature .btn-primary,
   .home-feature .btn-ghost,
   .fv-banner .btn-primary,
-  .fv-banner .btn-ghost {
+  .fv-banner .btn-ghost,
+  .detail-final-cta .btn-primary,
+  .detail-final-cta .btn-ghost {
     white-space: normal;
     min-width: 0;
   }
   .home-feature-inner > * {
     min-width: 0;
   }
+}
+
+/* B9 · Stellenkarten auf der Jobseite.
+   `.kar-role-name` ist Flex-Kind in `.kar-role-id`. Der Elternteil hat
+   `min-width: 0`, das Kind nicht, damit greift der Mindestinhalt-Boden und die
+   Ueberschrift ragte bei 375 px um 41,3 px aus ihrer Zeile. Altlast, vom
+   Fluchten-Gate gefunden, nachdem die Seitenliste auf alle 29 Seiten ging. */
+.kar-role-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* B10 · Lange Zeichenketten in Fliesstext.
+   Auf der Datenschutzseite steht eine Kennung in `<code>`, die bei 320 px
+   26 px aus ihrem Absatz ragte und die GANZE SEITE waagerecht scrollbar machte
+   (Rollbreite 356 gegen 320). Altlast, eigener Pruefpunkt fuer die Norm. */
+code,
+kbd,
+samp {
+  overflow-wrap: anywhere;
+}
+
+/* B11 · Schaltflaechenpaar der Anfragestrecke.
+   `.wizard-nav` ist ein Raster aus zwei gleichen Spalten. Ohne `min-width: 0`
+   kann eine Spalte nicht unter den Mindestinhalt ihres Knopfes schrumpfen; bei
+   320 px ragte der Weiter-Knopf 8,7 px heraus. */
+.wizard-nav > * {
+  min-width: 0;
+}
+@media (max-width: 360px) {
+  .wizard-btn-next,
+  .wizard-btn-back {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* B12 · Breite Tabellen im Ratgeber.
+   Eine Tabelle mit fester Mindestbreite ragte aus dem Artikelkasten. Sie
+   bekommt einen eigenen waagerechten Bildlaufbereich, statt die Seite zu
+   sprengen; das ist die uebliche und barrierefreie Loesung. */
+.ratgeber-article table {
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
 }

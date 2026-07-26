@@ -58,6 +58,12 @@
     .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:8px}
     .legal-footer{max-width:860px;margin:24px auto 0;text-align:center;font-size:.9rem}
     .legal-footer a{margin:0 10px}
+    /* Lange Kennungen in <code> brachen nicht um und machten die Seite bei
+       320 px waagerecht scrollbar (Rollbreite 356 gegen 320). Diese Seite laedt
+       css/site.css NICHT und braucht die Regel deshalb hier. Gefunden vom
+       Fluchten-Gate, 26.07.2026. */
+    code,kbd,samp{overflow-wrap:anywhere}
+    @media (max-width:600px){body{padding-left:24px;padding-right:24px}main{padding:24px 20px}}
   </style>
 </head>
 <body>

@@ -9,36 +9,120 @@
   ],
   "seiten": [
     {
-      "pfad": "/index.html",
-      "name": "Startseite"
-    },
-    {
-      "pfad": "/preise.html",
-      "name": "Preise"
-    },
-    {
-      "pfad": "/foerderung.html",
-      "name": "Foerderung"
-    },
-    {
-      "pfad": "/foerdervorschuss.html",
-      "name": "Foerdervorschuss"
-    },
-    {
       "pfad": "/anfrage.html",
-      "name": "Anfrage"
-    },
-    {
-      "pfad": "/rechner.html",
-      "name": "Rechner"
-    },
-    {
-      "pfad": "/kontakt.html",
-      "name": "Kontakt"
+      "name": "anfrage"
     },
     {
       "pfad": "/barrierefreiheit.html",
-      "name": "Barrierefreiheit"
+      "name": "barrierefreiheit"
+    },
+    {
+      "pfad": "/baubarkeitspruefung.html",
+      "name": "baubarkeitspruefung"
+    },
+    {
+      "pfad": "/bewerbung.html",
+      "name": "bewerbung"
+    },
+    {
+      "pfad": "/datenschutz.html",
+      "name": "datenschutz"
+    },
+    {
+      "pfad": "/dimensionierung-verstehen.html",
+      "name": "dimensionierung-verstehen"
+    },
+    {
+      "pfad": "/dimensionierung.html",
+      "name": "dimensionierung"
+    },
+    {
+      "pfad": "/foerderung-hannover.html",
+      "name": "foerderung-hannover"
+    },
+    {
+      "pfad": "/foerderung-jetzt-mitnehmen.html",
+      "name": "foerderung-jetzt-mitnehmen"
+    },
+    {
+      "pfad": "/foerderung.html",
+      "name": "foerderung"
+    },
+    {
+      "pfad": "/foerdervorschuss.html",
+      "name": "foerdervorschuss"
+    },
+    {
+      "pfad": "/gasheizung-tauschen-oder-reparieren.html",
+      "name": "gasheizung-tauschen-oder-reparieren"
+    },
+    {
+      "pfad": "/hinweise.html",
+      "name": "hinweise"
+    },
+    {
+      "pfad": "/impressum.html",
+      "name": "impressum"
+    },
+    {
+      "pfad": "/index.html",
+      "name": "index"
+    },
+    {
+      "pfad": "/karriere.html",
+      "name": "karriere"
+    },
+    {
+      "pfad": "/kontakt.html",
+      "name": "kontakt"
+    },
+    {
+      "pfad": "/kostenvergleich-waermepumpe.html",
+      "name": "kostenvergleich-waermepumpe"
+    },
+    {
+      "pfad": "/preise.html",
+      "name": "preise"
+    },
+    {
+      "pfad": "/propan-waermepumpe.html",
+      "name": "propan-waermepumpe"
+    },
+    {
+      "pfad": "/prozess.html",
+      "name": "prozess"
+    },
+    {
+      "pfad": "/ratgeber.html",
+      "name": "ratgeber"
+    },
+    {
+      "pfad": "/rechner.html",
+      "name": "rechner"
+    },
+    {
+      "pfad": "/waermepumpe-altbau.html",
+      "name": "waermepumpe-altbau"
+    },
+    {
+      "pfad": "/waermepumpe-hannover.html",
+      "name": "waermepumpe-hannover"
+    },
+    {
+      "pfad": "/waermepumpe-laerm.html",
+      "name": "waermepumpe-laerm"
+    },
+    {
+      "pfad": "/waermepumpenstrom-hannover.html",
+      "name": "waermepumpenstrom-hannover"
+    },
+    {
+      "pfad": "/wertsteigerung-waermepumpe.html",
+      "name": "wertsteigerung-waermepumpe"
+    },
+    {
+      "pfad": "/wp-kosten-hannover.html",
+      "name": "wp-kosten-hannover"
     }
   ],
   "toleranzPx": 0.5,
@@ -89,15 +173,15 @@
           "wahl": "section > .fv-inner",
           "grund": "Inhaltscontainer des Foerdervorschuss-Banners."
         }
-      ]
+      ],
+      "mindestAnteilBreite": 0.6
     },
     "r5_symmetrie": {
       "aktiv": true,
       "streng": true,
-      "beschreibung": "Linker und rechter Aussenabstand eines zentrierten Blocks duerfen sich um hoechstens 1 px unterscheiden.",
+      "beschreibung": "Bloecke, die das Stylesheet waagerecht zentriert (margin auto), muessen links und rechts denselben Aussenabstand haben. Erkennung ueber die Regeln des Stylesheets, nicht ueber eine Pixel-Heuristik.",
       "maxAbweichungPx": 1,
-      "ausnahmen": [],
-      "erkennungsFensterPx": 8
+      "ausnahmen": []
     }
   },
   "ignorierteWurzeln": [

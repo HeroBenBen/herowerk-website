@@ -122,12 +122,58 @@ function messen(cfg) {
   };
 
   const erg = { r1: [], r2: [], r3: [], r4: [], r5: [] };
+  // Abdeckung: eine Regel, die nichts prueft, meldet PASS und ist gefaehrlicher
+  // als eine abgeschaltete. Deshalb weist das Gate aus, WIE VIELE Elemente je
+  // Regel tatsaechlich in den Test gelaufen sind.
+  erg.abdeckung = { elemente: 0, sichtbar: 0, r1r3: 0, r5: 0, r4: 0 };
   const alle = [...document.querySelectorAll('body *')];
+  erg.abdeckung.elemente = alle.length;
+
+  // "Zentriert" heisst: das Stylesheet setzt den waagerechten Aussenabstand auf
+  // 'auto'. Das ist die einzige belastbare Erkennung. Der berechnete Stil gibt
+  // dafuer nur den benutzten Pixelwert her, deshalb werden die Regeln des
+  // Stylesheets gelesen und gegen das Element geprueft.
+  const zentrierWahlen = [];
+  for (const bogen of document.styleSheets) {
+    let regeln;
+    try {
+      regeln = bogen.cssRules;
+    } catch {
+      continue;
+    }
+    const sammle = (liste) => {
+      for (const r of liste) {
+        if (r.cssRules) {
+          sammle(r.cssRules);
+          continue;
+        }
+        if (!r.selectorText || !r.style) continue;
+        const ml = r.style.marginLeft,
+          mr = r.style.marginRight;
+        const mi = r.style.marginInline || r.style.margin || '';
+        if (ml === 'auto' || mr === 'auto' || /\bauto\b/.test(mi))
+          zentrierWahlen.push(r.selectorText);
+      }
+    };
+    sammle(regeln);
+  }
+  const istZentriert = (el) => {
+    const st = el.getAttribute('style') || '';
+    if (/margin(-left|-right|-inline)?\s*:[^;]*auto/.test(st)) return true;
+    return zentrierWahlen.some((w) => {
+      try {
+        return el.matches(w);
+      } catch {
+        return false;
+      }
+    });
+  };
 
   for (const el of alle) {
     if (ignoriert(el)) continue;
     const cs = getComputedStyle(el);
     if (!sichtbar(el, cs)) continue;
+    erg.abdeckung.sichtbar++;
     const b = el.getBoundingClientRect();
     if (b.width < 8 || b.height < 4) continue;
     const par = el.parentElement;
@@ -139,14 +185,20 @@ function messen(cfg) {
     // Waagerechte Bildlaufbereiche (z. B. Karten-Karussell) sind bauartbedingt
     // breiter als ihr Rahmen. Das ist gewollt und kein Rasterfehler.
     const rollt = (v) => v === 'auto' || v === 'scroll';
-    if (rollt(pcs.overflowX) || rollt(pcs.overflowY)) continue;
+    // NUR die waagerechte Achse, denn verglichen wird nur waagerecht. CSS zwingt
+    // overflow-x auf 'auto', sobald overflow-y 'auto' ist; wer beide Achsen
+    // ausnimmt, schaltet die Pruefung fuer jeden senkrecht rollenden Kasten ab.
+    if (rollt(pcs.overflowX) && par.scrollWidth > par.clientWidth + 1) continue;
     const pb = par.getBoundingClientRect();
     if (pb.width < 8) continue;
 
     // Regel 1: Kind ragt ueber die Kante seines Containers
-    if (cs.position === 'static' || cs.position === 'relative') {
+    // 'sticky' steht im normalen Fluss und gehoert ins Raster. 'absolute' und
+    // 'fixed' nicht: ihr Bezug ist nicht der Elternkasten.
+    if (cs.position === 'static' || cs.position === 'relative' || cs.position === 'sticky') {
       const links = pb.left - b.left;
       const rechts = b.right - pb.right;
+      erg.abdeckung.r1r3++;
       if (links > 0.01 || rechts > 0.01) {
         erg.r1.push({
           kind: wahl(el),
@@ -182,20 +234,17 @@ function messen(cfg) {
       // haben keine eigene Flucht; sie hier zu messen erzeugt reines Rauschen.
       const gapL = b.left - (pb.left + padL + bordL);
       const gapR = pb.right - padR - bordR - b.right;
-      const fenster = cfg.regeln.r5_symmetrie.erkennungsFensterPx ?? 8;
-      // Zusaetzlich muss der Container ein normaler Blockcontainer sein: in
-      // Flex- und Rasterlayouts kommt die Lage aus den Ausrichtungsregeln, eine
-      // ungleiche Luecke ist dort kein Zentrierungsfehler.
-      const istBlock = /^(block|flex|grid|table)$/.test(cs.display);
-      const containerBlock = /^(block|flow-root|list-item)$/.test(pcs.display);
-      if (
-        istBlock &&
-        containerBlock &&
-        gapL > 0.5 &&
-        gapR > 0.5 &&
-        Math.abs(gapL - gapR) <= fenster &&
-        Math.abs(gapL - gapR) > (cfg.regeln.r5_symmetrie.maxAbweichungPx ?? 1)
-      ) {
+      // Geprueft werden GENAU die Bloecke, die das Stylesheet zentriert
+      // (waagerechter Aussenabstand 'auto'). Zwei verworfene Fassungen und
+      // warum: (a) "Container muss ein reiner Blockcontainer sein" hat die Regel
+      // faktisch abgeschaltet, es erreichte KEIN Element den Test, weil hier
+      // zentrierte Bloecke in Flex- und Rasterschachteln stehen. (b) "Luecken
+      // aehnlich gross" hat 316 Scheinbefunde erzeugt, weil in einer Flex-Reihe
+      // jedes Element zufaellig aehnliche Luecken hat, ohne zentriert zu sein.
+      const istBlock = /^(block|flex|grid|table|table-cell)$/.test(cs.display);
+      const zentriert = istBlock && istZentriert(el);
+      if (zentriert) erg.abdeckung.r5++;
+      if (zentriert && Math.abs(gapL - gapR) > (cfg.regeln.r5_symmetrie.maxAbweichungPx ?? 1)) {
         erg.r5.push({
           block: wahl(el),
           container: wahl(par),
@@ -243,7 +292,12 @@ function messen(cfg) {
     if (b.width < 8) return;
     // Nur Container, die die volle Breite beanspruchen sollen. Ein bewusst
     // schmaler, zentrierter Block ist Sache von Regel 5, nicht von Regel 4.
-    if (b.width < breite - 2 * rand - 2) return;
+    // Schwelle bewusst als ANTEIL der Fensterbreite. Die frueher benutzte Formel
+    // (Breite >= Fenster minus zweimal Sollrand) nahm jeden Container mit
+    // GROESSEREM Rand als dem Soll still von der Pruefung aus: je groesser der
+    // Fehler, desto sicherer waere er durchgerutscht.
+    if (b.width < breite * (cfg.regeln.r4_seitenrand_treue.mindestAnteilBreite ?? 0.6)) return;
+    erg.abdeckung.r4++;
     erg.r4.push({
       art,
       wahl: wahlText,
@@ -274,6 +328,7 @@ const BASIS = process.env.RASTER_BASE_URL || serverUrl;
 
 const befunde = []; // { seite, breite, regel, text, daten }
 const kantenBericht = [];
+const abdeckung = [];
 let geprüft = 0;
 
 const browser = await chromium.launch();
@@ -366,6 +421,7 @@ try {
       }
 
       kantenBericht.push({ seite: seite.name, breite, kanten: r.r2 });
+      abdeckung.push({ seite: seite.name, breite, ...r.abdeckung });
       const erwartet = konfig.regeln.r2_kanten_inventar.erwarteteKanten;
       if (konfig.regeln.r2_kanten_inventar.streng && erwartet.length) {
         for (const k of r.r2) {
@@ -398,7 +454,7 @@ const nachRegel = (r) => befunde.filter((b) => b.regel === r);
 const zeilen = [];
 zeilen.push(`# Raster-Befund ${heute}`);
 zeilen.push('');
-zeilen.push(`Quelle: ${eigenerServer ? 'lokaler Arbeitsstand (' + wurzel + ')' : BASIS}`);
+zeilen.push(`Quelle: ${eigenerServer ? 'lokaler Arbeitsstand des Repos' : BASIS}`);
 zeilen.push(
   `Geprueft: ${konfig.seiten.length} Seiten x ${konfig.breiten.length} Breiten = ${geprüft} Laeufe.`
 );
@@ -423,6 +479,21 @@ for (const [regel, titel] of [
     zeilen.push('');
   }
 }
+zeilen.push('## Abdeckung (was die Regeln ueberhaupt angefasst haben)');
+zeilen.push('');
+zeilen.push(
+  '> Eine Regel, die nichts prueft, meldet PASS und ist gefaehrlicher als eine abgeschaltete. Diese Tabelle weist aus, wie viele Elemente je Regel tatsaechlich in den Test gelaufen sind. Steht in einer Spalte 0, ist die Regel auf dieser Seite wirkungslos.'
+);
+zeilen.push('');
+zeilen.push(
+  '| Seite | Breite | Elemente | davon sichtbar | in Regel 1+3 | in Regel 4 | in Regel 5 |'
+);
+zeilen.push('|---|---|---|---|---|---|---|');
+for (const a of abdeckung)
+  zeilen.push(
+    `| ${a.seite} | ${a.breite} px | ${a.elemente} | ${a.sichtbar} | ${a.r1r3} | ${a.r4} | ${a.r5} |`
+  );
+zeilen.push('');
 zeilen.push('## Kanten-Inventar (Bericht)');
 zeilen.push('');
 if (!konfig.regeln.r2_kanten_inventar.streng) {
@@ -453,6 +524,14 @@ console.log(
 );
 for (const [k, n] of [...gruppiert.entries()].sort((a, c) => c[1] - a[1]))
   console.log(`  ${n}x  ${k}`);
+const summe = (k) => abdeckung.reduce((a, b) => a + b[k], 0);
+console.log(
+  `Abdeckung: ${summe('sichtbar')} sichtbare Elemente, davon ${summe('r1r3')} in Regel 1+3, ${summe('r4')} in Regel 4, ${summe('r5')} in Regel 5.`
+);
+if (summe('r5') === 0)
+  console.log(
+    '  WARNUNG: Regel 5 hat kein einziges Element geprueft. Eine Regel ohne Pruefgegenstand meldet PASS, ohne etwas zu belegen.'
+  );
 console.log(`Befunddatei: ${path.relative(wurzel, berichtPfad)}`);
 
 if (befunde.length && !nurBericht) {
