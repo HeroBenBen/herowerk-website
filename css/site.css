@@ -6192,3 +6192,33 @@ samp {
   overflow-x: auto;
   max-width: 100%;
 }
+
+/* ═══ FUSSNOTEN-STERNCHEN: Kontrast und Anbindung (GF-Befund 26.07.2026) ═════
+   (1) Auf der orangen Foerdervorschuss-Flaeche der Startseiten-Karte erreichte
+   das gruene Sternchen nur Kontrast 1,28 gegen 232/168/56. Norm fuer Text ist
+   4,5. Benjamin hat es mit blossem Auge gesehen, gemessen ist es ein klarer
+   Norm-Verstoss. Dort erbt das Sternchen jetzt die dunkle Schriftfarbe des
+   Blocks statt gruen zu bleiben.
+   (2) Der waagerechte Abstand zum Text ist gemessen 0 px. Der Eindruck des
+   Abgeloestseins kommt vom hohen Hochstellen bei sehr kleiner Schrift. Die
+   Sternchen sitzen jetzt tiefer und etwas groesser, damit sie am Wort haengen.
+   ═══════════════════════════════════════════════════════════════════════════ */
+/* Die Farbe wird an der Quelle gesetzt (Inline-Stil in index.html auf
+   'inherit'), nicht ueber einen Spezifitaets-Kampf mit tokens.css. Das
+   Sternchen traegt damit in JEDEM Modus die Schriftfarbe seines Blocks. */
+.hc-label sup,
+.hc-value sup,
+.hc-result-value sup,
+.hc-fv-text sup,
+.hero-sub sup,
+.trust-logo-badge sup {
+  vertical-align: 0.35em;
+  font-size: 0.62em;
+  line-height: 0;
+  margin-left: 0;
+}
+.fv-asterisk {
+  vertical-align: 0.35em;
+  font-size: 0.62em;
+  margin-left: 0;
+}
