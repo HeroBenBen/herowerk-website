@@ -12,7 +12,7 @@ Ergebnis: PASS (0 Befunde).
 
 ## Regel 4: Seitenrand-Treue fester Elemente (hart) — PASS
 
-## Regel 5: Symmetrie zentrierter Bloecke (hart) — PASS
+## Regel 5: Symmetrie zentrierter Bloecke (ABGESCHALTET, siehe raster-expect.json) — PASS
 
 ## Regel 2: Kanten-Inventar — PASS
 
@@ -36,10 +36,10 @@ Ergebnis: PASS (0 Befunde).
 | gasheizung-tauschen-oder-reparieren | 320 px | 144 | 123 | 84 | 2 | 0 |
 | hinweise | 320 px | 148 | 126 | 87 | 3 | 0 |
 | impressum | 320 px | 51 | 39 | 32 | 0 | 0 |
-| index | 320 px | 334 | 310 | 215 | 8 | 0 |
+| index | 320 px | 334 | 310 | 214 | 8 | 0 |
 | karriere | 320 px | 788 | 750 | 413 | 7 | 0 |
 | kontakt | 320 px | 152 | 132 | 88 | 2 | 0 |
-| kostenvergleich-waermepumpe | 320 px | 652 | 593 | 56 | 0 | 1 |
+| kostenvergleich-waermepumpe | 320 px | 652 | 593 | 56 | 0 | 0 |
 | preise | 320 px | 354 | 336 | 258 | 6 | 0 |
 | propan-waermepumpe | 320 px | 140 | 122 | 83 | 1 | 0 |
 | prozess | 320 px | 196 | 172 | 116 | 3 | 0 |
@@ -65,10 +65,10 @@ Ergebnis: PASS (0 Befunde).
 | gasheizung-tauschen-oder-reparieren | 360 px | 144 | 123 | 84 | 2 | 0 |
 | hinweise | 360 px | 148 | 126 | 87 | 3 | 0 |
 | impressum | 360 px | 51 | 39 | 32 | 0 | 0 |
-| index | 360 px | 334 | 310 | 215 | 8 | 0 |
+| index | 360 px | 334 | 310 | 214 | 8 | 0 |
 | karriere | 360 px | 788 | 750 | 413 | 7 | 0 |
 | kontakt | 360 px | 152 | 132 | 88 | 2 | 0 |
-| kostenvergleich-waermepumpe | 360 px | 652 | 593 | 56 | 0 | 1 |
+| kostenvergleich-waermepumpe | 360 px | 652 | 593 | 56 | 0 | 0 |
 | preise | 360 px | 354 | 336 | 258 | 6 | 0 |
 | propan-waermepumpe | 360 px | 140 | 122 | 83 | 1 | 0 |
 | prozess | 360 px | 196 | 172 | 116 | 3 | 0 |
@@ -94,10 +94,10 @@ Ergebnis: PASS (0 Befunde).
 | gasheizung-tauschen-oder-reparieren | 375 px | 144 | 123 | 84 | 2 | 0 |
 | hinweise | 375 px | 148 | 126 | 87 | 3 | 0 |
 | impressum | 375 px | 51 | 39 | 32 | 0 | 0 |
-| index | 375 px | 334 | 310 | 215 | 8 | 0 |
+| index | 375 px | 334 | 310 | 214 | 8 | 0 |
 | karriere | 375 px | 788 | 750 | 413 | 7 | 0 |
 | kontakt | 375 px | 152 | 132 | 88 | 2 | 0 |
-| kostenvergleich-waermepumpe | 375 px | 652 | 593 | 56 | 0 | 1 |
+| kostenvergleich-waermepumpe | 375 px | 652 | 593 | 56 | 0 | 0 |
 | preise | 375 px | 354 | 336 | 258 | 6 | 0 |
 | propan-waermepumpe | 375 px | 140 | 122 | 83 | 1 | 0 |
 | prozess | 375 px | 196 | 172 | 116 | 3 | 0 |
@@ -123,10 +123,10 @@ Ergebnis: PASS (0 Befunde).
 | gasheizung-tauschen-oder-reparieren | 390 px | 144 | 123 | 84 | 2 | 0 |
 | hinweise | 390 px | 148 | 126 | 87 | 3 | 0 |
 | impressum | 390 px | 51 | 39 | 32 | 0 | 0 |
-| index | 390 px | 334 | 310 | 215 | 8 | 0 |
+| index | 390 px | 334 | 310 | 214 | 8 | 0 |
 | karriere | 390 px | 788 | 750 | 413 | 7 | 0 |
 | kontakt | 390 px | 152 | 132 | 88 | 2 | 0 |
-| kostenvergleich-waermepumpe | 390 px | 652 | 593 | 56 | 0 | 1 |
+| kostenvergleich-waermepumpe | 390 px | 652 | 593 | 56 | 0 | 0 |
 | preise | 390 px | 354 | 336 | 260 | 6 | 0 |
 | propan-waermepumpe | 390 px | 140 | 122 | 83 | 1 | 0 |
 | prozess | 390 px | 196 | 172 | 116 | 3 | 0 |
@@ -152,10 +152,10 @@ Ergebnis: PASS (0 Befunde).
 | gasheizung-tauschen-oder-reparieren | 414 px | 144 | 123 | 84 | 2 | 0 |
 | hinweise | 414 px | 148 | 126 | 87 | 3 | 0 |
 | impressum | 414 px | 51 | 39 | 32 | 0 | 0 |
-| index | 414 px | 334 | 310 | 215 | 8 | 0 |
+| index | 414 px | 334 | 310 | 214 | 8 | 0 |
 | karriere | 414 px | 788 | 750 | 413 | 7 | 0 |
 | kontakt | 414 px | 152 | 132 | 88 | 2 | 0 |
-| kostenvergleich-waermepumpe | 414 px | 652 | 593 | 56 | 0 | 1 |
+| kostenvergleich-waermepumpe | 414 px | 652 | 593 | 56 | 0 | 0 |
 | preise | 414 px | 354 | 336 | 260 | 6 | 0 |
 | propan-waermepumpe | 414 px | 140 | 122 | 83 | 1 | 0 |
 | prozess | 414 px | 196 | 172 | 116 | 3 | 0 |
@@ -368,9 +368,9 @@ Ergebnis: PASS (0 Befunde).
 | 91.28 px | 2 | div.usp-item, div.usp-icon |
 | 133.28 px | 2 | div.usp-text, h2 |
 | 139.27 px | 1 | a.mobile-phone-cta |
-| 167.83 px | 1 | div.hc-result-value |
 | 168 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
 | 178.27 px | 1 | span.mobile-phone-label |
+| 182.47 px | 1 | div.hc-result-value |
 | 200.08 px | 1 | div.hc-value |
 | 210 px | 4 | div.usp-text, h2, div.usp-text |
 | 210.94 px | 1 | div.hc-value |
@@ -768,7 +768,7 @@ Ergebnis: PASS (0 Befunde).
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 6 | div.nav-inner, main#main-content, section.hero |
-| 24 px | 25 | a, img.nav-logo.logo-dark, div.hero-inner |
+| 24 px | 27 | a, img.nav-logo.logo-dark, div.hero-inner |
 | 25 px | 4 | div.hc-row, div.hc-row, div.hc-result |
 | 43 px | 5 | div, div.hc-label, div |
 | 49 px | 3 | div.hc-fv-badge, div.hc-fv-text, strong |
@@ -779,7 +779,7 @@ Ergebnis: PASS (0 Befunde).
 | 159.27 px | 1 | a.mobile-phone-cta |
 | 188 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
 | 198.27 px | 1 | span.mobile-phone-label |
-| 207.83 px | 1 | div.hc-result-value |
+| 222.47 px | 1 | div.hc-result-value |
 | 230 px | 4 | div.usp-text, h2, div.usp-text |
 | 240.08 px | 1 | div.hc-value |
 | 250.94 px | 1 | div.hc-value |
@@ -1182,7 +1182,7 @@ Ergebnis: PASS (0 Befunde).
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 6 | div.nav-inner, main#main-content, section.hero |
-| 24 px | 25 | a, img.nav-logo.logo-dark, div.hero-inner |
+| 24 px | 27 | a, img.nav-logo.logo-dark, div.hero-inner |
 | 25 px | 4 | div.hc-row, div.hc-row, div.hc-result |
 | 43 px | 5 | div, div.hc-label, div |
 | 49 px | 3 | div.hc-fv-badge, div.hc-fv-text, strong |
@@ -1193,7 +1193,7 @@ Ergebnis: PASS (0 Befunde).
 | 166.77 px | 1 | a.mobile-phone-cta |
 | 195.5 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
 | 205.77 px | 1 | span.mobile-phone-label |
-| 222.83 px | 1 | div.hc-result-value |
+| 237.47 px | 1 | div.hc-result-value |
 | 237.5 px | 4 | div.usp-text, h2, div.usp-text |
 | 255.08 px | 1 | div.hc-value |
 | 265.94 px | 1 | div.hc-value |
@@ -1601,7 +1601,7 @@ Ergebnis: PASS (0 Befunde).
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 6 | div.nav-inner, main#main-content, section.hero |
-| 24 px | 25 | a, img.nav-logo.logo-dark, div.hero-inner |
+| 24 px | 27 | a, img.nav-logo.logo-dark, div.hero-inner |
 | 25 px | 4 | div.hc-row, div.hc-row, div.hc-result |
 | 43 px | 5 | div, div.hc-label, div |
 | 49 px | 3 | div.hc-fv-badge, div.hc-fv-text, strong |
@@ -1612,8 +1612,8 @@ Ergebnis: PASS (0 Befunde).
 | 174.27 px | 1 | a.mobile-phone-cta |
 | 203 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
 | 213.27 px | 1 | span.mobile-phone-label |
-| 237.83 px | 1 | div.hc-result-value |
 | 245 px | 4 | div.usp-text, h2, div.usp-text |
+| 252.47 px | 1 | div.hc-result-value |
 | 270.08 px | 1 | div.hc-value |
 | 280.94 px | 1 | div.hc-value |
 | 328 px | 1 | div#hamburger.hamburger |
@@ -2035,7 +2035,7 @@ Ergebnis: PASS (0 Befunde).
 | 215 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
 | 225.27 px | 1 | span.mobile-phone-label |
 | 257 px | 4 | div.usp-text, h2, div.usp-text |
-| 261.83 px | 1 | div.hc-result-value |
+| 276.47 px | 1 | div.hc-result-value |
 | 294.08 px | 1 | div.hc-value |
 | 304.94 px | 1 | div.hc-value |
 | 352 px | 1 | div#hamburger.hamburger |
