@@ -5901,3 +5901,135 @@ html[data-theme='light'] .section-tag {
   font-size: 14px;
   line-height: 1.6;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RASTER-KORREKTUR TELEFON (GF-Befund 26.07.2026, mit Hilfslinien gemeldet)
+   ───────────────────────────────────────────────────────────────────────────
+   Alle Aenderungen unten sind Antworten auf gemessene Befunde des Fluchten-
+   Gates (`npm run verify:raster`, Befunddatei in reports/). Gegen den Stand
+   origin/main 0f775be meldete das Gate 144 Befunde. Ein gemeinsames Muster:
+   Breiten aus dem Desktop-Entwurf (feste Werte, Mindestbreiten, Mindesthoehen
+   mit Seitenverhaeltnis) wandern unveraendert auf das Telefon und sprengen
+   dort ihren Container.
+   Bewusst als EIN eigener Block am Dateiende statt als Eingriff in bestehende
+   Medienbloecke: am 26.07. hat genau so ein Eingriff zwoelf Regeln in den
+   falschen Block verschoben und die Navigation zwischen 600 und 960 px
+   getoetet (Lehre feedback_klammer_bilanz_beweist_anzahl_nicht_verschachtelung).
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* B1 · Handlungsaufruf IN der Kontingentkarte.
+   Er erbte `min-width: 220px` von `.fv-banner .btn-primary`. Der Inhaltsbereich
+   der Karte misst 162 px, der Knopf ragte dadurch auf JEDER Breite um 29 px
+   nach links UND nach rechts sichtbar aus der Karte (Karte hat overflow:visible).
+   Hoehere Spezifitaet noetig, weil `.fv-banner .btn-primary` zwei Klassen traegt. */
+.fv-banner .btn-primary.fv-badge-cta {
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+  text-align: center;
+}
+
+/* B2 · Rechtszeile im Fusszeilenbereich.
+   Drei Links in einer Flex-Reihe ohne Umbruch ergeben 342,4 px feste Breite.
+   Auf 320 bis 414 px ragte die Zeile beidseitig aus ihrer Spalte und wurde vom
+   Seitenkoerper abgeschnitten, die aeusseren Links waren angeschnitten. */
+@media (max-width: 768px) {
+  .footer-legal {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 20px;
+  }
+}
+
+/* B3 · Bildblock der Merkmal-Abschnitte auf der Startseite.
+   `aspect-ratio: 4/3` zusammen mit `min-height: 260px` liess die HOEHE die
+   BREITE bestimmen: 260 x 4/3 = 346,7 px in einer 335 px breiten Spalte. Das
+   Bild wurde rechts angeschnitten, links stand es buendig - genau die schiefe
+   Flucht aus dem Screenshot. Mit ausdruecklicher Breite gewinnt die Spalte,
+   die Hoehe folgt. */
+@media (max-width: 960px) {
+  .home-feature-media {
+    width: 100%;
+  }
+}
+
+/* B4 · Markenkarten auf der Preisseite.
+   `minmax(290px, 1fr)` kann auf 320 px nicht erfuellt werden, die Karte ragte
+   18 px heraus. `min(290px, 100%)` erlaubt der Spalte, unter den Wunschwert zu
+   gehen, statt den Container zu sprengen. */
+.w3-brands {
+  grid-template-columns: repeat(auto-fit, minmax(min(290px, 100%), 1fr));
+}
+
+/* B5 · Kopfbereich der Preisseite.
+   `min-width: 280px` auf der Textspalte und ein nicht schrumpfender Knopf
+   ergaben 342 px in einem 272 px breiten Container. */
+@media (max-width: 768px) {
+  .pa-header-left {
+    min-width: min(280px, 100%);
+  }
+  .pa-header-cta {
+    flex-shrink: 1;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+/* B6 · EIN Seitenrand statt vier.
+   Gemessen am 26.07.: Kopfzeile 24 px, Startseiten-Banner 20 px, Rechner- und
+   Ratgeber-Uebersicht 18 px, feste Leiste unten 16 px. Hausmass der Seite ist
+   24 px (`section { padding: 100px 24px }`, `.nav-inner { padding: 0 24px }`).
+   Alle Abweichungen ziehen auf das Hausmass. */
+@media (max-width: 860px) {
+  .hero,
+  .fv-banner,
+  .detail-final-cta,
+  .home-feature,
+  .mobile-bottom-bar {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+@media (max-width: 520px) {
+  .rechner-hub,
+  .ratgeber-hub {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+/* B7 · Kontingentkarte flieht mit ihrem Abschnitt.
+   Die Karte stand fest auf 220 px und mittig (77,5 px bei 375 px Breite),
+   waehrend der Abschnittsinhalt linksbuendig ueber die volle Breite lief.
+   Auf dem Telefon nimmt sie jetzt die Inhaltsbreite und dieselbe Kante wie
+   Ueberschrift, Text und Knoepfe darueber. */
+@media (max-width: 768px) {
+  .fv-badge-box {
+    max-width: none;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+/* B8 · Schmalste Geraete: Knopfbeschriftung darf umbrechen.
+   `.home-feature .btn-primary` traegt `white-space: nowrap`. Die laengste
+   Beschriftung ("Foerdermittel-Rechner starten") ergibt dadurch eine
+   Mindestbreite von 277,3 px. Auf 320 px ist die Spalte 272 px breit, die
+   Rasterspalte konnte nicht kleiner werden als ihr Inhalt und ragte 5,3 px
+   heraus. Unterhalb 400 px darf die Beschriftung umbrechen; darueber bleibt
+   die einzeilige Optik unveraendert. */
+@media (max-width: 400px) {
+  .home-feature .btn-primary,
+  .home-feature .btn-ghost,
+  .fv-banner .btn-primary,
+  .fv-banner .btn-ghost {
+    white-space: normal;
+    min-width: 0;
+  }
+  .home-feature-inner > * {
+    min-width: 0;
+  }
+}
