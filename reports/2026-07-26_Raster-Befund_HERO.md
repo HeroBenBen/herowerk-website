@@ -1,7 +1,7 @@
 # Raster-Befund 2026-07-26
 
-Quelle: lokaler Arbeitsstand (/private/tmp/claude-501/-Users-benjaminbendler-Library-CloudStorage-GoogleDrive-b-bendler-herowerk-de-Meine-Ablage-HeroPlan/5a29d727-44df-4aec-974f-15fbf9a0c767/scratchpad/wt-raster)
-Geprueft: 8 Seiten x 5 Breiten = 40 Laeufe.
+Quelle: lokaler Arbeitsstand des Repos
+Geprueft: 29 Seiten x 5 Breiten = 145 Laeufe.
 Ergebnis: PASS (0 Befunde).
 
 ## Ladefehler — PASS
@@ -16,73 +16,163 @@ Ergebnis: PASS (0 Befunde).
 
 ## Regel 2: Kanten-Inventar — PASS
 
+## Abdeckung (was die Regeln ueberhaupt angefasst haben)
+
+> Eine Regel, die nichts prueft, meldet PASS und ist gefaehrlicher als eine abgeschaltete. Diese Tabelle weist aus, wie viele Elemente je Regel tatsaechlich in den Test gelaufen sind. Steht in einer Spalte 0, ist die Regel auf dieser Seite wirkungslos.
+
+| Seite | Breite | Elemente | davon sichtbar | in Regel 1+3 | in Regel 4 | in Regel 5 |
+|---|---|---|---|---|---|---|
+| anfrage | 320 px | 824 | 749 | 42 | 0 | 0 |
+| barrierefreiheit | 320 px | 159 | 141 | 102 | 1 | 0 |
+| baubarkeitspruefung | 320 px | 147 | 126 | 87 | 2 | 0 |
+| bewerbung | 320 px | 179 | 158 | 94 | 2 | 0 |
+| datenschutz | 320 px | 95 | 83 | 78 | 0 | 0 |
+| dimensionierung-verstehen | 320 px | 140 | 122 | 81 | 2 | 0 |
+| dimensionierung | 320 px | 666 | 609 | 71 | 2 | 0 |
+| foerderung-hannover | 320 px | 165 | 145 | 103 | 2 | 0 |
+| foerderung-jetzt-mitnehmen | 320 px | 245 | 227 | 184 | 1 | 0 |
+| foerderung | 320 px | 346 | 314 | 224 | 5 | 0 |
+| foerdervorschuss | 320 px | 173 | 150 | 107 | 3 | 0 |
+| gasheizung-tauschen-oder-reparieren | 320 px | 144 | 123 | 84 | 2 | 0 |
+| hinweise | 320 px | 148 | 126 | 87 | 3 | 0 |
+| impressum | 320 px | 51 | 39 | 32 | 0 | 0 |
+| index | 320 px | 334 | 310 | 215 | 8 | 0 |
+| karriere | 320 px | 788 | 750 | 413 | 7 | 0 |
+| kontakt | 320 px | 152 | 132 | 88 | 2 | 0 |
+| kostenvergleich-waermepumpe | 320 px | 652 | 593 | 56 | 0 | 1 |
+| preise | 320 px | 354 | 336 | 258 | 6 | 0 |
+| propan-waermepumpe | 320 px | 140 | 122 | 83 | 1 | 0 |
+| prozess | 320 px | 196 | 172 | 116 | 3 | 0 |
+| ratgeber | 320 px | 386 | 361 | 307 | 5 | 0 |
+| rechner | 320 px | 185 | 167 | 125 | 2 | 0 |
+| waermepumpe-altbau | 320 px | 142 | 121 | 81 | 2 | 0 |
+| waermepumpe-hannover | 320 px | 131 | 111 | 72 | 2 | 0 |
+| waermepumpe-laerm | 320 px | 160 | 142 | 103 | 1 | 0 |
+| waermepumpenstrom-hannover | 320 px | 174 | 156 | 109 | 1 | 0 |
+| wertsteigerung-waermepumpe | 320 px | 226 | 208 | 167 | 1 | 0 |
+| wp-kosten-hannover | 320 px | 199 | 181 | 135 | 1 | 0 |
+| anfrage | 360 px | 824 | 749 | 42 | 0 | 0 |
+| barrierefreiheit | 360 px | 159 | 141 | 102 | 1 | 0 |
+| baubarkeitspruefung | 360 px | 147 | 126 | 87 | 2 | 0 |
+| bewerbung | 360 px | 179 | 158 | 94 | 2 | 0 |
+| datenschutz | 360 px | 95 | 83 | 78 | 0 | 0 |
+| dimensionierung-verstehen | 360 px | 140 | 122 | 83 | 2 | 0 |
+| dimensionierung | 360 px | 666 | 609 | 71 | 2 | 0 |
+| foerderung-hannover | 360 px | 165 | 145 | 103 | 2 | 0 |
+| foerderung-jetzt-mitnehmen | 360 px | 245 | 227 | 184 | 1 | 0 |
+| foerderung | 360 px | 346 | 314 | 224 | 5 | 0 |
+| foerdervorschuss | 360 px | 173 | 150 | 107 | 3 | 0 |
+| gasheizung-tauschen-oder-reparieren | 360 px | 144 | 123 | 84 | 2 | 0 |
+| hinweise | 360 px | 148 | 126 | 87 | 3 | 0 |
+| impressum | 360 px | 51 | 39 | 32 | 0 | 0 |
+| index | 360 px | 334 | 310 | 215 | 8 | 0 |
+| karriere | 360 px | 788 | 750 | 413 | 7 | 0 |
+| kontakt | 360 px | 152 | 132 | 88 | 2 | 0 |
+| kostenvergleich-waermepumpe | 360 px | 652 | 593 | 56 | 0 | 1 |
+| preise | 360 px | 354 | 336 | 258 | 6 | 0 |
+| propan-waermepumpe | 360 px | 140 | 122 | 83 | 1 | 0 |
+| prozess | 360 px | 196 | 172 | 116 | 3 | 0 |
+| ratgeber | 360 px | 386 | 361 | 307 | 5 | 0 |
+| rechner | 360 px | 185 | 167 | 125 | 2 | 0 |
+| waermepumpe-altbau | 360 px | 142 | 121 | 81 | 2 | 0 |
+| waermepumpe-hannover | 360 px | 131 | 111 | 72 | 2 | 0 |
+| waermepumpe-laerm | 360 px | 160 | 142 | 103 | 1 | 0 |
+| waermepumpenstrom-hannover | 360 px | 174 | 156 | 109 | 1 | 0 |
+| wertsteigerung-waermepumpe | 360 px | 226 | 208 | 169 | 1 | 0 |
+| wp-kosten-hannover | 360 px | 199 | 181 | 135 | 1 | 0 |
+| anfrage | 375 px | 824 | 749 | 42 | 0 | 0 |
+| barrierefreiheit | 375 px | 159 | 141 | 102 | 1 | 0 |
+| baubarkeitspruefung | 375 px | 147 | 126 | 87 | 2 | 0 |
+| bewerbung | 375 px | 179 | 158 | 94 | 2 | 0 |
+| datenschutz | 375 px | 95 | 83 | 78 | 0 | 0 |
+| dimensionierung-verstehen | 375 px | 140 | 122 | 83 | 2 | 0 |
+| dimensionierung | 375 px | 666 | 609 | 71 | 2 | 0 |
+| foerderung-hannover | 375 px | 165 | 145 | 103 | 2 | 0 |
+| foerderung-jetzt-mitnehmen | 375 px | 245 | 227 | 184 | 1 | 0 |
+| foerderung | 375 px | 346 | 314 | 224 | 5 | 0 |
+| foerdervorschuss | 375 px | 173 | 150 | 107 | 3 | 0 |
+| gasheizung-tauschen-oder-reparieren | 375 px | 144 | 123 | 84 | 2 | 0 |
+| hinweise | 375 px | 148 | 126 | 87 | 3 | 0 |
+| impressum | 375 px | 51 | 39 | 32 | 0 | 0 |
+| index | 375 px | 334 | 310 | 215 | 8 | 0 |
+| karriere | 375 px | 788 | 750 | 413 | 7 | 0 |
+| kontakt | 375 px | 152 | 132 | 88 | 2 | 0 |
+| kostenvergleich-waermepumpe | 375 px | 652 | 593 | 56 | 0 | 1 |
+| preise | 375 px | 354 | 336 | 258 | 6 | 0 |
+| propan-waermepumpe | 375 px | 140 | 122 | 83 | 1 | 0 |
+| prozess | 375 px | 196 | 172 | 116 | 3 | 0 |
+| ratgeber | 375 px | 386 | 361 | 307 | 5 | 0 |
+| rechner | 375 px | 185 | 167 | 125 | 2 | 0 |
+| waermepumpe-altbau | 375 px | 142 | 121 | 81 | 2 | 0 |
+| waermepumpe-hannover | 375 px | 131 | 111 | 72 | 2 | 0 |
+| waermepumpe-laerm | 375 px | 160 | 142 | 103 | 1 | 0 |
+| waermepumpenstrom-hannover | 375 px | 174 | 156 | 109 | 1 | 0 |
+| wertsteigerung-waermepumpe | 375 px | 226 | 208 | 169 | 1 | 0 |
+| wp-kosten-hannover | 375 px | 199 | 181 | 135 | 1 | 0 |
+| anfrage | 390 px | 824 | 749 | 42 | 0 | 0 |
+| barrierefreiheit | 390 px | 159 | 141 | 102 | 1 | 0 |
+| baubarkeitspruefung | 390 px | 147 | 126 | 87 | 2 | 0 |
+| bewerbung | 390 px | 179 | 158 | 94 | 2 | 0 |
+| datenschutz | 390 px | 95 | 83 | 78 | 0 | 0 |
+| dimensionierung-verstehen | 390 px | 140 | 122 | 83 | 2 | 0 |
+| dimensionierung | 390 px | 666 | 609 | 71 | 2 | 0 |
+| foerderung-hannover | 390 px | 165 | 145 | 103 | 2 | 0 |
+| foerderung-jetzt-mitnehmen | 390 px | 245 | 227 | 184 | 1 | 0 |
+| foerderung | 390 px | 346 | 314 | 224 | 5 | 0 |
+| foerdervorschuss | 390 px | 173 | 150 | 107 | 3 | 0 |
+| gasheizung-tauschen-oder-reparieren | 390 px | 144 | 123 | 84 | 2 | 0 |
+| hinweise | 390 px | 148 | 126 | 87 | 3 | 0 |
+| impressum | 390 px | 51 | 39 | 32 | 0 | 0 |
+| index | 390 px | 334 | 310 | 215 | 8 | 0 |
+| karriere | 390 px | 788 | 750 | 413 | 7 | 0 |
+| kontakt | 390 px | 152 | 132 | 88 | 2 | 0 |
+| kostenvergleich-waermepumpe | 390 px | 652 | 593 | 56 | 0 | 1 |
+| preise | 390 px | 354 | 336 | 260 | 6 | 0 |
+| propan-waermepumpe | 390 px | 140 | 122 | 83 | 1 | 0 |
+| prozess | 390 px | 196 | 172 | 116 | 3 | 0 |
+| ratgeber | 390 px | 386 | 361 | 307 | 5 | 0 |
+| rechner | 390 px | 185 | 167 | 125 | 2 | 0 |
+| waermepumpe-altbau | 390 px | 142 | 121 | 81 | 2 | 0 |
+| waermepumpe-hannover | 390 px | 131 | 111 | 72 | 2 | 0 |
+| waermepumpe-laerm | 390 px | 160 | 142 | 103 | 1 | 0 |
+| waermepumpenstrom-hannover | 390 px | 174 | 156 | 109 | 1 | 0 |
+| wertsteigerung-waermepumpe | 390 px | 226 | 208 | 169 | 1 | 0 |
+| wp-kosten-hannover | 390 px | 199 | 181 | 135 | 1 | 0 |
+| anfrage | 414 px | 824 | 749 | 42 | 0 | 0 |
+| barrierefreiheit | 414 px | 159 | 141 | 102 | 1 | 0 |
+| baubarkeitspruefung | 414 px | 147 | 126 | 87 | 2 | 0 |
+| bewerbung | 414 px | 179 | 158 | 94 | 2 | 0 |
+| datenschutz | 414 px | 95 | 83 | 78 | 0 | 0 |
+| dimensionierung-verstehen | 414 px | 140 | 122 | 83 | 2 | 0 |
+| dimensionierung | 414 px | 666 | 609 | 71 | 2 | 0 |
+| foerderung-hannover | 414 px | 165 | 145 | 103 | 2 | 0 |
+| foerderung-jetzt-mitnehmen | 414 px | 245 | 227 | 184 | 1 | 0 |
+| foerderung | 414 px | 346 | 314 | 224 | 5 | 0 |
+| foerdervorschuss | 414 px | 173 | 150 | 107 | 3 | 0 |
+| gasheizung-tauschen-oder-reparieren | 414 px | 144 | 123 | 84 | 2 | 0 |
+| hinweise | 414 px | 148 | 126 | 87 | 3 | 0 |
+| impressum | 414 px | 51 | 39 | 32 | 0 | 0 |
+| index | 414 px | 334 | 310 | 215 | 8 | 0 |
+| karriere | 414 px | 788 | 750 | 413 | 7 | 0 |
+| kontakt | 414 px | 152 | 132 | 88 | 2 | 0 |
+| kostenvergleich-waermepumpe | 414 px | 652 | 593 | 56 | 0 | 1 |
+| preise | 414 px | 354 | 336 | 260 | 6 | 0 |
+| propan-waermepumpe | 414 px | 140 | 122 | 83 | 1 | 0 |
+| prozess | 414 px | 196 | 172 | 116 | 3 | 0 |
+| ratgeber | 414 px | 386 | 361 | 307 | 5 | 0 |
+| rechner | 414 px | 185 | 167 | 125 | 2 | 0 |
+| waermepumpe-altbau | 414 px | 142 | 121 | 81 | 2 | 0 |
+| waermepumpe-hannover | 414 px | 131 | 111 | 72 | 2 | 0 |
+| waermepumpe-laerm | 414 px | 160 | 142 | 103 | 1 | 0 |
+| waermepumpenstrom-hannover | 414 px | 174 | 156 | 109 | 1 | 0 |
+| wertsteigerung-waermepumpe | 414 px | 226 | 208 | 169 | 1 | 0 |
+| wp-kosten-hannover | 414 px | 199 | 181 | 135 | 1 | 0 |
+
 ## Kanten-Inventar (Bericht)
 
 > Regel 2 laeuft als Bericht ohne Fehlerabbruch. Grund: Kanten-Erwartung noch nicht mit Benjamin ratifiziert (Uebergabe 26.07., BLOCKED-Kriterium Einheit 2). Bis dahin Bericht ohne Fehlerabbruch.
 
-**Startseite, 320 px — 18 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 6 | div.nav-inner, main#main-content, section.hero |
-| 20 px | 5 | div.usp-strip-inner, div.usp-item, div.usp-icon |
-| 24 px | 19 | a, img.nav-logo.logo-dark, div.hero-inner |
-| 25 px | 4 | div.hc-row, div.hc-row, div.hc-result |
-| 43 px | 5 | div, div.hc-label, div |
-| 49 px | 3 | div.hc-fv-badge, div.hc-fv-text, strong |
-| 53 px | 2 | a#fvHomeCta.btn-primary.fv-badge-cta, div.fv-badge-note |
-| 62 px | 4 | div.usp-text, h2, div.usp-text |
-| 91.28 px | 2 | div.usp-item, div.usp-icon |
-| 133.28 px | 2 | div.usp-text, h2 |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 167.83 px | 1 | div.hc-result-value |
-| 168 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 200.08 px | 1 | div.hc-value |
-| 210 px | 4 | div.usp-text, h2, div.usp-text |
-| 210.94 px | 1 | div.hc-value |
-| 258 px | 1 | div#hamburger.hamburger |
-
-**Preise, 320 px — 8 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 4 | div.nav-inner, main#main-content, section#preise-intro.section |
-| 24 px | 15 | a, img.nav-logo.logo-dark, div.section-inner |
-| 44 px | 6 | li, strong, li |
-| 64.44 px | 1 | strong |
-| 73.5 px | 1 | div.section-tag |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
-
-**Foerderung, 320 px — 10 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
-| 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
-| 39 px | 33 | div, div.foerder-inputs-grid, div.fi-group |
-| 43 px | 2 | button.active, button.active |
-| 60 px | 1 | span |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 159.42 px | 1 | button |
-| 162 px | 1 | button |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
-
-**Foerdervorschuss, 320 px — 6 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 10 | div.section-inner, div.section-tag, h1.section-title |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
-
-**Anfrage, 320 px — 15 verschiedene linke Kanten**
+**anfrage, 320 px — 15 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -102,7 +192,300 @@ Ergebnis: PASS (0 Befunde).
 | 211.11 px | 1 | a.funnel-close-link |
 | 218.64 px | 1 | span#progressPercent.progress-percent |
 
-**Rechner, 320 px — 14 verschiedene linke Kanten**
+**barrierefreiheit, 320 px — 8 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 16 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 2 | li, li |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 173.72 px | 1 | strong |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**baubarkeitspruefung, 320 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 17 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 4 | li, strong, li |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**bewerbung, 320 px — 11 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#bewerbung.contact |
+| 24 px | 9 | a, img.nav-logo.logo-dark, div.section-inner |
+| 39 px | 6 | div.bewerbung-steps, span, span |
+| 40 px | 24 | div.form-group, label, select#bwRolle |
+| 58 px | 1 | strong |
+| 65 px | 1 | label |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 163.03 px | 1 | span.form-optional |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 193.77 px | 1 | span.form-optional |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**datenschutz, 320 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 24 px | 1 | main |
+| 45 px | 13 | div.topbar, a, h1 |
+| 102.28 px | 1 | a |
+| 110.22 px | 1 | a |
+| 160.84 px | 1 | button.theme-toggle |
+| 193.84 px | 1 | span.theme-toggle-label |
+
+**dimensionierung-verstehen, 320 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**dimensionierung, 320 px — 10 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 5 | div.nav-inner, main#main-content, section#wizard.wizard-section |
+| 24 px | 15 | a, img.nav-logo.logo-dark, div.section-inner |
+| 49 px | 10 | div#wizProgress.wizard-progress, div.wizard-step.active, div.wizard-question |
+| 53 px | 2 | h2#abschluss-angebot, p |
+| 65.97 px | 1 | a.btn-primary |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 166 px | 1 | button#wzPlzNext.wizard-btn-next.is-disabled |
+| 176 px | 6 | div.footer-col, h2, a |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**foerderung-hannover, 320 px — 8 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 20 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 180.05 px | 4 | th, td, td |
+| 244.73 px | 4 | th, td, td |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**foerderung-jetzt-mitnehmen, 320 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 15 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**foerderung, 320 px — 10 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
+| 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
+| 39 px | 33 | div, div.foerder-inputs-grid, div.fi-group |
+| 43 px | 2 | button.active, button.active |
+| 60 px | 1 | span |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 159.42 px | 1 | button |
+| 162 px | 1 | button |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**foerdervorschuss, 320 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 10 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**gasheizung-tauschen-oder-reparieren, 320 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 11 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 4 | li, li, li |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**hinweise, 320 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 11 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**impressum, 320 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 24 px | 1 | main |
+| 45 px | 17 | div.topbar, a, h1 |
+| 102.28 px | 1 | a |
+| 110.22 px | 1 | a |
+| 160.84 px | 1 | button.theme-toggle |
+| 193.84 px | 1 | span.theme-toggle-label |
+
+**index, 320 px — 17 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 6 | div.nav-inner, main#main-content, section.hero |
+| 24 px | 24 | a, img.nav-logo.logo-dark, div.hero-inner |
+| 25 px | 4 | div.hc-row, div.hc-row, div.hc-result |
+| 43 px | 5 | div, div.hc-label, div |
+| 49 px | 3 | div.hc-fv-badge, div.hc-fv-text, strong |
+| 53 px | 2 | a#fvHomeCta.btn-primary.fv-badge-cta, div.fv-badge-note |
+| 66 px | 4 | div.usp-text, h2, div.usp-text |
+| 91.28 px | 2 | div.usp-item, div.usp-icon |
+| 133.28 px | 2 | div.usp-text, h2 |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 167.83 px | 1 | div.hc-result-value |
+| 168 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 200.08 px | 1 | div.hc-value |
+| 210 px | 4 | div.usp-text, h2, div.usp-text |
+| 210.94 px | 1 | div.hc-value |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**karriere, 320 px — 8 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 4 | div.nav-inner, main#main-content, section#hero.section.kar-hero |
+| 24 px | 18 | a, img.nav-logo.logo-dark, div.section-inner |
+| 51 px | 4 | span.kar-icon, h3, p |
+| 62 px | 2 | svg, svg |
+| 107.59 px | 1 | strong |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**kontakt, 320 px — 12 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#contact.contact |
+| 24 px | 14 | a, img.nav-logo.logo-dark, div.section-inner |
+| 48 px | 2 | div.contact-image-caption-title, div.contact-image-caption-sub |
+| 57 px | 28 | div.form-group, label, input#kontaktName |
+| 82 px | 1 | label |
+| 88.05 px | 1 | span.form-optional |
+| 92.61 px | 1 | span.form-optional |
+| 111.34 px | 1 | span.form-optional |
+| 118.7 px | 1 | span.form-optional |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**kostenvergleich-waermepumpe, 320 px — 15 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 4 | nav.topnav, div.topnav-inner, div.container |
+| 24 px | 13 | a.topnav-brand, img.nav-logo.logo-dark, div#wzShell.wz-shell |
+| 35.16 px | 1 | a |
+| 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
+| 44 px | 1 | div.ib |
+| 57 px | 10 | div#wzStepBody, div, p.wz-intro |
+| 65 px | 5 | strong, span.d, div |
+| 69 px | 5 | span, span, span |
+| 93.55 px | 1 | a |
+| 119.86 px | 1 | a |
+| 137.91 px | 1 | a#wzModeLink |
+| 177.84 px | 2 | div.topnav-actions, button.theme-toggle |
+| 184.5 px | 1 | button#wzNext.wz-next |
+| 203.42 px | 1 | a |
+| 212.84 px | 1 | span.theme-toggle-label |
+
+**preise, 320 px — 8 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 4 | div.nav-inner, main#main-content, section#preise-intro.section |
+| 24 px | 14 | a, img.nav-logo.logo-dark, div.section-inner |
+| 43.44 px | 1 | strong |
+| 44 px | 6 | li, strong, li |
+| 73.5 px | 1 | div.section-tag |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**propan-waermepumpe, 320 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 11 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 6 | li, strong, li |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**prozess, 320 px — 11 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#prozess.prozess |
+| 24 px | 14 | a, img.nav-logo.logo-dark, div.section-inner |
+| 36 px | 19 | h2, p, div#pzSub1.pz-substeps |
+| 100.53 px | 2 | button.pz-expand-hint, button.pz-expand-hint |
+| 117.53 px | 2 | span.pz-hint-text, span.pz-hint-text |
+| 124 px | 3 | div.pz-step-num, div.pz-step-num, div.pz-step-num |
+| 126.52 px | 1 | span.pz-time |
+| 136.91 px | 1 | span.pz-time |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**ratgeber, 320 px — 13 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| -243.92 px | 1 | image |
+| 0 px | 3 | div.nav-inner, main#main-content, section#blog.blog-section.ratgeber-hub |
+| 24 px | 21 | a, img.nav-logo.logo-dark, div.section-inner |
+| 25 px | 4 | div.blog-card-art.guide-visual.guide-visual-altbau, div.blog-card-body, div.blog-card-art.guide-visual.guide-visual-sound |
+| 45 px | 12 | div.blog-card-tag, h2, p |
+| 55.62 px | 1 | image |
+| 101 px | 2 | svg, img.guide-icon-img |
+| 114.61 px | 1 | span |
+| 116.56 px | 1 | span |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 180.14 px | 1 | span |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**rechner, 320 px — 14 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -121,102 +504,76 @@ Ergebnis: PASS (0 Befunde).
 | 178.27 px | 1 | span.mobile-phone-label |
 | 258 px | 1 | div#hamburger.hamburger |
 
-**Kontakt, 320 px — 12 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, section#contact.contact |
-| 24 px | 14 | a, img.nav-logo.logo-dark, div.section-inner |
-| 48 px | 2 | div.contact-image-caption-title, div.contact-image-caption-sub |
-| 57 px | 28 | div.form-group, label, input#kontaktName |
-| 82 px | 1 | label |
-| 88.05 px | 1 | span.form-optional |
-| 92.61 px | 1 | span.form-optional |
-| 111.34 px | 1 | span.form-optional |
-| 118.7 px | 1 | span.form-optional |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
-
-**Barrierefreiheit, 320 px — 8 verschiedene linke Kanten**
+**waermepumpe-altbau, 320 px — 7 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 16 | div.section-inner, div.section-tag, h1.section-title |
+| 20 px | 10 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 42 px | 2 | li, li |
+| 42 px | 6 | li, strong, li |
 | 139.27 px | 1 | a.mobile-phone-cta |
-| 173.72 px | 1 | strong |
 | 178.27 px | 1 | span.mobile-phone-label |
 | 258 px | 1 | div#hamburger.hamburger |
 
-**Startseite, 360 px — 18 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 6 | div.nav-inner, main#main-content, section.hero |
-| 20 px | 5 | div.usp-strip-inner, div.usp-item, div.usp-icon |
-| 24 px | 20 | a, img.nav-logo.logo-dark, div.hero-inner |
-| 25 px | 4 | div.hc-row, div.hc-row, div.hc-result |
-| 43 px | 5 | div, div.hc-label, div |
-| 49 px | 3 | div.hc-fv-badge, div.hc-fv-text, strong |
-| 53 px | 2 | a#fvHomeCta.btn-primary.fv-badge-cta, div.fv-badge-note |
-| 62 px | 4 | div.usp-text, h2, div.usp-text |
-| 111.28 px | 2 | div.usp-item, div.usp-icon |
-| 153.28 px | 2 | div.usp-text, h2 |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 188 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 207.83 px | 1 | div.hc-result-value |
-| 230 px | 4 | div.usp-text, h2, div.usp-text |
-| 240.08 px | 1 | div.hc-value |
-| 250.94 px | 1 | div.hc-value |
-| 298 px | 1 | div#hamburger.hamburger |
-
-**Preise, 360 px — 11 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 4 | div.nav-inner, main#main-content, section#preise-intro.section |
-| 24 px | 17 | a, img.nav-logo.logo-dark, div.section-inner |
-| 35.09 px | 1 | strong |
-| 44 px | 6 | li, strong, li |
-| 46 px | 2 | span.manufacturer-name, span#wolfMinEigen.manufacturer-price |
-| 47 px | 2 | div.pa-cta-icon, svg |
-| 89 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
-| 93.5 px | 1 | div.section-tag |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
-
-**Foerderung, 360 px — 9 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
-| 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
-| 39 px | 34 | div, div.foerder-inputs-grid, div.fi-group |
-| 43 px | 2 | button.active, button.active |
-| 60 px | 1 | span |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 182 px | 2 | button, button |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
-
-**Foerdervorschuss, 360 px — 7 verschiedene linke Kanten**
+**waermepumpe-hannover, 320 px — 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 11 | div.section-inner, div.section-tag, h1.section-title |
+| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 179.41 px | 1 | strong |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 258 px | 1 | div#hamburger.hamburger |
 
-**Anfrage, 360 px — 15 verschiedene linke Kanten**
+**waermepumpe-laerm, 320 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 10 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 100.88 px | 1 | strong |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**waermepumpenstrom-hannover, 320 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 9 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**wertsteigerung-waermepumpe, 320 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 9 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**wp-kosten-hannover, 320 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 24 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 110.09 px | 6 | th, td, td |
+| 139.27 px | 1 | a.mobile-phone-cta |
+| 178.27 px | 1 | span.mobile-phone-label |
+| 258 px | 1 | div#hamburger.hamburger |
+
+**anfrage, 360 px — 15 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -236,7 +593,309 @@ Ergebnis: PASS (0 Befunde).
 | 251.11 px | 1 | a.funnel-close-link |
 | 258.64 px | 1 | span#progressPercent.progress-percent |
 
-**Rechner, 360 px — 14 verschiedene linke Kanten**
+**barrierefreiheit, 360 px — 8 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 16 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 4 | li, li, li |
+| 66.44 px | 1 | strong |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**baubarkeitspruefung, 360 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 17 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 6 | li, strong, li |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**bewerbung, 360 px — 11 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#bewerbung.contact |
+| 24 px | 9 | a, img.nav-logo.logo-dark, div.section-inner |
+| 39 px | 6 | div.bewerbung-steps, span, span |
+| 40 px | 24 | div.form-group, label, select#bwRolle |
+| 58 px | 1 | strong |
+| 65 px | 2 | label, a |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 163.03 px | 1 | span.form-optional |
+| 193.77 px | 1 | span.form-optional |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**datenschutz, 360 px — 5 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 24 px | 1 | main |
+| 45 px | 16 | div.topbar, a, h1 |
+| 110.22 px | 1 | a |
+| 200.84 px | 1 | button.theme-toggle |
+| 233.84 px | 1 | span.theme-toggle-label |
+
+**dimensionierung-verstehen, 360 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 11 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 212.3 px | 1 | a |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**dimensionierung, 360 px — 18 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 5 | div.nav-inner, main#main-content, section#wizard.wizard-section |
+| 24 px | 18 | a, img.nav-logo.logo-dark, div.section-inner |
+| 49 px | 11 | div#wizProgress.wizard-progress, div.wizard-progress-bar.active, div.wizard-step.active |
+| 53 px | 2 | h2#abschluss-angebot, p |
+| 78.55 px | 1 | div.wizard-progress-bar |
+| 85.97 px | 1 | a.btn-primary |
+| 108.11 px | 1 | div.wizard-progress-bar |
+| 137.66 px | 1 | div.wizard-progress-bar |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 167.22 px | 1 | div.wizard-progress-bar |
+| 186 px | 1 | button#wzPlzNext.wizard-btn-next.is-disabled |
+| 196 px | 9 | div.footer-col, h2, a |
+| 196.77 px | 1 | div.wizard-progress-bar |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 226.33 px | 1 | div.wizard-progress-bar |
+| 255.88 px | 1 | div.wizard-progress-bar |
+| 285.44 px | 1 | div.wizard-progress-bar |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**foerderung-hannover, 360 px — 8 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 20 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 180.05 px | 4 | th, td, td |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 244.73 px | 4 | th, td, td |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**foerderung-jetzt-mitnehmen, 360 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 17 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**foerderung, 360 px — 9 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
+| 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
+| 39 px | 34 | div, div.foerder-inputs-grid, div.fi-group |
+| 43 px | 2 | button.active, button.active |
+| 60 px | 1 | span |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 182 px | 2 | button, button |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**foerdervorschuss, 360 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 11 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 179.41 px | 1 | strong |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**gasheizung-tauschen-oder-reparieren, 360 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 4 | li, li, li |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**hinweise, 360 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**impressum, 360 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 24 px | 1 | main |
+| 45 px | 17 | div.topbar, a, h1 |
+| 102.28 px | 1 | a |
+| 110.22 px | 1 | a |
+| 200.84 px | 1 | button.theme-toggle |
+| 233.84 px | 1 | span.theme-toggle-label |
+
+**index, 360 px — 17 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 6 | div.nav-inner, main#main-content, section.hero |
+| 24 px | 25 | a, img.nav-logo.logo-dark, div.hero-inner |
+| 25 px | 4 | div.hc-row, div.hc-row, div.hc-result |
+| 43 px | 5 | div, div.hc-label, div |
+| 49 px | 3 | div.hc-fv-badge, div.hc-fv-text, strong |
+| 53 px | 2 | a#fvHomeCta.btn-primary.fv-badge-cta, div.fv-badge-note |
+| 66 px | 4 | div.usp-text, h2, div.usp-text |
+| 111.28 px | 2 | div.usp-item, div.usp-icon |
+| 153.28 px | 2 | div.usp-text, h2 |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 188 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 207.83 px | 1 | div.hc-result-value |
+| 230 px | 4 | div.usp-text, h2, div.usp-text |
+| 240.08 px | 1 | div.hc-value |
+| 250.94 px | 1 | div.hc-value |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**karriere, 360 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 4 | div.nav-inner, main#main-content, section#hero.section.kar-hero |
+| 24 px | 19 | a, img.nav-logo.logo-dark, div.section-inner |
+| 51 px | 6 | span.kar-icon, h3, p |
+| 62 px | 2 | svg, svg |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**kontakt, 360 px — 12 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#contact.contact |
+| 24 px | 14 | a, img.nav-logo.logo-dark, div.section-inner |
+| 48 px | 2 | div.contact-image-caption-title, div.contact-image-caption-sub |
+| 57 px | 28 | div.form-group, label, input#kontaktName |
+| 82 px | 1 | label |
+| 88.05 px | 1 | span.form-optional |
+| 92.61 px | 1 | span.form-optional |
+| 111.34 px | 1 | span.form-optional |
+| 118.7 px | 1 | span.form-optional |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**kostenvergleich-waermepumpe, 360 px — 15 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 4 | nav.topnav, div.topnav-inner, div.container |
+| 24 px | 13 | a.topnav-brand, img.nav-logo.logo-dark, div#wzShell.wz-shell |
+| 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
+| 44 px | 1 | div.ib |
+| 47.19 px | 1 | a |
+| 57 px | 10 | div#wzStepBody, div, p.wz-intro |
+| 65 px | 5 | strong, span.d, div |
+| 69 px | 5 | span, span, span |
+| 74.75 px | 1 | a |
+| 184.63 px | 1 | a |
+| 188.94 px | 1 | a#wzModeLink |
+| 217.84 px | 2 | div.topnav-actions, button.theme-toggle |
+| 224.5 px | 1 | button#wzNext.wz-next |
+| 252.84 px | 1 | span.theme-toggle-label |
+| 260.44 px | 1 | a |
+
+**preise, 360 px — 10 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 4 | div.nav-inner, main#main-content, section#preise-intro.section |
+| 24 px | 17 | a, img.nav-logo.logo-dark, div.section-inner |
+| 31.08 px | 1 | strong |
+| 44 px | 6 | li, strong, li |
+| 47 px | 2 | div.pa-cta-icon, svg |
+| 89 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
+| 93.5 px | 1 | div.section-tag |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**propan-waermepumpe, 360 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 6 | li, strong, li |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**prozess, 360 px — 11 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#prozess.prozess |
+| 24 px | 14 | a, img.nav-logo.logo-dark, div.section-inner |
+| 36 px | 19 | h2, p, div#pzSub1.pz-substeps |
+| 120.53 px | 2 | button.pz-expand-hint, button.pz-expand-hint |
+| 137.53 px | 2 | span.pz-hint-text, span.pz-hint-text |
+| 144 px | 3 | div.pz-step-num, div.pz-step-num, div.pz-step-num |
+| 146.52 px | 1 | span.pz-time |
+| 156.91 px | 1 | span.pz-time |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**ratgeber, 360 px — 13 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| -223.92 px | 1 | image |
+| 0 px | 3 | div.nav-inner, main#main-content, section#blog.blog-section.ratgeber-hub |
+| 24 px | 22 | a, img.nav-logo.logo-dark, div.section-inner |
+| 25 px | 5 | div.blog-card-art.guide-visual.guide-visual-altbau, div.blog-card-body, div.blog-card-art.guide-visual.guide-visual-sound |
+| 45 px | 12 | div.blog-card-tag, h2, p |
+| 75.62 px | 1 | image |
+| 114.61 px | 1 | span |
+| 116.56 px | 1 | span |
+| 121 px | 3 | svg, img.guide-icon-img, svg |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 180.14 px | 1 | span |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**rechner, 360 px — 14 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -255,102 +914,77 @@ Ergebnis: PASS (0 Befunde).
 | 198.27 px | 1 | span.mobile-phone-label |
 | 298 px | 1 | div#hamburger.hamburger |
 
-**Kontakt, 360 px — 12 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, section#contact.contact |
-| 24 px | 14 | a, img.nav-logo.logo-dark, div.section-inner |
-| 48 px | 2 | div.contact-image-caption-title, div.contact-image-caption-sub |
-| 57 px | 28 | div.form-group, label, input#kontaktName |
-| 82 px | 1 | label |
-| 88.05 px | 1 | span.form-optional |
-| 92.61 px | 1 | span.form-optional |
-| 111.34 px | 1 | span.form-optional |
-| 118.7 px | 1 | span.form-optional |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
-
-**Barrierefreiheit, 360 px — 8 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 16 | div.section-inner, div.section-tag, h1.section-title |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 42 px | 4 | li, li, li |
-| 66.44 px | 1 | strong |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
-
-**Startseite, 375 px — 18 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 6 | div.nav-inner, main#main-content, section.hero |
-| 20 px | 5 | div.usp-strip-inner, div.usp-item, div.usp-icon |
-| 24 px | 20 | a, img.nav-logo.logo-dark, div.hero-inner |
-| 25 px | 4 | div.hc-row, div.hc-row, div.hc-result |
-| 43 px | 5 | div, div.hc-label, div |
-| 49 px | 3 | div.hc-fv-badge, div.hc-fv-text, strong |
-| 53 px | 2 | a#fvHomeCta.btn-primary.fv-badge-cta, div.fv-badge-note |
-| 62 px | 4 | div.usp-text, h2, div.usp-text |
-| 118.78 px | 2 | div.usp-item, div.usp-icon |
-| 160.78 px | 2 | div.usp-text, h2 |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 195.5 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 222.83 px | 1 | div.hc-result-value |
-| 237.5 px | 4 | div.usp-text, h2, div.usp-text |
-| 255.08 px | 1 | div.hc-value |
-| 265.94 px | 1 | div.hc-value |
-| 313 px | 1 | div#hamburger.hamburger |
-
-**Preise, 375 px — 11 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 4 | div.nav-inner, main#main-content, section#preise-intro.section |
-| 24 px | 18 | a, img.nav-logo.logo-dark, div.section-inner |
-| 42.59 px | 1 | strong |
-| 44 px | 6 | li, strong, li |
-| 46 px | 2 | span.manufacturer-name, span#wolfMinEigen.manufacturer-price |
-| 52 px | 2 | div.pa-cta-icon, svg |
-| 94 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
-| 101 px | 1 | div.section-tag |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
-
-**Foerderung, 375 px — 9 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
-| 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
-| 39 px | 34 | div, div.foerder-inputs-grid, div.fi-group |
-| 43 px | 2 | button.active, button.active |
-| 60 px | 1 | span |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 189.5 px | 2 | button, button |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
-
-**Foerdervorschuss, 375 px — 7 verschiedene linke Kanten**
+**waermepumpe-altbau, 360 px — 7 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 179.41 px | 1 | strong |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
+| 42 px | 6 | li, strong, li |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 298 px | 1 | div#hamburger.hamburger |
 
-**Anfrage, 375 px — 16 verschiedene linke Kanten**
+**waermepumpe-hannover, 360 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**waermepumpe-laerm, 360 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 91.11 px | 1 | strong |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**waermepumpenstrom-hannover, 360 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 9 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 177.83 px | 1 | a |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**wertsteigerung-waermepumpe, 360 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 9 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**wp-kosten-hannover, 360 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 25 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 110.09 px | 6 | th, td, td |
+| 159.27 px | 1 | a.mobile-phone-cta |
+| 198.27 px | 1 | span.mobile-phone-label |
+| 298 px | 1 | div#hamburger.hamburger |
+
+**anfrage, 375 px — 16 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -371,7 +1005,313 @@ Ergebnis: PASS (0 Befunde).
 | 266.11 px | 1 | a.funnel-close-link |
 | 273.64 px | 1 | span#progressPercent.progress-percent |
 
-**Rechner, 375 px — 14 verschiedene linke Kanten**
+**barrierefreiheit, 375 px — 8 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 16 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 5 | li, li, li |
+| 66.44 px | 1 | strong |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**baubarkeitspruefung, 375 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 18 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 8 | li, strong, li |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**bewerbung, 375 px — 11 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#bewerbung.contact |
+| 24 px | 9 | a, img.nav-logo.logo-dark, div.section-inner |
+| 39 px | 6 | div.bewerbung-steps, span, span |
+| 40 px | 25 | div.form-group, label, select#bwRolle |
+| 58 px | 1 | strong |
+| 65 px | 3 | label, a, label |
+| 163.03 px | 1 | span.form-optional |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 193.77 px | 1 | span.form-optional |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**datenschutz, 375 px — 5 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 24 px | 1 | main |
+| 45 px | 16 | div.topbar, a, h1 |
+| 110.22 px | 1 | a |
+| 215.84 px | 1 | button.theme-toggle |
+| 248.84 px | 1 | span.theme-toggle-label |
+
+**dimensionierung-verstehen, 375 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 212.3 px | 1 | a |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**dimensionierung, 375 px — 20 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 5 | div.nav-inner, main#main-content, section#wizard.wizard-section |
+| 24 px | 19 | a, img.nav-logo.logo-dark, div.section-inner |
+| 49 px | 11 | div#wizProgress.wizard-progress, div.wizard-progress-bar.active, div.wizard-step.active |
+| 53 px | 2 | h2#abschluss-angebot, p |
+| 80.22 px | 1 | div.wizard-progress-bar |
+| 84.22 px | 1 | a |
+| 93.47 px | 1 | a.btn-primary |
+| 111.45 px | 1 | div.wizard-progress-bar |
+| 113.69 px | 1 | a |
+| 142.67 px | 1 | div.wizard-progress-bar |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 173.91 px | 1 | div.wizard-progress-bar |
+| 193.5 px | 1 | button#wzPlzNext.wizard-btn-next.is-disabled |
+| 203.5 px | 10 | div.footer-col, h2, a |
+| 205.13 px | 1 | div.wizard-progress-bar |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 236.34 px | 1 | div.wizard-progress-bar |
+| 267.56 px | 1 | div.wizard-progress-bar |
+| 298.78 px | 1 | div.wizard-progress-bar |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**foerderung-hannover, 375 px — 8 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 20 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 180.05 px | 4 | th, td, td |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 244.73 px | 4 | th, td, td |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**foerderung-jetzt-mitnehmen, 375 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 17 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**foerderung, 375 px — 9 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
+| 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
+| 39 px | 34 | div, div.foerder-inputs-grid, div.fi-group |
+| 43 px | 2 | button.active, button.active |
+| 60 px | 1 | span |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 189.5 px | 2 | button, button |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**foerdervorschuss, 375 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 179.41 px | 1 | strong |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**gasheizung-tauschen-oder-reparieren, 375 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 4 | li, li, li |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**hinweise, 375 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**impressum, 375 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 24 px | 1 | main |
+| 45 px | 18 | div.topbar, a, h1 |
+| 102.28 px | 1 | a |
+| 110.22 px | 1 | a |
+| 215.84 px | 1 | button.theme-toggle |
+| 248.84 px | 1 | span.theme-toggle-label |
+
+**index, 375 px — 17 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 6 | div.nav-inner, main#main-content, section.hero |
+| 24 px | 25 | a, img.nav-logo.logo-dark, div.hero-inner |
+| 25 px | 4 | div.hc-row, div.hc-row, div.hc-result |
+| 43 px | 5 | div, div.hc-label, div |
+| 49 px | 3 | div.hc-fv-badge, div.hc-fv-text, strong |
+| 53 px | 2 | a#fvHomeCta.btn-primary.fv-badge-cta, div.fv-badge-note |
+| 66 px | 4 | div.usp-text, h2, div.usp-text |
+| 118.78 px | 2 | div.usp-item, div.usp-icon |
+| 160.78 px | 2 | div.usp-text, h2 |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 195.5 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 222.83 px | 1 | div.hc-result-value |
+| 237.5 px | 4 | div.usp-text, h2, div.usp-text |
+| 255.08 px | 1 | div.hc-value |
+| 265.94 px | 1 | div.hc-value |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**karriere, 375 px — 8 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 4 | div.nav-inner, main#main-content, section#hero.section.kar-hero |
+| 24 px | 18 | a, img.nav-logo.logo-dark, div.section-inner |
+| 51 px | 6 | span.kar-icon, h3, p |
+| 62 px | 2 | svg, svg |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 217.88 px | 1 | strong |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**kontakt, 375 px — 12 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#contact.contact |
+| 24 px | 14 | a, img.nav-logo.logo-dark, div.section-inner |
+| 48 px | 2 | div.contact-image-caption-title, div.contact-image-caption-sub |
+| 57 px | 28 | div.form-group, label, input#kontaktName |
+| 82 px | 1 | label |
+| 88.05 px | 1 | span.form-optional |
+| 92.61 px | 1 | span.form-optional |
+| 111.34 px | 1 | span.form-optional |
+| 118.7 px | 1 | span.form-optional |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**kostenvergleich-waermepumpe, 375 px — 15 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 4 | nav.topnav, div.topnav-inner, div.container |
+| 24 px | 13 | a.topnav-brand, img.nav-logo.logo-dark, div#wzShell.wz-shell |
+| 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
+| 44 px | 1 | div.ib |
+| 51.13 px | 1 | a |
+| 57 px | 10 | div#wzStepBody, div, p.wz-intro |
+| 65 px | 5 | strong, span.d, div |
+| 69 px | 4 | span, span, span |
+| 78.69 px | 1 | a |
+| 141.44 px | 1 | a#wzModeLink |
+| 188.56 px | 1 | a |
+| 232.84 px | 2 | div.topnav-actions, button.theme-toggle |
+| 239.5 px | 1 | button#wzNext.wz-next |
+| 264.38 px | 1 | a |
+| 267.84 px | 1 | span.theme-toggle-label |
+
+**preise, 375 px — 11 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 4 | div.nav-inner, main#main-content, section#preise-intro.section |
+| 24 px | 17 | a, img.nav-logo.logo-dark, div.section-inner |
+| 26.42 px | 1 | strong |
+| 44 px | 6 | li, strong, li |
+| 46 px | 2 | span.manufacturer-name, span#wolfMinEigen.manufacturer-price |
+| 52 px | 2 | div.pa-cta-icon, svg |
+| 94 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
+| 101 px | 1 | div.section-tag |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**propan-waermepumpe, 375 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 6 | li, strong, li |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**prozess, 375 px — 11 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#prozess.prozess |
+| 24 px | 14 | a, img.nav-logo.logo-dark, div.section-inner |
+| 36 px | 19 | h2, p, div#pzSub1.pz-substeps |
+| 128.03 px | 2 | button.pz-expand-hint, button.pz-expand-hint |
+| 145.03 px | 2 | span.pz-hint-text, span.pz-hint-text |
+| 151.5 px | 3 | div.pz-step-num, div.pz-step-num, div.pz-step-num |
+| 154.02 px | 1 | span.pz-time |
+| 164.41 px | 1 | span.pz-time |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**ratgeber, 375 px — 13 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| -216.42 px | 1 | image |
+| 0 px | 3 | div.nav-inner, main#main-content, section#blog.blog-section.ratgeber-hub |
+| 24 px | 22 | a, img.nav-logo.logo-dark, div.section-inner |
+| 25 px | 5 | div.blog-card-art.guide-visual.guide-visual-altbau, div.blog-card-body, div.blog-card-art.guide-visual.guide-visual-sound |
+| 45 px | 12 | div.blog-card-tag, h2, p |
+| 83.12 px | 1 | image |
+| 114.61 px | 1 | span |
+| 116.56 px | 1 | span |
+| 128.5 px | 3 | svg, img.guide-icon-img, svg |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 180.14 px | 1 | span |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**rechner, 375 px — 14 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -390,103 +1330,77 @@ Ergebnis: PASS (0 Befunde).
 | 205.77 px | 1 | span.mobile-phone-label |
 | 313 px | 1 | div#hamburger.hamburger |
 
-**Kontakt, 375 px — 12 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, section#contact.contact |
-| 24 px | 14 | a, img.nav-logo.logo-dark, div.section-inner |
-| 48 px | 2 | div.contact-image-caption-title, div.contact-image-caption-sub |
-| 57 px | 28 | div.form-group, label, input#kontaktName |
-| 82 px | 1 | label |
-| 88.05 px | 1 | span.form-optional |
-| 92.61 px | 1 | span.form-optional |
-| 111.34 px | 1 | span.form-optional |
-| 118.7 px | 1 | span.form-optional |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
-
-**Barrierefreiheit, 375 px — 8 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 16 | div.section-inner, div.section-tag, h1.section-title |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 42 px | 5 | li, li, li |
-| 66.44 px | 1 | strong |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
-
-**Startseite, 390 px — 18 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 6 | div.nav-inner, main#main-content, section.hero |
-| 20 px | 5 | div.usp-strip-inner, div.usp-item, div.usp-icon |
-| 24 px | 20 | a, img.nav-logo.logo-dark, div.hero-inner |
-| 25 px | 4 | div.hc-row, div.hc-row, div.hc-result |
-| 43 px | 5 | div, div.hc-label, div |
-| 49 px | 3 | div.hc-fv-badge, div.hc-fv-text, strong |
-| 53 px | 2 | a#fvHomeCta.btn-primary.fv-badge-cta, div.fv-badge-note |
-| 62 px | 4 | div.usp-text, h2, div.usp-text |
-| 126.28 px | 2 | div.usp-item, div.usp-icon |
-| 168.28 px | 2 | div.usp-text, h2 |
-| 174.27 px | 1 | a.mobile-phone-cta |
-| 203 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 237.83 px | 1 | div.hc-result-value |
-| 245 px | 4 | div.usp-text, h2, div.usp-text |
-| 270.08 px | 1 | div.hc-value |
-| 280.94 px | 1 | div.hc-value |
-| 328 px | 1 | div#hamburger.hamburger |
-
-**Preise, 390 px — 11 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 4 | div.nav-inner, main#main-content, section#preise-intro.section |
-| 24 px | 18 | a, img.nav-logo.logo-dark, div.section-inner |
-| 44 px | 6 | li, strong, li |
-| 46 px | 3 | span.manufacturer-name, span#wolfMinEigen.manufacturer-price, span.manufacturer-name |
-| 50.09 px | 1 | strong |
-| 52 px | 2 | div.pa-cta-icon, svg |
-| 94 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
-| 108.5 px | 1 | div.section-tag |
-| 174.27 px | 1 | a.mobile-phone-cta |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
-
-**Foerderung, 390 px — 10 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
-| 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
-| 39 px | 34 | div, div.foerder-inputs-grid, div.fi-group |
-| 43 px | 2 | button.active, button.active |
-| 60 px | 1 | span |
-| 68 px | 2 | div, div#foerderSatzKfw.fr-satz |
-| 174.27 px | 1 | a.mobile-phone-cta |
-| 197 px | 2 | button, button |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
-
-**Foerdervorschuss, 390 px — 7 verschiedene linke Kanten**
+**waermepumpe-altbau, 375 px — 7 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 96.14 px | 1 | strong |
-| 174.27 px | 1 | a.mobile-phone-cta |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 42 px | 6 | li, strong, li |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 313 px | 1 | div#hamburger.hamburger |
 
-**Anfrage, 390 px — 16 verschiedene linke Kanten**
+**waermepumpe-hannover, 375 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**waermepumpe-laerm, 375 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 91.11 px | 1 | strong |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**waermepumpenstrom-hannover, 375 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 10 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 255 px | 1 | a |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**wertsteigerung-waermepumpe, 375 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 9 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**wp-kosten-hannover, 375 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 25 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 110.09 px | 6 | th, td, td |
+| 166.77 px | 1 | a.mobile-phone-cta |
+| 205.77 px | 1 | span.mobile-phone-label |
+| 313 px | 1 | div#hamburger.hamburger |
+
+**anfrage, 390 px — 16 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -507,7 +1421,316 @@ Ergebnis: PASS (0 Befunde).
 | 281.11 px | 1 | a.funnel-close-link |
 | 288.64 px | 1 | span#progressPercent.progress-percent |
 
-**Rechner, 390 px — 14 verschiedene linke Kanten**
+**barrierefreiheit, 390 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 17 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 5 | li, li, li |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**baubarkeitspruefung, 390 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 19 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 8 | li, strong, li |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**bewerbung, 390 px — 12 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#bewerbung.contact |
+| 24 px | 9 | a, img.nav-logo.logo-dark, div.section-inner |
+| 39 px | 6 | div.bewerbung-steps, span, span |
+| 40 px | 25 | div.form-group, label, select#bwRolle |
+| 58 px | 1 | strong |
+| 65 px | 2 | label, label |
+| 155.2 px | 1 | a |
+| 163.03 px | 1 | span.form-optional |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 193.77 px | 1 | span.form-optional |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**datenschutz, 390 px — 5 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 24 px | 1 | main |
+| 45 px | 16 | div.topbar, a, h1 |
+| 110.22 px | 1 | a |
+| 230.84 px | 1 | button.theme-toggle |
+| 263.84 px | 1 | span.theme-toggle-label |
+
+**dimensionierung-verstehen, 390 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 212.3 px | 1 | a |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**dimensionierung, 390 px — 22 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 5 | div.nav-inner, main#main-content, section#wizard.wizard-section |
+| 24 px | 19 | a, img.nav-logo.logo-dark, div.section-inner |
+| 49 px | 11 | div#wizProgress.wizard-progress, div.wizard-progress-bar.active, div.wizard-step.active |
+| 53 px | 2 | h2#abschluss-angebot, p |
+| 53.47 px | 1 | a |
+| 81.88 px | 1 | div.wizard-progress-bar |
+| 100.97 px | 1 | a.btn-primary |
+| 104.67 px | 1 | a |
+| 114.77 px | 1 | div.wizard-progress-bar |
+| 117.73 px | 1 | a |
+| 147.66 px | 1 | div.wizard-progress-bar |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 180.55 px | 1 | div.wizard-progress-bar |
+| 201 px | 1 | button#wzPlzNext.wizard-btn-next.is-disabled |
+| 211 px | 9 | div.footer-col, h2, a |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 213.44 px | 1 | div.wizard-progress-bar |
+| 246.33 px | 1 | div.wizard-progress-bar |
+| 271.38 px | 1 | a |
+| 279.22 px | 1 | div.wizard-progress-bar |
+| 312.11 px | 1 | div.wizard-progress-bar |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**foerderung-hannover, 390 px — 8 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 20 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 180.05 px | 4 | th, td, td |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 244.73 px | 4 | th, td, td |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**foerderung-jetzt-mitnehmen, 390 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 17 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**foerderung, 390 px — 10 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
+| 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
+| 39 px | 34 | div, div.foerder-inputs-grid, div.fi-group |
+| 43 px | 2 | button.active, button.active |
+| 60 px | 1 | span |
+| 68 px | 2 | div, div#foerderSatzKfw.fr-satz |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 197 px | 2 | button, button |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**foerdervorschuss, 390 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 96.14 px | 1 | strong |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**gasheizung-tauschen-oder-reparieren, 390 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 4 | li, li, li |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**hinweise, 390 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**impressum, 390 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 24 px | 1 | main |
+| 45 px | 18 | div.topbar, a, h1 |
+| 102.28 px | 1 | a |
+| 110.22 px | 1 | a |
+| 230.84 px | 1 | button.theme-toggle |
+| 263.84 px | 1 | span.theme-toggle-label |
+
+**index, 390 px — 17 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 6 | div.nav-inner, main#main-content, section.hero |
+| 24 px | 25 | a, img.nav-logo.logo-dark, div.hero-inner |
+| 25 px | 4 | div.hc-row, div.hc-row, div.hc-result |
+| 43 px | 5 | div, div.hc-label, div |
+| 49 px | 3 | div.hc-fv-badge, div.hc-fv-text, strong |
+| 53 px | 2 | a#fvHomeCta.btn-primary.fv-badge-cta, div.fv-badge-note |
+| 66 px | 4 | div.usp-text, h2, div.usp-text |
+| 126.28 px | 2 | div.usp-item, div.usp-icon |
+| 168.28 px | 2 | div.usp-text, h2 |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 203 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 237.83 px | 1 | div.hc-result-value |
+| 245 px | 4 | div.usp-text, h2, div.usp-text |
+| 270.08 px | 1 | div.hc-value |
+| 280.94 px | 1 | div.hc-value |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**karriere, 390 px — 8 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 4 | div.nav-inner, main#main-content, section#hero.section.kar-hero |
+| 24 px | 18 | a, img.nav-logo.logo-dark, div.section-inner |
+| 51 px | 6 | span.kar-icon, h3, p |
+| 52.86 px | 1 | strong |
+| 62 px | 2 | svg, svg |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**kontakt, 390 px — 12 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#contact.contact |
+| 24 px | 14 | a, img.nav-logo.logo-dark, div.section-inner |
+| 48 px | 2 | div.contact-image-caption-title, div.contact-image-caption-sub |
+| 57 px | 28 | div.form-group, label, input#kontaktName |
+| 82 px | 1 | label |
+| 88.05 px | 1 | span.form-optional |
+| 92.61 px | 1 | span.form-optional |
+| 111.34 px | 1 | span.form-optional |
+| 118.7 px | 1 | span.form-optional |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**kostenvergleich-waermepumpe, 390 px — 15 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 4 | nav.topnav, div.topnav-inner, div.container |
+| 24 px | 13 | a.topnav-brand, img.nav-logo.logo-dark, div#wzShell.wz-shell |
+| 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
+| 44 px | 1 | div.ib |
+| 57 px | 10 | div#wzStepBody, div, p.wz-intro |
+| 58.63 px | 1 | a |
+| 65 px | 5 | strong, span.d, div |
+| 69 px | 4 | span, span, span |
+| 86.19 px | 1 | a |
+| 148.94 px | 1 | a#wzModeLink |
+| 196.06 px | 1 | a |
+| 247.84 px | 2 | div.topnav-actions, button.theme-toggle |
+| 254.5 px | 1 | button#wzNext.wz-next |
+| 271.88 px | 1 | a |
+| 282.84 px | 1 | span.theme-toggle-label |
+
+**preise, 390 px — 11 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 4 | div.nav-inner, main#main-content, section#preise-intro.section |
+| 24 px | 17 | a, img.nav-logo.logo-dark, div.section-inner |
+| 33.92 px | 1 | strong |
+| 44 px | 6 | li, strong, li |
+| 46 px | 2 | span.manufacturer-name, span#wolfMinEigen.manufacturer-price |
+| 52 px | 2 | div.pa-cta-icon, svg |
+| 94 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
+| 108.5 px | 1 | div.section-tag |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**propan-waermepumpe, 390 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 6 | li, strong, li |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**prozess, 390 px — 11 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#prozess.prozess |
+| 24 px | 14 | a, img.nav-logo.logo-dark, div.section-inner |
+| 36 px | 19 | h2, p, div#pzSub1.pz-substeps |
+| 135.53 px | 2 | button.pz-expand-hint, button.pz-expand-hint |
+| 152.53 px | 2 | span.pz-hint-text, span.pz-hint-text |
+| 159 px | 3 | div.pz-step-num, div.pz-step-num, div.pz-step-num |
+| 161.52 px | 1 | span.pz-time |
+| 171.91 px | 1 | span.pz-time |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**ratgeber, 390 px — 13 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| -208.92 px | 1 | image |
+| 0 px | 3 | div.nav-inner, main#main-content, section#blog.blog-section.ratgeber-hub |
+| 24 px | 22 | a, img.nav-logo.logo-dark, div.section-inner |
+| 25 px | 5 | div.blog-card-art.guide-visual.guide-visual-altbau, div.blog-card-body, div.blog-card-art.guide-visual.guide-visual-sound |
+| 45 px | 12 | div.blog-card-tag, h2, p |
+| 90.62 px | 1 | image |
+| 114.61 px | 1 | span |
+| 116.56 px | 1 | span |
+| 136 px | 3 | svg, img.guide-icon-img, svg |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 180.14 px | 1 | span |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**rechner, 390 px — 14 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -526,102 +1749,78 @@ Ergebnis: PASS (0 Befunde).
 | 213.27 px | 1 | span.mobile-phone-label |
 | 328 px | 1 | div#hamburger.hamburger |
 
-**Kontakt, 390 px — 12 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, section#contact.contact |
-| 24 px | 14 | a, img.nav-logo.logo-dark, div.section-inner |
-| 48 px | 2 | div.contact-image-caption-title, div.contact-image-caption-sub |
-| 57 px | 28 | div.form-group, label, input#kontaktName |
-| 82 px | 1 | label |
-| 88.05 px | 1 | span.form-optional |
-| 92.61 px | 1 | span.form-optional |
-| 111.34 px | 1 | span.form-optional |
-| 118.7 px | 1 | span.form-optional |
-| 174.27 px | 1 | a.mobile-phone-cta |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
-
-**Barrierefreiheit, 390 px — 7 verschiedene linke Kanten**
+**waermepumpe-altbau, 390 px — 7 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 17 | div.section-inner, div.section-tag, h1.section-title |
+| 20 px | 14 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 42 px | 5 | li, li, li |
+| 42 px | 6 | li, strong, li |
 | 174.27 px | 1 | a.mobile-phone-cta |
 | 213.27 px | 1 | span.mobile-phone-label |
 | 328 px | 1 | div#hamburger.hamburger |
 
-**Startseite, 414 px — 18 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 6 | div.nav-inner, main#main-content, section.hero |
-| 20 px | 5 | div.usp-strip-inner, div.usp-item, div.usp-icon |
-| 24 px | 22 | a, img.nav-logo.logo-dark, div.hero-inner |
-| 25 px | 4 | div.hc-row, div.hc-row, div.hc-result |
-| 43 px | 5 | div, div.hc-label, div |
-| 49 px | 3 | div.hc-fv-badge, div.hc-fv-text, strong |
-| 53 px | 2 | a#fvHomeCta.btn-primary.fv-badge-cta, div.fv-badge-note |
-| 62 px | 4 | div.usp-text, h2, div.usp-text |
-| 138.28 px | 2 | div.usp-item, div.usp-icon |
-| 180.28 px | 2 | div.usp-text, h2 |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 215 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 257 px | 4 | div.usp-text, h2, div.usp-text |
-| 261.83 px | 1 | div.hc-result-value |
-| 294.08 px | 1 | div.hc-value |
-| 304.94 px | 1 | div.hc-value |
-| 352 px | 1 | div#hamburger.hamburger |
-
-**Preise, 414 px — 11 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 4 | div.nav-inner, main#main-content, section#preise-intro.section |
-| 24 px | 18 | a, img.nav-logo.logo-dark, div.section-inner |
-| 44 px | 6 | li, strong, li |
-| 46 px | 4 | span.manufacturer-name, span#wolfMinEigen.manufacturer-price, span.manufacturer-name |
-| 64 px | 2 | div.pa-cta-icon, svg |
-| 106 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
-| 120.5 px | 1 | div.section-tag |
-| 180.48 px | 1 | strong |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
-
-**Foerderung, 414 px — 10 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
-| 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
-| 39 px | 34 | div, div.foerder-inputs-grid, div.fi-group |
-| 43 px | 2 | button.active, button.active |
-| 60 px | 1 | span |
-| 68 px | 2 | div, div#foerderSatzKfw.fr-satz |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 209 px | 2 | button, button |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
-
-**Foerdervorschuss, 414 px — 7 verschiedene linke Kanten**
+**waermepumpe-hannover, 390 px — 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 20 px | 15 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 89.58 px | 1 | strong |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 328 px | 1 | div#hamburger.hamburger |
 
-**Anfrage, 414 px — 16 verschiedene linke Kanten**
+**waermepumpe-laerm, 390 px — 8 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 11 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 91.11 px | 1 | strong |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 209.03 px | 1 | strong |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**waermepumpenstrom-hannover, 390 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 10 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 177.83 px | 1 | a |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**wertsteigerung-waermepumpe, 390 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 10 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**wp-kosten-hannover, 390 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 25 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 110.09 px | 6 | th, td, td |
+| 174.27 px | 1 | a.mobile-phone-cta |
+| 213.27 px | 1 | span.mobile-phone-label |
+| 328 px | 1 | div#hamburger.hamburger |
+
+**anfrage, 414 px — 16 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -642,7 +1841,318 @@ Ergebnis: PASS (0 Befunde).
 | 305.11 px | 1 | a.funnel-close-link |
 | 312.64 px | 1 | span#progressPercent.progress-percent |
 
-**Rechner, 414 px — 14 verschiedene linke Kanten**
+**barrierefreiheit, 414 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 17 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 7 | li, li, li |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**baubarkeitspruefung, 414 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 19 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 8 | li, strong, li |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**bewerbung, 414 px — 12 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#bewerbung.contact |
+| 24 px | 9 | a, img.nav-logo.logo-dark, div.section-inner |
+| 39 px | 6 | div.bewerbung-steps, span, span |
+| 40 px | 25 | div.form-group, label, select#bwRolle |
+| 58 px | 1 | strong |
+| 65 px | 2 | label, label |
+| 155.2 px | 1 | a |
+| 163.03 px | 1 | span.form-optional |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 193.77 px | 1 | span.form-optional |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**datenschutz, 414 px — 5 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 24 px | 1 | main |
+| 45 px | 16 | div.topbar, a, h1 |
+| 110.22 px | 1 | a |
+| 254.84 px | 1 | button.theme-toggle |
+| 287.84 px | 1 | span.theme-toggle-label |
+
+**dimensionierung-verstehen, 414 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 212.3 px | 1 | a |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**dimensionierung, 414 px — 22 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 5 | div.nav-inner, main#main-content, section#wizard.wizard-section |
+| 24 px | 19 | a, img.nav-logo.logo-dark, div.section-inner |
+| 49 px | 11 | div#wizProgress.wizard-progress, div.wizard-progress-bar.active, div.wizard-step.active |
+| 53 px | 2 | h2#abschluss-angebot, p |
+| 53.47 px | 1 | a |
+| 84.55 px | 1 | div.wizard-progress-bar |
+| 97 px | 1 | a.btn-primary |
+| 104.67 px | 1 | a |
+| 117.73 px | 1 | a |
+| 120.11 px | 1 | div.wizard-progress-bar |
+| 155.66 px | 1 | div.wizard-progress-bar |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 191.22 px | 1 | div.wizard-progress-bar |
+| 213 px | 1 | button#wzPlzNext.wizard-btn-next.is-disabled |
+| 223 px | 9 | div.footer-col, h2, a |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 226.77 px | 1 | div.wizard-progress-bar |
+| 262.33 px | 1 | div.wizard-progress-bar |
+| 297.88 px | 1 | div.wizard-progress-bar |
+| 315.3 px | 1 | a |
+| 333.44 px | 1 | div.wizard-progress-bar |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**foerderung-hannover, 414 px — 8 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 20 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 180.05 px | 4 | th, td, td |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 244.73 px | 4 | th, td, td |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**foerderung-jetzt-mitnehmen, 414 px — 8 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 25 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 180.05 px | 2 | th, td |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 244.73 px | 2 | th, td |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**foerderung, 414 px — 10 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
+| 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
+| 39 px | 34 | div, div.foerder-inputs-grid, div.fi-group |
+| 43 px | 2 | button.active, button.active |
+| 60 px | 1 | span |
+| 68 px | 2 | div, div#foerderSatzKfw.fr-satz |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 209 px | 2 | button, button |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**foerdervorschuss, 414 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 89.58 px | 1 | strong |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**gasheizung-tauschen-oder-reparieren, 414 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 4 | li, li, li |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**hinweise, 414 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**impressum, 414 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 24 px | 1 | main |
+| 45 px | 19 | div.topbar, a, h1 |
+| 102.28 px | 1 | a |
+| 110.22 px | 1 | a |
+| 254.84 px | 1 | button.theme-toggle |
+| 287.84 px | 1 | span.theme-toggle-label |
+
+**index, 414 px — 17 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 6 | div.nav-inner, main#main-content, section.hero |
+| 24 px | 27 | a, img.nav-logo.logo-dark, div.hero-inner |
+| 25 px | 4 | div.hc-row, div.hc-row, div.hc-result |
+| 43 px | 5 | div, div.hc-label, div |
+| 49 px | 3 | div.hc-fv-badge, div.hc-fv-text, strong |
+| 53 px | 2 | a#fvHomeCta.btn-primary.fv-badge-cta, div.fv-badge-note |
+| 66 px | 4 | div.usp-text, h2, div.usp-text |
+| 138.28 px | 2 | div.usp-item, div.usp-icon |
+| 180.28 px | 2 | div.usp-text, h2 |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 215 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 257 px | 4 | div.usp-text, h2, div.usp-text |
+| 261.83 px | 1 | div.hc-result-value |
+| 294.08 px | 1 | div.hc-value |
+| 304.94 px | 1 | div.hc-value |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**karriere, 414 px — 8 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 4 | div.nav-inner, main#main-content, section#hero.section.kar-hero |
+| 24 px | 18 | a, img.nav-logo.logo-dark, div.section-inner |
+| 51 px | 6 | span.kar-icon, h3, p |
+| 62 px | 2 | svg, svg |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 217.88 px | 1 | strong |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**kontakt, 414 px — 12 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#contact.contact |
+| 24 px | 14 | a, img.nav-logo.logo-dark, div.section-inner |
+| 48 px | 2 | div.contact-image-caption-title, div.contact-image-caption-sub |
+| 57 px | 28 | div.form-group, label, input#kontaktName |
+| 82 px | 1 | label |
+| 88.05 px | 1 | span.form-optional |
+| 92.61 px | 1 | span.form-optional |
+| 111.34 px | 1 | span.form-optional |
+| 118.7 px | 1 | span.form-optional |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**kostenvergleich-waermepumpe, 414 px — 15 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 4 | nav.topnav, div.topnav-inner, div.container |
+| 24 px | 13 | a.topnav-brand, img.nav-logo.logo-dark, div#wzShell.wz-shell |
+| 29.27 px | 1 | a |
+| 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
+| 44 px | 1 | div.ib |
+| 57 px | 10 | div#wzStepBody, div, p.wz-intro |
+| 65 px | 5 | strong, span.d, div |
+| 69 px | 5 | span, span, span |
+| 98.19 px | 1 | a |
+| 208.06 px | 1 | a |
+| 237.52 px | 1 | a#wzModeLink |
+| 271.84 px | 2 | div.topnav-actions, button.theme-toggle |
+| 278.5 px | 1 | button#wzNext.wz-next |
+| 283.88 px | 1 | a |
+| 306.84 px | 1 | span.theme-toggle-label |
+
+**preise, 414 px — 11 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 4 | div.nav-inner, main#main-content, section#preise-intro.section |
+| 24 px | 18 | a, img.nav-logo.logo-dark, div.section-inner |
+| 31.86 px | 1 | strong |
+| 44 px | 6 | li, strong, li |
+| 46 px | 3 | span.manufacturer-name, span#wolfMinEigen.manufacturer-price, span.manufacturer-name |
+| 64 px | 2 | div.pa-cta-icon, svg |
+| 106 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
+| 120.5 px | 1 | div.section-tag |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**propan-waermepumpe, 414 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 6 | li, strong, li |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**prozess, 414 px — 11 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#prozess.prozess |
+| 24 px | 14 | a, img.nav-logo.logo-dark, div.section-inner |
+| 36 px | 19 | h2, p, div#pzSub1.pz-substeps |
+| 147.53 px | 2 | button.pz-expand-hint, button.pz-expand-hint |
+| 164.53 px | 2 | span.pz-hint-text, span.pz-hint-text |
+| 171 px | 3 | div.pz-step-num, div.pz-step-num, div.pz-step-num |
+| 173.52 px | 1 | span.pz-time |
+| 183.91 px | 1 | span.pz-time |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**ratgeber, 414 px — 13 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| -196.92 px | 1 | image |
+| 0 px | 3 | div.nav-inner, main#main-content, section#blog.blog-section.ratgeber-hub |
+| 24 px | 22 | a, img.nav-logo.logo-dark, div.section-inner |
+| 25 px | 5 | div.blog-card-art.guide-visual.guide-visual-altbau, div.blog-card-body, div.blog-card-art.guide-visual.guide-visual-sound |
+| 45 px | 12 | div.blog-card-tag, h2, p |
+| 102.62 px | 1 | image |
+| 114.61 px | 1 | span |
+| 116.56 px | 1 | span |
+| 148 px | 3 | svg, img.guide-icon-img, svg |
+| 180.14 px | 1 | span |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**rechner, 414 px — 14 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -661,31 +2171,75 @@ Ergebnis: PASS (0 Befunde).
 | 225.27 px | 1 | span.mobile-phone-label |
 | 352 px | 1 | div#hamburger.hamburger |
 
-**Kontakt, 414 px — 12 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, section#contact.contact |
-| 24 px | 14 | a, img.nav-logo.logo-dark, div.section-inner |
-| 48 px | 2 | div.contact-image-caption-title, div.contact-image-caption-sub |
-| 57 px | 28 | div.form-group, label, input#kontaktName |
-| 82 px | 1 | label |
-| 88.05 px | 1 | span.form-optional |
-| 92.61 px | 1 | span.form-optional |
-| 111.34 px | 1 | span.form-optional |
-| 118.7 px | 1 | span.form-optional |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
-
-**Barrierefreiheit, 414 px — 7 verschiedene linke Kanten**
+**waermepumpe-altbau, 414 px — 7 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 17 | div.section-inner, div.section-tag, h1.section-title |
+| 20 px | 16 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 42 px | 7 | li, li, li |
+| 42 px | 6 | li, strong, li |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**waermepumpe-hannover, 414 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 16 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**waermepumpe-laerm, 414 px — 9 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 10 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 91.11 px | 1 | strong |
+| 130.23 px | 1 | strong |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 187.05 px | 1 | strong |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**waermepumpenstrom-hannover, 414 px — 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 11 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 177.83 px | 1 | a |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**wertsteigerung-waermepumpe, 414 px — 6 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 11 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 186.27 px | 1 | a.mobile-phone-cta |
+| 225.27 px | 1 | span.mobile-phone-label |
+| 352 px | 1 | div#hamburger.hamburger |
+
+**wp-kosten-hannover, 414 px — 8 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 25 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 110.09 px | 6 | th, td, td |
+| 111.17 px | 1 | a |
 | 186.27 px | 1 | a.mobile-phone-cta |
 | 225.27 px | 1 | span.mobile-phone-label |
 | 352 px | 1 | div#hamburger.hamburger |

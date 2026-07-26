@@ -6093,3 +6093,102 @@ samp {
   overflow-x: auto;
   max-width: 100%;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PREISKARTE ZEIGT BEIDE ZAHLEN (GF-Entscheid 26.07.2026)
+   Vorher stand auf der Karte nur der Eigenanteil im Bestfall. Der Kunde kam
+   damit mit einer Preiserwartung ins Telefonat, die wir in vielen Faellen
+   nicht erfuellen koennen, und die Bedingungen dieses Bestfalls standen
+   nirgends auf der Karte. Der werblich guenstigste Preis bleibt die grosse
+   Zahl, seine Herleitung steht jetzt daneben statt im Kleingedruckten.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.pa-card .pa-price-brutto {
+  color: var(--g400);
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.pa-card .pa-price-bedingung {
+  color: var(--g400);
+  font-size: 11px;
+  line-height: 1.35;
+  margin-top: 2px;
+}
+.pa-card .pa-price-bedingung a {
+  color: var(--green);
+  text-decoration: none;
+}
+@media (max-width: 600px) {
+  .pa-card .pa-price-brutto {
+    font-size: 11px;
+  }
+  .pa-card .pa-price-bedingung {
+    font-size: 10px;
+  }
+}
+
+/* Der Bedingungstext ist jetzt eine gegliederte Erklaerung in einfacher
+   Sprache statt eines Fliesstext-Blocks. Linksbuendig, weil zentrierte
+   Aufzaehlungen schwer zu lesen sind. */
+.preisanker-disclaimer {
+  text-align: left;
+}
+.preisanker-disclaimer p {
+  margin: 0 0 8px;
+}
+.preisanker-disclaimer ul {
+  margin: 0 0 8px;
+  padding-left: 18px;
+}
+.preisanker-disclaimer li {
+  margin-bottom: 4px;
+}
+
+/* ═══ NACHTRAG zur Preiskarten-Aenderung, R14-Abnahme 26.07.2026 ═══════════
+   Die Abnahme fand ein Gate-FAIL, das erst durch die dauerhaft offene Karte
+   sichtbar wurde: die Kinder von .pa-detail-inner ragen bei 320 px um 65 px
+   und bei 375 px um 10 px aus ihrem Container. Ein Rasterkind kann nicht
+   unter seinen Mindestinhalt schrumpfen, solange min-width fehlt. Der Fehler
+   lag schon vorher im Stylesheet und schlief, weil die Karte geschlossen war.
+   Lehre: eine gruene Kennzahl beweist nur, was sie misst. */
+.pa-detail-inner > *,
+.pa-detail-left > *,
+.pa-detail-right > * {
+  min-width: 0;
+}
+.pa-bottom-cta {
+  min-width: 0;
+  max-width: 100%;
+}
+@media (max-width: 480px) {
+  .pa-bottom-cta {
+    flex-wrap: wrap;
+    row-gap: 4px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}
+
+/* Der Sternchen-Verweis steht jetzt UNTER dem Kartenraster statt in der Karte.
+   Ein Link in einem role="button" ist verschachtelte Interaktivitaet: axe-core
+   meldete 5x nested-interactive, und per Tastatur klappte der Link die Karte
+   zu, statt zum Text zu springen (WCAG 2.1.1). Norm vor Gestaltung. */
+.pa-bedingungen-verweis {
+  margin: 14px auto 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--g300);
+}
+.pa-bedingungen-verweis a {
+  color: var(--green);
+  text-decoration: underline;
+}
+
+/* Die technische Datentabelle im Detailbereich ist breiter als ihre Spalte,
+   sobald der Bereich auf dem Telefon offen steht. Eigener waagerechter
+   Bildlauf statt Ueberstand, wie bei den Ratgeber-Tabellen. */
+.pa-detail-right .pa-specs {
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+}

@@ -1115,6 +1115,11 @@ function paSelectManufacturer(manufacturer) {
   if (detail) detail.classList.remove('open');
   if (cardsContainer) cardsContainer.classList.remove('has-selection');
   paOpenIdx = -1;
+  // GF-Befund 26.07.2026: beim Aufruf war KEINE Karte offen, damit fehlte jeder
+  // Bezug zur Auftragssumme, solange niemand klickte. Die hervorgehobene
+  // Standardkarte oeffnet sich jetzt von selbst. Der Aufruf steht bewusst NACH
+  // dem Zuruecksetzen oben, sonst schliesst dieselbe Funktion sie sofort wieder.
+  paOeffneStandardkarte();
 }
 
 function paInitManufacturerTabs() {
@@ -1415,8 +1420,17 @@ function paRenderCards() {
   if (!container) return;
   container.innerHTML = paData
     .map((d, i) => {
+      // GF-Entscheid 26.07.2026: die Karte zeigt BEIDE Zahlen. Vorher stand hier
+      // nur der Eigenanteil im Bestfall. Der Kunde kam damit mit einer
+      // Preiserwartung ins Telefonat, die wir in vielen Faellen nicht erfuellen
+      // koennen, und die Bedingungen dieses Bestfalls standen nirgends auf der
+      // Karte. Jetzt: Komplettpreis klein darueber, Eigenanteil gross, darunter
+      // eine Bedingungszeile in einfacher Sprache mit Sprung zum Fusstext.
+      const bruttoHtml = paHasNumber(d.preis)
+        ? `<div class="pa-price-brutto">Komplett installiert ${d.preis.toLocaleString('de-DE')} €</div>`
+        : '';
       const priceHtml = paHasNumber(d.eigen)
-        ? `<div class="pa-price-compact">ab ${d.eigen.toLocaleString('de-DE')} €</div><div class="pa-label">Eigenanteil*</div>`
+        ? `${bruttoHtml}<div class="pa-price-compact">ab ${d.eigen.toLocaleString('de-DE')} €</div><div class="pa-label">Dein Anteil</div><div class="pa-price-bedingung">bei voller F\u00f6rderung*</div>`
         : `<div class="pa-price-compact" style="font-size:17px;">Auf Anfrage</div><div class="pa-label">projektgenau</div>`;
 
       const defaultClass = i === 0 ? ' pa-default-highlight' : '';
@@ -1504,6 +1518,22 @@ function paPositionArrow(idx) {
 }
 
 let paOpenIdx = -1;
+
+// Oeffnet die hervorgehobene Standardkarte (Index 0), sobald die Karten stehen.
+// Bewusst ueber paZoom, damit Detailbereich, Pfeil und Zustandsklassen exakt
+// denselben Weg nehmen wie bei einem echten Klick.
+function paOeffneStandardkarte() {
+  const karten = document.querySelectorAll('.pa-card');
+  if (!karten.length) return;
+  // Die Pruefung steht IM Callback, nicht davor: zwei Aufrufe im selben Frame
+  // (Doppelklick auf den Markenreiter) planten sonst zwei Callbacks, der erste
+  // oeffnete und der zweite klappte wieder zu. Von der Abnahme gemessen.
+  requestAnimationFrame(() => {
+    if (paOpenIdx !== -1) return;
+    paZoom(0);
+  });
+}
+
 function paZoom(idx) {
   const cards = document.querySelectorAll('.pa-card');
   const detail = document.getElementById('paDetail');
@@ -1558,9 +1588,15 @@ function paZoom(idx) {
   }
 }
 
-// Klick außerhalb → alles zuklappen
+// Klick außerhalb → alles zuklappen.
+// Der Einwilligungsdialog ist ausgenommen: er liegt beim Erstbesuch ueber der
+// ganzen Seite, und sein Wegklicken ist der erste Klick jedes neuen Besuchers.
+// Ohne diese Ausnahme schloss er die eben erst geoeffnete Standardkarte sofort
+// wieder, und zwar genau fuer die Zielgruppe, fuer die sie offen sein soll.
+// Von der Abnahme 26.07.2026 gemessen und gefunden.
 document.addEventListener('click', (e) => {
   if (paOpenIdx === -1) return;
+  if (e.target.closest('[id^="cmp"], [class^="cmp"]')) return;
   if (
     !e.target.closest('.pa-card') &&
     !e.target.closest('.pa-detail') &&
@@ -1585,6 +1621,9 @@ paInitManufacturerTabs();
 paLoadData().then(() => {
   paApplyBrand('wolf');
   paRenderCards();
+  // Standardkarte offen (GF-Befund 26.07.2026). Der Erstaufruf laeuft NICHT
+  // ueber paSelectManufacturer, deshalb steht der Aufruf hier zusaetzlich.
+  paOeffneStandardkarte();
 });
 
 // ===== SVG ICON CONSTANTS =====
