@@ -177,20 +177,20 @@ Ergebnis: PASS (0 Befunde).
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 6 | div.funnel-layout, main.funnel-panel, div.funnel-header |
+| 16.55 px | 1 | a |
 | 20 px | 9 | div.step.active, h2.step-question, p.step-hint |
 | 24 px | 6 | div.funnel-header-logo, img.logo-dark, div.progress-bar-top |
-| 25.13 px | 1 | a |
 | 42 px | 3 | div.answer-card-icon, div.answer-card-icon, div.answer-card-icon |
 | 57 px | 3 | svg, svg, svg |
 | 61.17 px | 5 | g, path, g |
 | 61.47 px | 1 | path |
 | 65.8 px | 1 | path |
-| 101.69 px | 1 | span#stepCounter.funnel-step-counter |
-| 108.36 px | 1 | a |
+| 98.84 px | 1 | span#stepCounter.funnel-step-counter |
+| 104.02 px | 1 | a |
 | 138 px | 9 | div.answer-card-text, div.answer-card-label, div.answer-card-sub |
-| 200.42 px | 1 | a |
-| 211.11 px | 1 | a.funnel-close-link |
-| 218.64 px | 1 | span#progressPercent.progress-percent |
+| 201.75 px | 1 | a |
+| 206.47 px | 1 | a.funnel-close-link |
+| 214.41 px | 1 | span#progressPercent.progress-percent |
 
 **barrierefreiheit, 320 px — 8 verschiedene linke Kanten**
 
@@ -242,7 +242,7 @@ Ergebnis: PASS (0 Befunde).
 | 49 px | 1 | span.tt-feld |
 | 102.28 px | 1 | a |
 | 110.22 px | 1 | a |
-| 139 px | 1 | span.tt-feld |
+| 116.88 px | 1 | span.tt-feld |
 
 **dimensionierung-verstehen, 320 px — 6 verschiedene linke Kanten**
 
@@ -352,7 +352,7 @@ Ergebnis: PASS (0 Befunde).
 | 49 px | 1 | span.tt-feld |
 | 102.28 px | 1 | a |
 | 110.22 px | 1 | a |
-| 139 px | 1 | span.tt-feld |
+| 116.88 px | 1 | span.tt-feld |
 
 **index, 320 px — 17 verschiedene linke Kanten**
 
@@ -420,12 +420,12 @@ Ergebnis: PASS (0 Befunde).
 | 69 px | 5 | span, span, span |
 | 93.55 px | 1 | a |
 | 119.86 px | 1 | a |
+| 132.03 px | 2 | div.topnav-actions, button.theme-toggle |
+| 136.03 px | 1 | span.tt-feld |
 | 137.91 px | 1 | a#wzModeLink |
-| 145.27 px | 2 | div.topnav-actions, button.theme-toggle |
-| 149.27 px | 1 | span.tt-feld |
 | 184.5 px | 1 | button#wzNext.wz-next |
 | 203.42 px | 1 | a |
-| 211.3 px | 1 | span.tt-feld |
+| 203.91 px | 1 | span.tt-feld |
 
 **preise, 320 px — 8 verschiedene linke Kanten**
 
@@ -581,18 +581,18 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 6 | div.funnel-layout, main.funnel-panel, div.funnel-header |
 | 20 px | 9 | div.step.active, h2.step-question, p.step-hint |
 | 24 px | 6 | div.funnel-header-logo, img.logo-dark, div.progress-bar-top |
+| 36.55 px | 1 | a |
 | 42 px | 3 | div.answer-card-icon, div.answer-card-icon, div.answer-card-icon |
-| 45.13 px | 1 | a |
 | 56.8 px | 3 | svg, svg, svg |
 | 61 px | 5 | g, path, g |
 | 61.3 px | 1 | path |
 | 65.67 px | 1 | path |
-| 121.69 px | 1 | span#stepCounter.funnel-step-counter |
-| 128.36 px | 1 | a |
+| 118.84 px | 1 | span#stepCounter.funnel-step-counter |
+| 124.02 px | 1 | a |
 | 138 px | 9 | div.answer-card-text, div.answer-card-label, div.answer-card-sub |
-| 220.42 px | 1 | a |
-| 251.11 px | 1 | a.funnel-close-link |
-| 258.64 px | 1 | span#progressPercent.progress-percent |
+| 221.75 px | 1 | a |
+| 246.47 px | 1 | a.funnel-close-link |
+| 254.41 px | 1 | span#progressPercent.progress-percent |
 
 **barrierefreiheit, 360 px — 8 verschiedene linke Kanten**
 
@@ -643,7 +643,7 @@ Ergebnis: PASS (0 Befunde).
 | 45 px | 17 | div.topbar, a, button.theme-toggle |
 | 49 px | 1 | span.tt-feld |
 | 110.22 px | 1 | a |
-| 139 px | 1 | span.tt-feld |
+| 116.88 px | 1 | span.tt-feld |
 
 **dimensionierung-verstehen, 360 px — 7 verschiedene linke Kanten**
 
@@ -762,7 +762,7 @@ Ergebnis: PASS (0 Befunde).
 | 49 px | 1 | span.tt-feld |
 | 102.28 px | 1 | a |
 | 110.22 px | 1 | a |
-| 139 px | 1 | span.tt-feld |
+| 116.88 px | 1 | span.tt-feld |
 
 **index, 360 px — 17 verschiedene linke Kanten**
 
@@ -828,12 +828,12 @@ Ergebnis: PASS (0 Befunde).
 | 65 px | 5 | strong, span.d, div |
 | 69 px | 5 | span, span, span |
 | 74.75 px | 1 | a |
+| 172.03 px | 2 | div.topnav-actions, button.theme-toggle |
+| 176.03 px | 1 | span.tt-feld |
 | 184.63 px | 1 | a |
-| 185.27 px | 2 | div.topnav-actions, button.theme-toggle |
 | 188.94 px | 1 | a#wzModeLink |
-| 189.27 px | 1 | span.tt-feld |
 | 224.5 px | 1 | button#wzNext.wz-next |
-| 251.3 px | 1 | span.tt-feld |
+| 243.91 px | 1 | span.tt-feld |
 | 260.44 px | 1 | a |
 
 **preise, 360 px — 10 verschiedene linke Kanten**
@@ -994,18 +994,18 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 9 | div.step.active, h2.step-question, p.step-hint |
 | 24 px | 6 | div.funnel-header-logo, img.logo-dark, div.progress-bar-top |
 | 42 px | 3 | div.answer-card-icon, div.answer-card-icon, div.answer-card-icon |
-| 52.63 px | 1 | a |
+| 44.05 px | 1 | a |
 | 57 px | 3 | svg, svg, svg |
 | 61.37 px | 2 | g, path |
 | 61.38 px | 3 | g, g, path |
 | 61.7 px | 1 | path |
 | 66.24 px | 1 | path |
-| 129.19 px | 1 | span#stepCounter.funnel-step-counter |
-| 135.86 px | 1 | a |
+| 126.34 px | 1 | span#stepCounter.funnel-step-counter |
+| 131.52 px | 1 | a |
 | 140.5 px | 9 | div.answer-card-text, div.answer-card-label, div.answer-card-sub |
-| 227.92 px | 1 | a |
-| 266.11 px | 1 | a.funnel-close-link |
-| 273.64 px | 1 | span#progressPercent.progress-percent |
+| 229.25 px | 1 | a |
+| 261.47 px | 1 | a.funnel-close-link |
+| 269.41 px | 1 | span#progressPercent.progress-percent |
 
 **barrierefreiheit, 375 px — 8 verschiedene linke Kanten**
 
@@ -1056,7 +1056,7 @@ Ergebnis: PASS (0 Befunde).
 | 45 px | 17 | div.topbar, a, button.theme-toggle |
 | 49 px | 1 | span.tt-feld |
 | 110.22 px | 1 | a |
-| 139 px | 1 | span.tt-feld |
+| 116.88 px | 1 | span.tt-feld |
 
 **dimensionierung-verstehen, 375 px — 7 verschiedene linke Kanten**
 
@@ -1177,7 +1177,7 @@ Ergebnis: PASS (0 Befunde).
 | 49 px | 1 | span.tt-feld |
 | 102.28 px | 1 | a |
 | 110.22 px | 1 | a |
-| 139 px | 1 | span.tt-feld |
+| 116.88 px | 1 | span.tt-feld |
 
 **index, 375 px — 17 verschiedene linke Kanten**
 
@@ -1245,12 +1245,12 @@ Ergebnis: PASS (0 Befunde).
 | 69 px | 4 | span, span, span |
 | 78.69 px | 1 | a |
 | 141.44 px | 1 | a#wzModeLink |
+| 187.03 px | 2 | div.topnav-actions, button.theme-toggle |
 | 188.56 px | 1 | a |
-| 200.27 px | 2 | div.topnav-actions, button.theme-toggle |
-| 204.27 px | 1 | span.tt-feld |
+| 191.03 px | 1 | span.tt-feld |
 | 239.5 px | 1 | button#wzNext.wz-next |
+| 258.91 px | 1 | span.tt-feld |
 | 264.38 px | 1 | a |
-| 266.3 px | 1 | span.tt-feld |
 
 **preise, 375 px — 11 verschiedene linke Kanten**
 
@@ -1411,18 +1411,18 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 9 | div.step.active, h2.step-question, p.step-hint |
 | 24 px | 6 | div.funnel-header-logo, img.logo-dark, div.progress-bar-top |
 | 42 px | 3 | div.answer-card-icon, div.answer-card-icon, div.answer-card-icon |
+| 51.55 px | 1 | a |
 | 57.59 px | 3 | svg, svg, svg |
-| 60.13 px | 1 | a |
 | 62.14 px | 3 | g, path, g |
 | 62.15 px | 2 | g, path |
 | 62.48 px | 1 | path |
 | 67.21 px | 1 | path |
-| 136.69 px | 1 | span#stepCounter.funnel-step-counter |
-| 143.36 px | 1 | a |
+| 133.84 px | 1 | span#stepCounter.funnel-step-counter |
+| 139.02 px | 1 | a |
 | 143.8 px | 9 | div.answer-card-text, div.answer-card-label, div.answer-card-sub |
-| 235.42 px | 1 | a |
-| 281.11 px | 1 | a.funnel-close-link |
-| 288.64 px | 1 | span#progressPercent.progress-percent |
+| 236.75 px | 1 | a |
+| 276.47 px | 1 | a.funnel-close-link |
+| 284.41 px | 1 | span#progressPercent.progress-percent |
 
 **barrierefreiheit, 390 px — 7 verschiedene linke Kanten**
 
@@ -1472,9 +1472,9 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 1 | main |
 | 45 px | 16 | div.topbar, a, h1 |
 | 110.22 px | 1 | a |
-| 157 px | 1 | button.theme-toggle |
-| 161 px | 1 | span.tt-feld |
-| 251 px | 1 | span.tt-feld |
+| 181.03 px | 1 | button.theme-toggle |
+| 185.03 px | 1 | span.tt-feld |
+| 252.91 px | 1 | span.tt-feld |
 
 **dimensionierung-verstehen, 390 px — 7 verschiedene linke Kanten**
 
@@ -1597,9 +1597,9 @@ Ergebnis: PASS (0 Befunde).
 | 45 px | 18 | div.topbar, a, h1 |
 | 102.28 px | 1 | a |
 | 110.22 px | 1 | a |
-| 157 px | 1 | button.theme-toggle |
-| 161 px | 1 | span.tt-feld |
-| 251 px | 1 | span.tt-feld |
+| 181.03 px | 1 | button.theme-toggle |
+| 185.03 px | 1 | span.tt-feld |
+| 252.91 px | 1 | span.tt-feld |
 
 **index, 390 px — 17 verschiedene linke Kanten**
 
@@ -1668,11 +1668,11 @@ Ergebnis: PASS (0 Befunde).
 | 86.19 px | 1 | a |
 | 148.94 px | 1 | a#wzModeLink |
 | 196.06 px | 1 | a |
-| 215.27 px | 2 | div.topnav-actions, button.theme-toggle |
-| 219.27 px | 1 | span.tt-feld |
+| 202.03 px | 2 | div.topnav-actions, button.theme-toggle |
+| 206.03 px | 1 | span.tt-feld |
 | 254.5 px | 1 | button#wzNext.wz-next |
 | 271.88 px | 1 | a |
-| 281.3 px | 1 | span.tt-feld |
+| 273.91 px | 1 | span.tt-feld |
 
 **preise, 390 px — 11 verschiedene linke Kanten**
 
@@ -1836,16 +1836,16 @@ Ergebnis: PASS (0 Befunde).
 | 42 px | 3 | div.answer-card-icon, div.answer-card-icon, div.answer-card-icon |
 | 58.56 px | 3 | svg, svg, svg |
 | 63.39 px | 5 | g, path, g |
+| 63.55 px | 1 | a |
 | 63.75 px | 1 | path |
 | 68.18 px | 1 | path |
 | 68.77 px | 1 | path |
-| 72.13 px | 1 | a |
-| 148.69 px | 1 | span#stepCounter.funnel-step-counter |
+| 145.84 px | 1 | span#stepCounter.funnel-step-counter |
 | 149.08 px | 9 | div.answer-card-text, div.answer-card-label, div.answer-card-sub |
-| 155.36 px | 1 | a |
-| 247.42 px | 1 | a |
-| 305.11 px | 1 | a.funnel-close-link |
-| 312.64 px | 1 | span#progressPercent.progress-percent |
+| 151.02 px | 1 | a |
+| 248.75 px | 1 | a |
+| 300.47 px | 1 | a.funnel-close-link |
+| 308.41 px | 1 | span#progressPercent.progress-percent |
 
 **barrierefreiheit, 414 px — 7 verschiedene linke Kanten**
 
@@ -1895,9 +1895,9 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 1 | main |
 | 45 px | 16 | div.topbar, a, h1 |
 | 110.22 px | 1 | a |
-| 181 px | 1 | button.theme-toggle |
-| 185 px | 1 | span.tt-feld |
-| 275 px | 1 | span.tt-feld |
+| 205.03 px | 1 | button.theme-toggle |
+| 209.03 px | 1 | span.tt-feld |
+| 276.91 px | 1 | span.tt-feld |
 
 **dimensionierung-verstehen, 414 px — 7 verschiedene linke Kanten**
 
@@ -2022,9 +2022,9 @@ Ergebnis: PASS (0 Befunde).
 | 45 px | 19 | div.topbar, a, h1 |
 | 102.28 px | 1 | a |
 | 110.22 px | 1 | a |
-| 181 px | 1 | button.theme-toggle |
-| 185 px | 1 | span.tt-feld |
-| 275 px | 1 | span.tt-feld |
+| 205.03 px | 1 | button.theme-toggle |
+| 209.03 px | 1 | span.tt-feld |
+| 276.91 px | 1 | span.tt-feld |
 
 **index, 414 px — 17 verschiedene linke Kanten**
 
@@ -2092,12 +2092,12 @@ Ergebnis: PASS (0 Befunde).
 | 69 px | 5 | span, span, span |
 | 98.19 px | 1 | a |
 | 208.06 px | 1 | a |
+| 226.03 px | 2 | div.topnav-actions, button.theme-toggle |
+| 230.03 px | 1 | span.tt-feld |
 | 237.52 px | 1 | a#wzModeLink |
-| 239.27 px | 2 | div.topnav-actions, button.theme-toggle |
-| 243.27 px | 1 | span.tt-feld |
 | 278.5 px | 1 | button#wzNext.wz-next |
 | 283.88 px | 1 | a |
-| 305.3 px | 1 | span.tt-feld |
+| 297.91 px | 1 | span.tt-feld |
 
 **preise, 414 px — 11 verschiedene linke Kanten**
 

@@ -37,13 +37,9 @@
   <script src="js/consent.js?v=5e2ae31749"></script>
   <!-- ============================================================== -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/fonts.css?v=c595924635">
 <style>
 /* Fonts von der Site selbst (/fonts/, CSP font-src 'self') */
-@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/inter-400.woff2?v=8909904ab6') format('woff2');}
-@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('/fonts/inter-500.woff2?v=f3779f1efc') format('woff2');}
-@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url('/fonts/inter-700.woff2?v=6f56409fd3') format('woff2');}
-@font-face{font-family:'Barlow';font-style:normal;font-weight:700;font-display:swap;src:url('/fonts/barlow-700.woff2?v=2d797dd8b3') format('woff2');}
-@font-face{font-family:'Barlow';font-style:normal;font-weight:800;font-display:swap;src:url('/fonts/barlow-800.woff2?v=231d487a99') format('woff2');}
 </style>
 <title>Kosten-Vergleichsrechner: Öl und Gas oder Wärmepumpe | HeroWerk</title>
 <meta name="description" content="Der ehrliche Kostenvergleich über 20 Jahre: neue Öl- oder Gasheizung gegen Wärmepumpe. Anschaffung, Förderung, Heizkosten und CO2-Preis, mit aktueller KfW-Förderung.">
@@ -311,8 +307,8 @@
      Lime und Schiefer stehen absichtlich als feste Werte: --hero-accent ist im
      Hell-Modus Oliv #4F6000, der aktive Feld-Grund soll aber in BEIDEN Modi die
      Markenfarbe sein, wie auf allen uebrigen Seiten. */
-  .theme-toggle[data-theme-switch]{display:inline-flex;align-items:center;justify-content:center;gap:0;padding:3px;min-height:44px;border-radius:999px;border:1px solid var(--hero-muted);background:var(--hero-row-alt);color:var(--hero-muted);font-family:'Inter',sans-serif;cursor:pointer;white-space:nowrap;}
-  .theme-toggle[data-theme-switch] .tt-feld{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:58px;height:36px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:500;color:var(--hero-muted);white-space:nowrap;}
+  .theme-toggle[data-theme-switch]{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:0;padding:3px;min-height:44px;border-radius:999px;border:1px solid var(--hero-muted);background:var(--hero-row-alt);color:var(--hero-muted);font-family:'Inter',sans-serif;cursor:pointer;white-space:nowrap;}
+  .theme-toggle[data-theme-switch] .tt-feld{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:66px;height:36px;padding:0 12px;border-radius:999px;font-size:13px;box-sizing:border-box;font-weight:500;color:var(--hero-muted);white-space:nowrap;}
   .theme-toggle[data-theme-switch] .tt-feld[data-aktiv='true']{background:#B7D900;color:#1C2B36;font-weight:700;}
   .theme-toggle[data-theme-switch] .tt-feld svg{flex:0 0 auto;}
   .theme-toggle[data-theme-switch]:focus-visible{outline:3px solid var(--hero-white);outline-offset:2px;}

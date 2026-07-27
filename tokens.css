@@ -236,6 +236,7 @@ body {
    damit ueber der Norm 3,0 fuer Bedienelemente (WCAG 1.4.11).
    ═════════════════════════════════════════════════════════════════════════ */
 .theme-toggle[data-theme-switch] {
+  box-sizing: border-box;
   /* KEIN display hier. Die Basisregel .theme-toggle setzt bereits
      inline-flex, und css/site.css blendet den freistehenden Umschalter ueber
      `button.nav-theme-standalone { display: none }` aus. Mit einem eigenen
@@ -262,6 +263,12 @@ body {
   white-space: nowrap;
 }
 .theme-toggle[data-theme-switch] .tt-feld {
+  /* Der Reset `* { box-sizing: border-box }` steht in css/site.css, und vier
+     Seiten laden die nicht. Dort zaehlte der Innenabstand zur Breite dazu:
+     66 + 12 + 12 = 90 px statt 67,9 [gemessen 27.07.2026 auf datenschutz.html
+     und impressum.html]. Das Bauteil bringt seine Kastenrechnung deshalb
+     selbst mit, statt sich auf einen fremden Reset zu verlassen. */
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;

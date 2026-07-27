@@ -1,0 +1,72 @@
+/* ═══ SCHRIFTEN DES HAUSES ══════════════════════════════════════════════════
+   Inter fuer Fliesstext, Barlow fuer Ueberschriften. Beide liegen als woff2 im
+   Repo unter /fonts, es wird nichts von Google oder einem anderen Fremdserver
+   geladen (Datenschutz, und es war schon vorher so).
+
+   WARUM DIESE DATEI EXISTIERT (Befund 27.07.2026): die @font-face-Bloecke
+   standen ausschliesslich in css/site.css. Vier Seiten binden css/site.css
+   aber gar nicht ein - anfrage.html, datenschutz.html, impressum.html und
+   kostenvergleich-waermepumpe.html. Sie forderten 'Inter' und 'Barlow'
+   namentlich an, bekamen die Schriftdateien aber nie und setzten deshalb in
+   der Systemschrift. Sichtbar wurde es am Modus-Schalter: auf datenschutz.html
+   misst er 188 statt 164 px, weil Arial breiter setzt als Inter.
+   Seitdem laden ALLE 29 Seiten diese eine Datei, und zwar als erstes
+   Stylesheet, damit die Schrift steht, bevor irgendetwas gesetzt wird.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/inter-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/inter-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/inter-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/inter-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/barlow-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/barlow-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/barlow-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/fonts/barlow-800.woff2') format('woff2');
+}
