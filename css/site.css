@@ -6193,6 +6193,20 @@ samp {
   max-width: 100%;
 }
 
+/* Quellen- und Einordnungs-Fussnote im Ratgeber (27.07.2026).
+   Kleiner und ruhiger als der Fliesstext, aber KEIN eigener Innenabstand:
+   die Fussnote muss mit den Absaetzen darueber fluchten, sonst faellt sie
+   dem Fluchten-Gate zur Last. Gemessen 27.07.2026 auf /propan-waermepumpe
+   bei 375 und 1280 px: Fussnote und Absatz stehen auf denselben Kanten
+   (20/335 bzw. 260/760). Farbe --g500 gegen den Artikelgrund: 5,91 dunkel
+   (#a0a6ad auf #1c2b36) und 5,33 hell (#5a6470 auf #f4f1ea), beide ueber der
+   Norm 4,5. */
+.ratgeber-article .quellen-note {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--g500);
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
    PREISKARTE ZEIGT BEIDE ZAHLEN (GF-Entscheid 26.07.2026)
    Vorher stand auf der Karte nur der Eigenanteil im Bestfall. Der Kunde kam

@@ -41,7 +41,7 @@ Ergebnis: PASS (0 Befunde).
 | kontakt | 320 px | 195 | 179 | 88 | 2 | 0 |
 | kostenvergleich-waermepumpe | 320 px | 660 | 604 | 58 | 0 | 0 |
 | preise | 320 px | 397 | 383 | 258 | 6 | 0 |
-| propan-waermepumpe | 320 px | 183 | 169 | 83 | 1 | 0 |
+| propan-waermepumpe | 320 px | 184 | 170 | 84 | 1 | 0 |
 | prozess | 320 px | 239 | 219 | 116 | 3 | 0 |
 | ratgeber | 320 px | 429 | 408 | 307 | 5 | 0 |
 | rechner | 320 px | 228 | 214 | 125 | 2 | 0 |
@@ -70,7 +70,7 @@ Ergebnis: PASS (0 Befunde).
 | kontakt | 360 px | 195 | 179 | 88 | 2 | 0 |
 | kostenvergleich-waermepumpe | 360 px | 660 | 604 | 58 | 0 | 0 |
 | preise | 360 px | 397 | 383 | 258 | 6 | 0 |
-| propan-waermepumpe | 360 px | 183 | 169 | 83 | 1 | 0 |
+| propan-waermepumpe | 360 px | 184 | 170 | 84 | 1 | 0 |
 | prozess | 360 px | 239 | 219 | 116 | 3 | 0 |
 | ratgeber | 360 px | 429 | 408 | 307 | 5 | 0 |
 | rechner | 360 px | 228 | 214 | 125 | 2 | 0 |
@@ -99,7 +99,7 @@ Ergebnis: PASS (0 Befunde).
 | kontakt | 375 px | 195 | 179 | 88 | 2 | 0 |
 | kostenvergleich-waermepumpe | 375 px | 660 | 604 | 58 | 0 | 0 |
 | preise | 375 px | 397 | 383 | 258 | 6 | 0 |
-| propan-waermepumpe | 375 px | 183 | 169 | 83 | 1 | 0 |
+| propan-waermepumpe | 375 px | 184 | 170 | 84 | 1 | 0 |
 | prozess | 375 px | 239 | 219 | 116 | 3 | 0 |
 | ratgeber | 375 px | 429 | 408 | 307 | 5 | 0 |
 | rechner | 375 px | 228 | 214 | 125 | 2 | 0 |
@@ -128,7 +128,7 @@ Ergebnis: PASS (0 Befunde).
 | kontakt | 390 px | 195 | 179 | 88 | 2 | 0 |
 | kostenvergleich-waermepumpe | 390 px | 660 | 604 | 58 | 0 | 0 |
 | preise | 390 px | 397 | 383 | 260 | 6 | 0 |
-| propan-waermepumpe | 390 px | 183 | 169 | 83 | 1 | 0 |
+| propan-waermepumpe | 390 px | 184 | 170 | 84 | 1 | 0 |
 | prozess | 390 px | 239 | 219 | 116 | 3 | 0 |
 | ratgeber | 390 px | 429 | 408 | 307 | 5 | 0 |
 | rechner | 390 px | 228 | 214 | 125 | 2 | 0 |
@@ -157,7 +157,7 @@ Ergebnis: PASS (0 Befunde).
 | kontakt | 414 px | 195 | 179 | 88 | 2 | 0 |
 | kostenvergleich-waermepumpe | 414 px | 660 | 604 | 58 | 0 | 0 |
 | preise | 414 px | 397 | 383 | 260 | 6 | 0 |
-| propan-waermepumpe | 414 px | 183 | 169 | 83 | 1 | 0 |
+| propan-waermepumpe | 414 px | 184 | 170 | 84 | 1 | 0 |
 | prozess | 414 px | 239 | 219 | 116 | 3 | 0 |
 | ratgeber | 414 px | 429 | 408 | 307 | 5 | 0 |
 | rechner | 414 px | 228 | 214 | 125 | 2 | 0 |
@@ -186,7 +186,7 @@ Ergebnis: PASS (0 Befunde).
 | kontakt | 600 px | 195 | 180 | 93 | 2 | 0 |
 | kostenvergleich-waermepumpe | 600 px | 660 | 605 | 59 | 0 | 0 |
 | preise | 600 px | 397 | 384 | 265 | 6 | 0 |
-| propan-waermepumpe | 600 px | 183 | 170 | 88 | 1 | 0 |
+| propan-waermepumpe | 600 px | 184 | 171 | 89 | 1 | 0 |
 | prozess | 600 px | 239 | 220 | 121 | 3 | 0 |
 | ratgeber | 600 px | 429 | 409 | 312 | 5 | 0 |
 | rechner | 600 px | 228 | 215 | 130 | 2 | 0 |
@@ -215,7 +215,7 @@ Ergebnis: PASS (0 Befunde).
 | kontakt | 768 px | 195 | 180 | 93 | 2 | 0 |
 | kostenvergleich-waermepumpe | 768 px | 660 | 605 | 59 | 0 | 0 |
 | preise | 768 px | 397 | 384 | 270 | 6 | 0 |
-| propan-waermepumpe | 768 px | 183 | 170 | 88 | 1 | 0 |
+| propan-waermepumpe | 768 px | 184 | 171 | 89 | 1 | 0 |
 | prozess | 768 px | 239 | 220 | 121 | 3 | 0 |
 | ratgeber | 768 px | 429 | 409 | 312 | 5 | 0 |
 | rechner | 768 px | 228 | 215 | 130 | 2 | 0 |
@@ -244,7 +244,7 @@ Ergebnis: PASS (0 Befunde).
 | kontakt | 960 px | 195 | 180 | 93 | 2 | 0 |
 | kostenvergleich-waermepumpe | 960 px | 660 | 605 | 59 | 0 | 0 |
 | preise | 960 px | 397 | 384 | 270 | 6 | 0 |
-| propan-waermepumpe | 960 px | 183 | 170 | 88 | 1 | 0 |
+| propan-waermepumpe | 960 px | 184 | 171 | 89 | 1 | 0 |
 | prozess | 960 px | 239 | 217 | 100 | 3 | 0 |
 | ratgeber | 960 px | 429 | 409 | 312 | 5 | 0 |
 | rechner | 960 px | 228 | 215 | 130 | 2 | 0 |
@@ -943,7 +943,7 @@ Ergebnis: PASS (0 Befunde).
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
 | 159.27 px | 1 | a.mobile-phone-cta |
@@ -1360,7 +1360,7 @@ Ergebnis: PASS (0 Befunde).
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
 | 166.77 px | 1 | a.mobile-phone-cta |
@@ -1780,7 +1780,7 @@ Ergebnis: PASS (0 Befunde).
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
 | 174.27 px | 1 | a.mobile-phone-cta |
@@ -2203,7 +2203,7 @@ Ergebnis: PASS (0 Befunde).
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
 | 186.27 px | 1 | a.mobile-phone-cta |
@@ -2714,7 +2714,7 @@ Ergebnis: PASS (0 Befunde).
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 16 | div.section-inner, div.section-tag, h1.section-title |
+| 20 px | 14 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
 | 177.77 px | 1 | a |
@@ -3277,7 +3277,7 @@ Ergebnis: PASS (0 Befunde).
 | 126 px | 1 | svg |
 | 241 px | 2 | div.pa-cta-icon, svg |
 | 268 px | 1 | div.pa-card.pa-visible.dimmed |
-| 268.01 px | 1 | div.pa-card.pa-visible.dimmed |
+| 268.02 px | 1 | div.pa-card.pa-visible.dimmed |
 | 283 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
 | 284 px | 8 | div, div, h2 |
 | 284.01 px | 4 | div, div, h2 |
@@ -3927,7 +3927,7 @@ Ergebnis: PASS (0 Befunde).
 | 779.19 px | 8 | div, div, h2 |
 | 790.06 px | 1 | a.mobile-phone-cta |
 | 829.06 px | 1 | span.mobile-phone-label |
-| 829.59 px | 1 | svg |
+| 829.6 px | 1 | svg |
 | 898 px | 1 | div#hamburger.hamburger |
 
 **propan-waermepumpe, 960 px — 11 verschiedene linke Kanten**
@@ -3936,7 +3936,7 @@ Ergebnis: PASS (0 Befunde).
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 100 px | 16 | div.section-inner, div.section-tag, h1.section-title |
+| 100 px | 15 | div.section-inner, div.section-tag, h1.section-title |
 | 122 px | 6 | li, strong, li |
 | 328.44 px | 1 | a |
 | 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
