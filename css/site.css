@@ -1,59 +1,7 @@
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('/fonts/inter-400.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('/fonts/inter-500.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('/fonts/inter-600.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('/fonts/inter-700.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Barlow';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('/fonts/barlow-400.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Barlow';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('/fonts/barlow-500.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Barlow';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('/fonts/barlow-700.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Barlow';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url('/fonts/barlow-800.woff2') format('woff2');
-}
+/* Die @font-face-Bloecke sind nach css/fonts.css umgezogen, damit sie ALLE
+   Seiten erreichen. Diese Datei laedt sie nicht selbst; die Seiten binden
+   css/fonts.css getrennt und vor css/site.css ein. */
+
 * {
   margin: 0;
   padding: 0;
@@ -556,54 +504,9 @@ nav.scrolled {
     display: none;
   }
 
-  /* ── Modus-Umschalter als Zwei-Feld-Schalter ───────────────────────────
-     Bauform bewusst gewaehlt: beide Zustaende stehen gleichzeitig da, der
-     aktive ist gefuellt. Ein einzelnes Sinnbild kann Zustand ODER Absicht
-     meinen und nie beides; der Altstand zeigte im Dunkel-Modus einen Mond
-     neben dem Wort "Light-Mode" und war damit doppeldeutig.
-     Sichtbar 44 px hoch, also schon ohne Trick ueber dem Mindestmass. */
-  .mobile-menu button.theme-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 0;
-    padding: 3px;
-    min-height: 44px;
-    border-radius: 999px;
-    /* Die Schiene selbst kommt gegen das Panel nur auf 1,24 (hell) und 1,25
-       (dunkel), waere als Bedienelement also unsichtbar. Genau der Vorwurf,
-       mit dem der Kachel-Entwurf verworfen wurde, deshalb traegt hier die
-       Umrandung das Element. Nicht border-strong: das misst im Dunkel-Modus
-       nur 2,41 und verfehlt die Norm 3,0 (WCAG 1.4.11). text-tertiary traegt
-       in beiden Modi, gemessen 5,91 dunkel und 6,01 hell. */
-    border: 1px solid var(--color-text-tertiary, #a0a6ad);
-    background: var(--color-surface-tertiary, #2d3a47);
-    font-family: inherit;
-    cursor: pointer;
-  }
-  .mobile-menu .tt-feld {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    min-width: 66px;
-    height: 36px;
-    padding: 0 12px;
-    border-radius: 999px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--color-text-secondary, #d1d5db);
-    white-space: nowrap;
-  }
-  /* Der Zustand haengt nicht allein an der Farbe: das aktive Feld traegt
-     zusaetzlich das schwerere Schriftgewicht (WCAG 1.4.1). */
-  .mobile-menu .tt-feld[data-aktiv='true'] {
-    background: var(--color-accent-primary, #b7d900);
-    color: var(--color-accent-primary-text, #1c2b36);
-    font-weight: 700;
-  }
-  .mobile-menu .tt-feld svg {
-    flex: 0 0 auto;
-  }
+  /* Modus-Umschalter: die Bauform steht global in tokens.css unter
+     [data-theme-switch], damit sie auf JEDER Seite identisch ist. Hier steht
+     nur noch, was am Ort des Klappmenues gilt. */
   /* Solange das Klappmenue offen ist, tritt die feste Leiste zurueck. Sie
      liegt mit z-index 1000 ueber dem Menue (999) und verdeckte bei 320 x 568
      px 41,4 von 52 px des Termin-Knopfs; ein Tipp in dessen Mitte traf die

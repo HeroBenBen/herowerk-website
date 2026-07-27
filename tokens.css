@@ -216,6 +216,103 @@ body {
   cursor: pointer;
   min-height: 34px;
 }
+/* ═══ MODUS-UMSCHALTER ALS ZWEI-FELD-SCHALTER ═══════════════════════════════
+   GF-Auftrag 27.07.2026: die im Klappmenue erprobte Bauform gilt ab jetzt auf
+   JEDER Seite, an jeder Stelle. Begruendung des Geschaeftsfuehrers: deutsche
+   Beschriftung "Hell" und "Dunkel" statt "Light-Mode" und "Dark-Mode" trifft
+   die Zielgruppe 40 bis 65 besser, und der Zwei-Feld-Schalter ist sofort als
+   Schalter zu erkennen.
+   Fachlicher Grund dazu: die einfeldrige Fassung zeigte im Dunkel-Modus einen
+   Mond neben dem Wort "Light-Mode" und behauptete damit im selben Atemzug
+   Zustand UND Absicht. Beim Zwei-Feld-Schalter stehen beide Zustaende
+   gleichzeitig da, der aktive ist gefuellt, es gibt nichts zu raten.
+   Diese Regeln stehen bewusst in tokens.css, weil das die einzige Stilquelle
+   ist, die ALLE Seiten laden - auch datenschutz.html, impressum.html,
+   anfrage.html und kostenvergleich-waermepumpe.html, die css/site.css nicht
+   einbinden. Das Verhalten liefert js/theme.js; kostenvergleich fuehrt eine
+   eigene Kopie und ist dort mitgezogen.
+   Masse: sichtbar 44 px hoch, also ohne Trick ueber dem Mindestmass 44 x 44
+   (WCAG 2.5.5). Rahmen text-tertiary, gemessen 5,91 dunkel und 6,01 hell,
+   damit ueber der Norm 3,0 fuer Bedienelemente (WCAG 1.4.11).
+   ═════════════════════════════════════════════════════════════════════════ */
+.theme-toggle[data-theme-switch] {
+  box-sizing: border-box;
+  /* KEIN display hier. Die Basisregel .theme-toggle setzt bereits
+     inline-flex, und css/site.css blendet den freistehenden Umschalter ueber
+     `button.nav-theme-standalone { display: none }` aus. Mit einem eigenen
+     display-Wert gewinnt diese Regel den Spezifitaets-Vergleich (0,2,0 gegen
+     0,1,1) und der freistehende Umschalter erscheint zusaetzlich auf dem
+     Schreibtisch. Genau das ist am 27.07.2026 passiert und wurde durch den
+     Vergleich gegen LIVE gefunden. */
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  /* Der Schalter waechst nie mit seinem Behaelter. Ohne diese Zeile zog ihn
+     die umgebrochene Kopfleiste von datenschutz.html auf 188 px auseinander,
+     womit er nicht mehr identisch zu allen anderen Stellen gewesen waere. */
+  flex: 0 0 auto;
+  align-self: center;
+  padding: 3px;
+  min-height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--color-text-tertiary, #a0a6ad);
+  background: var(--color-surface-tertiary, #2d3a47);
+  color: var(--color-text-secondary, #d1d5db);
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.theme-toggle[data-theme-switch] .tt-feld {
+  /* Der Reset `* { box-sizing: border-box }` steht in css/site.css, und vier
+     Seiten laden die nicht. Dort zaehlte der Innenabstand zur Breite dazu:
+     66 + 12 + 12 = 90 px statt 67,9 [gemessen 27.07.2026 auf datenschutz.html
+     und impressum.html]. Das Bauteil bringt seine Kastenrechnung deshalb
+     selbst mit, statt sich auf einen fremden Reset zu verlassen. */
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 66px;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary, #d1d5db);
+  white-space: nowrap;
+}
+/* Der Zustand haengt nicht allein an der Farbe: das aktive Feld traegt
+   zusaetzlich das schwerere Schriftgewicht (WCAG 1.4.1). */
+.theme-toggle[data-theme-switch] .tt-feld[data-aktiv='true'] {
+  background: var(--color-accent-primary, #b7d900);
+  color: var(--color-accent-primary-text, #1c2b36);
+  font-weight: 700;
+}
+.theme-toggle[data-theme-switch] .tt-feld svg {
+  flex: 0 0 auto;
+}
+.theme-toggle[data-theme-switch]:focus-visible {
+  outline: 3px solid var(--color-text-primary);
+  outline-offset: 2px;
+}
+/* Der Schalter ist auf JEDER Seite und an JEDER Stelle identisch, das ist
+   GF-Vorgabe vom 27.07.2026: keine zweite Variante. Gemessen 164 x 44 px mit
+   Feldern von 67,9 x 36 px, im Klappmenue wie in der Kopfzeile.
+   Auf 320 px passt er damit nicht mehr neben den Zurueck-Link in die schmale
+   Kopfleiste von datenschutz.html und impressum.html: Leiste 230 px, Link
+   75,3 px, Abstand 16 px, verbleiben 138,7 px fuer ein 164 px breites
+   Element - das Fluchten-Gate meldete 45,97 px Ueberstand.
+   Geloest wird das ueber den UMBRUCH der Leiste, nicht ueber einen kleineren
+   Schalter. Der Schalter bleibt unangetastet, er rutscht nur in die zweite
+   Zeile. */
+@media (max-width: 380px) {
+  .topbar {
+    flex-wrap: wrap;
+    row-gap: 12px;
+  }
+}
+
 /* Ohne Skript erscheinen die Umschalter gar nicht: js/theme.js erzeugt ihr
    Sinnbild und ihr Verhalten, ohne das waeren sie tote Knoepfe. Die Marke
    js-an setzt das Skript sofort beim Parsen des Kopfes, also vor dem ersten
