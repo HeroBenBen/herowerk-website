@@ -757,9 +757,16 @@
       .funnel-layout { grid-template-columns: minmax(280px, 360px) minmax(0, 1fr); }
     }
 
+    /* Rechtsverweise am Fuss der Anfragestrecke. Trefferflaechen gemessen
+       27.07.2026 auf vier Telefonbreiten: 17 px hoch, unter dem Mindestmass
+       44 x 44 px (WCAG 2.5.5). Es sind Navigationsverweise, nicht Verweise
+       mitten im Fliesstext; die Ausnahme fuer eingebettete Verweise greift
+       hier nicht. */
+    .legal-footer{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px;padding:24px 16px;font-size:.9rem;}
+    .legal-footer a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 10px;}
   </style>
-  <link rel="preload" href="tokens.css?v=979663ca61" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="tokens.css?v=979663ca61"></noscript>
+  <link rel="preload" href="tokens.css?v=4c1b19042c" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="tokens.css?v=4c1b19042c"></noscript>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -771,6 +778,7 @@
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
 
 <div class="funnel-layout">
 
@@ -875,7 +883,7 @@
   <!-- ════════════════════════════════════
        RECHTE SPALTE - Funnel
   ════════════════════════════════════ -->
-  <main class="funnel-panel">
+  <main id="main-content" class="funnel-panel" tabindex="-1">
     <h1 aria-label="Kostenloses Angebot anfragen" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;"></h1>
 
     <!-- Header -->
@@ -891,16 +899,35 @@
       </a>
     </div>
 
-    <!-- Fortschrittsbalken -->
+    <!-- Fortschrittsbalken.
+         Der Balken selbst traegt die Rolle progressbar mit aria-valuenow, damit
+         Hilfsmittel den Stand abfragen koennen. Die Ansage des Schrittwechsels
+         laeuft NICHT ueber den Balken, sondern ueber den unsichtbaren
+         Meldebereich darunter: eine role="progressbar" wird von Screenreadern
+         nicht automatisch vorgelesen, wenn sich ihr Wert aendert. -->
     <div class="progress-bar-wrap">
       <div class="progress-bar-top">
         <span class="progress-label">Dein Angebot</span>
         <span class="progress-percent" id="progressPercent">10 % geschafft</span>
       </div>
-      <div class="progress-bar-bg">
+      <div
+        class="progress-bar-bg"
+        id="progressBar"
+        role="progressbar"
+        aria-label="Fortschritt deiner Anfrage"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="10"
+        aria-valuetext="Schritt 1 von 11, 10 Prozent geschafft"
+      >
         <div class="progress-bar-fill" id="progressFill" style="width:10%"></div>
       </div>
     </div>
+    <!-- Unsichtbarer Meldebereich fuer den Schrittwechsel (WCAG 4.1.3
+         Statusmeldungen). Er ist beim Laden bewusst LEER: eine gefuellte
+         Live-Region wuerde beim Seitenaufbau einmal vorgelesen, obwohl nichts
+         passiert ist. Gefuellt wird er erst beim ersten echten Wechsel. -->
+    <p class="visually-hidden" id="schrittAnsage" role="status" aria-live="polite"></p>
 
     <!-- ── Fragen-Inhalt ── -->
     <div class="funnel-content">
@@ -1501,14 +1528,23 @@
         <p class="step-hint" id="plzHint">Wir prüfen, ob wir in deiner Region für dich da sind.</p>
         <div class="plz-input-wrap">
           <label class="plz-input-label" for="plzInput">Postleitzahl</label>
+          <!-- aria-required statt required: das Feld steht in einem Schritt, der
+               ohne Formularabsendung weitergeht, ein natives required wuerde die
+               Browser-Blase an einer Stelle zeigen, an der gar nicht abgesendet
+               wird. aria-describedby verweist auf Hinweis UND Fehlertext; solange
+               der Fehlertext auf display:none steht, blendet ihn der Screenreader
+               von selbst aus. aria-invalid wird in validatePlz mitgefuehrt. -->
           <input type="text" id="plzInput" class="plz-input"
             placeholder="z. B. 30900"
             maxlength="5"
             pattern="[0-9]{5}"
             inputmode="numeric"
+            aria-required="true"
+            aria-invalid="false"
+            aria-describedby="plzHint plzError"
             onkeyup="validatePlz(this)"
             oninput="this.value=this.value.replace(/[^0-9]/g,''); validatePlz(this)">
-          <div class="plz-error" id="plzError">Bitte eine gültige 5-stellige Postleitzahl eingeben.</div>
+          <div class="plz-error" id="plzError" role="alert">Bitte eine gültige 5-stellige Postleitzahl eingeben.</div>
         </div>
         <div id="plzResult" style="display:none;" class="contact-preview" style="max-width:320px;">
           <strong id="plzResultText"></strong>
@@ -1749,19 +1785,49 @@
           if (selectedCard) selectedCard.classList.add('selected');
         }
       }
+      // Der Merker wird von updateProgress gesetzt, deshalb VOR dem Aufruf
+      // lesen, sonst gilt schon der Erstaufbau als Wechsel.
+      const istEchterWechsel = fortschrittSchonGelaufen;
       updateProgress(n);
+      // Fokus auf die Ueberschrift des neuen Schritts (WCAG 2.4.3). Ohne das
+      // bleibt der Fokus auf dem Weiter-Knopf des alten Schritts, der gerade
+      // ausgeblendet wurde, und faellt damit auf den Seitenanfang zurueck.
+      // Nur bei einem echten Wechsel, nicht beim Erstaufbau.
+      if (istEchterWechsel) {
+        const ueberschrift = target.querySelector('.step-question');
+        if (ueberschrift) {
+          if (!ueberschrift.hasAttribute('tabindex')) ueberschrift.setAttribute('tabindex', '-1');
+          ueberschrift.focus({ preventScroll: true });
+        }
+      }
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // ── Fortschritt aktualisieren ─────────────────
+  // Der erste Aufruf beim Seitenaufbau meldet nichts: eine Live-Region, die
+  // schon beim Laden Text traegt, wird einmal ohne Anlass vorgelesen.
+  let fortschrittSchonGelaufen = false;
   function updateProgress(n) {
     const pct = progress[n] || 10;
     document.getElementById('progressFill').style.width = pct + '%';
     document.getElementById('progressPercent').textContent = pct + ' % geschafft';
     const position = stepOrder.indexOf(n) + 1;
-    document.getElementById('stepCounter').textContent =
-      `Schritt ${position} von ${stepOrder.length}`;
+    const zaehlerText = `Schritt ${position} von ${stepOrder.length}`;
+    document.getElementById('stepCounter').textContent = zaehlerText;
+
+    const balken = document.getElementById('progressBar');
+    if (balken) {
+      balken.setAttribute('aria-valuenow', String(pct));
+      balken.setAttribute('aria-valuetext', `${zaehlerText}, ${pct} Prozent geschafft`);
+    }
+    const ansage = document.getElementById('schrittAnsage');
+    if (ansage && fortschrittSchonGelaufen) {
+      const frage = document.querySelector(`.step[data-step="${n}"] .step-question`);
+      ansage.textContent =
+        `${zaehlerText}, ${pct} Prozent geschafft.` + (frage ? ' ' + frage.textContent.trim() : '');
+    }
+    fortschrittSchonGelaufen = true;
   }
 
   // ── Karte auswählen + auto-advance ───────────
@@ -1789,6 +1855,11 @@
       const result = validatePlz(input);
       if (!result || result.status === 'unvollstaendig' || result.status === 'aussen') {
         document.getElementById('plzError').style.display = 'block';
+        input.setAttribute('aria-invalid', 'true');
+        // Der Fokus geht zurueck ins fehlerhafte Feld, sonst steht er auf einem
+        // Knopf, der nichts tut, und der Fehler bleibt fuer Tastaturnutzer
+        // unauffindbar (WCAG 3.3.1).
+        input.focus();
         return;
       }
       answers['plz'] = result.val;
@@ -1870,6 +1941,7 @@
       btn.disabled = true;
       result.style.display = 'none';
       err.style.display = 'none';
+      input.setAttribute('aria-invalid', 'false');
       return resultData;
     }
 
@@ -1878,6 +1950,9 @@
     resultText.className = 'plz-result-text plz-' + resultData.status;
     btn.disabled = resultData.status === 'aussen';
     err.style.display = resultData.status === 'aussen' ? 'block' : 'none';
+    // Der Fehlerzustand haengt maschinenlesbar am Feld, nicht nur an der Farbe
+    // des Hinweistextes (WCAG 3.3.1).
+    input.setAttribute('aria-invalid', resultData.status === 'aussen' ? 'true' : 'false');
 
     if (resultData.status !== 'aussen') {
       answers.plz = resultData.val;
@@ -2290,6 +2365,6 @@
   prefillFoerdervorschussFromUrl();
 </script>
 
-  <nav aria-label="Rechtliches" style="text-align:center;padding:24px 16px;font-size:.9rem"><a href="/impressum">Impressum</a> &middot; <a href="/datenschutz">Datenschutz</a> &middot; <a href="/barrierefreiheit">Barrierefreiheit</a></nav>
+  <nav class="legal-footer" aria-label="Rechtliches"><a href="/impressum">Impressum</a> &middot; <a href="/datenschutz">Datenschutz</a> &middot; <a href="/barrierefreiheit">Barrierefreiheit</a></nav>
 </body>
 </html>

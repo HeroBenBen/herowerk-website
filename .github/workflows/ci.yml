@@ -74,6 +74,12 @@ jobs:
       # Kanten-Erwartung nicht ratifiziert ist (scripts/raster-expect.json).
       - run: npx playwright install --with-deps chromium
       - run: npm run verify:raster
+      # Mobile-Gate (Fixplan G4, 27.07.2026): die zehn Punkte der Mobil-Abnahme
+      # ueber vier Breiten und beide Modi. Bis dahin lief diese Pruefung als
+      # Wegwerf-Skript im Arbeitsordner und war fuer Dritte nicht nachfahrbar.
+      # Punkt 7 (Einwilligungsdialog) ist bewusst NICHT maschinell abgedeckt und
+      # im Bericht als Luecke ausgewiesen, siehe docs/compliance/bfsg-scope.md.
+      - run: npm run verify:mobile
 
   # Job 2: Lighthouse-CI (Mobile + Desktop, beide Themes)
   lighthouse:

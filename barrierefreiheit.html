@@ -47,16 +47,17 @@
   <meta name="twitter:description" content="Erklärung zur Barrierefreiheit nach dem Barrierefreiheitsstärkungsgesetz: Stand der Umsetzung, bekannte Einschränkungen und Feedback-Kanal.">
   <meta name="twitter:image" content="https://www.herowerk.de/herowerk-logo-stacked.png">
   <script src="js/theme.js?v=9b163705e9"></script>
-  <link rel="stylesheet" href="css/site.css?v=e20167ed34">
+  <link rel="stylesheet" href="css/site.css?v=bdff4d1e3f">
   <link rel="stylesheet" href="css/ratgeber.css?v=756325824b">
-  <link rel="preload" href="tokens.css?v=979663ca61" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="tokens.css?v=979663ca61"></noscript>
+  <link rel="preload" href="tokens.css?v=4c1b19042c" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="tokens.css?v=4c1b19042c"></noscript>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
   <!-- NAVIGATION -->
   <nav>
     <div class="nav-inner">
-      <a href="/" style="display:inline-block;"><img src="herowerk-logo-stacked.png?v=3805a3a2a6" alt="HeroWerk, Meisterbetrieb für Wärmepumpen" class="nav-logo logo-dark" width="607" height="337" decoding="async"><img src="herowerk-logo-stacked-light.png?v=8c40e63d7e" alt="" aria-hidden="true" class="nav-logo logo-light" width="607" height="337" decoding="async"></a>
+      <a href="/" style="display:inline-block;" aria-label="HeroWerk, zur Startseite"><img src="herowerk-logo-stacked.png?v=3805a3a2a6" alt="HeroWerk, Meisterbetrieb für Wärmepumpen" class="nav-logo logo-dark" width="607" height="337" decoding="async"><img src="herowerk-logo-stacked-light.png?v=8c40e63d7e" alt="" aria-hidden="true" class="nav-logo logo-light" width="607" height="337" decoding="async"></a>
       <div class="nav-links">
         <a href="/preise">Preise</a>
         <a href="/rechner">Rechner</a>
@@ -93,7 +94,7 @@
     </div>
   </nav>
 
-  <main id="main-content">
+  <main id="main-content" tabindex="-1">
 <article class="section">
   <div class="section-inner">
     <div class="section-tag">Barrierefreiheit</div>
@@ -118,19 +119,23 @@
         <li>sichtbare Fokus-Markierung beim Navigieren mit der Tastatur</li>
         <li>die Auswahlkacheln der Anfragestrecke und der Menü-Öffner auf schmalen Bildschirmen lassen sich per Tastatur ansteuern und mit Eingabe- oder Leertaste auslösen</li>
         <li>eine Hauptinhalts-Kennzeichnung, die Screenreader direkt anspringen können</li>
+        <li>eine Sprungmarke „Zum Inhalt springen“ als erstes Element beim Tabben, auf jeder Seite; sie führt in den Hauptinhalt und der Fokus landet dort auch wirklich</li>
+        <li>der Fortschritt in der Anfragestrecke wird angesagt, und der Fokus wandert bei jedem Schritt auf die neue Frage</li>
+        <li>Pflichtfelder sind maschinenlesbar ausgezeichnet, Fehlermeldungen hängen am betroffenen Feld, und bei einem Fehler springt der Fokus zurück in dieses Feld</li>
+        <li>das Hintergrundvideo auf der Startseite lässt sich anhalten; ist im Betriebssystem „Bewegung reduzieren“ eingestellt, startet es gar nicht erst</li>
+        <li>die Diagramme im Kostenvergleich geben ihre Werte zusätzlich als Tabelle aus, erzeugt aus denselben Zahlen wie die Grafik</li>
+        <li>breite Tabellen sind mit der Tastatur erreichbar und benannt, auch wenn sie seitlich gerollt werden müssen</li>
+        <li>die Farbkontraste sind in beiden Modi über alle 29 Seiten maschinell gemessen; bis auf die beiden unten genannten Stellen erfüllen sie den Maßstab</li>
+        <li>der Verweis hinter dem Logo trägt auf jeder Seite einen Namen, den Vorleseprogramme ansagen können</li>
       </ul>
 
       <h2>Bekannte Einschränkungen</h2>
       <p>Folgende Punkte erfüllen den Maßstab noch nicht vollständig. Sie sind erfasst und in Bearbeitung:</p>
       <ul>
-        <li><strong>Sprungmarke zum Inhalt:</strong> Ein Link, der die Navigation überspringt, ist noch nicht als erstes Element beim Tabben erreichbar. Wer nur die Tastatur nutzt, muss die Navigation derzeit durchlaufen.</li>
-        <li><strong>Anfragestrecke:</strong> Der Fortschritt zwischen den Schritten wird für Screenreader noch nicht angesagt, und Fehlermeldungen sind noch nicht durchgängig mit dem betroffenen Feld verknüpft.</li>
-        <li><strong>Pflichtfeld-Kennzeichnung:</strong> Pflichtfelder sind visuell erkennbar, aber noch nicht überall maschinenlesbar ausgezeichnet.</li>
-        <li><strong>Hintergrundvideo auf der Startseite:</strong> Es gibt noch keine sichtbare Möglichkeit, das Video anzuhalten. Für Menschen, die auf Bewegungsreduzierung angewiesen sind, ist das eine Belastung.</li>
         <li><strong>Abhängigkeit von JavaScript:</strong> Ein Teil der Zugänglichkeit, etwa die Tastaturbedienung der Auswahlkacheln und einzelne Feldbeschriftungen, wird beim Laden per Skript ergänzt. Ist JavaScript abgeschaltet, fehlen diese Ergänzungen. Wir ziehen sie schrittweise fest in den Seitenquelltext.</li>
-        <li><strong>Farbkontraste:</strong> Einzelne Textstellen erreichen im Hell-Modus möglicherweise noch nicht die geforderten Kontrastwerte. Eine vollständige Messung beider Modi läuft.</li>
-        <li><strong>Einwilligungsdialog für Cookies:</strong> Der Dialog stammt von einem externen Anbieter. Seine Tastaturbedienung prüfen wir derzeit; auf seinen inneren Aufbau haben wir nur eingeschränkt Einfluss.</li>
-        <li><strong>Kostenvergleichs-Rechner:</strong> Die dortigen Diagramme geben ihre Werte noch nicht in Textform aus. Die zugrunde liegenden Zahlen stehen aber in den begleitenden Texten.</li>
+        <li><strong>Einwilligungsdialog für Cookies:</strong> Der Dialog stammt von einem externen Anbieter und bringt seinen eigenen Aufbau und seine eigene Tastaturführung mit. Wir prüfen ihn von außen und bei jeder Änderung von Hand; maschinell absichern können wir ihn nicht. Auf seinen inneren Aufbau haben wir nur über die Einstellungen des Anbieters Einfluss.</li>
+        <li><strong>Zwei Stellen mit zu geringem Kontrast:</strong> Das Partner-Kennzeichen „Vaillant“ auf der Anfrageseite steht in der Hausfarbe des Herstellers und erreicht 2,5 gegen den hellen Grund. Und die Fußnoten-Zeichen hinter den Förderangaben heben sich nur farblich vom umgebenden Text ab. Beides sind Vorgaben, die wir nicht allein ändern können, ohne eine Marke oder einen abgestimmten Rechtstext anzufassen. Die Inhalte selbst sind an beiden Stellen vollständig lesbar und erreichbar.</li>
+        <li><strong>Reihenfolge der Zwischenüberschriften:</strong> Auf sechs Ratgeber-Seiten folgt auf die Hauptüberschrift direkt eine Überschrift der dritten Ebene, die zweite Ebene wird übersprungen. Wer sich per Überschriften-Liste durch die Seite bewegt, bekommt dort eine Stufe angezeigt, die nicht zur Gliederung passt. Der Inhalt selbst ist vollständig erreichbar.</li>
       </ul>
 
       <h2>Was Sie tun können, wenn etwas nicht funktioniert</h2>
@@ -144,8 +149,8 @@
       <p>Sollten Sie mit unserer Antwort nicht zufrieden sein, können Sie sich nach § 21 des Barrierefreiheitsstärkungsgesetzes an die <strong>Marktüberwachungsstelle der Länder für die Barrierefreiheit von Produkten und Dienstleistungen (MLBF)</strong> wenden, Alt-Moabit 101 D, 10559 Berlin, <a href="https://www.marktueberwachung-barrierefreiheit.de" rel="noopener">www.marktueberwachung-barrierefreiheit.de</a>.</p>
 
       <h2>Wie diese Erklärung entstanden ist</h2>
-      <p>Grundlage sind eine externe Prüfung der Seite vom 22.07.2026 sowie eigene Messungen mit Browser-Werkzeugen und automatisierten Tests. Diese Erklärung wurde am 25.07.2026 erstellt und wird fortgeschrieben, sobald die oben genannten Punkte erledigt sind.</p>
-      <p>Stand: 25.07.2026</p>
+      <p>Grundlage sind eine externe Prüfung der Seite vom 22.07.2026 sowie eigene Messungen mit Browser-Werkzeugen und automatisierten Tests. Diese Erklärung wurde am 25.07.2026 erstellt und am 27.07.2026 fortgeschrieben, nachdem fünf der ursprünglich acht Einschränkungen behoben und die Kontraste über alle Seiten in beiden Modi gemessen waren. Sie wird weiter fortgeschrieben und wird fortgeschrieben, sobald die oben genannten Punkte erledigt sind.</p>
+      <p>Stand: 27.07.2026</p>
     </div>
   </div>
 </article>
@@ -195,7 +200,7 @@
     </div>
   </footer>
 
-  <script src="js/site.js?v=d0dab17725" defer></script>
+  <script src="js/site.js?v=23c5495654" defer></script>
 
   <!-- MOBILE BOTTOM BAR -->
   <div class="mobile-bottom-bar" role="navigation" aria-label="Mobile Schnellnavigation">

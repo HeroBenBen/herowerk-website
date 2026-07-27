@@ -19,3 +19,7 @@ js/chart-4.4.1.umd.min.js
 # BEWUSST eng gefasst: reports/ enthaelt 13 handgeschriebene Dokumente, die
 # weiter von Prettier geprueft werden sollen.
 reports/*_Raster-Befund_HERO.md
+# Maschinell erzeugter Messbericht des Mobile-Gates, gleiche Begruendung wie
+# oben: er wird bei jedem Lauf neu geschrieben. Ebenfalls eng gefasst, damit die
+# handgeschriebenen Berichte in reports/ weiter geprueft werden.
+reports/*_Mobile-Verifikation_HERO.md

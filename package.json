@@ -9,7 +9,8 @@
     "baseline:generate": "node scripts/content-fidelity-check.js --generate",
     "verify:assets": "scripts/version-assets.sh --check",
     "verify:consent": "node scripts/consent-integration-check.js",
-    "verify:raster": "node scripts/verify-raster.mjs"
+    "verify:raster": "node scripts/verify-raster.mjs",
+    "verify:mobile": "node scripts/verify-mobile.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",
