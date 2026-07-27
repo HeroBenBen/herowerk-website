@@ -5010,8 +5010,12 @@ html[data-theme='light'] .section-tag {
 }
 
 /* Seitenrand 24 px statt 20 px (GF-Entscheid 26.07.2026, EIN Seitenrand).
-   Die Vereinheitlichung hatte diesen Abschnitt nur auf Telefonbreiten
-   erwischt; ab 600 px stand er weiter auf 20 px. Gefunden am 27.07.2026,
+   Die Vereinheitlichung vom 26.07. hatte diesen Abschnitt nur bis 860 px
+   erwischt (Block `@media (max-width: 860px)` weiter unten); ab 861 px stand
+   er weiter auf 20 px [nachgemessen 27.07.2026: paddingLeft 24 px bei 320 bis
+   860, 20 px ab 861. Die erste Fassung dieses Kommentars sagte "ab 600 px",
+   das war falsch und passte nicht einmal zum eigenen Befund, der nur bei
+   960 px anschlug]. Gefunden am 27.07.2026,
    nachdem das Fluchten-Gate um die Breiten 600/768/960 erweitert wurde:
    Regel 4 meldete auf sieben Seiten `.section-inner sitzt bei 20/940`
    gegen den Soll-Rand 24/936. */

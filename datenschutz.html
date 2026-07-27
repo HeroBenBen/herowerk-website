@@ -41,19 +41,23 @@
   <meta property="og:url" content="https://www.herowerk.de/datenschutz">
   <meta property="og:image" content="https://www.herowerk.de/herowerk-logo-stacked.png">
   <script src="js/theme.js?v=9b163705e9"></script>
-  <link rel="preload" href="tokens.css?v=8f440451bc" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="tokens.css?v=8f440451bc"></noscript>
+  <link rel="preload" href="tokens.css?v=979663ca61" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="tokens.css?v=979663ca61"></noscript>
   <style>
     body{font-family:Inter,Arial,sans-serif;padding:48px 24px;max-width:860px;margin:auto;line-height:1.65}
     main{background:var(--color-surface-secondary);border:1px solid var(--color-border-subtle);border-radius:18px;padding:32px;box-shadow:0 8px 28px var(--color-shadow)}
     a{color:var(--green)}
     h1,h2{font-family:Barlow,Arial,sans-serif;color:var(--color-text-primary)}
-    /* overflow-wrap: das lange Wort "Datenschutzerklaerung" bzw.
-       "Impressum"-Folgeueberschriften sprengten bei 320 px die Zeile und
-       zogen die Seite auf scrollWidth 344 gegen clientWidth 320 (gemessen
-       27.07.2026, Vorbestand auch auf 8b0599d). Das Fluchten-Gate faengt
-       das nicht, weil kein Element aus seinem Container ragt. */
-    h1{font-size:1.9rem;margin-top:.4rem;overflow-wrap:anywhere} h2{font-size:1.2rem;margin-top:2.1rem;overflow-wrap:anywhere}
+    /* KORREKTUR 27.07.2026 spaet (R14-Befund B2): Hier stand zuerst
+       `overflow-wrap: anywhere`. Das loeste zwar den Rollueberlauf, brach die
+       Ueberschrift aber mitten im Wort: gemessen "Datenschutzerkl" / "ärung"
+       bei 320 px und ein einzelnes "g" in der zweiten Zeile bei 375 px, wo es
+       vorher gar keinen Ueberlauf gab. Die Zeile wird jetzt ueber ein weiches
+       Trennzeichen (&shy;) im Markup gebrochen, an der Fugenstelle des
+       Kompositums. `hyphens: auto` traegt nicht (Chromium trennt
+       "Datenschutzerk|lärung"), und &shy; ZUSAMMEN mit `anywhere` wird
+       ignoriert, weil anywhere die Zeile gierig fuellt [beides gemessen]. */
+    h1{font-size:1.9rem;margin-top:.4rem} h2{font-size:1.2rem;margin-top:2.1rem}
     p,li{color:var(--color-text-secondary)}
     .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:8px}
     .legal-footer{max-width:860px;margin:24px auto 0;text-align:center;font-size:.9rem}
@@ -73,7 +77,7 @@
       <button type="button" class="theme-toggle" data-theme-toggle data-theme-switch>Light-Mode</button>
     </div>
 
-    <h1>Datenschutzerkl&auml;rung</h1>
+    <h1>Datenschutz&shy;erkl&auml;rung</h1>
     <!-- HINWEIS (nicht oeffentlich gedacht): Die Abschnitte 10-12 (consentmanager, GA4,
          Meta-Pixel, Einwilligung) sind RECHTSTEXT-ENTWURF und VOR LIVE-Schaltung
          juristisch zu bestaetigen. -->

@@ -2705,8 +2705,8 @@ Ergebnis: PASS (0 Befunde).
 | 763.48 px | 7 | div, div, h2 |
 | 846.39 px | 1 | svg |
 | 849.24 px | 1 | path |
-| 991.33 px | 1 | div.pa-card.pa-visible.dimmed |
-| 1005.33 px | 7 | div, div, h2 |
+| 991.32 px | 1 | div.pa-card.pa-visible.dimmed |
+| 1005.32 px | 7 | div, div, h2 |
 | 1087.22 px | 1 | svg |
 
 **propan-waermepumpe, 600 px — 11 verschiedene linke Kanten**
@@ -3277,10 +3277,10 @@ Ergebnis: PASS (0 Befunde).
 | 126 px | 1 | svg |
 | 241 px | 2 | div.pa-cta-icon, svg |
 | 268 px | 1 | div.pa-card.pa-visible.dimmed |
-| 268.02 px | 1 | div.pa-card.pa-visible.dimmed |
+| 268.01 px | 1 | div.pa-card.pa-visible.dimmed |
 | 283 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
 | 284 px | 8 | div, div, h2 |
-| 284.02 px | 4 | div, div, h2 |
+| 284.01 px | 4 | div, div, h2 |
 | 297.5 px | 1 | div.section-tag |
 | 334.58 px | 1 | strong |
 | 364 px | 1 | svg |
@@ -3923,11 +3923,11 @@ Ergebnis: PASS (0 Befunde).
 | 655.05 px | 4 | td, td, td |
 | 664 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
 | 689.97 px | 1 | span.tt-feld |
-| 763.21 px | 1 | div.pa-card.pa-visible.dimmed |
-| 779.2 px | 8 | div, div, h2 |
+| 763.19 px | 1 | div.pa-card.pa-visible.dimmed |
+| 779.19 px | 8 | div, div, h2 |
 | 790.06 px | 1 | a.mobile-phone-cta |
 | 829.06 px | 1 | span.mobile-phone-label |
-| 829.6 px | 1 | svg |
+| 829.59 px | 1 | svg |
 | 898 px | 1 | div#hamburger.hamburger |
 
 **propan-waermepumpe, 960 px — 11 verschiedene linke Kanten**

@@ -298,21 +298,28 @@ function messen(cfg) {
     // Fehler, desto sicherer waere er durchgerutscht.
     if (b.width < breite * (cfg.regeln.r4_seitenrand_treue.mindestAnteilBreite ?? 0.6)) return;
     // Ein Container, der NUR durch seine eigene max-width schmaler ist als der
-    // verfuegbare Inhaltsbereich, ist ein bewusst zentrierter Block (Textspalte)
-    // und damit Sache von Regel 5, nicht von Regel 4. Ohne diese Unterscheidung
-    // meldete Regel 4 am 27.07.2026 bei 960 px sieben Textseiten mit
-    // "sitzt bei 100/860" als Randfehler, obwohl dort schlicht eine 760 px
-    // breite Spalte im 912 px breiten Inhaltsbereich zentriert steht.
+    // verfuegbare Inhaltsbereich, ist ein bewusst zentrierter Block (Textspalte).
+    // Ohne diese Unterscheidung meldete Regel 4 am 27.07.2026 bei 960 px sieben
+    // Textseiten mit "sitzt bei 100/860" als Randfehler, obwohl dort schlicht
+    // eine 760 px breite Spalte im 912 px breiten Inhaltsbereich zentriert steht.
     // WICHTIG: Die Bedingung greift nur, wenn die max-width KLEINER ist als der
     // verfuegbare Bereich. Ein zu kleiner Seitenrand faellt weiterhin auf, weil
     // der Container dann bis an seine (groessere) max-width laeuft. Nachgewiesen
-    // am selben Tag: mit dieser Regel meldet das Gate den 20-px-Rand von
+    // am 27.07.2026: mit dieser Regel meldet das Gate den 20-px-Rand von
     // .detail-final-cta auf sieben Seiten unveraendert.
+    // ZWEITE BEDINGUNG, nachgetragen am 27.07.2026 (R14-Befund B3): der Block
+    // muss auch WIRKLICH zentriert stehen. Die erste Fassung sprang schon bei
+    // ausgeschoepfter max-width heraus und liess damit eine linksbuendig
+    // verrutschte Spalte durch (nachgestellt: .section-inner mit margin-left 0
+    // steht bei 960 px auf 0/760 statt 100/860, Gate meldete 0 Befunde).
+    // Auf Regel 5 zu verweisen half nicht: die ist abgeschaltet.
     const maxBreite = parseFloat(cs.maxWidth);
     const verfuegbar = breite - 2 * rand;
     const tol = cfg.toleranzPx ?? 0.5;
     if (Number.isFinite(maxBreite) && maxBreite < verfuegbar - tol && b.width <= maxBreite + tol) {
-      return;
+      const randLinks = b.left;
+      const randRechts = breite - b.right;
+      if (Math.abs(randLinks - randRechts) <= tol) return;
     }
     erg.abdeckung.r4++;
     erg.r4.push({
