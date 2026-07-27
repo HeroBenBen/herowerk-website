@@ -2454,3 +2454,59 @@ if (document.readyState === 'loading') {
 } else {
   fvPlaetzeLoad();
 }
+
+/* ═══ HALTEKNOPF FUER DAS HINTERGRUNDVIDEO ═════════════════════════════════
+   WCAG 2.2.2: bewegter Inhalt, der automatisch startet und laenger als fuenf
+   Sekunden laeuft, braucht eine Bedienmoeglichkeit zum Anhalten.
+   Zusaetzlich WCAG 2.3.3 beziehungsweise die Systemeinstellung "Bewegung
+   reduzieren": ist sie gesetzt, startet das Video gar nicht erst, die Seite
+   zeigt das Standbild und der Knopf bietet das Abspielen an.
+   Das Video traegt bewusst kein autoplay-Attribut mehr, sonst liefe es an,
+   bevor dieses Skript die Einstellung lesen kann.
+   ═══════════════════════════════════════════════════════════════════════ */
+function heroVideoSteuerung() {
+  const video = document.getElementById('heroVideo');
+  const knopf = document.getElementById('heroVideoToggle');
+  const beschriftung = document.getElementById('heroVideoToggleText');
+  if (!video || !knopf || !beschriftung) return;
+
+  const wenigerBewegung =
+    window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function beschriften(laeuft) {
+    beschriftung.textContent = laeuft ? 'Video anhalten' : 'Video abspielen';
+    knopf.setAttribute('aria-pressed', laeuft ? 'false' : 'true');
+    knopf.setAttribute(
+      'aria-label',
+      laeuft ? 'Hintergrundvideo anhalten' : 'Hintergrundvideo abspielen'
+    );
+  }
+
+  if (wenigerBewegung) {
+    video.pause();
+    beschriften(false);
+  } else {
+    const start = video.play();
+    if (start && typeof start.catch === 'function') start.catch(() => beschriften(false));
+    beschriften(true);
+  }
+
+  knopf.addEventListener('click', function () {
+    if (video.paused) {
+      const p = video.play();
+      if (p && typeof p.catch === 'function') p.catch(() => beschriften(false));
+      beschriften(true);
+    } else {
+      video.pause();
+      beschriften(false);
+    }
+  });
+
+  video.addEventListener('play', () => beschriften(true));
+  video.addEventListener('pause', () => beschriften(false));
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', heroVideoSteuerung);
+} else {
+  heroVideoSteuerung();
+}

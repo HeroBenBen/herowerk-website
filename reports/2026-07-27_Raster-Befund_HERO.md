@@ -22,238 +22,238 @@ Ergebnis: PASS (0 Befunde).
 
 | Seite | Breite | Elemente | davon sichtbar | in Regel 1+3 | in Regel 4 | in Regel 5 |
 |---|---|---|---|---|---|---|
-| anfrage | 320 px | 830 | 760 | 42 | 0 | 0 |
-| barrierefreiheit | 320 px | 202 | 188 | 102 | 1 | 0 |
-| baubarkeitspruefung | 320 px | 190 | 173 | 87 | 2 | 0 |
-| bewerbung | 320 px | 222 | 205 | 94 | 2 | 0 |
-| datenschutz | 320 px | 103 | 94 | 80 | 0 | 0 |
-| dimensionierung-verstehen | 320 px | 183 | 169 | 81 | 2 | 0 |
-| dimensionierung | 320 px | 709 | 656 | 71 | 2 | 0 |
-| foerderung-hannover | 320 px | 208 | 192 | 103 | 2 | 0 |
-| foerderung-jetzt-mitnehmen | 320 px | 288 | 274 | 184 | 1 | 0 |
-| foerderung | 320 px | 389 | 361 | 224 | 5 | 0 |
-| foerdervorschuss | 320 px | 216 | 197 | 107 | 3 | 0 |
-| gasheizung-tauschen-oder-reparieren | 320 px | 187 | 170 | 84 | 2 | 0 |
-| hinweise | 320 px | 191 | 173 | 87 | 3 | 0 |
-| impressum | 320 px | 59 | 50 | 34 | 0 | 0 |
-| index | 320 px | 377 | 357 | 214 | 8 | 0 |
-| karriere | 320 px | 831 | 797 | 413 | 7 | 0 |
-| kontakt | 320 px | 195 | 179 | 88 | 2 | 0 |
-| kostenvergleich-waermepumpe | 320 px | 660 | 604 | 58 | 0 | 0 |
-| preise | 320 px | 397 | 383 | 258 | 6 | 0 |
-| propan-waermepumpe | 320 px | 184 | 170 | 84 | 1 | 0 |
-| prozess | 320 px | 239 | 219 | 116 | 3 | 0 |
-| ratgeber | 320 px | 429 | 408 | 307 | 5 | 0 |
-| rechner | 320 px | 228 | 214 | 125 | 2 | 0 |
-| waermepumpe-altbau | 320 px | 185 | 168 | 81 | 2 | 0 |
-| waermepumpe-hannover | 320 px | 174 | 158 | 72 | 2 | 0 |
-| waermepumpe-laerm | 320 px | 203 | 189 | 103 | 1 | 0 |
-| waermepumpenstrom-hannover | 320 px | 217 | 203 | 109 | 1 | 0 |
-| wertsteigerung-waermepumpe | 320 px | 269 | 255 | 167 | 1 | 0 |
-| wp-kosten-hannover | 320 px | 242 | 228 | 135 | 1 | 0 |
-| anfrage | 360 px | 830 | 760 | 42 | 0 | 0 |
-| barrierefreiheit | 360 px | 202 | 188 | 102 | 1 | 0 |
-| baubarkeitspruefung | 360 px | 190 | 173 | 87 | 2 | 0 |
-| bewerbung | 360 px | 222 | 205 | 94 | 2 | 0 |
-| datenschutz | 360 px | 103 | 94 | 80 | 0 | 0 |
-| dimensionierung-verstehen | 360 px | 183 | 169 | 83 | 2 | 0 |
-| dimensionierung | 360 px | 709 | 656 | 71 | 2 | 0 |
-| foerderung-hannover | 360 px | 208 | 192 | 103 | 2 | 0 |
-| foerderung-jetzt-mitnehmen | 360 px | 288 | 274 | 184 | 1 | 0 |
-| foerderung | 360 px | 389 | 361 | 224 | 5 | 0 |
-| foerdervorschuss | 360 px | 216 | 197 | 107 | 3 | 0 |
-| gasheizung-tauschen-oder-reparieren | 360 px | 187 | 170 | 84 | 2 | 0 |
-| hinweise | 360 px | 191 | 173 | 87 | 3 | 0 |
-| impressum | 360 px | 59 | 50 | 34 | 0 | 0 |
-| index | 360 px | 377 | 357 | 214 | 8 | 0 |
-| karriere | 360 px | 831 | 797 | 413 | 7 | 0 |
-| kontakt | 360 px | 195 | 179 | 88 | 2 | 0 |
-| kostenvergleich-waermepumpe | 360 px | 660 | 604 | 58 | 0 | 0 |
-| preise | 360 px | 397 | 383 | 258 | 6 | 0 |
-| propan-waermepumpe | 360 px | 184 | 170 | 84 | 1 | 0 |
-| prozess | 360 px | 239 | 219 | 116 | 3 | 0 |
-| ratgeber | 360 px | 429 | 408 | 307 | 5 | 0 |
-| rechner | 360 px | 228 | 214 | 125 | 2 | 0 |
-| waermepumpe-altbau | 360 px | 185 | 168 | 81 | 2 | 0 |
-| waermepumpe-hannover | 360 px | 174 | 158 | 72 | 2 | 0 |
-| waermepumpe-laerm | 360 px | 203 | 189 | 103 | 1 | 0 |
-| waermepumpenstrom-hannover | 360 px | 217 | 203 | 109 | 1 | 0 |
-| wertsteigerung-waermepumpe | 360 px | 269 | 255 | 169 | 1 | 0 |
-| wp-kosten-hannover | 360 px | 242 | 228 | 135 | 1 | 0 |
-| anfrage | 375 px | 830 | 760 | 42 | 0 | 0 |
-| barrierefreiheit | 375 px | 202 | 188 | 102 | 1 | 0 |
-| baubarkeitspruefung | 375 px | 190 | 173 | 87 | 2 | 0 |
-| bewerbung | 375 px | 222 | 205 | 94 | 2 | 0 |
-| datenschutz | 375 px | 103 | 94 | 80 | 0 | 0 |
-| dimensionierung-verstehen | 375 px | 183 | 169 | 83 | 2 | 0 |
-| dimensionierung | 375 px | 709 | 656 | 71 | 2 | 0 |
-| foerderung-hannover | 375 px | 208 | 192 | 103 | 2 | 0 |
-| foerderung-jetzt-mitnehmen | 375 px | 288 | 274 | 184 | 1 | 0 |
-| foerderung | 375 px | 389 | 361 | 224 | 5 | 0 |
-| foerdervorschuss | 375 px | 216 | 197 | 107 | 3 | 0 |
-| gasheizung-tauschen-oder-reparieren | 375 px | 187 | 170 | 84 | 2 | 0 |
-| hinweise | 375 px | 191 | 173 | 87 | 3 | 0 |
-| impressum | 375 px | 59 | 50 | 34 | 0 | 0 |
-| index | 375 px | 377 | 357 | 214 | 8 | 0 |
-| karriere | 375 px | 831 | 797 | 413 | 7 | 0 |
-| kontakt | 375 px | 195 | 179 | 88 | 2 | 0 |
-| kostenvergleich-waermepumpe | 375 px | 660 | 604 | 58 | 0 | 0 |
-| preise | 375 px | 397 | 383 | 258 | 6 | 0 |
-| propan-waermepumpe | 375 px | 184 | 170 | 84 | 1 | 0 |
-| prozess | 375 px | 239 | 219 | 116 | 3 | 0 |
-| ratgeber | 375 px | 429 | 408 | 307 | 5 | 0 |
-| rechner | 375 px | 228 | 214 | 125 | 2 | 0 |
-| waermepumpe-altbau | 375 px | 185 | 168 | 81 | 2 | 0 |
-| waermepumpe-hannover | 375 px | 174 | 158 | 72 | 2 | 0 |
-| waermepumpe-laerm | 375 px | 203 | 189 | 103 | 1 | 0 |
-| waermepumpenstrom-hannover | 375 px | 217 | 203 | 109 | 1 | 0 |
-| wertsteigerung-waermepumpe | 375 px | 269 | 255 | 169 | 1 | 0 |
-| wp-kosten-hannover | 375 px | 242 | 228 | 135 | 1 | 0 |
-| anfrage | 390 px | 830 | 760 | 42 | 0 | 0 |
-| barrierefreiheit | 390 px | 202 | 188 | 102 | 1 | 0 |
-| baubarkeitspruefung | 390 px | 190 | 173 | 87 | 2 | 0 |
-| bewerbung | 390 px | 222 | 205 | 94 | 2 | 0 |
-| datenschutz | 390 px | 103 | 94 | 80 | 0 | 0 |
-| dimensionierung-verstehen | 390 px | 183 | 169 | 83 | 2 | 0 |
-| dimensionierung | 390 px | 709 | 656 | 71 | 2 | 0 |
-| foerderung-hannover | 390 px | 208 | 192 | 103 | 2 | 0 |
-| foerderung-jetzt-mitnehmen | 390 px | 288 | 274 | 184 | 1 | 0 |
-| foerderung | 390 px | 389 | 361 | 224 | 5 | 0 |
-| foerdervorschuss | 390 px | 216 | 197 | 107 | 3 | 0 |
-| gasheizung-tauschen-oder-reparieren | 390 px | 187 | 170 | 84 | 2 | 0 |
-| hinweise | 390 px | 191 | 173 | 87 | 3 | 0 |
-| impressum | 390 px | 59 | 50 | 34 | 0 | 0 |
-| index | 390 px | 377 | 357 | 214 | 8 | 0 |
-| karriere | 390 px | 831 | 797 | 413 | 7 | 0 |
-| kontakt | 390 px | 195 | 179 | 88 | 2 | 0 |
-| kostenvergleich-waermepumpe | 390 px | 660 | 604 | 58 | 0 | 0 |
-| preise | 390 px | 397 | 383 | 260 | 6 | 0 |
-| propan-waermepumpe | 390 px | 184 | 170 | 84 | 1 | 0 |
-| prozess | 390 px | 239 | 219 | 116 | 3 | 0 |
-| ratgeber | 390 px | 429 | 408 | 307 | 5 | 0 |
-| rechner | 390 px | 228 | 214 | 125 | 2 | 0 |
-| waermepumpe-altbau | 390 px | 185 | 168 | 81 | 2 | 0 |
-| waermepumpe-hannover | 390 px | 174 | 158 | 72 | 2 | 0 |
-| waermepumpe-laerm | 390 px | 203 | 189 | 103 | 1 | 0 |
-| waermepumpenstrom-hannover | 390 px | 217 | 203 | 109 | 1 | 0 |
-| wertsteigerung-waermepumpe | 390 px | 269 | 255 | 169 | 1 | 0 |
-| wp-kosten-hannover | 390 px | 242 | 228 | 135 | 1 | 0 |
-| anfrage | 414 px | 830 | 760 | 42 | 0 | 0 |
-| barrierefreiheit | 414 px | 202 | 188 | 102 | 1 | 0 |
-| baubarkeitspruefung | 414 px | 190 | 173 | 87 | 2 | 0 |
-| bewerbung | 414 px | 222 | 205 | 94 | 2 | 0 |
-| datenschutz | 414 px | 103 | 94 | 80 | 0 | 0 |
-| dimensionierung-verstehen | 414 px | 183 | 169 | 83 | 2 | 0 |
-| dimensionierung | 414 px | 709 | 656 | 71 | 2 | 0 |
-| foerderung-hannover | 414 px | 208 | 192 | 103 | 2 | 0 |
-| foerderung-jetzt-mitnehmen | 414 px | 288 | 274 | 184 | 1 | 0 |
-| foerderung | 414 px | 389 | 361 | 224 | 5 | 0 |
-| foerdervorschuss | 414 px | 216 | 197 | 107 | 3 | 0 |
-| gasheizung-tauschen-oder-reparieren | 414 px | 187 | 170 | 84 | 2 | 0 |
-| hinweise | 414 px | 191 | 173 | 87 | 3 | 0 |
-| impressum | 414 px | 59 | 50 | 34 | 0 | 0 |
-| index | 414 px | 377 | 357 | 214 | 8 | 0 |
-| karriere | 414 px | 831 | 797 | 413 | 7 | 0 |
-| kontakt | 414 px | 195 | 179 | 88 | 2 | 0 |
-| kostenvergleich-waermepumpe | 414 px | 660 | 604 | 58 | 0 | 0 |
-| preise | 414 px | 397 | 383 | 260 | 6 | 0 |
-| propan-waermepumpe | 414 px | 184 | 170 | 84 | 1 | 0 |
-| prozess | 414 px | 239 | 219 | 116 | 3 | 0 |
-| ratgeber | 414 px | 429 | 408 | 307 | 5 | 0 |
-| rechner | 414 px | 228 | 214 | 125 | 2 | 0 |
-| waermepumpe-altbau | 414 px | 185 | 168 | 81 | 2 | 0 |
-| waermepumpe-hannover | 414 px | 174 | 158 | 72 | 2 | 0 |
-| waermepumpe-laerm | 414 px | 203 | 189 | 103 | 1 | 0 |
-| waermepumpenstrom-hannover | 414 px | 217 | 203 | 109 | 1 | 0 |
-| wertsteigerung-waermepumpe | 414 px | 269 | 255 | 169 | 1 | 0 |
-| wp-kosten-hannover | 414 px | 242 | 228 | 135 | 1 | 0 |
-| anfrage | 600 px | 830 | 760 | 42 | 0 | 0 |
-| barrierefreiheit | 600 px | 202 | 189 | 107 | 1 | 0 |
-| baubarkeitspruefung | 600 px | 190 | 174 | 92 | 2 | 0 |
-| bewerbung | 600 px | 222 | 206 | 99 | 2 | 0 |
-| datenschutz | 600 px | 103 | 94 | 80 | 0 | 0 |
-| dimensionierung-verstehen | 600 px | 183 | 170 | 88 | 2 | 0 |
-| dimensionierung | 600 px | 709 | 657 | 76 | 2 | 0 |
-| foerderung-hannover | 600 px | 208 | 193 | 110 | 2 | 0 |
-| foerderung-jetzt-mitnehmen | 600 px | 288 | 275 | 191 | 1 | 0 |
-| foerderung | 600 px | 389 | 362 | 231 | 5 | 0 |
-| foerdervorschuss | 600 px | 216 | 198 | 112 | 3 | 0 |
-| gasheizung-tauschen-oder-reparieren | 600 px | 187 | 171 | 89 | 2 | 0 |
-| hinweise | 600 px | 191 | 174 | 92 | 3 | 0 |
-| impressum | 600 px | 59 | 50 | 34 | 0 | 0 |
-| index | 600 px | 377 | 358 | 220 | 8 | 0 |
-| karriere | 600 px | 831 | 798 | 418 | 7 | 0 |
-| kontakt | 600 px | 195 | 180 | 93 | 2 | 0 |
-| kostenvergleich-waermepumpe | 600 px | 660 | 605 | 59 | 0 | 0 |
-| preise | 600 px | 397 | 384 | 265 | 6 | 0 |
-| propan-waermepumpe | 600 px | 184 | 171 | 89 | 1 | 0 |
-| prozess | 600 px | 239 | 220 | 121 | 3 | 0 |
-| ratgeber | 600 px | 429 | 409 | 312 | 5 | 0 |
-| rechner | 600 px | 228 | 215 | 130 | 2 | 0 |
-| waermepumpe-altbau | 600 px | 185 | 169 | 86 | 2 | 0 |
-| waermepumpe-hannover | 600 px | 174 | 159 | 77 | 2 | 0 |
-| waermepumpe-laerm | 600 px | 203 | 190 | 108 | 1 | 0 |
-| waermepumpenstrom-hannover | 600 px | 217 | 204 | 114 | 1 | 0 |
-| wertsteigerung-waermepumpe | 600 px | 269 | 256 | 174 | 1 | 0 |
-| wp-kosten-hannover | 600 px | 242 | 229 | 142 | 1 | 0 |
-| anfrage | 768 px | 830 | 760 | 42 | 0 | 0 |
-| barrierefreiheit | 768 px | 202 | 189 | 107 | 1 | 0 |
-| baubarkeitspruefung | 768 px | 190 | 174 | 92 | 2 | 0 |
-| bewerbung | 768 px | 222 | 206 | 99 | 2 | 0 |
-| datenschutz | 768 px | 103 | 94 | 80 | 0 | 0 |
-| dimensionierung-verstehen | 768 px | 183 | 170 | 88 | 2 | 0 |
-| dimensionierung | 768 px | 709 | 657 | 76 | 2 | 0 |
-| foerderung-hannover | 768 px | 208 | 193 | 110 | 2 | 0 |
-| foerderung-jetzt-mitnehmen | 768 px | 288 | 275 | 193 | 1 | 0 |
-| foerderung | 768 px | 389 | 362 | 231 | 5 | 0 |
-| foerdervorschuss | 768 px | 216 | 198 | 112 | 3 | 0 |
-| gasheizung-tauschen-oder-reparieren | 768 px | 187 | 171 | 89 | 2 | 0 |
-| hinweise | 768 px | 191 | 174 | 92 | 3 | 0 |
-| impressum | 768 px | 59 | 50 | 34 | 0 | 0 |
-| index | 768 px | 377 | 358 | 220 | 8 | 0 |
-| karriere | 768 px | 831 | 798 | 418 | 7 | 0 |
-| kontakt | 768 px | 195 | 180 | 93 | 2 | 0 |
-| kostenvergleich-waermepumpe | 768 px | 660 | 605 | 59 | 0 | 0 |
-| preise | 768 px | 397 | 384 | 270 | 6 | 0 |
-| propan-waermepumpe | 768 px | 184 | 171 | 89 | 1 | 0 |
-| prozess | 768 px | 239 | 220 | 121 | 3 | 0 |
-| ratgeber | 768 px | 429 | 409 | 312 | 5 | 0 |
-| rechner | 768 px | 228 | 215 | 130 | 2 | 0 |
-| waermepumpe-altbau | 768 px | 185 | 169 | 86 | 2 | 0 |
-| waermepumpe-hannover | 768 px | 174 | 159 | 77 | 2 | 0 |
-| waermepumpe-laerm | 768 px | 203 | 190 | 108 | 1 | 0 |
-| waermepumpenstrom-hannover | 768 px | 217 | 204 | 114 | 1 | 0 |
-| wertsteigerung-waermepumpe | 768 px | 269 | 256 | 174 | 1 | 0 |
-| wp-kosten-hannover | 768 px | 242 | 229 | 142 | 1 | 0 |
-| anfrage | 960 px | 830 | 760 | 89 | 0 | 0 |
-| barrierefreiheit | 960 px | 202 | 189 | 107 | 1 | 0 |
-| baubarkeitspruefung | 960 px | 190 | 174 | 92 | 1 | 0 |
-| bewerbung | 960 px | 222 | 206 | 99 | 2 | 0 |
-| datenschutz | 960 px | 103 | 94 | 80 | 0 | 0 |
-| dimensionierung-verstehen | 960 px | 183 | 170 | 88 | 2 | 0 |
-| dimensionierung | 960 px | 709 | 657 | 76 | 2 | 0 |
-| foerderung-hannover | 960 px | 208 | 193 | 110 | 1 | 0 |
-| foerderung-jetzt-mitnehmen | 960 px | 288 | 275 | 193 | 1 | 0 |
-| foerderung | 960 px | 389 | 362 | 231 | 5 | 0 |
-| foerdervorschuss | 960 px | 216 | 198 | 112 | 2 | 0 |
-| gasheizung-tauschen-oder-reparieren | 960 px | 187 | 171 | 89 | 1 | 0 |
-| hinweise | 960 px | 191 | 174 | 92 | 2 | 0 |
-| impressum | 960 px | 59 | 50 | 34 | 0 | 0 |
-| index | 960 px | 377 | 358 | 224 | 8 | 0 |
-| karriere | 960 px | 831 | 798 | 418 | 7 | 0 |
-| kontakt | 960 px | 195 | 180 | 93 | 2 | 0 |
-| kostenvergleich-waermepumpe | 960 px | 660 | 605 | 59 | 0 | 0 |
-| preise | 960 px | 397 | 384 | 270 | 6 | 0 |
-| propan-waermepumpe | 960 px | 184 | 171 | 89 | 1 | 0 |
-| prozess | 960 px | 239 | 217 | 100 | 3 | 0 |
-| ratgeber | 960 px | 429 | 409 | 312 | 5 | 0 |
-| rechner | 960 px | 228 | 215 | 130 | 2 | 0 |
-| waermepumpe-altbau | 960 px | 185 | 169 | 86 | 1 | 0 |
-| waermepumpe-hannover | 960 px | 174 | 159 | 77 | 1 | 0 |
-| waermepumpe-laerm | 960 px | 203 | 190 | 108 | 1 | 0 |
-| waermepumpenstrom-hannover | 960 px | 217 | 204 | 118 | 1 | 0 |
-| wertsteigerung-waermepumpe | 960 px | 269 | 256 | 174 | 1 | 0 |
-| wp-kosten-hannover | 960 px | 242 | 229 | 142 | 1 | 0 |
+| anfrage | 320 px | 832 | 762 | 42 | 0 | 0 |
+| barrierefreiheit | 320 px | 200 | 186 | 99 | 1 | 0 |
+| baubarkeitspruefung | 320 px | 191 | 174 | 87 | 2 | 0 |
+| bewerbung | 320 px | 223 | 206 | 94 | 2 | 0 |
+| datenschutz | 320 px | 104 | 95 | 80 | 0 | 0 |
+| dimensionierung-verstehen | 320 px | 185 | 171 | 83 | 2 | 0 |
+| dimensionierung | 320 px | 710 | 657 | 71 | 2 | 0 |
+| foerderung-hannover | 320 px | 209 | 193 | 104 | 2 | 0 |
+| foerderung-jetzt-mitnehmen | 320 px | 289 | 275 | 186 | 1 | 0 |
+| foerderung | 320 px | 390 | 362 | 225 | 5 | 0 |
+| foerdervorschuss | 320 px | 217 | 198 | 107 | 3 | 0 |
+| gasheizung-tauschen-oder-reparieren | 320 px | 188 | 171 | 84 | 2 | 0 |
+| hinweise | 320 px | 192 | 174 | 87 | 3 | 0 |
+| impressum | 320 px | 60 | 51 | 34 | 0 | 0 |
+| index | 320 px | 380 | 360 | 215 | 8 | 0 |
+| karriere | 320 px | 832 | 798 | 413 | 7 | 0 |
+| kontakt | 320 px | 196 | 180 | 88 | 2 | 0 |
+| kostenvergleich-waermepumpe | 320 px | 664 | 608 | 58 | 0 | 0 |
+| preise | 320 px | 398 | 384 | 258 | 6 | 0 |
+| propan-waermepumpe | 320 px | 185 | 171 | 84 | 1 | 0 |
+| prozess | 320 px | 240 | 220 | 116 | 3 | 0 |
+| ratgeber | 320 px | 430 | 409 | 307 | 5 | 0 |
+| rechner | 320 px | 229 | 215 | 125 | 2 | 0 |
+| waermepumpe-altbau | 320 px | 186 | 169 | 81 | 2 | 0 |
+| waermepumpe-hannover | 320 px | 175 | 159 | 72 | 2 | 0 |
+| waermepumpe-laerm | 320 px | 204 | 190 | 103 | 1 | 0 |
+| waermepumpenstrom-hannover | 320 px | 218 | 204 | 109 | 1 | 0 |
+| wertsteigerung-waermepumpe | 320 px | 270 | 256 | 168 | 1 | 0 |
+| wp-kosten-hannover | 320 px | 244 | 230 | 136 | 1 | 0 |
+| anfrage | 360 px | 832 | 762 | 42 | 0 | 0 |
+| barrierefreiheit | 360 px | 200 | 186 | 99 | 1 | 0 |
+| baubarkeitspruefung | 360 px | 191 | 174 | 87 | 2 | 0 |
+| bewerbung | 360 px | 223 | 206 | 94 | 2 | 0 |
+| datenschutz | 360 px | 104 | 95 | 80 | 0 | 0 |
+| dimensionierung-verstehen | 360 px | 185 | 171 | 84 | 2 | 0 |
+| dimensionierung | 360 px | 710 | 657 | 71 | 2 | 0 |
+| foerderung-hannover | 360 px | 209 | 193 | 104 | 2 | 0 |
+| foerderung-jetzt-mitnehmen | 360 px | 289 | 275 | 186 | 1 | 0 |
+| foerderung | 360 px | 390 | 362 | 225 | 5 | 0 |
+| foerdervorschuss | 360 px | 217 | 198 | 107 | 3 | 0 |
+| gasheizung-tauschen-oder-reparieren | 360 px | 188 | 171 | 84 | 2 | 0 |
+| hinweise | 360 px | 192 | 174 | 87 | 3 | 0 |
+| impressum | 360 px | 60 | 51 | 34 | 0 | 0 |
+| index | 360 px | 380 | 360 | 215 | 8 | 0 |
+| karriere | 360 px | 832 | 798 | 413 | 7 | 0 |
+| kontakt | 360 px | 196 | 180 | 88 | 2 | 0 |
+| kostenvergleich-waermepumpe | 360 px | 664 | 608 | 58 | 0 | 0 |
+| preise | 360 px | 398 | 384 | 258 | 6 | 0 |
+| propan-waermepumpe | 360 px | 185 | 171 | 84 | 1 | 0 |
+| prozess | 360 px | 240 | 220 | 116 | 3 | 0 |
+| ratgeber | 360 px | 430 | 409 | 307 | 5 | 0 |
+| rechner | 360 px | 229 | 215 | 125 | 2 | 0 |
+| waermepumpe-altbau | 360 px | 186 | 169 | 81 | 2 | 0 |
+| waermepumpe-hannover | 360 px | 175 | 159 | 72 | 2 | 0 |
+| waermepumpe-laerm | 360 px | 204 | 190 | 103 | 1 | 0 |
+| waermepumpenstrom-hannover | 360 px | 218 | 204 | 109 | 1 | 0 |
+| wertsteigerung-waermepumpe | 360 px | 270 | 256 | 169 | 1 | 0 |
+| wp-kosten-hannover | 360 px | 244 | 230 | 136 | 1 | 0 |
+| anfrage | 375 px | 832 | 762 | 42 | 0 | 0 |
+| barrierefreiheit | 375 px | 200 | 186 | 99 | 1 | 0 |
+| baubarkeitspruefung | 375 px | 191 | 174 | 87 | 2 | 0 |
+| bewerbung | 375 px | 223 | 206 | 94 | 2 | 0 |
+| datenschutz | 375 px | 104 | 95 | 80 | 0 | 0 |
+| dimensionierung-verstehen | 375 px | 185 | 171 | 84 | 2 | 0 |
+| dimensionierung | 375 px | 710 | 657 | 71 | 2 | 0 |
+| foerderung-hannover | 375 px | 209 | 193 | 104 | 2 | 0 |
+| foerderung-jetzt-mitnehmen | 375 px | 289 | 275 | 186 | 1 | 0 |
+| foerderung | 375 px | 390 | 362 | 225 | 5 | 0 |
+| foerdervorschuss | 375 px | 217 | 198 | 107 | 3 | 0 |
+| gasheizung-tauschen-oder-reparieren | 375 px | 188 | 171 | 84 | 2 | 0 |
+| hinweise | 375 px | 192 | 174 | 87 | 3 | 0 |
+| impressum | 375 px | 60 | 51 | 34 | 0 | 0 |
+| index | 375 px | 380 | 360 | 215 | 8 | 0 |
+| karriere | 375 px | 832 | 798 | 413 | 7 | 0 |
+| kontakt | 375 px | 196 | 180 | 88 | 2 | 0 |
+| kostenvergleich-waermepumpe | 375 px | 664 | 608 | 58 | 0 | 0 |
+| preise | 375 px | 398 | 384 | 258 | 6 | 0 |
+| propan-waermepumpe | 375 px | 185 | 171 | 84 | 1 | 0 |
+| prozess | 375 px | 240 | 220 | 116 | 3 | 0 |
+| ratgeber | 375 px | 430 | 409 | 307 | 5 | 0 |
+| rechner | 375 px | 229 | 215 | 125 | 2 | 0 |
+| waermepumpe-altbau | 375 px | 186 | 169 | 81 | 2 | 0 |
+| waermepumpe-hannover | 375 px | 175 | 159 | 72 | 2 | 0 |
+| waermepumpe-laerm | 375 px | 204 | 190 | 103 | 1 | 0 |
+| waermepumpenstrom-hannover | 375 px | 218 | 204 | 109 | 1 | 0 |
+| wertsteigerung-waermepumpe | 375 px | 270 | 256 | 169 | 1 | 0 |
+| wp-kosten-hannover | 375 px | 244 | 230 | 136 | 1 | 0 |
+| anfrage | 390 px | 832 | 762 | 42 | 0 | 0 |
+| barrierefreiheit | 390 px | 200 | 186 | 99 | 1 | 0 |
+| baubarkeitspruefung | 390 px | 191 | 174 | 87 | 2 | 0 |
+| bewerbung | 390 px | 223 | 206 | 94 | 2 | 0 |
+| datenschutz | 390 px | 104 | 95 | 80 | 0 | 0 |
+| dimensionierung-verstehen | 390 px | 185 | 171 | 84 | 2 | 0 |
+| dimensionierung | 390 px | 710 | 657 | 71 | 2 | 0 |
+| foerderung-hannover | 390 px | 209 | 193 | 104 | 2 | 0 |
+| foerderung-jetzt-mitnehmen | 390 px | 289 | 275 | 186 | 1 | 0 |
+| foerderung | 390 px | 390 | 362 | 225 | 5 | 0 |
+| foerdervorschuss | 390 px | 217 | 198 | 107 | 3 | 0 |
+| gasheizung-tauschen-oder-reparieren | 390 px | 188 | 171 | 84 | 2 | 0 |
+| hinweise | 390 px | 192 | 174 | 87 | 3 | 0 |
+| impressum | 390 px | 60 | 51 | 34 | 0 | 0 |
+| index | 390 px | 380 | 360 | 215 | 8 | 0 |
+| karriere | 390 px | 832 | 798 | 413 | 7 | 0 |
+| kontakt | 390 px | 196 | 180 | 88 | 2 | 0 |
+| kostenvergleich-waermepumpe | 390 px | 664 | 608 | 58 | 0 | 0 |
+| preise | 390 px | 398 | 384 | 260 | 6 | 0 |
+| propan-waermepumpe | 390 px | 185 | 171 | 84 | 1 | 0 |
+| prozess | 390 px | 240 | 220 | 116 | 3 | 0 |
+| ratgeber | 390 px | 430 | 409 | 307 | 5 | 0 |
+| rechner | 390 px | 229 | 215 | 125 | 2 | 0 |
+| waermepumpe-altbau | 390 px | 186 | 169 | 81 | 2 | 0 |
+| waermepumpe-hannover | 390 px | 175 | 159 | 72 | 2 | 0 |
+| waermepumpe-laerm | 390 px | 204 | 190 | 103 | 1 | 0 |
+| waermepumpenstrom-hannover | 390 px | 218 | 204 | 109 | 1 | 0 |
+| wertsteigerung-waermepumpe | 390 px | 270 | 256 | 169 | 1 | 0 |
+| wp-kosten-hannover | 390 px | 244 | 230 | 136 | 1 | 0 |
+| anfrage | 414 px | 832 | 762 | 42 | 0 | 0 |
+| barrierefreiheit | 414 px | 200 | 186 | 99 | 1 | 0 |
+| baubarkeitspruefung | 414 px | 191 | 174 | 87 | 2 | 0 |
+| bewerbung | 414 px | 223 | 206 | 94 | 2 | 0 |
+| datenschutz | 414 px | 104 | 95 | 80 | 0 | 0 |
+| dimensionierung-verstehen | 414 px | 185 | 171 | 84 | 2 | 0 |
+| dimensionierung | 414 px | 710 | 657 | 71 | 2 | 0 |
+| foerderung-hannover | 414 px | 209 | 193 | 104 | 2 | 0 |
+| foerderung-jetzt-mitnehmen | 414 px | 289 | 275 | 186 | 1 | 0 |
+| foerderung | 414 px | 390 | 362 | 225 | 5 | 0 |
+| foerdervorschuss | 414 px | 217 | 198 | 107 | 3 | 0 |
+| gasheizung-tauschen-oder-reparieren | 414 px | 188 | 171 | 84 | 2 | 0 |
+| hinweise | 414 px | 192 | 174 | 87 | 3 | 0 |
+| impressum | 414 px | 60 | 51 | 34 | 0 | 0 |
+| index | 414 px | 380 | 360 | 215 | 8 | 0 |
+| karriere | 414 px | 832 | 798 | 413 | 7 | 0 |
+| kontakt | 414 px | 196 | 180 | 88 | 2 | 0 |
+| kostenvergleich-waermepumpe | 414 px | 664 | 608 | 58 | 0 | 0 |
+| preise | 414 px | 398 | 384 | 260 | 6 | 0 |
+| propan-waermepumpe | 414 px | 185 | 171 | 84 | 1 | 0 |
+| prozess | 414 px | 240 | 220 | 116 | 3 | 0 |
+| ratgeber | 414 px | 430 | 409 | 307 | 5 | 0 |
+| rechner | 414 px | 229 | 215 | 125 | 2 | 0 |
+| waermepumpe-altbau | 414 px | 186 | 169 | 81 | 2 | 0 |
+| waermepumpe-hannover | 414 px | 175 | 159 | 72 | 2 | 0 |
+| waermepumpe-laerm | 414 px | 204 | 190 | 103 | 1 | 0 |
+| waermepumpenstrom-hannover | 414 px | 218 | 204 | 109 | 1 | 0 |
+| wertsteigerung-waermepumpe | 414 px | 270 | 256 | 169 | 1 | 0 |
+| wp-kosten-hannover | 414 px | 244 | 230 | 136 | 1 | 0 |
+| anfrage | 600 px | 832 | 762 | 42 | 0 | 0 |
+| barrierefreiheit | 600 px | 200 | 187 | 104 | 1 | 0 |
+| baubarkeitspruefung | 600 px | 191 | 175 | 92 | 2 | 0 |
+| bewerbung | 600 px | 223 | 207 | 99 | 2 | 0 |
+| datenschutz | 600 px | 104 | 95 | 80 | 0 | 0 |
+| dimensionierung-verstehen | 600 px | 185 | 172 | 89 | 2 | 0 |
+| dimensionierung | 600 px | 710 | 658 | 76 | 2 | 0 |
+| foerderung-hannover | 600 px | 209 | 194 | 110 | 2 | 0 |
+| foerderung-jetzt-mitnehmen | 600 px | 289 | 276 | 192 | 1 | 0 |
+| foerderung | 600 px | 390 | 363 | 231 | 5 | 0 |
+| foerdervorschuss | 600 px | 217 | 199 | 112 | 3 | 0 |
+| gasheizung-tauschen-oder-reparieren | 600 px | 188 | 172 | 89 | 2 | 0 |
+| hinweise | 600 px | 192 | 175 | 92 | 3 | 0 |
+| impressum | 600 px | 60 | 51 | 34 | 0 | 0 |
+| index | 600 px | 380 | 361 | 221 | 8 | 0 |
+| karriere | 600 px | 832 | 799 | 418 | 7 | 0 |
+| kontakt | 600 px | 196 | 181 | 93 | 2 | 0 |
+| kostenvergleich-waermepumpe | 600 px | 664 | 609 | 59 | 0 | 0 |
+| preise | 600 px | 398 | 385 | 265 | 6 | 0 |
+| propan-waermepumpe | 600 px | 185 | 172 | 89 | 1 | 0 |
+| prozess | 600 px | 240 | 221 | 121 | 3 | 0 |
+| ratgeber | 600 px | 430 | 410 | 312 | 5 | 0 |
+| rechner | 600 px | 229 | 216 | 130 | 2 | 0 |
+| waermepumpe-altbau | 600 px | 186 | 170 | 86 | 2 | 0 |
+| waermepumpe-hannover | 600 px | 175 | 160 | 77 | 2 | 0 |
+| waermepumpe-laerm | 600 px | 204 | 191 | 108 | 1 | 0 |
+| waermepumpenstrom-hannover | 600 px | 218 | 205 | 114 | 1 | 0 |
+| wertsteigerung-waermepumpe | 600 px | 270 | 257 | 174 | 1 | 0 |
+| wp-kosten-hannover | 600 px | 244 | 231 | 142 | 1 | 0 |
+| anfrage | 768 px | 832 | 762 | 42 | 0 | 0 |
+| barrierefreiheit | 768 px | 200 | 187 | 104 | 1 | 0 |
+| baubarkeitspruefung | 768 px | 191 | 175 | 92 | 2 | 0 |
+| bewerbung | 768 px | 223 | 207 | 99 | 2 | 0 |
+| datenschutz | 768 px | 104 | 95 | 80 | 0 | 0 |
+| dimensionierung-verstehen | 768 px | 185 | 172 | 89 | 2 | 0 |
+| dimensionierung | 768 px | 710 | 658 | 76 | 2 | 0 |
+| foerderung-hannover | 768 px | 209 | 194 | 110 | 2 | 0 |
+| foerderung-jetzt-mitnehmen | 768 px | 289 | 276 | 193 | 1 | 0 |
+| foerderung | 768 px | 390 | 363 | 231 | 5 | 0 |
+| foerdervorschuss | 768 px | 217 | 199 | 112 | 3 | 0 |
+| gasheizung-tauschen-oder-reparieren | 768 px | 188 | 172 | 89 | 2 | 0 |
+| hinweise | 768 px | 192 | 175 | 92 | 3 | 0 |
+| impressum | 768 px | 60 | 51 | 34 | 0 | 0 |
+| index | 768 px | 380 | 361 | 221 | 8 | 0 |
+| karriere | 768 px | 832 | 799 | 418 | 7 | 0 |
+| kontakt | 768 px | 196 | 181 | 93 | 2 | 0 |
+| kostenvergleich-waermepumpe | 768 px | 664 | 609 | 59 | 0 | 0 |
+| preise | 768 px | 398 | 385 | 270 | 6 | 0 |
+| propan-waermepumpe | 768 px | 185 | 172 | 89 | 1 | 0 |
+| prozess | 768 px | 240 | 221 | 121 | 3 | 0 |
+| ratgeber | 768 px | 430 | 410 | 312 | 5 | 0 |
+| rechner | 768 px | 229 | 216 | 130 | 2 | 0 |
+| waermepumpe-altbau | 768 px | 186 | 170 | 86 | 2 | 0 |
+| waermepumpe-hannover | 768 px | 175 | 160 | 77 | 2 | 0 |
+| waermepumpe-laerm | 768 px | 204 | 191 | 108 | 1 | 0 |
+| waermepumpenstrom-hannover | 768 px | 218 | 205 | 114 | 1 | 0 |
+| wertsteigerung-waermepumpe | 768 px | 270 | 257 | 174 | 1 | 0 |
+| wp-kosten-hannover | 768 px | 244 | 231 | 142 | 1 | 0 |
+| anfrage | 960 px | 832 | 762 | 89 | 0 | 0 |
+| barrierefreiheit | 960 px | 200 | 187 | 104 | 1 | 0 |
+| baubarkeitspruefung | 960 px | 191 | 175 | 92 | 1 | 0 |
+| bewerbung | 960 px | 223 | 207 | 99 | 2 | 0 |
+| datenschutz | 960 px | 104 | 95 | 80 | 0 | 0 |
+| dimensionierung-verstehen | 960 px | 185 | 172 | 89 | 2 | 0 |
+| dimensionierung | 960 px | 710 | 658 | 76 | 2 | 0 |
+| foerderung-hannover | 960 px | 209 | 194 | 110 | 1 | 0 |
+| foerderung-jetzt-mitnehmen | 960 px | 289 | 276 | 193 | 1 | 0 |
+| foerderung | 960 px | 390 | 363 | 231 | 5 | 0 |
+| foerdervorschuss | 960 px | 217 | 199 | 112 | 2 | 0 |
+| gasheizung-tauschen-oder-reparieren | 960 px | 188 | 172 | 89 | 1 | 0 |
+| hinweise | 960 px | 192 | 175 | 92 | 2 | 0 |
+| impressum | 960 px | 60 | 51 | 34 | 0 | 0 |
+| index | 960 px | 380 | 361 | 225 | 8 | 0 |
+| karriere | 960 px | 832 | 799 | 418 | 7 | 0 |
+| kontakt | 960 px | 196 | 181 | 93 | 2 | 0 |
+| kostenvergleich-waermepumpe | 960 px | 664 | 609 | 59 | 0 | 0 |
+| preise | 960 px | 398 | 385 | 270 | 6 | 0 |
+| propan-waermepumpe | 960 px | 185 | 172 | 89 | 1 | 0 |
+| prozess | 960 px | 240 | 218 | 100 | 3 | 0 |
+| ratgeber | 960 px | 430 | 410 | 312 | 5 | 0 |
+| rechner | 960 px | 229 | 216 | 130 | 2 | 0 |
+| waermepumpe-altbau | 960 px | 186 | 170 | 86 | 1 | 0 |
+| waermepumpe-hannover | 960 px | 175 | 160 | 77 | 1 | 0 |
+| waermepumpe-laerm | 960 px | 204 | 191 | 108 | 1 | 0 |
+| waermepumpenstrom-hannover | 960 px | 218 | 205 | 118 | 1 | 0 |
+| wertsteigerung-waermepumpe | 960 px | 270 | 257 | 174 | 1 | 0 |
+| wp-kosten-hannover | 960 px | 244 | 231 | 142 | 1 | 0 |
 
 ## Kanten-Inventar (Bericht)
 
@@ -263,19 +263,19 @@ Ergebnis: PASS (0 Befunde).
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 6 | div.funnel-layout, main.funnel-panel, div.funnel-header |
-| 16.55 px | 1 | a |
+| 0 px | 6 | div.funnel-layout, main#main-content.funnel-panel, div.funnel-header |
 | 20 px | 9 | div.step.active, h2.step-question, p.step-hint |
 | 24 px | 6 | div.funnel-header-logo, img.logo-dark, div.progress-bar-top |
 | 42 px | 3 | div.answer-card-icon, div.answer-card-icon, div.answer-card-icon |
+| 49.48 px | 1 | a |
 | 57 px | 3 | svg, svg, svg |
 | 61.17 px | 5 | g, path, g |
 | 61.47 px | 1 | path |
 | 65.8 px | 1 | path |
 | 98.84 px | 1 | span#stepCounter.funnel-step-counter |
-| 104.02 px | 1 | a |
+| 99.16 px | 1 | a |
 | 138 px | 9 | div.answer-card-text, div.answer-card-label, div.answer-card-sub |
-| 201.75 px | 1 | a |
+| 156.86 px | 1 | a |
 | 206.47 px | 1 | a.funnel-close-link |
 | 214.41 px | 1 | span#progressPercent.progress-percent |
 
@@ -287,10 +287,10 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 16 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 2 | li, li |
-| 139.27 px | 1 | a.mobile-phone-cta |
+| 136.27 px | 1 | a.mobile-phone-cta |
 | 173.72 px | 1 | strong |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **baubarkeitspruefung, 320 px — 7 verschiedene linke Kanten**
 
@@ -300,9 +300,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 17 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 4 | li, strong, li |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **bewerbung, 320 px — 11 verschiedene linke Kanten**
 
@@ -314,17 +314,17 @@ Ergebnis: PASS (0 Befunde).
 | 40 px | 24 | div.form-group, label, select#bwRolle |
 | 58 px | 1 | strong |
 | 65 px | 1 | label |
-| 139.27 px | 1 | a.mobile-phone-cta |
+| 136.27 px | 1 | a.mobile-phone-cta |
 | 163.03 px | 1 | span.form-optional |
-| 178.27 px | 1 | span.mobile-phone-label |
+| 175.27 px | 1 | span.mobile-phone-label |
 | 193.77 px | 1 | span.form-optional |
-| 258 px | 1 | div#hamburger.hamburger |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **datenschutz, 320 px — 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 24 px | 1 | main |
+| 24 px | 1 | main#main-content |
 | 45 px | 13 | div.topbar, a, button.theme-toggle |
 | 49 px | 1 | span.tt-feld |
 | 102.28 px | 1 | a |
@@ -338,9 +338,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **dimensionierung, 320 px — 10 verschiedene linke Kanten**
 
@@ -351,11 +351,11 @@ Ergebnis: PASS (0 Befunde).
 | 49 px | 10 | div#wizProgress.wizard-progress, div.wizard-step.active, div.wizard-question |
 | 53 px | 2 | h2#abschluss-angebot, p |
 | 65.97 px | 1 | a.btn-primary |
-| 139.27 px | 1 | a.mobile-phone-cta |
+| 136.27 px | 1 | a.mobile-phone-cta |
 | 166 px | 1 | button#wzPlzNext.wizard-btn-next.is-disabled |
+| 175.27 px | 1 | span.mobile-phone-label |
 | 176 px | 6 | div.footer-col, h2, a |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **foerderung-hannover, 320 px — 8 verschiedene linke Kanten**
 
@@ -364,11 +364,11 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 20 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 175.27 px | 1 | span.mobile-phone-label |
 | 180.05 px | 4 | th, td, td |
 | 244.73 px | 4 | th, td, td |
-| 258 px | 1 | div#hamburger.hamburger |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **foerderung-jetzt-mitnehmen, 320 px — 6 verschiedene linke Kanten**
 
@@ -377,9 +377,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 15 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **foerderung, 320 px — 10 verschiedene linke Kanten**
 
@@ -390,11 +390,11 @@ Ergebnis: PASS (0 Befunde).
 | 39 px | 33 | div, div.foerder-inputs-grid, div.fi-group |
 | 43 px | 2 | button.active, button.active |
 | 60 px | 1 | span |
-| 139.27 px | 1 | a.mobile-phone-cta |
+| 136.27 px | 1 | a.mobile-phone-cta |
 | 159.42 px | 1 | button |
 | 162 px | 1 | button |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **foerdervorschuss, 320 px — 6 verschiedene linke Kanten**
 
@@ -403,9 +403,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 10 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **gasheizung-tauschen-oder-reparieren, 320 px — 7 verschiedene linke Kanten**
 
@@ -415,9 +415,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 11 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 4 | li, li, li |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **hinweise, 320 px — 6 verschiedene linke Kanten**
 
@@ -426,22 +426,22 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 11 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **impressum, 320 px — 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 24 px | 1 | main |
+| 24 px | 1 | main#main-content |
 | 45 px | 18 | div.topbar, a, button.theme-toggle |
 | 49 px | 1 | span.tt-feld |
 | 102.28 px | 1 | a |
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**index, 320 px — 17 verschiedene linke Kanten**
+**index, 320 px — 19 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -454,14 +454,16 @@ Ergebnis: PASS (0 Befunde).
 | 66 px | 4 | div.usp-text, h2, div.usp-text |
 | 91.28 px | 2 | div.usp-item, div.usp-icon |
 | 133.28 px | 2 | div.usp-text, h2 |
-| 139.27 px | 1 | a.mobile-phone-cta |
+| 136.27 px | 1 | a.mobile-phone-cta |
 | 168 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
-| 178.27 px | 1 | span.mobile-phone-label |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 182.31 px | 1 | button#heroVideoToggle.hero-video-toggle |
 | 182.47 px | 1 | div.hc-result-value |
+| 197.31 px | 1 | span#heroVideoToggleText |
 | 200.08 px | 1 | div.hc-value |
 | 210 px | 4 | div.usp-text, h2, div.usp-text |
 | 210.94 px | 1 | div.hc-value |
-| 258 px | 1 | div#hamburger.hamburger |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **karriere, 320 px — 8 verschiedene linke Kanten**
 
@@ -472,9 +474,9 @@ Ergebnis: PASS (0 Befunde).
 | 51 px | 4 | span.kar-icon, h3, p |
 | 62 px | 2 | svg, svg |
 | 107.59 px | 1 | strong |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **kontakt, 320 px — 12 verschiedene linke Kanten**
 
@@ -489,29 +491,24 @@ Ergebnis: PASS (0 Befunde).
 | 92.61 px | 1 | span.form-optional |
 | 111.34 px | 1 | span.form-optional |
 | 118.7 px | 1 | span.form-optional |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
 
-**kostenvergleich-waermepumpe, 320 px — 16 verschiedene linke Kanten**
+**kostenvergleich-waermepumpe, 320 px — 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 4 | nav.topnav, div.topnav-inner, div.container |
-| 24 px | 13 | a.topnav-brand, img.nav-logo.logo-dark, div#wzShell.wz-shell |
-| 35.16 px | 1 | a |
+| 0 px | 4 | nav.topnav, div.topnav-inner, header.page-head |
+| 24 px | 19 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
 | 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
 | 44 px | 1 | div.ib |
 | 57 px | 10 | div#wzStepBody, div, p.wz-intro |
 | 65 px | 5 | strong, span.d, div |
 | 69 px | 5 | span, span, span |
-| 93.55 px | 1 | a |
-| 119.86 px | 1 | a |
 | 132.03 px | 2 | div.topnav-actions, button.theme-toggle |
 | 136.03 px | 1 | span.tt-feld |
-| 137.91 px | 1 | a#wzModeLink |
 | 184.5 px | 1 | button#wzNext.wz-next |
-| 203.42 px | 1 | a |
 | 203.91 px | 1 | span.tt-feld |
 
 **preise, 320 px — 8 verschiedene linke Kanten**
@@ -523,9 +520,9 @@ Ergebnis: PASS (0 Befunde).
 | 43.44 px | 1 | strong |
 | 44 px | 6 | li, strong, li |
 | 73.5 px | 1 | div.section-tag |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **propan-waermepumpe, 320 px — 7 verschiedene linke Kanten**
 
@@ -535,9 +532,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 11 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **prozess, 320 px — 11 verschiedene linke Kanten**
 
@@ -550,10 +547,10 @@ Ergebnis: PASS (0 Befunde).
 | 117.53 px | 2 | span.pz-hint-text, span.pz-hint-text |
 | 124 px | 3 | div.pz-step-num, div.pz-step-num, div.pz-step-num |
 | 126.52 px | 1 | span.pz-time |
+| 136.27 px | 1 | a.mobile-phone-cta |
 | 136.91 px | 1 | span.pz-time |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **ratgeber, 320 px — 13 verschiedene linke Kanten**
 
@@ -568,10 +565,10 @@ Ergebnis: PASS (0 Befunde).
 | 101 px | 2 | svg, img.guide-icon-img |
 | 114.61 px | 1 | span |
 | 116.56 px | 1 | span |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 175.27 px | 1 | span.mobile-phone-label |
 | 180.14 px | 1 | span |
-| 258 px | 1 | div#hamburger.hamburger |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **rechner, 320 px — 14 verschiedene linke Kanten**
 
@@ -587,10 +584,10 @@ Ergebnis: PASS (0 Befunde).
 | 94.7 px | 1 | span |
 | 104 px | 1 | span.rechner-wp-unit.rechner-wp-unit-single |
 | 114.61 px | 1 | span |
-| 139.27 px | 1 | a.mobile-phone-cta |
+| 136.27 px | 1 | a.mobile-phone-cta |
 | 170.17 px | 1 | span |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-altbau, 320 px — 7 verschiedene linke Kanten**
 
@@ -600,9 +597,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 10 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-hannover, 320 px — 6 verschiedene linke Kanten**
 
@@ -611,9 +608,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-laerm, 320 px — 7 verschiedene linke Kanten**
 
@@ -623,9 +620,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 10 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 100.88 px | 1 | strong |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **waermepumpenstrom-hannover, 320 px — 6 verschiedene linke Kanten**
 
@@ -634,9 +631,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 9 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **wertsteigerung-waermepumpe, 320 px — 6 verschiedene linke Kanten**
 
@@ -645,9 +642,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 9 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **wp-kosten-hannover, 320 px — 7 verschiedene linke Kanten**
 
@@ -656,28 +653,28 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 24 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 110.09 px | 6 | th, td, td |
-| 139.27 px | 1 | a.mobile-phone-cta |
-| 178.27 px | 1 | span.mobile-phone-label |
-| 258 px | 1 | div#hamburger.hamburger |
+| 124 px | 6 | th, td, td |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
 
 **anfrage, 360 px — 15 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 6 | div.funnel-layout, main.funnel-panel, div.funnel-header |
+| 0 px | 6 | div.funnel-layout, main#main-content.funnel-panel, div.funnel-header |
 | 20 px | 9 | div.step.active, h2.step-question, p.step-hint |
 | 24 px | 6 | div.funnel-header-logo, img.logo-dark, div.progress-bar-top |
-| 36.55 px | 1 | a |
 | 42 px | 3 | div.answer-card-icon, div.answer-card-icon, div.answer-card-icon |
 | 56.8 px | 3 | svg, svg, svg |
 | 61 px | 5 | g, path, g |
 | 61.3 px | 1 | path |
 | 65.67 px | 1 | path |
+| 69.48 px | 1 | a |
 | 118.84 px | 1 | span#stepCounter.funnel-step-counter |
-| 124.02 px | 1 | a |
+| 119.16 px | 1 | a |
 | 138 px | 9 | div.answer-card-text, div.answer-card-label, div.answer-card-sub |
-| 221.75 px | 1 | a |
+| 176.86 px | 1 | a |
 | 246.47 px | 1 | a.funnel-close-link |
 | 254.41 px | 1 | span#progressPercent.progress-percent |
 
@@ -690,9 +687,9 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 4 | li, li, li |
 | 66.44 px | 1 | strong |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 156.27 px | 1 | a.mobile-phone-cta |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **baubarkeitspruefung, 360 px — 7 verschiedene linke Kanten**
 
@@ -702,9 +699,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 17 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 156.27 px | 1 | a.mobile-phone-cta |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **bewerbung, 360 px — 11 verschiedene linke Kanten**
 
@@ -716,17 +713,17 @@ Ergebnis: PASS (0 Befunde).
 | 40 px | 24 | div.form-group, label, select#bwRolle |
 | 58 px | 1 | strong |
 | 65 px | 2 | label, a |
-| 159.27 px | 1 | a.mobile-phone-cta |
+| 156.27 px | 1 | a.mobile-phone-cta |
 | 163.03 px | 1 | span.form-optional |
 | 193.77 px | 1 | span.form-optional |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **datenschutz, 360 px — 5 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 24 px | 1 | main |
+| 24 px | 1 | main#main-content |
 | 45 px | 17 | div.topbar, a, button.theme-toggle |
 | 49 px | 1 | span.tt-feld |
 | 110.22 px | 1 | a |
@@ -739,10 +736,10 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 11 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 198.27 px | 1 | span.mobile-phone-label |
+| 156.27 px | 1 | a.mobile-phone-cta |
+| 195.27 px | 1 | span.mobile-phone-label |
 | 212.3 px | 1 | a |
-| 298 px | 1 | div#hamburger.hamburger |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **dimensionierung, 360 px — 18 verschiedene linke Kanten**
 
@@ -756,16 +753,16 @@ Ergebnis: PASS (0 Befunde).
 | 85.97 px | 1 | a.btn-primary |
 | 108.11 px | 1 | div.wizard-progress-bar |
 | 137.66 px | 1 | div.wizard-progress-bar |
-| 159.27 px | 1 | a.mobile-phone-cta |
+| 156.27 px | 1 | a.mobile-phone-cta |
 | 167.22 px | 1 | div.wizard-progress-bar |
 | 186 px | 1 | button#wzPlzNext.wizard-btn-next.is-disabled |
+| 195.27 px | 1 | span.mobile-phone-label |
 | 196 px | 9 | div.footer-col, h2, a |
 | 196.77 px | 1 | div.wizard-progress-bar |
-| 198.27 px | 1 | span.mobile-phone-label |
 | 226.33 px | 1 | div.wizard-progress-bar |
 | 255.88 px | 1 | div.wizard-progress-bar |
 | 285.44 px | 1 | div.wizard-progress-bar |
-| 298 px | 1 | div#hamburger.hamburger |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **foerderung-hannover, 360 px — 8 verschiedene linke Kanten**
 
@@ -774,11 +771,11 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 20 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 159.27 px | 1 | a.mobile-phone-cta |
+| 156.27 px | 1 | a.mobile-phone-cta |
 | 180.05 px | 4 | th, td, td |
-| 198.27 px | 1 | span.mobile-phone-label |
+| 195.27 px | 1 | span.mobile-phone-label |
 | 244.73 px | 4 | th, td, td |
-| 298 px | 1 | div#hamburger.hamburger |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **foerderung-jetzt-mitnehmen, 360 px — 6 verschiedene linke Kanten**
 
@@ -787,9 +784,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 17 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 156.27 px | 1 | a.mobile-phone-cta |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **foerderung, 360 px — 9 verschiedene linke Kanten**
 
@@ -800,10 +797,10 @@ Ergebnis: PASS (0 Befunde).
 | 39 px | 34 | div, div.foerder-inputs-grid, div.fi-group |
 | 43 px | 2 | button.active, button.active |
 | 60 px | 1 | span |
-| 159.27 px | 1 | a.mobile-phone-cta |
+| 156.27 px | 1 | a.mobile-phone-cta |
 | 182 px | 2 | button, button |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **foerdervorschuss, 360 px — 7 verschiedene linke Kanten**
 
@@ -812,10 +809,10 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 11 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 159.27 px | 1 | a.mobile-phone-cta |
+| 156.27 px | 1 | a.mobile-phone-cta |
 | 179.41 px | 1 | strong |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **gasheizung-tauschen-oder-reparieren, 360 px — 7 verschiedene linke Kanten**
 
@@ -825,9 +822,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 4 | li, li, li |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 156.27 px | 1 | a.mobile-phone-cta |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **hinweise, 360 px — 6 verschiedene linke Kanten**
 
@@ -836,22 +833,22 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 156.27 px | 1 | a.mobile-phone-cta |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **impressum, 360 px — 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 24 px | 1 | main |
+| 24 px | 1 | main#main-content |
 | 45 px | 18 | div.topbar, a, button.theme-toggle |
 | 49 px | 1 | span.tt-feld |
 | 102.28 px | 1 | a |
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**index, 360 px — 17 verschiedene linke Kanten**
+**index, 360 px — 19 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -864,14 +861,16 @@ Ergebnis: PASS (0 Befunde).
 | 66 px | 4 | div.usp-text, h2, div.usp-text |
 | 111.28 px | 2 | div.usp-item, div.usp-icon |
 | 153.28 px | 2 | div.usp-text, h2 |
-| 159.27 px | 1 | a.mobile-phone-cta |
+| 156.27 px | 1 | a.mobile-phone-cta |
 | 188 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
-| 198.27 px | 1 | span.mobile-phone-label |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 222.31 px | 1 | button#heroVideoToggle.hero-video-toggle |
 | 222.47 px | 1 | div.hc-result-value |
 | 230 px | 4 | div.usp-text, h2, div.usp-text |
+| 237.31 px | 1 | span#heroVideoToggleText |
 | 240.08 px | 1 | div.hc-value |
 | 250.94 px | 1 | div.hc-value |
-| 298 px | 1 | div#hamburger.hamburger |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **karriere, 360 px — 7 verschiedene linke Kanten**
 
@@ -881,9 +880,9 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 19 | a, img.nav-logo.logo-dark, div.section-inner |
 | 51 px | 6 | span.kar-icon, h3, p |
 | 62 px | 2 | svg, svg |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 156.27 px | 1 | a.mobile-phone-cta |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **kontakt, 360 px — 12 verschiedene linke Kanten**
 
@@ -898,19 +897,18 @@ Ergebnis: PASS (0 Befunde).
 | 92.61 px | 1 | span.form-optional |
 | 111.34 px | 1 | span.form-optional |
 | 118.7 px | 1 | span.form-optional |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 156.27 px | 1 | a.mobile-phone-cta |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
 
-**kostenvergleich-waermepumpe, 360 px — 16 verschiedene linke Kanten**
+**kostenvergleich-waermepumpe, 360 px — 14 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 4 | nav.topnav, div.topnav-inner, div.container |
-| 24 px | 13 | a.topnav-brand, img.nav-logo.logo-dark, div#wzShell.wz-shell |
+| 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
+| 24 px | 19 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
 | 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
 | 44 px | 1 | div.ib |
-| 47.19 px | 1 | a |
 | 57 px | 10 | div#wzStepBody, div, p.wz-intro |
 | 65 px | 5 | strong, span.d, div |
 | 69 px | 5 | span, span, span |
@@ -918,7 +916,6 @@ Ergebnis: PASS (0 Befunde).
 | 172.03 px | 2 | div.topnav-actions, button.theme-toggle |
 | 176.03 px | 1 | span.tt-feld |
 | 184.63 px | 1 | a |
-| 188.94 px | 1 | a#wzModeLink |
 | 224.5 px | 1 | button#wzNext.wz-next |
 | 243.91 px | 1 | span.tt-feld |
 | 260.44 px | 1 | a |
@@ -934,9 +931,9 @@ Ergebnis: PASS (0 Befunde).
 | 47 px | 2 | div.pa-cta-icon, svg |
 | 89 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
 | 93.5 px | 1 | div.section-tag |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 156.27 px | 1 | a.mobile-phone-cta |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **propan-waermepumpe, 360 px — 7 verschiedene linke Kanten**
 
@@ -946,9 +943,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 156.27 px | 1 | a.mobile-phone-cta |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **prozess, 360 px — 11 verschiedene linke Kanten**
 
@@ -961,10 +958,10 @@ Ergebnis: PASS (0 Befunde).
 | 137.53 px | 2 | span.pz-hint-text, span.pz-hint-text |
 | 144 px | 3 | div.pz-step-num, div.pz-step-num, div.pz-step-num |
 | 146.52 px | 1 | span.pz-time |
+| 156.27 px | 1 | a.mobile-phone-cta |
 | 156.91 px | 1 | span.pz-time |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **ratgeber, 360 px — 13 verschiedene linke Kanten**
 
@@ -979,10 +976,10 @@ Ergebnis: PASS (0 Befunde).
 | 114.61 px | 1 | span |
 | 116.56 px | 1 | span |
 | 121 px | 3 | svg, img.guide-icon-img, svg |
-| 159.27 px | 1 | a.mobile-phone-cta |
+| 156.27 px | 1 | a.mobile-phone-cta |
 | 180.14 px | 1 | span |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **rechner, 360 px — 14 verschiedene linke Kanten**
 
@@ -998,10 +995,10 @@ Ergebnis: PASS (0 Befunde).
 | 112 px | 1 | svg |
 | 114.61 px | 1 | span |
 | 124 px | 1 | span.rechner-wp-unit.rechner-wp-unit-single |
-| 159.27 px | 1 | a.mobile-phone-cta |
+| 156.27 px | 1 | a.mobile-phone-cta |
 | 170.17 px | 1 | span |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-altbau, 360 px — 7 verschiedene linke Kanten**
 
@@ -1011,9 +1008,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 156.27 px | 1 | a.mobile-phone-cta |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-hannover, 360 px — 6 verschiedene linke Kanten**
 
@@ -1022,9 +1019,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 156.27 px | 1 | a.mobile-phone-cta |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-laerm, 360 px — 7 verschiedene linke Kanten**
 
@@ -1034,9 +1031,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 91.11 px | 1 | strong |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 156.27 px | 1 | a.mobile-phone-cta |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **waermepumpenstrom-hannover, 360 px — 7 verschiedene linke Kanten**
 
@@ -1045,10 +1042,10 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 9 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 159.27 px | 1 | a.mobile-phone-cta |
+| 156.27 px | 1 | a.mobile-phone-cta |
 | 177.83 px | 1 | a |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **wertsteigerung-waermepumpe, 360 px — 6 verschiedene linke Kanten**
 
@@ -1057,9 +1054,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 9 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 156.27 px | 1 | a.mobile-phone-cta |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **wp-kosten-hannover, 360 px — 7 verschiedene linke Kanten**
 
@@ -1068,29 +1065,29 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 25 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 110.09 px | 6 | th, td, td |
-| 159.27 px | 1 | a.mobile-phone-cta |
-| 198.27 px | 1 | span.mobile-phone-label |
-| 298 px | 1 | div#hamburger.hamburger |
+| 138.86 px | 6 | th, td, td |
+| 156.27 px | 1 | a.mobile-phone-cta |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
 
 **anfrage, 375 px — 16 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 6 | div.funnel-layout, main.funnel-panel, div.funnel-header |
+| 0 px | 6 | div.funnel-layout, main#main-content.funnel-panel, div.funnel-header |
 | 20 px | 9 | div.step.active, h2.step-question, p.step-hint |
 | 24 px | 6 | div.funnel-header-logo, img.logo-dark, div.progress-bar-top |
 | 42 px | 3 | div.answer-card-icon, div.answer-card-icon, div.answer-card-icon |
-| 44.05 px | 1 | a |
 | 57 px | 3 | svg, svg, svg |
 | 61.37 px | 2 | g, path |
 | 61.38 px | 3 | g, g, path |
 | 61.7 px | 1 | path |
 | 66.24 px | 1 | path |
+| 76.98 px | 1 | a |
 | 126.34 px | 1 | span#stepCounter.funnel-step-counter |
-| 131.52 px | 1 | a |
+| 126.66 px | 1 | a |
 | 140.5 px | 9 | div.answer-card-text, div.answer-card-label, div.answer-card-sub |
-| 229.25 px | 1 | a |
+| 184.36 px | 1 | a |
 | 261.47 px | 1 | a.funnel-close-link |
 | 269.41 px | 1 | span#progressPercent.progress-percent |
 
@@ -1103,9 +1100,9 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 5 | li, li, li |
 | 66.44 px | 1 | strong |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
+| 163.77 px | 1 | a.mobile-phone-cta |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **baubarkeitspruefung, 375 px — 7 verschiedene linke Kanten**
 
@@ -1115,9 +1112,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 18 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 8 | li, strong, li |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
+| 163.77 px | 1 | a.mobile-phone-cta |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **bewerbung, 375 px — 11 verschiedene linke Kanten**
 
@@ -1130,16 +1127,16 @@ Ergebnis: PASS (0 Befunde).
 | 58 px | 1 | strong |
 | 65 px | 3 | label, a, label |
 | 163.03 px | 1 | span.form-optional |
-| 166.77 px | 1 | a.mobile-phone-cta |
+| 163.77 px | 1 | a.mobile-phone-cta |
 | 193.77 px | 1 | span.form-optional |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **datenschutz, 375 px — 5 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 24 px | 1 | main |
+| 24 px | 1 | main#main-content |
 | 45 px | 17 | div.topbar, a, button.theme-toggle |
 | 49 px | 1 | span.tt-feld |
 | 110.22 px | 1 | a |
@@ -1152,10 +1149,10 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 205.77 px | 1 | span.mobile-phone-label |
+| 163.77 px | 1 | a.mobile-phone-cta |
+| 202.77 px | 1 | span.mobile-phone-label |
 | 212.3 px | 1 | a |
-| 313 px | 1 | div#hamburger.hamburger |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **dimensionierung, 375 px — 20 verschiedene linke Kanten**
 
@@ -1171,16 +1168,16 @@ Ergebnis: PASS (0 Befunde).
 | 111.45 px | 1 | div.wizard-progress-bar |
 | 113.69 px | 1 | a |
 | 142.67 px | 1 | div.wizard-progress-bar |
-| 166.77 px | 1 | a.mobile-phone-cta |
+| 163.77 px | 1 | a.mobile-phone-cta |
 | 173.91 px | 1 | div.wizard-progress-bar |
 | 193.5 px | 1 | button#wzPlzNext.wizard-btn-next.is-disabled |
+| 202.77 px | 1 | span.mobile-phone-label |
 | 203.5 px | 10 | div.footer-col, h2, a |
 | 205.13 px | 1 | div.wizard-progress-bar |
-| 205.77 px | 1 | span.mobile-phone-label |
 | 236.34 px | 1 | div.wizard-progress-bar |
 | 267.56 px | 1 | div.wizard-progress-bar |
 | 298.78 px | 1 | div.wizard-progress-bar |
-| 313 px | 1 | div#hamburger.hamburger |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **foerderung-hannover, 375 px — 8 verschiedene linke Kanten**
 
@@ -1189,11 +1186,11 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 20 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 166.77 px | 1 | a.mobile-phone-cta |
+| 163.77 px | 1 | a.mobile-phone-cta |
 | 180.05 px | 4 | th, td, td |
-| 205.77 px | 1 | span.mobile-phone-label |
+| 202.77 px | 1 | span.mobile-phone-label |
 | 244.73 px | 4 | th, td, td |
-| 313 px | 1 | div#hamburger.hamburger |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **foerderung-jetzt-mitnehmen, 375 px — 6 verschiedene linke Kanten**
 
@@ -1202,9 +1199,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 17 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
+| 163.77 px | 1 | a.mobile-phone-cta |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **foerderung, 375 px — 9 verschiedene linke Kanten**
 
@@ -1215,10 +1212,10 @@ Ergebnis: PASS (0 Befunde).
 | 39 px | 34 | div, div.foerder-inputs-grid, div.fi-group |
 | 43 px | 2 | button.active, button.active |
 | 60 px | 1 | span |
-| 166.77 px | 1 | a.mobile-phone-cta |
+| 163.77 px | 1 | a.mobile-phone-cta |
 | 189.5 px | 2 | button, button |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **foerdervorschuss, 375 px — 7 verschiedene linke Kanten**
 
@@ -1227,10 +1224,10 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 166.77 px | 1 | a.mobile-phone-cta |
+| 163.77 px | 1 | a.mobile-phone-cta |
 | 179.41 px | 1 | strong |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **gasheizung-tauschen-oder-reparieren, 375 px — 7 verschiedene linke Kanten**
 
@@ -1240,9 +1237,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 4 | li, li, li |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
+| 163.77 px | 1 | a.mobile-phone-cta |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **hinweise, 375 px — 6 verschiedene linke Kanten**
 
@@ -1251,22 +1248,22 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
+| 163.77 px | 1 | a.mobile-phone-cta |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **impressum, 375 px — 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 24 px | 1 | main |
+| 24 px | 1 | main#main-content |
 | 45 px | 18 | div.topbar, a, button.theme-toggle |
 | 49 px | 1 | span.tt-feld |
 | 102.28 px | 1 | a |
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**index, 375 px — 17 verschiedene linke Kanten**
+**index, 375 px — 19 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1279,14 +1276,16 @@ Ergebnis: PASS (0 Befunde).
 | 66 px | 4 | div.usp-text, h2, div.usp-text |
 | 118.78 px | 2 | div.usp-item, div.usp-icon |
 | 160.78 px | 2 | div.usp-text, h2 |
-| 166.77 px | 1 | a.mobile-phone-cta |
+| 163.77 px | 1 | a.mobile-phone-cta |
 | 195.5 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
-| 205.77 px | 1 | span.mobile-phone-label |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 237.31 px | 1 | button#heroVideoToggle.hero-video-toggle |
 | 237.47 px | 1 | div.hc-result-value |
 | 237.5 px | 4 | div.usp-text, h2, div.usp-text |
+| 252.31 px | 1 | span#heroVideoToggleText |
 | 255.08 px | 1 | div.hc-value |
 | 265.94 px | 1 | div.hc-value |
-| 313 px | 1 | div#hamburger.hamburger |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **karriere, 375 px — 8 verschiedene linke Kanten**
 
@@ -1296,10 +1295,10 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 18 | a, img.nav-logo.logo-dark, div.section-inner |
 | 51 px | 6 | span.kar-icon, h3, p |
 | 62 px | 2 | svg, svg |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 205.77 px | 1 | span.mobile-phone-label |
+| 163.77 px | 1 | a.mobile-phone-cta |
+| 202.77 px | 1 | span.mobile-phone-label |
 | 217.88 px | 1 | strong |
-| 313 px | 1 | div#hamburger.hamburger |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **kontakt, 375 px — 12 verschiedene linke Kanten**
 
@@ -1314,24 +1313,23 @@ Ergebnis: PASS (0 Befunde).
 | 92.61 px | 1 | span.form-optional |
 | 111.34 px | 1 | span.form-optional |
 | 118.7 px | 1 | span.form-optional |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
+| 163.77 px | 1 | a.mobile-phone-cta |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 307 px | 1 | div#hamburger.hamburger |
 
-**kostenvergleich-waermepumpe, 375 px — 16 verschiedene linke Kanten**
+**kostenvergleich-waermepumpe, 375 px — 15 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 4 | nav.topnav, div.topnav-inner, div.container |
-| 24 px | 13 | a.topnav-brand, img.nav-logo.logo-dark, div#wzShell.wz-shell |
+| 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
+| 24 px | 19 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
 | 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
 | 44 px | 1 | div.ib |
 | 51.13 px | 1 | a |
 | 57 px | 10 | div#wzStepBody, div, p.wz-intro |
 | 65 px | 5 | strong, span.d, div |
-| 69 px | 4 | span, span, span |
+| 69 px | 5 | span, span, span |
 | 78.69 px | 1 | a |
-| 141.44 px | 1 | a#wzModeLink |
 | 187.03 px | 2 | div.topnav-actions, button.theme-toggle |
 | 188.56 px | 1 | a |
 | 191.03 px | 1 | span.tt-feld |
@@ -1351,9 +1349,9 @@ Ergebnis: PASS (0 Befunde).
 | 52 px | 2 | div.pa-cta-icon, svg |
 | 94 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
 | 101 px | 1 | div.section-tag |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
+| 163.77 px | 1 | a.mobile-phone-cta |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **propan-waermepumpe, 375 px — 7 verschiedene linke Kanten**
 
@@ -1363,9 +1361,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
+| 163.77 px | 1 | a.mobile-phone-cta |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **prozess, 375 px — 11 verschiedene linke Kanten**
 
@@ -1378,10 +1376,10 @@ Ergebnis: PASS (0 Befunde).
 | 145.03 px | 2 | span.pz-hint-text, span.pz-hint-text |
 | 151.5 px | 3 | div.pz-step-num, div.pz-step-num, div.pz-step-num |
 | 154.02 px | 1 | span.pz-time |
+| 163.77 px | 1 | a.mobile-phone-cta |
 | 164.41 px | 1 | span.pz-time |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **ratgeber, 375 px — 13 verschiedene linke Kanten**
 
@@ -1396,10 +1394,10 @@ Ergebnis: PASS (0 Befunde).
 | 114.61 px | 1 | span |
 | 116.56 px | 1 | span |
 | 128.5 px | 3 | svg, img.guide-icon-img, svg |
-| 166.77 px | 1 | a.mobile-phone-cta |
+| 163.77 px | 1 | a.mobile-phone-cta |
 | 180.14 px | 1 | span |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **rechner, 375 px — 14 verschiedene linke Kanten**
 
@@ -1415,10 +1413,10 @@ Ergebnis: PASS (0 Befunde).
 | 114.61 px | 1 | span |
 | 119.5 px | 1 | svg |
 | 131.5 px | 1 | span.rechner-wp-unit.rechner-wp-unit-single |
-| 166.77 px | 1 | a.mobile-phone-cta |
+| 163.77 px | 1 | a.mobile-phone-cta |
 | 170.17 px | 1 | span |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-altbau, 375 px — 7 verschiedene linke Kanten**
 
@@ -1428,9 +1426,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
+| 163.77 px | 1 | a.mobile-phone-cta |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-hannover, 375 px — 6 verschiedene linke Kanten**
 
@@ -1439,9 +1437,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
+| 163.77 px | 1 | a.mobile-phone-cta |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-laerm, 375 px — 7 verschiedene linke Kanten**
 
@@ -1451,9 +1449,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 91.11 px | 1 | strong |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
+| 163.77 px | 1 | a.mobile-phone-cta |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **waermepumpenstrom-hannover, 375 px — 7 verschiedene linke Kanten**
 
@@ -1462,10 +1460,10 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 10 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 205.77 px | 1 | span.mobile-phone-label |
+| 163.77 px | 1 | a.mobile-phone-cta |
+| 202.77 px | 1 | span.mobile-phone-label |
 | 255 px | 1 | a |
-| 313 px | 1 | div#hamburger.hamburger |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **wertsteigerung-waermepumpe, 375 px — 6 verschiedene linke Kanten**
 
@@ -1474,9 +1472,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 9 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
+| 163.77 px | 1 | a.mobile-phone-cta |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **wp-kosten-hannover, 375 px — 7 verschiedene linke Kanten**
 
@@ -1485,29 +1483,29 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 25 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 110.09 px | 6 | th, td, td |
-| 166.77 px | 1 | a.mobile-phone-cta |
-| 205.77 px | 1 | span.mobile-phone-label |
-| 313 px | 1 | div#hamburger.hamburger |
+| 144.42 px | 6 | th, td, td |
+| 163.77 px | 1 | a.mobile-phone-cta |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 307 px | 1 | div#hamburger.hamburger |
 
 **anfrage, 390 px — 16 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 6 | div.funnel-layout, main.funnel-panel, div.funnel-header |
+| 0 px | 6 | div.funnel-layout, main#main-content.funnel-panel, div.funnel-header |
 | 20 px | 9 | div.step.active, h2.step-question, p.step-hint |
+| 21.64 px | 1 | a |
 | 24 px | 6 | div.funnel-header-logo, img.logo-dark, div.progress-bar-top |
 | 42 px | 3 | div.answer-card-icon, div.answer-card-icon, div.answer-card-icon |
-| 51.55 px | 1 | a |
 | 57.59 px | 3 | svg, svg, svg |
 | 62.14 px | 3 | g, path, g |
 | 62.15 px | 2 | g, path |
 | 62.48 px | 1 | path |
 | 67.21 px | 1 | path |
+| 129.02 px | 1 | a |
 | 133.84 px | 1 | span#stepCounter.funnel-step-counter |
-| 139.02 px | 1 | a |
 | 143.8 px | 9 | div.answer-card-text, div.answer-card-label, div.answer-card-sub |
-| 236.75 px | 1 | a |
+| 246.66 px | 1 | a |
 | 276.47 px | 1 | a.funnel-close-link |
 | 284.41 px | 1 | span#progressPercent.progress-percent |
 
@@ -1519,9 +1517,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 17 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 5 | li, li, li |
-| 174.27 px | 1 | a.mobile-phone-cta |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 171.27 px | 1 | a.mobile-phone-cta |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **baubarkeitspruefung, 390 px — 7 verschiedene linke Kanten**
 
@@ -1531,9 +1529,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 19 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 8 | li, strong, li |
-| 174.27 px | 1 | a.mobile-phone-cta |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 171.27 px | 1 | a.mobile-phone-cta |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **bewerbung, 390 px — 12 verschiedene linke Kanten**
 
@@ -1547,16 +1545,16 @@ Ergebnis: PASS (0 Befunde).
 | 65 px | 2 | label, label |
 | 155.2 px | 1 | a |
 | 163.03 px | 1 | span.form-optional |
-| 174.27 px | 1 | a.mobile-phone-cta |
+| 171.27 px | 1 | a.mobile-phone-cta |
 | 193.77 px | 1 | span.form-optional |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **datenschutz, 390 px — 5 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 24 px | 1 | main |
+| 24 px | 1 | main#main-content |
 | 45 px | 17 | div.topbar, a, button.theme-toggle |
 | 49 px | 1 | span.tt-feld |
 | 110.22 px | 1 | a |
@@ -1569,10 +1567,10 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 174.27 px | 1 | a.mobile-phone-cta |
+| 171.27 px | 1 | a.mobile-phone-cta |
+| 210.27 px | 1 | span.mobile-phone-label |
 | 212.3 px | 1 | a |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **dimensionierung, 390 px — 22 verschiedene linke Kanten**
 
@@ -1589,17 +1587,17 @@ Ergebnis: PASS (0 Befunde).
 | 114.77 px | 1 | div.wizard-progress-bar |
 | 117.73 px | 1 | a |
 | 147.66 px | 1 | div.wizard-progress-bar |
-| 174.27 px | 1 | a.mobile-phone-cta |
+| 171.27 px | 1 | a.mobile-phone-cta |
 | 180.55 px | 1 | div.wizard-progress-bar |
 | 201 px | 1 | button#wzPlzNext.wizard-btn-next.is-disabled |
+| 210.27 px | 1 | span.mobile-phone-label |
 | 211 px | 9 | div.footer-col, h2, a |
-| 213.27 px | 1 | span.mobile-phone-label |
 | 213.44 px | 1 | div.wizard-progress-bar |
 | 246.33 px | 1 | div.wizard-progress-bar |
 | 271.38 px | 1 | a |
 | 279.22 px | 1 | div.wizard-progress-bar |
 | 312.11 px | 1 | div.wizard-progress-bar |
-| 328 px | 1 | div#hamburger.hamburger |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **foerderung-hannover, 390 px — 8 verschiedene linke Kanten**
 
@@ -1608,11 +1606,11 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 20 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 174.27 px | 1 | a.mobile-phone-cta |
+| 171.27 px | 1 | a.mobile-phone-cta |
 | 180.05 px | 4 | th, td, td |
-| 213.27 px | 1 | span.mobile-phone-label |
+| 210.27 px | 1 | span.mobile-phone-label |
 | 244.73 px | 4 | th, td, td |
-| 328 px | 1 | div#hamburger.hamburger |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **foerderung-jetzt-mitnehmen, 390 px — 6 verschiedene linke Kanten**
 
@@ -1621,9 +1619,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 17 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 174.27 px | 1 | a.mobile-phone-cta |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 171.27 px | 1 | a.mobile-phone-cta |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **foerderung, 390 px — 10 verschiedene linke Kanten**
 
@@ -1635,10 +1633,10 @@ Ergebnis: PASS (0 Befunde).
 | 43 px | 2 | button.active, button.active |
 | 60 px | 1 | span |
 | 68 px | 2 | div, div#foerderSatzKfw.fr-satz |
-| 174.27 px | 1 | a.mobile-phone-cta |
+| 171.27 px | 1 | a.mobile-phone-cta |
 | 197 px | 2 | button, button |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **foerdervorschuss, 390 px — 7 verschiedene linke Kanten**
 
@@ -1648,9 +1646,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 96.14 px | 1 | strong |
-| 174.27 px | 1 | a.mobile-phone-cta |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 171.27 px | 1 | a.mobile-phone-cta |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **gasheizung-tauschen-oder-reparieren, 390 px — 7 verschiedene linke Kanten**
 
@@ -1660,9 +1658,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 4 | li, li, li |
-| 174.27 px | 1 | a.mobile-phone-cta |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 171.27 px | 1 | a.mobile-phone-cta |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **hinweise, 390 px — 6 verschiedene linke Kanten**
 
@@ -1671,22 +1669,22 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 174.27 px | 1 | a.mobile-phone-cta |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 171.27 px | 1 | a.mobile-phone-cta |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **impressum, 390 px — 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 24 px | 1 | main |
+| 24 px | 1 | main#main-content |
 | 45 px | 19 | div.topbar, a, button.theme-toggle |
 | 49 px | 1 | span.tt-feld |
 | 102.28 px | 1 | a |
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**index, 390 px — 17 verschiedene linke Kanten**
+**index, 390 px — 19 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1699,14 +1697,16 @@ Ergebnis: PASS (0 Befunde).
 | 66 px | 4 | div.usp-text, h2, div.usp-text |
 | 126.28 px | 2 | div.usp-item, div.usp-icon |
 | 168.28 px | 2 | div.usp-text, h2 |
-| 174.27 px | 1 | a.mobile-phone-cta |
+| 171.27 px | 1 | a.mobile-phone-cta |
 | 203 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
-| 213.27 px | 1 | span.mobile-phone-label |
+| 210.27 px | 1 | span.mobile-phone-label |
 | 245 px | 4 | div.usp-text, h2, div.usp-text |
+| 252.31 px | 1 | button#heroVideoToggle.hero-video-toggle |
 | 252.47 px | 1 | div.hc-result-value |
+| 267.31 px | 1 | span#heroVideoToggleText |
 | 270.08 px | 1 | div.hc-value |
 | 280.94 px | 1 | div.hc-value |
-| 328 px | 1 | div#hamburger.hamburger |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **karriere, 390 px — 8 verschiedene linke Kanten**
 
@@ -1717,9 +1717,9 @@ Ergebnis: PASS (0 Befunde).
 | 51 px | 6 | span.kar-icon, h3, p |
 | 52.86 px | 1 | strong |
 | 62 px | 2 | svg, svg |
-| 174.27 px | 1 | a.mobile-phone-cta |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 171.27 px | 1 | a.mobile-phone-cta |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **kontakt, 390 px — 12 verschiedene linke Kanten**
 
@@ -1734,24 +1734,23 @@ Ergebnis: PASS (0 Befunde).
 | 92.61 px | 1 | span.form-optional |
 | 111.34 px | 1 | span.form-optional |
 | 118.7 px | 1 | span.form-optional |
-| 174.27 px | 1 | a.mobile-phone-cta |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 171.27 px | 1 | a.mobile-phone-cta |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
 
-**kostenvergleich-waermepumpe, 390 px — 16 verschiedene linke Kanten**
+**kostenvergleich-waermepumpe, 390 px — 15 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 4 | nav.topnav, div.topnav-inner, div.container |
-| 24 px | 13 | a.topnav-brand, img.nav-logo.logo-dark, div#wzShell.wz-shell |
+| 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
+| 24 px | 19 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
 | 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
 | 44 px | 1 | div.ib |
 | 57 px | 10 | div#wzStepBody, div, p.wz-intro |
 | 58.63 px | 1 | a |
 | 65 px | 5 | strong, span.d, div |
-| 69 px | 4 | span, span, span |
+| 69 px | 5 | span, span, span |
 | 86.19 px | 1 | a |
-| 148.94 px | 1 | a#wzModeLink |
 | 196.06 px | 1 | a |
 | 202.03 px | 2 | div.topnav-actions, button.theme-toggle |
 | 206.03 px | 1 | span.tt-feld |
@@ -1771,9 +1770,9 @@ Ergebnis: PASS (0 Befunde).
 | 52 px | 2 | div.pa-cta-icon, svg |
 | 94 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
 | 108.5 px | 1 | div.section-tag |
-| 174.27 px | 1 | a.mobile-phone-cta |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 171.27 px | 1 | a.mobile-phone-cta |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **propan-waermepumpe, 390 px — 7 verschiedene linke Kanten**
 
@@ -1783,9 +1782,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 174.27 px | 1 | a.mobile-phone-cta |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 171.27 px | 1 | a.mobile-phone-cta |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **prozess, 390 px — 11 verschiedene linke Kanten**
 
@@ -1798,10 +1797,10 @@ Ergebnis: PASS (0 Befunde).
 | 152.53 px | 2 | span.pz-hint-text, span.pz-hint-text |
 | 159 px | 3 | div.pz-step-num, div.pz-step-num, div.pz-step-num |
 | 161.52 px | 1 | span.pz-time |
+| 171.27 px | 1 | a.mobile-phone-cta |
 | 171.91 px | 1 | span.pz-time |
-| 174.27 px | 1 | a.mobile-phone-cta |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **ratgeber, 390 px — 13 verschiedene linke Kanten**
 
@@ -1816,10 +1815,10 @@ Ergebnis: PASS (0 Befunde).
 | 114.61 px | 1 | span |
 | 116.56 px | 1 | span |
 | 136 px | 3 | svg, img.guide-icon-img, svg |
-| 174.27 px | 1 | a.mobile-phone-cta |
+| 171.27 px | 1 | a.mobile-phone-cta |
 | 180.14 px | 1 | span |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **rechner, 390 px — 14 verschiedene linke Kanten**
 
@@ -1836,9 +1835,9 @@ Ergebnis: PASS (0 Befunde).
 | 127 px | 1 | svg |
 | 139 px | 1 | span.rechner-wp-unit.rechner-wp-unit-single |
 | 170.17 px | 1 | span |
-| 174.27 px | 1 | a.mobile-phone-cta |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 171.27 px | 1 | a.mobile-phone-cta |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-altbau, 390 px — 7 verschiedene linke Kanten**
 
@@ -1848,9 +1847,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 14 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 174.27 px | 1 | a.mobile-phone-cta |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 171.27 px | 1 | a.mobile-phone-cta |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-hannover, 390 px — 6 verschiedene linke Kanten**
 
@@ -1859,9 +1858,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 15 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 174.27 px | 1 | a.mobile-phone-cta |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 171.27 px | 1 | a.mobile-phone-cta |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-laerm, 390 px — 8 verschiedene linke Kanten**
 
@@ -1871,10 +1870,10 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 11 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 91.11 px | 1 | strong |
-| 174.27 px | 1 | a.mobile-phone-cta |
+| 171.27 px | 1 | a.mobile-phone-cta |
 | 209.03 px | 1 | strong |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **waermepumpenstrom-hannover, 390 px — 7 verschiedene linke Kanten**
 
@@ -1883,10 +1882,10 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 10 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 174.27 px | 1 | a.mobile-phone-cta |
+| 171.27 px | 1 | a.mobile-phone-cta |
 | 177.83 px | 1 | a |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **wertsteigerung-waermepumpe, 390 px — 6 verschiedene linke Kanten**
 
@@ -1895,9 +1894,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 10 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 174.27 px | 1 | a.mobile-phone-cta |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 171.27 px | 1 | a.mobile-phone-cta |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **wp-kosten-hannover, 390 px — 7 verschiedene linke Kanten**
 
@@ -1906,29 +1905,29 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 25 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 110.09 px | 6 | th, td, td |
-| 174.27 px | 1 | a.mobile-phone-cta |
-| 213.27 px | 1 | span.mobile-phone-label |
-| 328 px | 1 | div#hamburger.hamburger |
+| 150 px | 6 | th, td, td |
+| 171.27 px | 1 | a.mobile-phone-cta |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
 
 **anfrage, 414 px — 16 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 6 | div.funnel-layout, main.funnel-panel, div.funnel-header |
+| 0 px | 6 | div.funnel-layout, main#main-content.funnel-panel, div.funnel-header |
 | 20 px | 9 | div.step.active, h2.step-question, p.step-hint |
 | 24 px | 6 | div.funnel-header-logo, img.logo-dark, div.progress-bar-top |
+| 33.64 px | 1 | a |
 | 42 px | 3 | div.answer-card-icon, div.answer-card-icon, div.answer-card-icon |
 | 58.56 px | 3 | svg, svg, svg |
 | 63.39 px | 5 | g, path, g |
-| 63.55 px | 1 | a |
 | 63.75 px | 1 | path |
 | 68.18 px | 1 | path |
 | 68.77 px | 1 | path |
+| 141.02 px | 1 | a |
 | 145.84 px | 1 | span#stepCounter.funnel-step-counter |
 | 149.08 px | 9 | div.answer-card-text, div.answer-card-label, div.answer-card-sub |
-| 151.02 px | 1 | a |
-| 248.75 px | 1 | a |
+| 258.66 px | 1 | a |
 | 300.47 px | 1 | a.funnel-close-link |
 | 308.41 px | 1 | span#progressPercent.progress-percent |
 
@@ -1940,9 +1939,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 17 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 7 | li, li, li |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 183.27 px | 1 | a.mobile-phone-cta |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **baubarkeitspruefung, 414 px — 7 verschiedene linke Kanten**
 
@@ -1952,9 +1951,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 19 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 8 | li, strong, li |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 183.27 px | 1 | a.mobile-phone-cta |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **bewerbung, 414 px — 12 verschiedene linke Kanten**
 
@@ -1968,16 +1967,16 @@ Ergebnis: PASS (0 Befunde).
 | 65 px | 2 | label, label |
 | 155.2 px | 1 | a |
 | 163.03 px | 1 | span.form-optional |
-| 186.27 px | 1 | a.mobile-phone-cta |
+| 183.27 px | 1 | a.mobile-phone-cta |
 | 193.77 px | 1 | span.form-optional |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **datenschutz, 414 px — 5 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 24 px | 1 | main |
+| 24 px | 1 | main#main-content |
 | 45 px | 17 | div.topbar, a, button.theme-toggle |
 | 49 px | 1 | span.tt-feld |
 | 110.22 px | 1 | a |
@@ -1990,10 +1989,10 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 186.27 px | 1 | a.mobile-phone-cta |
+| 183.27 px | 1 | a.mobile-phone-cta |
 | 212.3 px | 1 | a |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **dimensionierung, 414 px — 22 verschiedene linke Kanten**
 
@@ -2010,17 +2009,17 @@ Ergebnis: PASS (0 Befunde).
 | 117.73 px | 1 | a |
 | 120.11 px | 1 | div.wizard-progress-bar |
 | 155.66 px | 1 | div.wizard-progress-bar |
-| 186.27 px | 1 | a.mobile-phone-cta |
+| 183.27 px | 1 | a.mobile-phone-cta |
 | 191.22 px | 1 | div.wizard-progress-bar |
 | 213 px | 1 | button#wzPlzNext.wizard-btn-next.is-disabled |
+| 222.27 px | 1 | span.mobile-phone-label |
 | 223 px | 9 | div.footer-col, h2, a |
-| 225.27 px | 1 | span.mobile-phone-label |
 | 226.77 px | 1 | div.wizard-progress-bar |
 | 262.33 px | 1 | div.wizard-progress-bar |
 | 297.88 px | 1 | div.wizard-progress-bar |
 | 315.3 px | 1 | a |
 | 333.44 px | 1 | div.wizard-progress-bar |
-| 352 px | 1 | div#hamburger.hamburger |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **foerderung-hannover, 414 px — 8 verschiedene linke Kanten**
 
@@ -2030,10 +2029,10 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 20 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 180.05 px | 4 | th, td, td |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 225.27 px | 1 | span.mobile-phone-label |
+| 183.27 px | 1 | a.mobile-phone-cta |
+| 222.27 px | 1 | span.mobile-phone-label |
 | 244.73 px | 4 | th, td, td |
-| 352 px | 1 | div#hamburger.hamburger |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **foerderung-jetzt-mitnehmen, 414 px — 8 verschiedene linke Kanten**
 
@@ -2043,10 +2042,10 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 25 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 180.05 px | 2 | th, td |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 225.27 px | 1 | span.mobile-phone-label |
+| 183.27 px | 1 | a.mobile-phone-cta |
+| 222.27 px | 1 | span.mobile-phone-label |
 | 244.73 px | 2 | th, td |
-| 352 px | 1 | div#hamburger.hamburger |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **foerderung, 414 px — 10 verschiedene linke Kanten**
 
@@ -2058,10 +2057,10 @@ Ergebnis: PASS (0 Befunde).
 | 43 px | 2 | button.active, button.active |
 | 60 px | 1 | span |
 | 68 px | 2 | div, div#foerderSatzKfw.fr-satz |
-| 186.27 px | 1 | a.mobile-phone-cta |
+| 183.27 px | 1 | a.mobile-phone-cta |
 | 209 px | 2 | button, button |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **foerdervorschuss, 414 px — 7 verschiedene linke Kanten**
 
@@ -2071,9 +2070,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 89.58 px | 1 | strong |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 183.27 px | 1 | a.mobile-phone-cta |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **gasheizung-tauschen-oder-reparieren, 414 px — 7 verschiedene linke Kanten**
 
@@ -2083,9 +2082,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 4 | li, li, li |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 183.27 px | 1 | a.mobile-phone-cta |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **hinweise, 414 px — 6 verschiedene linke Kanten**
 
@@ -2094,22 +2093,22 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 183.27 px | 1 | a.mobile-phone-cta |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **impressum, 414 px — 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 24 px | 1 | main |
+| 24 px | 1 | main#main-content |
 | 45 px | 20 | div.topbar, a, button.theme-toggle |
 | 49 px | 1 | span.tt-feld |
 | 102.28 px | 1 | a |
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**index, 414 px — 17 verschiedene linke Kanten**
+**index, 414 px — 19 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2122,14 +2121,16 @@ Ergebnis: PASS (0 Befunde).
 | 66 px | 4 | div.usp-text, h2, div.usp-text |
 | 138.28 px | 2 | div.usp-item, div.usp-icon |
 | 180.28 px | 2 | div.usp-text, h2 |
-| 186.27 px | 1 | a.mobile-phone-cta |
+| 183.27 px | 1 | a.mobile-phone-cta |
 | 215 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
-| 225.27 px | 1 | span.mobile-phone-label |
+| 222.27 px | 1 | span.mobile-phone-label |
 | 257 px | 4 | div.usp-text, h2, div.usp-text |
+| 276.31 px | 1 | button#heroVideoToggle.hero-video-toggle |
 | 276.47 px | 1 | div.hc-result-value |
+| 291.31 px | 1 | span#heroVideoToggleText |
 | 294.08 px | 1 | div.hc-value |
 | 304.94 px | 1 | div.hc-value |
-| 352 px | 1 | div#hamburger.hamburger |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **karriere, 414 px — 8 verschiedene linke Kanten**
 
@@ -2139,10 +2140,10 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 18 | a, img.nav-logo.logo-dark, div.section-inner |
 | 51 px | 6 | span.kar-icon, h3, p |
 | 62 px | 2 | svg, svg |
-| 186.27 px | 1 | a.mobile-phone-cta |
+| 183.27 px | 1 | a.mobile-phone-cta |
 | 217.88 px | 1 | strong |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **kontakt, 414 px — 12 verschiedene linke Kanten**
 
@@ -2157,16 +2158,16 @@ Ergebnis: PASS (0 Befunde).
 | 92.61 px | 1 | span.form-optional |
 | 111.34 px | 1 | span.form-optional |
 | 118.7 px | 1 | span.form-optional |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 183.27 px | 1 | a.mobile-phone-cta |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
 
-**kostenvergleich-waermepumpe, 414 px — 16 verschiedene linke Kanten**
+**kostenvergleich-waermepumpe, 414 px — 15 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 4 | nav.topnav, div.topnav-inner, div.container |
-| 24 px | 13 | a.topnav-brand, img.nav-logo.logo-dark, div#wzShell.wz-shell |
+| 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
+| 24 px | 19 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
 | 29.27 px | 1 | a |
 | 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
 | 44 px | 1 | div.ib |
@@ -2177,7 +2178,6 @@ Ergebnis: PASS (0 Befunde).
 | 208.06 px | 1 | a |
 | 226.03 px | 2 | div.topnav-actions, button.theme-toggle |
 | 230.03 px | 1 | span.tt-feld |
-| 237.52 px | 1 | a#wzModeLink |
 | 278.5 px | 1 | button#wzNext.wz-next |
 | 283.88 px | 1 | a |
 | 297.91 px | 1 | span.tt-feld |
@@ -2194,9 +2194,9 @@ Ergebnis: PASS (0 Befunde).
 | 64 px | 2 | div.pa-cta-icon, svg |
 | 106 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
 | 120.5 px | 1 | div.section-tag |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 183.27 px | 1 | a.mobile-phone-cta |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **propan-waermepumpe, 414 px — 7 verschiedene linke Kanten**
 
@@ -2206,9 +2206,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 183.27 px | 1 | a.mobile-phone-cta |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **prozess, 414 px — 11 verschiedene linke Kanten**
 
@@ -2221,10 +2221,10 @@ Ergebnis: PASS (0 Befunde).
 | 164.53 px | 2 | span.pz-hint-text, span.pz-hint-text |
 | 171 px | 3 | div.pz-step-num, div.pz-step-num, div.pz-step-num |
 | 173.52 px | 1 | span.pz-time |
+| 183.27 px | 1 | a.mobile-phone-cta |
 | 183.91 px | 1 | span.pz-time |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **ratgeber, 414 px — 13 verschiedene linke Kanten**
 
@@ -2240,9 +2240,9 @@ Ergebnis: PASS (0 Befunde).
 | 116.56 px | 1 | span |
 | 148 px | 3 | svg, img.guide-icon-img, svg |
 | 180.14 px | 1 | span |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 183.27 px | 1 | a.mobile-phone-cta |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **rechner, 414 px — 14 verschiedene linke Kanten**
 
@@ -2259,9 +2259,9 @@ Ergebnis: PASS (0 Befunde).
 | 139 px | 1 | svg |
 | 151 px | 1 | span.rechner-wp-unit.rechner-wp-unit-single |
 | 170.17 px | 1 | span |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 183.27 px | 1 | a.mobile-phone-cta |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-altbau, 414 px — 7 verschiedene linke Kanten**
 
@@ -2271,9 +2271,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 16 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 183.27 px | 1 | a.mobile-phone-cta |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-hannover, 414 px — 6 verschiedene linke Kanten**
 
@@ -2282,9 +2282,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 16 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 183.27 px | 1 | a.mobile-phone-cta |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-laerm, 414 px — 9 verschiedene linke Kanten**
 
@@ -2295,10 +2295,10 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 91.11 px | 1 | strong |
 | 130.23 px | 1 | strong |
-| 186.27 px | 1 | a.mobile-phone-cta |
+| 183.27 px | 1 | a.mobile-phone-cta |
 | 187.05 px | 1 | strong |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **waermepumpenstrom-hannover, 414 px — 7 verschiedene linke Kanten**
 
@@ -2308,9 +2308,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 11 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 177.83 px | 1 | a |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 183.27 px | 1 | a.mobile-phone-cta |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **wertsteigerung-waermepumpe, 414 px — 6 verschiedene linke Kanten**
 
@@ -2319,9 +2319,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 11 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 183.27 px | 1 | a.mobile-phone-cta |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **wp-kosten-hannover, 414 px — 8 verschiedene linke Kanten**
 
@@ -2330,17 +2330,17 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 25 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 110.09 px | 6 | th, td, td |
 | 111.17 px | 1 | a |
-| 186.27 px | 1 | a.mobile-phone-cta |
-| 225.27 px | 1 | span.mobile-phone-label |
-| 352 px | 1 | div#hamburger.hamburger |
+| 158.91 px | 6 | th, td, td |
+| 183.27 px | 1 | a.mobile-phone-cta |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
 
 **anfrage, 600 px — 18 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 6 | div.funnel-layout, main.funnel-panel, div.funnel-header |
+| 0 px | 6 | div.funnel-layout, main#main-content.funnel-panel, div.funnel-header |
 | 20 px | 9 | div.step.active, h2.step-question, p.step-hint |
 | 24 px | 6 | div.funnel-header-logo, img.logo-dark, div.progress-bar-top |
 | 42 px | 3 | div.answer-card-icon, div.answer-card-icon, div.answer-card-icon |
@@ -2351,11 +2351,11 @@ Ergebnis: PASS (0 Befunde).
 | 74.61 px | 1 | path |
 | 75.32 px | 1 | path |
 | 96.11 px | 1 | path |
-| 156.55 px | 1 | a |
+| 126.64 px | 1 | a |
 | 170 px | 9 | div.answer-card-text, div.answer-card-label, div.answer-card-sub |
+| 234.02 px | 1 | a |
 | 238.84 px | 1 | span#stepCounter.funnel-step-counter |
-| 244.02 px | 1 | a |
-| 341.75 px | 1 | a |
+| 351.66 px | 1 | a |
 | 486.47 px | 1 | a.funnel-close-link |
 | 494.41 px | 1 | span#progressPercent.progress-percent |
 
@@ -2364,17 +2364,17 @@ Ergebnis: PASS (0 Befunde).
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 18 | div.section-inner, div.section-tag, h1.section-title |
+| 20 px | 15 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 42 px | 10 | li, li, li |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
+| 42 px | 11 | li, li, li |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
 | 290.05 px | 1 | strong |
-| 329.97 px | 1 | span.tt-feld |
+| 323.97 px | 1 | span.tt-feld |
 | 363.95 px | 1 | strong |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
-| 538 px | 1 | div#hamburger.hamburger |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **baubarkeitspruefung, 600 px — 10 verschiedene linke Kanten**
 
@@ -2384,12 +2384,12 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 22 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 8 | li, strong, li |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
-| 329.97 px | 1 | span.tt-feld |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
-| 538 px | 1 | div#hamburger.hamburger |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
+| 323.97 px | 1 | span.tt-feld |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **bewerbung, 600 px — 21 verschiedene linke Kanten**
 
@@ -2405,23 +2405,23 @@ Ergebnis: PASS (0 Befunde).
 | 199.77 px | 1 | span.form-optional |
 | 214.81 px | 1 | span |
 | 237.59 px | 1 | span.form-optional |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
 | 292.27 px | 1 | a |
 | 308 px | 6 | div.form-group, label, input#bwNachname |
 | 316 px | 4 | div.footer-col, h2, a |
-| 329.97 px | 1 | span.tt-feld |
+| 323.97 px | 1 | span.tt-feld |
 | 389.2 px | 1 | a |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
 | 476.13 px | 1 | a |
-| 538 px | 1 | div#hamburger.hamburger |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **datenschutz, 600 px — 7 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 24 px | 1 | main |
+| 24 px | 1 | main#main-content |
 | 45 px | 19 | div.topbar, a, h1 |
 | 110.22 px | 1 | a |
 | 316.44 px | 1 | a |
@@ -2434,16 +2434,16 @@ Ergebnis: PASS (0 Befunde).
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 26 | div.section-inner, div.section-tag, h1.section-title |
+| 20 px | 27 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 206.08 px | 5 | th, td, td |
 | 212.3 px | 1 | a |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
-| 329.97 px | 1 | span.tt-feld |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
-| 538 px | 1 | div#hamburger.hamburger |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
+| 323.97 px | 1 | span.tt-feld |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **dimensionierung, 600 px — 27 verschiedene linke Kanten**
 
@@ -2461,21 +2461,21 @@ Ergebnis: PASS (0 Befunde).
 | 190 px | 1 | a.btn-primary |
 | 207.42 px | 1 | a |
 | 217.67 px | 1 | div.wizard-progress-bar |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
 | 273.91 px | 1 | div.wizard-progress-bar |
 | 306 px | 1 | button#wzPlzNext.wizard-btn-next.is-disabled |
 | 316 px | 10 | div.footer-col, h2, a |
-| 329.97 px | 1 | span.tt-feld |
+| 323.97 px | 1 | span.tt-feld |
 | 330.13 px | 1 | div.wizard-progress-bar |
 | 386.34 px | 1 | div.wizard-progress-bar |
 | 389.2 px | 1 | a |
-| 430.06 px | 1 | a.mobile-phone-cta |
+| 424.06 px | 1 | a.mobile-phone-cta |
 | 442.56 px | 1 | div.wizard-progress-bar |
-| 469.06 px | 1 | span.mobile-phone-label |
+| 463.06 px | 1 | span.mobile-phone-label |
 | 476.13 px | 1 | a |
 | 498.78 px | 1 | div.wizard-progress-bar |
-| 538 px | 1 | div#hamburger.hamburger |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **foerderung-hannover, 600 px — 11 verschiedene linke Kanten**
 
@@ -2485,13 +2485,13 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 28 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 180.05 px | 4 | th, td, td |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
 | 260.64 px | 4 | th, td, td |
-| 262.09 px | 1 | span.tt-feld |
-| 329.97 px | 1 | span.tt-feld |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
-| 538 px | 1 | div#hamburger.hamburger |
+| 323.97 px | 1 | span.tt-feld |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **foerderung-jetzt-mitnehmen, 600 px — 11 verschiedene linke Kanten**
 
@@ -2501,13 +2501,13 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 29 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 180.05 px | 4 | th, td, td |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
 | 257.03 px | 4 | th, td, td |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
-| 329.97 px | 1 | span.tt-feld |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
-| 538 px | 1 | div#hamburger.hamburger |
+| 323.97 px | 1 | span.tt-feld |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **foerderung, 600 px — 14 verschiedene linke Kanten**
 
@@ -2519,14 +2519,14 @@ Ergebnis: PASS (0 Befunde).
 | 49 px | 2 | button.active, button.active |
 | 66 px | 1 | span |
 | 74 px | 4 | div, div#foerderSatzKfw.fr-satz, div |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
 | 267.55 px | 1 | span.calc-dots |
 | 302 px | 2 | button, button |
-| 329.97 px | 1 | span.tt-feld |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
-| 538 px | 1 | div#hamburger.hamburger |
+| 323.97 px | 1 | span.tt-feld |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **foerdervorschuss, 600 px — 11 verschiedene linke Kanten**
 
@@ -2535,14 +2535,14 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 17 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
 | 297.55 px | 1 | strong |
 | 309.52 px | 1 | strong |
-| 329.97 px | 1 | span.tt-feld |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
-| 538 px | 1 | div#hamburger.hamburger |
+| 323.97 px | 1 | span.tt-feld |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **gasheizung-tauschen-oder-reparieren, 600 px — 10 verschiedene linke Kanten**
 
@@ -2552,12 +2552,12 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 15 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 4 | li, li, li |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
-| 329.97 px | 1 | span.tt-feld |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
-| 538 px | 1 | div#hamburger.hamburger |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
+| 323.97 px | 1 | span.tt-feld |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **hinweise, 600 px — 9 verschiedene linke Kanten**
 
@@ -2566,18 +2566,18 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 17 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
-| 329.97 px | 1 | span.tt-feld |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
-| 538 px | 1 | div#hamburger.hamburger |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
+| 323.97 px | 1 | span.tt-feld |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **impressum, 600 px — 7 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 24 px | 1 | main |
+| 24 px | 1 | main#main-content |
 | 45 px | 21 | div.topbar, a, h1 |
 | 102.28 px | 1 | a |
 | 110.22 px | 1 | a |
@@ -2585,7 +2585,7 @@ Ergebnis: PASS (0 Befunde).
 | 395.03 px | 1 | span.tt-feld |
 | 462.91 px | 1 | span.tt-feld |
 
-**index, 600 px — 23 verschiedene linke Kanten**
+**index, 600 px — 25 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2598,20 +2598,22 @@ Ergebnis: PASS (0 Befunde).
 | 66 px | 4 | div.usp-text, h2, div.usp-text |
 | 120.89 px | 1 | a.fv-disclaimer-link |
 | 231.28 px | 2 | div.usp-item, div.usp-icon |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
 | 273.28 px | 2 | div.usp-text, h2 |
 | 306 px | 1 | a.btn-ghost |
 | 308 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
-| 329.97 px | 1 | span.tt-feld |
+| 323.97 px | 1 | span.tt-feld |
 | 350 px | 4 | div.usp-text, h2, div.usp-text |
+| 424.06 px | 1 | a.mobile-phone-cta |
 | 424.98 px | 1 | a.fv-disclaimer-link |
-| 430.06 px | 1 | a.mobile-phone-cta |
+| 462.31 px | 1 | button#heroVideoToggle.hero-video-toggle |
 | 462.47 px | 1 | div.hc-result-value |
-| 469.06 px | 1 | span.mobile-phone-label |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 477.31 px | 1 | span#heroVideoToggleText |
 | 480.08 px | 1 | div.hc-value |
 | 490.94 px | 1 | div.hc-value |
-| 538 px | 1 | div#hamburger.hamburger |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **karriere, 600 px — 12 verschiedene linke Kanten**
 
@@ -2622,13 +2624,13 @@ Ergebnis: PASS (0 Befunde).
 | 51 px | 9 | span.kar-icon, h3, p |
 | 62 px | 3 | svg, svg, svg |
 | 107.59 px | 1 | strong |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
 | 308.63 px | 1 | a.kar-btn-ghost |
-| 329.97 px | 1 | span.tt-feld |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
-| 538 px | 1 | div#hamburger.hamburger |
+| 323.97 px | 1 | span.tt-feld |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **kontakt, 600 px — 15 verschiedene linke Kanten**
 
@@ -2643,19 +2645,19 @@ Ergebnis: PASS (0 Befunde).
 | 92.61 px | 1 | span.form-optional |
 | 111.34 px | 1 | span.form-optional |
 | 118.7 px | 1 | span.form-optional |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
-| 329.97 px | 1 | span.tt-feld |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
-| 538 px | 1 | div#hamburger.hamburger |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
+| 323.97 px | 1 | span.tt-feld |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **kostenvergleich-waermepumpe, 600 px — 18 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 4 | nav.topnav, div.topnav-inner, div.container |
-| 24 px | 13 | a.topnav-brand, img.nav-logo.logo-dark, div#wzShell.wz-shell |
+| 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
+| 24 px | 19 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
 | 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
 | 44 px | 1 | div.ib |
 | 57 px | 10 | div#wzStepBody, div, p.wz-intro |
@@ -2687,26 +2689,26 @@ Ergebnis: PASS (0 Befunde).
 | 157 px | 2 | div.pa-cta-icon, svg |
 | 199 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
 | 213.5 px | 1 | div.section-tag |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
 | 265.83 px | 1 | div.pa-card.pa-visible.dimmed |
 | 279.83 px | 7 | div, div, h2 |
-| 329.97 px | 1 | span.tt-feld |
+| 323.97 px | 1 | span.tt-feld |
 | 365.73 px | 1 | svg |
 | 368.73 px | 1 | path |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
 | 507.66 px | 1 | div.pa-card.pa-visible.dimmed |
 | 521.66 px | 7 | div, div, h2 |
-| 538 px | 1 | div#hamburger.hamburger |
+| 532 px | 1 | div#hamburger.hamburger |
 | 605.56 px | 1 | svg |
 | 608.56 px | 1 | path |
 | 749.48 px | 1 | div.pa-card.pa-visible.dimmed |
 | 763.48 px | 7 | div, div, h2 |
 | 846.39 px | 1 | svg |
 | 849.24 px | 1 | path |
-| 991.32 px | 1 | div.pa-card.pa-visible.dimmed |
-| 1005.32 px | 7 | div, div, h2 |
+| 991.33 px | 1 | div.pa-card.pa-visible.dimmed |
+| 1005.33 px | 7 | div, div, h2 |
 | 1087.22 px | 1 | svg |
 
 **propan-waermepumpe, 600 px — 11 verschiedene linke Kanten**
@@ -2718,12 +2720,12 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
 | 177.77 px | 1 | a |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
-| 329.97 px | 1 | span.tt-feld |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
-| 538 px | 1 | div#hamburger.hamburger |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
+| 323.97 px | 1 | span.tt-feld |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **prozess, 600 px — 22 verschiedene linke Kanten**
 
@@ -2737,20 +2739,20 @@ Ergebnis: PASS (0 Befunde).
 | 118 px | 2 | div.pz-step-num, div.pz-step-num |
 | 119.27 px | 1 | span.pz-time |
 | 130.91 px | 1 | span.pz-time |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
 | 316 px | 2 | div.pz-step.is-open, div.pz-step.is-open |
+| 323.97 px | 1 | span.tt-feld |
 | 328 px | 18 | h2, p, div#pzSub2.pz-substeps |
-| 329.97 px | 1 | span.tt-feld |
 | 386.53 px | 2 | button.pz-expand-hint, button.pz-expand-hint |
 | 403.53 px | 2 | span.pz-hint-text, span.pz-hint-text |
 | 410 px | 2 | div.pz-step-num, div.pz-step-num |
 | 412.52 px | 1 | span.pz-time |
 | 418.48 px | 1 | span.pz-time |
-| 430.06 px | 1 | a.mobile-phone-cta |
+| 424.06 px | 1 | a.mobile-phone-cta |
 | 462.13 px | 1 | a |
-| 469.06 px | 1 | span.mobile-phone-label |
-| 538 px | 1 | div#hamburger.hamburger |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **ratgeber, 600 px — 18 verschiedene linke Kanten**
 
@@ -2767,13 +2769,13 @@ Ergebnis: PASS (0 Befunde).
 | 180.14 px | 1 | span |
 | 183.23 px | 1 | image |
 | 234 px | 3 | svg, img.guide-icon-img, svg |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
 | 288.39 px | 1 | a |
-| 329.97 px | 1 | span.tt-feld |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
-| 538 px | 1 | div#hamburger.hamburger |
+| 323.97 px | 1 | span.tt-feld |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **rechner, 600 px — 16 verschiedene linke Kanten**
 
@@ -2789,12 +2791,12 @@ Ergebnis: PASS (0 Befunde).
 | 170.17 px | 1 | span |
 | 215 px | 2 | svg, img.guide-icon-img |
 | 235 px | 1 | span.rechner-wp-unit.rechner-wp-unit-single |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
-| 329.97 px | 1 | span.tt-feld |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
-| 538 px | 1 | div#hamburger.hamburger |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
+| 323.97 px | 1 | span.tt-feld |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-altbau, 600 px — 11 verschiedene linke Kanten**
 
@@ -2804,13 +2806,13 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 16 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
 | 282.36 px | 1 | a |
-| 329.97 px | 1 | span.tt-feld |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
-| 538 px | 1 | div#hamburger.hamburger |
+| 323.97 px | 1 | span.tt-feld |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-hannover, 600 px — 10 verschiedene linke Kanten**
 
@@ -2819,13 +2821,13 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 4 | div.nav-inner, main#main-content, article.section |
 | 20 px | 17 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
 | 282.36 px | 1 | a.btn-primary |
-| 329.97 px | 1 | span.tt-feld |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
-| 538 px | 1 | div#hamburger.hamburger |
+| 323.97 px | 1 | span.tt-feld |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-laerm, 600 px — 14 verschiedene linke Kanten**
 
@@ -2839,12 +2841,12 @@ Ergebnis: PASS (0 Befunde).
 | 91.11 px | 1 | strong |
 | 130.23 px | 1 | strong |
 | 234.47 px | 1 | strong |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
-| 329.97 px | 1 | span.tt-feld |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
-| 538 px | 1 | div#hamburger.hamburger |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
+| 323.97 px | 1 | span.tt-feld |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **waermepumpenstrom-hannover, 600 px — 11 verschiedene linke Kanten**
 
@@ -2853,14 +2855,14 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 255 px | 1 | a |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
-| 329.97 px | 1 | span.tt-feld |
+| 256.09 px | 1 | span.tt-feld |
+| 323.97 px | 1 | span.tt-feld |
 | 368.39 px | 1 | a |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
-| 538 px | 1 | div#hamburger.hamburger |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **wertsteigerung-waermepumpe, 600 px — 9 verschiedene linke Kanten**
 
@@ -2869,12 +2871,12 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
-| 329.97 px | 1 | span.tt-feld |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
-| 538 px | 1 | div#hamburger.hamburger |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
+| 323.97 px | 1 | span.tt-feld |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **wp-kosten-hannover, 600 px — 11 verschiedene linke Kanten**
 
@@ -2884,19 +2886,19 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 28 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 82.3 px | 1 | a |
-| 110.09 px | 6 | th, td, td |
-| 258.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 262.09 px | 1 | span.tt-feld |
-| 329.97 px | 1 | span.tt-feld |
-| 430.06 px | 1 | a.mobile-phone-cta |
-| 469.06 px | 1 | span.mobile-phone-label |
-| 538 px | 1 | div#hamburger.hamburger |
+| 228 px | 6 | th, td, td |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
+| 323.97 px | 1 | span.tt-feld |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
 
 **anfrage, 768 px — 18 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 6 | div.funnel-layout, main.funnel-panel, div.funnel-header |
+| 0 px | 6 | div.funnel-layout, main#main-content.funnel-panel, div.funnel-header |
 | 20 px | 9 | div.step.active, h2.step-question, p.step-hint |
 | 24 px | 6 | div.funnel-header-logo, img.logo-dark, div.progress-bar-top |
 | 42 px | 3 | div.answer-card-icon, div.answer-card-icon, div.answer-card-icon |
@@ -2908,10 +2910,10 @@ Ergebnis: PASS (0 Befunde).
 | 75.32 px | 1 | path |
 | 96.11 px | 1 | path |
 | 170 px | 9 | div.answer-card-text, div.answer-card-label, div.answer-card-sub |
-| 240.55 px | 1 | a |
+| 210.64 px | 1 | a |
+| 318.02 px | 1 | a |
 | 322.84 px | 1 | span#stepCounter.funnel-step-counter |
-| 328.02 px | 1 | a |
-| 425.75 px | 1 | a |
+| 435.66 px | 1 | a |
 | 654.47 px | 1 | a.funnel-close-link |
 | 662.41 px | 1 | span#progressPercent.progress-percent |
 
@@ -2920,17 +2922,17 @@ Ergebnis: PASS (0 Befunde).
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 18 | div.section-inner, div.section-tag, h1.section-title |
+| 20 px | 15 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 15 | li, li, li |
 | 290.05 px | 1 | strong |
 | 363.95 px | 1 | strong |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
-| 497.97 px | 1 | span.tt-feld |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **baubarkeitspruefung, 768 px — 11 verschiedene linke Kanten**
 
@@ -2941,12 +2943,12 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
 | 42 px | 8 | li, strong, li |
 | 44 px | 1 | span.faq-q-text |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
-| 497.97 px | 1 | span.tt-feld |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **bewerbung, 768 px — 25 verschiedene linke Kanten**
 
@@ -2967,22 +2969,22 @@ Ergebnis: PASS (0 Befunde).
 | 312.27 px | 1 | a |
 | 373 px | 6 | div.form-group, label, input#bwNachname |
 | 400 px | 6 | div.footer-col, h2, a |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
 | 426.19 px | 1 | span |
-| 430.09 px | 1 | span.tt-feld |
 | 444.28 px | 1 | a |
-| 497.97 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
 | 560.13 px | 1 | a |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
 | 652.42 px | 1 | a |
-| 706 px | 1 | div#hamburger.hamburger |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **datenschutz, 768 px — 10 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 24 px | 1 | main |
+| 24 px | 1 | main#main-content |
 | 57 px | 20 | div.topbar, a, h1 |
 | 122.22 px | 1 | a |
 | 138.2 px | 1 | a |
@@ -2998,17 +3000,17 @@ Ergebnis: PASS (0 Befunde).
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 29 | div.section-inner, div.section-tag, h1.section-title |
+| 20 px | 30 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 212.3 px | 1 | a |
 | 242.09 px | 5 | th, td, td |
 | 290.28 px | 1 | a.btn-primary |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
-| 497.97 px | 1 | span.tt-feld |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **dimensionierung, 768 px — 33 verschiedene linke Kanten**
 
@@ -3034,19 +3036,19 @@ Ergebnis: PASS (0 Befunde).
 | 390 px | 1 | button#wzPlzNext.wizard-btn-next.is-disabled |
 | 392.7 px | 1 | a |
 | 400 px | 10 | div.footer-col, h2, a |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 423.44 px | 1 | div.wizard-progress-bar |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
+| 424.09 px | 1 | span.tt-feld |
 | 464.45 px | 1 | a |
-| 497.97 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
 | 498.33 px | 1 | div.wizard-progress-bar |
 | 560.13 px | 1 | a |
 | 573.22 px | 1 | div.wizard-progress-bar |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
 | 648.11 px | 1 | div.wizard-progress-bar |
 | 652.42 px | 1 | a |
-| 706 px | 1 | div#hamburger.hamburger |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **foerderung-hannover, 768 px — 11 verschiedene linke Kanten**
 
@@ -3057,12 +3059,12 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 180.05 px | 4 | th, td, td |
 | 278.55 px | 4 | th, td, td |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
-| 497.97 px | 1 | span.tt-feld |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **foerderung-jetzt-mitnehmen, 768 px — 11 verschiedene linke Kanten**
 
@@ -3073,12 +3075,12 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 180.05 px | 4 | th, td, td |
 | 270.86 px | 4 | th, td, td |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
-| 497.97 px | 1 | span.tt-feld |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **foerderung, 768 px — 15 verschiedene linke Kanten**
 
@@ -3093,12 +3095,12 @@ Ergebnis: PASS (0 Befunde).
 | 74 px | 4 | div, div#foerderSatzKfw.fr-satz, div |
 | 351.55 px | 1 | span.calc-dots |
 | 386 px | 2 | button, button |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
-| 497.97 px | 1 | span.tt-feld |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **foerdervorschuss, 768 px — 9 verschiedene linke Kanten**
 
@@ -3107,12 +3109,12 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 22 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
-| 497.97 px | 1 | span.tt-feld |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **gasheizung-tauschen-oder-reparieren, 768 px — 11 verschiedene linke Kanten**
 
@@ -3123,12 +3125,12 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 4 | li, li, li |
 | 282.36 px | 1 | a.btn-primary |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
-| 497.97 px | 1 | span.tt-feld |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **hinweise, 768 px — 9 verschiedene linke Kanten**
 
@@ -3137,18 +3139,18 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 18 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
-| 497.97 px | 1 | span.tt-feld |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **impressum, 768 px — 7 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 24 px | 1 | main |
+| 24 px | 1 | main#main-content |
 | 57 px | 23 | div.topbar, a, h1 |
 | 114.28 px | 1 | a |
 | 122.22 px | 1 | a |
@@ -3156,7 +3158,7 @@ Ergebnis: PASS (0 Befunde).
 | 551.03 px | 1 | span.tt-feld |
 | 618.91 px | 1 | span.tt-feld |
 
-**index, 768 px — 28 verschiedene linke Kanten**
+**index, 768 px — 30 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3175,19 +3177,21 @@ Ergebnis: PASS (0 Befunde).
 | 311.83 px | 2 | div.usp-text, h2 |
 | 388.97 px | 2 | div.usp-item, div.usp-icon |
 | 390 px | 1 | a.btn-ghost |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
 | 424.98 px | 1 | a.fv-disclaimer-link |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
 | 440.97 px | 2 | div.usp-text, h2 |
 | 468.44 px | 2 | div.usp-item, div.usp-icon |
-| 497.97 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
 | 520.44 px | 2 | div.usp-text, h2 |
-| 598.06 px | 1 | a.mobile-phone-cta |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 626.31 px | 1 | button#heroVideoToggle.hero-video-toggle |
 | 630.47 px | 1 | div.hc-result-value |
-| 637.06 px | 1 | span.mobile-phone-label |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 641.31 px | 1 | span#heroVideoToggleText |
 | 648.08 px | 1 | div.hc-value |
 | 658.94 px | 1 | div.hc-value |
-| 706 px | 1 | div#hamburger.hamburger |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **karriere, 768 px — 12 verschiedene linke Kanten**
 
@@ -3199,12 +3203,12 @@ Ergebnis: PASS (0 Befunde).
 | 62 px | 3 | svg, svg, svg |
 | 217.88 px | 1 | strong |
 | 392.63 px | 1 | a.kar-btn-ghost |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
-| 497.97 px | 1 | span.tt-feld |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **kontakt, 768 px — 15 verschiedene linke Kanten**
 
@@ -3219,19 +3223,19 @@ Ergebnis: PASS (0 Befunde).
 | 92.61 px | 1 | span.form-optional |
 | 111.34 px | 1 | span.form-optional |
 | 118.7 px | 1 | span.form-optional |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
-| 497.97 px | 1 | span.tt-feld |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **kostenvergleich-waermepumpe, 768 px — 32 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
-| 24 px | 13 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
+| 24 px | 14 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
 | 37 px | 1 | span.wz-dot |
 | 44 px | 1 | div.ib |
 | 57 px | 9 | div#wzStepBody, div, p.wz-intro |
@@ -3277,7 +3281,7 @@ Ergebnis: PASS (0 Befunde).
 | 126 px | 1 | svg |
 | 241 px | 2 | div.pa-cta-icon, svg |
 | 268 px | 1 | div.pa-card.pa-visible.dimmed |
-| 268.02 px | 1 | div.pa-card.pa-visible.dimmed |
+| 268.01 px | 1 | div.pa-card.pa-visible.dimmed |
 | 283 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
 | 284 px | 8 | div, div, h2 |
 | 284.01 px | 4 | div, div, h2 |
@@ -3288,16 +3292,16 @@ Ergebnis: PASS (0 Befunde).
 | 371 px | 1 | path |
 | 391 px | 1 | button#manufacturerVaillant.manufacturer-tab |
 | 413 px | 2 | span.manufacturer-name, span#vaillantMinEigen.manufacturer-price |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
-| 497.97 px | 1 | span.tt-feld |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
 | 512 px | 1 | div.pa-card.pa-visible.dimmed |
 | 528 px | 8 | div, div, h2 |
-| 598.06 px | 1 | a.mobile-phone-cta |
+| 592.06 px | 1 | a.mobile-phone-cta |
 | 610 px | 1 | svg |
 | 613 px | 1 | path |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **propan-waermepumpe, 768 px — 11 verschiedene linke Kanten**
 
@@ -3308,12 +3312,12 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
 | 248.44 px | 1 | a |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
-| 497.97 px | 1 | span.tt-feld |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **prozess, 768 px — 22 verschiedene linke Kanten**
 
@@ -3329,18 +3333,18 @@ Ergebnis: PASS (0 Befunde).
 | 172.91 px | 1 | span.pz-time |
 | 400 px | 2 | div.pz-step.is-open, div.pz-step.is-open |
 | 412 px | 18 | h2, p, div#pzSub2.pz-substeps |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
-| 497.97 px | 1 | span.tt-feld |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
 | 512.53 px | 2 | button.pz-expand-hint, button.pz-expand-hint |
 | 529.53 px | 2 | span.pz-hint-text, span.pz-hint-text |
 | 536 px | 2 | div.pz-step-num, div.pz-step-num |
 | 538.52 px | 1 | span.pz-time |
 | 544.48 px | 1 | span.pz-time |
 | 546.13 px | 1 | a |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **ratgeber, 768 px — 19 verschiedene linke Kanten**
 
@@ -3359,12 +3363,12 @@ Ergebnis: PASS (0 Befunde).
 | 267.23 px | 1 | image |
 | 288.39 px | 1 | a |
 | 318 px | 3 | svg, img.guide-icon-img, svg |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
-| 497.97 px | 1 | span.tt-feld |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **rechner, 768 px — 18 verschiedene linke Kanten**
 
@@ -3382,12 +3386,12 @@ Ergebnis: PASS (0 Befunde).
 | 170.17 px | 1 | span |
 | 299 px | 2 | svg, img.guide-icon-img |
 | 319 px | 1 | span.rechner-wp-unit.rechner-wp-unit-single |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
-| 497.97 px | 1 | span.tt-feld |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-altbau, 768 px — 12 verschiedene linke Kanten**
 
@@ -3399,12 +3403,12 @@ Ergebnis: PASS (0 Befunde).
 | 42 px | 6 | li, strong, li |
 | 44 px | 1 | span.faq-q-text |
 | 282.36 px | 1 | a |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
-| 497.97 px | 1 | span.tt-feld |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-hannover, 768 px — 11 verschiedene linke Kanten**
 
@@ -3415,12 +3419,12 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
 | 44 px | 1 | span.faq-q-text |
 | 282.36 px | 1 | a.btn-primary |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
-| 497.97 px | 1 | span.tt-feld |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-laerm, 768 px — 14 verschiedene linke Kanten**
 
@@ -3432,14 +3436,14 @@ Ergebnis: PASS (0 Befunde).
 | 42 px | 4 | li, strong, li |
 | 69.56 px | 1 | strong |
 | 91.11 px | 1 | strong |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
 | 458.34 px | 1 | strong |
 | 473.28 px | 1 | strong |
-| 497.97 px | 1 | span.tt-feld |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **waermepumpenstrom-hannover, 768 px — 12 verschiedene linke Kanten**
 
@@ -3449,14 +3453,14 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 15 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 2 | li, strong |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
 | 488.39 px | 1 | a |
-| 497.97 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
 | 534.03 px | 1 | a |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **wertsteigerung-waermepumpe, 768 px — 10 verschiedene linke Kanten**
 
@@ -3466,12 +3470,12 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 14 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 232.25 px | 1 | a |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
-| 497.97 px | 1 | span.tt-feld |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **wp-kosten-hannover, 768 px — 12 verschiedene linke Kanten**
 
@@ -3481,20 +3485,20 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 36 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 82.3 px | 1 | a |
-| 110.09 px | 6 | th, td, td |
-| 166.41 px | 2 | th, td |
-| 426.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 430.09 px | 1 | span.tt-feld |
-| 497.97 px | 1 | span.tt-feld |
-| 598.06 px | 1 | a.mobile-phone-cta |
-| 637.06 px | 1 | span.mobile-phone-label |
-| 706 px | 1 | div#hamburger.hamburger |
+| 290.41 px | 6 | th, td, td |
+| 394.63 px | 2 | th, td |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
 
 **anfrage, 960 px — 25 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 3 | div.funnel-layout, aside.trust-panel, nav |
+| 0 px | 3 | div.funnel-layout, aside.trust-panel, nav.legal-footer |
 | 36 px | 23 | div.trust-logo, a, img.logo-dark |
 | 40 px | 1 | span.tt-feld |
 | 76 px | 8 | div.trust-usp-text, strong, div.trust-usp-text |
@@ -3503,10 +3507,10 @@ Ergebnis: PASS (0 Befunde).
 | 107.88 px | 1 | span.tt-feld |
 | 119.09 px | 1 | a |
 | 186.48 px | 1 | span#partnerKfw.partner-badge |
-| 336.55 px | 1 | a |
-| 360 px | 4 | main.funnel-panel, div.funnel-header, div.progress-bar-wrap |
+| 306.64 px | 1 | a |
+| 360 px | 4 | main#main-content.funnel-panel, div.funnel-header, div.progress-bar-wrap |
 | 408 px | 14 | span#stepCounter.funnel-step-counter, div.progress-bar-top, span.progress-label |
-| 424.02 px | 1 | a |
+| 414.02 px | 1 | a |
 | 430 px | 3 | div.answer-card-icon, div.answer-card-icon, div.answer-card-icon |
 | 451 px | 3 | svg, svg, svg |
 | 456.83 px | 3 | g, path, g |
@@ -3515,7 +3519,7 @@ Ergebnis: PASS (0 Befunde).
 | 462.61 px | 1 | path |
 | 463.32 px | 1 | path |
 | 484.11 px | 1 | path |
-| 521.75 px | 1 | a |
+| 531.66 px | 1 | a |
 | 558 px | 9 | div.answer-card-text, div.answer-card-label, div.answer-card-sub |
 | 822.47 px | 1 | a.funnel-close-link |
 | 830.41 px | 1 | span#progressPercent.progress-percent |
@@ -3526,16 +3530,16 @@ Ergebnis: PASS (0 Befunde).
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 100 px | 18 | div.section-inner, div.section-tag, h1.section-title |
-| 122 px | 12 | li, li, li |
+| 100 px | 15 | div.section-inner, div.section-tag, h1.section-title |
+| 122 px | 13 | li, li, li |
 | 386.94 px | 1 | strong |
 | 465.45 px | 1 | strong |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
-| 689.97 px | 1 | span.tt-feld |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
-| 898 px | 1 | div#hamburger.hamburger |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **baubarkeitspruefung, 960 px — 10 verschiedene linke Kanten**
 
@@ -3545,12 +3549,12 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 100 px | 22 | div.section-inner, div.section-tag, h1.section-title |
 | 122 px | 8 | li, strong, li |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
-| 689.97 px | 1 | span.tt-feld |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
-| 898 px | 1 | div#hamburger.hamburger |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **bewerbung, 960 px — 28 verschiedene linke Kanten**
 
@@ -3576,20 +3580,20 @@ Ergebnis: PASS (0 Befunde).
 | 551.2 px | 1 | a |
 | 560.28 px | 1 | a |
 | 593.73 px | 1 | a |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
 | 653.95 px | 1 | a |
-| 689.97 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
 | 738 px | 5 | div.footer-col, h2, p |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
-| 898 px | 1 | div#hamburger.hamburger |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **datenschutz, 960 px — 10 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 50 px | 1 | main |
+| 50 px | 1 | main#main-content |
 | 83 px | 20 | div.topbar, a, h1 |
 | 148.22 px | 1 | a |
 | 354.44 px | 1 | a |
@@ -3606,16 +3610,16 @@ Ergebnis: PASS (0 Befunde).
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 100 px | 29 | div.section-inner, div.section-tag, h1.section-title |
+| 100 px | 30 | div.section-inner, div.section-tag, h1.section-title |
 | 304.31 px | 1 | a |
 | 328.94 px | 5 | th, td, td |
 | 370.28 px | 1 | a.btn-primary |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
-| 689.97 px | 1 | span.tt-feld |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
-| 898 px | 1 | div#hamburger.hamburger |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **dimensionierung, 960 px — 33 verschiedene linke Kanten**
 
@@ -3641,19 +3645,19 @@ Ergebnis: PASS (0 Befunde).
 | 593.61 px | 2 | div.footer-legal, a |
 | 593.73 px | 1 | a |
 | 595.66 px | 1 | div.wizard-progress-bar |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
 | 653.95 px | 1 | a |
 | 671.44 px | 1 | div.wizard-progress-bar |
 | 680.28 px | 1 | a |
-| 689.97 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
 | 738 px | 6 | div.footer-col, h2, p |
 | 747.22 px | 1 | div.wizard-progress-bar |
 | 775.52 px | 1 | a |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
 | 851.27 px | 1 | a |
-| 898 px | 1 | div#hamburger.hamburger |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **foerderung-hannover, 960 px — 11 verschiedene linke Kanten**
 
@@ -3664,12 +3668,12 @@ Ergebnis: PASS (0 Befunde).
 | 100 px | 29 | div.section-inner, div.section-tag, h1.section-title |
 | 260.05 px | 4 | th, td, td |
 | 361.95 px | 4 | th, td, td |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
-| 689.97 px | 1 | span.tt-feld |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
-| 898 px | 1 | div#hamburger.hamburger |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **foerderung-jetzt-mitnehmen, 960 px — 11 verschiedene linke Kanten**
 
@@ -3680,12 +3684,12 @@ Ergebnis: PASS (0 Befunde).
 | 100 px | 30 | div.section-inner, div.section-tag, h1.section-title |
 | 260.05 px | 4 | th, td, td |
 | 353.5 px | 4 | th, td, td |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
-| 689.97 px | 1 | span.tt-feld |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
-| 898 px | 1 | div#hamburger.hamburger |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **foerderung, 960 px — 15 verschiedene linke Kanten**
 
@@ -3700,12 +3704,12 @@ Ergebnis: PASS (0 Befunde).
 | 94 px | 4 | div, div#foerderSatzKfw.fr-satz, div |
 | 447.55 px | 1 | span.calc-dots |
 | 482 px | 2 | button, button |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
-| 689.97 px | 1 | span.tt-feld |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
-| 898 px | 1 | div#hamburger.hamburger |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **foerdervorschuss, 960 px — 9 verschiedene linke Kanten**
 
@@ -3714,12 +3718,12 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 100 px | 20 | div.section-inner, div.section-tag, h1.section-title |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
-| 689.97 px | 1 | span.tt-feld |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
-| 898 px | 1 | div#hamburger.hamburger |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **gasheizung-tauschen-oder-reparieren, 960 px — 10 verschiedene linke Kanten**
 
@@ -3729,12 +3733,12 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 100 px | 17 | div.section-inner, div.section-tag, h1.section-title |
 | 122 px | 4 | li, li, li |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
-| 689.97 px | 1 | span.tt-feld |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
-| 898 px | 1 | div#hamburger.hamburger |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **hinweise, 960 px — 9 verschiedene linke Kanten**
 
@@ -3743,30 +3747,30 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 100 px | 17 | div.section-inner, div.section-tag, h1.section-title |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
-| 689.97 px | 1 | span.tt-feld |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
-| 898 px | 1 | div#hamburger.hamburger |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **impressum, 960 px — 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 50 px | 2 | main, nav.legal-footer |
+| 50 px | 2 | main#main-content, nav.legal-footer |
 | 83 px | 23 | div.topbar, a, h1 |
 | 140.28 px | 1 | a |
 | 148.22 px | 1 | a |
-| 280.31 px | 1 | a |
-| 379.59 px | 1 | a |
-| 489.14 px | 1 | a |
-| 614.89 px | 1 | a |
+| 270.41 px | 1 | a |
+| 369.63 px | 1 | a |
+| 479.11 px | 1 | a |
+| 604.8 px | 1 | a |
 | 713.03 px | 1 | button.theme-toggle |
 | 717.03 px | 1 | span.tt-feld |
 | 784.91 px | 1 | span.tt-feld |
 
-**index, 960 px — 28 verschiedene linke Kanten**
+**index, 960 px — 30 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3788,16 +3792,18 @@ Ergebnis: PASS (0 Befunde).
 | 438.67 px | 1 | div.hc-value |
 | 442.09 px | 2 | div.usp-text, h2 |
 | 486 px | 1 | a.btn-ghost |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
 | 622.86 px | 2 | div.usp-item, div.usp-icon |
 | 674.86 px | 2 | div.usp-text, h2 |
-| 689.97 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
 | 780.63 px | 2 | div.usp-item, div.usp-icon |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 818.31 px | 1 | button#heroVideoToggle.hero-video-toggle |
+| 823.06 px | 1 | span.mobile-phone-label |
 | 832.63 px | 2 | div.usp-text, h2 |
-| 898 px | 1 | div#hamburger.hamburger |
+| 833.31 px | 1 | span#heroVideoToggleText |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **karriere, 960 px — 12 verschiedene linke Kanten**
 
@@ -3809,12 +3815,12 @@ Ergebnis: PASS (0 Befunde).
 | 62 px | 3 | svg, svg, svg |
 | 107.59 px | 1 | strong |
 | 260.48 px | 1 | a.kar-btn-ghost |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
-| 689.97 px | 1 | span.tt-feld |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
-| 898 px | 1 | div#hamburger.hamburger |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **kontakt, 960 px — 29 verschiedene linke Kanten**
 
@@ -3834,28 +3840,28 @@ Ergebnis: PASS (0 Befunde).
 | 551.2 px | 1 | a |
 | 593.61 px | 2 | div.footer-legal, a |
 | 593.73 px | 1 | a |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
 | 639.23 px | 3 | div.form-group, label, input#kontaktOrt |
 | 653.95 px | 1 | a |
 | 670.28 px | 1 | span.form-optional |
 | 680.28 px | 1 | a |
-| 689.97 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
 | 738 px | 6 | div.footer-col, h2, p |
 | 775.52 px | 1 | a |
-| 790.06 px | 1 | a.mobile-phone-cta |
+| 784.06 px | 1 | a.mobile-phone-cta |
 | 804.08 px | 3 | div.form-group, label, input#kontaktHausnr |
 | 810.08 px | 1 | span.form-optional |
-| 829.06 px | 1 | span.mobile-phone-label |
+| 823.06 px | 1 | span.mobile-phone-label |
 | 851.27 px | 1 | a |
-| 898 px | 1 | div#hamburger.hamburger |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **kostenvergleich-waermepumpe, 960 px — 32 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
-| 24 px | 13 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
+| 24 px | 14 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
 | 37 px | 1 | span.wz-dot |
 | 44 px | 1 | div.ib |
 | 57 px | 9 | div#wzStepBody, div, p.wz-intro |
@@ -3915,20 +3921,20 @@ Ergebnis: PASS (0 Befunde).
 | 578.39 px | 1 | div.pa-card.pa-visible.dimmed |
 | 594 px | 1 | a.pa-header-cta |
 | 594.39 px | 8 | div, div, h2 |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
 | 622 px | 2 | div.pa-cta-icon, svg |
-| 622.09 px | 1 | span.tt-feld |
 | 645.78 px | 1 | svg |
 | 648.63 px | 1 | path |
 | 655.05 px | 4 | td, td, td |
 | 664 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
-| 689.97 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
 | 763.19 px | 1 | div.pa-card.pa-visible.dimmed |
 | 779.19 px | 8 | div, div, h2 |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
-| 829.6 px | 1 | svg |
-| 898 px | 1 | div#hamburger.hamburger |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 829.59 px | 1 | svg |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **propan-waermepumpe, 960 px — 11 verschiedene linke Kanten**
 
@@ -3939,12 +3945,12 @@ Ergebnis: PASS (0 Befunde).
 | 100 px | 15 | div.section-inner, div.section-tag, h1.section-title |
 | 122 px | 6 | li, strong, li |
 | 328.44 px | 1 | a |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
-| 689.97 px | 1 | span.tt-feld |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
-| 898 px | 1 | div#hamburger.hamburger |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **prozess, 960 px — 35 verschiedene linke Kanten**
 
@@ -3972,19 +3978,19 @@ Ergebnis: PASS (0 Befunde).
 | 512.91 px | 1 | span.pz-hint-text |
 | 558 px | 1 | div.pz-step-num |
 | 559.27 px | 1 | span.pz-time |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
-| 689.97 px | 1 | span.tt-feld |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
 | 708 px | 1 | div.pz-step |
 | 720 px | 8 | h2, p, p.pz-sub-head |
 | 723.91 px | 1 | button.pz-expand-hint |
 | 740.91 px | 1 | span.pz-hint-text |
+| 784.06 px | 1 | a.mobile-phone-cta |
 | 786 px | 1 | div.pz-step-num |
-| 790.06 px | 1 | a.mobile-phone-cta |
 | 794.48 px | 1 | span.pz-time |
-| 829.06 px | 1 | span.mobile-phone-label |
+| 823.06 px | 1 | span.mobile-phone-label |
 | 842.55 px | 1 | a |
-| 898 px | 1 | div#hamburger.hamburger |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **ratgeber, 960 px — 22 verschiedene linke Kanten**
 
@@ -4006,12 +4012,12 @@ Ergebnis: PASS (0 Befunde).
 | 431.91 px | 1 | span |
 | 468.81 px | 1 | span |
 | 491.45 px | 1 | span |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
-| 689.97 px | 1 | span.tt-feld |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
-| 898 px | 1 | div#hamburger.hamburger |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **rechner, 960 px — 28 verschiedene linke Kanten**
 
@@ -4039,12 +4045,12 @@ Ergebnis: PASS (0 Befunde).
 | 473.45 px | 1 | span |
 | 481.48 px | 1 | span |
 | 538.98 px | 1 | span |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
-| 689.97 px | 1 | span.tt-feld |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
-| 898 px | 1 | div#hamburger.hamburger |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-altbau, 960 px — 11 verschiedene linke Kanten**
 
@@ -4055,12 +4061,12 @@ Ergebnis: PASS (0 Befunde).
 | 100 px | 18 | div.section-inner, div.section-tag, h1.section-title |
 | 122 px | 6 | li, strong, li |
 | 362.36 px | 1 | a |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
-| 689.97 px | 1 | span.tt-feld |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
-| 898 px | 1 | div#hamburger.hamburger |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-hannover, 960 px — 10 verschiedene linke Kanten**
 
@@ -4070,12 +4076,12 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 100 px | 19 | div.section-inner, div.section-tag, h1.section-title |
 | 362.36 px | 1 | a.btn-primary |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
-| 689.97 px | 1 | span.tt-feld |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
-| 898 px | 1 | div#hamburger.hamburger |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **waermepumpe-laerm, 960 px — 14 verschiedene linke Kanten**
 
@@ -4089,12 +4095,12 @@ Ergebnis: PASS (0 Befunde).
 | 251.56 px | 1 | strong |
 | 565.75 px | 1 | strong |
 | 581.61 px | 1 | strong |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
-| 689.97 px | 1 | span.tt-feld |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
-| 898 px | 1 | div#hamburger.hamburger |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **waermepumpenstrom-hannover, 960 px — 10 verschiedene linke Kanten**
 
@@ -4103,13 +4109,13 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 100 px | 15 | div.section-inner, div.section-tag, h1.section-title |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
 | 640.39 px | 1 | a |
-| 689.97 px | 1 | span.tt-feld |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
-| 898 px | 1 | div#hamburger.hamburger |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **wertsteigerung-waermepumpe, 960 px — 9 verschiedene linke Kanten**
 
@@ -4118,12 +4124,12 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 100 px | 14 | div.section-inner, div.section-tag, h1.section-title |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
-| 689.97 px | 1 | span.tt-feld |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
-| 898 px | 1 | div#hamburger.hamburger |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
 
 **wp-kosten-hannover, 960 px — 12 verschiedene linke Kanten**
 
@@ -4132,12 +4138,12 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 100 px | 33 | div.section-inner, div.section-tag, h1.section-title |
-| 190.09 px | 6 | th, td, td |
 | 222.11 px | 1 | a |
-| 246.41 px | 1 | th |
-| 618.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 622.09 px | 1 | span.tt-feld |
-| 689.97 px | 1 | span.tt-feld |
-| 790.06 px | 1 | a.mobile-phone-cta |
-| 829.06 px | 1 | span.mobile-phone-label |
-| 898 px | 1 | div#hamburger.hamburger |
+| 382.3 px | 6 | th, td, td |
+| 491.09 px | 1 | th |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |

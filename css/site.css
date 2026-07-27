@@ -176,10 +176,20 @@ nav.scrolled {
   color: var(--white) !important;
 }
 
+/* Trefferflaeche des Menue-Oeffners. Gemessen 27.07.2026 auf allen zehn
+   Kernseiten und vier Telefonbreiten: 38 x 42 px, also unter dem Mindestmass
+   44 x 44 px (WCAG 2.5.5). Die drei Balken bleiben 22 px breit, nur die
+   Trefferflaeche waechst. */
 .hamburger {
   display: none;
   cursor: pointer;
   padding: 8px;
+  box-sizing: border-box;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 .hamburger span {
   display: block;
@@ -204,7 +214,7 @@ nav.scrolled {
     display: none;
   }
   .hamburger {
-    display: block;
+    display: flex;
   }
   /* Rufnummer in der Kopfzeile. Seit dem Wegfall des Telefonknopfs aus der
      festen Leiste (GF-Entscheid 26.07.) ist das der einzige dauerhaft sichtbare
@@ -621,6 +631,48 @@ nav.scrolled {
   z-index: 0;
   opacity: 0.45;
   pointer-events: none;
+}
+/* Halteknopf fuer das Hintergrundvideo (WCAG 2.2.2 "Pausieren, Stoppen,
+   Ausblenden": bewegter Inhalt, der laenger als fuenf Sekunden laeuft und
+   automatisch startet, braucht eine sichtbare Bedienmoeglichkeit).
+   Trefferflaeche 44 x 44 px (WCAG 2.5.5). Der Knopf sitzt in der unteren
+   rechten Ecke des Hero-Bereichs, ausserhalb des Textblocks, und erscheint
+   nur, wenn das Skript laeuft: ohne Skript spielt das Video zwar, aber der
+   Knopf koennte es nicht anhalten. */
+.hero-video-toggle {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 14px;
+  box-sizing: border-box;
+  border: 1px solid var(--color-text-tertiary, #a0a6ad);
+  border-radius: 999px;
+  background: rgba(28, 43, 54, 0.82);
+  color: #ffffff;
+  font:
+    700 13px/1 'Inter',
+    sans-serif;
+  cursor: pointer;
+}
+html:not(.js-an) .hero-video-toggle {
+  display: none;
+}
+.hero-video-toggle:focus-visible {
+  outline: 3px solid var(--color-accent-primary, #b7d900);
+  outline-offset: 2px;
+}
+@media (max-width: 600px) {
+  .hero-video-toggle {
+    right: 12px;
+    bottom: 12px;
+  }
 }
 .hero-inner {
   max-width: 1100px;
@@ -3991,7 +4043,12 @@ section {
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 6px;
   color: var(--white);
-  font-size: 14px;
+  /* 16 px ist keine gestalterische Wahl, sondern eine Systemgrenze: iOS zoomt
+     beim Antippen eines Eingabefeldes automatisch hinein, wenn dessen Schrift
+     kleiner als 16 px ist. Der Besucher landet dann in einer vergroesserten
+     Ansicht, aus der er von Hand herauszoomen muss. Gemessen 27.07.2026 auf
+     /kontakt: acht Felder standen auf 14 px. */
+  font-size: 16px;
   font-family: 'Inter', sans-serif;
 }
 .form-group input::placeholder,
@@ -6186,11 +6243,34 @@ samp {
 /* B12 · Breite Tabellen im Ratgeber.
    Eine Tabelle mit fester Mindestbreite ragte aus dem Artikelkasten. Sie
    bekommt einen eigenen waagerechten Bildlaufbereich, statt die Seite zu
-   sprengen; das ist die uebliche und barrierefreie Loesung. */
-.ratgeber-article table {
-  display: block;
+   sprengen.
+   KORREKTUR 27.07.2026: Der Bildlauf lag auf der TABELLE selbst
+   (display:block plus overflow-x:auto). Damit war der rollbare Bereich die
+   Tabelle, und die war nicht mit der Tastatur erreichbar: wer nicht zeigen
+   oder wischen kann, kommt an die rechts abgeschnittenen Spalten nicht heran
+   (WCAG 2.1.1). Gemessen mit axe-core auf vier Seiten, Schweregrad "serious".
+   Der frueher hier stehende Satz, das sei "die uebliche und barrierefreie
+   Loesung", war damit falsch.
+   Neu rollt der UMSCHLAG .table-scroll, der Tabindex, Rolle und Beschriftung
+   ohnehin schon trug; die Tabelle bleibt eine Tabelle. Jede Tabelle im
+   Ratgeber steht deshalb in einem solchen Umschlag. */
+.ratgeber-article .table-scroll {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   max-width: 100%;
+}
+.ratgeber-article table {
+  max-width: 100%;
+}
+.ratgeber-article .table-scroll > table {
+  display: table;
+  overflow-x: visible;
+}
+/* Der Bildlaufbereich ist mit der Tastatur anspringbar, deshalb braucht er
+   auch eine sichtbare Fokusmarkierung. */
+.ratgeber-article .table-scroll:focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: 3px;
 }
 
 /* Quellen- und Einordnungs-Fussnote im Ratgeber (27.07.2026).

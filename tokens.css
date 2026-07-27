@@ -65,6 +65,78 @@
   --trust-strip-sub-color: var(--color-text-secondary);
 }
 
+/* ═══ SPRUNGMARKE ZUM INHALT ════════════════════════════════════════════════
+   BFSG/WCAG 2.4.1 "Blöcke umgehen". Die Marke steht auf allen 29 Seiten als
+   erstes Element hinter <body> und ist damit das erste fokussierbare Element
+   der Seite; das Ziel #main-content traegt tabindex="-1", damit der Fokus
+   nach dem Sprung wirklich im Inhalt landet und nicht nur die Bildlaufposition
+   springt.
+   Verstecktechnik bewusst per clip statt per negativer Position: eine negativ
+   positionierte Marke kann die Rollbreite des Dokuments beeinflussen, und
+   genau die wird ab dieser Einheit als eigene Gate-Regel geprueft.
+   Im Fokus liegt sie fest (position: fixed) ueber der ebenfalls festen
+   Kopfzeile, deren z-index 1000 betraegt.
+   ACHTUNG: kostenvergleich-waermepumpe.html laedt tokens.css NICHT und fuehrt
+   eine eigene Kopie dieses Blocks. Aenderungen hier dort mitziehen.
+   ═════════════════════════════════════════════════════════════════════════ */
+/* Nur fuer Hilfsmittel sichtbar. Wird von den Meldebereichen der Anfragestrecke
+   genutzt (WCAG 4.1.3) und teilt die Verstecktechnik mit der Sprungmarke:
+   clip statt negativer Position, damit die Rollbreite unberuehrt bleibt. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.skip-link:focus {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 2000;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 12px 20px;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
+  border-radius: 999px;
+  background: var(--color-accent-primary, #b7d900);
+  color: var(--color-accent-primary-text, #1c2b36);
+  font:
+    700 15px/1.2 'Inter',
+    sans-serif;
+  text-decoration: none;
+  /* Der Fokusring folgt der Textfarbe des jeweiligen Modus: dunkel weiss,
+     hell schiefer. Eine eigene Hell-Regel ist NICHT noetig und war in der
+     ersten Fassung sogar falsch: sie setzte den Ring auf
+     --color-surface-secondary, im Hell-Modus also auf Weiss, und damit auf
+     nahezu unsichtbar vor dem sandfarbenen Grund [gesehen im Render
+     27.07.2026, danach entfernt]. */
+  outline: 3px solid var(--color-text-primary);
+  outline-offset: 2px;
+  box-sizing: border-box;
+}
+
 body {
   background: var(--color-surface-secondary);
   color: var(--color-text-primary);
@@ -227,10 +299,15 @@ body {
    Zustand UND Absicht. Beim Zwei-Feld-Schalter stehen beide Zustaende
    gleichzeitig da, der aktive ist gefuellt, es gibt nichts zu raten.
    Diese Regeln stehen bewusst in tokens.css, weil das die einzige Stilquelle
-   ist, die ALLE Seiten laden - auch datenschutz.html, impressum.html,
-   anfrage.html und kostenvergleich-waermepumpe.html, die css/site.css nicht
-   einbinden. Das Verhalten liefert js/theme.js; kostenvergleich fuehrt eine
-   eigene Kopie und ist dort mitgezogen.
+   ist, die 28 der 29 Seiten laden, darunter datenschutz.html, impressum.html
+   und anfrage.html, die css/site.css nicht einbinden.
+   RICHTIGSTELLUNG 27.07.2026: die frueher hier stehende Behauptung "ALLE
+   Seiten" war falsch. kostenvergleich-waermepumpe.html laedt als einzige
+   Seite ausser css/fonts.css gar kein externes Stylesheet [gemessen live
+   27.07.2026: die ausgelieferte Seite traegt genau eine link-Zeile auf
+   css/fonts.css]; sie fuehrt eine eigene Kopie dieser Bauform und muss bei
+   jeder Aenderung hier mitgezogen werden. Das Verhalten liefert js/theme.js,
+   das dieselbe Seite ebenfalls nicht laedt und ebenfalls selbst kopiert.
    Masse: sichtbar 44 px hoch, also ohne Trick ueber dem Mindestmass 44 x 44
    (WCAG 2.5.5). Rahmen text-tertiary, gemessen 5,91 dunkel und 6,01 hell,
    damit ueber der Norm 3,0 fuer Bedienelemente (WCAG 1.4.11).
@@ -283,11 +360,25 @@ body {
   white-space: nowrap;
 }
 /* Der Zustand haengt nicht allein an der Farbe: das aktive Feld traegt
-   zusaetzlich das schwerere Schriftgewicht (WCAG 1.4.1). */
+   zusaetzlich das schwerere Schriftgewicht (WCAG 1.4.1).
+   KANTE, GF-Entscheid 27.07.2026 (Fassung C2, Render-Abnahme): das aktive Feld
+   traegt in BEIDEN Modi eine 2 px starke Innenkante in der Farbe seiner eigenen
+   Beschriftung. Grund ist WCAG 1.4.11: im Hell-Modus erreichte das lindgruene
+   Feld gegen die beige Schiene nur 1,31 gegen die Norm 3,0 [gemessen 27.07.2026
+   auf index.html bei 1280 px, Schiene rgb(235,231,220) gegen Feld
+   rgb(183,217,0)]. Die Kante loest das ueber die Umrisslinie statt ueber die
+   Flaeche: sie misst gegen die helle Schiene 11,74 und gegen das lindgruene
+   Feld 8,93. Im Dunkel-Modus ist sie gestalterisch, dort erfuellt schon die
+   Flaeche selbst die Norm mit 7,16.
+   Bewusst als inset-Schatten und nicht als border: ein Rahmen haette die
+   ratifizierten Masse 163,97 x 44 px veraendert, der Schatten laesst sie
+   unberuehrt [gemessen: 163,44 x 44 px im Hell-Modus vor und nach der
+   Aenderung]. */
 .theme-toggle[data-theme-switch] .tt-feld[data-aktiv='true'] {
   background: var(--color-accent-primary, #b7d900);
   color: var(--color-accent-primary-text, #1c2b36);
   font-weight: 700;
+  box-shadow: inset 0 0 0 2px var(--color-accent-primary-text, #1c2b36);
 }
 .theme-toggle[data-theme-switch] .tt-feld svg {
   flex: 0 0 auto;
@@ -374,15 +465,12 @@ html:not(.js-an) [data-theme-toggle] {
    kostenvergleich-waermepumpe.html, 6,01 gegen den weissen Grund von
    index.html und den Rechtsseiten), inaktiver Text 4,87. Das ist exakt die Fassung, die am 27.07. im Klappmenue abgenommen
    wurde. Der alte einfeldrige Umschalter behaelt seine gruene Pille.
-   OFFEN und bewusst benannt statt beschoenigt: das aktive Feld erreicht im
-   Hell-Modus gegen die Schiene nur 1,31 (dunkel 7,16), die Norm 3,0 fuer
-   Bedienelemente ist damit im Hell-Modus weiterhin verfehlt. Der Zustand
-   haengt dort zusaetzlich am Schriftgewicht 700 gegen 500 und am Farbton.
-   Der Wert ist KEIN Rueckschritt dieser Fassung: der Live-Stand 8b0599d
-   misst im Klappmenue dieselben 1,31. Behebung gehoert in das
-   Barrierefreiheits-Paket (G4 Teil 2, Kontrastmessung beider Modi), weil
-   sie eine dunklere Schiene und damit einen GF-Gestaltungsentscheid
-   verlangt. */
+   GESCHLOSSEN 27.07.2026: das aktive Feld erreichte im Hell-Modus gegen die
+   Schiene nur 1,31 (dunkel 7,16) und verfehlte damit die Norm 3,0 fuer
+   Bedienelemente. Der GF hat nach Render-Vergleich von vier Fassungen die
+   Kanten-Loesung gewaehlt (Fassung C2); sie steht oben an der Regel fuer
+   .tt-feld[data-aktiv='true']. Die Flaechenfarbe der Schiene bleibt damit
+   unveraendert, der Zustand wird ueber die Umrisslinie getragen. */
 [data-theme='light'] .theme-toggle:not([data-theme-switch]) {
   color: var(--color-text-primary);
   background: var(--green);
@@ -435,8 +523,23 @@ html:not(.js-an) [data-theme-toggle] {
    gruen gefuelltes Bedienelement ist: dadurch bekam sie #4f6000 auf
    Chartreuse und damit 4,30:1 statt der geforderten 4,5:1 [gemessen
    26.07.2026; Vorbestand, im Alt- und Neustand identisch]. Nachgetragen,
-   die Schiefer-Farbe liefert css/site.css. */
-[data-theme='light'] a:not(.btn-primary):not(.nav-cta):not(.pa-header-cta):not(.mob-bar-cta),
+   die Schiefer-Farbe liefert css/site.css.
+   NACHTRAG 27.07.2026, gleiche Ursache, gleicher Vorbestand: die beiden
+   gruen gefuellten Knoepfe am Fuss der Preisseite (.pa-bottom-cta--beratung
+   und .pa-bottom-cta--wizard) standen ebenfalls auf #4f6000 auf Chartreuse
+   und damit auf 4,30:1 [gemessen 27.07.2026 live auf /preise im Hell-Modus,
+   Textfarbe rgb(79,96,0) auf rgb(183,217,0)]. Mit der Ausnahme faellt der
+   Text auf var(--nacht) aus css/site.css zurueck und erreicht 8,93:1.
+   Ausgenommen wird die Grundklasse .pa-bottom-cta, damit kuenftige Varianten
+   dieses Knopfes nicht erneut einzeln nachgetragen werden muessen.
+   ACHTUNG SPEZIFITAET: jedes :not() zaehlt seine Klasse mit, die Regel steht
+   damit bei (0,6,1) statt (0,5,1). Die Klappmenue-Ausnahme darunter liegt bei
+   (0,6,1) und wuerde damit nur noch ueber die Quellreihenfolge gewinnen,
+   deshalb ist sie mitgezogen auf (0,7,1). */
+[data-theme='light']
+  a:not(.btn-primary):not(.nav-cta):not(.pa-header-cta):not(.mob-bar-cta):not(.pa-bottom-cta):not(
+    .skip-link
+  ),
 [data-theme='light']
   [style*='var(--green)']:not([style*='background:var(--green)']):not(
     [style*='background: var(--green)']
@@ -454,8 +557,17 @@ html:not(.js-an) [data-theme-toggle] {
    allein die Spezifitaet. Ein schlichtes
    [data-theme='light'] .mobile-menu .mm-nav a laege bei (0,3,1) und wuerde
    verlieren - genau das ist beim ersten Versuch passiert, der Text blieb
-   oliv. Die drei :not() unten heben die Regel auf (0,6,1). */
-[data-theme='light'] .mobile-menu .mm-nav a:not(.nav-cta):not(.nav-cta-call):not(.btn-primary) {
+   oliv. Die :not() unten heben die Regel auf (0,7,1).
+   NACHZUG 27.07.2026: die breite Regel darueber ist durch die Ausnahme
+   .pa-bottom-cta von (0,5,1) auf (0,6,1) gestiegen und laege damit gleichauf.
+   Gleichstand haette nur noch die Quellreihenfolge entscheiden lassen, und
+   genau darauf soll sich diese Datei nicht verlassen. Das vierte :not() hier
+   ist deshalb bewusst wirkungslos im Inhalt (im Klappmenue gibt es keinen
+   .pa-bottom-cta) und dient allein dem Spezifitaets-Abstand. */
+[data-theme='light']
+  .mobile-menu
+  .mm-nav
+  a:not(.nav-cta):not(.nav-cta-call):not(.btn-primary):not(.pa-bottom-cta):not(.skip-link) {
   color: var(--color-text-primary) !important;
 }
 [data-theme='light']

@@ -41,8 +41,8 @@
   <meta property="og:url" content="https://www.herowerk.de/impressum">
   <meta property="og:image" content="https://www.herowerk.de/herowerk-logo-stacked.png">
   <script src="js/theme.js?v=9b163705e9"></script>
-  <link rel="preload" href="tokens.css?v=979663ca61" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="tokens.css?v=979663ca61"></noscript>
+  <link rel="preload" href="tokens.css?v=2963aada0c" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="tokens.css?v=2963aada0c"></noscript>
   <style>
     body{font-family:Inter,Arial,sans-serif;padding:48px 24px;max-width:860px;margin:auto;line-height:1.65}
     main{background:var(--color-surface-secondary);border:1px solid var(--color-border-subtle);border-radius:18px;padding:32px;box-shadow:0 8px 28px var(--color-shadow)}
@@ -58,7 +58,12 @@
     p,li{color:var(--color-text-secondary)}
     .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:8px}
     .legal-footer{max-width:860px;margin:24px auto 0;text-align:center;font-size:.9rem}
-    .legal-footer a{margin:0 10px}
+    /* Trefferflaechen der Rechtsverweise. Gemessen 27.07.2026 auf vier
+       Telefonbreiten: 17 px hoch, also weit unter dem Mindestmass 44 x 44 px
+       (WCAG 2.5.5). Es sind Navigationsverweise, keine Verweise mitten im
+       Fliesstext, die Ausnahme fuer eingebettete Verweise greift hier nicht. */
+    .legal-footer a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 10px;margin:0;}
+    .legal-footer{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;}
     /* Lange Kennungen in <code> brachen nicht um und machten die Seite bei
        320 px waagerecht scrollbar (Rollbreite 356 gegen 320). Diese Seite laedt
        css/site.css NICHT und braucht die Regel deshalb hier. Gefunden vom
@@ -68,7 +73,8 @@
   </style>
 </head>
 <body>
-  <main>
+  <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
+  <main id="main-content" tabindex="-1">
     <div class="topbar">
       <a href="/">&larr; Zur&uuml;ck zur Startseite</a>
       <button type="button" class="theme-toggle" data-theme-toggle data-theme-switch>Light-Mode</button>
