@@ -41,19 +41,20 @@
   <meta property="og:url" content="https://www.herowerk.de/impressum">
   <meta property="og:image" content="https://www.herowerk.de/herowerk-logo-stacked.png">
   <script src="js/theme.js?v=9b163705e9"></script>
-  <link rel="preload" href="tokens.css?v=8f440451bc" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="tokens.css?v=8f440451bc"></noscript>
+  <link rel="preload" href="tokens.css?v=979663ca61" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="tokens.css?v=979663ca61"></noscript>
   <style>
     body{font-family:Inter,Arial,sans-serif;padding:48px 24px;max-width:860px;margin:auto;line-height:1.65}
     main{background:var(--color-surface-secondary);border:1px solid var(--color-border-subtle);border-radius:18px;padding:32px;box-shadow:0 8px 28px var(--color-shadow)}
     a{color:var(--green)}
     h1,h2{font-family:Barlow,Arial,sans-serif;color:var(--color-text-primary)}
-    /* overflow-wrap wie auf datenschutz.html: lange Ueberschriften sprengten
-       dort bei 320 px die Zeile und zogen die Seite auf scrollWidth 344 gegen
-       clientWidth 320 (gemessen 27.07.2026, Vorbestand auch auf 8b0599d).
-       Hier vorsorglich gleich mitgezogen, damit die beiden Rechtsseiten nicht
-       auseinanderlaufen. */
-    h1{font-size:1.9rem;margin-top:.4rem;overflow-wrap:anywhere} h2{font-size:1.2rem;margin-top:2rem;overflow-wrap:anywhere}
+    /* Kein `overflow-wrap: anywhere` hier. Diese Seite rollt bei 320 px nicht
+       waagerecht (gemessen 27.07.2026: 320 gegen 320, auch im Altstand), die
+       Regel hatte also keinen Gegenstand und brach nur Ueberschriften mitten
+       im Wort auf, zuletzt "Verbraucherstreitbeilegun" / "g" bei 320 px
+       (R14-Befund B2). Lange Komposita tragen stattdessen ein weiches
+       Trennzeichen im Markup. */
+    h1{font-size:1.9rem;margin-top:.4rem} h2{font-size:1.2rem;margin-top:2rem}
     p,li{color:var(--color-text-secondary)}
     .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:8px}
     .legal-footer{max-width:860px;margin:24px auto 0;text-align:center;font-size:.9rem}
@@ -108,7 +109,7 @@
     <h2>Verantwortlich f&uuml;r journalistisch-redaktionelle Inhalte (&sect; 18 Abs. 2 MStV)</h2>
     <p>Benjamin Bendler, Anschrift wie oben.</p>
 
-    <h2>Verbraucherstreitbeilegung</h2>
+    <h2>Verbraucher&shy;streit&shy;beilegung</h2>
     <p>
       Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer
       Verbraucherschlichtungsstelle teilzunehmen (&sect; 36 Verbraucherstreitbeilegungsgesetz &ndash; VSBG).

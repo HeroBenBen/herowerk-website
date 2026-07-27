@@ -303,7 +303,10 @@ body {
    "Dunkel" ist laenger als "Hell", deshalb misst im Dunkel-Modus das aktive
    Feld 88,09 und das inaktive 67,88, im Hell-Modus umgekehrt das aktive 68,52
    und das inaktive 86,92. Das schwerere Gewicht des aktiven Feldes steuert
-   nur 0,53 bis 0,64 px bei [gemessen 27.07.2026, R14-Befund W-3].
+   bei gleicher Beschriftung 0,64 px ("Hell") bis 1,17 px ("Dunkel") bei
+   [gemessen 27.07.2026; die frueher hier stehende Spanne "0,53 bis 0,64"
+   verwechselte den Gewichtsanteil mit der Differenz der beiden
+   Gesamtbreiten, R14-Befund B4].
    Genau diese Fassung ist am 27.07.2026 im Klappmenue live abgenommen worden,
    sie gilt auch in der Kopfzeile. (Die Zahl "Felder 67,9" aus der Vorgabe
    beschreibt das inaktive Feld; zwei gleich breite 67,9er ergaeben
@@ -367,8 +370,9 @@ html:not(.js-an) [data-theme-toggle] {
    (WCAG 1.4.3). Der Schalter zeigte im Hell-Modus keinen Zustand mehr.
    Mit dem `:not()` (0,3,0) faellt der Zwei-Feld-Schalter auf seine eigenen
    Tokens zurueck: Schiene --color-surface-tertiary #ebe7dc, Rahmen
-   --color-text-tertiary #5a6470 (5,33 gegen den Seitengrund), inaktiver Text
-   4,87. Das ist exakt die Fassung, die am 27.07. im Klappmenue abgenommen
+   --color-text-tertiary #5a6470 (5,33 gegen den Sandgrund #f4f1ea von
+   kostenvergleich-waermepumpe.html, 6,01 gegen den weissen Grund von
+   index.html und den Rechtsseiten), inaktiver Text 4,87. Das ist exakt die Fassung, die am 27.07. im Klappmenue abgenommen
    wurde. Der alte einfeldrige Umschalter behaelt seine gruene Pille.
    OFFEN und bewusst benannt statt beschoenigt: das aktive Feld erreicht im
    Hell-Modus gegen die Schiene nur 1,31 (dunkel 7,16), die Norm 3,0 fuer
