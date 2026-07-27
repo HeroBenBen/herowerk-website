@@ -233,17 +233,16 @@ Ergebnis: PASS (0 Befunde).
 | 193.77 px | 1 | span.form-optional |
 | 258 px | 1 | div#hamburger.hamburger |
 
-**datenschutz, 320 px — 7 verschiedene linke Kanten**
+**datenschutz, 320 px — 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 24 px | 1 | main |
-| 45 px | 13 | div.topbar, a, h1 |
+| 45 px | 13 | div.topbar, a, button.theme-toggle |
+| 49 px | 1 | span.tt-feld |
 | 102.28 px | 1 | a |
 | 110.22 px | 1 | a |
-| 136.27 px | 1 | button.theme-toggle |
-| 140.27 px | 1 | span.tt-feld |
-| 196.3 px | 1 | span.tt-feld |
+| 139 px | 1 | span.tt-feld |
 
 **dimensionierung-verstehen, 320 px — 6 verschiedene linke Kanten**
 
@@ -344,17 +343,16 @@ Ergebnis: PASS (0 Befunde).
 | 178.27 px | 1 | span.mobile-phone-label |
 | 258 px | 1 | div#hamburger.hamburger |
 
-**impressum, 320 px — 7 verschiedene linke Kanten**
+**impressum, 320 px — 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 24 px | 1 | main |
-| 45 px | 17 | div.topbar, a, h1 |
+| 45 px | 18 | div.topbar, a, button.theme-toggle |
+| 49 px | 1 | span.tt-feld |
 | 102.28 px | 1 | a |
 | 110.22 px | 1 | a |
-| 136.27 px | 1 | button.theme-toggle |
-| 140.27 px | 1 | span.tt-feld |
-| 196.3 px | 1 | span.tt-feld |
+| 139 px | 1 | span.tt-feld |
 
 **index, 320 px — 17 verschiedene linke Kanten**
 
@@ -637,16 +635,15 @@ Ergebnis: PASS (0 Befunde).
 | 198.27 px | 1 | span.mobile-phone-label |
 | 298 px | 1 | div#hamburger.hamburger |
 
-**datenschutz, 360 px — 6 verschiedene linke Kanten**
+**datenschutz, 360 px — 5 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 24 px | 1 | main |
-| 45 px | 16 | div.topbar, a, h1 |
+| 45 px | 17 | div.topbar, a, button.theme-toggle |
+| 49 px | 1 | span.tt-feld |
 | 110.22 px | 1 | a |
-| 176.27 px | 1 | button.theme-toggle |
-| 180.27 px | 1 | span.tt-feld |
-| 236.3 px | 1 | span.tt-feld |
+| 139 px | 1 | span.tt-feld |
 
 **dimensionierung-verstehen, 360 px — 7 verschiedene linke Kanten**
 
@@ -756,17 +753,16 @@ Ergebnis: PASS (0 Befunde).
 | 198.27 px | 1 | span.mobile-phone-label |
 | 298 px | 1 | div#hamburger.hamburger |
 
-**impressum, 360 px — 7 verschiedene linke Kanten**
+**impressum, 360 px — 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 24 px | 1 | main |
-| 45 px | 17 | div.topbar, a, h1 |
+| 45 px | 18 | div.topbar, a, button.theme-toggle |
+| 49 px | 1 | span.tt-feld |
 | 102.28 px | 1 | a |
 | 110.22 px | 1 | a |
-| 176.27 px | 1 | button.theme-toggle |
-| 180.27 px | 1 | span.tt-feld |
-| 236.3 px | 1 | span.tt-feld |
+| 139 px | 1 | span.tt-feld |
 
 **index, 360 px — 17 verschiedene linke Kanten**
 
@@ -1052,16 +1048,15 @@ Ergebnis: PASS (0 Befunde).
 | 205.77 px | 1 | span.mobile-phone-label |
 | 313 px | 1 | div#hamburger.hamburger |
 
-**datenschutz, 375 px — 6 verschiedene linke Kanten**
+**datenschutz, 375 px — 5 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 24 px | 1 | main |
-| 45 px | 16 | div.topbar, a, h1 |
+| 45 px | 17 | div.topbar, a, button.theme-toggle |
+| 49 px | 1 | span.tt-feld |
 | 110.22 px | 1 | a |
-| 191.27 px | 1 | button.theme-toggle |
-| 195.27 px | 1 | span.tt-feld |
-| 251.3 px | 1 | span.tt-feld |
+| 139 px | 1 | span.tt-feld |
 
 **dimensionierung-verstehen, 375 px — 7 verschiedene linke Kanten**
 
@@ -1173,17 +1168,16 @@ Ergebnis: PASS (0 Befunde).
 | 205.77 px | 1 | span.mobile-phone-label |
 | 313 px | 1 | div#hamburger.hamburger |
 
-**impressum, 375 px — 7 verschiedene linke Kanten**
+**impressum, 375 px — 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 24 px | 1 | main |
-| 45 px | 18 | div.topbar, a, h1 |
+| 45 px | 18 | div.topbar, a, button.theme-toggle |
+| 49 px | 1 | span.tt-feld |
 | 102.28 px | 1 | a |
 | 110.22 px | 1 | a |
-| 191.27 px | 1 | button.theme-toggle |
-| 195.27 px | 1 | span.tt-feld |
-| 251.3 px | 1 | span.tt-feld |
+| 139 px | 1 | span.tt-feld |
 
 **index, 375 px — 17 verschiedene linke Kanten**
 

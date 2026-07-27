@@ -246,6 +246,11 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0;
+  /* Der Schalter waechst nie mit seinem Behaelter. Ohne diese Zeile zog ihn
+     die umgebrochene Kopfleiste von datenschutz.html auf 188 px auseinander,
+     womit er nicht mehr identisch zu allen anderen Stellen gewesen waere. */
+  flex: 0 0 auto;
+  align-self: center;
   padding: 3px;
   min-height: 44px;
   border-radius: 999px;
@@ -284,26 +289,21 @@ body {
   outline: 3px solid var(--color-text-primary);
   outline-offset: 2px;
 }
-/* Auf 320 px ragte der Schalter aus der schmalen Kopfleiste von
-   datenschutz.html und impressum.html: 188 px Kind in 230 px Container, 45,97 px
-   sichtbar heraus [Fluchten-Gate 27.07.2026]. Die Beschriftung bleibt, die
-   Felder werden schmaler. Die Hoehe 44 px bleibt unangetastet. */
+/* Der Schalter ist auf JEDER Seite und an JEDER Stelle identisch, das ist
+   GF-Vorgabe vom 27.07.2026: keine zweite Variante. Gemessen 164 x 44 px mit
+   Feldern von 67,9 x 36 px, im Klappmenue wie in der Kopfzeile.
+   Auf 320 px passt er damit nicht mehr neben den Zurueck-Link in die schmale
+   Kopfleiste von datenschutz.html und impressum.html: Leiste 230 px, Link
+   75,3 px, Abstand 16 px, verbleiben 138,7 px fuer ein 164 px breites
+   Element - das Fluchten-Gate meldete 45,97 px Ueberstand.
+   Geloest wird das ueber den UMBRUCH der Leiste, nicht ueber einen kleineren
+   Schalter. Der Schalter bleibt unangetastet, er rutscht nur in die zweite
+   Zeile. */
 @media (max-width: 380px) {
-  .theme-toggle[data-theme-switch] .tt-feld {
-    min-width: 0;
-    padding: 0 8px;
-    gap: 4px;
-    font-size: 12px;
+  .topbar {
+    flex-wrap: wrap;
+    row-gap: 12px;
   }
-}
-
-/* In der Kopfzeile ist der Platz knapper als im Klappmenue. Die Beschriftung
-   bleibt, nur die Felder werden schmaler; unter 44 px Hoehe geht es nicht. */
-.nav-links .theme-toggle[data-theme-switch] .tt-feld,
-.nav-theme-standalone.theme-toggle[data-theme-switch] .tt-feld {
-  min-width: 58px;
-  padding: 0 10px;
-  font-size: 12px;
 }
 
 /* Ohne Skript erscheinen die Umschalter gar nicht: js/theme.js erzeugt ihr
