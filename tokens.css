@@ -297,12 +297,17 @@ body {
   outline-offset: 2px;
 }
 /* Der Schalter ist auf JEDER Seite und an JEDER Stelle identisch, das ist
-   GF-Vorgabe vom 27.07.2026: keine zweite Variante. Gemessen 163,97 x 44 px;
-   die Felder sind ungleich breit (67,88 inaktiv, 88,09 aktiv), weil das
-   aktive Feld das schwerere Schriftgewicht traegt. Genau diese Fassung ist
-   am 27.07.2026 im Klappmenue live abgenommen worden, sie gilt auch in der
-   Kopfzeile. (Die Zahl "Felder 67,9" aus der Vorgabe beschreibt das inaktive
-   Feld; zwei gleich breite 67,9er ergaeben rechnerisch 143,8 statt 164.)
+   GF-Vorgabe vom 27.07.2026: keine zweite Variante. Gemessen 163,97 x 44 px
+   im Dunkel-Modus und 163,44 x 44 px im Hell-Modus. Die Felder sind ungleich
+   breit, und zwar wegen der WORTLAENGE, nicht wegen des Schriftgewichts:
+   "Dunkel" ist laenger als "Hell", deshalb misst im Dunkel-Modus das aktive
+   Feld 88,09 und das inaktive 67,88, im Hell-Modus umgekehrt das aktive 68,52
+   und das inaktive 86,92. Das schwerere Gewicht des aktiven Feldes steuert
+   nur 0,53 bis 0,64 px bei [gemessen 27.07.2026, R14-Befund W-3].
+   Genau diese Fassung ist am 27.07.2026 im Klappmenue live abgenommen worden,
+   sie gilt auch in der Kopfzeile. (Die Zahl "Felder 67,9" aus der Vorgabe
+   beschreibt das inaktive Feld; zwei gleich breite 67,9er ergaeben
+   rechnerisch 143,8 statt 164.)
    Auf 320 px passt er nicht mehr neben den Zurueck-Link in die schmale
    Kopfleiste von datenschutz.html und impressum.html: Leiste 230 px, Link
    75,3 px, Abstand 16 px, verbleiben 138,7 px fuer ein 164 px breites
@@ -364,7 +369,16 @@ html:not(.js-an) [data-theme-toggle] {
    Tokens zurueck: Schiene --color-surface-tertiary #ebe7dc, Rahmen
    --color-text-tertiary #5a6470 (5,33 gegen den Seitengrund), inaktiver Text
    4,87. Das ist exakt die Fassung, die am 27.07. im Klappmenue abgenommen
-   wurde. Der alte einfeldrige Umschalter behaelt seine gruene Pille. */
+   wurde. Der alte einfeldrige Umschalter behaelt seine gruene Pille.
+   OFFEN und bewusst benannt statt beschoenigt: das aktive Feld erreicht im
+   Hell-Modus gegen die Schiene nur 1,31 (dunkel 7,16), die Norm 3,0 fuer
+   Bedienelemente ist damit im Hell-Modus weiterhin verfehlt. Der Zustand
+   haengt dort zusaetzlich am Schriftgewicht 700 gegen 500 und am Farbton.
+   Der Wert ist KEIN Rueckschritt dieser Fassung: der Live-Stand 8b0599d
+   misst im Klappmenue dieselben 1,31. Behebung gehoert in das
+   Barrierefreiheits-Paket (G4 Teil 2, Kontrastmessung beider Modi), weil
+   sie eine dunklere Schiene und damit einen GF-Gestaltungsentscheid
+   verlangt. */
 [data-theme='light'] .theme-toggle:not([data-theme-switch]) {
   color: var(--color-text-primary);
   background: var(--green);

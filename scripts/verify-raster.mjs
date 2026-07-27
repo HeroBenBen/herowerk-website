@@ -285,15 +285,7 @@ function messen(cfg) {
   // feste Leiste 16.
   const rand = cfg.regeln.r4_seitenrand_treue.seitenrandPx;
   const breite = document.documentElement.clientWidth;
-  // Der 24-px-Seitenrand ist das Hausmass des TELEFONS. Auf breiten Ansichten
-  // setzt die Seite absichtlich groessere Innenabstaende (gemessen 27.07.2026:
-  // .section-inner sitzt bei 1280 px auf 90 px, bei 768 px auf 100 px). Ohne
-  // diese Grenze meldet Regel 4 dort 51 Befunde, die alle Absicht sind - und
-  // eine Regel, die Absicht als Fehler meldet, wird abgeschaltet statt
-  // befolgt. Regel 1 und 3 (Ueberstand) gelten dagegen auf JEDER Breite.
-  const r4NurBis = cfg.regeln.r4_seitenrand_treue.nurBisBreitePx ?? Infinity;
   const pruefeRand = (el, art, wahlText) => {
-    if (breite > r4NurBis) return;
     const cs = getComputedStyle(el);
     if (!sichtbar(el, cs)) return;
     const b = el.getBoundingClientRect();
@@ -305,6 +297,23 @@ function messen(cfg) {
     // GROESSEREM Rand als dem Soll still von der Pruefung aus: je groesser der
     // Fehler, desto sicherer waere er durchgerutscht.
     if (b.width < breite * (cfg.regeln.r4_seitenrand_treue.mindestAnteilBreite ?? 0.6)) return;
+    // Ein Container, der NUR durch seine eigene max-width schmaler ist als der
+    // verfuegbare Inhaltsbereich, ist ein bewusst zentrierter Block (Textspalte)
+    // und damit Sache von Regel 5, nicht von Regel 4. Ohne diese Unterscheidung
+    // meldete Regel 4 am 27.07.2026 bei 960 px sieben Textseiten mit
+    // "sitzt bei 100/860" als Randfehler, obwohl dort schlicht eine 760 px
+    // breite Spalte im 912 px breiten Inhaltsbereich zentriert steht.
+    // WICHTIG: Die Bedingung greift nur, wenn die max-width KLEINER ist als der
+    // verfuegbare Bereich. Ein zu kleiner Seitenrand faellt weiterhin auf, weil
+    // der Container dann bis an seine (groessere) max-width laeuft. Nachgewiesen
+    // am selben Tag: mit dieser Regel meldet das Gate den 20-px-Rand von
+    // .detail-final-cta auf sieben Seiten unveraendert.
+    const maxBreite = parseFloat(cs.maxWidth);
+    const verfuegbar = breite - 2 * rand;
+    const tol = cfg.toleranzPx ?? 0.5;
+    if (Number.isFinite(maxBreite) && maxBreite < verfuegbar - tol && b.width <= maxBreite + tol) {
+      return;
+    }
     erg.abdeckung.r4++;
     erg.r4.push({
       art,

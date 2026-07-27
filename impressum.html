@@ -31,7 +31,7 @@
   <script src="js/consent.js?v=5e2ae31749"></script>
   <!-- ============================================================== -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/fonts.css?v=505e04d26b">
+  <link rel="stylesheet" href="css/fonts.css?v=d3f3999a2f">
   <link rel="icon" href="/favicon.ico" sizes="any" type="image/x-icon">
   <title>Impressum | HeroWerk</title>
   <meta name="description" content="Impressum der HeroWerk GmbH i. G. — Anbieterkennzeichnung nach § 5 DDG.">
@@ -41,14 +41,19 @@
   <meta property="og:url" content="https://www.herowerk.de/impressum">
   <meta property="og:image" content="https://www.herowerk.de/herowerk-logo-stacked.png">
   <script src="js/theme.js?v=9b163705e9"></script>
-  <link rel="preload" href="tokens.css?v=02f8918365" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="tokens.css?v=02f8918365"></noscript>
+  <link rel="preload" href="tokens.css?v=8f440451bc" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="tokens.css?v=8f440451bc"></noscript>
   <style>
     body{font-family:Inter,Arial,sans-serif;padding:48px 24px;max-width:860px;margin:auto;line-height:1.65}
     main{background:var(--color-surface-secondary);border:1px solid var(--color-border-subtle);border-radius:18px;padding:32px;box-shadow:0 8px 28px var(--color-shadow)}
     a{color:var(--green)}
     h1,h2{font-family:Barlow,Arial,sans-serif;color:var(--color-text-primary)}
-    h1{font-size:1.9rem;margin-top:.4rem} h2{font-size:1.2rem;margin-top:2rem}
+    /* overflow-wrap wie auf datenschutz.html: lange Ueberschriften sprengten
+       dort bei 320 px die Zeile und zogen die Seite auf scrollWidth 344 gegen
+       clientWidth 320 (gemessen 27.07.2026, Vorbestand auch auf 8b0599d).
+       Hier vorsorglich gleich mitgezogen, damit die beiden Rechtsseiten nicht
+       auseinanderlaufen. */
+    h1{font-size:1.9rem;margin-top:.4rem;overflow-wrap:anywhere} h2{font-size:1.2rem;margin-top:2rem;overflow-wrap:anywhere}
     p,li{color:var(--color-text-secondary)}
     .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:8px}
     .legal-footer{max-width:860px;margin:24px auto 0;text-align:center;font-size:.9rem}
