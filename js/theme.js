@@ -35,6 +35,25 @@
     const next = allowed.includes(theme) ? theme : 'dark';
     document.documentElement.setAttribute('data-theme', next);
     document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+      // Zwei-Feld-Schalter (nur im Klappmenue, Kennzeichen data-theme-switch).
+      // Fachbefund 26.07.2026: die einfeldrige Fassung zeigt im Dunkel-Modus
+      // einen Mond neben dem Wort "Light-Mode" und behauptet damit im selben
+      // Atemzug Zustand UND Absicht. Beim Zwei-Feld-Schalter stehen beide
+      // Zustaende gleichzeitig da, der aktive ist gefuellt, nichts zu raten.
+      if (button.hasAttribute('data-theme-switch')) {
+        const dunkel = next === 'dark';
+        button.setAttribute('role', 'switch');
+        button.setAttribute('aria-checked', dunkel ? 'true' : 'false');
+        // Der zugaengliche Name MUSS die sichtbaren Beschriftungen "Hell" und
+        // "Dunkel" enthalten (WCAG 2.5.3 Label in Name, Stufe A), sonst trifft
+        // Sprachsteuerung das Element nicht. R14-Befund 26.07.2026: der Name
+        // lautete "Dunkle Ansicht" und enthielt "Dunkel" nicht als Wort.
+        button.setAttribute('aria-label', 'Ansicht: Hell oder Dunkel');
+        button.innerHTML =
+          `<span class="tt-feld" data-aktiv="${dunkel ? 'false' : 'true'}">${SUN_ICON}Hell</span>` +
+          `<span class="tt-feld" data-aktiv="${dunkel ? 'true' : 'false'}">${MOON_ICON}Dunkel</span>`;
+        return;
+      }
       const label = next === 'dark' ? 'Light' : 'Dark';
       const icon = next === 'dark' ? MOON_ICON : SUN_ICON;
       button.setAttribute('aria-label', `${label}-Mode aktivieren`);
@@ -74,8 +93,17 @@
     applyTheme(document.documentElement.getAttribute('data-theme') || initial, false);
     ensureAccessibleControls();
     document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
-      button.addEventListener('click', () => {
+      button.addEventListener('click', (event) => {
         const current = document.documentElement.getAttribute('data-theme') || 'dark';
+        // Beim Zwei-Feld-Schalter ist ein Tipp auf das BEREITS aktive Feld
+        // folgenlos. R14-Befund 26.07.2026: er schaltete davon weg, das
+        // Bedienelement sah aus wie ein Waehler und verhielt sich wie ein
+        // Kippschalter. Ein Tipp neben die Felder (auf die Schiene) schaltet
+        // weiterhin um, damit die ganze Flaeche bedienbar bleibt.
+        if (button.hasAttribute('data-theme-switch')) {
+          const feld = event.target instanceof Element ? event.target.closest('.tt-feld') : null;
+          if (feld && feld.dataset.aktiv === 'true') return;
+        }
         applyTheme(current === 'dark' ? 'light' : 'dark', true);
       });
     });
