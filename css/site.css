@@ -5009,8 +5009,14 @@ html[data-theme='light'] .section-tag {
   }
 }
 
+/* Seitenrand 24 px statt 20 px (GF-Entscheid 26.07.2026, EIN Seitenrand).
+   Die Vereinheitlichung hatte diesen Abschnitt nur auf Telefonbreiten
+   erwischt; ab 600 px stand er weiter auf 20 px. Gefunden am 27.07.2026,
+   nachdem das Fluchten-Gate um die Breiten 600/768/960 erweitert wurde:
+   Regel 4 meldete auf sieben Seiten `.section-inner sitzt bei 20/940`
+   gegen den Soll-Rand 24/936. */
 .detail-final-cta {
-  padding: 56px 20px 72px;
+  padding: 56px 24px 72px;
   background: var(--section-bg, transparent);
 }
 .detail-final-cta .section-inner {

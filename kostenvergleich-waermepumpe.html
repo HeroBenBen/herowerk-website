@@ -37,7 +37,7 @@
   <script src="js/consent.js?v=5e2ae31749"></script>
   <!-- ============================================================== -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/fonts.css?v=505e04d26b">
+  <link rel="stylesheet" href="css/fonts.css?v=d3f3999a2f">
 <style>
 /* Fonts von der Site selbst (/fonts/, CSP font-src 'self') */
 </style>
@@ -307,8 +307,16 @@
      Lime und Schiefer stehen absichtlich als feste Werte: --hero-accent ist im
      Hell-Modus Oliv #4F6000, der aktive Feld-Grund soll aber in BEIDEN Modi die
      Markenfarbe sein, wie auf allen uebrigen Seiten. */
-  .theme-toggle[data-theme-switch]{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:0;padding:3px;min-height:44px;border-radius:999px;border:1px solid var(--hero-muted);background:var(--hero-row-alt);color:var(--hero-muted);font-family:'Inter',sans-serif;cursor:pointer;white-space:nowrap;}
-  .theme-toggle[data-theme-switch] .tt-feld{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:66px;height:36px;padding:0 12px;border-radius:999px;font-size:13px;box-sizing:border-box;font-weight:500;color:var(--hero-muted);white-space:nowrap;}
+  /* Schiene und inaktive Schrift stehen als feste Werte, NICHT als --hero-*.
+     Grund (R14-Befund W-5, gemessen 27.07.2026): --hero-row-alt ergibt im
+     Dunkel-Modus rgb(39,54,64) statt der rgb(45,58,71) aller uebrigen Seiten,
+     --hero-muted ergibt rgb(160,166,173) statt rgb(209,213,219), Textkontrast
+     5,08 statt 7,88. Beides keine Normverletzung, aber ein Verstoss gegen die
+     GF-Vorgabe "ein Bauteil, ueberall identisch". Die Werte entsprechen
+     --color-surface-tertiary und --color-text-secondary aus tokens.css. */
+  .theme-toggle[data-theme-switch]{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:0;padding:3px;min-height:44px;border-radius:999px;border:1px solid var(--hero-muted);background:#2D3A47;color:#D1D5DB;font-family:'Inter',sans-serif;cursor:pointer;white-space:nowrap;}
+  [data-theme='light'] .theme-toggle[data-theme-switch]{background:#EBE7DC;color:#5A6470;}
+  .theme-toggle[data-theme-switch] .tt-feld{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:66px;height:36px;padding:0 12px;border-radius:999px;font-size:13px;box-sizing:border-box;font-weight:500;color:inherit;white-space:nowrap;}
   .theme-toggle[data-theme-switch] .tt-feld[data-aktiv='true']{background:#B7D900;color:#1C2B36;font-weight:700;}
   .theme-toggle[data-theme-switch] .tt-feld svg{flex:0 0 auto;}
   .theme-toggle[data-theme-switch]:focus-visible{outline:3px solid var(--hero-white);outline-offset:2px;}

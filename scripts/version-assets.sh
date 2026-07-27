@@ -87,11 +87,13 @@ patched_refs=0
 # ── Durchgang 1: Referenzen INNERHALB von CSS-Dateien ───────────────────────
 # WARUM (R14-Befund 27.07.2026): Bis hierhin hat dieses Skript ausschliesslich
 # HTML-Seiten gepatcht. Die Schriftdateien werden aber nicht aus HTML geladen,
-# sondern aus css/fonts.css heraus. Solange die @font-face-Bloecke in vier
-# Seitenkoepfen inline standen, trugen ihre Schrift-URLs dort eine Marke
-# (`/fonts/inter-400.woff2?v=8909904ab6`); mit dem Umzug nach css/fonts.css
-# ist sie ersatzlos verschwunden, und das Gate meldete trotzdem "0
-# Abweichungen", weil es CSS-Dateien nie angesehen hat. `.htaccess` cacht
+# sondern aus css/fonts.css heraus. In DREI Seitenkoepfen standen die
+# @font-face-Bloecke inline und trugen dort eine Marke
+# (`/fonts/inter-400.woff2?v=8909904ab6`); in css/site.css trugen dieselben
+# acht Bloecke NIE eine, fuer die 25 Seiten mit site.css fehlte sie also von
+# Anfang an. Mit dem Umzug nach css/fonts.css war sie ueberall weg, und das
+# Gate meldete trotzdem "0 Abweichungen", weil es CSS-Dateien nie angesehen
+# hat. `.htaccess` cacht
 # font/woff2 ein Jahr: ein spaeterer In-Place-Tausch einer Schriftdatei haette
 # wiederkehrende Besucher nie erreicht. Genau dieselbe Falle wie beim Logo am
 # 24.07. und beim JS am 04.07.

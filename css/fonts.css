@@ -4,9 +4,11 @@
    geladen (Datenschutz, und es war schon vorher so).
 
    WARUM DIESE DATEI EXISTIERT (Befund 27.07.2026): die @font-face-Bloecke
-   standen in css/site.css UND in vier Seitenkoepfen, die css/site.css gar
-   nicht einbinden. Vier gepflegte Kopien derselben acht Bloecke, jede fuer
-   sich veraltbar. Seitdem laden ALLE 29 Seiten diese eine Datei, und zwar
+   standen in css/site.css UND in DREI Seitenkoepfen, die css/site.css gar
+   nicht einbinden (datenschutz.html und impressum.html mit je 6 Bloecken,
+   kostenvergleich-waermepumpe.html mit 5). Eine vierte Seite, anfrage.html,
+   hatte gar keine Schriftquelle. Also vier gepflegte Staende derselben acht
+   Bloecke, jeder fuer sich veraltbar. Seitdem laden ALLE 29 Seiten diese eine Datei, und zwar
    als erstes Stylesheet, damit die Schrift steht, bevor irgendetwas gesetzt
    wird.
    RICHTIGSTELLUNG 27.07.2026 spaet (R14-Befund, nachgemessen): Hier stand

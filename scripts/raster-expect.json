@@ -178,8 +178,7 @@
         }
       ],
       "mindestAnteilBreite": 0.6,
-      "nurBisBreitePx": 599,
-      "grundNurBis": "Der Seitenrand 24 px ist das Hausmass des Telefons (GF-Entscheid 26.07.2026). Ab 600 px setzt die Seite absichtlich groessere Innenabstaende: gemessen 27.07.2026 sitzt .section-inner bei 768 px auf 100 px und bei 1280 px auf 90 px. Ohne diese Grenze meldete Regel 4 im Tablet-Band 51 Befunde, die alle Absicht sind. Regel 1 und Regel 3 (Ueberstand) laufen weiterhin auf ALLEN Breiten, und genau die haetten den Schalter-Ueberstand vom 27.07.2026 im Band 600 bis 960 px gefangen - dort hatte das Gate bis dahin gar keine Breite."
+      "grundZentrierteSpalten": "Regel 4 laeuft auf ALLEN Breiten. Ein Container, der nur durch seine eigene max-width schmaler ist als der verfuegbare Inhaltsbereich, ist eine bewusst zentrierte Textspalte und wird uebersprungen (Sache von Regel 5). Gemessen 27.07.2026: ohne diese Unterscheidung meldete Regel 4 bei 960 px sieben Textseiten mit '.section-inner sitzt bei 100/860', also eine 760-px-Spalte im 912-px-Inhaltsbereich. Ein zu kleiner Seitenrand faellt weiterhin auf, belegt am 20-px-Rand von .detail-final-cta, den dieselbe Erweiterung auf sieben Seiten gemeldet hat und der daraufhin auf 24 px korrigiert wurde."
     },
     "r5_symmetrie": {
       "aktiv": false,
