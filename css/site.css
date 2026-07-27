@@ -392,6 +392,27 @@ nav.scrolled {
   .cmpboxrecall {
     bottom: calc(var(--mobile-bar-h, 84px) + 8px) !important;
   }
+  /* ═══ KLAPPMENUE TELEFON (GF-Auftrag 26.07.2026, nach zwei Fachgutachten) ══
+     ERSTER ANLAUF WAR FALSCH und ist verworfen: jeder Menuepunkt bekam eine
+     eigene umrandete Kachel. Beide Gutachter und die Nachmessung sind sich
+     einig, warum das nicht traegt:
+     (a) Die Kachelfuellung rgba(255,255,255,0.04) erzeugt im Hell-Modus
+         Weiss auf Weiss, also Kontrast 1,00. Der Rahmen kam auf 1,42 gegen
+         die Norm 3,0 (WCAG 1.4.11). Die Kachel kostete 96 px Hoehe und war
+         auf dem Geraet nicht zu sehen.
+     (b) Neun gleich aussehende Flaechen nehmen dem Umsatz-Knopf seine
+         Sonderstellung. Wenn jede Zeile eine Schaltflaeche ist, ist keine
+         Zeile eine Schaltflaeche.
+     (c) Die Desktop-Kopfzeile fuehrt dieselben Links als reinen Text ohne
+         Kasten. Die Kacheln erfanden auf dem Telefon eine zweite
+         Formensprache.
+     JETZT: ruhige Textliste mit Haarlinie, genau EIN gefuellter Knopf, und
+     der Modus-Umschalter als eigenes Bedienelement in einer Kopfzeile.
+     Der eigentliche Mangel des Altstands war nicht die fehlende Umrandung,
+     sondern die Trefferhoehe: gemessen 41,6 px bei den Links und 36,8 px bei
+     Anrufen und Termin, beides unter dem Mindestmass 44 px (WCAG 2.5.5).
+     Das loesen Groesse und Druckzustand, nicht der Rahmen.
+     ═══════════════════════════════════════════════════════════════════════ */
   .mobile-menu.open {
     display: flex;
     flex-direction: column;
@@ -399,18 +420,199 @@ nav.scrolled {
     top: 64px;
     left: 0;
     right: 0;
-    background: var(--nacht);
-    padding: 20px 24px;
-    gap: 16px;
-    border-bottom: 1px solid var(--charcoal);
+    /* Im Dunkel-Modus dieselbe Flaeche wie die Kopfzeile, aus der das Menue
+       faehrt: rgb(28,43,54) gegen rgba(28,43,54,0.99). Vorher var(--nacht)
+       #0a0a0a, das Menue war also dunkler als sein eigener Traeger und wirkte
+       aufgeklebt. Im Hell-Modus bleibt eine sichtbare Kante (Kopfzeile Sand
+       rgba(244,241,234,0.97) gegen Panel Weiss, Kontrast 1,24), weil
+       tokens.css das Panel dort bewusst mit Leiste und Fusszeile
+       zusammenfasst. Bewusst so belassen [R14-Befund 26.07.2026]. */
+    background: var(--color-surface-secondary, #1c2b36);
+    padding: 8px 12px 20px;
+    gap: 0;
+    border-bottom: 1px solid var(--color-border-subtle, #2d3a47);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
     z-index: 999;
+    /* Auf kurzen Bildschirmen lief der letzte Eintrag aus dem Bild. Gemessen
+       26.07.2026 bei 320 x 568 px: Menue-Unterkante 600 px im ALTSTAND, also
+       schon vorher abgeschnitten. Deckel plus eigener Bildlauf als Sicherung. */
+    max-height: calc(100vh - 64px);
+    max-height: calc(100dvh - 64px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
+
+  /* ── Kopfzeile des Menues: Ansicht umschalten ──────────────────────────
+     Benjamin wollte den Umschalter OBEN. Er steht oben, aber bewusst NICHT
+     als erster Listeneintrag: eine Anzeigeeinstellung ist kein Navigations-
+     ziel. Eigene Zeile, eigenes Etikett, durch eine Linie von der Liste
+     getrennt. Damit ist er strukturell unterscheidbar, nicht nur farblich. */
+  .mobile-menu .mm-kopf {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 44px;
+    padding: 0 12px 12px;
+    border-bottom: 1px solid var(--color-border-subtle, #2d3a47);
+    margin-bottom: 8px;
+  }
+  .mobile-menu .mm-kopf-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-tertiary, #a0a6ad);
+  }
+
+  /* ── Navigationszeilen ─────────────────────────────────────────────────
+     Textkante bei 12 px Innenabstand plus 12 px Panel-Rand = 24 px, also
+     buendig mit Logo und Seiteninhalt. Im ersten Anlauf lag sie bei 40 px. */
   .mobile-menu a {
-    color: var(--g300);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 52px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--color-text-primary, #ffffff);
     text-decoration: none;
-    font-size: 16px;
-    padding: 8px 0;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.3;
   }
+  /* Haarlinie ZWISCHEN den Zeilen, nicht ueber der ersten und nicht unter der
+     letzten. Als Pseudo-Element, damit die abgerundete Druckflaeche sie nicht
+     schneidet. */
+  .mobile-menu .mm-nav a + a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    /* Buendig mit den beiden anderen Trennlinien im Menue. Die Zeile selbst
+       sitzt bereits 12 px eingerueckt; mit left/right 12 waere die Haarlinie
+       um 12 px je Seite versetzt gelaufen [R14-Befund 26.07.2026: 24 bis 351
+       gegen 12 bis 363]. */
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--color-border-subtle, #2d3a47);
+  }
+  .mobile-menu .mm-pfeil {
+    flex: 0 0 auto;
+    color: var(--color-text-tertiary, #a0a6ad);
+  }
+  /* Der Druckzustand ist das Anfass-Signal, nicht der Rahmen. Der Textfarb-
+     wechsel traegt ihn, weil die Flaechenaufhellung allein in keinem der
+     beiden Modi die Norm 3,0 erreicht. */
+  .mobile-menu .mm-nav a:hover,
+  .mobile-menu .mm-nav a:active {
+    background: rgba(183, 217, 0, 0.14);
+    color: var(--color-accent-primary, #b7d900);
+  }
+  /* Fokus: sichtbarer Ring in der Textfarbe. NICHT Lime, das misst gegen
+     Weiss 1,62 und ist im Hell-Modus praktisch unsichtbar. Der erste Anlauf
+     hatte hier outline:none gesetzt, das war eine echte Verschlechterung
+     gegenueber dem Altstand. */
+  .mobile-menu a:focus-visible,
+  .mobile-menu button:focus-visible {
+    outline: 3px solid var(--color-text-primary, #ffffff);
+    outline-offset: -3px;
+  }
+  /* Auf der Lime-Flaeche waere der helle Ring im Dunkel-Modus bei 1,62
+     [R14-Befund 26.07.2026, selbst nachgemessen]. Dort traegt die dunkle
+     Schriftfarbe des Knopfs: 8,93 in beiden Modi. */
+  .mobile-menu a.nav-cta:focus-visible {
+    outline-color: var(--color-accent-primary-text, #1c2b36);
+  }
+
+  /* ── Handlungszone ─────────────────────────────────────────────────────
+     Genau EIN Knopf. "Anrufen" ist per GF-Entscheid 26.07.2026 aus dem
+     Klappmenue entfernt; der Anrufweg liegt in der Kopfzeile
+     (.mobile-phone-cta, beschriftet, 44 px) und in der festen Leiste. Damit
+     steht die Markenfarbe hier genau einmal und entwertet sich nicht selbst. */
+  .mobile-menu .mm-aktionen {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border-subtle, #2d3a47);
+  }
+  .mobile-menu a.nav-cta {
+    justify-content: center;
+    min-height: 52px;
+    padding: 0 24px;
+    border-radius: 8px;
+    background: var(--color-accent-primary, #b7d900);
+    color: var(--color-accent-primary-text, #1c2b36);
+    font-size: 16px;
+    font-weight: 700;
+  }
+  /* Die wandernde Glanzwelle des Desktop-Knopfs gehoert nicht in ein Menue.
+     Sie steht im Standbild als schiefer Verlauf und liest sich als Fehler. */
+  .mobile-menu a.nav-cta::after {
+    display: none;
+  }
+
+  /* ── Modus-Umschalter als Zwei-Feld-Schalter ───────────────────────────
+     Bauform bewusst gewaehlt: beide Zustaende stehen gleichzeitig da, der
+     aktive ist gefuellt. Ein einzelnes Sinnbild kann Zustand ODER Absicht
+     meinen und nie beides; der Altstand zeigte im Dunkel-Modus einen Mond
+     neben dem Wort "Light-Mode" und war damit doppeldeutig.
+     Sichtbar 44 px hoch, also schon ohne Trick ueber dem Mindestmass. */
+  .mobile-menu button.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    padding: 3px;
+    min-height: 44px;
+    border-radius: 999px;
+    /* Die Schiene selbst kommt gegen das Panel nur auf 1,24 (hell) und 1,25
+       (dunkel), waere als Bedienelement also unsichtbar. Genau der Vorwurf,
+       mit dem der Kachel-Entwurf verworfen wurde, deshalb traegt hier die
+       Umrandung das Element. Nicht border-strong: das misst im Dunkel-Modus
+       nur 2,41 und verfehlt die Norm 3,0 (WCAG 1.4.11). text-tertiary traegt
+       in beiden Modi, gemessen 5,91 dunkel und 6,01 hell. */
+    border: 1px solid var(--color-text-tertiary, #a0a6ad);
+    background: var(--color-surface-tertiary, #2d3a47);
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .mobile-menu .tt-feld {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-width: 66px;
+    height: 36px;
+    padding: 0 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-secondary, #d1d5db);
+    white-space: nowrap;
+  }
+  /* Der Zustand haengt nicht allein an der Farbe: das aktive Feld traegt
+     zusaetzlich das schwerere Schriftgewicht (WCAG 1.4.1). */
+  .mobile-menu .tt-feld[data-aktiv='true'] {
+    background: var(--color-accent-primary, #b7d900);
+    color: var(--color-accent-primary-text, #1c2b36);
+    font-weight: 700;
+  }
+  .mobile-menu .tt-feld svg {
+    flex: 0 0 auto;
+  }
+  /* Solange das Klappmenue offen ist, tritt die feste Leiste zurueck. Sie
+     liegt mit z-index 1000 ueber dem Menue (999) und verdeckte bei 320 x 568
+     px 41,4 von 52 px des Termin-Knopfs; ein Tipp in dessen Mitte traf die
+     Leiste [R14-Befund 26.07.2026, selbst nachgemessen]. Die Klasse setzt
+     toggleMenu() in js/site.js. */
+  html.menue-offen .mobile-bottom-bar {
+    display: none;
+  }
+
   /* Sticky Bottom Bar mit Anrufen + Beratung */
   .mobile-bottom-bar {
     display: flex;

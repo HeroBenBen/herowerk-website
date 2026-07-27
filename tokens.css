@@ -304,6 +304,31 @@ html:not(.js-an) [data-theme-toggle] {
   color: var(--color-accent-on-light) !important;
 }
 
+/* Ausnahme Klappmenue (Fachbefund 26.07.2026): die Navigationsziele dort sind
+   eine Liste, keine hervorgehobenen Links. Ohne diese Regel faerbt die breite
+   Regel darueber sie oliv, waehrend das Etikett "Ansicht" daneben Marine
+   bleibt - zwei Textfarben im selben Stapel. Der Umsatz-Knopf .nav-cta ist
+   oben bereits ausgenommen.
+   ACHTUNG SPEZIFITAET: die Regel darueber steht bei (0,5,1), weil jedes
+   :not() seine Klasse mitzaehlt. Beide tragen !important, also entscheidet
+   allein die Spezifitaet. Ein schlichtes
+   [data-theme='light'] .mobile-menu .mm-nav a laege bei (0,3,1) und wuerde
+   verlieren - genau das ist beim ersten Versuch passiert, der Text blieb
+   oliv. Die drei :not() unten heben die Regel auf (0,6,1). */
+[data-theme='light'] .mobile-menu .mm-nav a:not(.nav-cta):not(.nav-cta-call):not(.btn-primary) {
+  color: var(--color-text-primary) !important;
+}
+[data-theme='light']
+  .mobile-menu
+  .mm-nav
+  a:not(.nav-cta):not(.nav-cta-call):not(.btn-primary):hover,
+[data-theme='light']
+  .mobile-menu
+  .mm-nav
+  a:not(.nav-cta):not(.nav-cta-call):not(.btn-primary):active {
+  color: var(--color-accent-on-light) !important;
+}
+
 [data-theme='light'] .trust-sub,
 [data-theme='light'] .trust-usp-text,
 [data-theme='light'] .trust-partner-label,
