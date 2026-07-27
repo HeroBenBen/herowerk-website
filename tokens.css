@@ -297,20 +297,31 @@ body {
   outline-offset: 2px;
 }
 /* Der Schalter ist auf JEDER Seite und an JEDER Stelle identisch, das ist
-   GF-Vorgabe vom 27.07.2026: keine zweite Variante. Gemessen 164 x 44 px mit
-   Feldern von 67,9 x 36 px, im Klappmenue wie in der Kopfzeile.
-   Auf 320 px passt er damit nicht mehr neben den Zurueck-Link in die schmale
+   GF-Vorgabe vom 27.07.2026: keine zweite Variante. Gemessen 163,97 x 44 px;
+   die Felder sind ungleich breit (67,88 inaktiv, 88,09 aktiv), weil das
+   aktive Feld das schwerere Schriftgewicht traegt. Genau diese Fassung ist
+   am 27.07.2026 im Klappmenue live abgenommen worden, sie gilt auch in der
+   Kopfzeile. (Die Zahl "Felder 67,9" aus der Vorgabe beschreibt das inaktive
+   Feld; zwei gleich breite 67,9er ergaeben rechnerisch 143,8 statt 164.)
+   Auf 320 px passt er nicht mehr neben den Zurueck-Link in die schmale
    Kopfleiste von datenschutz.html und impressum.html: Leiste 230 px, Link
    75,3 px, Abstand 16 px, verbleiben 138,7 px fuer ein 164 px breites
    Element - das Fluchten-Gate meldete 45,97 px Ueberstand.
    Geloest wird das ueber den UMBRUCH der Leiste, nicht ueber einen kleineren
    Schalter. Der Schalter bleibt unangetastet, er rutscht nur in die zweite
-   Zeile. */
-@media (max-width: 380px) {
-  .topbar {
-    flex-wrap: wrap;
-    row-gap: 12px;
-  }
+   Zeile.
+   KORREKTUR 27.07.2026 spaet: Der Umbruch stand zuerst in einem Block
+   `@media (max-width: 380px)`. Damit brach die Leiste genau eine Breite weit
+   um und liess ab 381 px stattdessen den Nachbarn stauchen - gemessen auf
+   datenschutz.html: Zurueck-Link 178,72 px natuerliche Breite, tatsaechlich
+   111,03 px bei 381 px und 120,03 px bei 390 px, also zweizeiliger Text
+   neben einem unveraenderten Schalter. Die Vorgabe lautet aber "passt er
+   nicht, bricht die LEISTE um". `flex-wrap: wrap` ohne Bandgrenze tut genau
+   das und nur das: es wirkt erst, wenn der Platz nicht reicht, und ist auf
+   jeder breiteren Ansicht wirkungslos. */
+.topbar {
+  flex-wrap: wrap;
+  row-gap: 12px;
 }
 
 /* Ohne Skript erscheinen die Umschalter gar nicht: js/theme.js erzeugt ihr
@@ -340,7 +351,21 @@ html:not(.js-an) [data-theme-toggle] {
   outline: 3px solid rgba(183, 217, 0, 0.45);
   outline-offset: 2px;
 }
-[data-theme='light'] .theme-toggle {
+/* Diese Hell-Regel stammt aus der Zeit des einfeldrigen Umschalters, der im
+   Hell-Modus als gruene Pille stand. Fuer den Zwei-Feld-Schalter ist sie
+   schaedlich: sie steht NACH der Bauteil-Regel und ist gleich spezifisch
+   (0,2,0), gewinnt also und faerbt die ganze Schiene lime. Das aktive Feld
+   ist selbst lime - gemessen 27.07.2026 auf index.html (1280 px) und
+   datenschutz.html (375 px): Schiene rgb(183,217,0), aktives Feld
+   rgb(183,217,0), Zustandskontrast **1,00** gegen die Norm 3,0 (WCAG 1.4.11),
+   inaktiver Text rgb(90,100,112) auf lime **3,70** gegen die Norm 4,5
+   (WCAG 1.4.3). Der Schalter zeigte im Hell-Modus keinen Zustand mehr.
+   Mit dem `:not()` (0,3,0) faellt der Zwei-Feld-Schalter auf seine eigenen
+   Tokens zurueck: Schiene --color-surface-tertiary #ebe7dc, Rahmen
+   --color-text-tertiary #5a6470 (5,33 gegen den Seitengrund), inaktiver Text
+   4,87. Das ist exakt die Fassung, die am 27.07. im Klappmenue abgenommen
+   wurde. Der alte einfeldrige Umschalter behaelt seine gruene Pille. */
+[data-theme='light'] .theme-toggle:not([data-theme-switch]) {
   color: var(--color-text-primary);
   background: var(--green);
   border-color: var(--green-dark);

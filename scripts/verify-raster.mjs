@@ -285,7 +285,15 @@ function messen(cfg) {
   // feste Leiste 16.
   const rand = cfg.regeln.r4_seitenrand_treue.seitenrandPx;
   const breite = document.documentElement.clientWidth;
+  // Der 24-px-Seitenrand ist das Hausmass des TELEFONS. Auf breiten Ansichten
+  // setzt die Seite absichtlich groessere Innenabstaende (gemessen 27.07.2026:
+  // .section-inner sitzt bei 1280 px auf 90 px, bei 768 px auf 100 px). Ohne
+  // diese Grenze meldet Regel 4 dort 51 Befunde, die alle Absicht sind - und
+  // eine Regel, die Absicht als Fehler meldet, wird abgeschaltet statt
+  // befolgt. Regel 1 und 3 (Ueberstand) gelten dagegen auf JEDER Breite.
+  const r4NurBis = cfg.regeln.r4_seitenrand_treue.nurBisBreitePx ?? Infinity;
   const pruefeRand = (el, art, wahlText) => {
+    if (breite > r4NurBis) return;
     const cs = getComputedStyle(el);
     if (!sichtbar(el, cs)) return;
     const b = el.getBoundingClientRect();

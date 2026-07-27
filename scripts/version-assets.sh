@@ -84,6 +84,67 @@ fi
 changed_files=0
 patched_refs=0
 
+# ── Durchgang 1: Referenzen INNERHALB von CSS-Dateien ───────────────────────
+# WARUM (R14-Befund 27.07.2026): Bis hierhin hat dieses Skript ausschliesslich
+# HTML-Seiten gepatcht. Die Schriftdateien werden aber nicht aus HTML geladen,
+# sondern aus css/fonts.css heraus. Solange die @font-face-Bloecke in vier
+# Seitenkoepfen inline standen, trugen ihre Schrift-URLs dort eine Marke
+# (`/fonts/inter-400.woff2?v=8909904ab6`); mit dem Umzug nach css/fonts.css
+# ist sie ersatzlos verschwunden, und das Gate meldete trotzdem "0
+# Abweichungen", weil es CSS-Dateien nie angesehen hat. `.htaccess` cacht
+# font/woff2 ein Jahr: ein spaeterer In-Place-Tausch einer Schriftdatei haette
+# wiederkehrende Besucher nie erreicht. Genau dieselbe Falle wie beim Logo am
+# 24.07. und beim JS am 04.07.
+# Dieser Durchgang laeuft VOR dem HTML-Durchgang, damit der Fingerabdruck der
+# CSS-Datei in den HTML-Seiten schon den gepatchten Inhalt beschreibt.
+CSS_PAGES=()
+for rel in "${ASSETS[@]}"; do
+  case "$rel" in *.css) CSS_PAGES+=("$rel") ;; esac
+done
+# Nicht nur Schriften: css/site.css laedt ausserdem Sinnbilder als
+# Hintergrundbild (gefunden von der erweiterten Notbremse am 27.07.2026,
+# Beispiel funnel-icons/interesse-wp.svg). Dieselbe Ein-Jahres-Cache-Falle.
+# CSS-Dateien selbst sind ausgenommen: sie werden aus HTML eingebunden, das
+# erledigt Durchgang 2.
+CSS_REF_ASSETS=()
+for rel in "${ASSETS[@]}"; do
+  case "$rel" in *.css) ;; *) CSS_REF_ASSETS+=("$rel") ;; esac
+done
+
+for rel in "${CSS_REF_ASSETS[@]}"; do
+  hash="$(shasum -a 256 "$ROOT/$rel" | cut -c1-10)"
+  for page in "${CSS_PAGES[@]}"; do
+    out="$(
+      REL="$rel" HASH="$hash" MODE="$MODE" perl -0777 -e '
+        my $rel  = $ENV{REL};
+        my $hash = $ENV{HASH};
+        my $file = $ARGV[0];
+        open(my $fh, "<:raw", $file) or die "read $file: $!";
+        my $src = do { local $/; <$fh> };
+        close $fh;
+        my $dst = $src;
+        my $n = ($dst =~ s{(["\x27])((?:\.\./|\./|/)*)\Q$rel\E(?:\?v=[^"\x27]*)?\1}
+                          {$1$2$rel?v=$hash$1}g);
+        exit 0 if $dst eq $src;
+        if ($ENV{MODE} ne "check") {
+          open(my $wh, ">:raw", $file) or die "write $file: $!";
+          print $wh $dst;
+          close $wh;
+        }
+        print "$n\n";
+      ' "$ROOT/$page"
+    )"
+    if [ -n "$out" ]; then
+      changed_files=$((changed_files + 1))
+      patched_refs=$((patched_refs + out))
+      if [ "$MODE" = "check" ]; then
+        echo "  VERALTET: $page -> $rel (Soll ?v=$hash)"
+      fi
+    fi
+  done
+done
+
+# ── Durchgang 2: Referenzen in den HTML-Seiten ──────────────────────────────
 for rel in "${ASSETS[@]}"; do
   hash="$(shasum -a 256 "$ROOT/$rel" | cut -c1-10)"
   for page in "${PAGES[@]}"; do
@@ -137,9 +198,11 @@ echo "Asset-Versionierung: ${#ASSETS[@]} Assets, ${#PAGES[@]} Seiten,"
 echo "  $patched_refs Referenz(en) in $changed_files Seiten-Treffern aktualisiert."
 
 # Notbremse: keine unversionierte lokale Referenz darf uebrig bleiben.
+# Seit 27.07.2026 auch in CSS-Dateien, sonst faellt die Schrift-Referenz aus
+# css/fonts.css durch das Netz (siehe Durchgang 1).
 rest=0
 for rel in "${ASSETS[@]}"; do
-  hits="$(cd "$ROOT" && grep -rlE "[\"'](\.\./|\./|/)*${rel//./\\.}[\"']" --include='*.html' . 2>/dev/null | grep -v '^./archive/' || true)"
+  hits="$(cd "$ROOT" && grep -rlE "[\"'](\.\./|\./|/)*${rel//./\\.}[\"']" --include='*.html' --include='*.css' . 2>/dev/null | grep -v '^./archive/' | grep -v '^./node_modules/' || true)"
   if [ -n "$hits" ]; then
     echo "FEHLER: unversionierte Referenz auf $rel in:" >&2
     echo "$hits" >&2

@@ -234,42 +234,21 @@ nav.scrolled {
   .mobile-phone-cta svg {
     flex: 0 0 auto;
   }
-  /* Umschalter in der Kopfzeile (gilt ab 600 px, siehe Telefon-Regel unten).
-     Trefferflaeche 44 x 44 statt vorher 114 x 34 (WCAG 2.5.5). Selektor mit
-     Elementnamen (0,1,1), weil tokens.css NACH dieser Datei geladen wird und
-     dort .theme-toggle min-height 34px setzt; bei gleicher Spezifitaet gewaenne
-     die spaetere Datei [gemessen 26.07.2026].
-     Rangfolge: die Rufnummer ist ein Umsatzweg, der Umschalter eine
-     Voreinstellung. Deshalb neutraler Kreis mit reinem Sinnbild; Gruen und das
-     Wort bleiben allein der Rufnummer. Zugaenglicher Name im aria-label. */
-  button.nav-theme-standalone {
-    width: 44px;
-    min-width: 44px;
-    max-width: 44px;
-    height: 44px;
-    min-height: 44px;
-    padding: 0;
-    font-size: 0;
-    background: transparent;
-    border-color: var(--color-border-strong);
-    color: var(--color-text-secondary);
-  }
-  .nav-theme-standalone .theme-toggle-label {
-    display: none;
-  }
-  .nav-theme-standalone .theme-toggle-icon {
-    width: 20px;
-    height: 20px;
-  }
-  [data-theme='light'] button.nav-theme-standalone {
-    background: transparent;
-    border-color: var(--color-border-strong);
-    color: var(--color-text-secondary);
-  }
-  button.nav-theme-standalone:hover {
-    border-color: var(--color-text-primary);
-    background: transparent;
-  }
+  /* Umschalter in der Kopfzeile im Tablet-Band 600 bis 960 px.
+     HIER STAND BIS 27.07.2026 EIN 44-x-44-KREIS mit `font-size: 0` und
+     ausgeblendeter Beschriftung (GF-Rangfolge 26.07.: Rufnummer ist ein
+     Umsatzweg, Umschalter nur eine Voreinstellung). Diese Klammer ist
+     ERSATZLOS ENTFERNT, weil der GF-Entscheid vom 27.07.2026 sie aufhebt:
+     der Modus-Umschalter ist EIN Bauteil, ueberall identisch, KEINE
+     Kopfzeilen-Sonderform. Solange beides nebeneinander stand, klemmte die
+     Altregel den Zwei-Feld-Schalter auf 44 px, waehrend seine beiden Felder
+     ihre 66 px behielten: gemessen 27.07. auf index.html bei 600, 768 und
+     960 px in beiden Modi ragten sie **44,00 px nach links UND rechts** aus
+     dem Knopf und legten sich ueber den Anrufen-Knopf.
+     Die Bauform kommt jetzt ausschliesslich aus tokens.css, damit sie auf
+     allen 29 Seiten aus EINER Quelle stammt. Was hier bleibt, ist nur, was
+     der freistehende Umschalter zusaetzlich zur Bauform braucht:
+     Sichtbarkeit (tokens.css) und der eigene Fokusring. */
   /* Fokusring: der geerbte Ring rgba(183,217,0,0.45) erreicht gegen den
      Kopfzeilen-Grund nur 1,19 hell und 2,96 dunkel gegen die Norm 3,0
      (WCAG 1.4.11) [gemessen 26.07.2026]. --color-text-primary ist in beiden
@@ -5340,8 +5319,8 @@ html[data-theme='light'] .section-tag {
   position: absolute;
   display: block;
   background: currentColor;
-  -webkit-mask: url('/funnel-icons/interesse-wp.svg') center / contain no-repeat;
-  mask: url('/funnel-icons/interesse-wp.svg') center / contain no-repeat;
+  -webkit-mask: url('/funnel-icons/interesse-wp.svg?v=b527026b51') center / contain no-repeat;
+  mask: url('/funnel-icons/interesse-wp.svg?v=b527026b51') center / contain no-repeat;
 }
 .rechner-wp-unit-single {
   width: 130px;
@@ -5374,8 +5353,8 @@ html[data-theme='light'] .section-tag {
   width: 80px;
   height: 80px;
   background: currentColor;
-  -webkit-mask: url('/funnel-icons/interesse-wp.svg') center / contain no-repeat;
-  mask: url('/funnel-icons/interesse-wp.svg') center / contain no-repeat;
+  -webkit-mask: url('/funnel-icons/interesse-wp.svg?v=b527026b51') center / contain no-repeat;
+  mask: url('/funnel-icons/interesse-wp.svg?v=b527026b51') center / contain no-repeat;
   transform: translateY(-50%);
 }
 .rechner-sound-wave {

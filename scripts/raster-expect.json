@@ -5,7 +5,10 @@
     360,
     375,
     390,
-    414
+    414,
+    600,
+    768,
+    960
   ],
   "seiten": [
     {
@@ -174,7 +177,9 @@
           "grund": "Inhaltscontainer des Foerdervorschuss-Banners."
         }
       ],
-      "mindestAnteilBreite": 0.6
+      "mindestAnteilBreite": 0.6,
+      "nurBisBreitePx": 599,
+      "grundNurBis": "Der Seitenrand 24 px ist das Hausmass des Telefons (GF-Entscheid 26.07.2026). Ab 600 px setzt die Seite absichtlich groessere Innenabstaende: gemessen 27.07.2026 sitzt .section-inner bei 768 px auf 100 px und bei 1280 px auf 90 px. Ohne diese Grenze meldete Regel 4 im Tablet-Band 51 Befunde, die alle Absicht sind. Regel 1 und Regel 3 (Ueberstand) laufen weiterhin auf ALLEN Breiten, und genau die haetten den Schalter-Ueberstand vom 27.07.2026 im Band 600 bis 960 px gefangen - dort hatte das Gate bis dahin gar keine Breite."
     },
     "r5_symmetrie": {
       "aktiv": false,
