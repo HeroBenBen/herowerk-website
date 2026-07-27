@@ -5491,10 +5491,15 @@ html[data-theme='light'] .section-tag {
    sitzt außerhalb des klickbaren CTA-Labels (a11y/UX, analog W1 anfrage.html). */
 .fv-asterisk {
   color: var(--green);
-  font-size: 0.55em;
-  vertical-align: super;
+  font-size: 0.75em;
+  vertical-align: 0.35em;
   font-weight: 800;
-  margin-left: 2px;
+  margin-left: 0;
+}
+/* Im Hell-Modus steht dieses Sternchen auf Sand: Lime erreicht dort nur 1,42.
+   Von der Abnahme gefunden, dritte Stelle desselben GF-Befundes. */
+[data-theme='light'] .fv-asterisk {
+  color: var(--color-accent-on-light);
 }
 .fv-disclaimer {
   margin-top: 18px;
@@ -6191,4 +6196,34 @@ samp {
   display: block;
   overflow-x: auto;
   max-width: 100%;
+}
+
+/* ═══ FUSSNOTEN-STERNCHEN: Kontrast und Anbindung (GF-Befund 26.07.2026) ═════
+   (1) Auf der orangen Foerdervorschuss-Flaeche der Startseiten-Karte erreichte
+   das gruene Sternchen nur Kontrast 1,28 gegen 232/168/56. Norm fuer Text ist
+   4,5. Benjamin hat es mit blossem Auge gesehen, gemessen ist es ein klarer
+   Norm-Verstoss. Dort erbt das Sternchen jetzt die dunkle Schriftfarbe des
+   Blocks statt gruen zu bleiben.
+   (2) Der waagerechte Abstand zum Text ist gemessen 0 px. Der Eindruck des
+   Abgeloestseins kommt vom hohen Hochstellen bei sehr kleiner Schrift. Die
+   Sternchen sitzen jetzt tiefer und etwas groesser, damit sie am Wort haengen.
+   ═══════════════════════════════════════════════════════════════════════════ */
+/* Die Farbe wird an der Quelle gesetzt (Inline-Stil in index.html auf
+   'inherit'), nicht ueber einen Spezifitaets-Kampf mit tokens.css. Das
+   Sternchen traegt damit in JEDEM Modus die Schriftfarbe seines Blocks. */
+.hc-label sup,
+.hc-value sup,
+.hc-result-label sup,
+.hc-result-value sup,
+.hc-fv-text sup,
+.hero-sub sup,
+.trust-logo-badge sup {
+  vertical-align: 0.35em;
+  /* 0.75em statt des Browser-Standards (etwa 0.83em) waere kleiner gewesen und
+     haette gegen den GF-Befund "kaum zu sehen" gearbeitet. Die Abnahme hat den
+     Groessenverlust gemessen: Trefferflaeche minus 45 Prozent. Deshalb 0.75em
+     zusammen mit der tieferen Lage, das ergibt netto keine Verkleinerung. */
+  font-size: 0.75em;
+  line-height: 0;
+  margin-left: 0;
 }
