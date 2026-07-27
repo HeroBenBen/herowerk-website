@@ -23,7 +23,7 @@ Ergebnis: PASS (0 Befunde).
 | Seite | Breite | Elemente | davon sichtbar | in Regel 1+3 | in Regel 4 | in Regel 5 |
 |---|---|---|---|---|---|---|
 | anfrage | 320 px | 832 | 762 | 42 | 0 | 0 |
-| barrierefreiheit | 320 px | 200 | 186 | 99 | 1 | 0 |
+| barrierefreiheit | 320 px | 203 | 189 | 102 | 1 | 0 |
 | baubarkeitspruefung | 320 px | 191 | 174 | 87 | 2 | 0 |
 | bewerbung | 320 px | 223 | 206 | 94 | 2 | 0 |
 | datenschutz | 320 px | 104 | 95 | 80 | 0 | 0 |
@@ -52,7 +52,7 @@ Ergebnis: PASS (0 Befunde).
 | wertsteigerung-waermepumpe | 320 px | 270 | 256 | 168 | 1 | 0 |
 | wp-kosten-hannover | 320 px | 244 | 230 | 136 | 1 | 0 |
 | anfrage | 360 px | 832 | 762 | 42 | 0 | 0 |
-| barrierefreiheit | 360 px | 200 | 186 | 99 | 1 | 0 |
+| barrierefreiheit | 360 px | 203 | 189 | 102 | 1 | 0 |
 | baubarkeitspruefung | 360 px | 191 | 174 | 87 | 2 | 0 |
 | bewerbung | 360 px | 223 | 206 | 94 | 2 | 0 |
 | datenschutz | 360 px | 104 | 95 | 80 | 0 | 0 |
@@ -81,7 +81,7 @@ Ergebnis: PASS (0 Befunde).
 | wertsteigerung-waermepumpe | 360 px | 270 | 256 | 169 | 1 | 0 |
 | wp-kosten-hannover | 360 px | 244 | 230 | 136 | 1 | 0 |
 | anfrage | 375 px | 832 | 762 | 42 | 0 | 0 |
-| barrierefreiheit | 375 px | 200 | 186 | 99 | 1 | 0 |
+| barrierefreiheit | 375 px | 203 | 189 | 102 | 1 | 0 |
 | baubarkeitspruefung | 375 px | 191 | 174 | 87 | 2 | 0 |
 | bewerbung | 375 px | 223 | 206 | 94 | 2 | 0 |
 | datenschutz | 375 px | 104 | 95 | 80 | 0 | 0 |
@@ -110,7 +110,7 @@ Ergebnis: PASS (0 Befunde).
 | wertsteigerung-waermepumpe | 375 px | 270 | 256 | 169 | 1 | 0 |
 | wp-kosten-hannover | 375 px | 244 | 230 | 136 | 1 | 0 |
 | anfrage | 390 px | 832 | 762 | 42 | 0 | 0 |
-| barrierefreiheit | 390 px | 200 | 186 | 99 | 1 | 0 |
+| barrierefreiheit | 390 px | 203 | 189 | 102 | 1 | 0 |
 | baubarkeitspruefung | 390 px | 191 | 174 | 87 | 2 | 0 |
 | bewerbung | 390 px | 223 | 206 | 94 | 2 | 0 |
 | datenschutz | 390 px | 104 | 95 | 80 | 0 | 0 |
@@ -139,7 +139,7 @@ Ergebnis: PASS (0 Befunde).
 | wertsteigerung-waermepumpe | 390 px | 270 | 256 | 169 | 1 | 0 |
 | wp-kosten-hannover | 390 px | 244 | 230 | 136 | 1 | 0 |
 | anfrage | 414 px | 832 | 762 | 42 | 0 | 0 |
-| barrierefreiheit | 414 px | 200 | 186 | 99 | 1 | 0 |
+| barrierefreiheit | 414 px | 203 | 189 | 102 | 1 | 0 |
 | baubarkeitspruefung | 414 px | 191 | 174 | 87 | 2 | 0 |
 | bewerbung | 414 px | 223 | 206 | 94 | 2 | 0 |
 | datenschutz | 414 px | 104 | 95 | 80 | 0 | 0 |
@@ -168,7 +168,7 @@ Ergebnis: PASS (0 Befunde).
 | wertsteigerung-waermepumpe | 414 px | 270 | 256 | 169 | 1 | 0 |
 | wp-kosten-hannover | 414 px | 244 | 230 | 136 | 1 | 0 |
 | anfrage | 600 px | 832 | 762 | 42 | 0 | 0 |
-| barrierefreiheit | 600 px | 200 | 187 | 104 | 1 | 0 |
+| barrierefreiheit | 600 px | 203 | 190 | 107 | 1 | 0 |
 | baubarkeitspruefung | 600 px | 191 | 175 | 92 | 2 | 0 |
 | bewerbung | 600 px | 223 | 207 | 99 | 2 | 0 |
 | datenschutz | 600 px | 104 | 95 | 80 | 0 | 0 |
@@ -197,7 +197,7 @@ Ergebnis: PASS (0 Befunde).
 | wertsteigerung-waermepumpe | 600 px | 270 | 257 | 174 | 1 | 0 |
 | wp-kosten-hannover | 600 px | 244 | 231 | 142 | 1 | 0 |
 | anfrage | 768 px | 832 | 762 | 42 | 0 | 0 |
-| barrierefreiheit | 768 px | 200 | 187 | 104 | 1 | 0 |
+| barrierefreiheit | 768 px | 203 | 190 | 107 | 1 | 0 |
 | baubarkeitspruefung | 768 px | 191 | 175 | 92 | 2 | 0 |
 | bewerbung | 768 px | 223 | 207 | 99 | 2 | 0 |
 | datenschutz | 768 px | 104 | 95 | 80 | 0 | 0 |
@@ -226,7 +226,7 @@ Ergebnis: PASS (0 Befunde).
 | wertsteigerung-waermepumpe | 768 px | 270 | 257 | 174 | 1 | 0 |
 | wp-kosten-hannover | 768 px | 244 | 231 | 142 | 1 | 0 |
 | anfrage | 960 px | 832 | 762 | 89 | 0 | 0 |
-| barrierefreiheit | 960 px | 200 | 187 | 104 | 1 | 0 |
+| barrierefreiheit | 960 px | 203 | 190 | 107 | 1 | 0 |
 | baubarkeitspruefung | 960 px | 191 | 175 | 92 | 1 | 0 |
 | bewerbung | 960 px | 223 | 207 | 99 | 2 | 0 |
 | datenschutz | 960 px | 104 | 95 | 80 | 0 | 0 |
@@ -2707,8 +2707,8 @@ Ergebnis: PASS (0 Befunde).
 | 763.48 px | 7 | div, div, h2 |
 | 846.39 px | 1 | svg |
 | 849.24 px | 1 | path |
-| 991.33 px | 1 | div.pa-card.pa-visible.dimmed |
-| 1005.33 px | 7 | div, div, h2 |
+| 991.32 px | 1 | div.pa-card.pa-visible.dimmed |
+| 1005.32 px | 7 | div, div, h2 |
 | 1087.22 px | 1 | svg |
 
 **propan-waermepumpe, 600 px — 11 verschiedene linke Kanten**
@@ -3933,7 +3933,7 @@ Ergebnis: PASS (0 Befunde).
 | 779.19 px | 8 | div, div, h2 |
 | 784.06 px | 1 | a.mobile-phone-cta |
 | 823.06 px | 1 | span.mobile-phone-label |
-| 829.59 px | 1 | svg |
+| 829.6 px | 1 | svg |
 | 892 px | 1 | div#hamburger.hamburger |
 
 **propan-waermepumpe, 960 px — 11 verschiedene linke Kanten**

@@ -775,11 +775,21 @@ html:not(.js-an) [data-theme-toggle] {
 /* Umbau-Iteration 2e: final exact E1 node.
    The generic light [style*='var(--green)'] rule above has higher specificity than
    the previous .preisanker-fv link override, so this selector includes the inline
-   green style and exact funnel href to win the cascade on the #EBE7DC chip. */
+   green style and exact funnel href to win the cascade on the #EBE7DC chip.
+   NACHZUG 27.07.2026, eigener Rueckbau, von der Abnahme gefunden und selbst
+   nachgemessen: die breite Hell-Regel ist durch die zwei neuen Ausnahmen
+   .pa-bottom-cta und .skip-link von (0,5,1) auf (0,6,1) gestiegen und hat
+   diese gehaertete Regel bei (0,5,2) geschlagen. Der Verweis "jetzt
+   Verfuegbarkeit pruefen" auf /preise fiel im Hell-Modus von 11,74 auf 5,65
+   [gemessen 27.07.2026 gegen den Stand 93b332a, rgb(28,43,54) wurde
+   rgb(79,96,0) auf rgb(235,231,220)]. 5,65 verletzt die Norm 4,5 nicht, aber
+   es macht eine bewusste Haertung still rueckgaengig und setzt zwei
+   Textfarben in denselben Stapel. Die zwei :not() unten heben die Regel auf
+   (0,7,2) und damit wieder ueber die breite Regel. */
 [data-theme='light']
   .preisanker-fv
   span
-  > a[href='/anfrage'][href$='anfrage'][style*='var(--green)'] {
+  > a[href='/anfrage'][href$='anfrage'][style*='var(--green)']:not(.pa-bottom-cta):not(.skip-link) {
   color: var(--color-text-primary) !important;
   text-decoration: underline !important;
 }

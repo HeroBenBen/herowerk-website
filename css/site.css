@@ -178,8 +178,16 @@ nav.scrolled {
 
 /* Trefferflaeche des Menue-Oeffners. Gemessen 27.07.2026 auf allen zehn
    Kernseiten und vier Telefonbreiten: 38 x 42 px, also unter dem Mindestmass
-   44 x 44 px (WCAG 2.5.5). Die drei Balken bleiben 22 px breit, nur die
-   Trefferflaeche waechst. */
+   44 x 44 px (WCAG 2.5.5).
+   KORREKTUR nach der Abnahme, selbst nachgemessen: die erste Fassung stellte
+   nur auf flex um und liess die Aussenabstaende der drei Balken stehen. Im
+   Flex-Kontext fallen benachbarte Aussenabstaende aber NICHT mehr zusammen,
+   dadurch verdoppelte sich der Balkenabstand von 7 auf 12 px, die Ikone wuchs
+   von 16 auf 26 px und der Knopf mass 44 x 52 statt 44 x 44. Der frueher hier
+   stehende Satz "nur die Trefferflaeche waechst" war damit falsch.
+   Jetzt tragen die Balken keinen eigenen Aussenabstand mehr, der Abstand kommt
+   aus gap: 5px. Gemessen danach: Balkenoberkanten 24/31/38, Ikone 16 px,
+   Knopf 44 x 44 px, also identisches Bild bei normgerechter Flaeche. */
 .hamburger {
   display: none;
   cursor: pointer;
@@ -196,7 +204,13 @@ nav.scrolled {
   width: 22px;
   height: 2px;
   background: var(--white);
-  margin: 5px 0;
+  /* 2,5 statt 5 px, weil der Oeffner jetzt ein Flex-Behaelter ist. Im
+     Block-Fluss fielen die 5 px zweier benachbarter Balken zu 5 px zusammen,
+     im Flex-Fluss addieren sie sich zu 10. Mit 2,5 px ergibt sich derselbe
+     lichte Abstand von 5 px und damit exakt das alte Bild: Balkenoberkanten
+     24/31/38, Ikone 16 px hoch [gemessen 27.07.2026 bei 390 px gegen den
+     Stand 93b332a]. */
+  margin: 2.5px 0;
   transition: 0.3s;
 }
 .mobile-menu {
