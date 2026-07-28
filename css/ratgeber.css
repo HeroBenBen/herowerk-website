@@ -183,18 +183,21 @@ article.section + section.faq .section-inner {
   line-height: 1.4;
   color: var(--color-text-secondary);
 }
+/* Der erste Verweis darf kein Polster links tragen, sonst steht die ganze
+   Zeile 6 px neben der Flucht von h1, Lead und Fliesstext (gemessen 266
+   gegen 260 am 28.07.2026, gefunden von der Abnahme). */
+.brotkrume > :first-child {
+  padding-left: 0;
+}
 .brotkrume a {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
   padding: 0 6px;
+  /* Im Hell-Modus setzt tokens.css die Farbe, siehe Kommentar am Dateiende. */
   color: var(--color-text-secondary);
   text-decoration: underline;
   text-underline-offset: 3px;
-}
-.brotkrume a:hover,
-.brotkrume a:focus-visible {
-  color: var(--green);
 }
 .brotkrume [aria-current='page'] {
   display: inline-flex;
@@ -245,4 +248,43 @@ article.section + section.faq .section-inner {
   margin: 2px 0 0;
   color: var(--color-text-secondary);
   line-height: 1.6;
+}
+
+/* Hell-Modus: tokens.css laedt NACH dieser Datei und traegt fuer Verweise eine
+   Regel mit (0,6,1) plus !important. Eine Farbregel von hier gewinnt dort nicht,
+   gemessen 28.07.2026: Pfadzeile hell rgb(79,96,0) statt der hier deklarierten
+   rgb(90,100,112). Die Spezifitaet wird BEWUSST NICHT hochgezogen: die breite
+   Hell-Modus-Linkregel steht bereits bei fuenf :not(), eine sechste Ausnahme
+   heben sie auf (0,7,1) und schlaegt die Klappmenue- und die Preisseiten-Regel.
+   Beide ausgelieferten Farben bestehen die Norm (6,19:1 und 6,01:1).
+   Deshalb: keine Farbregel, und der Hover-Zustand haengt an der Unterstreichung,
+   die von tokens.css nicht gesetzt wird und damit in BEIDEN Modi wirkt.
+   Vorher war er im Hell-Modus wirkungslos und nur im Dunkel-Modus sichtbar. */
+.brotkrume a:hover,
+.brotkrume a:focus-visible {
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+
+/* Am Telefon brach die Pfadzeile auf zwei Reihen um und verbrauchte 90 px vor
+   der Ueberschrift (gemessen 320 px, 28.07.2026). Statt eine Stufe zu
+   verstecken, was die Auszeichnung von der Anzeige entkoppeln wuerde, laeuft
+   die aktuelle Seite jetzt in einer Zeile und wird bei Bedarf mit Auslassung
+   gekuerzt. Es geht nichts verloren: derselbe Titel steht direkt darunter als
+   Ueberschrift. */
+@media (max-width: 600px) {
+  .brotkrume {
+    flex-wrap: nowrap;
+  }
+  .brotkrume [aria-current='page'] {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    line-height: 44px;
+  }
+  .brotkrume a {
+    flex: 0 0 auto;
+  }
 }

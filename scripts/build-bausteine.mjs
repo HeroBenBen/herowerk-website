@@ -78,13 +78,22 @@ function begriffe(liste) {
  * Fakt-Satz, sonst belegt er sich selbst.
  */
 function zahlenBelegt(slug, satz, html) {
-  const ohneBaustein = html.replace(new RegExp(`${rx(A_FAKT)}[\\s\\S]*?${rx(E_FAKT)}`, 'g'), ' ');
+  // Kopf, Skripte und der Baustein selbst zaehlen nicht als Beleg: strukturierte
+  // Daten spiegeln den Fakt-Satz, er wuerde sich sonst selbst bestaetigen.
+  const ohneBaustein = html
+    .replace(new RegExp(`${rx(A_FAKT)}[\\s\\S]*?${rx(E_FAKT)}`, 'g'), ' ')
+    .replace(/<head[\s\S]*?<\/head>/i, ' ')
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ');
   const text = ohneBaustein
     .replace(/<[^>]*>/g, ' ')
     .replace(/&nbsp;/g, ' ')
     .replace(/\s+/g, ' ');
   const zahlen = [...new Set(satz.match(/\d[\d.,]*\d|\d/g) || [])];
-  return zahlen.filter((z) => !text.includes(z));
+  // Ziffern-Grenze statt Teilzeichenfolge. Ohne sie galt "8.81" als belegt,
+  // weil es in "48.815" steckt, und "0.026", weil es in "30.026" steckt.
+  // Am 28.07.2026 von der Abnahme aktiv nachgestellt: das Gate meldete gruen,
+  // obwohl beide Zahlen frei erfunden waren.
+  return zahlen.filter((z) => !new RegExp(`(?<![\\d.,])${rx(z)}(?![\\d.,])`).test(text));
 }
 
 let geschrieben = 0;
@@ -124,6 +133,43 @@ for (const [slug, d] of Object.entries(DATEN)) {
     geschrieben += 1;
     if (!NUR_PRUEFEN) writeFileSync(pfad, neu);
   }
+}
+
+/**
+ * Ratifizierte Sollwerte. Ohne sie meldet das Gate gruen, wenn eine Seite aus
+ * der Quelldatei verschwindet: es prueft dann nur noch 11 Seiten und findet
+ * dort 0 Abweichungen. Am 28.07.2026 von der Abnahme nachgestellt.
+ */
+const SOLL_SEITEN = 12;
+if (Object.keys(DATEN).length !== SOLL_SEITEN) {
+  console.error(
+    `Sollwert verletzt: ${Object.keys(DATEN).length} Seiten in seiten-bausteine.json, erwartet ${SOLL_SEITEN}.`
+  );
+  console.error('Wer bewusst Seiten ergaenzt oder streicht, aendert SOLL_SEITEN mit.');
+  process.exit(1);
+}
+
+/**
+ * Der einzige echte Konstruktionszwang dieser Bausteine, hart abgesichert:
+ * die Pfadzeile darf KEIN <nav> sein. css/site.css formatiert jedes
+ * <nav>-Element als fixierte Kopfleiste. Ein Rueckbau auf <nav> erzeugte am
+ * 28.07.2026 zwoelf Seiten mit zweiter Kopfleiste, liess still alle zwoelf
+ * BreadcrumbList verschwinden, und KEIN Gate der Kette schlug an.
+ */
+const bauartFehler = [];
+for (const slug of Object.keys(DATEN)) {
+  const html = readFileSync(join(ROOT, `${slug}.html`), 'utf8');
+  const navs = (html.match(/<nav[\s>]/g) || []).length;
+  const krumen = (html.match(/class="brotkrume"/g) || []).length;
+  const krumeAlsNav = /<nav[^>]*class="brotkrume"/.test(html);
+  if (navs !== 1) bauartFehler.push(`${slug}: ${navs} <nav>-Elemente, erwartet genau 1`);
+  if (krumen !== 1) bauartFehler.push(`${slug}: ${krumen} Pfadzeilen, erwartet genau 1`);
+  if (krumeAlsNav) bauartFehler.push(`${slug}: Pfadzeile ist ein <nav>, sie muss ein <div> sein`);
+}
+if (bauartFehler.length) {
+  console.error('Bauart der Pfadzeile verletzt:');
+  bauartFehler.forEach((z) => console.error('  ' + z));
+  process.exit(1);
 }
 
 if (unbelegt.length) {

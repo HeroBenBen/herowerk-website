@@ -1,117 +1,240 @@
 {
-  "_hinweis": "Sichtbare Bausteine je Ratgeberseite, GF-freigegeben am 28.07.2026 nach Vorher-Nachher-Render. brotkrume = Kurztitel in der Pfadzeile. fakt = zitierfaehiger Satz unter der Kern-Ueberschrift; JEDE Zahl darin muss auf derselben Seite sichtbar stehen, geprueft von scripts/verify-bausteine.mjs. begriffe = Glossar-Muster nach BFSG-04.",
+  "_hinweis": "Sichtbare Bausteine je Ratgeberseite, GF-freigegeben am 28.07.2026 nach Vorher-Nachher-Render. brotkrume = Kurztitel in der Pfadzeile. fakt = zitierfaehiger Satz unter der Kern-Ueberschrift; JEDE Zahl darin muss auf derselben Seite sichtbar stehen, geprueft von scripts/build-bausteine.mjs --check. begriffe = Glossar-Muster nach BFSG-04.",
   "seiten": {
     "baubarkeitspruefung": {
       "brotkrume": "Baubarkeitsprüfung",
       "fakt": "Vor dem Einbau prüfen wir bei einem Vor-Ort-Termin, ob und wie die Wärmepumpe in dein Haus passt. Einen verbindlichen Preis gibt es erst danach.",
       "begriffe": [
-        ["Baubarkeitsprüfung", "Der Vor-Ort-Termin, bei dem wir prüfen, ob und wie die Wärmepumpe in dein Haus passt."],
-        ["Vorlauftemperatur", "Die Temperatur, mit der das Heizwasser zu den Heizkörpern läuft. Je niedriger sie sein darf, desto sparsamer arbeitet die Wärmepumpe."],
-        ["Heizlast", "Die Wärmeleistung, die dein Haus am kältesten Tag braucht. Sie bestimmt die Größe der Anlage."]
+        [
+          "Baubarkeitsprüfung",
+          "Der Vor-Ort-Termin, bei dem wir prüfen, ob und wie die Wärmepumpe in dein Haus passt."
+        ],
+        [
+          "Vorlauftemperatur",
+          "Die Temperatur, mit der das Heizwasser zu den Heizkörpern läuft. Je niedriger sie sein darf, desto sparsamer arbeitet die Wärmepumpe."
+        ],
+        [
+          "Heizlast",
+          "Die Wärmeleistung, die dein Haus am kältesten Tag braucht. Sie bestimmt die Größe der Anlage."
+        ]
       ]
     },
     "dimensionierung-verstehen": {
-      "brotkrume": "Dimensionierung verstehen",
+      "brotkrume": "Dimensionierung",
       "fakt": "Eine Wärmepumpe läuft sparsam, leise und lange, wenn ihre Größe genau zum Haus passt. Deshalb legen wir sie vor dem Angebot rechnerisch aus.",
       "begriffe": [
-        ["Heizlast", "Die Wärmeleistung, die dein Haus am kältesten Tag braucht. Sie bestimmt die Größe der Anlage."],
-        ["Vorlauftemperatur", "Die Temperatur, mit der das Heizwasser zu den Heizkörpern läuft. Je niedriger sie sein darf, desto sparsamer arbeitet die Wärmepumpe."],
-        ["Takten", "Häufiges Ein- und Ausschalten. Eine zu groß gewählte Wärmepumpe taktet, das kostet Strom und Lebensdauer."]
+        [
+          "Heizlast",
+          "Die Wärmeleistung, die dein Haus am kältesten Tag braucht. Sie bestimmt die Größe der Anlage."
+        ],
+        [
+          "Vorlauftemperatur",
+          "Die Temperatur, mit der das Heizwasser zu den Heizkörpern läuft. Je niedriger sie sein darf, desto sparsamer arbeitet die Wärmepumpe."
+        ],
+        [
+          "Takten",
+          "Häufiges Ein- und Ausschalten. Eine zu groß gewählte Wärmepumpe taktet, das kostet Strom und Lebensdauer."
+        ]
       ]
     },
     "foerderung-hannover": {
       "brotkrume": "Förderung in Hannover",
-      "fakt": "Für die erste Wohneinheit sind 28.000 Euro förderfähig, für die zweite bis sechste Wohneinheit je 15.000 Euro, ab der siebten je 8.000 Euro. Im Bestfall sind das höchstens 22.400 Euro Zuschuss.",
+      "fakt": "Für die erste Wohneinheit sind 28.000 Euro förderfähig, daraus ergeben sich bei Anträgen vom 21.07.2026 bis 31.01.2027 bis zu 22.400 Euro Zuschuss. Für die zweite bis sechste Wohneinheit sind je 15.000 Euro förderfähig, ab der siebten je 8.000 Euro.",
       "begriffe": [
-        ["Grundförderung", "Der Sockel der KfW-Heizungsförderung, den jeder bekommt, der die Voraussetzungen erfüllt."],
-        ["Klimabonus", "Ein Förderaufschlag dafür, dass eine alte Öl-, Gas- oder Kohleheizung ersetzt wird."],
-        ["Einkommensbonus", "Ein Förderaufschlag, der vom anrechenbaren zu versteuernden Haushaltseinkommen abhängt."],
-        ["Förderfähige Kosten", "Der Teil der Rechnung, auf den die Förderquote überhaupt angewendet wird. Er ist je Wohneinheit gedeckelt."]
+        [
+          "Grundförderung",
+          "Der Sockel der KfW-Heizungsförderung, den jeder bekommt, der die Voraussetzungen des Programms erfüllt."
+        ],
+        [
+          "Klimabonus",
+          "Ein Förderaufschlag für selbstnutzende Eigentümer, die eine funktionsfähige alte Öl-, Kohle-, Gasetagen- oder Nachtspeicherheizung ersetzen, bei Gas- und Biomasseheizungen ab 20 Jahren."
+        ],
+        [
+          "Einkommensbonus",
+          "Ein Förderaufschlag für selbstnutzende Eigentümer, dessen Höhe an Schwellen des anrechenbaren zu versteuernden Haushaltseinkommens hängt."
+        ],
+        [
+          "Förderfähige Kosten",
+          "Der Teil der Rechnung, auf den die Förderquote überhaupt angewendet wird. Er ist je Wohneinheit gedeckelt."
+        ]
       ]
     },
     "foerderung-jetzt-mitnehmen": {
-      "brotkrume": "Förderung jetzt mitnehmen",
-      "fakt": "Je Stichtag sinkt der Klimabonus um 4 Prozentpunkte und die Grenze der förderfähigen Kosten um 750 €. Wer früher beantragt, bekommt beides noch in voller Höhe.",
+      "brotkrume": "Förderung mitnehmen",
+      "fakt": "Je Stichtag sinkt der Klimabonus um 4 Prozentpunkte und die Grenze der förderfähigen Kosten um 750 Euro. Wer früher beantragt, bekommt beides noch in voller Höhe.",
       "begriffe": [
-        ["Klimabonus", "Ein Förderaufschlag dafür, dass eine alte Öl-, Gas- oder Kohleheizung ersetzt wird."],
-        ["Stichtag", "Der Termin, zu dem sich die Förderhöhe ändert. Maßgeblich ist das Datum deines Antrags."],
-        ["Förderfähige Kosten", "Der Teil der Rechnung, auf den die Förderquote überhaupt angewendet wird. Er ist je Wohneinheit gedeckelt."]
+        [
+          "Klimabonus",
+          "Ein Förderaufschlag für selbstnutzende Eigentümer, die eine funktionsfähige alte Öl-, Kohle-, Gasetagen- oder Nachtspeicherheizung ersetzen, bei Gas- und Biomasseheizungen ab 20 Jahren."
+        ],
+        [
+          "Stichtag",
+          "Der Termin, zu dem sich die Förderhöhe ändert. Maßgeblich ist das Datum deines Antrags."
+        ],
+        [
+          "Förderfähige Kosten",
+          "Der Teil der Rechnung, auf den die Förderquote überhaupt angewendet wird. Er ist je Wohneinheit gedeckelt."
+        ]
       ]
     },
     "gasheizung-tauschen-oder-reparieren": {
-      "brotkrume": "Gasheizung tauschen oder reparieren",
+      "brotkrume": "Gasheizung tauschen?",
       "fakt": "Der Klimabonus von 16 Prozent setzt bei einer Gas- oder Biomasseheizung voraus, dass sie mindestens 20 Jahre alt ist. Ist sie jünger, bleiben dir die Grundförderung von 30 Prozent und, je nach Haushaltseinkommen, der Einkommensbonus.",
       "begriffe": [
-        ["Klimabonus", "Ein Förderaufschlag dafür, dass eine alte Öl-, Gas- oder Kohleheizung ersetzt wird."],
-        ["CO₂-Preis", "Der gesetzlich festgelegte Aufschlag auf fossile Brennstoffe. Er steigt und verteuert das Heizen mit Gas und Öl Jahr für Jahr."],
-        ["Grundförderung", "Der Sockel der KfW-Heizungsförderung, den jeder bekommt, der die Voraussetzungen erfüllt."]
+        [
+          "Klimabonus",
+          "Ein Förderaufschlag für selbstnutzende Eigentümer, die eine funktionsfähige alte Öl-, Kohle-, Gasetagen- oder Nachtspeicherheizung ersetzen, bei Gas- und Biomasseheizungen ab 20 Jahren."
+        ],
+        [
+          "CO₂-Preis",
+          "Der gesetzlich festgelegte Aufschlag auf fossile Brennstoffe. Er steigt und verteuert das Heizen mit Gas und Öl Jahr für Jahr."
+        ],
+        [
+          "Grundförderung",
+          "Der Sockel der KfW-Heizungsförderung, den jeder bekommt, der die Voraussetzungen des Programms erfüllt."
+        ]
       ]
     },
     "propan-waermepumpe": {
       "brotkrume": "Propan-Wärmepumpe",
       "fakt": "Propan (R290) hat einen GWP-Wert von 0,02, R32 liegt bei 675 und R410A bei 2.088. Deshalb ist R290 von den Abschmelzpfaden der F-Gase-Verordnung nicht betroffen.",
       "begriffe": [
-        ["Kältemittel", "Der Stoff, der im Kreislauf der Wärmepumpe die Wärme transportiert."],
-        ["GWP", "Treibhauspotenzial. Es sagt, wie stark ein Kilogramm des Stoffs im Vergleich zu einem Kilogramm CO₂ auf das Klima wirkt."],
-        ["R290", "Die Kältemittel-Bezeichnung für Propan."],
-        ["Vorlauftemperatur", "Die Temperatur, mit der das Heizwasser zu den Heizkörpern läuft. R290 erreicht hier hohe Werte und passt deshalb auch in den Altbau."]
+        [
+          "Kältemittel",
+          "Der Stoff, der im Kreislauf der Wärmepumpe die Wärme transportiert."
+        ],
+        [
+          "GWP",
+          "Treibhauspotenzial über 100 Jahre. Es sagt, wie stark ein Kilogramm des Stoffs im Vergleich zu einem Kilogramm CO₂ auf das Klima wirkt. Der Zeithorizont und der zugrunde gelegte IPCC-Bericht erklären, warum für Propan je nach Quelle 0,02 oder rund 3 genannt wird."
+        ],
+        [
+          "R290",
+          "Die Kältemittel-Bezeichnung für Propan."
+        ],
+        [
+          "Vorlauftemperatur",
+          "Die Temperatur, mit der das Heizwasser zu den Heizkörpern läuft. R290 erreicht hier hohe Werte und passt deshalb auch in den Altbau."
+        ]
       ]
     },
     "waermepumpe-altbau": {
       "brotkrume": "Wärmepumpe im Altbau",
       "fakt": "Ob eine Wärmepumpe im Altbau funktioniert, entscheidet nicht das Baujahr, sondern die Vorlauftemperatur, die das Haus braucht.",
       "begriffe": [
-        ["Vorlauftemperatur", "Die Temperatur, mit der das Heizwasser zu den Heizkörpern läuft. Je niedriger sie sein darf, desto sparsamer arbeitet die Wärmepumpe."],
-        ["Heizlast", "Die Wärmeleistung, die dein Haus am kältesten Tag braucht. Sie bestimmt die Größe der Anlage."],
-        ["Baubarkeitsprüfung", "Der Vor-Ort-Termin, bei dem wir prüfen, ob und wie die Wärmepumpe in dein Haus passt."]
+        [
+          "Vorlauftemperatur",
+          "Die Temperatur, mit der das Heizwasser zu den Heizkörpern läuft. Je niedriger sie sein darf, desto sparsamer arbeitet die Wärmepumpe."
+        ],
+        [
+          "Heizlast",
+          "Die Wärmeleistung, die dein Haus am kältesten Tag braucht. Sie bestimmt die Größe der Anlage."
+        ],
+        [
+          "Baubarkeitsprüfung",
+          "Der Vor-Ort-Termin, bei dem wir prüfen, ob und wie die Wärmepumpe in dein Haus passt."
+        ]
       ]
     },
     "waermepumpe-hannover": {
-      "brotkrume": "Wärmepumpe in der Region Hannover",
-      "fakt": "In der Region Hannover sind bis zu 80 Prozent Förderung möglich: 30 Prozent Grundförderung, 16 Prozent Klimabonus und bis zu 40 Prozent Einkommensbonus.",
+      "brotkrume": "Region Hannover",
+      "fakt": "Für Wärmepumpen in der Region Hannover greift die bundesweite KfW-Förderung mit bis zu 80 Prozent: 30 Prozent Grundförderung, 16 Prozent Klimabonus und bis zu 40 Prozent Einkommensbonus.",
       "begriffe": [
-        ["Grundförderung", "Der Sockel der KfW-Heizungsförderung, den jeder bekommt, der die Voraussetzungen erfüllt."],
-        ["Klimabonus", "Ein Förderaufschlag dafür, dass eine alte Öl-, Gas- oder Kohleheizung ersetzt wird."],
-        ["Einkommensbonus", "Ein Förderaufschlag, der vom anrechenbaren zu versteuernden Haushaltseinkommen abhängt."]
+        [
+          "Grundförderung",
+          "Der Sockel der KfW-Heizungsförderung, den jeder bekommt, der die Voraussetzungen des Programms erfüllt."
+        ],
+        [
+          "Klimabonus",
+          "Ein Förderaufschlag für selbstnutzende Eigentümer, die eine funktionsfähige alte Öl-, Kohle-, Gasetagen- oder Nachtspeicherheizung ersetzen, bei Gas- und Biomasseheizungen ab 20 Jahren."
+        ],
+        [
+          "Einkommensbonus",
+          "Ein Förderaufschlag für selbstnutzende Eigentümer, dessen Höhe an Schwellen des anrechenbaren zu versteuernden Haushaltseinkommens hängt."
+        ]
       ]
     },
     "waermepumpe-laerm": {
       "brotkrume": "Wärmepumpe und Schall",
       "fakt": "Die Wolf CHA-Monoblock 10 hat einen Schallleistungspegel von 53 dB(A), im reduzierten Nachtbetrieb 51 dB(A). Beim Nachbarn in 3 Metern Entfernung kommen nachts rund 34 dB(A) an.",
       "begriffe": [
-        ["Schallleistungspegel", "Der Wert aus dem Datenblatt. Er beschreibt, wie viel Schall das Gerät insgesamt abgibt, unabhängig vom Abstand."],
-        ["Schalldruckpegel", "Der Wert, der tatsächlich an einem bestimmten Ort ankommt. Er sinkt mit dem Abstand."],
-        ["TA Lärm", "Die Technische Anleitung zum Schutz gegen Lärm. Sie gibt vor, welche Pegel an der Nachbarbebauung zulässig sind."],
-        ["Nachtbetrieb", "Ein abgesenkter Betriebsmodus, in dem die Wärmepumpe leiser läuft."]
+        [
+          "Schallleistungspegel",
+          "Der Wert aus dem Datenblatt. Er beschreibt, wie viel Schall das Gerät insgesamt abgibt, unabhängig vom Abstand."
+        ],
+        [
+          "Schalldruckpegel",
+          "Der Wert, der tatsächlich an einem bestimmten Ort ankommt. Er sinkt mit dem Abstand."
+        ],
+        [
+          "TA Lärm",
+          "Die Technische Anleitung zum Schutz gegen Lärm. Sie gibt vor, welche Pegel an der Nachbarbebauung zulässig sind."
+        ],
+        [
+          "Nachtbetrieb",
+          "Ein abgesenkter Betriebsmodus, in dem die Wärmepumpe leiser läuft."
+        ]
       ]
     },
     "waermepumpenstrom-hannover": {
       "brotkrume": "Wärmepumpenstrom",
-      "fakt": "Wärmepumpenstrom ist günstiger als Haushaltsstrom. Wer nach Paragraf 14a EnWG steuerbar wird, spart zusätzlich beim Netzentgelt.",
+      "fakt": "Wärmepumpenstrom ist günstiger als Haushaltsstrom. Wärmepumpen ab 4,2 Kilowatt Anschlussleistung müssen nach Paragraf 14a EnWG beim Netzbetreiber angemeldet werden und bekommen im Gegenzug dauerhaft reduzierte Netzentgelte.",
       "begriffe": [
-        ["Wärmepumpentarif", "Ein eigener, günstigerer Stromtarif für die Wärmepumpe."],
-        ["Paragraf 14a EnWG", "Die Regel, nach der der Netzbetreiber die Wärmepumpe im Ausnahmefall kurz drosseln darf. Dafür sinkt das Netzentgelt."],
-        ["Netzentgelt", "Der Anteil am Strompreis, der für die Nutzung des Stromnetzes anfällt."],
-        ["Zähler", "Das Messgerät für den Stromverbrauch. Für die Wärmepumpe kann sich ein eigener lohnen."]
+        [
+          "Wärmepumpentarif",
+          "Ein eigener, günstigerer Stromtarif für die Wärmepumpe."
+        ],
+        [
+          "Paragraf 14a EnWG",
+          "Die Regel, nach der Wärmepumpen ab 4,2 Kilowatt beim Netzbetreiber angemeldet werden müssen. Der Netzbetreiber darf sie im Ausnahmefall kurz drosseln, dafür sinkt dauerhaft das Netzentgelt."
+        ],
+        [
+          "Netzentgelt",
+          "Der Anteil am Strompreis, der für die Nutzung des Stromnetzes anfällt."
+        ],
+        [
+          "Zähler",
+          "Das Messgerät für den Stromverbrauch. Für die Wärmepumpe kann sich ein eigener lohnen."
+        ]
       ]
     },
     "wertsteigerung-waermepumpe": {
       "brotkrume": "Wertsteigerung",
       "fakt": "Eigenheime der schlechtesten Effizienzklasse H werden im Schnitt rund 14 Prozent günstiger angeboten als Klasse D. Bei Eigentumswohnungen liegt der Aufpreis für die Klassen A+ und A bei jeweils rund 23 Prozent.",
       "begriffe": [
-        ["Energieeffizienzklasse", "Die Einstufung von A+ bis H im Energieausweis. Sie steht in jedem Immobilieninserat."],
-        ["Energieausweis", "Das Dokument, das den Energiebedarf eines Gebäudes ausweist. Beim Verkauf ist es Pflicht."],
-        ["Wertrisiko", "Das Risiko, dass eine Immobilie an Wert verliert, weil ihre Heizung absehbar teurer oder unzulässig wird."]
+        [
+          "Energieeffizienzklasse",
+          "Die Einstufung von A+ bis H im Energieausweis. Sie steht in jedem Immobilieninserat."
+        ],
+        [
+          "Energieausweis",
+          "Das Dokument, das den Energiebedarf eines Gebäudes ausweist. Beim Verkauf ist es Pflicht."
+        ],
+        [
+          "Wertrisiko",
+          "Das Risiko, dass eine Immobilie an Wert verliert, weil ihre Heizung absehbar teurer oder unzulässig wird."
+        ]
       ]
     },
     "wp-kosten-hannover": {
       "brotkrume": "Was kostet eine Wärmepumpe?",
       "fakt": "Eine Wärmepumpe kostet in der Region Hannover komplett eingebaut 30.026 bis 48.815 Euro brutto. Für ein durchschnittliches Einfamilienhaus bleiben nach Förderung ab 12.949 Euro Eigenanteil.",
       "begriffe": [
-        ["Bruttopreis", "Der Komplettpreis inklusive Gerät, Einbau und Mehrwertsteuer, bevor die Förderung abgezogen wird."],
-        ["Eigenanteil", "Der Betrag, der nach Abzug der Förderung für dich übrig bleibt."],
-        ["Baubarkeitsprüfung", "Der Vor-Ort-Termin, bei dem wir prüfen, ob und wie die Wärmepumpe in dein Haus passt. Erst danach gibt es einen verbindlichen Preis."],
-        ["Klimabonus", "Ein Förderaufschlag dafür, dass eine alte Öl-, Gas- oder Kohleheizung ersetzt wird."]
+        [
+          "Bruttopreis",
+          "Der Komplettpreis inklusive Gerät, Einbau und Mehrwertsteuer, bevor die Förderung abgezogen wird."
+        ],
+        [
+          "Eigenanteil",
+          "Der Betrag, der nach Abzug der Förderung für dich übrig bleibt."
+        ],
+        [
+          "Baubarkeitsprüfung",
+          "Der Vor-Ort-Termin, bei dem wir prüfen, ob und wie die Wärmepumpe in dein Haus passt. Erst danach gibt es einen verbindlichen Preis."
+        ],
+        [
+          "Klimabonus",
+          "Ein Förderaufschlag für selbstnutzende Eigentümer, die eine funktionsfähige alte Öl-, Kohle-, Gasetagen- oder Nachtspeicherheizung ersetzen, bei Gas- und Biomasseheizungen ab 20 Jahren."
+        ]
       ]
     }
   }

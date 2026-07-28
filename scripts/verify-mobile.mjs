@@ -50,6 +50,14 @@ const KERNSEITEN = [
   '/anfrage.html',
   '/datenschutz.html',
   '/impressum.html',
+  // Ergaenzt 28.07.2026: die Ratgeber-Artikelseiten waren gar nicht abgedeckt,
+  // obwohl sie seit diesem Tag drei neue Bauteile tragen (Pfadzeile, Fakt-Satz,
+  // Begriffsblock). Das gruene Gate war fuer sie kein Nachweis. Gefunden von der
+  // Abnahme. Drei Vertreter, weil alle zwoelf denselben Bauplan tragen:
+  // der laengste Fakt-Satz, die laengste Pfadzeile, der groesste Begriffsblock.
+  '/foerderung-hannover.html',
+  '/waermepumpe-hannover.html',
+  '/waermepumpe-laerm.html',
 ];
 
 // ── Statischer Server auf dem Arbeitsstand ──────────────────────────────────
