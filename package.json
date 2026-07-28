@@ -13,7 +13,9 @@
     "verify:mobile": "node scripts/verify-mobile.mjs",
     "verify:seo": "node scripts/build-structured-data.mjs --check",
     "build:seo": "node scripts/build-structured-data.mjs",
-    "build:seo:jobs": "node scripts/build-structured-data.mjs --jobs"
+    "build:seo:jobs": "node scripts/build-structured-data.mjs --jobs",
+    "build:bausteine": "node scripts/build-bausteine.mjs",
+    "verify:bausteine": "node scripts/build-bausteine.mjs --check"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",
