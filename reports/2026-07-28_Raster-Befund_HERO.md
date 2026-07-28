@@ -292,15 +292,16 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**baubarkeitspruefung, 320 px — 7 verschiedene linke Kanten**
+**baubarkeitspruefung, 320 px — 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 19 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 18 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 136.27 px | 1 | a.mobile-phone-cta |
+| 156.34 px | 1 | span |
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
@@ -331,15 +332,16 @@ Ergebnis: PASS (0 Befunde).
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**dimensionierung-verstehen, 320 px — 7 verschiedene linke Kanten**
+**dimensionierung-verstehen, 320 px — 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 136.27 px | 1 | a.mobile-phone-cta |
+| 156.34 px | 1 | span |
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
@@ -358,29 +360,31 @@ Ergebnis: PASS (0 Befunde).
 | 176 px | 6 | div.footer-col, h2, a |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**foerderung-hannover, 320 px — 9 verschiedene linke Kanten**
+**foerderung-hannover, 320 px — 10 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 21 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 20 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 136.27 px | 1 | a.mobile-phone-cta |
+| 156.34 px | 1 | span |
 | 175.27 px | 1 | span.mobile-phone-label |
 | 180.05 px | 3 | th, td, td |
 | 244.73 px | 3 | th, td, td |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**foerderung-jetzt-mitnehmen, 320 px — 7 verschiedene linke Kanten**
+**foerderung-jetzt-mitnehmen, 320 px — 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 18 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 17 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 136.27 px | 1 | a.mobile-phone-cta |
+| 156.34 px | 1 | span |
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
@@ -410,16 +414,17 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**gasheizung-tauschen-oder-reparieren, 320 px — 8 verschiedene linke Kanten**
+**gasheizung-tauschen-oder-reparieren, 320 px — 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 15 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 4 | li, li, li |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 136.27 px | 1 | a.mobile-phone-cta |
+| 156.34 px | 1 | span |
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
@@ -528,16 +533,17 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**propan-waermepumpe, 320 px — 8 verschiedene linke Kanten**
+**propan-waermepumpe, 320 px — 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 13 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 42 px | 1 | li |
-| 76.95 px | 1 | a |
+| 42 px | 2 | li, strong |
+| 70.95 px | 1 | a |
 | 136.27 px | 1 | a.mobile-phone-cta |
+| 156.34 px | 1 | span |
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
@@ -594,53 +600,57 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-altbau, 320 px — 8 verschiedene linke Kanten**
+**waermepumpe-altbau, 320 px — 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 13 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 136.27 px | 1 | a.mobile-phone-cta |
+| 156.34 px | 1 | span |
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-hannover, 320 px — 7 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 15 | div.section-inner, div.section-tag, div.brotkrume |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 136.27 px | 1 | a.mobile-phone-cta |
-| 175.27 px | 1 | span.mobile-phone-label |
-| 252 px | 1 | div#hamburger.hamburger |
-
-**waermepumpe-laerm, 320 px — 8 verschiedene linke Kanten**
+**waermepumpe-hannover, 320 px — 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 100.88 px | 1 | strong |
+| 70.95 px | 1 | a |
 | 136.27 px | 1 | a.mobile-phone-cta |
+| 156.34 px | 1 | span |
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**waermepumpenstrom-hannover, 320 px — 7 verschiedene linke Kanten**
+**waermepumpe-laerm, 320 px — 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 12 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 13 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
+| 100.88 px | 1 | strong |
 | 136.27 px | 1 | a.mobile-phone-cta |
+| 156.34 px | 1 | span |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
+
+**waermepumpenstrom-hannover, 320 px — 8 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 11 | div.section-inner, div.section-tag, div.brotkrume |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 70.95 px | 1 | a |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 156.34 px | 1 | span |
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
@@ -651,21 +661,22 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 11 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 136.27 px | 1 | a.mobile-phone-cta |
-| 162.34 px | 1 | span |
+| 156.34 px | 1 | span |
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**wp-kosten-hannover, 320 px — 7 verschiedene linke Kanten**
+**wp-kosten-hannover, 320 px — 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 12 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 11 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 136.27 px | 1 | a.mobile-phone-cta |
+| 156.34 px | 1 | span |
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
@@ -710,9 +721,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 20 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 2 | li, strong |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 156.27 px | 1 | a.mobile-phone-cta |
-| 162.34 px | 1 | span |
+| 156.34 px | 1 | span |
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
@@ -742,15 +753,16 @@ Ergebnis: PASS (0 Befunde).
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**dimensionierung-verstehen, 360 px — 8 verschiedene linke Kanten**
+**dimensionierung-verstehen, 360 px — 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 156.27 px | 1 | a.mobile-phone-cta |
+| 156.34 px | 1 | span |
 | 195.27 px | 1 | span.mobile-phone-label |
 | 212.3 px | 1 | a |
 | 292 px | 1 | div#hamburger.hamburger |
@@ -785,23 +797,24 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 22 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 156.27 px | 1 | a.mobile-phone-cta |
-| 162.34 px | 1 | span |
+| 156.34 px | 1 | span |
 | 180.05 px | 4 | th, td, td |
 | 195.27 px | 1 | span.mobile-phone-label |
 | 244.73 px | 4 | th, td, td |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**foerderung-jetzt-mitnehmen, 360 px — 7 verschiedene linke Kanten**
+**foerderung-jetzt-mitnehmen, 360 px — 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 19 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 18 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 156.27 px | 1 | a.mobile-phone-cta |
+| 156.34 px | 1 | span |
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
@@ -831,16 +844,17 @@ Ergebnis: PASS (0 Befunde).
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**gasheizung-tauschen-oder-reparieren, 360 px — 8 verschiedene linke Kanten**
+**gasheizung-tauschen-oder-reparieren, 360 px — 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 15 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 4 | li, li, li |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 156.27 px | 1 | a.mobile-phone-cta |
+| 156.34 px | 1 | span |
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
@@ -961,9 +975,9 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 156.27 px | 1 | a.mobile-phone-cta |
-| 162.34 px | 1 | span |
+| 156.34 px | 1 | span |
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
@@ -1028,21 +1042,22 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 13 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 156.27 px | 1 | a.mobile-phone-cta |
-| 162.34 px | 1 | span |
+| 156.34 px | 1 | span |
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-hannover, 360 px — 7 verschiedene linke Kanten**
+**waermepumpe-hannover, 360 px — 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 15 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 156.27 px | 1 | a.mobile-phone-cta |
+| 156.34 px | 1 | span |
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
@@ -1053,9 +1068,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 156.27 px | 1 | a.mobile-phone-cta |
-| 162.34 px | 1 | span |
+| 156.34 px | 1 | span |
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
@@ -1064,11 +1079,11 @@ Ergebnis: PASS (0 Befunde).
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 12 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 11 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 156.27 px | 1 | a.mobile-phone-cta |
-| 162.34 px | 1 | span |
+| 156.34 px | 1 | span |
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
@@ -1079,22 +1094,23 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 11 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 156.27 px | 1 | a.mobile-phone-cta |
-| 162.34 px | 1 | span |
+| 156.34 px | 1 | span |
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**wp-kosten-hannover, 360 px — 8 verschiedene linke Kanten**
+**wp-kosten-hannover, 360 px — 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 17 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 19 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 138.86 px | 1 | th |
+| 70.95 px | 1 | a |
+| 138.86 px | 2 | th, td |
 | 156.27 px | 1 | a.mobile-phone-cta |
+| 156.34 px | 1 | span |
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
@@ -1140,8 +1156,8 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 20 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 4 | li, strong, li |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 163.77 px | 1 | a.mobile-phone-cta |
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
@@ -1172,14 +1188,15 @@ Ergebnis: PASS (0 Befunde).
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**dimensionierung-verstehen, 375 px — 8 verschiedene linke Kanten**
+**dimensionierung-verstehen, 375 px — 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 15 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 163.77 px | 1 | a.mobile-phone-cta |
 | 202.77 px | 1 | span.mobile-phone-label |
 | 212.3 px | 1 | a |
@@ -1217,8 +1234,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 22 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 163.77 px | 1 | a.mobile-phone-cta |
 | 180.05 px | 4 | th, td, td |
 | 202.77 px | 1 | span.mobile-phone-label |
@@ -1232,8 +1249,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 18 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 163.77 px | 1 | a.mobile-phone-cta |
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
@@ -1264,15 +1281,16 @@ Ergebnis: PASS (0 Befunde).
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**gasheizung-tauschen-oder-reparieren, 375 px — 8 verschiedene linke Kanten**
+**gasheizung-tauschen-oder-reparieren, 375 px — 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 15 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 4 | li, li, li |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 163.77 px | 1 | a.mobile-phone-cta |
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
@@ -1397,8 +1415,8 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 163.77 px | 1 | a.mobile-phone-cta |
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
@@ -1464,20 +1482,21 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 163.77 px | 1 | a.mobile-phone-cta |
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-hannover, 375 px — 7 verschiedene linke Kanten**
+**waermepumpe-hannover, 375 px — 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 15 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 163.77 px | 1 | a.mobile-phone-cta |
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
@@ -1489,8 +1508,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 163.77 px | 1 | a.mobile-phone-cta |
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
@@ -1502,8 +1521,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 12 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 163.77 px | 1 | a.mobile-phone-cta |
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
@@ -1515,21 +1534,22 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 11 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 163.77 px | 1 | a.mobile-phone-cta |
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**wp-kosten-hannover, 375 px — 8 verschiedene linke Kanten**
+**wp-kosten-hannover, 375 px — 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 22 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 23 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 144.42 px | 3 | th, td, td |
+| 70.95 px | 1 | a |
+| 144.42 px | 4 | th, td, td |
+| 156.34 px | 1 | span |
 | 163.77 px | 1 | a.mobile-phone-cta |
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
@@ -1575,8 +1595,8 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 20 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 4 | li, strong, li |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 171.27 px | 1 | a.mobile-phone-cta |
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
@@ -1615,8 +1635,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 171.27 px | 1 | a.mobile-phone-cta |
 | 210.27 px | 1 | span.mobile-phone-label |
 | 212.3 px | 1 | a |
@@ -1656,8 +1676,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 22 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 171.27 px | 1 | a.mobile-phone-cta |
 | 180.05 px | 4 | th, td, td |
 | 210.27 px | 1 | span.mobile-phone-label |
@@ -1671,8 +1691,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 18 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 171.27 px | 1 | a.mobile-phone-cta |
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
@@ -1704,15 +1724,16 @@ Ergebnis: PASS (0 Befunde).
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**gasheizung-tauschen-oder-reparieren, 390 px — 8 verschiedene linke Kanten**
+**gasheizung-tauschen-oder-reparieren, 390 px — 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 15 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 4 | li, li, li |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 171.27 px | 1 | a.mobile-phone-cta |
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
@@ -1837,8 +1858,8 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 171.27 px | 1 | a.mobile-phone-cta |
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
@@ -1904,20 +1925,21 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 15 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 171.27 px | 1 | a.mobile-phone-cta |
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-hannover, 390 px — 7 verschiedene linke Kanten**
+**waermepumpe-hannover, 390 px — 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 16 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 15 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 171.27 px | 1 | a.mobile-phone-cta |
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
@@ -1929,24 +1951,23 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 13 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 171.27 px | 1 | a.mobile-phone-cta |
 | 209.03 px | 1 | strong |
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**waermepumpenstrom-hannover, 390 px — 9 verschiedene linke Kanten**
+**waermepumpenstrom-hannover, 390 px — 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 12 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 171.27 px | 1 | a.mobile-phone-cta |
-| 177.83 px | 1 | a |
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
@@ -1957,21 +1978,22 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 12 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 171.27 px | 1 | a.mobile-phone-cta |
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**wp-kosten-hannover, 390 px — 8 verschiedene linke Kanten**
+**wp-kosten-hannover, 390 px — 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 26 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 27 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 150 px | 5 | th, td, td |
+| 70.95 px | 1 | a |
+| 150 px | 6 | th, td, td |
+| 156.34 px | 1 | span |
 | 171.27 px | 1 | a.mobile-phone-cta |
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
@@ -2017,8 +2039,8 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 20 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 8 | li, strong, li |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 183.27 px | 1 | a.mobile-phone-cta |
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
@@ -2057,8 +2079,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 183.27 px | 1 | a.mobile-phone-cta |
 | 212.3 px | 1 | a |
 | 222.27 px | 1 | span.mobile-phone-label |
@@ -2098,8 +2120,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 22 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 180.05 px | 4 | th, td, td |
 | 183.27 px | 1 | a.mobile-phone-cta |
 | 222.27 px | 1 | span.mobile-phone-label |
@@ -2113,8 +2135,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 20 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 183.27 px | 1 | a.mobile-phone-cta |
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
@@ -2146,15 +2168,16 @@ Ergebnis: PASS (0 Befunde).
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**gasheizung-tauschen-oder-reparieren, 414 px — 8 verschiedene linke Kanten**
+**gasheizung-tauschen-oder-reparieren, 414 px — 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 15 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 4 | li, li, li |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 183.27 px | 1 | a.mobile-phone-cta |
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
@@ -2279,8 +2302,8 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 15 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 183.27 px | 1 | a.mobile-phone-cta |
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
@@ -2346,20 +2369,21 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 15 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 183.27 px | 1 | a.mobile-phone-cta |
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-hannover, 414 px — 7 verschiedene linke Kanten**
+**waermepumpe-hannover, 414 px — 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 17 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 16 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 183.27 px | 1 | a.mobile-phone-cta |
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
@@ -2371,9 +2395,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 12 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 130.23 px | 1 | strong |
-| 162.34 px | 1 | span |
+| 156.34 px | 1 | span |
 | 183.27 px | 1 | a.mobile-phone-cta |
 | 187.05 px | 1 | strong |
 | 222.27 px | 1 | span.mobile-phone-label |
@@ -2384,10 +2408,10 @@ Ergebnis: PASS (0 Befunde).
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 13 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 12 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 177.83 px | 1 | a |
 | 183.27 px | 1 | a.mobile-phone-cta |
 | 222.27 px | 1 | span.mobile-phone-label |
@@ -2400,8 +2424,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 12 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 183.27 px | 1 | a.mobile-phone-cta |
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
@@ -2413,9 +2437,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 27 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 158.91 px | 6 | th, td, td |
-| 162.34 px | 1 | span |
 | 183.27 px | 1 | a.mobile-phone-cta |
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
@@ -2468,8 +2492,8 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 22 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 8 | li, strong, li |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 256.09 px | 1 | span.tt-feld |
 | 323.97 px | 1 | span.tt-feld |
@@ -2522,8 +2546,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 26 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 206.08 px | 3 | th, td, td |
 | 212.3 px | 1 | a |
 | 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
@@ -2572,8 +2596,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 26 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 180.05 px | 4 | th, td, td |
 | 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 256.09 px | 1 | span.tt-feld |
@@ -2590,8 +2614,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 30 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 180.05 px | 3 | th, td, td |
 | 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 256.09 px | 1 | span.tt-feld |
@@ -2644,8 +2668,8 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 16 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 4 | li, li, li |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 256.09 px | 1 | span.tt-feld |
 | 323.97 px | 1 | span.tt-feld |
@@ -2801,8 +2825,8 @@ Ergebnis: PASS (0 Befunde).
 | 763.48 px | 7 | div, div, h2 |
 | 846.39 px | 1 | svg |
 | 849.24 px | 1 | path |
-| 991.31 px | 1 | div.pa-card.pa-visible.dimmed |
-| 1005.31 px | 7 | div, div, h2 |
+| 991.32 px | 1 | div.pa-card.pa-visible.dimmed |
+| 1005.32 px | 7 | div, div, h2 |
 | 1087.22 px | 1 | svg |
 
 **propan-waermepumpe, 600 px — 13 verschiedene linke Kanten**
@@ -2813,8 +2837,8 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 16 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 177.77 px | 1 | a |
 | 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 256.09 px | 1 | span.tt-feld |
@@ -2903,8 +2927,8 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
 | 45 px | 4 | h2#begriffe-titel, dl, dt |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 256.09 px | 1 | span.tt-feld |
 | 282.36 px | 1 | a |
@@ -2920,9 +2944,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 19 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 45 px | 6 | h2#begriffe-titel, dl, dt |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 45 px | 5 | h2#begriffe-titel, dl, dt |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 256.09 px | 1 | span.tt-feld |
 | 282.36 px | 1 | a.btn-primary |
@@ -2939,10 +2963,10 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 16 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 51.41 px | 1 | strong |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 91.11 px | 1 | strong |
 | 130.23 px | 1 | strong |
-| 162.34 px | 1 | span |
+| 156.34 px | 1 | span |
 | 234.47 px | 1 | strong |
 | 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 256.09 px | 1 | span.tt-feld |
@@ -2958,8 +2982,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 15 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 255 px | 1 | a |
 | 256.09 px | 1 | span.tt-feld |
@@ -2976,8 +3000,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 15 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 256.09 px | 1 | span.tt-feld |
 | 323.97 px | 1 | span.tt-feld |
@@ -2992,9 +3016,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 30 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 82.3 px | 1 | a |
-| 162.34 px | 1 | span |
+| 156.34 px | 1 | span |
 | 228 px | 6 | th, td, td |
 | 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 256.09 px | 1 | span.tt-feld |
@@ -3052,8 +3076,8 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 8 | li, strong, li |
 | 45 px | 5 | h2#begriffe-titel, dl, dt |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 424.09 px | 1 | span.tt-feld |
 | 491.97 px | 1 | span.tt-feld |
@@ -3113,8 +3137,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 32 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 212.3 px | 1 | a |
 | 242.09 px | 5 | th, td, td |
 | 290.28 px | 1 | a.btn-primary |
@@ -3168,10 +3192,10 @@ Ergebnis: PASS (0 Befunde).
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 32 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 31 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 180.05 px | 4 | th, td, td |
 | 278.55 px | 4 | th, td, td |
 | 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
@@ -3188,8 +3212,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 33 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 180.05 px | 4 | th, td, td |
 | 270.86 px | 4 | th, td, td |
 | 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
@@ -3241,8 +3265,8 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 18 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 4 | li, li, li |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 424.09 px | 1 | span.tt-feld |
 | 491.97 px | 1 | span.tt-feld |
@@ -3385,7 +3409,7 @@ Ergebnis: PASS (0 Befunde).
 | 632.5 px | 1 | button#wzNext.wz-next |
 | 651.91 px | 1 | span |
 
-**preise, 768 px — 31 verschiedene linke Kanten**
+**preise, 768 px — 29 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3398,11 +3422,9 @@ Ergebnis: PASS (0 Befunde).
 | 123.85 px | 1 | path |
 | 126 px | 1 | svg |
 | 241 px | 2 | div.pa-cta-icon, svg |
-| 268 px | 1 | div.pa-card.pa-visible.dimmed |
-| 268.01 px | 1 | div.pa-card.pa-visible.dimmed |
+| 268 px | 2 | div.pa-card.pa-visible.dimmed, div.pa-card.pa-visible.dimmed |
 | 283 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
-| 284 px | 8 | div, div, h2 |
-| 284.01 px | 4 | div, div, h2 |
+| 284 px | 12 | div, div, h2 |
 | 297.5 px | 1 | div.section-tag |
 | 334.58 px | 1 | strong |
 | 364 px | 1 | svg |
@@ -3429,8 +3451,8 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 17 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 248.44 px | 1 | a |
 | 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 424.09 px | 1 | span.tt-feld |
@@ -3522,8 +3544,8 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 6 | li, strong, li |
 | 45 px | 8 | h2#begriffe-titel, dl, dt |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 282.36 px | 1 | a |
 | 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 424.09 px | 1 | span.tt-feld |
@@ -3540,8 +3562,8 @@ Ergebnis: PASS (0 Befunde).
 | 20 px | 19 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 45 px | 8 | h2#begriffe-titel, dl, dt |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 282.36 px | 1 | a.btn-primary |
 | 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 424.09 px | 1 | span.tt-feld |
@@ -3559,9 +3581,9 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 42 px | 4 | li, strong, li |
 | 69.56 px | 1 | strong |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 91.11 px | 1 | strong |
-| 162.34 px | 1 | span |
+| 156.34 px | 1 | span |
 | 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 424.09 px | 1 | span.tt-feld |
 | 458.34 px | 1 | strong |
@@ -3576,10 +3598,10 @@ Ergebnis: PASS (0 Befunde).
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 17 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 16 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 424.09 px | 1 | span.tt-feld |
 | 488.39 px | 1 | a |
@@ -3596,8 +3618,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 17 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
-| 162.34 px | 1 | span |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
 | 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 424.09 px | 1 | span.tt-feld |
 | 491.97 px | 1 | span.tt-feld |
@@ -3612,9 +3634,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 20 px | 31 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 76.95 px | 1 | a |
+| 70.95 px | 1 | a |
 | 82.3 px | 1 | a |
-| 162.34 px | 1 | span |
+| 156.34 px | 1 | span |
 | 290.41 px | 6 | th, td, td |
 | 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 424.09 px | 1 | span.tt-feld |
@@ -3679,8 +3701,8 @@ Ergebnis: PASS (0 Befunde).
 | 100 px | 25 | div.section-inner, div.section-tag, div.brotkrume |
 | 122 px | 8 | li, strong, li |
 | 125 px | 1 | h2#begriffe-titel |
-| 156.95 px | 1 | a |
-| 242.34 px | 1 | span |
+| 150.95 px | 1 | a |
+| 236.34 px | 1 | span |
 | 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 616.09 px | 1 | span.tt-feld |
 | 683.97 px | 1 | span.tt-feld |
@@ -3743,8 +3765,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 100 px | 30 | div.section-inner, div.section-tag, div.brotkrume |
-| 156.95 px | 1 | a |
-| 242.34 px | 1 | span |
+| 150.95 px | 1 | a |
+| 236.34 px | 1 | span |
 | 304.31 px | 1 | a |
 | 328.94 px | 5 | th, td, td |
 | 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
@@ -3799,8 +3821,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 100 px | 30 | div.section-inner, div.section-tag, div.brotkrume |
-| 156.95 px | 1 | a |
-| 242.34 px | 1 | span |
+| 150.95 px | 1 | a |
+| 236.34 px | 1 | span |
 | 260.05 px | 4 | th, td, td |
 | 361.95 px | 4 | th, td, td |
 | 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
@@ -3817,8 +3839,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 100 px | 32 | div.section-inner, div.section-tag, div.brotkrume |
-| 156.95 px | 1 | a |
-| 242.34 px | 1 | span |
+| 150.95 px | 1 | a |
+| 236.34 px | 1 | span |
 | 260.05 px | 4 | th, td, td |
 | 353.5 px | 4 | th, td, td |
 | 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
@@ -3870,8 +3892,8 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 100 px | 18 | div.section-inner, div.section-tag, div.brotkrume |
 | 122 px | 4 | li, li, li |
-| 156.95 px | 1 | a |
-| 242.34 px | 1 | span |
+| 150.95 px | 1 | a |
+| 236.34 px | 1 | span |
 | 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 616.09 px | 1 | span.tt-feld |
 | 683.97 px | 1 | span.tt-feld |
@@ -4083,8 +4105,8 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 100 px | 17 | div.section-inner, div.section-tag, div.brotkrume |
 | 122 px | 6 | li, strong, li |
-| 156.95 px | 1 | a |
-| 242.34 px | 1 | span |
+| 150.95 px | 1 | a |
+| 236.34 px | 1 | span |
 | 328.44 px | 1 | a |
 | 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 616.09 px | 1 | span.tt-feld |
@@ -4202,8 +4224,8 @@ Ergebnis: PASS (0 Befunde).
 | 100 px | 18 | div.section-inner, div.section-tag, div.brotkrume |
 | 122 px | 6 | li, strong, li |
 | 125 px | 8 | h2#begriffe-titel, dl, dt |
-| 156.95 px | 1 | a |
-| 242.34 px | 1 | span |
+| 150.95 px | 1 | a |
+| 236.34 px | 1 | span |
 | 362.36 px | 1 | a |
 | 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 616.09 px | 1 | span.tt-feld |
@@ -4219,9 +4241,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 100 px | 19 | div.section-inner, div.section-tag, div.brotkrume |
-| 125 px | 7 | h2#begriffe-titel, dl, dt |
-| 156.95 px | 1 | a |
-| 242.34 px | 1 | span |
+| 125 px | 6 | h2#begriffe-titel, dl, dt |
+| 150.95 px | 1 | a |
+| 236.34 px | 1 | span |
 | 362.36 px | 1 | a.btn-primary |
 | 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 616.09 px | 1 | span.tt-feld |
@@ -4238,9 +4260,9 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 100 px | 17 | div.section-inner, div.section-tag, div.brotkrume |
 | 122 px | 1 | li |
-| 156.95 px | 1 | a |
+| 150.95 px | 1 | a |
 | 175.55 px | 1 | strong |
-| 242.34 px | 1 | span |
+| 236.34 px | 1 | span |
 | 251.56 px | 1 | strong |
 | 565.75 px | 1 | strong |
 | 581.61 px | 1 | strong |
@@ -4258,8 +4280,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 100 px | 17 | div.section-inner, div.section-tag, div.brotkrume |
-| 156.95 px | 1 | a |
-| 242.34 px | 1 | span |
+| 150.95 px | 1 | a |
+| 236.34 px | 1 | span |
 | 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 616.09 px | 1 | span.tt-feld |
 | 640.39 px | 1 | a |
@@ -4275,8 +4297,8 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 100 px | 15 | div.section-inner, div.section-tag, div.brotkrume |
-| 156.95 px | 1 | a |
-| 242.34 px | 1 | span |
+| 150.95 px | 1 | a |
+| 236.34 px | 1 | span |
 | 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 616.09 px | 1 | span.tt-feld |
 | 683.97 px | 1 | span.tt-feld |
@@ -4291,9 +4313,9 @@ Ergebnis: PASS (0 Befunde).
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 100 px | 30 | div.section-inner, div.section-tag, div.brotkrume |
-| 156.95 px | 1 | a |
+| 150.95 px | 1 | a |
 | 222.11 px | 1 | a |
-| 242.34 px | 1 | span |
+| 236.34 px | 1 | span |
 | 382.3 px | 6 | th, td, td |
 | 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 616.09 px | 1 | span.tt-feld |

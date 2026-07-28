@@ -2,51 +2,51 @@
   "_hinweis": "Erzeugt von scripts/build-structured-data.mjs. NICHT von Hand aendern. fingerabdruck ist ein Kurz-Hash des ausgezeichneten Inhalts; solange er gleich bleibt, bleibt dateModified stehen.",
   "artikel": {
     "baubarkeitspruefung": {
-      "fingerabdruck": "762bed38e291f1a0",
+      "fingerabdruck": "d25a007e30128325",
       "dateModified": "2026-07-28"
     },
     "dimensionierung-verstehen": {
-      "fingerabdruck": "46d4fcb958c8c19e",
+      "fingerabdruck": "c8a8ccb3b19f4255",
       "dateModified": "2026-07-28"
     },
     "foerderung-hannover": {
-      "fingerabdruck": "947ee73eeebcab87",
+      "fingerabdruck": "a9be6f2f9c26c10f",
       "dateModified": "2026-07-28"
     },
     "foerderung-jetzt-mitnehmen": {
-      "fingerabdruck": "f3b5d87e7575e5fa",
+      "fingerabdruck": "4e41dd6d6149c3c3",
       "dateModified": "2026-07-28"
     },
     "gasheizung-tauschen-oder-reparieren": {
-      "fingerabdruck": "65c6b0254067f469",
+      "fingerabdruck": "ce433b918dda15ec",
       "dateModified": "2026-07-28"
     },
     "propan-waermepumpe": {
-      "fingerabdruck": "565b80eb151a84db",
+      "fingerabdruck": "2e5de7c2351b2452",
       "dateModified": "2026-07-28"
     },
     "waermepumpe-altbau": {
-      "fingerabdruck": "8dec76091feefc98",
+      "fingerabdruck": "96ec7daf84a11055",
       "dateModified": "2026-07-28"
     },
     "waermepumpe-hannover": {
-      "fingerabdruck": "05a9e355d2bd0f17",
+      "fingerabdruck": "af7f4637f290a76e",
       "dateModified": "2026-07-28"
     },
     "waermepumpe-laerm": {
-      "fingerabdruck": "b534bb5243dd77da",
+      "fingerabdruck": "3bc06f565c08b3a7",
       "dateModified": "2026-07-28"
     },
     "waermepumpenstrom-hannover": {
-      "fingerabdruck": "71dfce59c33560b7",
+      "fingerabdruck": "15ddc0f401a0848f",
       "dateModified": "2026-07-28"
     },
     "wertsteigerung-waermepumpe": {
-      "fingerabdruck": "a9448c05b6a62c41",
+      "fingerabdruck": "2c88b51e6cb00191",
       "dateModified": "2026-07-28"
     },
     "wp-kosten-hannover": {
-      "fingerabdruck": "283595aaa33a2d3c",
+      "fingerabdruck": "dd4adeeb8f507c1f",
       "dateModified": "2026-07-28"
     }
   }
