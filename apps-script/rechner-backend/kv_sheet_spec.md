@@ -61,6 +61,12 @@ Datumsformatierung ein `Date` statt der Zahl.
 | `co2_ziel_schritte` | 19 | Anzahl | Schritte bis zum CO₂-Zieljahr 2045 (Index 0 = 2026) | Orakel Z.240 |
 | `kred_lz_default` | 10 | Jahre | Kredit-Laufzeit, wenn Finanzierung AUS ist | Orakel Z.178 |
 | `kred_zins_default` | 0.035 | Anteil | Kredit-Zins, wenn Finanzierung AUS ist | Orakel Z.179 |
+| `kred_zins_358_eff` | 0.98 | Prozent | Effektivzins KfW 358 Plus, 10 Jahre Laufzeit, 2 Jahre tilgungsfrei | KfW-Konditionenanzeiger, Stand 24.07.2026 |
+| `kred_zins_359_eff` | 4.10 | Prozent | Effektivzins KfW 359, gleiche Variante | KfW-Konditionenanzeiger, Stand 24.07.2026 |
+| `kred_zins_zve_grenze` | 90000 | Euro | zvE-Schwelle zwischen 358 und 359 | Merkblatt 358/359, Stand 07/2026 |
+| `kred_bereitstellung_prov` | 0.15 | Prozent je Monat | Bereitstellungsprovision ab dem 13. Monat nach Zusage | Merkblatt 358/359, Stand 07/2026 |
+| `kred_zins_stand` | 2026-07-24 | Text | Stand-Datum, das im UI mitläuft | KfW-Konditionenanzeiger, Stand 24.07.2026 |
+| `kred_zins_quelle` | KfW-Ergänzungskredit 358/359 | Text | Programmbezeichnung für die Beschriftung am Regler | Merkblatt 358/359, Stand 07/2026 |
 | `sensi_best_fossil` | 0.015 | Prozentpunkte/Jahr | Best Case: fossil steigt schneller | Orakel Z.359 |
 | `sensi_best_strom` | -0.01 | Prozentpunkte/Jahr | Best Case: Strom steigt langsamer | Orakel Z.359 |
 | `sensi_worst_fossil` | -0.015 | Prozentpunkte/Jahr | Worst Case: fossil steigt langsamer | Orakel Z.361 |
@@ -185,6 +191,12 @@ function KV_PARAMETER_ROWS_() {
     ['co2_ziel_schritte', 19, 'Anzahl', 'Schritte bis CO₂-Zieljahr 2045 (Index 0 = 2026)', 'Orakel Z.240'],
     ['kred_lz_default', 10, 'Jahre', 'Kredit-Laufzeit, wenn Finanzierung AUS', 'Orakel Z.178'],
     ['kred_zins_default', 0.035, 'Anteil', 'Kredit-Zins, wenn Finanzierung AUS', 'Orakel Z.179'],
+    ['kred_zins_358_eff', 0.98, 'Prozent', 'Effektivzins KfW 358 Plus, 10 Jahre Laufzeit, 2 Jahre tilgungsfrei', 'KfW-Konditionenanzeiger, Stand 24.07.2026'],
+    ['kred_zins_359_eff', 4.10, 'Prozent', 'Effektivzins KfW 359, gleiche Variante', 'KfW-Konditionenanzeiger, Stand 24.07.2026'],
+    ['kred_zins_zve_grenze', 90000, 'Euro', 'zvE-Schwelle zwischen 358 und 359', 'Merkblatt 358/359, Stand 07/2026'],
+    ['kred_bereitstellung_prov', 0.15, 'Prozent je Monat', 'Bereitstellungsprovision ab dem 13. Monat nach Zusage', 'Merkblatt 358/359, Stand 07/2026'],
+    ['kred_zins_stand', '2026-07-24', 'Text', 'Stand-Datum, das im UI mitläuft', 'KfW-Konditionenanzeiger, Stand 24.07.2026'],
+    ['kred_zins_quelle', 'KfW-Ergänzungskredit 358/359', 'Text', 'Programmbezeichnung für die Beschriftung am Regler', 'Merkblatt 358/359, Stand 07/2026'],
     ['sensi_best_fossil', 0.015, 'Prozentpunkte/Jahr', 'Best Case: fossil steigt schneller', 'Orakel Z.359'],
     ['sensi_best_strom', -0.01, 'Prozentpunkte/Jahr', 'Best Case: Strom steigt langsamer', 'Orakel Z.359'],
     ['sensi_worst_fossil', -0.015, 'Prozentpunkte/Jahr', 'Worst Case: fossil steigt langsamer', 'Orakel Z.361'],
@@ -294,6 +306,12 @@ function kvGetParams_() {
     co2ZielSchritte: kvNum_(kv['co2_ziel_schritte'], 19),
     kredLZDefault: kvNum_(kv['kred_lz_default'], 10),
     kredZinsDefault: kvNum_(kv['kred_zins_default'], 0.035),
+    kredZins358Eff: kvNum_(kv['kred_zins_358_eff'], 0.98),
+    kredZins359Eff: kvNum_(kv['kred_zins_359_eff'], 4.10),
+    kredZinsZveGrenze: kvNum_(kv['kred_zins_zve_grenze'], 90000),
+    kredBereitstellungProv: kvNum_(kv['kred_bereitstellung_prov'], 0.15),
+    kredZinsStand: String(kv['kred_zins_stand'] || ''),
+    kredZinsQuelle: String(kv['kred_zins_quelle'] || ''),
     sensi: {
       best: { fossil: kvNum_(kv['sensi_best_fossil'], 0.015), strom: kvNum_(kv['sensi_best_strom'], -0.01) },
       base: { fossil: 0, strom: 0 },

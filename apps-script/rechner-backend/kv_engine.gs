@@ -132,6 +132,12 @@ var KV_PARAMS_SEED = {
   // --- Finanzierungs-Defaults, wenn finanzTog aus ist. Orakel Z.178 bis 179
   kredLZDefault: 10,
   kredZinsDefault: 0.035,
+  kredZins358Eff: 0.98,
+  kredZins359Eff: 4.10,
+  kredZinsZveGrenze: 90000,
+  kredBereitstellungProv: 0.15,
+  kredZinsStand: '2026-07-24',
+  kredZinsQuelle: 'KfW-Ergänzungskredit 358/359',
 
   // --- Sensitivitäts-Szenarien (additive Deltas). Orakel Z.359 bis 361
   sensi: {
@@ -540,13 +546,18 @@ function kvCalculate(inputs, params) {
     },
 
     finanzierung: {
-      aktiv: finanzOn, kreditBetrag: kreditBetrag, kredLZ: kredLZ,
-      kredZinsProzent: kredZins * 100, kredN: kredN,
-      monRate: monRate, monRateFossil: monRateFossil,
-      monWPStrom: monWPStrom, monFossil: monFossil, monGesWP: monGesWP,
-      monDiff: monDiff, wpMon: wpMon, fossMon: fossMon, monVorteil: dCf,
+      aktiv: finanzOn, kreditBetrag: finanzOn ? kreditBetrag : null, kredLZ: kredLZ,
+      kredZinsProzent: finanzOn ? kredZins * 100 : null, kredN: finanzOn ? kredN : null,
+      monRate: finanzOn ? monRate : null,
+      monRateFossil: finanzOn ? monRateFossil : null,
+      monWPStrom: monWPStrom, monFossil: monFossil,
+      monGesWP: finanzOn ? monGesWP : null,
+      monDiff: finanzOn ? monDiff : null,
+      wpMon: finanzOn ? wpMon : null,
+      fossMon: finanzOn ? fossMon : null,
+      monVorteil: finanzOn ? dCf : null,
       zinsKosten: zinsKosten, zinsFossil: zinsFossil, zinsDelta: zinsDelta,
-      gesamtkostenKredit: monRate * kredN,
+      gesamtkostenKredit: finanzOn ? monRate * kredN : null,
       // Betriebskosten-Monatswerte am Kreditende. Orakel Z.557 und Z.570
       endJahrIndex: Math.min(kredLZ, laufzeit) - 1,
       endWpMon: data[Math.min(kredLZ, laufzeit) - 1] ? data[Math.min(kredLZ, laufzeit) - 1].wpGes / 12 : 0,
@@ -630,10 +641,19 @@ function kvBootstrapPayload(params) {
       clientDefaults[key] = KV_DEFAULTS[key];
     }
   }
+  clientDefaults.kredZins = params.kredZins358Eff;
   return {
     service: 'kv_bootstrap',
     perioden: perioden,
     defaults: clientDefaults,
+    kredit: {
+      zins358Eff: params.kredZins358Eff,
+      zins359Eff: params.kredZins359Eff,
+      zveGrenze: params.kredZinsZveGrenze,
+      bereitstellungProv: params.kredBereitstellungProv,
+      stand: params.kredZinsStand,
+      quelle: params.kredZinsQuelle
+    },
     etaMatrix: KV_ETA_MATRIX,
     schaetzung: schaetzung,
     hinweise: {
@@ -656,7 +676,7 @@ var KV_DEFAULTS = {
   bioTog: true, bioAufpreis: 2.5,
   fHalbjahr: 'h2-2026', fGrund: true, fEU: true, fKlima: true, fAlt20: true,
   fEinkSlider: 60000, fKind: false, proklimaTog: false, fEffizienz: false,
-  finanzTog: false, kredLZ: 10, kredZins: 0.7,
+  finanzTog: false, kredLZ: 10, kredZins: KV_PARAMS_SEED.kredZins358Eff,
   immoTog: false, hausW: 350000, immoP: 7,
   dynTarifTog: false, dynAnteil: 40, dynSpread: 10,
   modus: 'kunde'

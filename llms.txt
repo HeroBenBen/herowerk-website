@@ -93,6 +93,7 @@ Einschätzung liefert https://www.herowerk.de/rechner in wenigen Schritten.
 - [Ablauf](https://www.herowerk.de/prozess): von der Anfrage bis zur Inbetriebnahme
 - [Baubarkeitsprüfung](https://www.herowerk.de/baubarkeitspruefung): ob das Haus geeignet ist
 - [Kostenvergleich](https://www.herowerk.de/kostenvergleich-waermepumpe): Wärmepumpe gegen Gas und Öl über die Laufzeit
+- [Amortisation Wärmepumpe](https://www.herowerk.de/amortisation-waermepumpe): Mehrpreis nach Förderung und laufende Kosten ehrlich vergleichen
 - [Was eine Wärmepumpe kostet](https://www.herowerk.de/wp-kosten-hannover): Kostenbestandteile im Detail
 - [Wärmepumpe im Altbau](https://www.herowerk.de/waermepumpe-altbau): Voraussetzungen im Bestand
 - [Wärmepumpe Hannover](https://www.herowerk.de/waermepumpe-hannover): regionale Übersicht

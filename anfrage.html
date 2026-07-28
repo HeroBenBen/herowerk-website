@@ -2080,6 +2080,11 @@
     if (submitButton) submitButton.disabled = true;
     try {
       await postToHubSpot(data);
+      const sitzung = readKvSession();
+      if (sitzung) {
+        gtag('event','lead_abgeschickt',{sitzung:sitzung});
+        try { sessionStorage.removeItem(KV_SESSION_KEY); } catch (error) {}
+      }
     } catch (error) {
       console.error(error);
       if (submitButton) submitButton.disabled = false;
@@ -2152,6 +2157,7 @@
   }
 
   const KV_LEAD_KEY = 'hero_kv_lead';
+  const KV_SESSION_KEY = 'hero_kv_sitzung';
   const KV_LEAD_ANSWER_KEYS = [
     'step1', 'step2', 'step3', 'step4', 'step5', 'energiebedarf_kwh',
     'foerderquote_pct', 'foerderbetrag_eur', 'kv_eigenanteil_eur', 'kv_vorteil_eur',
@@ -2164,6 +2170,11 @@
     const allowed = required.concat(optional || []);
     if (!required.every((key) => Object.prototype.hasOwnProperty.call(value, key))) return false;
     return keys.every((key) => allowed.includes(key));
+  }
+  function readKvSession() {
+    let sitzung = null;
+    try { sitzung = sessionStorage.getItem(KV_SESSION_KEY); } catch (error) {}
+    return typeof sitzung === 'string' && sitzung.trim() ? sitzung : null;
   }
   function finiteIn(value, min, max) {
     return typeof value === 'number' && Number.isFinite(value) && value >= min && value <= max;
@@ -2249,6 +2260,8 @@
       let kvLead = null;
       try { kvLead = JSON.parse(kvRaw); } catch (e) {}
       if (validKvLead(kvLead) && applyKvLeadHandoff(kvLead)) {
+        const sitzung = readKvSession();
+        if (sitzung) gtag('event','lead_handoff_erkannt',{sitzung:sitzung});
         try { sessionStorage.removeItem(KV_LEAD_KEY); } catch (e) {}
         return true;
       }
