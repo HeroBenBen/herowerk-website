@@ -26,6 +26,12 @@ declare function calculate(options?: any): any;
 /** Chart.js 4.4.1 UMD-Global. Fundstelle: <script src="/js/chart-4.4.1.umd.min.js"> */
 declare const Chart: any;
 
+/** Google Tag Manager Queue. Fundstelle: js/consent.js und kostenvergleich-waermepumpe.html */
+declare const dataLayer: any[];
+
+/** Google Analytics Event-API. Fundstelle: kostenvergleich-waermepumpe.html */
+declare function gtag(...args: any[]): void;
+
 interface Window {
   /** WP-Rechner Thin Client: Wizard-Bridge-Handle (schaetzungsbasierter Bedarf). Fundstelle: kostenvergleich-waermepumpe.html:1076/1083 */
   WZ_BRIDGE?: any;

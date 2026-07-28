@@ -434,7 +434,7 @@ if (zustandNeu !== zustandAlt) {
  * der Pfadzeile auf <nav> liess alle zwoelf BreadcrumbList wegfallen, das Gate
  * meldete "42 Knoten, 0 Abweichungen" und damit PASS.
  */
-const SOLL = { BreadcrumbList: 12, FAQPage: 10, Article: 12, JobPosting: 19 };
+const SOLL = { BreadcrumbList: 12, FAQPage: 11, Article: 12, JobPosting: 19 };
 const gezaehlt = {};
 for (const datei of seiten) {
   const slug = datei.replace(/\.html$/, '');

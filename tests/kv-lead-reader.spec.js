@@ -1,5 +1,5 @@
 'use strict';
-/* global buildHubSpotPayload, document, localStorage, sessionStorage */
+/* global buildHubSpotPayload, dataLayer, document, localStorage, sessionStorage */
 
 const { test, expect } = require('@playwright/test');
 const http = require('http');
@@ -54,6 +54,12 @@ test.beforeAll(async () => {
   baseURL = `http://127.0.0.1:${address.port}`;
 });
 
+test.beforeEach(async ({ page }) => {
+  await page.route(/https:\/\/.*consentmanager\.net\//, (route) =>
+    route.fulfill({ status: 200, contentType: 'text/javascript; charset=utf-8', body: '' })
+  );
+});
+
 test.afterAll(async () => {
   await new Promise((resolve) => server.close(resolve));
 });
@@ -82,6 +88,7 @@ test('O4 Reader: gültiger v1-Key übernimmt technische Angaben und löscht den 
   const errors = collectErrors(page);
   await page.setViewportSize({ width: 375, height: 812 });
   await setLead(page, VALID_LEAD);
+  await page.addInitScript(() => sessionStorage.setItem('hero_kv_sitzung', 'test-sitzung'));
   await page.goto(`${baseURL}/anfrage.html`, { waitUntil: 'domcontentloaded' });
 
   await expect(page.locator('#leadHandoffBanner')).toContainText(
@@ -110,6 +117,17 @@ test('O4 Reader: gültiger v1-Key übernimmt technische Angaben und löscht den 
   expect(mapped.foerderquote_pct).toBe('46');
   expect(mapped.foerderbetrag_eur).toBe('12880');
   expect(await page.evaluate(() => sessionStorage.getItem('hero_kv_lead'))).toBeNull();
+  expect(
+    await page.evaluate(() =>
+      dataLayer.some(
+        (entry) =>
+          entry &&
+          entry[0] === 'event' &&
+          entry[1] === 'lead_handoff_erkannt' &&
+          entry[2].sitzung === 'test-sitzung'
+      )
+    )
+  ).toBe(true);
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth

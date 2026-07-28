@@ -127,6 +127,14 @@ reset();
 const boot = call({ action: 'kv_bootstrap' });
 check('Route kv_bootstrap', { service: boot.service, perioden: boot.perioden.length, aktiv: boot.aktivePeriode },
   { service: 'kv_bootstrap', perioden: 6, aktiv: 'h2-2026' });
+check('Zinsparameter erreichen den Bootstrap', boot.kredit, {
+  zins358Eff: 0.98,
+  zins359Eff: 4.1,
+  zveGrenze: 90000,
+  bereitstellungProv: 0.15,
+  stand: '2026-07-24',
+  quelle: 'KfW-Ergänzungskredit 358/359',
+});
 
 const decimal = call({
   action: 'kostenvergleich', fHalbjahr: 'h2-2026', jaz: '3.8', kredZins: '0.7',
@@ -180,6 +188,18 @@ check('Sheet-Treiber 1978 bis 1994 wirkt in Bootstrap und Schätzung', {
 }, { bootstrap: 200, bedarf: 28000 });
 
 reset();
+spreadsheet.tabs.KV_Parameter.rows.find((r) => r[0] === 'kred_zins_358_eff')[1] = 1.23;
+spreadsheet.tabs.KV_Parameter.rows.find((r) => r[0] === 'kred_zins_stand')[1] = '2026-08-01';
+const bootZinsMutiert = call({ action: 'kv_bootstrap' });
+const kvZinsMutiert = call({ action: 'kostenvergleich', finanzTog: '1' });
+check('Sheet-Zins wirkt in Bootstrap und Request-Fallback', {
+  bootstrap: bootZinsMutiert.kredit.zins358Eff,
+  default: bootZinsMutiert.defaults.kredZins,
+  stand: bootZinsMutiert.kredit.stand,
+  request: kvZinsMutiert.inputsEcho.kredZins,
+}, { bootstrap: 1.23, default: 1.23, stand: '2026-08-01', request: 1.23 });
+
+reset();
 const spez1995 = spreadsheet.tabs.KV_Parameter.rows.find((r) => r[0] === 'wz_spez_1995_2010');
 spez1995[1] = 200;
 const bootSpez1995 = call({ action: 'kv_bootstrap' });
@@ -215,8 +235,10 @@ const foerderSeed = call({ action: 'foerderung', einkommen: 'ueber50', preisManu
 check('Fehlende Tabs nutzen gemeinsamen Seed', {
   kvQuote: kvSeed.foerder.quote,
   bootPeriode: bootSeed.aktivePeriode,
+  bootZins: bootSeed.kredit.zins358Eff,
+  bootStand: bootSeed.kredit.stand,
   foerderQuote: foerderSeed.kfwSatz,
-}, { kvQuote: 46, bootPeriode: 'h2-2026', foerderQuote: 46 });
+}, { kvQuote: 46, bootPeriode: 'h2-2026', bootZins: 0.98, bootStand: '2026-07-24', foerderQuote: 46 });
 
 clockIso = '2026-07-15';
 reset();

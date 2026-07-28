@@ -1,5 +1,6 @@
 // Additive smoke/a11y checks for T1-11 website build.
 'use strict';
+/* global dataLayer, sessionStorage */
 const { test, expect } = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default;
 const { gotoWithConsentRejected } = require('./helpers/consent');
@@ -94,6 +95,7 @@ test('@smoke Funnel sendet HubSpot-Form-Payload (Standard-Properties, Mock)', as
       await route.fulfill({ status: 200, contentType: 'application/json', body: '{}' });
     }
   );
+  await page.addInitScript(() => sessionStorage.setItem('hero_kv_sitzung', 'test-sitzung'));
   await gotoWithConsentRejected(
     page,
     '/anfrage.html?utm_source=playwright&utm_medium=smoke&utm_campaign=t1-11'
@@ -116,6 +118,18 @@ test('@smoke Funnel sendet HubSpot-Form-Payload (Standard-Properties, Mock)', as
   await page.locator('#dsgvo').check();
   await page.locator('.btn-submit-final').click();
   await expect(page.locator('#successStep')).toBeVisible();
+  expect(
+    await page.evaluate(() =>
+      dataLayer.some(
+        (entry) =>
+          entry &&
+          entry[0] === 'event' &&
+          entry[1] === 'lead_abgeschickt' &&
+          entry[2].sitzung === 'test-sitzung'
+      )
+    )
+  ).toBe(true);
+  expect(await page.evaluate(() => sessionStorage.getItem('hero_kv_sitzung'))).toBeNull();
   if (!submitted) throw new Error('HubSpot mock submit was not captured');
   const fields = Object.fromEntries(submitted.fields.map((field) => [field.name, field.value]));
   // Ist-Mapping (C24-Lead-Fix): der Funnel sendet HubSpot-Standard-Properties

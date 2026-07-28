@@ -9,6 +9,7 @@
     "baseline:generate": "node scripts/content-fidelity-check.js --generate",
     "verify:assets": "scripts/version-assets.sh --check",
     "verify:consent": "node scripts/consent-integration-check.js",
+    "verify:wp-analytics": "node scripts/verify-wp-analytics.mjs",
     "verify:raster": "node scripts/verify-raster.mjs",
     "verify:mobile": "node scripts/verify-mobile.mjs",
     "verify:seo": "node scripts/build-structured-data.mjs --check",
