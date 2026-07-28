@@ -10,9 +10,21 @@
 
 const REQUIRED_FIELDS = {
   LocalBusiness: ['name', 'address'],
+  HVACBusiness: ['name', 'address'],
   FAQPage: ['mainEntity'],
   Product: ['name'],
+  Article: ['headline', 'datePublished', 'author', 'publisher'],
+  JobPosting: ['title', 'description', 'datePosted', 'hiringOrganization', 'jobLocation'],
+  BreadcrumbList: ['itemListElement'],
 };
+
+// @type darf laut schema.org ein Array sein (index.html traegt seit dem 28.07.2026
+// ["LocalBusiness","HVACBusiness"]). Der frühere direkte Lookup lief bei einem Array
+// ins Leere und hat die Pflichtfeldpruefung STILL abgeschaltet, statt sie zu melden.
+// Gefunden von der unabhaengigen Abnahme am 28.07.2026.
+function typen(type) {
+  return (Array.isArray(type) ? type : [type]).filter(Boolean).map(String);
+}
 
 async function main() {
   const base = process.argv[2];
@@ -49,8 +61,10 @@ async function main() {
         errors.push(`Block ${i + 1}: @type fehlt`);
         continue;
       }
-      for (const field of REQUIRED_FIELDS[type] || []) {
-        if (!(field in item)) errors.push(`Block ${i + 1} (${type}): Pflichtfeld "${field}" fehlt`);
+      for (const t of typen(type)) {
+        for (const field of REQUIRED_FIELDS[t] || []) {
+          if (!(field in item)) errors.push(`Block ${i + 1} (${t}): Pflichtfeld "${field}" fehlt`);
+        }
       }
     }
   }

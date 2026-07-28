@@ -1,0 +1,53 @@
+{
+  "_hinweis": "Erzeugt von scripts/build-structured-data.mjs. NICHT von Hand aendern. fingerabdruck ist ein Kurz-Hash des ausgezeichneten Inhalts; solange er gleich bleibt, bleibt dateModified stehen.",
+  "artikel": {
+    "baubarkeitspruefung": {
+      "fingerabdruck": "0017a50ca5a46350",
+      "dateModified": "2026-07-28"
+    },
+    "dimensionierung-verstehen": {
+      "fingerabdruck": "5b13e13d744a4b89",
+      "dateModified": "2026-07-28"
+    },
+    "foerderung-hannover": {
+      "fingerabdruck": "688cf95d323ddda1",
+      "dateModified": "2026-07-28"
+    },
+    "foerderung-jetzt-mitnehmen": {
+      "fingerabdruck": "5450d25d82b19566",
+      "dateModified": "2026-07-28"
+    },
+    "gasheizung-tauschen-oder-reparieren": {
+      "fingerabdruck": "de86667180f9493e",
+      "dateModified": "2026-07-28"
+    },
+    "propan-waermepumpe": {
+      "fingerabdruck": "6a102a11a78a6da2",
+      "dateModified": "2026-07-28"
+    },
+    "waermepumpe-altbau": {
+      "fingerabdruck": "9d56ea1c75cf8b5a",
+      "dateModified": "2026-07-28"
+    },
+    "waermepumpe-hannover": {
+      "fingerabdruck": "8a753f7550f0b79e",
+      "dateModified": "2026-07-28"
+    },
+    "waermepumpe-laerm": {
+      "fingerabdruck": "36d51e2b8b59f159",
+      "dateModified": "2026-07-28"
+    },
+    "waermepumpenstrom-hannover": {
+      "fingerabdruck": "d392ae80b0f69ccb",
+      "dateModified": "2026-07-28"
+    },
+    "wertsteigerung-waermepumpe": {
+      "fingerabdruck": "75face3971e2f363",
+      "dateModified": "2026-07-28"
+    },
+    "wp-kosten-hannover": {
+      "fingerabdruck": "b818fbbe5dea7eaf",
+      "dateModified": "2026-07-28"
+    }
+  }
+}
