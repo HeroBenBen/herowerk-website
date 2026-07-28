@@ -69,6 +69,27 @@ function pruefeGruende(konfig) {
 }
 pruefeGruende(konfig);
 
+// ── Schalter, die nichts schalten, sind schlimmer als keine ─────────────────
+// `aktiv` und `streng` standen bis zum 28.07.2026 in JEDER Regel der
+// Erwartungsdatei, gelesen wurden aber nur `r5.aktiv` und `r2.streng`.
+// `"aktiv": false` auf Regel 6 haette nichts abgeschaltet, `"streng": false`
+// auf Regel 1 keinen Abbruch verhindert. Wer die Datei liest, glaubt an einen
+// Schalter, der nicht angeschlossen ist. Beide werden jetzt ausgewertet, und
+// jede Abweichung vom scharfen Zustand steht sichtbar im Bericht.
+const REGEL_SCHLUESSEL = {
+  R1: 'r1_container_ueberstand',
+  R2: 'r2_kanten_inventar',
+  R3: 'r3_volle_aussenbreite',
+  R4: 'r4_seitenrand_treue',
+  R5: 'r5_seitenversatz',
+  R6: 'r6_fensterkanten_ueberstand',
+};
+const regelAktiv = (kurz) => konfig.regeln[REGEL_SCHLUESSEL[kurz]]?.aktiv ?? true;
+const regelStreng = (kurz) => konfig.regeln[REGEL_SCHLUESSEL[kurz]]?.streng ?? true;
+const abgeschwaecht = Object.entries(REGEL_SCHLUESSEL)
+  .filter(([kurz]) => !regelAktiv(kurz) || !regelStreng(kurz))
+  .map(([kurz, k]) => `${kurz} (${k}): aktiv ${regelAktiv(kurz)}, streng ${regelStreng(kurz)}`);
+
 // ── Bereichspruefung ────────────────────────────────────────────────────────
 // Eine physikalisch unmoegliche Messzahl ist ein Fehler im Messskript, nicht
 // ein Befund. Lehre feedback_unmoegliche_zahl_ist_ein_messfehler_kein_befund_2026-07-26.
@@ -155,12 +176,33 @@ function messen(cfg) {
   const flaechenlos = (cs) =>
     /inset\(\s*50%/.test(cs.clipPath || '') ||
     /^rect\(0(px)?,?\s*0(px)?,?\s*0(px)?,?\s*0(px)?\)$/.test((cs.clip || '').replace(/\s+/g, ' '));
-  const sichtbar = (el, cs) =>
+  const eigenSichtbar = (el, cs) =>
     cs.display !== 'none' &&
     cs.visibility !== 'hidden' &&
     parseFloat(cs.opacity) !== 0 &&
     !el.hasAttribute('hidden') &&
     !flaechenlos(cs);
+  // Ein Element in einem ausgeblendeten Teilbaum hat selbst einen berechneten
+  // `display`, der NICHT `none` ist. Die alte Pruefung sah nur das Element und
+  // zaehlte solche Elemente als sichtbar. Gemessen 28.07.2026 ueber 30 Seiten
+  // bei 375 px: 8.675 gezaehlt gegen 4.475 wirklich gerenderte, also 48,4
+  // Prozent Auffuellung; auf `kostenvergleich-waermepumpe` 686 gegen 73.
+  // Eine aufgeblasene Abdeckungszahl ist derselbe Fehler wie die 232 Dokumente
+  // der alten Regel 6, nur eine Ebene tiefer. `offsetParent` traegt hier nicht,
+  // weil fest und absolut gesetzte Elemente keinen haben; deshalb der
+  // ausdrueckliche Weg ueber die Vorfahren.
+  const sichtbar = (el, cs) => {
+    if (!eigenSichtbar(el, cs)) return false;
+    let a = el.parentElement;
+    while (a) {
+      const acs = getComputedStyle(a);
+      if (acs.display === 'none' || acs.visibility === 'hidden' || parseFloat(acs.opacity) === 0)
+        return false;
+      if (a.hasAttribute('hidden')) return false;
+      a = a.parentElement;
+    }
+    return true;
+  };
   const klippt = (el) => {
     let a = el.parentElement;
     while (a && a !== document.documentElement) {
@@ -203,13 +245,31 @@ function messen(cfg) {
     }
     const sammle = (liste) => {
       for (const r of liste) {
-        if (r.cssRules) {
+        // ACHTUNG, hier lag ein toter Scanner. Die Bedingung hiess bis zum
+        // 28.07.2026 `if (r.cssRules)`. In Chromium erbt `CSSStyleRule` von
+        // `CSSGroupingRule` und hat deshalb ein `cssRules`, das LEER, aber
+        // WAHR ist. Damit wurde JEDE Stilregel als Gruppenregel behandelt, in
+        // eine leere Liste geschickt und uebersprungen, bevor `r.style` je
+        // gelesen wurde. Gemessen ueber die drei Stylesheets von index.html:
+        // alte Bedingung 0 Selektoren mit `margin-left: auto` und 0 mit
+        // `margin-right: auto`, diese hier 19 und 18, davon 18 beidseitig, und
+        // alle 18 stehen in `css/site.css`.
+        // Folge fuer die Historie: auch die Messzahl "8 von 67.539 Elementen",
+        // mit der die alte Regel 5 am 28.07. gestrichen wurde, stammt aus
+        // diesem toten Scanner. Sie hat nie Stylesheet-Regeln gesehen, nur
+        // Elemente mit `style`-Attribut. Die Streichung stand also auf einer
+        // Messung, die selbst nichts gemessen hat.
+        if (r.cssRules && r.cssRules.length) {
           sammle(r.cssRules);
           continue;
         }
         if (!r.selectorText || !r.style) continue;
-        if (r.style.marginLeft === 'auto') autoLinks.push(r.selectorText);
-        if (r.style.marginRight === 'auto') autoRechts.push(r.selectorText);
+        // `margin-inline` bildet die CSSOM nicht auf die physischen
+        // Eigenschaften ab, deshalb zusaetzlich der Rohtext der Regel.
+        const roh = r.style.marginInline || '';
+        const inlineAuto = /(^|\s)auto(\s|$)/.test(roh) || roh.trim() === 'auto';
+        if (r.style.marginLeft === 'auto' || inlineAuto) autoLinks.push(r.selectorText);
+        if (r.style.marginRight === 'auto' || inlineAuto) autoRechts.push(r.selectorText);
       }
     };
     sammle(regeln);
@@ -456,10 +516,37 @@ function messen(cfg) {
   // wird vorher abgeschnitten oder ist in einem rollbaren Kasten erreichbar.
   // `html` und `body` zaehlen hier ausdruecklich NICHT, denn genau ihr
   // `overflow-x: clip` war die Ursache der Blindheit.
-  const zwischenGeklippt = (el) => {
+  // Ein Klipper wirkt nur auf Elemente, fuer die er auch Bezugsrahmen ist.
+  // Gemessen 28.07.2026: ein `position: fixed`-Kasten unter einem statischen
+  // `overflow: hidden` wird sichtbar gemalt (`elementFromPoint` trifft ihn bei
+  // 370/420 im 375-px-Fenster), die alte Fassung hat ihn trotzdem
+  // ausgeschlossen. Regel 1 nimmt `absolute` und `fixed` bewusst aus, also sah
+  // ihn kein Gate. Live sind derzeit 0 solche Elemente vorhanden, der Befund
+  // ist baulich, nicht akut.
+  //   fixed:    nur ein Vorfahre mit transform, filter, perspective, will-change
+  //             oder contain ist Bezugsrahmen, sonst das Fenster.
+  //   absolute: erst der naechste positionierte Vorfahre ist Bezugsrahmen.
+  //   static/relative/sticky: der Elternkasten, also jeder Vorfahre.
+  const istBezugsrahmen = (a, acs, pos) => {
+    if (pos === 'fixed')
+      return (
+        acs.transform !== 'none' ||
+        acs.filter !== 'none' ||
+        acs.perspective !== 'none' ||
+        acs.willChange.includes('transform') ||
+        (acs.contain || '').includes('paint')
+      );
+    if (pos === 'absolute') return acs.position !== 'static';
+    return true;
+  };
+  const zwischenGeklippt = (el, pos) => {
     let a = el.parentElement;
+    let bezugGefunden = false;
     while (a && a !== document.body && a !== de) {
-      if (getComputedStyle(a).overflowX !== 'visible') return wahl(a);
+      const acs = getComputedStyle(a);
+      if (!bezugGefunden && istBezugsrahmen(a, acs, pos)) bezugGefunden = true;
+      const gehtMich = pos === 'static' || pos === 'relative' || pos === 'sticky' || bezugGefunden;
+      if (gehtMich && acs.overflowX !== 'visible') return wahl(a);
       a = a.parentElement;
     }
     return null;
@@ -470,7 +557,7 @@ function messen(cfg) {
     if (!sichtbar(el, cs)) continue;
     const b = el.getBoundingClientRect();
     if (b.width < 1 || b.height < 1) continue;
-    if (zwischenGeklippt(el)) continue;
+    if (zwischenGeklippt(el, cs.position)) continue;
     erg.abdeckung.r6++;
     const ueberLinks = -b.left;
     const ueberRechts = b.right - fensterBreite;
@@ -553,9 +640,16 @@ try {
       fehlversuche += erfolgreich ? versuche - 1 : versuche;
       if (!antwort || !antwort.ok()) {
         // Transportfehler wird als eigene Gattung gefuehrt, nicht als Layoutbefund.
+        // Statuscode mitfuehren. Ein 404 ist KEIN abgerissener Verbindungsversuch
+        // unter Last, sondern eine Seite, die es im Repo gibt und auf dem Server
+        // nicht. Gemessen 28.07.2026: alle 8 Transportfehler des Live-Laufs waren
+        // 404 auf amortisation-waermepumpe.html, weil die Parallel-Spur ihre
+        // Aenderung gemergt, aber nicht hochgeladen hat. Unter der Gattung
+        // "Transportfehler" waere das als Lastproblem durchgegangen.
         transportfehler.push({
           seite: seite.name,
           breite,
+          status: antwort ? antwort.status() : null,
           text: `nach ${versuche} Versuch(en) nicht ladbar: ${ziel} (${antwort ? antwort.status() : 'kein Antwortobjekt'})`,
         });
         continue;
@@ -572,7 +666,7 @@ try {
       const r = await page.evaluate(messen, konfig);
       geprüft++;
 
-      for (const f of r.r1) {
+      for (const f of regelAktiv('R1') ? r.r1 : []) {
         pruefeBereich('ueberstandLinks', f.ueberstandLinks, 0, 10000);
         pruefeBereich('ueberstandRechts', f.ueberstandRechts, 0, 10000);
         if (f.ueberstandLinks <= TOL && f.ueberstandRechts <= TOL) continue;
@@ -593,7 +687,7 @@ try {
           daten: f,
         });
       }
-      for (const f of r.r3) {
+      for (const f of regelAktiv('R3') ? r.r3 : []) {
         if (
           konfig.regeln.r3_volle_aussenbreite.ausnahmen.some(
             (a) => f.kind.includes(a.kind) && f.container.includes(a.container)
@@ -608,7 +702,9 @@ try {
           daten: f,
         });
       }
-      for (const f of r.r4) {
+      for (const f of regelAktiv('R4') ? r.r4 : []) {
+        pruefeBereich('abweichungLinks', f.abweichungLinks, 0, 10000);
+        pruefeBereich('abweichungRechts', f.abweichungRechts, 0, 10000);
         if (f.abweichungLinks <= TOL && f.abweichungRechts <= TOL) continue;
         befunde.push({
           seite: seite.name,
@@ -618,7 +714,8 @@ try {
           daten: f,
         });
       }
-      for (const f of r.r5) {
+      for (const f of regelAktiv('R5') ? r.r5 : []) {
+        pruefeBereich('abweichung', f.abweichung, 0, 10000);
         if (
           konfig.regeln.r5_seitenversatz.ausnahmen.some(
             (a) => f.block.includes(a.block) && f.container.includes(a.container)
@@ -636,7 +733,9 @@ try {
       // Regel 6: Fensterkanten-Ueberstand.
       const r6 = konfig.regeln.r6_fensterkanten_ueberstand;
       rollbreiteBericht.push({ seite: seite.name, breite, ...r.rollbreite });
-      for (const f of r.r6) {
+      for (const f of regelAktiv('R6') ? r.r6 : []) {
+        pruefeBereich('ueberstandLinks', f.ueberstandLinks, 0, 100000);
+        pruefeBereich('ueberstandRechts', f.ueberstandRechts, 0, 100000);
         if (
           (r6.ausnahmen ?? []).some(
             (a) =>
@@ -684,6 +783,74 @@ try {
   if (server) server.close();
 }
 
+// ── Gueltigkeit des Laufs ───────────────────────────────────────────────────
+// Wird VOR dem Berichtsbau ausgewertet. Bis zum 28.07.2026 stand die Pruefung
+// dahinter, und die Berichtsdatei, die in den Pull Request geht, trug
+// `Ergebnis: PASS`, waehrend der Rueckgabewert 4 lautete. Ein Dokument, das
+// das Gegenteil des Rueckgabewerts behauptet, ist genau die Ausgabe, die
+// dieses Gate abschaffen soll.
+const summe = (k) => abdeckung.reduce((a, b) => a + b[k], 0);
+const sollLaeufe = konfig.seiten.length * konfig.breiten.length;
+const anteilTransport = sollLaeufe ? transportfehler.length / sollLaeufe : 0;
+const maxAnteil = konfig.gueltigkeit?.maxAnteilTransportfehler ?? 0.05;
+const ungueltig = [];
+if (geprüft === 0) ungueltig.push('kein einziges Dokument gemessen');
+if (anteilTransport > maxAnteil)
+  ungueltig.push(
+    `${transportfehler.length} von ${sollLaeufe} Aufrufen nicht ladbar (${(anteilTransport * 100).toFixed(1)} Prozent, Grenze ${(maxAnteil * 100).toFixed(1)} Prozent)`
+  );
+for (const [name, n] of [
+  ['Regel 1+3', summe('r1r3')],
+  ['Regel 4', summe('r4')],
+  ['Regel 5', summe('r5')],
+  ['Regel 6', summe('r6')],
+])
+  if (n === 0) ungueltig.push(`${name} hat kein einziges Element geprueft und belegt damit nichts`);
+// Nicht ladbare Seiten, die es im Repo GIBT, sind kein Lastproblem, sondern
+// eine Luecke in der Auslieferung. Sie werden getrennt ausgewiesen, damit sie
+// nicht unter "abgerissener Verbindungsversuch" verschwinden.
+const nichtAusgeliefert = [
+  ...new Set(transportfehler.filter((t) => t.status === 404).map((t) => t.seite)),
+];
+// Reihenfolge: ein echter Befund schlaegt die Ungueltigkeit. Andersherum
+// verschwaende ein Lauf, der acht sichtbare Ueberstaende gefunden hat, sein
+// Ergebnis hinter einer Abdeckungsluecke einer anderen Regel, und ein FAIL
+// koennte als blosses Messproblem abgetan werden. Die Ungueltigkeit steht
+// trotzdem daneben, sie faellt nicht weg.
+const hartBefunde0 = befunde.filter((b) => regelStreng(b.regel));
+const urteil = hartBefunde0.length ? 'FAIL' : ungueltig.length ? 'UNGUELTIG' : 'PASS';
+
+// Eine Gesamtsumme verdeckt, WO nichts gemessen wurde. Gemessen 28.07.2026:
+// Regel 4 hat auf anfrage, datenschutz, impressum und
+// kostenvergleich-waermepumpe ueber alle acht Breiten 0 Elemente, und Regel 6
+// erreicht auf anfrage nur einen Bruchteil, weil
+// `main#main-content.funnel-panel` selbst `overflow-x: clip` setzt. Das ist
+// nicht automatisch ein Fehler, denn dort traegt Regel 1 die Pruefung (Kind
+// gegen Container). Verschwiegen werden darf es trotzdem nicht: der Bericht
+// wies bisher je Seite eine Spalte aus und schrieb daneben, eine 0 bedeute
+// Wirkungslosigkeit, ohne die Faelle je zusammenzufassen.
+const duenneSeiten = [];
+{
+  const jeSeite = new Map();
+  for (const a of abdeckung) {
+    if (!jeSeite.has(a.seite)) jeSeite.set(a.seite, { r1r3: 0, r4: 0, r5: 0, r6: 0, laeufe: 0 });
+    const e = jeSeite.get(a.seite);
+    e.r1r3 += a.r1r3;
+    e.r4 += a.r4;
+    e.r5 += a.r5;
+    e.r6 += a.r6;
+    e.laeufe++;
+  }
+  for (const [seite, e] of jeSeite)
+    for (const [regel, n] of [
+      ['Regel 1+3', e.r1r3],
+      ['Regel 4', e.r4],
+      ['Regel 5', e.r5],
+      ['Regel 6', e.r6],
+    ])
+      if (n === 0) duenneSeiten.push({ seite, regel, laeufe: e.laeufe });
+}
+
 // ── Befunddatei ─────────────────────────────────────────────────────────────
 const heute = new Date().toISOString().slice(0, 10);
 const berichtVerzeichnis = path.join(wurzel, 'reports');
@@ -702,10 +869,36 @@ const zeilen = [];
 zeilen.push(`# Raster-Befund ${heute}`);
 zeilen.push('');
 zeilen.push(`Quelle: ${eigenerServer ? 'lokaler Arbeitsstand des Repos' : BASIS}`);
+// Soll und Ist getrennt nennen. Die alte Zeile schrieb "30 Seiten x 8 Breiten
+// = 232 Laeufe" und rechnete damit sichtbar falsch (30 x 8 sind 240): sie
+// stellte das Produkt hin und setzte die Zahl der WIRKLICH gemessenen
+// Dokumente dahinter. Genau die Sorte Abdeckungszahl, die dieses Gate
+// abschaffen soll.
 zeilen.push(
-  `Geprueft: ${konfig.seiten.length} Seiten x ${konfig.breiten.length} Breiten = ${geprüft} Laeufe.`
+  `Vorgesehen: ${konfig.seiten.length} Seiten x ${konfig.breiten.length} Breiten = ${konfig.seiten.length * konfig.breiten.length} Laeufe.`
 );
-zeilen.push(`Ergebnis: ${befunde.length === 0 ? 'PASS' : 'FAIL'} (${befunde.length} Befunde).`);
+zeilen.push(
+  `Gemessen: ${geprüft} Dokumente${geprüft < konfig.seiten.length * konfig.breiten.length ? `, ${konfig.seiten.length * konfig.breiten.length - geprüft} nicht ladbar (siehe Transportfehler)` : ''}.`
+);
+zeilen.push(`Ergebnis: ${urteil} (${befunde.length} Befunde).`);
+if (ungueltig.length) {
+  zeilen.push('');
+  zeilen.push(
+    '> **Dieser Lauf belegt nichts und gilt nicht als bestanden.** Die Zahl der Befunde ist deshalb ohne Aussage.'
+  );
+  for (const u of ungueltig) zeilen.push(`> - ${u}`);
+}
+if (nichtAusgeliefert.length) {
+  zeilen.push('');
+  zeilen.push(
+    `> **Nicht ausgeliefert:** ${nichtAusgeliefert.join(', ')}. Die Seite liegt im Repo und in der Pruefliste, die gepruefte Adresse antwortet aber mit 404. Das ist eine Luecke in der Auslieferung, kein Lastproblem.`
+  );
+}
+if (abgeschwaecht.length) {
+  zeilen.push('');
+  zeilen.push('> **Nicht alle Regeln stehen scharf.** Dieser Lauf urteilt eingeschraenkt:');
+  for (const a of abgeschwaecht) zeilen.push(`> - ${a}`);
+}
 zeilen.push('');
 for (const [regel, titel] of [
   ['R1', 'Regel 1: Container-Ueberstand (hart)'],
@@ -745,9 +938,21 @@ if (!eigenerServer) {
 zeilen.push('## Abdeckung (was die Regeln ueberhaupt angefasst haben)');
 zeilen.push('');
 zeilen.push(
-  '> Eine Regel, die nichts prueft, meldet PASS und ist gefaehrlicher als eine abgeschaltete. Diese Tabelle weist aus, wie viele Elemente je Regel **befundfaehig** waren, also einen Befund haetten erzeugen koennen. Steht in einer Spalte 0, ist die Regel auf dieser Seite wirkungslos. Gezaehlt werden ausdruecklich NICHT die Seitenaufrufe: die erste Fassung von Regel 6 meldete "232 Dokumente geprueft" und konnte auf 26 von 29 Seiten baulich nichts messen.'
+  '> Eine Regel, die nichts prueft, meldet PASS und ist gefaehrlicher als eine abgeschaltete. Diese Tabelle weist aus, wie viele Elemente je Regel **befundfaehig** waren, also einen Befund haetten erzeugen koennen. Gezaehlt werden ausdruecklich NICHT die Seitenaufrufe: die erste Fassung von Regel 6 meldete "232 Dokumente geprueft" und konnte auf 26 von 29 Seiten baulich nichts messen.'
 );
 zeilen.push('');
+zeilen.push(
+  '> Steht in einer Spalte 0, ist die Regel auf dieser Seite wirkungslos. Das ist nicht automatisch ein Fehler: Regel 4 greift nur auf vollbreiten Containern, Regel 5 nur auf schmaleren Bloecken in Blockcontainern, und Regel 6 nur auf Elementen, die die Fensterkante ueberhaupt erreichen koennen. Auf `anfrage.html` klippt `main#main-content.funnel-panel` selbst waagerecht, dort traegt Regel 1 die Pruefung. Wo eine Regel ueber alle Breiten hinweg 0 erreicht, steht der Fall unten ausdruecklich in der Liste, statt in der Gesamtsumme zu verschwinden.'
+);
+zeilen.push('');
+if (duenneSeiten.length) {
+  zeilen.push('**Regeln ohne befundfaehiges Element ueber alle Breiten dieser Seite**');
+  zeilen.push('');
+  zeilen.push('| Seite | Regel | Laeufe |');
+  zeilen.push('|---|---|---|');
+  for (const d of duenneSeiten) zeilen.push(`| ${d.seite} | ${d.regel} | ${d.laeufe} |`);
+  zeilen.push('');
+}
 zeilen.push(
   '| Seite | Breite | Elemente | davon sichtbar | in Regel 1+3 | in Regel 4 | in Regel 5 | in Regel 6 |'
 );
@@ -801,14 +1006,17 @@ for (const b of befunde) {
   gruppiert.set(k, (gruppiert.get(k) || 0) + 1);
 }
 console.log(
-  `Raster-Gate: ${konfig.seiten.length} Seiten x ${konfig.breiten.length} Breiten, ${befunde.length} Befunde.`
+  `Raster-Gate: ${geprüft} von ${konfig.seiten.length * konfig.breiten.length} Dokumenten gemessen (${konfig.seiten.length} Seiten x ${konfig.breiten.length} Breiten), ${befunde.length} Befunde.`
 );
 for (const [k, n] of [...gruppiert.entries()].sort((a, c) => c[1] - a[1]))
   console.log(`  ${n}x  ${k}`);
-const summe = (k) => abdeckung.reduce((a, b) => a + b[k], 0);
 console.log(
   `Abdeckung (befundfaehige Elemente): ${summe('sichtbar')} sichtbar, davon ${summe('r1r3')} in Regel 1+3, ${summe('r4')} in Regel 4, ${summe('r5')} in Regel 5, ${summe('r6')} in Regel 6.`
 );
+if (duenneSeiten.length)
+  console.log(
+    `  Duenne Abdeckung, je Regel und Seite ausgewiesen: ${duenneSeiten.length} Faelle, siehe Bericht.`
+  );
 if (!eigenerServer) {
   console.log(
     `Live-Lauf: ${transportfehler.length} Transportfehler nach je ${LIVE.versuche} Versuchen, ${fehlversuche} Fehlversuche insgesamt, Pause ${LIVE.pauseMs} ms je Aufruf.`
@@ -819,39 +1027,28 @@ if (!eigenerServer) {
 }
 console.log(`Befunddatei: ${path.relative(wurzel, berichtPfad)}`);
 
-// ── Gueltigkeit des Laufs ───────────────────────────────────────────────────
-// Ein Lauf, der nichts gemessen hat, ist UNGUELTIG, nicht gruen. Gemessen am
-// 28.07.2026 gegen einen Server, der dauerhaft 503 lieferte: 0 gemessene
-// Dokumente, 10 Transportfehler, drei Nullabdeckungs-Warnungen, und trotzdem
-// "Raster-Gate PASS" mit Rueckgabewert 0. Ein gruenes Ergebnis ohne Messung ist
-// die gefaehrlichste Ausgabe, die ein Pruefwerkzeug erzeugen kann.
-// Lehre: _Learnings/agenten/feedback_messung_deren_voraussetzung_still_scheitert_2026-07-28.md
-const soll = konfig.seiten.length * konfig.breiten.length;
-const anteilTransport = soll ? transportfehler.length / soll : 0;
-const maxAnteil = konfig.gueltigkeit?.maxAnteilTransportfehler ?? 0.05;
-const ungueltig = [];
-if (geprüft === 0) ungueltig.push('kein einziges Dokument gemessen');
-if (anteilTransport > maxAnteil)
-  ungueltig.push(
-    `${transportfehler.length} von ${soll} Aufrufen nicht ladbar (${(anteilTransport * 100).toFixed(1)} Prozent, Grenze ${(maxAnteil * 100).toFixed(1)} Prozent)`
+// ── Rueckgabewert ───────────────────────────────────────────────────────────
+// Das Urteil steht schon oben, es ist dasselbe wie im Bericht. Bis zum
+// 28.07.2026 wurde es hier UNTEN gebildet, und die Datei im Pull Request trug
+// `Ergebnis: PASS`, waehrend der Rueckgabewert 4 lautete.
+if (nichtAusgeliefert.length)
+  console.log(
+    `NICHT AUSGELIEFERT: ${nichtAusgeliefert.join(', ')} liegt im Repo und in der Pruefliste, antwortet aber mit 404.`
   );
-for (const [name, n] of [
-  ['Regel 1+3', summe('r1r3')],
-  ['Regel 4', summe('r4')],
-  ['Regel 5', summe('r5')],
-  ['Regel 6', summe('r6')],
-])
-  if (n === 0) ungueltig.push(`${name} hat kein einziges Element geprueft und belegt damit nichts`);
 if (ungueltig.length) {
-  console.error('Raster-Gate UNGUELTIG. Der Lauf belegt nichts und gilt nicht als bestanden:');
+  console.error('Raster-Gate: der Lauf ist UNGUELTIG und belegt fuer sich genommen nichts:');
   for (const u of ungueltig) console.error(`  ${u}`);
-  process.exit(4);
 }
-
-if (befunde.length && !nurBericht) {
-  console.error(
-    'Raster-Gate FAIL. Fluchten, Proportionen oder Container-Ueberstand stimmen nicht.'
-  );
-  process.exit(1);
+// `--nur-bericht` verspricht in der Kopfzeile ausdruecklich "kein
+// Fehlerabbruch". Das gilt fuer BEIDE Faelle: Ungueltigkeit und Befunde stehen
+// im Bericht und auf der Konsole, brechen den Lauf im Berichtsmodus aber nicht ab.
+if (!nurBericht) {
+  if (hartBefunde0.length) {
+    console.error(
+      'Raster-Gate FAIL. Fluchten, Proportionen oder Container-Ueberstand stimmen nicht.'
+    );
+    process.exit(1);
+  }
+  if (ungueltig.length) process.exit(4);
 }
-console.log('Raster-Gate PASS.');
+console.log(`Raster-Gate ${urteil}.`);

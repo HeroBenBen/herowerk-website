@@ -68,10 +68,14 @@ jobs:
       # Trefferflaechen, Ueberlauf) sagen nichts ueber Fluchten und Proportionen.
       # Am 26.07. ragte ein Knopf auf jeder Telefonbreite 29 px aus seiner Karte,
       # obwohl vier unabhaengige Abnahmen gruen gemeldet hatten. Das Gate prueft
-      # je Seite und Breite hart: Container-Ueberstand, Aussenbreite statt
-      # Inhaltsbreite, Seitenrand-Treue, Symmetrie zentrierter Bloecke. Das
-      # Kanten-Inventar laeuft als Bericht OHNE Fehlerabbruch, solange die
-      # Kanten-Erwartung nicht ratifiziert ist (scripts/raster-expect.json).
+      # je Seite und Breite hart: Container-Ueberstand (1), Aussenbreite statt
+      # Inhaltsbreite (3), Seitenrand-Treue vollbreiter Container (4),
+      # erklaerter Seitenversatz schmalerer Bloecke (5) und
+      # Fensterkanten-Ueberstand (6). Das Kanten-Inventar (2) laeuft als Bericht
+      # OHNE Fehlerabbruch, solange die Kanten-Erwartung nicht ratifiziert ist
+      # (scripts/raster-expect.json).
+      # Rueckgabewerte: 1 Layoutbefund, 2 Ausnahme ohne Feld grund,
+      # 3 unmoegliche Messzahl, 4 Lauf ohne Messung und damit ungueltig.
       - run: npx playwright install --with-deps chromium
       - run: npm run verify:raster
       # Mobile-Gate (Fixplan G4, 27.07.2026): die zehn Punkte der Mobil-Abnahme
