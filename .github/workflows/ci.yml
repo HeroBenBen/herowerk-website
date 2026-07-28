@@ -217,7 +217,7 @@ jobs:
       - run: node scripts/rich-results-check.js ${{ needs.resolve-preview.outputs.url }}
 
   # Job 12: Lead-only-Negativ-Gate (verhindert Vertragsabschluss-CTA)
-  # Codex-Iteration-3-Finding 6 — Pattern erweitert
+  # Codex-Iteration-3-Finding 6 : Pattern erweitert
   lead-only-gate:
     runs-on: ubuntu-latest
     needs: lint

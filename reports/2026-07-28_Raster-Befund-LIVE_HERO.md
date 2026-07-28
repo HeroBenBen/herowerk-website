@@ -3,7 +3,11 @@
 Quelle: https://www.herowerk.de
 Vorgesehen: 30 Seiten x 8 Breiten = 240 Laeufe.
 Gemessen: 232 Dokumente, 8 nicht ladbar (siehe Transportfehler).
-Ergebnis: PASS (0 Befunde).
+Ergebnis: UNGUELTIG (0 harte Befunde).
+
+> **Dieser Lauf belegt nichts und gilt nicht als bestanden.** Die Zahl der Befunde ist deshalb ohne Aussage.
+>
+> - Seite "amortisation-waermepumpe" konnte auf keiner der 8 Breiten geladen werden und ist damit ungeprueft
 
 > **Nicht ausgeliefert:** amortisation-waermepumpe. Die Seite liegt im Repo und in der Pruefliste, die gepruefte Adresse antwortet aber mit 404. Das ist eine Luecke in der Auslieferung, kein Lastproblem.
 
@@ -44,6 +48,21 @@ Ergebnis: PASS (0 Befunde).
 
 > Steht in einer Spalte 0, ist die Regel auf dieser Seite wirkungslos. Das ist nicht automatisch ein Fehler: Regel 4 greift nur auf vollbreiten Containern, Regel 5 nur auf schmaleren Bloecken in Blockcontainern, und Regel 6 nur auf Elementen, die die Fensterkante ueberhaupt erreichen koennen. Auf `anfrage.html` klippt `main#main-content.funnel-panel` selbst waagerecht, dort traegt Regel 1 die Pruefung. Wo eine Regel ueber alle Breiten hinweg 0 erreicht, steht der Fall unten ausdruecklich in der Liste, statt in der Gesamtsumme zu verschwinden.
 
+**Befundfaehige Elemente je Breite, alle 30 Seiten zusammen**
+
+> Diese Tabelle steht hier, weil eine Zusammenfassung ueber alle Breiten genau das verdeckt, wofuer das Gate gebaut wurde: der Ursprungsfehler vom 26.07.2026 war ein Telefonfehler. Wo eine Regel auf den Telefonbreiten kaum Elemente erreicht, schuetzt sie dort auch nicht.
+
+| Breite | Regel 1+3 | Regel 4 | Regel 5 | Regel 6 |
+| ------ | --------- | ------- | ------- | ------- |
+| 320 px | 4050      | 67      | 1       | 3508    |
+| 360 px | 4052      | 67      | 1       | 3508    |
+| 375 px | 4052      | 67      | 1       | 3509    |
+| 390 px | 4054      | 67      | 1       | 3509    |
+| 414 px | 4054      | 67      | 1       | 3509    |
+| 600 px | 4185      | 67      | 2       | 3635    |
+| 768 px | 4191      | 67      | 65      | 3695    |
+| 960 px | 4224      | 60      | 111     | 3693    |
+
 **Regeln ohne befundfaehiges Element ueber alle Breiten dieser Seite**
 
 | Seite                       | Regel   | Laeufe |
@@ -74,7 +93,7 @@ Ergebnis: PASS (0 Befunde).
 | index                               | 320 px | 394      | 294            | 233          | 8          | 0          | 158        |
 | karriere                            | 320 px | 1098     | 581            | 509          | 7          | 0          | 516        |
 | kontakt                             | 320 px | 196      | 99             | 88           | 2          | 0          | 91         |
-| kostenvergleich-waermepumpe         | 320 px | 1205     | 66             | 51           | 0          | 0          | 55         |
+| kostenvergleich-waermepumpe         | 320 px | 1203     | 66             | 51           | 0          | 0          | 55         |
 | preise                              | 320 px | 408      | 316            | 268          | 6          | 0          | 151        |
 | propan-waermepumpe                  | 320 px | 203      | 111            | 102          | 1          | 0          | 109        |
 | prozess                             | 320 px | 240      | 130            | 116          | 3          | 0          | 97         |
@@ -248,7 +267,7 @@ Ergebnis: PASS (0 Befunde).
 | index                               | 768 px | 394      | 309            | 239          | 8          | 8          | 163        |
 | karriere                            | 768 px | 1098     | 596            | 514          | 7          | 4          | 521        |
 | kontakt                             | 768 px | 196      | 114            | 93           | 2          | 2          | 96         |
-| kostenvergleich-waermepumpe         | 768 px | 1203     | 67             | 52           | 0          | 1          | 56         |
+| kostenvergleich-waermepumpe         | 768 px | 1204     | 67             | 52           | 0          | 1          | 56         |
 | preise                              | 768 px | 408      | 331            | 280          | 6          | 5          | 217        |
 | propan-waermepumpe                  | 768 px | 203      | 126            | 107          | 1          | 2          | 114        |
 | prozess                             | 768 px | 240      | 145            | 121          | 3          | 2          | 102        |
@@ -277,7 +296,7 @@ Ergebnis: PASS (0 Befunde).
 | index                               | 960 px | 394      | 309            | 243          | 8          | 3          | 163        |
 | karriere                            | 960 px | 1098     | 596            | 514          | 7          | 25         | 521        |
 | kontakt                             | 960 px | 196      | 114            | 93           | 2          | 1          | 96         |
-| kostenvergleich-waermepumpe         | 960 px | 1203     | 67             | 52           | 0          | 1          | 56         |
+| kostenvergleich-waermepumpe         | 960 px | 1205     | 67             | 52           | 0          | 1          | 56         |
 | preise                              | 960 px | 408      | 331            | 280          | 6          | 9          | 217        |
 | propan-waermepumpe                  | 960 px | 203      | 126            | 107          | 1          | 3          | 114        |
 | prozess                             | 960 px | 240      | 123            | 99           | 3          | 3          | 99         |

@@ -3,7 +3,7 @@
 Quelle: lokaler Arbeitsstand des Repos
 Vorgesehen: 30 Seiten x 8 Breiten = 240 Laeufe.
 Gemessen: 240 Dokumente.
-Ergebnis: PASS (0 Befunde).
+Ergebnis: PASS (0 harte Befunde).
 
 > **Nicht alle Regeln stehen scharf.** Dieser Lauf urteilt eingeschraenkt:
 > - R2 (r2_kanten_inventar): aktiv true, streng false
@@ -25,6 +25,21 @@ Ergebnis: PASS (0 Befunde).
 > Eine Regel, die nichts prueft, meldet PASS und ist gefaehrlicher als eine abgeschaltete. Diese Tabelle weist aus, wie viele Elemente je Regel **befundfaehig** waren, also einen Befund haetten erzeugen koennen. Gezaehlt werden ausdruecklich NICHT die Seitenaufrufe: die erste Fassung von Regel 6 meldete "232 Dokumente geprueft" und konnte auf 26 von 29 Seiten baulich nichts messen.
 
 > Steht in einer Spalte 0, ist die Regel auf dieser Seite wirkungslos. Das ist nicht automatisch ein Fehler: Regel 4 greift nur auf vollbreiten Containern, Regel 5 nur auf schmaleren Bloecken in Blockcontainern, und Regel 6 nur auf Elementen, die die Fensterkante ueberhaupt erreichen koennen. Auf `anfrage.html` klippt `main#main-content.funnel-panel` selbst waagerecht, dort traegt Regel 1 die Pruefung. Wo eine Regel ueber alle Breiten hinweg 0 erreicht, steht der Fall unten ausdruecklich in der Liste, statt in der Gesamtsumme zu verschwinden.
+
+**Befundfaehige Elemente je Breite, alle 30 Seiten zusammen**
+
+> Diese Tabelle steht hier, weil eine Zusammenfassung ueber alle Breiten genau das verdeckt, wofuer das Gate gebaut wurde: der Ursprungsfehler vom 26.07.2026 war ein Telefonfehler. Wo eine Regel auf den Telefonbreiten kaum Elemente erreicht, schuetzt sie dort auch nicht.
+
+| Breite | Regel 1+3 | Regel 4 | Regel 5 | Regel 6 |
+|---|---|---|---|---|
+| 320 px | 4036 | 69 | 1 | 3506 |
+| 360 px | 4038 | 69 | 1 | 3506 |
+| 375 px | 4038 | 69 | 1 | 3507 |
+| 390 px | 4040 | 69 | 1 | 3507 |
+| 414 px | 4040 | 69 | 1 | 3507 |
+| 600 px | 4180 | 69 | 2 | 3642 |
+| 768 px | 4186 | 69 | 66 | 3692 |
+| 960 px | 4219 | 61 | 108 | 3690 |
 
 **Regeln ohne befundfaehiges Element ueber alle Breiten dieser Seite**
 
@@ -2928,8 +2943,8 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 763.48 px | 7 | div, div, h2 |
 | 846.39 px | 1 | svg |
 | 849.24 px | 1 | path |
-| 991.31 px | 1 | div.pa-card.pa-visible.dimmed |
-| 1005.31 px | 7 | div, div, h2 |
+| 991.32 px | 1 | div.pa-card.pa-visible.dimmed |
+| 1005.32 px | 7 | div, div, h2 |
 | 1087.22 px | 1 | svg |
 
 **propan-waermepumpe, 600 px: 13 verschiedene linke Kanten**
@@ -3528,7 +3543,7 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 651.91 px | 1 | span |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**preise, 768 px: 31 verschiedene linke Kanten**
+**preise, 768 px: 29 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3541,11 +3556,9 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 123.85 px | 1 | path |
 | 126 px | 1 | svg |
 | 241 px | 2 | div.pa-cta-icon, svg |
-| 268 px | 1 | div.pa-card.pa-visible.dimmed |
-| 268.02 px | 1 | div.pa-card.pa-visible.dimmed |
+| 268 px | 2 | div.pa-card.pa-visible.dimmed, div.pa-card.pa-visible.dimmed |
 | 283 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
-| 284 px | 8 | div, div, h2 |
-| 284.02 px | 4 | div, div, h2 |
+| 284 px | 12 | div, div, h2 |
 | 297.5 px | 1 | div.section-tag |
 | 334.58 px | 1 | strong |
 | 364 px | 1 | svg |
@@ -4232,7 +4245,7 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 779.19 px | 8 | div, div, h2 |
 | 784.06 px | 1 | a.mobile-phone-cta |
 | 823.06 px | 1 | span.mobile-phone-label |
-| 829.6 px | 1 | svg |
+| 829.59 px | 1 | svg |
 | 892 px | 1 | div#hamburger.hamburger |
 
 **propan-waermepumpe, 960 px: 13 verschiedene linke Kanten**
