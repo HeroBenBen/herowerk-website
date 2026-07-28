@@ -88,6 +88,10 @@ jobs:
       # Der Jobs-Schnappschuss wird bewusst NICHT im CI neu geholt, sonst haengt
       # das Gate am Google-Sheet. Neu holen von Hand: npm run build:seo:jobs.
       - run: npm run verify:seo
+      # Pfadzeile, zitierfaehiger Fakt-Satz und Begriffsblock: Inhalt aus
+      # scripts/seiten-bausteine.json, GF-freigegeben 28.07.2026. Das Gate prueft
+      # zusaetzlich, dass JEDE Zahl im Fakt-Satz auf derselben Seite sichtbar steht.
+      - run: npm run verify:bausteine
 
   # Job 2: Lighthouse-CI (Mobile + Desktop, beide Themes)
   lighthouse:

@@ -160,3 +160,89 @@ article.section + section.faq .section-inner {
     min-width: 0;
   }
 }
+
+/* ============================================================
+   Brotkrume, Fakt-Satz und Begriffsblock (G4 Teil 3, 28.07.2026)
+   Drei sichtbare Bausteine, jeder mit eigenem Zweck:
+   - .brotkrume ist die sichtbare Grundlage fuer die BreadcrumbList-
+     Auszeichnung. Ohne sichtbaren Pfad darf nicht ausgezeichnet werden.
+     Die Verweise sind Navigation, keine Verweise im Fliesstext, deshalb
+     gilt hier dasselbe Mindestmass 44 px wie bei den Rechtsverweisen
+     (Entscheid 27.07.2026, WCAG 2.5.5).
+   - .fakt-satz ist der zitierfaehige Satz unter der Kern-Ueberschrift.
+     Er wiederholt nur, was auf derselben Seite in einer Tabelle steht.
+   - .begriffe ist das Glossar-Muster nach BFSG-04.
+   ============================================================ */
+.brotkrume {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  margin: 0 0 8px;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+}
+.brotkrume a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 6px;
+  color: var(--color-text-secondary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.brotkrume a:hover,
+.brotkrume a:focus-visible {
+  color: var(--green);
+}
+.brotkrume [aria-current='page'] {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 6px;
+}
+.brotkrume-trenner {
+  padding: 0 2px;
+  opacity: 0.6;
+}
+
+.fakt-satz {
+  margin: 0 0 20px;
+  max-width: 640px;
+  padding: 14px 18px;
+  border-left: 3px solid var(--green);
+  background: var(--color-surface-secondary);
+  border-radius: 0 10px 10px 0;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--color-text-primary);
+}
+
+.begriffe {
+  margin: 32px 0 0;
+  padding: 24px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 14px;
+  background: var(--color-surface-secondary);
+}
+.begriffe h2 {
+  margin: 0 0 12px;
+  font-size: 1.15rem;
+}
+.begriffe dl {
+  margin: 0;
+}
+.begriffe dt {
+  margin-top: 12px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+.begriffe dt:first-of-type {
+  margin-top: 0;
+}
+.begriffe dd {
+  margin: 2px 0 0;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
