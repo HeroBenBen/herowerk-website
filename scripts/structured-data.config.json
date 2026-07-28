@@ -1,0 +1,41 @@
+{
+  "_hinweis": "Konfiguration fuer scripts/build-structured-data.mjs. Nur SICHTBARER Seiteninhalt wird ausgezeichnet. Fragen und Antworten werden aus dem HTML gelesen, nicht hier gepflegt. datePublished ist der Tag, an dem die Seite erstmals im Repo lag (git --diff-filter=A), und wird eingefroren, damit er nicht wandert. dateModified errechnet das Skript.",
+  "organisation": {
+    "name": "HeroWerk GmbH i. G.",
+    "url": "https://www.herowerk.de/",
+    "logo": "https://www.herowerk.de/herowerk-logo-stacked.png",
+    "telefon": "+4951315059750",
+    "email": "info@herowerk.de",
+    "strasse": "Nelkenstraße 8",
+    "plz": "30900",
+    "ort": "Wedemark",
+    "region": "NI",
+    "land": "DE",
+    "_quelle_anschrift": "impressum.html, Live-Read 28.07.2026. Die bisherige LocalBusiness-Angabe nannte nur addressLocality Hannover ohne Strasse und wich damit vom Impressum ab.",
+    "_sameAs": "BEWUSST LEER. Es existiert kein verifiziertes oeffentliches Profil (Repo-Grep ueber alle HTML- und JS-Dateien: 0 Treffer). Erfundene Profile waeren ein Verstoss gegen die Richtlinie fuer strukturierte Daten. Sobald ein Profil belegt ist, wird es hier eingetragen."
+  },
+  "artikel": {
+    "baubarkeitspruefung": { "datePublished": "2026-06-17" },
+    "dimensionierung-verstehen": { "datePublished": "2026-06-26" },
+    "foerderung-hannover": { "datePublished": "2026-06-17" },
+    "foerderung-jetzt-mitnehmen": { "datePublished": "2026-06-17" },
+    "gasheizung-tauschen-oder-reparieren": { "datePublished": "2026-06-17" },
+    "propan-waermepumpe": { "datePublished": "2026-06-24" },
+    "waermepumpe-altbau": { "datePublished": "2026-06-17" },
+    "waermepumpe-hannover": { "datePublished": "2026-06-17" },
+    "waermepumpe-laerm": { "datePublished": "2026-06-24" },
+    "waermepumpenstrom-hannover": { "datePublished": "2026-06-24" },
+    "wertsteigerung-waermepumpe": { "datePublished": "2026-06-24" },
+    "wp-kosten-hannover": { "datePublished": "2026-06-24" }
+  },
+  "localbusiness": ["index"],
+  "keineAuszeichnung": {
+    "datenschutz": "Rechtstext ohne auszeichnungsfaehigen Inhalt",
+    "impressum": "Rechtstext ohne auszeichnungsfaehigen Inhalt",
+    "barrierefreiheit": "Rechtstext, kein Ratgeber-Artikel",
+    "hinweise": "Rechtstext; der Fragenkatalog wird ausgezeichnet, die Seite selbst nicht als Artikel",
+    "bewerbung": "Formularseite, noindex",
+    "anfrage": "Funnel, traegt bereits LocalBusiness und WebPage",
+    "kostenvergleich-waermepumpe": "Rechner ohne redaktionellen Artikeltext"
+  }
+}

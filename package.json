@@ -10,7 +10,10 @@
     "verify:assets": "scripts/version-assets.sh --check",
     "verify:consent": "node scripts/consent-integration-check.js",
     "verify:raster": "node scripts/verify-raster.mjs",
-    "verify:mobile": "node scripts/verify-mobile.mjs"
+    "verify:mobile": "node scripts/verify-mobile.mjs",
+    "verify:seo": "node scripts/build-structured-data.mjs --check",
+    "build:seo": "node scripts/build-structured-data.mjs",
+    "build:seo:jobs": "node scripts/build-structured-data.mjs --jobs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",

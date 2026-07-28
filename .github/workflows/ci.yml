@@ -80,6 +80,14 @@ jobs:
       # Punkt 7 (Einwilligungsdialog) ist bewusst NICHT maschinell abgedeckt und
       # im Bericht als Luecke ausgewiesen, siehe docs/compliance/bfsg-scope.md.
       - run: npm run verify:mobile
+      # Strukturdaten-Gate (Fixplan G4, 28.07.2026): die JSON-LD-Bloecke werden aus
+      # dem SICHTBAREN Seiteninhalt erzeugt, nicht von Hand gepflegt. Dieses Gate
+      # prueft, dass Auszeichnung und sichtbarer Inhalt nicht auseinanderlaufen.
+      # Schaerfe-Nachweis 28.07.: eine geaenderte Antwort und eine neu eingefuegte
+      # Frage schlagen beide an, der unveraenderte Stand meldet 0 Abweichungen.
+      # Der Jobs-Schnappschuss wird bewusst NICHT im CI neu geholt, sonst haengt
+      # das Gate am Google-Sheet. Neu holen von Hand: npm run build:seo:jobs.
+      - run: npm run verify:seo
 
   # Job 2: Lighthouse-CI (Mobile + Desktop, beide Themes)
   lighthouse:
