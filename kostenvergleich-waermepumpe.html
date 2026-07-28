@@ -629,13 +629,13 @@
       <div class="grid-2">
         <div>
           <div class="tg"><label class="tog"><input type="checkbox" id="finanzTog"><span class="sl"></span></label>
-            <div class="tl">Wärmepumpe finanzieren (KfW-Ergänzungskredit 358/359)<small>Blendet den monatlichen Vergleich im Ergebnis ein</small></div></div>
+            <div class="tl">Wärmepumpe finanzieren (KfW-Ergänzungskredit)<small>Blendet den monatlichen Vergleich im Ergebnis ein</small></div></div>
           <div id="finanzOpt" style="display:none">
             <div class="sg"><label>Kreditlaufzeit <span class="v" id="vKredLZ">10 Jahre</span></label>
               <input type="range" id="kredLZ" min="5" max="20" step="1" value="10"></div>
-            <div class="sg"><label>Zinssatz (nominal) <span class="ii" data-tooltip="Den Zins legt die KfW bei Zusage fest. Frei einstellbar, wenn Ihre Bank andere Konditionen nennt.">i</span> <span class="v" id="vKredZins"></span></label>
-              <input type="range" id="kredZins" min="0.0" max="9.0" step="0.1"></div>
-            <div class="ib"><span class="d"><strong>Welcher Kredit?</strong> Der KfW-Ergänzungskredit zur Heizungsförderung (Programm 358/359). Ihn gibt es nur zusammen mit der KfW-Zuschusszusage (KfW 458), bis 120.000 € je Wohneinheit. Den Antrag stellen Sie bei Ihrer Bank oder Sparkasse. Liegt Ihr Haushaltseinkommen bei höchstens 90.000 € im Jahr, bekommen Sie den Zinsvorteil über Programm 358: aktuell 0,71 bis 2,12 % effektiv je nach Laufzeit. Liegt es darüber, gilt Programm 359: aktuell 3,63 bis 4,03 % effektiv. Quelle: KfW-Konditionenanzeiger, Stand 14.07.2026, ohne Gewähr.</span></div>
+            <div class="sg"><label>Zinssatz (effektiv) <span class="ii" id="kredZinsTooltip" data-tooltip="Rechenannahme wird geladen.">i</span> <span class="v" id="vKredZins"></span></label>
+              <input type="range" id="kredZins" min="0.0" max="9.0" step="0.01"></div>
+            <div class="ib"><span class="d"><strong>Welcher Kredit?</strong> <span id="kredZinsInfo">Rechenannahme wird geladen.</span></span></div>
           </div>
         </div>
         <div class="ib"><span class="d"><strong>Der Denkfehler, den wir auflösen:</strong> Viele vergleichen die finanzierte Wärmepumpe mit der „alten Gasrechnung". Das ist unfair, denn die alte Heizung ist am Ende. Der ehrliche Vergleich lautet: neue WP-Rate + WP-Strom gegen neue Gas-/Öl-Rate + steigende Brennstoffkosten. Genau das rechnet der monatliche Vergleich im Ergebnis.</span></div>
@@ -731,7 +731,7 @@ const SL=[
   {id:'strompreis',vid:'vStrom',f:v=>Number(v).toFixed(0)+' ct/kWh'},
   {id:'co2preis',vid:'vCO2',f:v=>v+' €/t'},
   {id:'kredLZ',vid:'vKredLZ',f:v=>v+' Jahre'},
-  {id:'kredZins',vid:'vKredZins',f:v=>Number(v).toFixed(1).replace('.',',')+' %'},
+  {id:'kredZins',vid:'vKredZins',f:v=>Number(v).toFixed(2).replace('.',',')+' %'},
   {id:'hausW',vid:'vHausW',f:v=>Number(v).toLocaleString('de-DE')+' €'},
   {id:'immoP',vid:'vImmoP',f:v=>v+' %'},
   {id:'dynAnteil',vid:'vDynAnteil',f:v=>v+' %'},
@@ -814,7 +814,10 @@ async function kvFetch(params,signal){
 function kvApplyBootstrap(data){
   KV_STATE.bootstrap=data;
   KV_STATE.applyingBootstrap=true;
-  try{Object.entries(data.defaults||{}).forEach(([id,value])=>{const el=document.getElementById(id);if(!el)return;if(el.type==='checkbox')el.checked=!!value;else el.value=value;el.dispatchEvent(new Event('input',{bubbles:true}));});}
+  try{
+    Object.entries(data.defaults||{}).forEach(([id,value])=>{const el=document.getElementById(id);if(!el)return;if(el.type==='checkbox')el.checked=!!value;else el.value=value;el.dispatchEvent(new Event('input',{bubbles:true}));});
+    if(typeof window.WZ_AFTER_KV_BOOTSTRAP==='function')window.WZ_AFTER_KV_BOOTSTRAP(data);
+  }
   finally{KV_STATE.applyingBootstrap=false;}
   const sel=document.getElementById('fHalbjahr');
   if(sel&&Array.isArray(data.perioden)){
@@ -1021,6 +1024,41 @@ kvLoadBootstrap();
   function touch(id){if(id)WZ.touched.add(id);updateChips();}
   function syncLabel(id){const el=$(id);if(el)el.dispatchEvent(new Event('input',{bubbles:true}));}
   function clampBedarf(v){const el=$('bedarf');const min=Number(el.min),max=Number(el.max),step=Number(el.step)||1;return Math.min(max,Math.max(min,Math.round(Number(v)/step)*step));}
+  function kredFormat(value){return Number(value).toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2});}
+  function kredStandFormat(value){
+    const parts=String(value||'').split('-');
+    return parts.length===3?parts[2]+'.'+parts[1]+'.'+parts[0]:String(value||'');
+  }
+  function kredProgramme(quelle){
+    const matches=String(quelle||'').match(/\d+/g)||[];
+    return {niedrig:matches[0]||'',hoch:matches[1]||''};
+  }
+  function kredZinsFuerEinkommen(kredit){
+    return Number($('fEinkSlider').value)<=Number(kredit.zveGrenze)?Number(kredit.zins358Eff):Number(kredit.zins359Eff);
+  }
+  function renderKreditHinweise(kredit){
+    const stand=kredStandFormat(kredit.stand);
+    const grenze=Number(kredit.zveGrenze).toLocaleString('de-DE');
+    const wert=kredFormat(kredZinsFuerEinkommen(kredit));
+    const programme=kredProgramme(kredit.quelle);
+    const tooltip='Rechenannahme '+wert+' Prozent effektiv, angelehnt an '+kredit.quelle+', Stand '+stand+', gilt bis '+grenze+' Euro zu versteuerndem Haushaltseinkommen. Kein Kreditangebot, die Vergabe erfolgt über deine Hausbank, ein Anspruch besteht nicht. Der ausgewiesene Effektivzins enthält die Kosten einer grundpfandrechtlichen Sicherung nicht. Ab dem 13. Monat nach Zusage fallen '+kredFormat(kredit.bereitstellungProv)+' Prozent Bereitstellungsprovision je Monat an. Du kannst den Regler jederzeit selbst verstellen.';
+    const info='Rechenannahme: Der '+kredit.quelle+' setzt eine KfW-Zuschusszusage voraus. Du beantragst ihn über deine Hausbank. Bis einschließlich '+grenze+' Euro zu versteuerndem Haushaltseinkommen rechnen wir mit Programm '+programme.niedrig+' Plus und '+kredFormat(kredit.zins358Eff)+' Prozent effektiv, darüber mit Programm '+programme.hoch+' und '+kredFormat(kredit.zins359Eff)+' Prozent effektiv. Möglich sind bis 120.000 Euro je Wohneinheit. Stand '+stand+', ohne Gewähr.';
+    if($('kredZinsTooltip'))$('kredZinsTooltip').setAttribute('data-tooltip',tooltip);
+    if($('kredZinsInfo'))$('kredZinsInfo').textContent=info;
+    WZ_MARKET_LABELS.kredZins='Rechenannahme '+kredit.quelle+', Stand '+stand;
+    updateChips();
+  }
+  function applyKreditZinsvorgabe(kredit){
+    if(isBerater()||WZ.touched.has('kredZins'))return;
+    setControl('kredZins',kredZinsFuerEinkommen(kredit),['input','change']);
+  }
+  function applyKreditBootstrap(data){
+    const kredit=data&&data.kredit;
+    if(!kredit)return;
+    applyKreditZinsvorgabe(kredit);
+    renderKreditHinweise(kredit);
+  }
+  window.WZ_AFTER_KV_BOOTSTRAP=applyKreditBootstrap;
 
   function init(){
     addFooterLink();
@@ -1378,6 +1416,7 @@ kvLoadBootstrap();
     document.addEventListener('change',e=>{if(WZ.programmatic||KV_STATE.applyingBootstrap)return;const id=e.target&&e.target.id;if(WZ_TRACK_IDS.includes(id)){if(id==='fEinkSlider'&&!WZ.incomeOpted)return;touch(id);}if(id==='fHalbjahr')gtag('event','wz_zeitraum_gewechselt',{zeitraum:e.target.value});});
     const WZ_FOERDER_IDS=['fHalbjahr','fEinkSlider','fKind','fGrund','fEU','fKlima','fAlt20'];
     ['input','change'].forEach(t=>document.addEventListener(t,e=>{const id=e.target&&e.target.id;if(WZ_FOERDER_IDS.includes(id)){renderFoerderAufbau();renderLiveFoerder();}}));
+    ['input','change'].forEach(t=>document.addEventListener(t,e=>{if(KV_STATE.applyingBootstrap)return;const id=e.target&&e.target.id;if(id==='fEinkSlider'&&KV_STATE.bootstrap&&KV_STATE.bootstrap.kredit){applyKreditZinsvorgabe(KV_STATE.bootstrap.kredit);renderKreditHinweise(KV_STATE.bootstrap.kredit);}}));
   }
   const WZ_MARKET_LABELS={invWP:'Richtwert HeroWerk-Einstiegsangebot',vglBrennstoff:'Vorbelegt nach Ihrer Heizungsart',kredZins:'Rechenannahme'};
   function marketLabel(id){return WZ_MARKET_LABELS[id]||'Marktannahme';}

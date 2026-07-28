@@ -342,14 +342,14 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
   ).toHaveCount(1);
   await rangeFromStart(page, 'kredZins', 0);
   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.inputsEcho.kredZins === 0);
-  await expect(page.locator('#vKredZins')).toHaveText('0,0 %');
+  await expect(page.locator('#vKredZins')).toHaveText('0,00 %');
   const monRateNull = await page.evaluate(() => KV_STATE.last.finanzierung.monRate);
   await expect(page.locator('#cashflowBox')).toContainText(
     `${Math.round(monRateNull).toLocaleString('de-DE')} € Rate`
   );
   await rangeToEnd(page, 'kredZins');
   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.inputsEcho.kredZins === 9);
-  await expect(page.locator('#vKredZins')).toHaveText('9,0 %');
+  await expect(page.locator('#vKredZins')).toHaveText('9,00 %');
   const monRateNeun = await page.evaluate(() => KV_STATE.last.finanzierung.monRate);
   await expect(page.locator('#cashflowBox')).toContainText(
     `${Math.round(monRateNeun).toLocaleString('de-DE')} € Rate`

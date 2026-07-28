@@ -80,7 +80,7 @@ Ausnahmen (im Orakel selbst gerundet) sind je Feld markiert mit `[gerundet: …]
 |---|---|---|---|
 | `finanzTog` | bool | `0` | Finanzierungs-Vergleich an |
 | `kredLZ` | int | `10` | Kredit-Laufzeit Jahre (5–20) |
-| `kredZins` | number | `0.7` | Zins % nominal (0.5–6.0). Bei `finanzTog=0` intern 3.5 (Orakel-Default) |
+| `kredZins` | number | `0.98` | Effektivzins in Prozent, frei einstellbar von 0,0 bis 9,0. Die Kundenvorgabe kommt aus `kv_bootstrap.kredit` und folgt dem zu versteuernden Haushaltseinkommen. Bei `finanzTog=0` bleibt der interne Orakel-Default ohne Außenwirkung. |
 | `immoTog` | bool | `0` | Immobilienwert-Block an |
 | `hausW` | number | `350000` | Hauswert € (100000–800000) |
 | `immoP` | number | `7` | Wertsteigerung % (3–15) |
@@ -180,14 +180,12 @@ Feld mit `[gerundet]` markiert und der ungerundete Partner steht daneben.
 
   "finanzierung": {
     "aktiv": false,
-    "kreditBetrag": 17120.0, "kredLZ": 10, "kredZinsProzent": 3.5, "kredN": 120,
-    // ACHTUNG: bei aktiv=false erzwingt das Orakel kredLZ=10 und kredZins=3.5 %,
-    // die Slider-Werte werden ignoriert (Orakel Z.178 bis 179).
-    "monRate": 0.0, "monRateFossil": 0.0,
-    "monWPStrom": 0.0, "monFossil": 0.0, "monGesWP": 0.0, "monDiff": 0.0,
-    "wpMon": 0.0, "fossMon": 0.0, "monVorteil": 0.0,   // monVorteil = fossMon − wpMon (dCf)
+    "kreditBetrag": null, "kredLZ": 10, "kredZinsProzent": null, "kredN": null,
+    "monRate": null, "monRateFossil": null,
+    "monWPStrom": 0.0, "monFossil": 0.0, "monGesWP": null, "monDiff": null,
+    "wpMon": null, "fossMon": null, "monVorteil": null,
     "zinsKosten": 0.0, "zinsFossil": 0.0, "zinsDelta": 0.0,
-    "gesamtkostenKredit": 0.0,
+    "gesamtkostenKredit": null,
     "endJahrIndex": 9,                        // min(kredLZ, laufzeit) − 1
     "endWpMon": 0.0, "endFossilMon": 0.0      // Betriebskosten/Monat am Kreditende
   },
@@ -322,10 +320,18 @@ existieren in der realen Payload nicht.
     "fHalbjahr": "h2-2026", "fGrund": true, "fEU": true,
     "fKlima": true, "fAlt20": true, "fEinkSlider": 60000,
     "fKind": false, "fEffizienz": false,
-    "finanzTog": false, "kredLZ": 10, "kredZins": 0.7,
+    "finanzTog": false, "kredLZ": 10, "kredZins": 0.98,
     "immoTog": false, "hausW": 350000, "immoP": 7,
     "dynTarifTog": false, "dynAnteil": 40, "dynSpread": 10,
     "modus": "kunde"
+  },
+  "kredit": {
+    "zins358Eff": 0.98,
+    "zins359Eff": 4.1,
+    "zveGrenze": 90000,
+    "bereitstellungProv": 0.15,
+    "stand": "2026-07-24",
+    "quelle": "KfW-Ergänzungskredit 358/359"
   },
   "etaMatrix": {
     "fallback": { "wert": 85, "label": null, "text": "..." },
