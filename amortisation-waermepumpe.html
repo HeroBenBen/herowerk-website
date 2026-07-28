@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <!-- (a) consentmanager CMP (Autoblocking): erstes Skript nach <head> -->
+  <script type="text/javascript" data-cmp-ab="1" src="https://cdn.consentmanager.net/delivery/autoblocking/d94854dc5273c.js" data-cmp-host="a.delivery.consentmanager.net" data-cmp-cdn="cdn.consentmanager.net" data-cmp-codesrc="0"></script>
+  <meta charset="UTF-8">
+  <!-- ============================================================== -->
+  <!-- HeroWerk Consent + Analytics (Opt-in, Google Consent Mode v2)   -->
+  <!-- Reihenfolge: CMP, Consent-Mode-Default, Opt-in-Loader.       -->
+  <!-- GA4 + Meta werden erst NACH Einwilligung aus               -->
+  <!-- js/consent.js injiziert.                                   -->
+  <!-- ============================================================== -->
+  <!-- (b) Google Consent Mode v2: Default alles verweigert -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+      functionality_storage: 'denied',
+      personalization_storage: 'denied',
+      security_storage: 'granted',
+      wait_for_update: 500
+    });
+    gtag('set', 'ads_data_redaction', true);
+    gtag('set', 'url_passthrough', true);
+  </script>
+  <!-- (c) Opt-in-Loader: injiziert GA4 (G-1XT9BLBDW8) + Meta-Pixel (1348888427192043) ERST nach Consent -->
+  <script src="js/consent.js?v=5e2ae31749"></script>
+  <!-- ============================================================== -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/fonts.css?v=d3f3999a2f">
+  <link rel="icon" href="/favicon.ico" sizes="any" type="image/x-icon">
+  <meta name="theme-color" content="#0A0A0A">
+  <title>Wann rechnet sich eine Wärmepumpe? Die Amortisation ehrlich gerechnet | HeroWerk</title>
+  <meta name="description" content="Nach wie vielen Jahren hat sich der Umstieg auf eine Wärmepumpe bezahlt gemacht? Wir zeigen, welche Posten in die Rechnung gehören und wo die üblichen Faustformeln danebenliegen.">
+  <link rel="canonical" href="https://www.herowerk.de/amortisation-waermepumpe">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Wann rechnet sich eine Wärmepumpe? Die Amortisation ehrlich gerechnet | HeroWerk">
+  <meta property="og:description" content="Nach wie vielen Jahren hat sich der Umstieg auf eine Wärmepumpe bezahlt gemacht? Wir zeigen, welche Posten in die Rechnung gehören und wo die üblichen Faustformeln danebenliegen.">
+  <meta property="og:url" content="https://www.herowerk.de/amortisation-waermepumpe">
+  <meta property="og:image" content="https://www.herowerk.de/hero-paar-terrasse.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Wann rechnet sich eine Wärmepumpe? Die Amortisation ehrlich gerechnet | HeroWerk">
+  <meta name="twitter:description" content="Nach wie vielen Jahren hat sich der Umstieg auf eine Wärmepumpe bezahlt gemacht? Wir zeigen, welche Posten in die Rechnung gehören und wo die üblichen Faustformeln danebenliegen.">
+  <meta name="twitter:image" content="https://www.herowerk.de/hero-paar-terrasse.png">
+  <script src="js/theme.js?v=9b163705e9"></script>
+  <link rel="stylesheet" href="css/site.css?v=bdff4d1e3f">
+  <link rel="stylesheet" href="css/ratgeber.css?v=756325824b">
+  <link rel="preload" href="tokens.css?v=4c1b19042c" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="tokens.css?v=4c1b19042c"></noscript>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="nav-inner">
+      <a href="/" style="display:inline-block;" aria-label="HeroWerk, zur Startseite"><img src="herowerk-logo-stacked.png?v=3805a3a2a6" alt="HeroWerk, Meisterbetrieb für Wärmepumpen" class="nav-logo logo-dark" width="607" height="337" decoding="async"><img src="herowerk-logo-stacked-light.png?v=8c40e63d7e" alt="" aria-hidden="true" class="nav-logo logo-light" width="607" height="337" decoding="async"></a>
+      <div class="nav-links">
+        <a href="/preise">Preise</a>
+        <a href="/rechner">Rechner</a>
+        <a href="/foerderung">Förderung</a>
+        <a href="/ratgeber">Ratgeber</a>
+        <a href="/kontakt">Kontakt</a>
+        <a href="/karriere">Jobs</a>
+        <button type="button" class="theme-toggle" data-theme-toggle data-theme-switch>Light-Mode</button>
+        <a href="tel:+4951315059750" class="nav-cta-call"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:4px;"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg> Anrufen</a>
+        <a href="/anfrage" class="nav-cta">Termin vereinbaren</a>
+      </div>
+      <button type="button" class="theme-toggle nav-theme-standalone" data-theme-toggle data-theme-switch>Light-Mode</button>
+      <a href="tel:+4951315059750" class="mobile-phone-cta" aria-label="Anrufen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg><span class="mobile-phone-label">Anrufen</span></a>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mm-kopf">
+        <span class="mm-kopf-label">Ansicht</span>
+        <button type="button" class="theme-toggle" data-theme-toggle data-theme-switch>Light-Mode</button>
+      </div>
+      <div class="mm-nav">
+        <a href="/preise" onclick="toggleMenu()">Preise<svg class="mm-pfeil" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"/></svg></a>
+        <a href="/rechner" onclick="toggleMenu()">Rechner<svg class="mm-pfeil" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"/></svg></a>
+        <a href="/foerderung" onclick="toggleMenu()">Förderung<svg class="mm-pfeil" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"/></svg></a>
+        <a href="/ratgeber" onclick="toggleMenu()">Ratgeber<svg class="mm-pfeil" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"/></svg></a>
+        <a href="/kontakt" onclick="toggleMenu()">Kontakt<svg class="mm-pfeil" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"/></svg></a>
+        <a href="/karriere" onclick="toggleMenu()">Jobs<svg class="mm-pfeil" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"/></svg></a>
+      </div>
+      <div class="mm-aktionen">
+        <a href="/anfrage" class="nav-cta" onclick="toggleMenu()">Termin vereinbaren</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content" tabindex="-1">
+<article class="section">
+  <div class="section-inner">
+    <div class="section-tag">Ratgeber</div>
+    <h1 class="section-title" style="color:var(--white);">Wann rechnet sich eine Wärmepumpe?</h1>
+    <p class="section-lead">Die Frage wird fast immer falsch gestellt: als Vergleich zwischen Wärmepumpe und einer Gasheizung, die einfach weiterläuft. Wenn die alte Heizung am Ende ist, ist das keine echte Wahl. Die ehrliche Rechnung vergleicht zwei Neuanschaffungen.</p>
+    <div class="ratgeber-article">
+      <h2>Amortisation heißt: ab wann ist der Mehrpreis wieder drin</h2>
+      <p>Amortisation ist der Zeitpunkt, an dem die laufenden Einsparungen den anfänglichen Mehrpreis ausgeglichen haben. Dieser Mehrpreis ist die Differenz der Anschaffungskosten nach Förderung, nicht der volle Kaufpreis der Wärmepumpe.</p>
+      <p>Wer die Förderung erst am Ende abzieht, setzt die Ausgangsbasis falsch und rechnet sich den Umstieg systematisch schlecht.</p>
+
+      <h2>Was in die Rechnung gehört</h2>
+      <ul>
+        <li><strong>Anschaffung nach Förderung:</strong> Verglichen werden die Kosten einer neuen fossilen Heizung mit dem Eigenanteil für die Wärmepumpe nach Zuschuss. Nur die Differenz ist der Mehrpreis, der sich ausgleichen muss.</li>
+        <li><strong>Energiekosten pro Jahr:</strong> Für beide Heizwege zählt der tatsächliche Energiebedarf des Gebäudes. Bei der Wärmepumpe übersetzt die Jahresarbeitszahl diesen Bedarf in Stromverbrauch.</li>
+        <li><strong>CO2-Preis auf fossile Brennstoffe:</strong> Öl und Gas tragen zusätzlich den CO2-Preis. Er gehört Jahr für Jahr in die fossile Kostenreihe und darf nicht als einmaliger Aufschlag behandelt werden.</li>
+        <li><strong>Finanzierung, falls du sie nutzt:</strong> Wer den Eigenanteil finanziert, muss Rate und Laufzeit in die Gegenüberstellung aufnehmen. Ohne Finanzierung gehören auch keine Zinskosten in die Rechnung.</li>
+      </ul>
+
+      <h2>Drei Fehler, die die Rechnung kippen</h2>
+      <h3>Nur den Kaufpreis vergleichen</h3>
+      <p>Wer den Zuschuss ignoriert, vergleicht nicht den Betrag, den du am Ende selbst trägst. Richtig ist der Vergleich beider Anschaffungen nach Förderung.</p>
+      <h3>Heutige Energiepreise einfach fortschreiben</h3>
+      <p>Ein unveränderter Preis über viele Jahre blendet Preissteigerungen und den CO2-Preis aus. Richtig ist, beide Energieträger mit transparenten, verstellbaren Annahmen über denselben Zeitraum zu rechnen.</p>
+      <h3>Die Jahresarbeitszahl raten</h3>
+      <p>Eine zu hohe Jahresarbeitszahl macht den Stromverbrauch künstlich klein, eine zu niedrige macht die Wärmepumpe unnötig teuer. Richtig ist eine Annahme, die zum Gebäude und zur benötigten Vorlauftemperatur passt und im Rechner verändert werden kann.</p>
+
+      <h2>Warum der Zeitpunkt mitentscheidet</h2>
+      <p>Der Klimageschwindigkeitsbonus schmilzt ab. Wer später beantragt, bekommt weniger. Der Kostenvergleich bildet die Halbjahresperioden der BEG-Reform 2026 ab und zeigt, wie sich der gewählte Antragszeitraum auf den Eigenanteil auswirkt.</p>
+
+      <h2>Rechne deinen eigenen Fall</h2>
+      <p>Gib Heizungsart und Verbrauch ein. Wenn du den Verbrauch nicht kennst, schätzt der Rechner ihn aus deinen Gebäudedaten. Danach kannst du Förderung, Laufzeit, Energiepreise und Finanzierung selbst verstellen.</p>
+      <div class="ra-cta">
+        <a href="/kostenvergleich-waermepumpe" class="btn-primary">Kosten vergleichen</a>
+      </div>
+      <p class="ra-stand">Stand: Juli 2026. Grundlage für die Förderperioden ist die Heizungsförderung der KfW und die im Kostenvergleich abgebildete BEG-Reform 2026.</p>
+    </div>
+  </div>
+</article>
+<section class="faq" id="faq"><div class="section-inner"><h2 class="section-title" style="color:var(--white);">Häufige Fragen</h2>
+<div class="faq-item"><div class="faq-question"><span class="faq-q-text">Nach wie vielen Jahren rechnet sich eine Wärmepumpe im Schnitt?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Es gibt keinen belastbaren Schnitt. Gebäudebedarf, Förderung, Energiepreise, Jahresarbeitszahl und Finanzierung erzeugen eine zu große Spanne. Deshalb rechnen wir deinen Einzelfall.</div></div>
+<div class="faq-item"><div class="faq-question"><span class="faq-q-text">Zählt die Förderung wirklich mit?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Ja. Für die Amortisation zählt dein Eigenanteil nach Zuschuss. Würdest du die Förderung weglassen, würdest du einen Betrag vergleichen, den du nicht selbst bezahlen musst.</div></div>
+<div class="faq-item"><div class="faq-question"><span class="faq-q-text">Was ist, wenn die Strompreise steigen?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Dann verändert sich das Ergebnis. Deshalb kannst du im Kostenvergleich die Preisentwicklung für Strom und den fossilen Brennstoff getrennt einstellen und dieselbe Zeitspanne vergleichen.</div></div>
+<div class="faq-item"><div class="faq-question"><span class="faq-q-text">Lohnt sich das auch im Altbau?</span><span class="faq-toggle">+</span></div><div class="faq-answer">Das hängt vor allem von Heizlast, Heizflächen und Vorlauftemperatur ab. Was bei älteren Gebäuden geprüft werden muss, erklären wir im Ratgeber <a href="/waermepumpe-altbau">Wärmepumpe im Altbau</a>.</div></div>
+</div></section>
+</main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h2>HeroWerk</h2>
+          <p>Meisterbetrieb für Wärmepumpen in der Region Hannover.</p>
+          <p style="margin-top: 12px;">Wir verbauen:<br><strong style="color: var(--white);">Wolf GmbH &amp; Vaillant Group</strong></p>
+        </div>
+        <div class="footer-col">
+          <h2>Leistungen</h2>
+          <a href="/dimensionierung">Wärmepumpen-Beratung</a>
+          <a href="/foerderung">Förderrechner</a>
+          <a href="/preise">Richtpreise</a>
+          <a href="/ratgeber#friends">HERO FRIENDS</a>
+        </div>
+        <div class="footer-col">
+          <h2>Unternehmen</h2>
+          <a href="/prozess">Unser Prozess</a>
+          <a href="/ratgeber">Ratgeber</a>
+          <a href="/ratgeber#faq">FAQ</a>
+          <a href="/kontakt">Kontakt</a>
+          <a href="/karriere">Jobs</a>
+        </div>
+        <div class="footer-col">
+          <h2>Kontakt</h2>
+          <p>HeroWerk GmbH i.G.</p>
+          <p>Region Hannover</p>
+          <p>Tel: 05131 - 50 59 750</p>
+          <p>info@herowerk.de</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-tagline">HeroWerk GmbH i.G. &middot; Meisterqualität aus der Region.</div>
+        <div class="footer-legal">
+          <a href="/impressum">Impressum</a>
+          <a href="/datenschutz">Datenschutz</a>
+          <a href="/hinweise">Hinweise</a>
+          <a href="/barrierefreiheit">Barrierefreiheit</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/site.js?v=23c5495654" defer></script>
+
+  <!-- MOBILE BOTTOM BAR -->
+  <div class="mobile-bottom-bar" role="navigation" aria-label="Mobile Schnellnavigation">
+    <a href="/anfrage" class="mob-bar-cta" onclick="document.getElementById('mobileMenu')?.classList.remove('open');">
+      Kostenlose Beratung
+    </a>
+  </div>
+
+</body>
+</html>

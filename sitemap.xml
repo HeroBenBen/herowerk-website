@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.herowerk.de/</loc><lastmod>2026-07-25</lastmod><priority>1.0</priority></url>
+  <url><loc>https://www.herowerk.de/amortisation-waermepumpe</loc><lastmod>2026-07-28</lastmod><priority>0.6</priority></url>
   <url><loc>https://www.herowerk.de/anfrage</loc><lastmod>2026-07-25</lastmod><priority>0.9</priority></url>
   <url><loc>https://www.herowerk.de/barrierefreiheit</loc><lastmod>2026-07-25</lastmod><priority>0.3</priority></url>
   <url><loc>https://www.herowerk.de/baubarkeitspruefung</loc><lastmod>2026-07-25</lastmod><priority>0.6</priority></url>
@@ -16,11 +17,11 @@
   <url><loc>https://www.herowerk.de/impressum</loc><lastmod>2026-07-25</lastmod><priority>0.3</priority></url>
   <url><loc>https://www.herowerk.de/karriere</loc><lastmod>2026-07-25</lastmod><priority>0.6</priority></url>
   <url><loc>https://www.herowerk.de/kontakt</loc><lastmod>2026-07-25</lastmod><priority>0.8</priority></url>
-  <url><loc>https://www.herowerk.de/kostenvergleich-waermepumpe</loc><lastmod>2026-07-25</lastmod><priority>0.6</priority></url>
+  <url><loc>https://www.herowerk.de/kostenvergleich-waermepumpe</loc><lastmod>2026-07-28</lastmod><priority>0.6</priority></url>
   <url><loc>https://www.herowerk.de/preise</loc><lastmod>2026-07-25</lastmod><priority>0.9</priority></url>
   <url><loc>https://www.herowerk.de/propan-waermepumpe</loc><lastmod>2026-07-25</lastmod><priority>0.6</priority></url>
   <url><loc>https://www.herowerk.de/prozess</loc><lastmod>2026-07-25</lastmod><priority>0.7</priority></url>
-  <url><loc>https://www.herowerk.de/ratgeber</loc><lastmod>2026-07-25</lastmod><priority>0.7</priority></url>
+  <url><loc>https://www.herowerk.de/ratgeber</loc><lastmod>2026-07-28</lastmod><priority>0.7</priority></url>
   <url><loc>https://www.herowerk.de/rechner</loc><lastmod>2026-07-25</lastmod><priority>0.9</priority></url>
   <url><loc>https://www.herowerk.de/waermepumpe-altbau</loc><lastmod>2026-07-25</lastmod><priority>0.6</priority></url>
   <url><loc>https://www.herowerk.de/waermepumpe-hannover</loc><lastmod>2026-07-25</lastmod><priority>0.6</priority></url>

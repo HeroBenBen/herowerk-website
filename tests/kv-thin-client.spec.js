@@ -1,5 +1,5 @@
 'use strict';
-/* global KV_STATE, Chart, Storage, calculate, document, location, sessionStorage, window */
+/* global KV_STATE, Chart, Crypto, Storage, calculate, dataLayer, document, gtag, location, sessionStorage, window */
 
 const { test, expect } = require('@playwright/test');
 const http = require('http');
@@ -76,6 +76,7 @@ test.beforeAll(async () => {
         result.periodeAutomatik = !url.searchParams.has('fHalbjahr');
         return sendJson(response, result);
       }
+      if (action === 'preise') return sendJson(response, { wolf: [], vaillant: [] });
       return sendJson(response, { error: true, message: 'unknown_action' }, 400);
     }
     const relative =
@@ -339,6 +340,30 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
   await expect(
     page.locator('#kpiGrid .ml', { hasText: 'Monatl. Vorteil (finanziert)' })
   ).toHaveCount(1);
+  await rangeFromStart(page, 'kredZins', 0);
+  await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.inputsEcho.kredZins === 0);
+  await expect(page.locator('#vKredZins')).toHaveText('0,0 %');
+  const monRateNull = await page.evaluate(() => KV_STATE.last.finanzierung.monRate);
+  await expect(page.locator('#cashflowBox')).toContainText(
+    `${Math.round(monRateNull).toLocaleString('de-DE')} € Rate`
+  );
+  await rangeToEnd(page, 'kredZins');
+  await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.inputsEcho.kredZins === 9);
+  await expect(page.locator('#vKredZins')).toHaveText('9,0 %');
+  const monRateNeun = await page.evaluate(() => KV_STATE.last.finanzierung.monRate);
+  await expect(page.locator('#cashflowBox')).toContainText(
+    `${Math.round(monRateNeun).toLocaleString('de-DE')} € Rate`
+  );
+  expect(monRateNeun).toBeGreaterThan(monRateNull);
+  console.log(
+    `Monatsrate am Zinsregler: 0,0 % = ${monRateNull.toFixed(2)} €, 9,0 % = ${monRateNeun.toFixed(2)} €`
+  );
+  await page.locator('#kredZins').evaluate((element) => {
+    /** @type {HTMLInputElement} */ (element).value = '0.7';
+    element.dispatchEvent(new window.Event('input', { bubbles: true }));
+    element.dispatchEvent(new window.Event('change', { bubbles: true }));
+  });
+  await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.inputsEcho.kredZins === 0.7);
 
   await clickTab(page, 'Ihre Situation');
   await rangeToEnd(page, 'invWP');
@@ -397,13 +422,25 @@ test('O3 Kunde Light 375: lokaler Consent, Alt-/EU-Text, fünf Förderanker und 
   page,
 }) => {
   await installLocalConsent(page);
+  await page.addInitScript(() => {
+    Object.defineProperty(Crypto.prototype, 'randomUUID', {
+      configurable: true,
+      value() {
+        throw new Error('uuid_test_failure');
+      },
+    });
+  });
   const light = collectErrors(page);
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?theme=light`, {
     waitUntil: 'domcontentloaded',
   });
   await acceptConsent(page);
+  await page.evaluate(() => gtag('consent', 'update', { analytics_storage: 'granted' }));
   await page.waitForFunction(() => typeof KV_STATE !== 'undefined' && KV_STATE.last);
+  expect(await page.evaluate(() => sessionStorage.getItem('hero_kv_sitzung'))).toMatch(
+    /^[a-z0-9]+-[a-z0-9]+$/
+  );
   await expect(page.locator('body')).toHaveClass(/wz-customer/);
   await page.locator('[data-wz-heizart="gas"]').click();
   await page.locator('[data-wz-grp="vmode"][data-wz-val="known"]').click();
@@ -438,6 +475,27 @@ test('O3 Kunde Light 375: lokaler Consent, Alt-/EU-Text, fünf Förderanker und 
   await nextWizardStep(page);
   await expect(page.locator('#wzHero')).toBeVisible();
   await expect(page.locator('#results')).toHaveClass(/visible/);
+  const directEvents = await page.evaluate(() =>
+    dataLayer
+      .filter((entry) => entry && entry[0] === 'event')
+      .map((entry) => ({ name: entry[1], parameters: entry[2] || {} }))
+  );
+  expect(directEvents.map((event) => event.name)).toEqual(
+    expect.arrayContaining([
+      'rechner_start',
+      'wz_step_view',
+      'wz_step_complete',
+      'wz_zeitraum_gewechselt',
+      'wz_ergebnis_erreicht',
+    ])
+  );
+  const directResult = directEvents.find((event) => event.name === 'wz_ergebnis_erreicht');
+  expect(directResult.parameters.verbrauch_herkunft).toBe('eingabe');
+  expect(Object.keys(directResult.parameters).sort()).toEqual([
+    'eigenanteil_ohne_einkommen',
+    'quote_ohne_einkommen',
+    'verbrauch_herkunft',
+  ]);
   expect(await page.evaluate(() => document.documentElement.getAttribute('data-theme'))).toBe(
     'light'
   );
@@ -541,8 +599,10 @@ test('O4 Writer: jeder Anfrage-CTA schreibt ausschließlich das v1-Contract-Sche
       const link = el.closest && el.closest('a[href]');
       if (
         link &&
-        new URL(/** @type {HTMLAnchorElement} */ (link).href, location.href).pathname ===
-          '/anfrage.html'
+        new URL(/** @type {HTMLAnchorElement} */ (link).href, location.href).pathname.replace(
+          /\.html$/,
+          ''
+        ) === '/anfrage'
       )
         event.preventDefault();
     })
@@ -596,12 +656,12 @@ test('O4 Writer: jeder Anfrage-CTA schreibt ausschließlich das v1-Contract-Sche
     KV_STATE.last = null;
     sessionStorage.setItem('hero_kv_lead', '{"stale":true}');
   });
-  await page.locator('a.nav-cta[href="/anfrage.html"]').click();
+  await page.locator('nav a.nav-cta[href="/anfrage"]').first().click();
   expect(await page.evaluate(() => sessionStorage.getItem('hero_kv_lead'))).toBeNull();
   await page.evaluate(() => {
     KV_STATE.last = window.__kvLastForO4Test;
   });
-  await expectWriterPayload(page.locator('a.nav-cta[href="/anfrage.html"]'));
+  await expectWriterPayload(page.locator('nav a.nav-cta[href="/anfrage"]').first());
   await expectWriterPayload(page.locator('#wzStickyCta a[href="/anfrage.html"]'));
   await page.setViewportSize({ width: 375, height: 812 });
   await nextWizardStep(page);
@@ -613,6 +673,12 @@ test('O4 Writer: jeder Anfrage-CTA schreibt ausschließlich das v1-Contract-Sche
   await nextWizardStep(page);
   await nextWizardStep(page);
   await page.waitForFunction(() => document.querySelector('#wzResultCta a[href="/anfrage.html"]'));
+  const estimatedResult = await page.evaluate(() =>
+    dataLayer
+      .filter((entry) => entry && entry[0] === 'event' && entry[1] === 'wz_ergebnis_erreicht')
+      .at(-1)
+  );
+  expect(estimatedResult[2].verbrauch_herkunft).toBe('schaetzung');
   await expectWriterPayload(page.locator('#wzResultCta a[href="/anfrage.html"]'));
 
   await fetch(`${baseURL}/__fail-on`);
