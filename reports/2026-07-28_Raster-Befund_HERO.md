@@ -4,15 +4,13 @@ Quelle: lokaler Arbeitsstand des Repos
 Geprueft: 29 Seiten x 8 Breiten = 232 Laeufe.
 Ergebnis: PASS (0 Befunde).
 
-## Ladefehler — PASS
-
 ## Regel 1: Container-Ueberstand (hart) — PASS
 
 ## Regel 3: Kind nimmt die Aussenbreite statt der Inhaltsbreite (hart) — PASS
 
 ## Regel 4: Seitenrand-Treue fester Elemente (hart) — PASS
 
-## Regel 5: Symmetrie zentrierter Bloecke (ABGESCHALTET, siehe raster-expect.json) — PASS
+## Regel 6: waagerechte Rollbreite des Dokuments (hart) — PASS
 
 ## Regel 2: Kanten-Inventar — PASS
 
@@ -20,240 +18,240 @@ Ergebnis: PASS (0 Befunde).
 
 > Eine Regel, die nichts prueft, meldet PASS und ist gefaehrlicher als eine abgeschaltete. Diese Tabelle weist aus, wie viele Elemente je Regel tatsaechlich in den Test gelaufen sind. Steht in einer Spalte 0, ist die Regel auf dieser Seite wirkungslos.
 
-| Seite | Breite | Elemente | davon sichtbar | in Regel 1+3 | in Regel 4 | in Regel 5 |
-|---|---|---|---|---|---|---|
-| anfrage | 320 px | 832 | 762 | 42 | 0 | 0 |
-| barrierefreiheit | 320 px | 203 | 189 | 102 | 1 | 0 |
-| baubarkeitspruefung | 320 px | 207 | 190 | 103 | 2 | 0 |
-| bewerbung | 320 px | 223 | 206 | 94 | 2 | 0 |
-| datenschutz | 320 px | 104 | 95 | 80 | 0 | 0 |
-| dimensionierung-verstehen | 320 px | 201 | 187 | 99 | 2 | 0 |
-| dimensionierung | 320 px | 710 | 657 | 71 | 2 | 0 |
-| foerderung-hannover | 320 px | 227 | 211 | 122 | 2 | 0 |
-| foerderung-jetzt-mitnehmen | 320 px | 305 | 291 | 202 | 1 | 0 |
-| foerderung | 320 px | 390 | 362 | 225 | 5 | 0 |
-| foerdervorschuss | 320 px | 217 | 198 | 107 | 3 | 0 |
-| gasheizung-tauschen-oder-reparieren | 320 px | 204 | 187 | 100 | 2 | 0 |
-| hinweise | 320 px | 192 | 174 | 87 | 3 | 0 |
-| impressum | 320 px | 60 | 51 | 34 | 0 | 0 |
-| index | 320 px | 380 | 360 | 215 | 8 | 0 |
-| karriere | 320 px | 832 | 798 | 413 | 7 | 0 |
-| kontakt | 320 px | 196 | 180 | 88 | 2 | 0 |
-| kostenvergleich-waermepumpe | 320 px | 664 | 608 | 58 | 0 | 0 |
-| preise | 320 px | 398 | 384 | 258 | 6 | 0 |
-| propan-waermepumpe | 320 px | 203 | 189 | 102 | 1 | 0 |
-| prozess | 320 px | 240 | 220 | 116 | 3 | 0 |
-| ratgeber | 320 px | 430 | 409 | 307 | 5 | 0 |
-| rechner | 320 px | 229 | 215 | 125 | 2 | 0 |
-| waermepumpe-altbau | 320 px | 202 | 185 | 97 | 2 | 0 |
-| waermepumpe-hannover | 320 px | 191 | 175 | 88 | 2 | 0 |
-| waermepumpe-laerm | 320 px | 222 | 208 | 121 | 1 | 0 |
-| waermepumpenstrom-hannover | 320 px | 236 | 222 | 127 | 1 | 0 |
-| wertsteigerung-waermepumpe | 320 px | 286 | 272 | 184 | 1 | 0 |
-| wp-kosten-hannover | 320 px | 262 | 248 | 154 | 1 | 0 |
-| anfrage | 360 px | 832 | 762 | 42 | 0 | 0 |
-| barrierefreiheit | 360 px | 203 | 189 | 102 | 1 | 0 |
-| baubarkeitspruefung | 360 px | 207 | 190 | 103 | 2 | 0 |
-| bewerbung | 360 px | 223 | 206 | 94 | 2 | 0 |
-| datenschutz | 360 px | 104 | 95 | 80 | 0 | 0 |
-| dimensionierung-verstehen | 360 px | 201 | 187 | 100 | 2 | 0 |
-| dimensionierung | 360 px | 710 | 657 | 71 | 2 | 0 |
-| foerderung-hannover | 360 px | 227 | 211 | 122 | 2 | 0 |
-| foerderung-jetzt-mitnehmen | 360 px | 305 | 291 | 202 | 1 | 0 |
-| foerderung | 360 px | 390 | 362 | 225 | 5 | 0 |
-| foerdervorschuss | 360 px | 217 | 198 | 107 | 3 | 0 |
-| gasheizung-tauschen-oder-reparieren | 360 px | 204 | 187 | 100 | 2 | 0 |
-| hinweise | 360 px | 192 | 174 | 87 | 3 | 0 |
-| impressum | 360 px | 60 | 51 | 34 | 0 | 0 |
-| index | 360 px | 380 | 360 | 215 | 8 | 0 |
-| karriere | 360 px | 832 | 798 | 413 | 7 | 0 |
-| kontakt | 360 px | 196 | 180 | 88 | 2 | 0 |
-| kostenvergleich-waermepumpe | 360 px | 664 | 608 | 58 | 0 | 0 |
-| preise | 360 px | 398 | 384 | 258 | 6 | 0 |
-| propan-waermepumpe | 360 px | 203 | 189 | 102 | 1 | 0 |
-| prozess | 360 px | 240 | 220 | 116 | 3 | 0 |
-| ratgeber | 360 px | 430 | 409 | 307 | 5 | 0 |
-| rechner | 360 px | 229 | 215 | 125 | 2 | 0 |
-| waermepumpe-altbau | 360 px | 202 | 185 | 97 | 2 | 0 |
-| waermepumpe-hannover | 360 px | 191 | 175 | 88 | 2 | 0 |
-| waermepumpe-laerm | 360 px | 222 | 208 | 121 | 1 | 0 |
-| waermepumpenstrom-hannover | 360 px | 236 | 222 | 127 | 1 | 0 |
-| wertsteigerung-waermepumpe | 360 px | 286 | 272 | 185 | 1 | 0 |
-| wp-kosten-hannover | 360 px | 262 | 248 | 154 | 1 | 0 |
-| anfrage | 375 px | 832 | 762 | 42 | 0 | 0 |
-| barrierefreiheit | 375 px | 203 | 189 | 102 | 1 | 0 |
-| baubarkeitspruefung | 375 px | 207 | 190 | 103 | 2 | 0 |
-| bewerbung | 375 px | 223 | 206 | 94 | 2 | 0 |
-| datenschutz | 375 px | 104 | 95 | 80 | 0 | 0 |
-| dimensionierung-verstehen | 375 px | 201 | 187 | 100 | 2 | 0 |
-| dimensionierung | 375 px | 710 | 657 | 71 | 2 | 0 |
-| foerderung-hannover | 375 px | 227 | 211 | 122 | 2 | 0 |
-| foerderung-jetzt-mitnehmen | 375 px | 305 | 291 | 202 | 1 | 0 |
-| foerderung | 375 px | 390 | 362 | 225 | 5 | 0 |
-| foerdervorschuss | 375 px | 217 | 198 | 107 | 3 | 0 |
-| gasheizung-tauschen-oder-reparieren | 375 px | 204 | 187 | 100 | 2 | 0 |
-| hinweise | 375 px | 192 | 174 | 87 | 3 | 0 |
-| impressum | 375 px | 60 | 51 | 34 | 0 | 0 |
-| index | 375 px | 380 | 360 | 215 | 8 | 0 |
-| karriere | 375 px | 832 | 798 | 413 | 7 | 0 |
-| kontakt | 375 px | 196 | 180 | 88 | 2 | 0 |
-| kostenvergleich-waermepumpe | 375 px | 664 | 608 | 58 | 0 | 0 |
-| preise | 375 px | 398 | 384 | 258 | 6 | 0 |
-| propan-waermepumpe | 375 px | 203 | 189 | 102 | 1 | 0 |
-| prozess | 375 px | 240 | 220 | 116 | 3 | 0 |
-| ratgeber | 375 px | 430 | 409 | 307 | 5 | 0 |
-| rechner | 375 px | 229 | 215 | 125 | 2 | 0 |
-| waermepumpe-altbau | 375 px | 202 | 185 | 97 | 2 | 0 |
-| waermepumpe-hannover | 375 px | 191 | 175 | 88 | 2 | 0 |
-| waermepumpe-laerm | 375 px | 222 | 208 | 121 | 1 | 0 |
-| waermepumpenstrom-hannover | 375 px | 236 | 222 | 127 | 1 | 0 |
-| wertsteigerung-waermepumpe | 375 px | 286 | 272 | 185 | 1 | 0 |
-| wp-kosten-hannover | 375 px | 262 | 248 | 154 | 1 | 0 |
-| anfrage | 390 px | 832 | 762 | 42 | 0 | 0 |
-| barrierefreiheit | 390 px | 203 | 189 | 102 | 1 | 0 |
-| baubarkeitspruefung | 390 px | 207 | 190 | 103 | 2 | 0 |
-| bewerbung | 390 px | 223 | 206 | 94 | 2 | 0 |
-| datenschutz | 390 px | 104 | 95 | 80 | 0 | 0 |
-| dimensionierung-verstehen | 390 px | 201 | 187 | 100 | 2 | 0 |
-| dimensionierung | 390 px | 710 | 657 | 71 | 2 | 0 |
-| foerderung-hannover | 390 px | 227 | 211 | 122 | 2 | 0 |
-| foerderung-jetzt-mitnehmen | 390 px | 305 | 291 | 202 | 1 | 0 |
-| foerderung | 390 px | 390 | 362 | 225 | 5 | 0 |
-| foerdervorschuss | 390 px | 217 | 198 | 107 | 3 | 0 |
-| gasheizung-tauschen-oder-reparieren | 390 px | 204 | 187 | 100 | 2 | 0 |
-| hinweise | 390 px | 192 | 174 | 87 | 3 | 0 |
-| impressum | 390 px | 60 | 51 | 34 | 0 | 0 |
-| index | 390 px | 380 | 360 | 215 | 8 | 0 |
-| karriere | 390 px | 832 | 798 | 413 | 7 | 0 |
-| kontakt | 390 px | 196 | 180 | 88 | 2 | 0 |
-| kostenvergleich-waermepumpe | 390 px | 664 | 608 | 58 | 0 | 0 |
-| preise | 390 px | 398 | 384 | 260 | 6 | 0 |
-| propan-waermepumpe | 390 px | 203 | 189 | 102 | 1 | 0 |
-| prozess | 390 px | 240 | 220 | 116 | 3 | 0 |
-| ratgeber | 390 px | 430 | 409 | 307 | 5 | 0 |
-| rechner | 390 px | 229 | 215 | 125 | 2 | 0 |
-| waermepumpe-altbau | 390 px | 202 | 185 | 97 | 2 | 0 |
-| waermepumpe-hannover | 390 px | 191 | 175 | 88 | 2 | 0 |
-| waermepumpe-laerm | 390 px | 222 | 208 | 121 | 1 | 0 |
-| waermepumpenstrom-hannover | 390 px | 236 | 222 | 127 | 1 | 0 |
-| wertsteigerung-waermepumpe | 390 px | 286 | 272 | 185 | 1 | 0 |
-| wp-kosten-hannover | 390 px | 262 | 248 | 154 | 1 | 0 |
-| anfrage | 414 px | 832 | 762 | 42 | 0 | 0 |
-| barrierefreiheit | 414 px | 203 | 189 | 102 | 1 | 0 |
-| baubarkeitspruefung | 414 px | 207 | 190 | 103 | 2 | 0 |
-| bewerbung | 414 px | 223 | 206 | 94 | 2 | 0 |
-| datenschutz | 414 px | 104 | 95 | 80 | 0 | 0 |
-| dimensionierung-verstehen | 414 px | 201 | 187 | 100 | 2 | 0 |
-| dimensionierung | 414 px | 710 | 657 | 71 | 2 | 0 |
-| foerderung-hannover | 414 px | 227 | 211 | 122 | 2 | 0 |
-| foerderung-jetzt-mitnehmen | 414 px | 305 | 291 | 202 | 1 | 0 |
-| foerderung | 414 px | 390 | 362 | 225 | 5 | 0 |
-| foerdervorschuss | 414 px | 217 | 198 | 107 | 3 | 0 |
-| gasheizung-tauschen-oder-reparieren | 414 px | 204 | 187 | 100 | 2 | 0 |
-| hinweise | 414 px | 192 | 174 | 87 | 3 | 0 |
-| impressum | 414 px | 60 | 51 | 34 | 0 | 0 |
-| index | 414 px | 380 | 360 | 215 | 8 | 0 |
-| karriere | 414 px | 832 | 798 | 413 | 7 | 0 |
-| kontakt | 414 px | 196 | 180 | 88 | 2 | 0 |
-| kostenvergleich-waermepumpe | 414 px | 664 | 608 | 58 | 0 | 0 |
-| preise | 414 px | 398 | 384 | 260 | 6 | 0 |
-| propan-waermepumpe | 414 px | 203 | 189 | 102 | 1 | 0 |
-| prozess | 414 px | 240 | 220 | 116 | 3 | 0 |
-| ratgeber | 414 px | 430 | 409 | 307 | 5 | 0 |
-| rechner | 414 px | 229 | 215 | 125 | 2 | 0 |
-| waermepumpe-altbau | 414 px | 202 | 185 | 97 | 2 | 0 |
-| waermepumpe-hannover | 414 px | 191 | 175 | 88 | 2 | 0 |
-| waermepumpe-laerm | 414 px | 222 | 208 | 121 | 1 | 0 |
-| waermepumpenstrom-hannover | 414 px | 236 | 222 | 127 | 1 | 0 |
-| wertsteigerung-waermepumpe | 414 px | 286 | 272 | 185 | 1 | 0 |
-| wp-kosten-hannover | 414 px | 262 | 248 | 154 | 1 | 0 |
-| anfrage | 600 px | 832 | 762 | 42 | 0 | 0 |
-| barrierefreiheit | 600 px | 203 | 190 | 107 | 1 | 0 |
-| baubarkeitspruefung | 600 px | 207 | 191 | 108 | 2 | 0 |
-| bewerbung | 600 px | 223 | 207 | 99 | 2 | 0 |
-| datenschutz | 600 px | 104 | 95 | 80 | 0 | 0 |
-| dimensionierung-verstehen | 600 px | 201 | 188 | 105 | 2 | 0 |
-| dimensionierung | 600 px | 710 | 658 | 76 | 2 | 0 |
-| foerderung-hannover | 600 px | 227 | 212 | 128 | 2 | 0 |
-| foerderung-jetzt-mitnehmen | 600 px | 305 | 292 | 208 | 1 | 0 |
-| foerderung | 600 px | 390 | 363 | 231 | 5 | 0 |
-| foerdervorschuss | 600 px | 217 | 199 | 112 | 3 | 0 |
-| gasheizung-tauschen-oder-reparieren | 600 px | 204 | 188 | 105 | 2 | 0 |
-| hinweise | 600 px | 192 | 175 | 92 | 3 | 0 |
-| impressum | 600 px | 60 | 51 | 34 | 0 | 0 |
-| index | 600 px | 380 | 361 | 221 | 8 | 0 |
-| karriere | 600 px | 832 | 799 | 418 | 7 | 0 |
-| kontakt | 600 px | 196 | 181 | 93 | 2 | 0 |
-| kostenvergleich-waermepumpe | 600 px | 664 | 609 | 59 | 0 | 0 |
-| preise | 600 px | 398 | 385 | 265 | 6 | 0 |
-| propan-waermepumpe | 600 px | 203 | 190 | 107 | 1 | 0 |
-| prozess | 600 px | 240 | 221 | 121 | 3 | 0 |
-| ratgeber | 600 px | 430 | 410 | 312 | 5 | 0 |
-| rechner | 600 px | 229 | 216 | 130 | 2 | 0 |
-| waermepumpe-altbau | 600 px | 202 | 186 | 102 | 2 | 0 |
-| waermepumpe-hannover | 600 px | 191 | 176 | 93 | 2 | 0 |
-| waermepumpe-laerm | 600 px | 222 | 209 | 126 | 1 | 0 |
-| waermepumpenstrom-hannover | 600 px | 236 | 223 | 132 | 1 | 0 |
-| wertsteigerung-waermepumpe | 600 px | 286 | 273 | 190 | 1 | 0 |
-| wp-kosten-hannover | 600 px | 262 | 249 | 160 | 1 | 0 |
-| anfrage | 768 px | 832 | 762 | 42 | 0 | 0 |
-| barrierefreiheit | 768 px | 203 | 190 | 107 | 1 | 0 |
-| baubarkeitspruefung | 768 px | 207 | 191 | 108 | 2 | 0 |
-| bewerbung | 768 px | 223 | 207 | 99 | 2 | 0 |
-| datenschutz | 768 px | 104 | 95 | 80 | 0 | 0 |
-| dimensionierung-verstehen | 768 px | 201 | 188 | 105 | 2 | 0 |
-| dimensionierung | 768 px | 710 | 658 | 76 | 2 | 0 |
-| foerderung-hannover | 768 px | 227 | 212 | 128 | 2 | 0 |
-| foerderung-jetzt-mitnehmen | 768 px | 305 | 292 | 209 | 1 | 0 |
-| foerderung | 768 px | 390 | 363 | 231 | 5 | 0 |
-| foerdervorschuss | 768 px | 217 | 199 | 112 | 3 | 0 |
-| gasheizung-tauschen-oder-reparieren | 768 px | 204 | 188 | 105 | 2 | 0 |
-| hinweise | 768 px | 192 | 175 | 92 | 3 | 0 |
-| impressum | 768 px | 60 | 51 | 34 | 0 | 0 |
-| index | 768 px | 380 | 361 | 221 | 8 | 0 |
-| karriere | 768 px | 832 | 799 | 418 | 7 | 0 |
-| kontakt | 768 px | 196 | 181 | 93 | 2 | 0 |
-| kostenvergleich-waermepumpe | 768 px | 664 | 609 | 59 | 0 | 0 |
-| preise | 768 px | 398 | 385 | 270 | 6 | 0 |
-| propan-waermepumpe | 768 px | 203 | 190 | 107 | 1 | 0 |
-| prozess | 768 px | 240 | 221 | 121 | 3 | 0 |
-| ratgeber | 768 px | 430 | 410 | 312 | 5 | 0 |
-| rechner | 768 px | 229 | 216 | 130 | 2 | 0 |
-| waermepumpe-altbau | 768 px | 202 | 186 | 102 | 2 | 0 |
-| waermepumpe-hannover | 768 px | 191 | 176 | 93 | 2 | 0 |
-| waermepumpe-laerm | 768 px | 222 | 209 | 126 | 1 | 0 |
-| waermepumpenstrom-hannover | 768 px | 236 | 223 | 132 | 1 | 0 |
-| wertsteigerung-waermepumpe | 768 px | 286 | 273 | 190 | 1 | 0 |
-| wp-kosten-hannover | 768 px | 262 | 249 | 160 | 1 | 0 |
-| anfrage | 960 px | 832 | 762 | 89 | 0 | 0 |
-| barrierefreiheit | 960 px | 203 | 190 | 107 | 1 | 0 |
-| baubarkeitspruefung | 960 px | 207 | 191 | 108 | 1 | 0 |
-| bewerbung | 960 px | 223 | 207 | 99 | 2 | 0 |
-| datenschutz | 960 px | 104 | 95 | 80 | 0 | 0 |
-| dimensionierung-verstehen | 960 px | 201 | 188 | 105 | 2 | 0 |
-| dimensionierung | 960 px | 710 | 658 | 76 | 2 | 0 |
-| foerderung-hannover | 960 px | 227 | 212 | 128 | 1 | 0 |
-| foerderung-jetzt-mitnehmen | 960 px | 305 | 292 | 209 | 1 | 0 |
-| foerderung | 960 px | 390 | 363 | 231 | 5 | 0 |
-| foerdervorschuss | 960 px | 217 | 199 | 112 | 2 | 0 |
-| gasheizung-tauschen-oder-reparieren | 960 px | 204 | 188 | 105 | 1 | 0 |
-| hinweise | 960 px | 192 | 175 | 92 | 2 | 0 |
-| impressum | 960 px | 60 | 51 | 34 | 0 | 0 |
-| index | 960 px | 380 | 361 | 225 | 8 | 0 |
-| karriere | 960 px | 832 | 799 | 418 | 7 | 0 |
-| kontakt | 960 px | 196 | 181 | 93 | 2 | 0 |
-| kostenvergleich-waermepumpe | 960 px | 664 | 609 | 59 | 0 | 0 |
-| preise | 960 px | 398 | 385 | 270 | 6 | 0 |
-| propan-waermepumpe | 960 px | 203 | 190 | 107 | 1 | 0 |
-| prozess | 960 px | 240 | 218 | 100 | 3 | 0 |
-| ratgeber | 960 px | 430 | 410 | 312 | 5 | 0 |
-| rechner | 960 px | 229 | 216 | 130 | 2 | 0 |
-| waermepumpe-altbau | 960 px | 202 | 186 | 102 | 1 | 0 |
-| waermepumpe-hannover | 960 px | 191 | 176 | 93 | 1 | 0 |
-| waermepumpe-laerm | 960 px | 222 | 209 | 126 | 1 | 0 |
-| waermepumpenstrom-hannover | 960 px | 236 | 223 | 136 | 1 | 0 |
-| wertsteigerung-waermepumpe | 960 px | 286 | 273 | 190 | 1 | 0 |
-| wp-kosten-hannover | 960 px | 262 | 249 | 160 | 1 | 0 |
+| Seite | Breite | Elemente | davon sichtbar | in Regel 1+3 | in Regel 4 |
+|---|---|---|---|---|---|
+| anfrage | 320 px | 832 | 762 | 42 | 0 |
+| barrierefreiheit | 320 px | 203 | 189 | 102 | 1 |
+| baubarkeitspruefung | 320 px | 207 | 190 | 103 | 2 |
+| bewerbung | 320 px | 223 | 206 | 94 | 2 |
+| datenschutz | 320 px | 104 | 95 | 80 | 0 |
+| dimensionierung-verstehen | 320 px | 201 | 187 | 99 | 2 |
+| dimensionierung | 320 px | 710 | 657 | 71 | 2 |
+| foerderung-hannover | 320 px | 227 | 211 | 122 | 2 |
+| foerderung-jetzt-mitnehmen | 320 px | 305 | 291 | 202 | 1 |
+| foerderung | 320 px | 390 | 362 | 225 | 5 |
+| foerdervorschuss | 320 px | 217 | 198 | 107 | 3 |
+| gasheizung-tauschen-oder-reparieren | 320 px | 204 | 187 | 100 | 2 |
+| hinweise | 320 px | 192 | 174 | 87 | 3 |
+| impressum | 320 px | 60 | 51 | 34 | 0 |
+| index | 320 px | 380 | 360 | 215 | 8 |
+| karriere | 320 px | 832 | 798 | 413 | 7 |
+| kontakt | 320 px | 196 | 180 | 88 | 2 |
+| kostenvergleich-waermepumpe | 320 px | 664 | 608 | 58 | 0 |
+| preise | 320 px | 398 | 384 | 258 | 6 |
+| propan-waermepumpe | 320 px | 203 | 189 | 102 | 1 |
+| prozess | 320 px | 240 | 220 | 116 | 3 |
+| ratgeber | 320 px | 430 | 409 | 307 | 5 |
+| rechner | 320 px | 229 | 215 | 125 | 2 |
+| waermepumpe-altbau | 320 px | 202 | 185 | 97 | 2 |
+| waermepumpe-hannover | 320 px | 191 | 175 | 88 | 2 |
+| waermepumpe-laerm | 320 px | 222 | 208 | 121 | 1 |
+| waermepumpenstrom-hannover | 320 px | 236 | 222 | 127 | 1 |
+| wertsteigerung-waermepumpe | 320 px | 286 | 272 | 184 | 1 |
+| wp-kosten-hannover | 320 px | 262 | 248 | 154 | 1 |
+| anfrage | 360 px | 832 | 762 | 42 | 0 |
+| barrierefreiheit | 360 px | 203 | 189 | 102 | 1 |
+| baubarkeitspruefung | 360 px | 207 | 190 | 103 | 2 |
+| bewerbung | 360 px | 223 | 206 | 94 | 2 |
+| datenschutz | 360 px | 104 | 95 | 80 | 0 |
+| dimensionierung-verstehen | 360 px | 201 | 187 | 100 | 2 |
+| dimensionierung | 360 px | 710 | 657 | 71 | 2 |
+| foerderung-hannover | 360 px | 227 | 211 | 122 | 2 |
+| foerderung-jetzt-mitnehmen | 360 px | 305 | 291 | 202 | 1 |
+| foerderung | 360 px | 390 | 362 | 225 | 5 |
+| foerdervorschuss | 360 px | 217 | 198 | 107 | 3 |
+| gasheizung-tauschen-oder-reparieren | 360 px | 204 | 187 | 100 | 2 |
+| hinweise | 360 px | 192 | 174 | 87 | 3 |
+| impressum | 360 px | 60 | 51 | 34 | 0 |
+| index | 360 px | 380 | 360 | 215 | 8 |
+| karriere | 360 px | 832 | 798 | 413 | 7 |
+| kontakt | 360 px | 196 | 180 | 88 | 2 |
+| kostenvergleich-waermepumpe | 360 px | 664 | 608 | 58 | 0 |
+| preise | 360 px | 398 | 384 | 258 | 6 |
+| propan-waermepumpe | 360 px | 203 | 189 | 102 | 1 |
+| prozess | 360 px | 240 | 220 | 116 | 3 |
+| ratgeber | 360 px | 430 | 409 | 307 | 5 |
+| rechner | 360 px | 229 | 215 | 125 | 2 |
+| waermepumpe-altbau | 360 px | 202 | 185 | 97 | 2 |
+| waermepumpe-hannover | 360 px | 191 | 175 | 88 | 2 |
+| waermepumpe-laerm | 360 px | 222 | 208 | 121 | 1 |
+| waermepumpenstrom-hannover | 360 px | 236 | 222 | 127 | 1 |
+| wertsteigerung-waermepumpe | 360 px | 286 | 272 | 185 | 1 |
+| wp-kosten-hannover | 360 px | 262 | 248 | 154 | 1 |
+| anfrage | 375 px | 832 | 762 | 42 | 0 |
+| barrierefreiheit | 375 px | 203 | 189 | 102 | 1 |
+| baubarkeitspruefung | 375 px | 207 | 190 | 103 | 2 |
+| bewerbung | 375 px | 223 | 206 | 94 | 2 |
+| datenschutz | 375 px | 104 | 95 | 80 | 0 |
+| dimensionierung-verstehen | 375 px | 201 | 187 | 100 | 2 |
+| dimensionierung | 375 px | 710 | 657 | 71 | 2 |
+| foerderung-hannover | 375 px | 227 | 211 | 122 | 2 |
+| foerderung-jetzt-mitnehmen | 375 px | 305 | 291 | 202 | 1 |
+| foerderung | 375 px | 390 | 362 | 225 | 5 |
+| foerdervorschuss | 375 px | 217 | 198 | 107 | 3 |
+| gasheizung-tauschen-oder-reparieren | 375 px | 204 | 187 | 100 | 2 |
+| hinweise | 375 px | 192 | 174 | 87 | 3 |
+| impressum | 375 px | 60 | 51 | 34 | 0 |
+| index | 375 px | 380 | 360 | 215 | 8 |
+| karriere | 375 px | 832 | 798 | 413 | 7 |
+| kontakt | 375 px | 196 | 180 | 88 | 2 |
+| kostenvergleich-waermepumpe | 375 px | 664 | 608 | 58 | 0 |
+| preise | 375 px | 398 | 384 | 258 | 6 |
+| propan-waermepumpe | 375 px | 203 | 189 | 102 | 1 |
+| prozess | 375 px | 240 | 220 | 116 | 3 |
+| ratgeber | 375 px | 430 | 409 | 307 | 5 |
+| rechner | 375 px | 229 | 215 | 125 | 2 |
+| waermepumpe-altbau | 375 px | 202 | 185 | 97 | 2 |
+| waermepumpe-hannover | 375 px | 191 | 175 | 88 | 2 |
+| waermepumpe-laerm | 375 px | 222 | 208 | 121 | 1 |
+| waermepumpenstrom-hannover | 375 px | 236 | 222 | 127 | 1 |
+| wertsteigerung-waermepumpe | 375 px | 286 | 272 | 185 | 1 |
+| wp-kosten-hannover | 375 px | 262 | 248 | 154 | 1 |
+| anfrage | 390 px | 832 | 762 | 42 | 0 |
+| barrierefreiheit | 390 px | 203 | 189 | 102 | 1 |
+| baubarkeitspruefung | 390 px | 207 | 190 | 103 | 2 |
+| bewerbung | 390 px | 223 | 206 | 94 | 2 |
+| datenschutz | 390 px | 104 | 95 | 80 | 0 |
+| dimensionierung-verstehen | 390 px | 201 | 187 | 100 | 2 |
+| dimensionierung | 390 px | 710 | 657 | 71 | 2 |
+| foerderung-hannover | 390 px | 227 | 211 | 122 | 2 |
+| foerderung-jetzt-mitnehmen | 390 px | 305 | 291 | 202 | 1 |
+| foerderung | 390 px | 390 | 362 | 225 | 5 |
+| foerdervorschuss | 390 px | 217 | 198 | 107 | 3 |
+| gasheizung-tauschen-oder-reparieren | 390 px | 204 | 187 | 100 | 2 |
+| hinweise | 390 px | 192 | 174 | 87 | 3 |
+| impressum | 390 px | 60 | 51 | 34 | 0 |
+| index | 390 px | 380 | 360 | 215 | 8 |
+| karriere | 390 px | 832 | 798 | 413 | 7 |
+| kontakt | 390 px | 196 | 180 | 88 | 2 |
+| kostenvergleich-waermepumpe | 390 px | 664 | 608 | 58 | 0 |
+| preise | 390 px | 398 | 384 | 260 | 6 |
+| propan-waermepumpe | 390 px | 203 | 189 | 102 | 1 |
+| prozess | 390 px | 240 | 220 | 116 | 3 |
+| ratgeber | 390 px | 430 | 409 | 307 | 5 |
+| rechner | 390 px | 229 | 215 | 125 | 2 |
+| waermepumpe-altbau | 390 px | 202 | 185 | 97 | 2 |
+| waermepumpe-hannover | 390 px | 191 | 175 | 88 | 2 |
+| waermepumpe-laerm | 390 px | 222 | 208 | 121 | 1 |
+| waermepumpenstrom-hannover | 390 px | 236 | 222 | 127 | 1 |
+| wertsteigerung-waermepumpe | 390 px | 286 | 272 | 185 | 1 |
+| wp-kosten-hannover | 390 px | 262 | 248 | 154 | 1 |
+| anfrage | 414 px | 832 | 762 | 42 | 0 |
+| barrierefreiheit | 414 px | 203 | 189 | 102 | 1 |
+| baubarkeitspruefung | 414 px | 207 | 190 | 103 | 2 |
+| bewerbung | 414 px | 223 | 206 | 94 | 2 |
+| datenschutz | 414 px | 104 | 95 | 80 | 0 |
+| dimensionierung-verstehen | 414 px | 201 | 187 | 100 | 2 |
+| dimensionierung | 414 px | 710 | 657 | 71 | 2 |
+| foerderung-hannover | 414 px | 227 | 211 | 122 | 2 |
+| foerderung-jetzt-mitnehmen | 414 px | 305 | 291 | 202 | 1 |
+| foerderung | 414 px | 390 | 362 | 225 | 5 |
+| foerdervorschuss | 414 px | 217 | 198 | 107 | 3 |
+| gasheizung-tauschen-oder-reparieren | 414 px | 204 | 187 | 100 | 2 |
+| hinweise | 414 px | 192 | 174 | 87 | 3 |
+| impressum | 414 px | 60 | 51 | 34 | 0 |
+| index | 414 px | 380 | 360 | 215 | 8 |
+| karriere | 414 px | 832 | 798 | 413 | 7 |
+| kontakt | 414 px | 196 | 180 | 88 | 2 |
+| kostenvergleich-waermepumpe | 414 px | 664 | 608 | 58 | 0 |
+| preise | 414 px | 398 | 384 | 260 | 6 |
+| propan-waermepumpe | 414 px | 203 | 189 | 102 | 1 |
+| prozess | 414 px | 240 | 220 | 116 | 3 |
+| ratgeber | 414 px | 430 | 409 | 307 | 5 |
+| rechner | 414 px | 229 | 215 | 125 | 2 |
+| waermepumpe-altbau | 414 px | 202 | 185 | 97 | 2 |
+| waermepumpe-hannover | 414 px | 191 | 175 | 88 | 2 |
+| waermepumpe-laerm | 414 px | 222 | 208 | 121 | 1 |
+| waermepumpenstrom-hannover | 414 px | 236 | 222 | 127 | 1 |
+| wertsteigerung-waermepumpe | 414 px | 286 | 272 | 185 | 1 |
+| wp-kosten-hannover | 414 px | 262 | 248 | 154 | 1 |
+| anfrage | 600 px | 832 | 762 | 42 | 0 |
+| barrierefreiheit | 600 px | 203 | 190 | 107 | 1 |
+| baubarkeitspruefung | 600 px | 207 | 191 | 108 | 2 |
+| bewerbung | 600 px | 223 | 207 | 99 | 2 |
+| datenschutz | 600 px | 104 | 95 | 80 | 0 |
+| dimensionierung-verstehen | 600 px | 201 | 188 | 105 | 2 |
+| dimensionierung | 600 px | 710 | 658 | 76 | 2 |
+| foerderung-hannover | 600 px | 227 | 212 | 128 | 2 |
+| foerderung-jetzt-mitnehmen | 600 px | 305 | 292 | 208 | 1 |
+| foerderung | 600 px | 390 | 363 | 231 | 5 |
+| foerdervorschuss | 600 px | 217 | 199 | 112 | 3 |
+| gasheizung-tauschen-oder-reparieren | 600 px | 204 | 188 | 105 | 2 |
+| hinweise | 600 px | 192 | 175 | 92 | 3 |
+| impressum | 600 px | 60 | 51 | 34 | 0 |
+| index | 600 px | 380 | 361 | 221 | 8 |
+| karriere | 600 px | 832 | 799 | 418 | 7 |
+| kontakt | 600 px | 196 | 181 | 93 | 2 |
+| kostenvergleich-waermepumpe | 600 px | 664 | 609 | 59 | 0 |
+| preise | 600 px | 398 | 385 | 265 | 6 |
+| propan-waermepumpe | 600 px | 203 | 190 | 107 | 1 |
+| prozess | 600 px | 240 | 221 | 121 | 3 |
+| ratgeber | 600 px | 430 | 410 | 312 | 5 |
+| rechner | 600 px | 229 | 216 | 130 | 2 |
+| waermepumpe-altbau | 600 px | 202 | 186 | 102 | 2 |
+| waermepumpe-hannover | 600 px | 191 | 176 | 93 | 2 |
+| waermepumpe-laerm | 600 px | 222 | 209 | 126 | 1 |
+| waermepumpenstrom-hannover | 600 px | 236 | 223 | 132 | 1 |
+| wertsteigerung-waermepumpe | 600 px | 286 | 273 | 190 | 1 |
+| wp-kosten-hannover | 600 px | 262 | 249 | 160 | 1 |
+| anfrage | 768 px | 832 | 762 | 42 | 0 |
+| barrierefreiheit | 768 px | 203 | 190 | 107 | 1 |
+| baubarkeitspruefung | 768 px | 207 | 191 | 108 | 2 |
+| bewerbung | 768 px | 223 | 207 | 99 | 2 |
+| datenschutz | 768 px | 104 | 95 | 80 | 0 |
+| dimensionierung-verstehen | 768 px | 201 | 188 | 105 | 2 |
+| dimensionierung | 768 px | 710 | 658 | 76 | 2 |
+| foerderung-hannover | 768 px | 227 | 212 | 128 | 2 |
+| foerderung-jetzt-mitnehmen | 768 px | 305 | 292 | 209 | 1 |
+| foerderung | 768 px | 390 | 363 | 231 | 5 |
+| foerdervorschuss | 768 px | 217 | 199 | 112 | 3 |
+| gasheizung-tauschen-oder-reparieren | 768 px | 204 | 188 | 105 | 2 |
+| hinweise | 768 px | 192 | 175 | 92 | 3 |
+| impressum | 768 px | 60 | 51 | 34 | 0 |
+| index | 768 px | 380 | 361 | 221 | 8 |
+| karriere | 768 px | 832 | 799 | 418 | 7 |
+| kontakt | 768 px | 196 | 181 | 93 | 2 |
+| kostenvergleich-waermepumpe | 768 px | 664 | 609 | 59 | 0 |
+| preise | 768 px | 398 | 385 | 270 | 6 |
+| propan-waermepumpe | 768 px | 203 | 190 | 107 | 1 |
+| prozess | 768 px | 240 | 221 | 121 | 3 |
+| ratgeber | 768 px | 430 | 410 | 312 | 5 |
+| rechner | 768 px | 229 | 216 | 130 | 2 |
+| waermepumpe-altbau | 768 px | 202 | 186 | 102 | 2 |
+| waermepumpe-hannover | 768 px | 191 | 176 | 93 | 2 |
+| waermepumpe-laerm | 768 px | 222 | 209 | 126 | 1 |
+| waermepumpenstrom-hannover | 768 px | 236 | 223 | 132 | 1 |
+| wertsteigerung-waermepumpe | 768 px | 286 | 273 | 190 | 1 |
+| wp-kosten-hannover | 768 px | 262 | 249 | 160 | 1 |
+| anfrage | 960 px | 832 | 762 | 89 | 0 |
+| barrierefreiheit | 960 px | 203 | 190 | 107 | 1 |
+| baubarkeitspruefung | 960 px | 207 | 191 | 108 | 1 |
+| bewerbung | 960 px | 223 | 207 | 99 | 2 |
+| datenschutz | 960 px | 104 | 95 | 80 | 0 |
+| dimensionierung-verstehen | 960 px | 201 | 188 | 105 | 2 |
+| dimensionierung | 960 px | 710 | 658 | 76 | 2 |
+| foerderung-hannover | 960 px | 227 | 212 | 128 | 1 |
+| foerderung-jetzt-mitnehmen | 960 px | 305 | 292 | 209 | 1 |
+| foerderung | 960 px | 390 | 363 | 231 | 5 |
+| foerdervorschuss | 960 px | 217 | 199 | 112 | 2 |
+| gasheizung-tauschen-oder-reparieren | 960 px | 204 | 188 | 105 | 1 |
+| hinweise | 960 px | 192 | 175 | 92 | 2 |
+| impressum | 960 px | 60 | 51 | 34 | 0 |
+| index | 960 px | 380 | 361 | 225 | 8 |
+| karriere | 960 px | 832 | 799 | 418 | 7 |
+| kontakt | 960 px | 196 | 181 | 93 | 2 |
+| kostenvergleich-waermepumpe | 960 px | 664 | 609 | 59 | 0 |
+| preise | 960 px | 398 | 385 | 270 | 6 |
+| propan-waermepumpe | 960 px | 203 | 190 | 107 | 1 |
+| prozess | 960 px | 240 | 218 | 100 | 3 |
+| ratgeber | 960 px | 430 | 410 | 312 | 5 |
+| rechner | 960 px | 229 | 216 | 130 | 2 |
+| waermepumpe-altbau | 960 px | 202 | 186 | 102 | 1 |
+| waermepumpe-hannover | 960 px | 191 | 176 | 93 | 1 |
+| waermepumpe-laerm | 960 px | 222 | 209 | 126 | 1 |
+| waermepumpenstrom-hannover | 960 px | 236 | 223 | 136 | 1 |
+| wertsteigerung-waermepumpe | 960 px | 286 | 273 | 190 | 1 |
+| wp-kosten-hannover | 960 px | 262 | 249 | 160 | 1 |
 
 ## Kanten-Inventar (Bericht)
 
@@ -2825,8 +2823,8 @@ Ergebnis: PASS (0 Befunde).
 | 763.48 px | 7 | div, div, h2 |
 | 846.39 px | 1 | svg |
 | 849.24 px | 1 | path |
-| 991.32 px | 1 | div.pa-card.pa-visible.dimmed |
-| 1005.32 px | 7 | div, div, h2 |
+| 991.31 px | 1 | div.pa-card.pa-visible.dimmed |
+| 1005.31 px | 7 | div, div, h2 |
 | 1087.22 px | 1 | svg |
 
 **propan-waermepumpe, 600 px — 13 verschiedene linke Kanten**
@@ -3409,7 +3407,7 @@ Ergebnis: PASS (0 Befunde).
 | 632.5 px | 1 | button#wzNext.wz-next |
 | 651.91 px | 1 | span |
 
-**preise, 768 px — 29 verschiedene linke Kanten**
+**preise, 768 px — 31 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3422,9 +3420,11 @@ Ergebnis: PASS (0 Befunde).
 | 123.85 px | 1 | path |
 | 126 px | 1 | svg |
 | 241 px | 2 | div.pa-cta-icon, svg |
-| 268 px | 2 | div.pa-card.pa-visible.dimmed, div.pa-card.pa-visible.dimmed |
+| 268 px | 1 | div.pa-card.pa-visible.dimmed |
+| 268.02 px | 1 | div.pa-card.pa-visible.dimmed |
 | 283 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
-| 284 px | 12 | div, div, h2 |
+| 284 px | 8 | div, div, h2 |
+| 284.02 px | 4 | div, div, h2 |
 | 297.5 px | 1 | div.section-tag |
 | 334.58 px | 1 | strong |
 | 364 px | 1 | svg |
@@ -4090,11 +4090,11 @@ Ergebnis: PASS (0 Befunde).
 | 655.05 px | 4 | td, td, td |
 | 664 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
 | 683.97 px | 1 | span.tt-feld |
-| 763.19 px | 1 | div.pa-card.pa-visible.dimmed |
-| 779.19 px | 8 | div, div, h2 |
+| 763.2 px | 1 | div.pa-card.pa-visible.dimmed |
+| 779.2 px | 8 | div, div, h2 |
 | 784.06 px | 1 | a.mobile-phone-cta |
 | 823.06 px | 1 | span.mobile-phone-label |
-| 829.59 px | 1 | svg |
+| 829.6 px | 1 | svg |
 | 892 px | 1 | div#hamburger.hamburger |
 
 **propan-waermepumpe, 960 px — 13 verschiedene linke Kanten**

@@ -121,11 +121,11 @@ function messen(cfg) {
     return null;
   };
 
-  const erg = { r1: [], r2: [], r3: [], r4: [], r5: [] };
+  const erg = { r1: [], r2: [], r3: [], r4: [] };
   // Abdeckung: eine Regel, die nichts prueft, meldet PASS und ist gefaehrlicher
   // als eine abgeschaltete. Deshalb weist das Gate aus, WIE VIELE Elemente je
   // Regel tatsaechlich in den Test gelaufen sind.
-  erg.abdeckung = { elemente: 0, sichtbar: 0, r1r3: 0, r5: 0, r4: 0 };
+  erg.abdeckung = { elemente: 0, sichtbar: 0, r1r3: 0, r4: 0 };
   const alle = [...document.querySelectorAll('body *')];
   erg.abdeckung.elemente = alle.length;
 
@@ -229,30 +229,17 @@ function messen(cfg) {
         });
       }
 
-      // Regel 5: zentrierter Block, aber unsymmetrisch.
-      // Nur Bloecke. Inline-Elemente (a, strong, span) stehen im Textfluss und
-      // haben keine eigene Flucht; sie hier zu messen erzeugt reines Rauschen.
-      const gapL = b.left - (pb.left + padL + bordL);
-      const gapR = pb.right - padR - bordR - b.right;
-      // Geprueft werden GENAU die Bloecke, die das Stylesheet zentriert
-      // (waagerechter Aussenabstand 'auto'). Zwei verworfene Fassungen und
-      // warum: (a) "Container muss ein reiner Blockcontainer sein" hat die Regel
-      // faktisch abgeschaltet, es erreichte KEIN Element den Test, weil hier
-      // zentrierte Bloecke in Flex- und Rasterschachteln stehen. (b) "Luecken
-      // aehnlich gross" hat 316 Scheinbefunde erzeugt, weil in einer Flex-Reihe
-      // jedes Element zufaellig aehnliche Luecken hat, ohne zentriert zu sein.
-      const istBlock = /^(block|flex|grid|table|table-cell)$/.test(cs.display);
-      const zentriert = (cfg.regeln.r5_symmetrie.aktiv ?? true) && istBlock && istZentriert(el);
-      if (zentriert) erg.abdeckung.r5++;
-      if (zentriert && Math.abs(gapL - gapR) > (cfg.regeln.r5_symmetrie.maxAbweichungPx ?? 1)) {
-        erg.r5.push({
-          block: wahl(el),
-          container: wahl(par),
-          abstandLinks: rr(gapL),
-          abstandRechts: rr(gapR),
-          abweichung: rr(Math.abs(gapL - gapR)),
-        });
-      }
+      // Regel 5 ist am 28.07.2026 ERSATZLOS GESTRICHEN, nicht abgeschaltet.
+      // Begruendung, gemessen statt vermutet: mit `aktiv: true` erreichte sie
+      // ueber 232 Laeufe genau 8 Elemente von 67.539 sichtbaren, also 0,01
+      // Prozent, und fand 0 Befunde. Der Grund ist baulich: geprueft wurden nur
+      // Bloecke mit waagerechtem Aussenabstand `auto`, und die sind per
+      // CSS-Definition symmetrisch. Eine Asymmetrie kann dort nicht entstehen.
+      // Jede der drei frueheren Fassungen war entweder blind oder erzeugte
+      // Scheinbefunde (Protokoll im Archiv von raster-expect.json).
+      // Was die Regel abdecken sollte, deckt Regel 4 ab: eine echte
+      // Seitenrand-Abweichung eines breiten Containers. Ein dauerhaft
+      // abgeschaltetes Gate meldet PASS und ist gefaehrlicher als keins.
     }
   }
 
@@ -340,6 +327,37 @@ function messen(cfg) {
     document.querySelectorAll(w.wahl).forEach((el) => pruefeRand(el, 'Inhaltscontainer', wahl(el)));
   }
 
+  // Regel 6: waagerechte Rollbreite des DOKUMENTS.
+  // Die Regeln 1 bis 4 vergleichen Kind gegen Container. Ein Element, das
+  // ueber den Fensterrand hinausragt, ohne seinen Container zu verlassen,
+  // faellt dort durch. Genau so blieb der Fehler auf datenschutz.html
+  // unentdeckt: Rollbreite 344 gegen Fensterbreite 320 bei 320 px, und alle
+  // vier Regeln meldeten sauber.
+  // Umgekehrt gilt: diese Regel ersetzt die anderen NICHT. Am 28.07.2026
+  // gemessen, ein Element 620 px ueber seinen Container hinaus, und die
+  // Rollbreite blieb bei 0 Ueberschuss, weil der Container klippt.
+  const de = document.documentElement;
+  erg.r6 = {
+    scrollWidth: rr(de.scrollWidth),
+    clientWidth: rr(de.clientWidth),
+    ueberschuss: rr(de.scrollWidth - de.clientWidth),
+  };
+  // Wer ragt heraus? Ohne diese Angabe ist der Befund nicht reparierbar.
+  if (erg.r6.ueberschuss > 0) {
+    const taeter = [];
+    for (const el of document.querySelectorAll('*')) {
+      if (ignoriert(el)) continue;
+      const cs = getComputedStyle(el);
+      if (!sichtbar(el, cs) || cs.position === 'fixed') continue;
+      const b = el.getBoundingClientRect();
+      if (b.width === 0 || b.height === 0) continue;
+      const raus = rr(b.right + window.scrollX - de.clientWidth);
+      if (raus > 0.5) taeter.push({ el: wahl(el), ueber: raus, breite: rr(b.width) });
+    }
+    taeter.sort((a, b) => b.ueber - a.ueber);
+    erg.r6.taeter = taeter.slice(0, 5);
+  }
+
   return erg;
 }
 
@@ -351,7 +369,11 @@ const { server, url: serverUrl } = eigenerServer
 const BASIS = process.env.RASTER_BASE_URL || serverUrl;
 
 const befunde = []; // { seite, breite, regel, text, daten }
+const transportfehler = []; // Ladefehler, die KEINE Layoutbefunde sind
+let fehlversuche = 0;
+const LIVE = konfig.liveLauf ?? { versuche: 3, wartenMs: 1500, pauseMs: 250 };
 const kantenBericht = [];
+const rollbreiteBericht = [];
 const abdeckung = [];
 let geprüft = 0;
 
@@ -365,13 +387,31 @@ try {
     const page = await ctx.newPage();
     for (const seite of konfig.seiten) {
       const ziel = BASIS + seite.pfad;
-      const antwort = await page.goto(ziel, { waitUntil: 'networkidle' }).catch(() => null);
+      // Wiederholungsversuch und Drosselung, nur gegen eine echte Adresse.
+      // Am 28.07.2026 meldete der Live-Lauf 32 Befunde "Seite nicht ladbar",
+      // verteilt auf 27 verschiedene Seiten und alle 8 Breiten. 20 Einzelabrufe
+      // der betroffenen Adressen ergaben 20 mal HTTP 200. Ursache gemessen,
+      // nicht vermutet: IONOS liefert `x-ws-ratelimit-limit: 1000`, der Lauf
+      // erzeugt bei 232 Seitenaufrufen ueber 2.000 Anfragen. Es ist also ein
+      // Mengenproblem. Ein Wiederholungsversuch allein reicht dagegen nicht,
+      // deshalb zusaetzlich eine Pause zwischen den Aufrufen.
+      let antwort = null;
+      let versuche = 0;
+      for (let v = 1; v <= (eigenerServer ? 1 : LIVE.versuche); v++) {
+        versuche = v;
+        if (!eigenerServer && (v > 1 || LIVE.pauseMs)) {
+          await new Promise((r) => setTimeout(r, v > 1 ? LIVE.wartenMs : LIVE.pauseMs));
+        }
+        antwort = await page.goto(ziel, { waitUntil: 'networkidle' }).catch(() => null);
+        if (antwort && antwort.ok()) break;
+      }
+      if (versuche > 1) fehlversuche += versuche - 1;
       if (!antwort || !antwort.ok()) {
-        befunde.push({
+        // Transportfehler wird als eigene Gattung gefuehrt, nicht als Layoutbefund.
+        transportfehler.push({
           seite: seite.name,
           breite,
-          regel: 'LADEN',
-          text: `Seite nicht ladbar: ${ziel} (${antwort ? antwort.status() : 'kein Antwortobjekt'})`,
+          text: `nach ${versuche} Versuch(en) nicht ladbar: ${ziel} (${antwort ? antwort.status() : 'kein Antwortobjekt'})`,
         });
         continue;
       }
@@ -433,14 +473,20 @@ try {
           daten: f,
         });
       }
-      for (const f of r.r5) {
-        if (konfig.regeln.r5_symmetrie.ausnahmen.some((a) => f.block.includes(a.block))) continue;
+      // Regel 6: waagerechte Rollbreite des Dokuments.
+      const r6 = konfig.regeln.r6_dokument_rollbreite;
+      const ausgenommen = (r6.ausnahmen ?? []).find(
+        (a) => a.seite === seite.name && (a.breite === undefined || a.breite === breite)
+      );
+      rollbreiteBericht.push({ seite: seite.name, breite, ...r.r6 });
+      if (r.r6.ueberschuss > (r6.toleranzPx ?? 0.5) && !ausgenommen) {
+        const wer = (r.r6.taeter ?? []).map((t) => `${t.el} ragt ${t.ueber} px hinaus`).join(', ');
         befunde.push({
           seite: seite.name,
           breite,
-          regel: 'R5',
-          text: `${f.block} steht unsymmetrisch in ${f.container}: links ${f.abstandLinks} px, rechts ${f.abstandRechts} px (Abweichung ${f.abweichung} px)`,
-          daten: f,
+          regel: 'R6',
+          text: `Dokument rollt waagerecht: scrollWidth ${r.r6.scrollWidth} gegen clientWidth ${r.r6.clientWidth}, Ueberschuss ${r.r6.ueberschuss} px${wer ? '. Verursacher: ' + wer : ''}`,
+          daten: r.r6,
         });
       }
 
@@ -485,14 +531,10 @@ zeilen.push(
 zeilen.push(`Ergebnis: ${befunde.length === 0 ? 'PASS' : 'FAIL'} (${befunde.length} Befunde).`);
 zeilen.push('');
 for (const [regel, titel] of [
-  ['LADEN', 'Ladefehler'],
   ['R1', 'Regel 1: Container-Ueberstand (hart)'],
   ['R3', 'Regel 3: Kind nimmt die Aussenbreite statt der Inhaltsbreite (hart)'],
   ['R4', 'Regel 4: Seitenrand-Treue fester Elemente (hart)'],
-  [
-    'R5',
-    `Regel 5: Symmetrie zentrierter Bloecke (${konfig.regeln.r5_symmetrie.aktiv ? 'hart' : 'ABGESCHALTET, siehe raster-expect.json'})`,
-  ],
+  ['R6', 'Regel 6: waagerechte Rollbreite des Dokuments (hart)'],
   ['R2', 'Regel 2: Kanten-Inventar'],
 ]) {
   const liste = nachRegel(regel);
@@ -506,19 +548,33 @@ for (const [regel, titel] of [
     zeilen.push('');
   }
 }
+if (!eigenerServer) {
+  zeilen.push('## Transportfehler (KEINE Layoutbefunde)');
+  zeilen.push('');
+  zeilen.push(
+    `> Je Seitenaufruf bis zu ${LIVE.versuche} Versuche mit ${LIVE.wartenMs} ms Pause, dazu ${LIVE.pauseMs} ms Drosselung zwischen den Aufrufen. Fehlversuche insgesamt: ${fehlversuche}. Ein Transportfehler ist ein abgerissener Verbindungsversuch unter Last, kein Seitenfehler, und bricht den Lauf nicht als Rasterfehler ab.`
+  );
+  zeilen.push('');
+  if (transportfehler.length) {
+    zeilen.push('| Seite | Breite | Befund |');
+    zeilen.push('|---|---|---|');
+    for (const t of transportfehler) zeilen.push(`| ${t.seite} | ${t.breite} px | ${t.text} |`);
+  } else {
+    zeilen.push('Keine.');
+  }
+  zeilen.push('');
+}
 zeilen.push('## Abdeckung (was die Regeln ueberhaupt angefasst haben)');
 zeilen.push('');
 zeilen.push(
   '> Eine Regel, die nichts prueft, meldet PASS und ist gefaehrlicher als eine abgeschaltete. Diese Tabelle weist aus, wie viele Elemente je Regel tatsaechlich in den Test gelaufen sind. Steht in einer Spalte 0, ist die Regel auf dieser Seite wirkungslos.'
 );
 zeilen.push('');
-zeilen.push(
-  '| Seite | Breite | Elemente | davon sichtbar | in Regel 1+3 | in Regel 4 | in Regel 5 |'
-);
-zeilen.push('|---|---|---|---|---|---|---|');
+zeilen.push('| Seite | Breite | Elemente | davon sichtbar | in Regel 1+3 | in Regel 4 |');
+zeilen.push('|---|---|---|---|---|---|');
 for (const a of abdeckung)
   zeilen.push(
-    `| ${a.seite} | ${a.breite} px | ${a.elemente} | ${a.sichtbar} | ${a.r1r3} | ${a.r4} | ${a.r5} |`
+    `| ${a.seite} | ${a.breite} px | ${a.elemente} | ${a.sichtbar} | ${a.r1r3} | ${a.r4} |`
   );
 zeilen.push('');
 zeilen.push('## Kanten-Inventar (Bericht)');
@@ -553,12 +609,24 @@ for (const [k, n] of [...gruppiert.entries()].sort((a, c) => c[1] - a[1]))
   console.log(`  ${n}x  ${k}`);
 const summe = (k) => abdeckung.reduce((a, b) => a + b[k], 0);
 console.log(
-  `Abdeckung: ${summe('sichtbar')} sichtbare Elemente, davon ${summe('r1r3')} in Regel 1+3, ${summe('r4')} in Regel 4, ${summe('r5')} in Regel 5.`
+  `Abdeckung: ${summe('sichtbar')} sichtbare Elemente, davon ${summe('r1r3')} in Regel 1+3, ${summe('r4')} in Regel 4, ${rollbreiteBericht.length} Dokumente in Regel 6.`
 );
-if (summe('r5') === 0 && (konfig.regeln.r5_symmetrie.aktiv ?? true))
+// Eine Regel ohne Pruefgegenstand meldet PASS, ohne etwas zu belegen.
+for (const [name, n] of [
+  ['Regel 1+3', summe('r1r3')],
+  ['Regel 4', summe('r4')],
+  ['Regel 6', rollbreiteBericht.length],
+])
+  if (n === 0)
+    console.log(`  WARNUNG: ${name} hat kein einziges Element geprueft und belegt damit nichts.`);
+if (!eigenerServer) {
   console.log(
-    '  WARNUNG: Regel 5 hat kein einziges Element geprueft. Eine Regel ohne Pruefgegenstand meldet PASS, ohne etwas zu belegen.'
+    `Live-Lauf: ${transportfehler.length} Transportfehler nach je ${LIVE.versuche} Versuchen, ${fehlversuche} Fehlversuche insgesamt, Pause ${LIVE.pauseMs} ms je Aufruf.`
   );
+  if (transportfehler.length)
+    for (const t of transportfehler)
+      console.log(`  TRANSPORT ${t.seite} ${t.breite} px: ${t.text}`);
+}
 console.log(`Befunddatei: ${path.relative(wurzel, berichtPfad)}`);
 
 if (befunde.length && !nurBericht) {
