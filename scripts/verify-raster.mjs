@@ -102,6 +102,14 @@ const regelStreng = (kurz) => konfig.regeln[REGEL_SCHLUESSEL[kurz]]?.streng ?? t
 const abgeschwaecht = Object.entries(REGEL_SCHLUESSEL)
   .filter(([kurz]) => !regelAktiv(kurz) || !regelStreng(kurz))
   .map(([kurz, k]) => `${kurz} (${k}): aktiv ${regelAktiv(kurz)}, streng ${regelStreng(kurz)}`);
+// Eine HARTE Regel auf `aktiv: false` ist eine stille Aufweichung des Gates,
+// genau die Gattung, fuer die eine Ausnahme ohne Grund mit Rueckgabewert 2
+// abbricht. Bis zum 29.07.2026 meldete sie stattdessen PASS mit Rueckgabewert 0,
+// und der einzige Hinweis stand in der Berichtsdatei, nie auf der Konsole. In
+// der CI war eine abgeschaltete harte Regel damit gruen.
+const abgeschaltetHart = Object.entries(REGEL_SCHLUESSEL)
+  .filter(([kurz]) => !regelAktiv(kurz) && regelStreng(kurz))
+  .map(([kurz, k]) => `${kurz} (${k}) ist eine harte Regel und steht auf aktiv: false`);
 
 // ── Bereichspruefung ────────────────────────────────────────────────────────
 // Eine physikalisch unmoegliche Messzahl ist ein Fehler im Messskript, nicht
@@ -322,8 +330,20 @@ function messen(cfg) {
       return m ? m[1].trim() : '';
     };
     const [siStart, siEnde] = zerlegeInline(holeWert('margin-inline'));
-    const inlL = holeWert('margin-left') === 'auto' || siStart;
-    const inlR = holeWert('margin-right') === 'auto' || siEnde;
+    // Das Kurzschreiben `margin` deckt die waagerechten Raender mit ab: bei zwei
+    // Werten ist der zweite waagerecht, bei drei und vier Werten ebenso. Runde 3
+    // hatte diese Erkennung beim Umbau auf `holeWert` verloren; gemessen ergab
+    // `style="margin:0 auto"` keinen Befund mehr, waehrend das geometrisch
+    // gleiche `margin-inline:auto` weiter gemeldet wurde.
+    const kurz = holeWert('margin').split(/\s+/).filter(Boolean);
+    const kurzWaagerecht =
+      kurz.length === 1
+        ? kurz[0] === 'auto'
+        : kurz.length >= 2
+          ? kurz[1] === 'auto' && (kurz.length < 4 || kurz[3] === 'auto')
+          : false;
+    const inlL = holeWert('margin-left') === 'auto' || siStart || kurzWaagerecht;
+    const inlR = holeWert('margin-right') === 'auto' || siEnde || kurzWaagerecht;
     return (inlL || passt(el, autoLinks)) && (inlR || passt(el, autoRechts));
   };
 
@@ -590,7 +610,7 @@ function messen(cfg) {
         // `contain: strict` wird geklippt, das Gate haette 380 px als Befund
         // gemeldet. `backdrop-filter` fehlte ganz und steht im echten
         // Stylesheet an drei Stellen.
-        /paint|strict|content/.test(acs.contain || '')
+        /paint|strict|content|layout/.test(acs.contain || '')
       );
     if (pos === 'absolute') return acs.position !== 'static';
     return true;
@@ -820,7 +840,7 @@ try {
       kantenBericht.push({ seite: seite.name, breite, kanten: r.r2 });
       abdeckung.push({ seite: seite.name, breite, ...r.abdeckung });
       const erwartet = konfig.regeln.r2_kanten_inventar.erwarteteKanten;
-      if (konfig.regeln.r2_kanten_inventar.streng && erwartet.length) {
+      if (regelAktiv('R2') && regelStreng('R2') && erwartet.length) {
         for (const k of r.r2) {
           if (!erwartet.includes(k.kante)) {
             befunde.push({
@@ -853,6 +873,7 @@ const anteilTransport = sollLaeufe ? transportfehler.length / sollLaeufe : 0;
 const maxAnteil = konfig.gueltigkeit?.maxAnteilTransportfehler ?? 0.05;
 const ungueltig = [];
 if (geprüft === 0) ungueltig.push('kein einziges Dokument gemessen');
+for (const a of abgeschaltetHart) ungueltig.push(a);
 if (anteilTransport > maxAnteil)
   ungueltig.push(
     `${transportfehler.length} von ${sollLaeufe} Aufrufen nicht ladbar (${(anteilTransport * 100).toFixed(1)} Prozent, Grenze ${(maxAnteil * 100).toFixed(1)} Prozent)`
@@ -983,7 +1004,7 @@ if (ungueltig.length) {
   // Befund daneben, waere er falsch: ein gefundener Ueberstand bleibt ein
   // gefundener Ueberstand, auch wenn eine andere Regel nichts messen konnte.
   zeilen.push(
-    urteil === 'FAIL'
+    befunde.length
       ? '> **Dieser Lauf ist zusaetzlich unvollstaendig.** Die gefundenen Befunde gelten, die Abdeckung reicht aber nicht fuer eine Entwarnung:'
       : '> **Dieser Lauf belegt nichts und gilt nicht als bestanden.** Die Zahl der Befunde ist deshalb ohne Aussage.'
   );
@@ -1014,10 +1035,16 @@ for (const [regel, titel] of [
   // nicht ist, und darf nicht FAIL zaehlen, wenn der Lauf deswegen nicht
   // fehlschlaegt. Gemessen 29.07.2026: mit `streng: false` stand im Kopf
   // `Ergebnis: PASS` und darunter `Regel 5 (hart): 1 FAIL`.
-  const scharf = regelStreng(regel);
-  const ueberschrift = titel.replace('(hart)', scharf ? '(hart)' : '(Bericht, nicht scharf)');
+  const an = regelAktiv(regel);
+  const scharf = regelStreng(regel) && an;
+  const zustand = !an ? '(ABGESCHALTET)' : scharf ? '(hart)' : '(Bericht, nicht scharf)';
+  const ueberschrift = titel.includes('(hart)')
+    ? titel.replace('(hart)', zustand)
+    : an
+      ? titel
+      : `${titel} (ABGESCHALTET)`;
   zeilen.push(
-    `## ${ueberschrift}: ${liste.length === 0 ? 'PASS' : liste.length + (scharf ? ' FAIL' : ' gemeldet, ohne Fehlerabbruch')}`
+    `## ${ueberschrift}: ${!an ? 'nicht geprueft' : liste.length === 0 ? 'PASS' : liste.length + (scharf ? ' FAIL' : ' gemeldet, ohne Fehlerabbruch')}`
   );
   zeilen.push('');
   if (liste.length) {
@@ -1054,7 +1081,7 @@ zeilen.push(
   '> Steht in einer Spalte 0, ist die Regel auf dieser Seite wirkungslos. Das ist nicht automatisch ein Fehler: Regel 4 greift nur auf vollbreiten Containern, Regel 5 nur auf schmaleren Bloecken in Blockcontainern, und Regel 6 nur auf Elementen, die die Fensterkante ueberhaupt erreichen koennen. Auf `anfrage.html` klippt `main#main-content.funnel-panel` selbst waagerecht, dort traegt Regel 1 die Pruefung. Wo eine Regel ueber alle Breiten hinweg 0 erreicht, steht der Fall unten ausdruecklich in der Liste, statt in der Gesamtsumme zu verschwinden.'
 );
 zeilen.push('');
-zeilen.push('**Befundfaehige Elemente je Breite, alle 30 Seiten zusammen**');
+zeilen.push(`**Befundfaehige Elemente je Breite, alle ${konfig.seiten.length} Seiten zusammen**`);
 zeilen.push('');
 zeilen.push(
   '> Diese Tabelle steht hier, weil eine Zusammenfassung ueber alle Breiten genau das verdeckt, wofuer das Gate gebaut wurde: der Ursprungsfehler vom 26.07.2026 war ein Telefonfehler. Wo eine Regel auf den Telefonbreiten kaum Elemente erreicht, schuetzt sie dort auch nicht.'
@@ -1126,7 +1153,7 @@ for (const b of befunde) {
   gruppiert.set(k, (gruppiert.get(k) || 0) + 1);
 }
 console.log(
-  `Raster-Gate: ${geprüft} von ${konfig.seiten.length * konfig.breiten.length} Dokumenten gemessen (${konfig.seiten.length} Seiten x ${konfig.breiten.length} Breiten), ${befunde.length} Befunde.`
+  `Raster-Gate: ${geprüft} von ${konfig.seiten.length * konfig.breiten.length} Dokumenten gemessen (${konfig.seiten.length} Seiten x ${konfig.breiten.length} Breiten), ${hartBefunde0.length} harte Befunde${befunde.length - hartBefunde0.length ? `, ${befunde.length - hartBefunde0.length} nur gemeldet` : ''}.`
 );
 for (const [k, n] of [...gruppiert.entries()].sort((a, c) => c[1] - a[1]))
   console.log(`  ${n}x  ${k}`);
@@ -1155,6 +1182,7 @@ if (nichtAusgeliefert.length)
   console.log(
     `NICHT AUSGELIEFERT: ${nichtAusgeliefert.join(', ')} liegt im Repo und in der Pruefliste, antwortet aber mit 404.`
   );
+for (const a of abgeschwaecht) console.error(`ABGESCHWAECHT: ${a}`);
 if (ungueltig.length) {
   console.error('Raster-Gate: der Lauf ist UNGUELTIG und belegt fuer sich genommen nichts:');
   for (const u of ungueltig) console.error(`  ${u}`);
