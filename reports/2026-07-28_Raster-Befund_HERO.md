@@ -1,263 +1,291 @@
 # Raster-Befund 2026-07-28
 
 Quelle: lokaler Arbeitsstand des Repos
-Geprueft: 29 Seiten x 8 Breiten = 232 Laeufe.
+Geprueft: 30 Seiten x 8 Breiten = 240 Laeufe.
 Ergebnis: PASS (0 Befunde).
 
-## Regel 1: Container-Ueberstand (hart) — PASS
+## Regel 1: Container-Ueberstand (hart): PASS
 
-## Regel 3: Kind nimmt die Aussenbreite statt der Inhaltsbreite (hart) — PASS
+## Regel 3: Kind nimmt die Aussenbreite statt der Inhaltsbreite (hart): PASS
 
-## Regel 4: Seitenrand-Treue fester Elemente (hart) — PASS
+## Regel 4: Seitenrand-Treue vollbreiter Container (hart): PASS
 
-## Regel 6: waagerechte Rollbreite des Dokuments (hart) — PASS
+## Regel 5: erklaerter Seitenversatz schmalerer Bloecke (hart): PASS
 
-## Regel 2: Kanten-Inventar — PASS
+## Regel 6: Fensterkanten-Ueberstand (hart): PASS
+
+## Regel 2: Kanten-Inventar: PASS
 
 ## Abdeckung (was die Regeln ueberhaupt angefasst haben)
 
-> Eine Regel, die nichts prueft, meldet PASS und ist gefaehrlicher als eine abgeschaltete. Diese Tabelle weist aus, wie viele Elemente je Regel tatsaechlich in den Test gelaufen sind. Steht in einer Spalte 0, ist die Regel auf dieser Seite wirkungslos.
+> Eine Regel, die nichts prueft, meldet PASS und ist gefaehrlicher als eine abgeschaltete. Diese Tabelle weist aus, wie viele Elemente je Regel **befundfaehig** waren, also einen Befund haetten erzeugen koennen. Steht in einer Spalte 0, ist die Regel auf dieser Seite wirkungslos. Gezaehlt werden ausdruecklich NICHT die Seitenaufrufe: die erste Fassung von Regel 6 meldete "232 Dokumente geprueft" und konnte auf 26 von 29 Seiten baulich nichts messen.
 
-| Seite | Breite | Elemente | davon sichtbar | in Regel 1+3 | in Regel 4 |
-|---|---|---|---|---|---|
-| anfrage | 320 px | 832 | 762 | 42 | 0 |
-| barrierefreiheit | 320 px | 203 | 189 | 102 | 1 |
-| baubarkeitspruefung | 320 px | 207 | 190 | 103 | 2 |
-| bewerbung | 320 px | 223 | 206 | 94 | 2 |
-| datenschutz | 320 px | 104 | 95 | 80 | 0 |
-| dimensionierung-verstehen | 320 px | 201 | 187 | 99 | 2 |
-| dimensionierung | 320 px | 710 | 657 | 71 | 2 |
-| foerderung-hannover | 320 px | 227 | 211 | 122 | 2 |
-| foerderung-jetzt-mitnehmen | 320 px | 305 | 291 | 202 | 1 |
-| foerderung | 320 px | 390 | 362 | 225 | 5 |
-| foerdervorschuss | 320 px | 217 | 198 | 107 | 3 |
-| gasheizung-tauschen-oder-reparieren | 320 px | 204 | 187 | 100 | 2 |
-| hinweise | 320 px | 192 | 174 | 87 | 3 |
-| impressum | 320 px | 60 | 51 | 34 | 0 |
-| index | 320 px | 380 | 360 | 215 | 8 |
-| karriere | 320 px | 832 | 798 | 413 | 7 |
-| kontakt | 320 px | 196 | 180 | 88 | 2 |
-| kostenvergleich-waermepumpe | 320 px | 664 | 608 | 58 | 0 |
-| preise | 320 px | 398 | 384 | 258 | 6 |
-| propan-waermepumpe | 320 px | 203 | 189 | 102 | 1 |
-| prozess | 320 px | 240 | 220 | 116 | 3 |
-| ratgeber | 320 px | 430 | 409 | 307 | 5 |
-| rechner | 320 px | 229 | 215 | 125 | 2 |
-| waermepumpe-altbau | 320 px | 202 | 185 | 97 | 2 |
-| waermepumpe-hannover | 320 px | 191 | 175 | 88 | 2 |
-| waermepumpe-laerm | 320 px | 222 | 208 | 121 | 1 |
-| waermepumpenstrom-hannover | 320 px | 236 | 222 | 127 | 1 |
-| wertsteigerung-waermepumpe | 320 px | 286 | 272 | 184 | 1 |
-| wp-kosten-hannover | 320 px | 262 | 248 | 154 | 1 |
-| anfrage | 360 px | 832 | 762 | 42 | 0 |
-| barrierefreiheit | 360 px | 203 | 189 | 102 | 1 |
-| baubarkeitspruefung | 360 px | 207 | 190 | 103 | 2 |
-| bewerbung | 360 px | 223 | 206 | 94 | 2 |
-| datenschutz | 360 px | 104 | 95 | 80 | 0 |
-| dimensionierung-verstehen | 360 px | 201 | 187 | 100 | 2 |
-| dimensionierung | 360 px | 710 | 657 | 71 | 2 |
-| foerderung-hannover | 360 px | 227 | 211 | 122 | 2 |
-| foerderung-jetzt-mitnehmen | 360 px | 305 | 291 | 202 | 1 |
-| foerderung | 360 px | 390 | 362 | 225 | 5 |
-| foerdervorschuss | 360 px | 217 | 198 | 107 | 3 |
-| gasheizung-tauschen-oder-reparieren | 360 px | 204 | 187 | 100 | 2 |
-| hinweise | 360 px | 192 | 174 | 87 | 3 |
-| impressum | 360 px | 60 | 51 | 34 | 0 |
-| index | 360 px | 380 | 360 | 215 | 8 |
-| karriere | 360 px | 832 | 798 | 413 | 7 |
-| kontakt | 360 px | 196 | 180 | 88 | 2 |
-| kostenvergleich-waermepumpe | 360 px | 664 | 608 | 58 | 0 |
-| preise | 360 px | 398 | 384 | 258 | 6 |
-| propan-waermepumpe | 360 px | 203 | 189 | 102 | 1 |
-| prozess | 360 px | 240 | 220 | 116 | 3 |
-| ratgeber | 360 px | 430 | 409 | 307 | 5 |
-| rechner | 360 px | 229 | 215 | 125 | 2 |
-| waermepumpe-altbau | 360 px | 202 | 185 | 97 | 2 |
-| waermepumpe-hannover | 360 px | 191 | 175 | 88 | 2 |
-| waermepumpe-laerm | 360 px | 222 | 208 | 121 | 1 |
-| waermepumpenstrom-hannover | 360 px | 236 | 222 | 127 | 1 |
-| wertsteigerung-waermepumpe | 360 px | 286 | 272 | 185 | 1 |
-| wp-kosten-hannover | 360 px | 262 | 248 | 154 | 1 |
-| anfrage | 375 px | 832 | 762 | 42 | 0 |
-| barrierefreiheit | 375 px | 203 | 189 | 102 | 1 |
-| baubarkeitspruefung | 375 px | 207 | 190 | 103 | 2 |
-| bewerbung | 375 px | 223 | 206 | 94 | 2 |
-| datenschutz | 375 px | 104 | 95 | 80 | 0 |
-| dimensionierung-verstehen | 375 px | 201 | 187 | 100 | 2 |
-| dimensionierung | 375 px | 710 | 657 | 71 | 2 |
-| foerderung-hannover | 375 px | 227 | 211 | 122 | 2 |
-| foerderung-jetzt-mitnehmen | 375 px | 305 | 291 | 202 | 1 |
-| foerderung | 375 px | 390 | 362 | 225 | 5 |
-| foerdervorschuss | 375 px | 217 | 198 | 107 | 3 |
-| gasheizung-tauschen-oder-reparieren | 375 px | 204 | 187 | 100 | 2 |
-| hinweise | 375 px | 192 | 174 | 87 | 3 |
-| impressum | 375 px | 60 | 51 | 34 | 0 |
-| index | 375 px | 380 | 360 | 215 | 8 |
-| karriere | 375 px | 832 | 798 | 413 | 7 |
-| kontakt | 375 px | 196 | 180 | 88 | 2 |
-| kostenvergleich-waermepumpe | 375 px | 664 | 608 | 58 | 0 |
-| preise | 375 px | 398 | 384 | 258 | 6 |
-| propan-waermepumpe | 375 px | 203 | 189 | 102 | 1 |
-| prozess | 375 px | 240 | 220 | 116 | 3 |
-| ratgeber | 375 px | 430 | 409 | 307 | 5 |
-| rechner | 375 px | 229 | 215 | 125 | 2 |
-| waermepumpe-altbau | 375 px | 202 | 185 | 97 | 2 |
-| waermepumpe-hannover | 375 px | 191 | 175 | 88 | 2 |
-| waermepumpe-laerm | 375 px | 222 | 208 | 121 | 1 |
-| waermepumpenstrom-hannover | 375 px | 236 | 222 | 127 | 1 |
-| wertsteigerung-waermepumpe | 375 px | 286 | 272 | 185 | 1 |
-| wp-kosten-hannover | 375 px | 262 | 248 | 154 | 1 |
-| anfrage | 390 px | 832 | 762 | 42 | 0 |
-| barrierefreiheit | 390 px | 203 | 189 | 102 | 1 |
-| baubarkeitspruefung | 390 px | 207 | 190 | 103 | 2 |
-| bewerbung | 390 px | 223 | 206 | 94 | 2 |
-| datenschutz | 390 px | 104 | 95 | 80 | 0 |
-| dimensionierung-verstehen | 390 px | 201 | 187 | 100 | 2 |
-| dimensionierung | 390 px | 710 | 657 | 71 | 2 |
-| foerderung-hannover | 390 px | 227 | 211 | 122 | 2 |
-| foerderung-jetzt-mitnehmen | 390 px | 305 | 291 | 202 | 1 |
-| foerderung | 390 px | 390 | 362 | 225 | 5 |
-| foerdervorschuss | 390 px | 217 | 198 | 107 | 3 |
-| gasheizung-tauschen-oder-reparieren | 390 px | 204 | 187 | 100 | 2 |
-| hinweise | 390 px | 192 | 174 | 87 | 3 |
-| impressum | 390 px | 60 | 51 | 34 | 0 |
-| index | 390 px | 380 | 360 | 215 | 8 |
-| karriere | 390 px | 832 | 798 | 413 | 7 |
-| kontakt | 390 px | 196 | 180 | 88 | 2 |
-| kostenvergleich-waermepumpe | 390 px | 664 | 608 | 58 | 0 |
-| preise | 390 px | 398 | 384 | 260 | 6 |
-| propan-waermepumpe | 390 px | 203 | 189 | 102 | 1 |
-| prozess | 390 px | 240 | 220 | 116 | 3 |
-| ratgeber | 390 px | 430 | 409 | 307 | 5 |
-| rechner | 390 px | 229 | 215 | 125 | 2 |
-| waermepumpe-altbau | 390 px | 202 | 185 | 97 | 2 |
-| waermepumpe-hannover | 390 px | 191 | 175 | 88 | 2 |
-| waermepumpe-laerm | 390 px | 222 | 208 | 121 | 1 |
-| waermepumpenstrom-hannover | 390 px | 236 | 222 | 127 | 1 |
-| wertsteigerung-waermepumpe | 390 px | 286 | 272 | 185 | 1 |
-| wp-kosten-hannover | 390 px | 262 | 248 | 154 | 1 |
-| anfrage | 414 px | 832 | 762 | 42 | 0 |
-| barrierefreiheit | 414 px | 203 | 189 | 102 | 1 |
-| baubarkeitspruefung | 414 px | 207 | 190 | 103 | 2 |
-| bewerbung | 414 px | 223 | 206 | 94 | 2 |
-| datenschutz | 414 px | 104 | 95 | 80 | 0 |
-| dimensionierung-verstehen | 414 px | 201 | 187 | 100 | 2 |
-| dimensionierung | 414 px | 710 | 657 | 71 | 2 |
-| foerderung-hannover | 414 px | 227 | 211 | 122 | 2 |
-| foerderung-jetzt-mitnehmen | 414 px | 305 | 291 | 202 | 1 |
-| foerderung | 414 px | 390 | 362 | 225 | 5 |
-| foerdervorschuss | 414 px | 217 | 198 | 107 | 3 |
-| gasheizung-tauschen-oder-reparieren | 414 px | 204 | 187 | 100 | 2 |
-| hinweise | 414 px | 192 | 174 | 87 | 3 |
-| impressum | 414 px | 60 | 51 | 34 | 0 |
-| index | 414 px | 380 | 360 | 215 | 8 |
-| karriere | 414 px | 832 | 798 | 413 | 7 |
-| kontakt | 414 px | 196 | 180 | 88 | 2 |
-| kostenvergleich-waermepumpe | 414 px | 664 | 608 | 58 | 0 |
-| preise | 414 px | 398 | 384 | 260 | 6 |
-| propan-waermepumpe | 414 px | 203 | 189 | 102 | 1 |
-| prozess | 414 px | 240 | 220 | 116 | 3 |
-| ratgeber | 414 px | 430 | 409 | 307 | 5 |
-| rechner | 414 px | 229 | 215 | 125 | 2 |
-| waermepumpe-altbau | 414 px | 202 | 185 | 97 | 2 |
-| waermepumpe-hannover | 414 px | 191 | 175 | 88 | 2 |
-| waermepumpe-laerm | 414 px | 222 | 208 | 121 | 1 |
-| waermepumpenstrom-hannover | 414 px | 236 | 222 | 127 | 1 |
-| wertsteigerung-waermepumpe | 414 px | 286 | 272 | 185 | 1 |
-| wp-kosten-hannover | 414 px | 262 | 248 | 154 | 1 |
-| anfrage | 600 px | 832 | 762 | 42 | 0 |
-| barrierefreiheit | 600 px | 203 | 190 | 107 | 1 |
-| baubarkeitspruefung | 600 px | 207 | 191 | 108 | 2 |
-| bewerbung | 600 px | 223 | 207 | 99 | 2 |
-| datenschutz | 600 px | 104 | 95 | 80 | 0 |
-| dimensionierung-verstehen | 600 px | 201 | 188 | 105 | 2 |
-| dimensionierung | 600 px | 710 | 658 | 76 | 2 |
-| foerderung-hannover | 600 px | 227 | 212 | 128 | 2 |
-| foerderung-jetzt-mitnehmen | 600 px | 305 | 292 | 208 | 1 |
-| foerderung | 600 px | 390 | 363 | 231 | 5 |
-| foerdervorschuss | 600 px | 217 | 199 | 112 | 3 |
-| gasheizung-tauschen-oder-reparieren | 600 px | 204 | 188 | 105 | 2 |
-| hinweise | 600 px | 192 | 175 | 92 | 3 |
-| impressum | 600 px | 60 | 51 | 34 | 0 |
-| index | 600 px | 380 | 361 | 221 | 8 |
-| karriere | 600 px | 832 | 799 | 418 | 7 |
-| kontakt | 600 px | 196 | 181 | 93 | 2 |
-| kostenvergleich-waermepumpe | 600 px | 664 | 609 | 59 | 0 |
-| preise | 600 px | 398 | 385 | 265 | 6 |
-| propan-waermepumpe | 600 px | 203 | 190 | 107 | 1 |
-| prozess | 600 px | 240 | 221 | 121 | 3 |
-| ratgeber | 600 px | 430 | 410 | 312 | 5 |
-| rechner | 600 px | 229 | 216 | 130 | 2 |
-| waermepumpe-altbau | 600 px | 202 | 186 | 102 | 2 |
-| waermepumpe-hannover | 600 px | 191 | 176 | 93 | 2 |
-| waermepumpe-laerm | 600 px | 222 | 209 | 126 | 1 |
-| waermepumpenstrom-hannover | 600 px | 236 | 223 | 132 | 1 |
-| wertsteigerung-waermepumpe | 600 px | 286 | 273 | 190 | 1 |
-| wp-kosten-hannover | 600 px | 262 | 249 | 160 | 1 |
-| anfrage | 768 px | 832 | 762 | 42 | 0 |
-| barrierefreiheit | 768 px | 203 | 190 | 107 | 1 |
-| baubarkeitspruefung | 768 px | 207 | 191 | 108 | 2 |
-| bewerbung | 768 px | 223 | 207 | 99 | 2 |
-| datenschutz | 768 px | 104 | 95 | 80 | 0 |
-| dimensionierung-verstehen | 768 px | 201 | 188 | 105 | 2 |
-| dimensionierung | 768 px | 710 | 658 | 76 | 2 |
-| foerderung-hannover | 768 px | 227 | 212 | 128 | 2 |
-| foerderung-jetzt-mitnehmen | 768 px | 305 | 292 | 209 | 1 |
-| foerderung | 768 px | 390 | 363 | 231 | 5 |
-| foerdervorschuss | 768 px | 217 | 199 | 112 | 3 |
-| gasheizung-tauschen-oder-reparieren | 768 px | 204 | 188 | 105 | 2 |
-| hinweise | 768 px | 192 | 175 | 92 | 3 |
-| impressum | 768 px | 60 | 51 | 34 | 0 |
-| index | 768 px | 380 | 361 | 221 | 8 |
-| karriere | 768 px | 832 | 799 | 418 | 7 |
-| kontakt | 768 px | 196 | 181 | 93 | 2 |
-| kostenvergleich-waermepumpe | 768 px | 664 | 609 | 59 | 0 |
-| preise | 768 px | 398 | 385 | 270 | 6 |
-| propan-waermepumpe | 768 px | 203 | 190 | 107 | 1 |
-| prozess | 768 px | 240 | 221 | 121 | 3 |
-| ratgeber | 768 px | 430 | 410 | 312 | 5 |
-| rechner | 768 px | 229 | 216 | 130 | 2 |
-| waermepumpe-altbau | 768 px | 202 | 186 | 102 | 2 |
-| waermepumpe-hannover | 768 px | 191 | 176 | 93 | 2 |
-| waermepumpe-laerm | 768 px | 222 | 209 | 126 | 1 |
-| waermepumpenstrom-hannover | 768 px | 236 | 223 | 132 | 1 |
-| wertsteigerung-waermepumpe | 768 px | 286 | 273 | 190 | 1 |
-| wp-kosten-hannover | 768 px | 262 | 249 | 160 | 1 |
-| anfrage | 960 px | 832 | 762 | 89 | 0 |
-| barrierefreiheit | 960 px | 203 | 190 | 107 | 1 |
-| baubarkeitspruefung | 960 px | 207 | 191 | 108 | 1 |
-| bewerbung | 960 px | 223 | 207 | 99 | 2 |
-| datenschutz | 960 px | 104 | 95 | 80 | 0 |
-| dimensionierung-verstehen | 960 px | 201 | 188 | 105 | 2 |
-| dimensionierung | 960 px | 710 | 658 | 76 | 2 |
-| foerderung-hannover | 960 px | 227 | 212 | 128 | 1 |
-| foerderung-jetzt-mitnehmen | 960 px | 305 | 292 | 209 | 1 |
-| foerderung | 960 px | 390 | 363 | 231 | 5 |
-| foerdervorschuss | 960 px | 217 | 199 | 112 | 2 |
-| gasheizung-tauschen-oder-reparieren | 960 px | 204 | 188 | 105 | 1 |
-| hinweise | 960 px | 192 | 175 | 92 | 2 |
-| impressum | 960 px | 60 | 51 | 34 | 0 |
-| index | 960 px | 380 | 361 | 225 | 8 |
-| karriere | 960 px | 832 | 799 | 418 | 7 |
-| kontakt | 960 px | 196 | 181 | 93 | 2 |
-| kostenvergleich-waermepumpe | 960 px | 664 | 609 | 59 | 0 |
-| preise | 960 px | 398 | 385 | 270 | 6 |
-| propan-waermepumpe | 960 px | 203 | 190 | 107 | 1 |
-| prozess | 960 px | 240 | 218 | 100 | 3 |
-| ratgeber | 960 px | 430 | 410 | 312 | 5 |
-| rechner | 960 px | 229 | 216 | 130 | 2 |
-| waermepumpe-altbau | 960 px | 202 | 186 | 102 | 1 |
-| waermepumpe-hannover | 960 px | 191 | 176 | 93 | 1 |
-| waermepumpe-laerm | 960 px | 222 | 209 | 126 | 1 |
-| waermepumpenstrom-hannover | 960 px | 236 | 223 | 136 | 1 |
-| wertsteigerung-waermepumpe | 960 px | 286 | 273 | 190 | 1 |
-| wp-kosten-hannover | 960 px | 262 | 249 | 160 | 1 |
+| Seite | Breite | Elemente | davon sichtbar | in Regel 1+3 | in Regel 4 | in Regel 5 | in Regel 6 |
+|---|---|---|---|---|---|---|---|
+| amortisation-waermepumpe | 320 px | 199 | 180 | 93 | 2 | 0 | 100 |
+| anfrage | 320 px | 832 | 759 | 42 | 0 | 1 | 6 |
+| barrierefreiheit | 320 px | 203 | 188 | 102 | 1 | 0 | 109 |
+| baubarkeitspruefung | 320 px | 207 | 189 | 103 | 2 | 0 | 110 |
+| bewerbung | 320 px | 223 | 205 | 94 | 2 | 0 | 101 |
+| datenschutz | 320 px | 104 | 94 | 80 | 0 | 0 | 82 |
+| dimensionierung | 320 px | 710 | 656 | 71 | 2 | 0 | 52 |
+| dimensionierung-verstehen | 320 px | 201 | 186 | 99 | 2 | 0 | 89 |
+| foerderung | 320 px | 390 | 361 | 225 | 5 | 0 | 201 |
+| foerderung-hannover | 320 px | 227 | 210 | 122 | 2 | 0 | 111 |
+| foerderung-jetzt-mitnehmen | 320 px | 305 | 290 | 202 | 1 | 0 | 145 |
+| foerdervorschuss | 320 px | 217 | 197 | 107 | 3 | 0 | 118 |
+| gasheizung-tauschen-oder-reparieren | 320 px | 206 | 188 | 102 | 2 | 0 | 109 |
+| hinweise | 320 px | 192 | 173 | 87 | 3 | 0 | 94 |
+| impressum | 320 px | 60 | 50 | 34 | 0 | 0 | 36 |
+| index | 320 px | 380 | 358 | 215 | 8 | 0 | 140 |
+| karriere | 320 px | 832 | 797 | 413 | 7 | 0 | 420 |
+| kontakt | 320 px | 196 | 179 | 88 | 2 | 0 | 91 |
+| kostenvergleich-waermepumpe | 320 px | 746 | 686 | 65 | 0 | 0 | 72 |
+| preise | 320 px | 398 | 383 | 258 | 6 | 0 | 151 |
+| propan-waermepumpe | 320 px | 203 | 188 | 102 | 1 | 0 | 109 |
+| prozess | 320 px | 240 | 219 | 116 | 3 | 0 | 97 |
+| ratgeber | 320 px | 444 | 422 | 320 | 5 | 0 | 179 |
+| rechner | 320 px | 229 | 214 | 125 | 2 | 0 | 80 |
+| waermepumpe-altbau | 320 px | 202 | 184 | 97 | 2 | 0 | 104 |
+| waermepumpe-hannover | 320 px | 191 | 174 | 88 | 2 | 0 | 95 |
+| waermepumpe-laerm | 320 px | 222 | 207 | 121 | 1 | 0 | 128 |
+| waermepumpenstrom-hannover | 320 px | 236 | 221 | 127 | 1 | 0 | 142 |
+| wertsteigerung-waermepumpe | 320 px | 286 | 271 | 184 | 1 | 0 | 125 |
+| wp-kosten-hannover | 320 px | 262 | 246 | 154 | 1 | 0 | 110 |
+| amortisation-waermepumpe | 360 px | 199 | 180 | 93 | 2 | 0 | 100 |
+| anfrage | 360 px | 832 | 759 | 42 | 0 | 1 | 6 |
+| barrierefreiheit | 360 px | 203 | 188 | 102 | 1 | 0 | 109 |
+| baubarkeitspruefung | 360 px | 207 | 189 | 103 | 2 | 0 | 110 |
+| bewerbung | 360 px | 223 | 205 | 94 | 2 | 0 | 101 |
+| datenschutz | 360 px | 104 | 94 | 80 | 0 | 0 | 82 |
+| dimensionierung | 360 px | 710 | 656 | 71 | 2 | 0 | 52 |
+| dimensionierung-verstehen | 360 px | 201 | 186 | 100 | 2 | 0 | 89 |
+| foerderung | 360 px | 390 | 361 | 225 | 5 | 0 | 201 |
+| foerderung-hannover | 360 px | 227 | 210 | 122 | 2 | 0 | 111 |
+| foerderung-jetzt-mitnehmen | 360 px | 305 | 290 | 202 | 1 | 0 | 145 |
+| foerdervorschuss | 360 px | 217 | 197 | 107 | 3 | 0 | 118 |
+| gasheizung-tauschen-oder-reparieren | 360 px | 206 | 188 | 102 | 2 | 0 | 109 |
+| hinweise | 360 px | 192 | 173 | 87 | 3 | 0 | 94 |
+| impressum | 360 px | 60 | 50 | 34 | 0 | 0 | 36 |
+| index | 360 px | 380 | 358 | 215 | 8 | 0 | 140 |
+| karriere | 360 px | 832 | 797 | 413 | 7 | 0 | 420 |
+| kontakt | 360 px | 196 | 179 | 88 | 2 | 0 | 91 |
+| kostenvergleich-waermepumpe | 360 px | 746 | 686 | 65 | 0 | 0 | 72 |
+| preise | 360 px | 398 | 383 | 258 | 6 | 0 | 151 |
+| propan-waermepumpe | 360 px | 203 | 188 | 102 | 1 | 0 | 109 |
+| prozess | 360 px | 240 | 219 | 116 | 3 | 0 | 97 |
+| ratgeber | 360 px | 444 | 422 | 320 | 5 | 0 | 179 |
+| rechner | 360 px | 229 | 214 | 125 | 2 | 0 | 80 |
+| waermepumpe-altbau | 360 px | 202 | 184 | 97 | 2 | 0 | 104 |
+| waermepumpe-hannover | 360 px | 191 | 174 | 88 | 2 | 0 | 95 |
+| waermepumpe-laerm | 360 px | 222 | 207 | 121 | 1 | 0 | 128 |
+| waermepumpenstrom-hannover | 360 px | 236 | 221 | 127 | 1 | 0 | 142 |
+| wertsteigerung-waermepumpe | 360 px | 286 | 271 | 185 | 1 | 0 | 125 |
+| wp-kosten-hannover | 360 px | 262 | 246 | 154 | 1 | 0 | 110 |
+| amortisation-waermepumpe | 375 px | 199 | 180 | 93 | 2 | 0 | 100 |
+| anfrage | 375 px | 832 | 759 | 42 | 0 | 1 | 6 |
+| barrierefreiheit | 375 px | 203 | 188 | 102 | 1 | 0 | 109 |
+| baubarkeitspruefung | 375 px | 207 | 189 | 103 | 2 | 0 | 110 |
+| bewerbung | 375 px | 223 | 205 | 94 | 2 | 0 | 101 |
+| datenschutz | 375 px | 104 | 94 | 80 | 0 | 0 | 82 |
+| dimensionierung | 375 px | 710 | 656 | 71 | 2 | 0 | 52 |
+| dimensionierung-verstehen | 375 px | 201 | 186 | 100 | 2 | 0 | 89 |
+| foerderung | 375 px | 390 | 361 | 225 | 5 | 0 | 201 |
+| foerderung-hannover | 375 px | 227 | 210 | 122 | 2 | 0 | 111 |
+| foerderung-jetzt-mitnehmen | 375 px | 305 | 290 | 202 | 1 | 0 | 145 |
+| foerdervorschuss | 375 px | 217 | 197 | 107 | 3 | 0 | 118 |
+| gasheizung-tauschen-oder-reparieren | 375 px | 206 | 188 | 102 | 2 | 0 | 109 |
+| hinweise | 375 px | 192 | 173 | 87 | 3 | 0 | 94 |
+| impressum | 375 px | 60 | 50 | 34 | 0 | 0 | 36 |
+| index | 375 px | 380 | 358 | 215 | 8 | 0 | 140 |
+| karriere | 375 px | 832 | 797 | 413 | 7 | 0 | 420 |
+| kontakt | 375 px | 196 | 179 | 88 | 2 | 0 | 91 |
+| kostenvergleich-waermepumpe | 375 px | 746 | 686 | 65 | 0 | 0 | 72 |
+| preise | 375 px | 398 | 383 | 258 | 6 | 0 | 152 |
+| propan-waermepumpe | 375 px | 203 | 188 | 102 | 1 | 0 | 109 |
+| prozess | 375 px | 240 | 219 | 116 | 3 | 0 | 97 |
+| ratgeber | 375 px | 444 | 422 | 320 | 5 | 0 | 179 |
+| rechner | 375 px | 229 | 214 | 125 | 2 | 0 | 80 |
+| waermepumpe-altbau | 375 px | 202 | 184 | 97 | 2 | 0 | 104 |
+| waermepumpe-hannover | 375 px | 191 | 174 | 88 | 2 | 0 | 95 |
+| waermepumpe-laerm | 375 px | 222 | 207 | 121 | 1 | 0 | 128 |
+| waermepumpenstrom-hannover | 375 px | 236 | 221 | 127 | 1 | 0 | 142 |
+| wertsteigerung-waermepumpe | 375 px | 286 | 271 | 185 | 1 | 0 | 125 |
+| wp-kosten-hannover | 375 px | 262 | 246 | 154 | 1 | 0 | 110 |
+| amortisation-waermepumpe | 390 px | 199 | 180 | 93 | 2 | 0 | 100 |
+| anfrage | 390 px | 832 | 759 | 42 | 0 | 1 | 6 |
+| barrierefreiheit | 390 px | 203 | 188 | 102 | 1 | 0 | 109 |
+| baubarkeitspruefung | 390 px | 207 | 189 | 103 | 2 | 0 | 110 |
+| bewerbung | 390 px | 223 | 205 | 94 | 2 | 0 | 101 |
+| datenschutz | 390 px | 104 | 94 | 80 | 0 | 0 | 82 |
+| dimensionierung | 390 px | 710 | 656 | 71 | 2 | 0 | 52 |
+| dimensionierung-verstehen | 390 px | 201 | 186 | 100 | 2 | 0 | 89 |
+| foerderung | 390 px | 390 | 361 | 225 | 5 | 0 | 201 |
+| foerderung-hannover | 390 px | 227 | 210 | 122 | 2 | 0 | 111 |
+| foerderung-jetzt-mitnehmen | 390 px | 305 | 290 | 202 | 1 | 0 | 145 |
+| foerdervorschuss | 390 px | 217 | 197 | 107 | 3 | 0 | 118 |
+| gasheizung-tauschen-oder-reparieren | 390 px | 206 | 188 | 102 | 2 | 0 | 109 |
+| hinweise | 390 px | 192 | 173 | 87 | 3 | 0 | 94 |
+| impressum | 390 px | 60 | 50 | 34 | 0 | 0 | 36 |
+| index | 390 px | 380 | 358 | 215 | 8 | 0 | 140 |
+| karriere | 390 px | 832 | 797 | 413 | 7 | 0 | 420 |
+| kontakt | 390 px | 196 | 179 | 88 | 2 | 0 | 91 |
+| kostenvergleich-waermepumpe | 390 px | 746 | 686 | 65 | 0 | 0 | 72 |
+| preise | 390 px | 398 | 383 | 260 | 6 | 0 | 152 |
+| propan-waermepumpe | 390 px | 203 | 188 | 102 | 1 | 0 | 109 |
+| prozess | 390 px | 240 | 219 | 116 | 3 | 0 | 97 |
+| ratgeber | 390 px | 444 | 422 | 320 | 5 | 0 | 179 |
+| rechner | 390 px | 229 | 214 | 125 | 2 | 0 | 80 |
+| waermepumpe-altbau | 390 px | 202 | 184 | 97 | 2 | 0 | 104 |
+| waermepumpe-hannover | 390 px | 191 | 174 | 88 | 2 | 0 | 95 |
+| waermepumpe-laerm | 390 px | 222 | 207 | 121 | 1 | 0 | 128 |
+| waermepumpenstrom-hannover | 390 px | 236 | 221 | 127 | 1 | 0 | 142 |
+| wertsteigerung-waermepumpe | 390 px | 286 | 271 | 185 | 1 | 0 | 125 |
+| wp-kosten-hannover | 390 px | 262 | 246 | 154 | 1 | 0 | 110 |
+| amortisation-waermepumpe | 414 px | 199 | 180 | 93 | 2 | 0 | 100 |
+| anfrage | 414 px | 832 | 759 | 42 | 0 | 1 | 6 |
+| barrierefreiheit | 414 px | 203 | 188 | 102 | 1 | 0 | 109 |
+| baubarkeitspruefung | 414 px | 207 | 189 | 103 | 2 | 0 | 110 |
+| bewerbung | 414 px | 223 | 205 | 94 | 2 | 0 | 101 |
+| datenschutz | 414 px | 104 | 94 | 80 | 0 | 0 | 82 |
+| dimensionierung | 414 px | 710 | 656 | 71 | 2 | 0 | 52 |
+| dimensionierung-verstehen | 414 px | 201 | 186 | 100 | 2 | 0 | 89 |
+| foerderung | 414 px | 390 | 361 | 225 | 5 | 0 | 201 |
+| foerderung-hannover | 414 px | 227 | 210 | 122 | 2 | 0 | 111 |
+| foerderung-jetzt-mitnehmen | 414 px | 305 | 290 | 202 | 1 | 0 | 145 |
+| foerdervorschuss | 414 px | 217 | 197 | 107 | 3 | 0 | 118 |
+| gasheizung-tauschen-oder-reparieren | 414 px | 206 | 188 | 102 | 2 | 0 | 109 |
+| hinweise | 414 px | 192 | 173 | 87 | 3 | 0 | 94 |
+| impressum | 414 px | 60 | 50 | 34 | 0 | 0 | 36 |
+| index | 414 px | 380 | 358 | 215 | 8 | 0 | 140 |
+| karriere | 414 px | 832 | 797 | 413 | 7 | 0 | 420 |
+| kontakt | 414 px | 196 | 179 | 88 | 2 | 0 | 91 |
+| kostenvergleich-waermepumpe | 414 px | 746 | 686 | 65 | 0 | 0 | 72 |
+| preise | 414 px | 398 | 383 | 260 | 6 | 0 | 152 |
+| propan-waermepumpe | 414 px | 203 | 188 | 102 | 1 | 0 | 109 |
+| prozess | 414 px | 240 | 219 | 116 | 3 | 0 | 97 |
+| ratgeber | 414 px | 444 | 422 | 320 | 5 | 0 | 179 |
+| rechner | 414 px | 229 | 214 | 125 | 2 | 0 | 80 |
+| waermepumpe-altbau | 414 px | 202 | 184 | 97 | 2 | 0 | 104 |
+| waermepumpe-hannover | 414 px | 191 | 174 | 88 | 2 | 0 | 95 |
+| waermepumpe-laerm | 414 px | 222 | 207 | 121 | 1 | 0 | 128 |
+| waermepumpenstrom-hannover | 414 px | 236 | 221 | 127 | 1 | 0 | 142 |
+| wertsteigerung-waermepumpe | 414 px | 286 | 271 | 185 | 1 | 0 | 125 |
+| wp-kosten-hannover | 414 px | 262 | 246 | 154 | 1 | 0 | 110 |
+| amortisation-waermepumpe | 600 px | 199 | 181 | 98 | 2 | 0 | 105 |
+| anfrage | 600 px | 832 | 759 | 42 | 0 | 1 | 6 |
+| barrierefreiheit | 600 px | 203 | 189 | 107 | 1 | 0 | 114 |
+| baubarkeitspruefung | 600 px | 207 | 190 | 108 | 2 | 0 | 115 |
+| bewerbung | 600 px | 223 | 206 | 99 | 2 | 0 | 106 |
+| datenschutz | 600 px | 104 | 94 | 80 | 0 | 0 | 82 |
+| dimensionierung | 600 px | 710 | 657 | 76 | 2 | 0 | 57 |
+| dimensionierung-verstehen | 600 px | 201 | 187 | 105 | 2 | 0 | 94 |
+| foerderung | 600 px | 390 | 362 | 231 | 5 | 0 | 206 |
+| foerderung-hannover | 600 px | 227 | 211 | 128 | 2 | 0 | 116 |
+| foerderung-jetzt-mitnehmen | 600 px | 305 | 291 | 208 | 1 | 0 | 150 |
+| foerdervorschuss | 600 px | 217 | 198 | 112 | 3 | 0 | 123 |
+| gasheizung-tauschen-oder-reparieren | 600 px | 206 | 189 | 107 | 2 | 0 | 114 |
+| hinweise | 600 px | 192 | 174 | 92 | 3 | 0 | 99 |
+| impressum | 600 px | 60 | 50 | 34 | 0 | 0 | 36 |
+| index | 600 px | 380 | 359 | 221 | 8 | 1 | 145 |
+| karriere | 600 px | 832 | 798 | 418 | 7 | 0 | 425 |
+| kontakt | 600 px | 196 | 180 | 93 | 2 | 0 | 96 |
+| kostenvergleich-waermepumpe | 600 px | 746 | 687 | 70 | 0 | 0 | 77 |
+| preise | 600 px | 398 | 384 | 265 | 6 | 0 | 157 |
+| propan-waermepumpe | 600 px | 203 | 189 | 107 | 1 | 0 | 114 |
+| prozess | 600 px | 240 | 220 | 121 | 3 | 0 | 102 |
+| ratgeber | 600 px | 444 | 423 | 325 | 5 | 0 | 184 |
+| rechner | 600 px | 229 | 215 | 130 | 2 | 0 | 85 |
+| waermepumpe-altbau | 600 px | 202 | 185 | 102 | 2 | 0 | 109 |
+| waermepumpe-hannover | 600 px | 191 | 175 | 93 | 2 | 0 | 100 |
+| waermepumpe-laerm | 600 px | 222 | 208 | 126 | 1 | 0 | 133 |
+| waermepumpenstrom-hannover | 600 px | 236 | 222 | 132 | 1 | 0 | 147 |
+| wertsteigerung-waermepumpe | 600 px | 286 | 272 | 190 | 1 | 0 | 130 |
+| wp-kosten-hannover | 600 px | 262 | 247 | 160 | 1 | 0 | 115 |
+| amortisation-waermepumpe | 768 px | 199 | 181 | 98 | 2 | 1 | 105 |
+| anfrage | 768 px | 832 | 759 | 42 | 0 | 1 | 6 |
+| barrierefreiheit | 768 px | 203 | 189 | 107 | 1 | 1 | 114 |
+| baubarkeitspruefung | 768 px | 207 | 190 | 108 | 2 | 2 | 115 |
+| bewerbung | 768 px | 223 | 206 | 99 | 2 | 3 | 106 |
+| datenschutz | 768 px | 104 | 94 | 80 | 0 | 0 | 82 |
+| dimensionierung | 768 px | 710 | 657 | 76 | 2 | 2 | 57 |
+| dimensionierung-verstehen | 768 px | 201 | 187 | 105 | 2 | 3 | 94 |
+| foerderung | 768 px | 390 | 362 | 231 | 5 | 2 | 206 |
+| foerderung-hannover | 768 px | 227 | 211 | 128 | 2 | 2 | 116 |
+| foerderung-jetzt-mitnehmen | 768 px | 305 | 291 | 209 | 1 | 2 | 150 |
+| foerdervorschuss | 768 px | 217 | 198 | 112 | 3 | 2 | 123 |
+| gasheizung-tauschen-oder-reparieren | 768 px | 206 | 189 | 107 | 2 | 2 | 114 |
+| hinweise | 768 px | 192 | 174 | 92 | 3 | 1 | 99 |
+| impressum | 768 px | 60 | 50 | 34 | 0 | 0 | 36 |
+| index | 768 px | 380 | 359 | 221 | 8 | 8 | 145 |
+| karriere | 768 px | 832 | 798 | 418 | 7 | 4 | 425 |
+| kontakt | 768 px | 196 | 180 | 93 | 2 | 2 | 96 |
+| kostenvergleich-waermepumpe | 768 px | 746 | 687 | 70 | 0 | 1 | 77 |
+| preise | 768 px | 398 | 384 | 270 | 6 | 5 | 207 |
+| propan-waermepumpe | 768 px | 203 | 189 | 107 | 1 | 2 | 114 |
+| prozess | 768 px | 240 | 220 | 121 | 3 | 2 | 102 |
+| ratgeber | 768 px | 444 | 423 | 325 | 5 | 3 | 184 |
+| rechner | 768 px | 229 | 215 | 130 | 2 | 1 | 85 |
+| waermepumpe-altbau | 768 px | 202 | 185 | 102 | 2 | 2 | 109 |
+| waermepumpe-hannover | 768 px | 191 | 175 | 93 | 2 | 2 | 100 |
+| waermepumpe-laerm | 768 px | 222 | 208 | 126 | 1 | 2 | 133 |
+| waermepumpenstrom-hannover | 768 px | 236 | 222 | 132 | 1 | 3 | 147 |
+| wertsteigerung-waermepumpe | 768 px | 286 | 272 | 190 | 1 | 2 | 130 |
+| wp-kosten-hannover | 768 px | 262 | 247 | 160 | 1 | 3 | 115 |
+| amortisation-waermepumpe | 960 px | 199 | 181 | 98 | 1 | 3 | 105 |
+| anfrage | 960 px | 832 | 759 | 89 | 0 | 1 | 7 |
+| barrierefreiheit | 960 px | 203 | 189 | 107 | 1 | 2 | 114 |
+| baubarkeitspruefung | 960 px | 207 | 190 | 108 | 1 | 4 | 115 |
+| bewerbung | 960 px | 223 | 206 | 99 | 2 | 2 | 106 |
+| datenschutz | 960 px | 104 | 94 | 80 | 0 | 0 | 82 |
+| dimensionierung | 960 px | 710 | 657 | 76 | 2 | 3 | 57 |
+| dimensionierung-verstehen | 960 px | 201 | 187 | 105 | 2 | 4 | 94 |
+| foerderung | 960 px | 390 | 362 | 231 | 5 | 4 | 206 |
+| foerderung-hannover | 960 px | 227 | 211 | 128 | 1 | 4 | 116 |
+| foerderung-jetzt-mitnehmen | 960 px | 305 | 291 | 209 | 1 | 3 | 150 |
+| foerdervorschuss | 960 px | 217 | 198 | 112 | 2 | 4 | 123 |
+| gasheizung-tauschen-oder-reparieren | 960 px | 206 | 189 | 107 | 1 | 4 | 114 |
+| hinweise | 960 px | 192 | 174 | 92 | 2 | 3 | 99 |
+| impressum | 960 px | 60 | 50 | 34 | 0 | 0 | 36 |
+| index | 960 px | 380 | 359 | 225 | 8 | 3 | 145 |
+| karriere | 960 px | 832 | 798 | 418 | 7 | 19 | 425 |
+| kontakt | 960 px | 196 | 180 | 93 | 2 | 1 | 96 |
+| kostenvergleich-waermepumpe | 960 px | 746 | 687 | 70 | 0 | 1 | 77 |
+| preise | 960 px | 398 | 384 | 270 | 6 | 9 | 207 |
+| propan-waermepumpe | 960 px | 203 | 189 | 107 | 1 | 3 | 114 |
+| prozess | 960 px | 240 | 217 | 100 | 3 | 3 | 99 |
+| ratgeber | 960 px | 444 | 423 | 325 | 5 | 4 | 184 |
+| rechner | 960 px | 229 | 215 | 130 | 2 | 2 | 85 |
+| waermepumpe-altbau | 960 px | 202 | 185 | 102 | 1 | 4 | 109 |
+| waermepumpe-hannover | 960 px | 191 | 175 | 93 | 1 | 4 | 100 |
+| waermepumpe-laerm | 960 px | 222 | 208 | 126 | 1 | 3 | 133 |
+| waermepumpenstrom-hannover | 960 px | 236 | 222 | 136 | 1 | 4 | 147 |
+| wertsteigerung-waermepumpe | 960 px | 286 | 272 | 190 | 1 | 3 | 130 |
+| wp-kosten-hannover | 960 px | 262 | 247 | 160 | 1 | 4 | 115 |
+
+## Waagerechte Rollbreite (Kontextzahl, kein Urteil)
+
+> `documentElement.scrollWidth` gegen `clientWidth`. Diese Zahl ist bewusst KEIN Pruefkriterium mehr: `css/site.css` setzt `overflow-x: clip` auf `html` und `body`, damit ist sie auf jeder Seite mit diesem Stylesheet auf `clientWidth` geklemmt. Das Urteil faellt Regel 6 aus den Elementkanten. Steht hier ein Ueberschuss, rollt die Seite zusaetzlich waagerecht.
+
+Kein Ueberschuss auf 240 Dokumenten.
 
 ## Kanten-Inventar (Bericht)
 
 > Regel 2 laeuft als Bericht ohne Fehlerabbruch. Grund: Kanten-Erwartung noch nicht mit Benjamin ratifiziert (Uebergabe 26.07., BLOCKED-Kriterium Einheit 2). Bis dahin Bericht ohne Fehlerabbruch.
 
-**anfrage, 320 px — 15 verschiedene linke Kanten**
+**amortisation-waermepumpe, 320 px: 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 10 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 6 | li, strong, li |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
+
+**anfrage, 320 px: 15 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -277,7 +305,7 @@ Ergebnis: PASS (0 Befunde).
 | 206.47 px | 1 | a.funnel-close-link |
 | 214.41 px | 1 | span#progressPercent.progress-percent |
 
-**barrierefreiheit, 320 px — 8 verschiedene linke Kanten**
+**barrierefreiheit, 320 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -290,7 +318,7 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**baubarkeitspruefung, 320 px — 8 verschiedene linke Kanten**
+**baubarkeitspruefung, 320 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -303,7 +331,7 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**bewerbung, 320 px — 11 verschiedene linke Kanten**
+**bewerbung, 320 px: 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -319,7 +347,7 @@ Ergebnis: PASS (0 Befunde).
 | 193.77 px | 1 | span.form-optional |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**datenschutz, 320 px — 6 verschiedene linke Kanten**
+**datenschutz, 320 px: 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -330,20 +358,7 @@ Ergebnis: PASS (0 Befunde).
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**dimensionierung-verstehen, 320 px — 8 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 70.95 px | 1 | a |
-| 136.27 px | 1 | a.mobile-phone-cta |
-| 156.34 px | 1 | span |
-| 175.27 px | 1 | span.mobile-phone-label |
-| 252 px | 1 | div#hamburger.hamburger |
-
-**dimensionierung, 320 px — 10 verschiedene linke Kanten**
+**dimensionierung, 320 px: 10 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -358,27 +373,12 @@ Ergebnis: PASS (0 Befunde).
 | 176 px | 6 | div.footer-col, h2, a |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**foerderung-hannover, 320 px — 10 verschiedene linke Kanten**
+**dimensionierung-verstehen, 320 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 20 | div.section-inner, div.section-tag, div.brotkrume |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 70.95 px | 1 | a |
-| 136.27 px | 1 | a.mobile-phone-cta |
-| 156.34 px | 1 | span |
-| 175.27 px | 1 | span.mobile-phone-label |
-| 180.05 px | 3 | th, td, td |
-| 244.73 px | 3 | th, td, td |
-| 252 px | 1 | div#hamburger.hamburger |
-
-**foerderung-jetzt-mitnehmen, 320 px — 8 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 17 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 70.95 px | 1 | a |
 | 136.27 px | 1 | a.mobile-phone-cta |
@@ -386,7 +386,7 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**foerderung, 320 px — 10 verschiedene linke Kanten**
+**foerderung, 320 px: 10 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -401,7 +401,35 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**foerdervorschuss, 320 px — 6 verschiedene linke Kanten**
+**foerderung-hannover, 320 px: 10 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 20 | div.section-inner, div.section-tag, div.brotkrume |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 70.95 px | 1 | a |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 156.34 px | 1 | span |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 180.05 px | 3 | th, td, td |
+| 244.73 px | 3 | th, td, td |
+| 252 px | 1 | div#hamburger.hamburger |
+
+**foerderung-jetzt-mitnehmen, 320 px: 8 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 17 | div.section-inner, div.section-tag, div.brotkrume |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 70.95 px | 1 | a |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 156.34 px | 1 | span |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 252 px | 1 | div#hamburger.hamburger |
+
+**foerdervorschuss, 320 px: 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -412,7 +440,7 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**gasheizung-tauschen-oder-reparieren, 320 px — 9 verschiedene linke Kanten**
+**gasheizung-tauschen-oder-reparieren, 320 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -426,7 +454,7 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**hinweise, 320 px — 6 verschiedene linke Kanten**
+**hinweise, 320 px: 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -437,7 +465,7 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**impressum, 320 px — 6 verschiedene linke Kanten**
+**impressum, 320 px: 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -448,7 +476,7 @@ Ergebnis: PASS (0 Befunde).
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**index, 320 px — 19 verschiedene linke Kanten**
+**index, 320 px: 19 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -472,7 +500,7 @@ Ergebnis: PASS (0 Befunde).
 | 210.94 px | 1 | div.hc-value |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**karriere, 320 px — 8 verschiedene linke Kanten**
+**karriere, 320 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -485,7 +513,7 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**kontakt, 320 px — 12 verschiedene linke Kanten**
+**kontakt, 320 px: 12 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -502,23 +530,23 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**kostenvergleich-waermepumpe, 320 px — 11 verschiedene linke Kanten**
+**kostenvergleich-waermepumpe, 320 px: 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 4 | nav.topnav, div.topnav-inner, header.page-head |
-| 24 px | 19 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
-| 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
-| 44 px | 1 | div.ib |
-| 57 px | 10 | div#wzStepBody, div, p.wz-intro |
-| 65 px | 5 | strong, span.d, div |
-| 69 px | 5 | span, span, span |
-| 132.03 px | 2 | div.topnav-actions, button.theme-toggle |
-| 136.03 px | 1 | span.tt-feld |
-| 184.5 px | 1 | button#wzNext.wz-next |
-| 203.91 px | 1 | span.tt-feld |
+| 0 px | 3 | div.nav-inner, header.page-head, div.container |
+| 16 px | 17 | div.page-head-inner, div.kicker, h1 |
+| 24 px | 2 | a, img.nav-logo.logo-dark |
+| 27 px | 8 | h2#rechner-einleitung, p.wz-intro, p.wz-intro |
+| 29 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
+| 49 px | 10 | div#wzStepBody, div, p.wz-intro |
+| 61 px | 5 | span, span, span |
+| 136.27 px | 1 | a.mobile-phone-cta |
+| 175.27 px | 1 | span.mobile-phone-label |
+| 192.5 px | 1 | button#wzNext.wz-next |
+| 252 px | 1 | div#hamburger.hamburger |
 
-**preise, 320 px — 8 verschiedene linke Kanten**
+**preise, 320 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -531,7 +559,7 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**propan-waermepumpe, 320 px — 9 verschiedene linke Kanten**
+**propan-waermepumpe, 320 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -545,7 +573,7 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**prozess, 320 px — 11 verschiedene linke Kanten**
+**prozess, 320 px: 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -561,7 +589,7 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**ratgeber, 320 px — 13 verschiedene linke Kanten**
+**ratgeber, 320 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -579,7 +607,7 @@ Ergebnis: PASS (0 Befunde).
 | 180.14 px | 1 | span |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**rechner, 320 px — 14 verschiedene linke Kanten**
+**rechner, 320 px: 14 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -598,7 +626,7 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-altbau, 320 px — 9 verschiedene linke Kanten**
+**waermepumpe-altbau, 320 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -612,7 +640,7 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-hannover, 320 px — 8 verschiedene linke Kanten**
+**waermepumpe-hannover, 320 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -625,7 +653,7 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-laerm, 320 px — 9 verschiedene linke Kanten**
+**waermepumpe-laerm, 320 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -639,7 +667,7 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**waermepumpenstrom-hannover, 320 px — 8 verschiedene linke Kanten**
+**waermepumpenstrom-hannover, 320 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -652,7 +680,7 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**wertsteigerung-waermepumpe, 320 px — 8 verschiedene linke Kanten**
+**wertsteigerung-waermepumpe, 320 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -665,7 +693,7 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**wp-kosten-hannover, 320 px — 8 verschiedene linke Kanten**
+**wp-kosten-hannover, 320 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -678,7 +706,19 @@ Ergebnis: PASS (0 Befunde).
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**anfrage, 360 px — 15 verschiedene linke Kanten**
+**amortisation-waermepumpe, 360 px: 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 10 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 8 | li, strong, li |
+| 156.27 px | 1 | a.mobile-phone-cta |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
+
+**anfrage, 360 px: 15 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -698,7 +738,7 @@ Ergebnis: PASS (0 Befunde).
 | 246.47 px | 1 | a.funnel-close-link |
 | 254.41 px | 1 | span#progressPercent.progress-percent |
 
-**barrierefreiheit, 360 px — 8 verschiedene linke Kanten**
+**barrierefreiheit, 360 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -711,7 +751,7 @@ Ergebnis: PASS (0 Befunde).
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**baubarkeitspruefung, 360 px — 9 verschiedene linke Kanten**
+**baubarkeitspruefung, 360 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -725,7 +765,7 @@ Ergebnis: PASS (0 Befunde).
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**bewerbung, 360 px — 11 verschiedene linke Kanten**
+**bewerbung, 360 px: 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -741,7 +781,7 @@ Ergebnis: PASS (0 Befunde).
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**datenschutz, 360 px — 5 verschiedene linke Kanten**
+**datenschutz, 360 px: 5 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -751,21 +791,7 @@ Ergebnis: PASS (0 Befunde).
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**dimensionierung-verstehen, 360 px — 9 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 70.95 px | 1 | a |
-| 156.27 px | 1 | a.mobile-phone-cta |
-| 156.34 px | 1 | span |
-| 195.27 px | 1 | span.mobile-phone-label |
-| 212.3 px | 1 | a |
-| 292 px | 1 | div#hamburger.hamburger |
-
-**dimensionierung, 360 px — 18 verschiedene linke Kanten**
+**dimensionierung, 360 px: 18 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -788,7 +814,35 @@ Ergebnis: PASS (0 Befunde).
 | 285.44 px | 1 | div.wizard-progress-bar |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**foerderung-hannover, 360 px — 10 verschiedene linke Kanten**
+**dimensionierung-verstehen, 360 px: 9 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 70.95 px | 1 | a |
+| 156.27 px | 1 | a.mobile-phone-cta |
+| 156.34 px | 1 | span |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 212.3 px | 1 | a |
+| 292 px | 1 | div#hamburger.hamburger |
+
+**foerderung, 360 px: 9 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
+| 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
+| 39 px | 34 | div, div.foerder-inputs-grid, div.fi-group |
+| 43 px | 2 | button.active, button.active |
+| 60 px | 1 | span |
+| 156.27 px | 1 | a.mobile-phone-cta |
+| 182 px | 2 | button, button |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 292 px | 1 | div#hamburger.hamburger |
+
+**foerderung-hannover, 360 px: 10 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -803,7 +857,7 @@ Ergebnis: PASS (0 Befunde).
 | 244.73 px | 4 | th, td, td |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**foerderung-jetzt-mitnehmen, 360 px — 8 verschiedene linke Kanten**
+**foerderung-jetzt-mitnehmen, 360 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -816,21 +870,7 @@ Ergebnis: PASS (0 Befunde).
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**foerderung, 360 px — 9 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
-| 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
-| 39 px | 34 | div, div.foerder-inputs-grid, div.fi-group |
-| 43 px | 2 | button.active, button.active |
-| 60 px | 1 | span |
-| 156.27 px | 1 | a.mobile-phone-cta |
-| 182 px | 2 | button, button |
-| 195.27 px | 1 | span.mobile-phone-label |
-| 292 px | 1 | div#hamburger.hamburger |
-
-**foerdervorschuss, 360 px — 7 verschiedene linke Kanten**
+**foerdervorschuss, 360 px: 7 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -842,7 +882,7 @@ Ergebnis: PASS (0 Befunde).
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**gasheizung-tauschen-oder-reparieren, 360 px — 9 verschiedene linke Kanten**
+**gasheizung-tauschen-oder-reparieren, 360 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -856,7 +896,7 @@ Ergebnis: PASS (0 Befunde).
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**hinweise, 360 px — 6 verschiedene linke Kanten**
+**hinweise, 360 px: 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -867,7 +907,7 @@ Ergebnis: PASS (0 Befunde).
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**impressum, 360 px — 6 verschiedene linke Kanten**
+**impressum, 360 px: 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -878,7 +918,7 @@ Ergebnis: PASS (0 Befunde).
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**index, 360 px — 19 verschiedene linke Kanten**
+**index, 360 px: 19 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -902,7 +942,7 @@ Ergebnis: PASS (0 Befunde).
 | 250.94 px | 1 | div.hc-value |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**karriere, 360 px — 7 verschiedene linke Kanten**
+**karriere, 360 px: 7 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -914,7 +954,7 @@ Ergebnis: PASS (0 Befunde).
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**kontakt, 360 px — 12 verschiedene linke Kanten**
+**kontakt, 360 px: 12 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -931,26 +971,25 @@ Ergebnis: PASS (0 Befunde).
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**kostenvergleich-waermepumpe, 360 px — 14 verschiedene linke Kanten**
+**kostenvergleich-waermepumpe, 360 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
-| 24 px | 19 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
-| 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
-| 44 px | 1 | div.ib |
-| 57 px | 10 | div#wzStepBody, div, p.wz-intro |
-| 65 px | 5 | strong, span.d, div |
-| 69 px | 5 | span, span, span |
-| 74.75 px | 1 | a |
-| 172.03 px | 2 | div.topnav-actions, button.theme-toggle |
-| 176.03 px | 1 | span.tt-feld |
-| 184.63 px | 1 | a |
-| 224.5 px | 1 | button#wzNext.wz-next |
-| 243.91 px | 1 | span.tt-feld |
-| 260.44 px | 1 | a |
+| 0 px | 3 | div.nav-inner, header.page-head, div.container |
+| 16 px | 18 | div.page-head-inner, div.kicker, h1 |
+| 24 px | 2 | a, img.nav-logo.logo-dark |
+| 27 px | 8 | h2#rechner-einleitung, p.wz-intro, p.wz-intro |
+| 29 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
+| 36 px | 1 | div.ib |
+| 49 px | 10 | div#wzStepBody, div, p.wz-intro |
+| 57 px | 2 | strong, span.d |
+| 61 px | 5 | span, span, span |
+| 156.27 px | 1 | a.mobile-phone-cta |
+| 195.27 px | 1 | span.mobile-phone-label |
+| 232.5 px | 1 | button#wzNext.wz-next |
+| 292 px | 1 | div#hamburger.hamburger |
 
-**preise, 360 px — 10 verschiedene linke Kanten**
+**preise, 360 px: 10 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -965,7 +1004,7 @@ Ergebnis: PASS (0 Befunde).
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**propan-waermepumpe, 360 px — 9 verschiedene linke Kanten**
+**propan-waermepumpe, 360 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -979,7 +1018,7 @@ Ergebnis: PASS (0 Befunde).
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**prozess, 360 px — 11 verschiedene linke Kanten**
+**prozess, 360 px: 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -995,7 +1034,7 @@ Ergebnis: PASS (0 Befunde).
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**ratgeber, 360 px — 13 verschiedene linke Kanten**
+**ratgeber, 360 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1013,7 +1052,7 @@ Ergebnis: PASS (0 Befunde).
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**rechner, 360 px — 14 verschiedene linke Kanten**
+**rechner, 360 px: 14 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1032,7 +1071,7 @@ Ergebnis: PASS (0 Befunde).
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-altbau, 360 px — 9 verschiedene linke Kanten**
+**waermepumpe-altbau, 360 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1046,7 +1085,7 @@ Ergebnis: PASS (0 Befunde).
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-hannover, 360 px — 8 verschiedene linke Kanten**
+**waermepumpe-hannover, 360 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1059,7 +1098,7 @@ Ergebnis: PASS (0 Befunde).
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-laerm, 360 px — 8 verschiedene linke Kanten**
+**waermepumpe-laerm, 360 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1072,7 +1111,7 @@ Ergebnis: PASS (0 Befunde).
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**waermepumpenstrom-hannover, 360 px — 8 verschiedene linke Kanten**
+**waermepumpenstrom-hannover, 360 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1085,7 +1124,7 @@ Ergebnis: PASS (0 Befunde).
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**wertsteigerung-waermepumpe, 360 px — 8 verschiedene linke Kanten**
+**wertsteigerung-waermepumpe, 360 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1098,7 +1137,7 @@ Ergebnis: PASS (0 Befunde).
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**wp-kosten-hannover, 360 px — 9 verschiedene linke Kanten**
+**wp-kosten-hannover, 360 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1112,7 +1151,19 @@ Ergebnis: PASS (0 Befunde).
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**anfrage, 375 px — 16 verschiedene linke Kanten**
+**amortisation-waermepumpe, 375 px: 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 11 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 8 | li, strong, li |
+| 163.77 px | 1 | a.mobile-phone-cta |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 307 px | 1 | div#hamburger.hamburger |
+
+**anfrage, 375 px: 16 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1133,7 +1184,7 @@ Ergebnis: PASS (0 Befunde).
 | 261.47 px | 1 | a.funnel-close-link |
 | 269.41 px | 1 | span#progressPercent.progress-percent |
 
-**barrierefreiheit, 375 px — 8 verschiedene linke Kanten**
+**barrierefreiheit, 375 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1146,7 +1197,7 @@ Ergebnis: PASS (0 Befunde).
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**baubarkeitspruefung, 375 px — 9 verschiedene linke Kanten**
+**baubarkeitspruefung, 375 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1160,7 +1211,7 @@ Ergebnis: PASS (0 Befunde).
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**bewerbung, 375 px — 11 verschiedene linke Kanten**
+**bewerbung, 375 px: 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1176,7 +1227,7 @@ Ergebnis: PASS (0 Befunde).
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**datenschutz, 375 px — 5 verschiedene linke Kanten**
+**datenschutz, 375 px: 5 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1186,21 +1237,7 @@ Ergebnis: PASS (0 Befunde).
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**dimensionierung-verstehen, 375 px — 9 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 70.95 px | 1 | a |
-| 156.34 px | 1 | span |
-| 163.77 px | 1 | a.mobile-phone-cta |
-| 202.77 px | 1 | span.mobile-phone-label |
-| 212.3 px | 1 | a |
-| 307 px | 1 | div#hamburger.hamburger |
-
-**dimensionierung, 375 px — 20 verschiedene linke Kanten**
+**dimensionierung, 375 px: 20 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1225,7 +1262,35 @@ Ergebnis: PASS (0 Befunde).
 | 298.78 px | 1 | div.wizard-progress-bar |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**foerderung-hannover, 375 px — 10 verschiedene linke Kanten**
+**dimensionierung-verstehen, 375 px: 9 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
+| 163.77 px | 1 | a.mobile-phone-cta |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 212.3 px | 1 | a |
+| 307 px | 1 | div#hamburger.hamburger |
+
+**foerderung, 375 px: 9 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
+| 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
+| 39 px | 34 | div, div.foerder-inputs-grid, div.fi-group |
+| 43 px | 2 | button.active, button.active |
+| 60 px | 1 | span |
+| 163.77 px | 1 | a.mobile-phone-cta |
+| 189.5 px | 2 | button, button |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 307 px | 1 | div#hamburger.hamburger |
+
+**foerderung-hannover, 375 px: 10 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1240,7 +1305,7 @@ Ergebnis: PASS (0 Befunde).
 | 244.73 px | 4 | th, td, td |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**foerderung-jetzt-mitnehmen, 375 px — 8 verschiedene linke Kanten**
+**foerderung-jetzt-mitnehmen, 375 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1253,21 +1318,7 @@ Ergebnis: PASS (0 Befunde).
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**foerderung, 375 px — 9 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
-| 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
-| 39 px | 34 | div, div.foerder-inputs-grid, div.fi-group |
-| 43 px | 2 | button.active, button.active |
-| 60 px | 1 | span |
-| 163.77 px | 1 | a.mobile-phone-cta |
-| 189.5 px | 2 | button, button |
-| 202.77 px | 1 | span.mobile-phone-label |
-| 307 px | 1 | div#hamburger.hamburger |
-
-**foerdervorschuss, 375 px — 7 verschiedene linke Kanten**
+**foerdervorschuss, 375 px: 7 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1279,7 +1330,7 @@ Ergebnis: PASS (0 Befunde).
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**gasheizung-tauschen-oder-reparieren, 375 px — 9 verschiedene linke Kanten**
+**gasheizung-tauschen-oder-reparieren, 375 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1293,7 +1344,7 @@ Ergebnis: PASS (0 Befunde).
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**hinweise, 375 px — 6 verschiedene linke Kanten**
+**hinweise, 375 px: 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1304,7 +1355,7 @@ Ergebnis: PASS (0 Befunde).
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**impressum, 375 px — 6 verschiedene linke Kanten**
+**impressum, 375 px: 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1315,7 +1366,7 @@ Ergebnis: PASS (0 Befunde).
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**index, 375 px — 19 verschiedene linke Kanten**
+**index, 375 px: 19 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1339,7 +1390,7 @@ Ergebnis: PASS (0 Befunde).
 | 265.94 px | 1 | div.hc-value |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**karriere, 375 px — 8 verschiedene linke Kanten**
+**karriere, 375 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1352,7 +1403,7 @@ Ergebnis: PASS (0 Befunde).
 | 217.88 px | 1 | strong |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**kontakt, 375 px — 12 verschiedene linke Kanten**
+**kontakt, 375 px: 12 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1369,27 +1420,25 @@ Ergebnis: PASS (0 Befunde).
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**kostenvergleich-waermepumpe, 375 px — 15 verschiedene linke Kanten**
+**kostenvergleich-waermepumpe, 375 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
-| 24 px | 19 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
-| 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
-| 44 px | 1 | div.ib |
-| 51.13 px | 1 | a |
-| 57 px | 10 | div#wzStepBody, div, p.wz-intro |
-| 65 px | 5 | strong, span.d, div |
-| 69 px | 5 | span, span, span |
-| 78.69 px | 1 | a |
-| 187.03 px | 2 | div.topnav-actions, button.theme-toggle |
-| 188.56 px | 1 | a |
-| 191.03 px | 1 | span.tt-feld |
-| 239.5 px | 1 | button#wzNext.wz-next |
-| 258.91 px | 1 | span.tt-feld |
-| 264.38 px | 1 | a |
+| 0 px | 3 | div.nav-inner, header.page-head, div.container |
+| 16 px | 18 | div.page-head-inner, div.kicker, h1 |
+| 24 px | 2 | a, img.nav-logo.logo-dark |
+| 27 px | 8 | h2#rechner-einleitung, p.wz-intro, p.wz-intro |
+| 29 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
+| 36 px | 1 | div.ib |
+| 49 px | 10 | div#wzStepBody, div, p.wz-intro |
+| 57 px | 2 | strong, span.d |
+| 61 px | 5 | span, span, span |
+| 163.77 px | 1 | a.mobile-phone-cta |
+| 202.77 px | 1 | span.mobile-phone-label |
+| 247.5 px | 1 | button#wzNext.wz-next |
+| 307 px | 1 | div#hamburger.hamburger |
 
-**preise, 375 px — 11 verschiedene linke Kanten**
+**preise, 375 px: 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1405,7 +1454,7 @@ Ergebnis: PASS (0 Befunde).
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**propan-waermepumpe, 375 px — 9 verschiedene linke Kanten**
+**propan-waermepumpe, 375 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1419,7 +1468,7 @@ Ergebnis: PASS (0 Befunde).
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**prozess, 375 px — 11 verschiedene linke Kanten**
+**prozess, 375 px: 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1435,7 +1484,7 @@ Ergebnis: PASS (0 Befunde).
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**ratgeber, 375 px — 13 verschiedene linke Kanten**
+**ratgeber, 375 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1453,7 +1502,7 @@ Ergebnis: PASS (0 Befunde).
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**rechner, 375 px — 14 verschiedene linke Kanten**
+**rechner, 375 px: 14 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1472,7 +1521,7 @@ Ergebnis: PASS (0 Befunde).
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-altbau, 375 px — 9 verschiedene linke Kanten**
+**waermepumpe-altbau, 375 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1486,7 +1535,7 @@ Ergebnis: PASS (0 Befunde).
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-hannover, 375 px — 8 verschiedene linke Kanten**
+**waermepumpe-hannover, 375 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1499,7 +1548,7 @@ Ergebnis: PASS (0 Befunde).
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-laerm, 375 px — 8 verschiedene linke Kanten**
+**waermepumpe-laerm, 375 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1512,7 +1561,7 @@ Ergebnis: PASS (0 Befunde).
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**waermepumpenstrom-hannover, 375 px — 8 verschiedene linke Kanten**
+**waermepumpenstrom-hannover, 375 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1525,7 +1574,7 @@ Ergebnis: PASS (0 Befunde).
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**wertsteigerung-waermepumpe, 375 px — 8 verschiedene linke Kanten**
+**wertsteigerung-waermepumpe, 375 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1538,7 +1587,7 @@ Ergebnis: PASS (0 Befunde).
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**wp-kosten-hannover, 375 px — 9 verschiedene linke Kanten**
+**wp-kosten-hannover, 375 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1552,7 +1601,19 @@ Ergebnis: PASS (0 Befunde).
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**anfrage, 390 px — 16 verschiedene linke Kanten**
+**amortisation-waermepumpe, 390 px: 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 8 | li, strong, li |
+| 171.27 px | 1 | a.mobile-phone-cta |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
+
+**anfrage, 390 px: 16 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1573,7 +1634,7 @@ Ergebnis: PASS (0 Befunde).
 | 276.47 px | 1 | a.funnel-close-link |
 | 284.41 px | 1 | span#progressPercent.progress-percent |
 
-**barrierefreiheit, 390 px — 7 verschiedene linke Kanten**
+**barrierefreiheit, 390 px: 7 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1585,7 +1646,7 @@ Ergebnis: PASS (0 Befunde).
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**baubarkeitspruefung, 390 px — 9 verschiedene linke Kanten**
+**baubarkeitspruefung, 390 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1599,7 +1660,7 @@ Ergebnis: PASS (0 Befunde).
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**bewerbung, 390 px — 12 verschiedene linke Kanten**
+**bewerbung, 390 px: 12 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1616,7 +1677,7 @@ Ergebnis: PASS (0 Befunde).
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**datenschutz, 390 px — 5 verschiedene linke Kanten**
+**datenschutz, 390 px: 5 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1626,21 +1687,7 @@ Ergebnis: PASS (0 Befunde).
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**dimensionierung-verstehen, 390 px — 9 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 70.95 px | 1 | a |
-| 156.34 px | 1 | span |
-| 171.27 px | 1 | a.mobile-phone-cta |
-| 210.27 px | 1 | span.mobile-phone-label |
-| 212.3 px | 1 | a |
-| 322 px | 1 | div#hamburger.hamburger |
-
-**dimensionierung, 390 px — 22 verschiedene linke Kanten**
+**dimensionierung, 390 px: 22 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1667,35 +1714,21 @@ Ergebnis: PASS (0 Befunde).
 | 312.11 px | 1 | div.wizard-progress-bar |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**foerderung-hannover, 390 px — 10 verschiedene linke Kanten**
+**dimensionierung-verstehen, 390 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 22 | div.section-inner, div.section-tag, div.brotkrume |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 70.95 px | 1 | a |
-| 156.34 px | 1 | span |
-| 171.27 px | 1 | a.mobile-phone-cta |
-| 180.05 px | 4 | th, td, td |
-| 210.27 px | 1 | span.mobile-phone-label |
-| 244.73 px | 4 | th, td, td |
-| 322 px | 1 | div#hamburger.hamburger |
-
-**foerderung-jetzt-mitnehmen, 390 px — 8 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 18 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 70.95 px | 1 | a |
 | 156.34 px | 1 | span |
 | 171.27 px | 1 | a.mobile-phone-cta |
 | 210.27 px | 1 | span.mobile-phone-label |
+| 212.3 px | 1 | a |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**foerderung, 390 px — 10 verschiedene linke Kanten**
+**foerderung, 390 px: 10 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1710,7 +1743,35 @@ Ergebnis: PASS (0 Befunde).
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**foerdervorschuss, 390 px — 7 verschiedene linke Kanten**
+**foerderung-hannover, 390 px: 10 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 22 | div.section-inner, div.section-tag, div.brotkrume |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
+| 171.27 px | 1 | a.mobile-phone-cta |
+| 180.05 px | 4 | th, td, td |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 244.73 px | 4 | th, td, td |
+| 322 px | 1 | div#hamburger.hamburger |
+
+**foerderung-jetzt-mitnehmen, 390 px: 8 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 18 | div.section-inner, div.section-tag, div.brotkrume |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
+| 171.27 px | 1 | a.mobile-phone-cta |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 322 px | 1 | div#hamburger.hamburger |
+
+**foerdervorschuss, 390 px: 7 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1722,7 +1783,7 @@ Ergebnis: PASS (0 Befunde).
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**gasheizung-tauschen-oder-reparieren, 390 px — 9 verschiedene linke Kanten**
+**gasheizung-tauschen-oder-reparieren, 390 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1736,7 +1797,7 @@ Ergebnis: PASS (0 Befunde).
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**hinweise, 390 px — 6 verschiedene linke Kanten**
+**hinweise, 390 px: 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1747,7 +1808,7 @@ Ergebnis: PASS (0 Befunde).
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**impressum, 390 px — 6 verschiedene linke Kanten**
+**impressum, 390 px: 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1758,7 +1819,7 @@ Ergebnis: PASS (0 Befunde).
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**index, 390 px — 19 verschiedene linke Kanten**
+**index, 390 px: 19 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1782,7 +1843,7 @@ Ergebnis: PASS (0 Befunde).
 | 280.94 px | 1 | div.hc-value |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**karriere, 390 px — 8 verschiedene linke Kanten**
+**karriere, 390 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1795,7 +1856,7 @@ Ergebnis: PASS (0 Befunde).
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**kontakt, 390 px — 12 verschiedene linke Kanten**
+**kontakt, 390 px: 12 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1812,27 +1873,25 @@ Ergebnis: PASS (0 Befunde).
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**kostenvergleich-waermepumpe, 390 px — 15 verschiedene linke Kanten**
+**kostenvergleich-waermepumpe, 390 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
-| 24 px | 19 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
-| 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
-| 44 px | 1 | div.ib |
-| 57 px | 10 | div#wzStepBody, div, p.wz-intro |
-| 58.63 px | 1 | a |
-| 65 px | 5 | strong, span.d, div |
-| 69 px | 5 | span, span, span |
-| 86.19 px | 1 | a |
-| 196.06 px | 1 | a |
-| 202.03 px | 2 | div.topnav-actions, button.theme-toggle |
-| 206.03 px | 1 | span.tt-feld |
-| 254.5 px | 1 | button#wzNext.wz-next |
-| 271.88 px | 1 | a |
-| 273.91 px | 1 | span.tt-feld |
+| 0 px | 3 | div.nav-inner, header.page-head, div.container |
+| 16 px | 18 | div.page-head-inner, div.kicker, h1 |
+| 24 px | 2 | a, img.nav-logo.logo-dark |
+| 27 px | 8 | h2#rechner-einleitung, p.wz-intro, p.wz-intro |
+| 29 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
+| 36 px | 1 | div.ib |
+| 49 px | 10 | div#wzStepBody, div, p.wz-intro |
+| 57 px | 4 | strong, span.d, div |
+| 61 px | 5 | span, span, span |
+| 171.27 px | 1 | a.mobile-phone-cta |
+| 210.27 px | 1 | span.mobile-phone-label |
+| 262.5 px | 1 | button#wzNext.wz-next |
+| 322 px | 1 | div#hamburger.hamburger |
 
-**preise, 390 px — 11 verschiedene linke Kanten**
+**preise, 390 px: 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1848,7 +1907,7 @@ Ergebnis: PASS (0 Befunde).
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**propan-waermepumpe, 390 px — 9 verschiedene linke Kanten**
+**propan-waermepumpe, 390 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1862,7 +1921,7 @@ Ergebnis: PASS (0 Befunde).
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**prozess, 390 px — 11 verschiedene linke Kanten**
+**prozess, 390 px: 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1878,7 +1937,7 @@ Ergebnis: PASS (0 Befunde).
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**ratgeber, 390 px — 13 verschiedene linke Kanten**
+**ratgeber, 390 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1896,7 +1955,7 @@ Ergebnis: PASS (0 Befunde).
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**rechner, 390 px — 14 verschiedene linke Kanten**
+**rechner, 390 px: 14 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1915,7 +1974,7 @@ Ergebnis: PASS (0 Befunde).
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-altbau, 390 px — 9 verschiedene linke Kanten**
+**waermepumpe-altbau, 390 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1929,7 +1988,7 @@ Ergebnis: PASS (0 Befunde).
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-hannover, 390 px — 8 verschiedene linke Kanten**
+**waermepumpe-hannover, 390 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1942,7 +2001,7 @@ Ergebnis: PASS (0 Befunde).
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-laerm, 390 px — 9 verschiedene linke Kanten**
+**waermepumpe-laerm, 390 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1956,7 +2015,7 @@ Ergebnis: PASS (0 Befunde).
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**waermepumpenstrom-hannover, 390 px — 8 verschiedene linke Kanten**
+**waermepumpenstrom-hannover, 390 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1969,7 +2028,7 @@ Ergebnis: PASS (0 Befunde).
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**wertsteigerung-waermepumpe, 390 px — 8 verschiedene linke Kanten**
+**wertsteigerung-waermepumpe, 390 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1982,7 +2041,7 @@ Ergebnis: PASS (0 Befunde).
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**wp-kosten-hannover, 390 px — 9 verschiedene linke Kanten**
+**wp-kosten-hannover, 390 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -1996,7 +2055,19 @@ Ergebnis: PASS (0 Befunde).
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**anfrage, 414 px — 16 verschiedene linke Kanten**
+**amortisation-waermepumpe, 414 px: 7 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 8 | li, strong, li |
+| 183.27 px | 1 | a.mobile-phone-cta |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
+
+**anfrage, 414 px: 16 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2017,7 +2088,7 @@ Ergebnis: PASS (0 Befunde).
 | 300.47 px | 1 | a.funnel-close-link |
 | 308.41 px | 1 | span#progressPercent.progress-percent |
 
-**barrierefreiheit, 414 px — 7 verschiedene linke Kanten**
+**barrierefreiheit, 414 px: 7 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2029,7 +2100,7 @@ Ergebnis: PASS (0 Befunde).
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**baubarkeitspruefung, 414 px — 9 verschiedene linke Kanten**
+**baubarkeitspruefung, 414 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2043,7 +2114,7 @@ Ergebnis: PASS (0 Befunde).
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**bewerbung, 414 px — 12 verschiedene linke Kanten**
+**bewerbung, 414 px: 12 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2060,7 +2131,7 @@ Ergebnis: PASS (0 Befunde).
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**datenschutz, 414 px — 5 verschiedene linke Kanten**
+**datenschutz, 414 px: 5 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2070,21 +2141,7 @@ Ergebnis: PASS (0 Befunde).
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**dimensionierung-verstehen, 414 px — 9 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 70.95 px | 1 | a |
-| 156.34 px | 1 | span |
-| 183.27 px | 1 | a.mobile-phone-cta |
-| 212.3 px | 1 | a |
-| 222.27 px | 1 | span.mobile-phone-label |
-| 346 px | 1 | div#hamburger.hamburger |
-
-**dimensionierung, 414 px — 22 verschiedene linke Kanten**
+**dimensionierung, 414 px: 22 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2111,35 +2168,21 @@ Ergebnis: PASS (0 Befunde).
 | 333.44 px | 1 | div.wizard-progress-bar |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**foerderung-hannover, 414 px — 10 verschiedene linke Kanten**
+**dimensionierung-verstehen, 414 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 22 | div.section-inner, div.section-tag, div.brotkrume |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 70.95 px | 1 | a |
-| 156.34 px | 1 | span |
-| 180.05 px | 4 | th, td, td |
-| 183.27 px | 1 | a.mobile-phone-cta |
-| 222.27 px | 1 | span.mobile-phone-label |
-| 244.73 px | 4 | th, td, td |
-| 346 px | 1 | div#hamburger.hamburger |
-
-**foerderung-jetzt-mitnehmen, 414 px — 8 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 20 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 14 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 70.95 px | 1 | a |
 | 156.34 px | 1 | span |
 | 183.27 px | 1 | a.mobile-phone-cta |
+| 212.3 px | 1 | a |
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**foerderung, 414 px — 10 verschiedene linke Kanten**
+**foerderung, 414 px: 10 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2154,7 +2197,35 @@ Ergebnis: PASS (0 Befunde).
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**foerdervorschuss, 414 px — 7 verschiedene linke Kanten**
+**foerderung-hannover, 414 px: 10 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 22 | div.section-inner, div.section-tag, div.brotkrume |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
+| 180.05 px | 4 | th, td, td |
+| 183.27 px | 1 | a.mobile-phone-cta |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 244.73 px | 4 | th, td, td |
+| 346 px | 1 | div#hamburger.hamburger |
+
+**foerderung-jetzt-mitnehmen, 414 px: 8 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 20 | div.section-inner, div.section-tag, div.brotkrume |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
+| 183.27 px | 1 | a.mobile-phone-cta |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 346 px | 1 | div#hamburger.hamburger |
+
+**foerdervorschuss, 414 px: 7 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2166,7 +2237,7 @@ Ergebnis: PASS (0 Befunde).
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**gasheizung-tauschen-oder-reparieren, 414 px — 9 verschiedene linke Kanten**
+**gasheizung-tauschen-oder-reparieren, 414 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2180,7 +2251,7 @@ Ergebnis: PASS (0 Befunde).
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**hinweise, 414 px — 6 verschiedene linke Kanten**
+**hinweise, 414 px: 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2191,7 +2262,7 @@ Ergebnis: PASS (0 Befunde).
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**impressum, 414 px — 6 verschiedene linke Kanten**
+**impressum, 414 px: 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2202,7 +2273,7 @@ Ergebnis: PASS (0 Befunde).
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**index, 414 px — 19 verschiedene linke Kanten**
+**index, 414 px: 19 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2226,7 +2297,7 @@ Ergebnis: PASS (0 Befunde).
 | 304.94 px | 1 | div.hc-value |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**karriere, 414 px — 8 verschiedene linke Kanten**
+**karriere, 414 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2239,7 +2310,7 @@ Ergebnis: PASS (0 Befunde).
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**kontakt, 414 px — 12 verschiedene linke Kanten**
+**kontakt, 414 px: 12 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2256,27 +2327,25 @@ Ergebnis: PASS (0 Befunde).
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**kostenvergleich-waermepumpe, 414 px — 15 verschiedene linke Kanten**
+**kostenvergleich-waermepumpe, 414 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
-| 24 px | 19 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
-| 29.27 px | 1 | a |
-| 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
-| 44 px | 1 | div.ib |
-| 57 px | 10 | div#wzStepBody, div, p.wz-intro |
-| 65 px | 5 | strong, span.d, div |
-| 69 px | 5 | span, span, span |
-| 98.19 px | 1 | a |
-| 208.06 px | 1 | a |
-| 226.03 px | 2 | div.topnav-actions, button.theme-toggle |
-| 230.03 px | 1 | span.tt-feld |
-| 278.5 px | 1 | button#wzNext.wz-next |
-| 283.88 px | 1 | a |
-| 297.91 px | 1 | span.tt-feld |
+| 0 px | 3 | div.nav-inner, header.page-head, div.container |
+| 16 px | 18 | div.page-head-inner, div.kicker, h1 |
+| 24 px | 2 | a, img.nav-logo.logo-dark |
+| 27 px | 8 | h2#rechner-einleitung, p.wz-intro, p.wz-intro |
+| 29 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
+| 36 px | 1 | div.ib |
+| 49 px | 10 | div#wzStepBody, div, p.wz-intro |
+| 57 px | 5 | strong, span.d, div |
+| 61 px | 5 | span, span, span |
+| 183.27 px | 1 | a.mobile-phone-cta |
+| 222.27 px | 1 | span.mobile-phone-label |
+| 286.5 px | 1 | button#wzNext.wz-next |
+| 346 px | 1 | div#hamburger.hamburger |
 
-**preise, 414 px — 11 verschiedene linke Kanten**
+**preise, 414 px: 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2292,7 +2361,7 @@ Ergebnis: PASS (0 Befunde).
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**propan-waermepumpe, 414 px — 9 verschiedene linke Kanten**
+**propan-waermepumpe, 414 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2306,7 +2375,7 @@ Ergebnis: PASS (0 Befunde).
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**prozess, 414 px — 11 verschiedene linke Kanten**
+**prozess, 414 px: 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2322,7 +2391,7 @@ Ergebnis: PASS (0 Befunde).
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**ratgeber, 414 px — 13 verschiedene linke Kanten**
+**ratgeber, 414 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2340,7 +2409,7 @@ Ergebnis: PASS (0 Befunde).
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**rechner, 414 px — 14 verschiedene linke Kanten**
+**rechner, 414 px: 14 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2359,7 +2428,7 @@ Ergebnis: PASS (0 Befunde).
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-altbau, 414 px — 9 verschiedene linke Kanten**
+**waermepumpe-altbau, 414 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2373,7 +2442,7 @@ Ergebnis: PASS (0 Befunde).
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-hannover, 414 px — 8 verschiedene linke Kanten**
+**waermepumpe-hannover, 414 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2386,7 +2455,7 @@ Ergebnis: PASS (0 Befunde).
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-laerm, 414 px — 10 verschiedene linke Kanten**
+**waermepumpe-laerm, 414 px: 10 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2401,7 +2470,7 @@ Ergebnis: PASS (0 Befunde).
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**waermepumpenstrom-hannover, 414 px — 9 verschiedene linke Kanten**
+**waermepumpenstrom-hannover, 414 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2415,7 +2484,7 @@ Ergebnis: PASS (0 Befunde).
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**wertsteigerung-waermepumpe, 414 px — 8 verschiedene linke Kanten**
+**wertsteigerung-waermepumpe, 414 px: 8 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2428,7 +2497,7 @@ Ergebnis: PASS (0 Befunde).
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**wp-kosten-hannover, 414 px — 9 verschiedene linke Kanten**
+**wp-kosten-hannover, 414 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2442,7 +2511,22 @@ Ergebnis: PASS (0 Befunde).
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**anfrage, 600 px — 18 verschiedene linke Kanten**
+**amortisation-waermepumpe, 600 px: 10 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 17 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 8 | li, strong, li |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
+| 323.97 px | 1 | span.tt-feld |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
+
+**anfrage, 600 px: 18 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2465,7 +2549,7 @@ Ergebnis: PASS (0 Befunde).
 | 486.47 px | 1 | a.funnel-close-link |
 | 494.41 px | 1 | span#progressPercent.progress-percent |
 
-**barrierefreiheit, 600 px — 12 verschiedene linke Kanten**
+**barrierefreiheit, 600 px: 12 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2482,7 +2566,7 @@ Ergebnis: PASS (0 Befunde).
 | 463.06 px | 1 | span.mobile-phone-label |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**baubarkeitspruefung, 600 px — 12 verschiedene linke Kanten**
+**baubarkeitspruefung, 600 px: 12 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2499,7 +2583,7 @@ Ergebnis: PASS (0 Befunde).
 | 463.06 px | 1 | span.mobile-phone-label |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**bewerbung, 600 px — 21 verschiedene linke Kanten**
+**bewerbung, 600 px: 21 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2525,7 +2609,7 @@ Ergebnis: PASS (0 Befunde).
 | 476.13 px | 1 | a |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**datenschutz, 600 px — 7 verschiedene linke Kanten**
+**datenschutz, 600 px: 7 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2537,25 +2621,7 @@ Ergebnis: PASS (0 Befunde).
 | 395.03 px | 1 | span.tt-feld |
 | 462.91 px | 1 | span.tt-feld |
 
-**dimensionierung-verstehen, 600 px — 13 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 26 | div.section-inner, div.section-tag, div.brotkrume |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 70.95 px | 1 | a |
-| 156.34 px | 1 | span |
-| 206.08 px | 3 | th, td, td |
-| 212.3 px | 1 | a |
-| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 256.09 px | 1 | span.tt-feld |
-| 323.97 px | 1 | span.tt-feld |
-| 424.06 px | 1 | a.mobile-phone-cta |
-| 463.06 px | 1 | span.mobile-phone-label |
-| 532 px | 1 | div#hamburger.hamburger |
-
-**dimensionierung, 600 px — 27 verschiedene linke Kanten**
+**dimensionierung, 600 px: 27 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2587,7 +2653,7 @@ Ergebnis: PASS (0 Befunde).
 | 498.78 px | 1 | div.wizard-progress-bar |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**foerderung-hannover, 600 px — 13 verschiedene linke Kanten**
+**dimensionierung-verstehen, 600 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2596,34 +2662,16 @@ Ergebnis: PASS (0 Befunde).
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 70.95 px | 1 | a |
 | 156.34 px | 1 | span |
-| 180.05 px | 4 | th, td, td |
+| 206.08 px | 3 | th, td, td |
+| 212.3 px | 1 | a |
 | 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 256.09 px | 1 | span.tt-feld |
-| 260.64 px | 4 | th, td, td |
 | 323.97 px | 1 | span.tt-feld |
 | 424.06 px | 1 | a.mobile-phone-cta |
 | 463.06 px | 1 | span.mobile-phone-label |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**foerderung-jetzt-mitnehmen, 600 px — 13 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 30 | div.section-inner, div.section-tag, div.brotkrume |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 70.95 px | 1 | a |
-| 156.34 px | 1 | span |
-| 180.05 px | 3 | th, td, td |
-| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 256.09 px | 1 | span.tt-feld |
-| 257.03 px | 3 | th, td, td |
-| 323.97 px | 1 | span.tt-feld |
-| 424.06 px | 1 | a.mobile-phone-cta |
-| 463.06 px | 1 | span.mobile-phone-label |
-| 532 px | 1 | div#hamburger.hamburger |
-
-**foerderung, 600 px — 14 verschiedene linke Kanten**
+**foerderung, 600 px: 14 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2642,7 +2690,43 @@ Ergebnis: PASS (0 Befunde).
 | 463.06 px | 1 | span.mobile-phone-label |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**foerdervorschuss, 600 px — 11 verschiedene linke Kanten**
+**foerderung-hannover, 600 px: 13 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 26 | div.section-inner, div.section-tag, div.brotkrume |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
+| 180.05 px | 4 | th, td, td |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
+| 260.64 px | 4 | th, td, td |
+| 323.97 px | 1 | span.tt-feld |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
+
+**foerderung-jetzt-mitnehmen, 600 px: 13 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 30 | div.section-inner, div.section-tag, div.brotkrume |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
+| 180.05 px | 3 | th, td, td |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
+| 257.03 px | 3 | th, td, td |
+| 323.97 px | 1 | span.tt-feld |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 532 px | 1 | div#hamburger.hamburger |
+
+**foerdervorschuss, 600 px: 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2658,7 +2742,7 @@ Ergebnis: PASS (0 Befunde).
 | 463.06 px | 1 | span.mobile-phone-label |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**gasheizung-tauschen-oder-reparieren, 600 px — 12 verschiedene linke Kanten**
+**gasheizung-tauschen-oder-reparieren, 600 px: 12 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2675,7 +2759,7 @@ Ergebnis: PASS (0 Befunde).
 | 463.06 px | 1 | span.mobile-phone-label |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**hinweise, 600 px — 9 verschiedene linke Kanten**
+**hinweise, 600 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2689,7 +2773,7 @@ Ergebnis: PASS (0 Befunde).
 | 463.06 px | 1 | span.mobile-phone-label |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**impressum, 600 px — 7 verschiedene linke Kanten**
+**impressum, 600 px: 7 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2701,7 +2785,7 @@ Ergebnis: PASS (0 Befunde).
 | 395.03 px | 1 | span.tt-feld |
 | 462.91 px | 1 | span.tt-feld |
 
-**index, 600 px — 25 verschiedene linke Kanten**
+**index, 600 px: 25 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2731,7 +2815,7 @@ Ergebnis: PASS (0 Befunde).
 | 490.94 px | 1 | div.hc-value |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**karriere, 600 px — 12 verschiedene linke Kanten**
+**karriere, 600 px: 12 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2748,7 +2832,7 @@ Ergebnis: PASS (0 Befunde).
 | 463.06 px | 1 | span.mobile-phone-label |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**kontakt, 600 px — 15 verschiedene linke Kanten**
+**kontakt, 600 px: 15 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2768,30 +2852,34 @@ Ergebnis: PASS (0 Befunde).
 | 463.06 px | 1 | span.mobile-phone-label |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**kostenvergleich-waermepumpe, 600 px — 18 verschiedene linke Kanten**
+**kostenvergleich-waermepumpe, 600 px: 22 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
-| 24 px | 19 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
-| 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
-| 44 px | 1 | div.ib |
-| 57 px | 10 | div#wzStepBody, div, p.wz-intro |
-| 65 px | 4 | strong, span.d, div |
-| 69 px | 5 | span, span, span |
+| 0 px | 4 | div.nav-inner, header.page-head, div.container |
+| 16 px | 17 | div.page-head-inner, div.kicker, h1 |
+| 24 px | 2 | a, img.nav-logo.logo-dark |
+| 27 px | 8 | h2#rechner-einleitung, p.wz-intro, p.wz-intro |
+| 29 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
+| 36 px | 1 | div.ib |
+| 49 px | 10 | div#wzStepBody, div, p.wz-intro |
+| 57 px | 4 | strong, span.d, div |
+| 61 px | 5 | span, span, span |
 | 77.55 px | 1 | a |
 | 187.42 px | 1 | a |
-| 225.61 px | 1 | a.wz-link-btn |
-| 248.56 px | 2 | div.topnav-actions, button.theme-toggle |
-| 252.56 px | 1 | span.tt-feld |
+| 217.61 px | 1 | a.wz-link-btn |
+| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 256.09 px | 1 | span.tt-feld |
 | 263.23 px | 1 | a |
-| 320.44 px | 1 | span.tt-feld |
+| 317.69 px | 1 | span.accent |
+| 323.97 px | 1 | span.tt-feld |
 | 347.94 px | 1 | a |
-| 382.58 px | 1 | a#wzModeLink |
-| 424.53 px | 1 | a.nav-cta |
-| 464.5 px | 1 | button#wzNext.wz-next |
+| 424.06 px | 1 | a.mobile-phone-cta |
+| 463.06 px | 1 | span.mobile-phone-label |
+| 472.5 px | 1 | button#wzNext.wz-next |
+| 532 px | 1 | div#hamburger.hamburger |
 
-**preise, 600 px — 31 verschiedene linke Kanten**
+**preise, 600 px: 31 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2823,11 +2911,11 @@ Ergebnis: PASS (0 Befunde).
 | 763.48 px | 7 | div, div, h2 |
 | 846.39 px | 1 | svg |
 | 849.24 px | 1 | path |
-| 991.31 px | 1 | div.pa-card.pa-visible.dimmed |
-| 1005.31 px | 7 | div, div, h2 |
+| 991.32 px | 1 | div.pa-card.pa-visible.dimmed |
+| 1005.32 px | 7 | div, div, h2 |
 | 1087.22 px | 1 | svg |
 
-**propan-waermepumpe, 600 px — 13 verschiedene linke Kanten**
+**propan-waermepumpe, 600 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2845,7 +2933,7 @@ Ergebnis: PASS (0 Befunde).
 | 463.06 px | 1 | span.mobile-phone-label |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**prozess, 600 px — 22 verschiedene linke Kanten**
+**prozess, 600 px: 22 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2872,7 +2960,7 @@ Ergebnis: PASS (0 Befunde).
 | 463.06 px | 1 | span.mobile-phone-label |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**ratgeber, 600 px — 18 verschiedene linke Kanten**
+**ratgeber, 600 px: 18 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2895,7 +2983,7 @@ Ergebnis: PASS (0 Befunde).
 | 463.06 px | 1 | span.mobile-phone-label |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**rechner, 600 px — 16 verschiedene linke Kanten**
+**rechner, 600 px: 16 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2916,7 +3004,7 @@ Ergebnis: PASS (0 Befunde).
 | 463.06 px | 1 | span.mobile-phone-label |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-altbau, 600 px — 14 verschiedene linke Kanten**
+**waermepumpe-altbau, 600 px: 14 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2935,7 +3023,7 @@ Ergebnis: PASS (0 Befunde).
 | 463.06 px | 1 | span.mobile-phone-label |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-hannover, 600 px — 13 verschiedene linke Kanten**
+**waermepumpe-hannover, 600 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2953,7 +3041,7 @@ Ergebnis: PASS (0 Befunde).
 | 463.06 px | 1 | span.mobile-phone-label |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-laerm, 600 px — 15 verschiedene linke Kanten**
+**waermepumpe-laerm, 600 px: 15 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2973,7 +3061,7 @@ Ergebnis: PASS (0 Befunde).
 | 463.06 px | 1 | span.mobile-phone-label |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**waermepumpenstrom-hannover, 600 px — 13 verschiedene linke Kanten**
+**waermepumpenstrom-hannover, 600 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -2991,7 +3079,7 @@ Ergebnis: PASS (0 Befunde).
 | 463.06 px | 1 | span.mobile-phone-label |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**wertsteigerung-waermepumpe, 600 px — 11 verschiedene linke Kanten**
+**wertsteigerung-waermepumpe, 600 px: 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3007,7 +3095,7 @@ Ergebnis: PASS (0 Befunde).
 | 463.06 px | 1 | span.mobile-phone-label |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**wp-kosten-hannover, 600 px — 13 verschiedene linke Kanten**
+**wp-kosten-hannover, 600 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3025,7 +3113,22 @@ Ergebnis: PASS (0 Befunde).
 | 463.06 px | 1 | span.mobile-phone-label |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**anfrage, 768 px — 18 verschiedene linke Kanten**
+**amortisation-waermepumpe, 768 px: 10 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 19 | div.section-inner, div.section-tag, h1.section-title |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 42 px | 8 | li, strong, li |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
+
+**anfrage, 768 px: 18 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3048,7 +3151,7 @@ Ergebnis: PASS (0 Befunde).
 | 654.47 px | 1 | a.funnel-close-link |
 | 662.41 px | 1 | span#progressPercent.progress-percent |
 
-**barrierefreiheit, 768 px — 12 verschiedene linke Kanten**
+**barrierefreiheit, 768 px: 12 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3065,7 +3168,7 @@ Ergebnis: PASS (0 Befunde).
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**baubarkeitspruefung, 768 px — 13 verschiedene linke Kanten**
+**baubarkeitspruefung, 768 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3083,7 +3186,7 @@ Ergebnis: PASS (0 Befunde).
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**bewerbung, 768 px — 25 verschiedene linke Kanten**
+**bewerbung, 768 px: 25 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3113,7 +3216,7 @@ Ergebnis: PASS (0 Befunde).
 | 652.42 px | 1 | a |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**datenschutz, 768 px — 10 verschiedene linke Kanten**
+**datenschutz, 768 px: 10 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3128,26 +3231,7 @@ Ergebnis: PASS (0 Befunde).
 | 618.91 px | 1 | span.tt-feld |
 | 630.13 px | 1 | code |
 
-**dimensionierung-verstehen, 768 px — 14 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 32 | div.section-inner, div.section-tag, div.brotkrume |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 70.95 px | 1 | a |
-| 156.34 px | 1 | span |
-| 212.3 px | 1 | a |
-| 242.09 px | 5 | th, td, td |
-| 290.28 px | 1 | a.btn-primary |
-| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 424.09 px | 1 | span.tt-feld |
-| 491.97 px | 1 | span.tt-feld |
-| 592.06 px | 1 | a.mobile-phone-cta |
-| 631.06 px | 1 | span.mobile-phone-label |
-| 700 px | 1 | div#hamburger.hamburger |
-
-**dimensionierung, 768 px — 33 verschiedene linke Kanten**
+**dimensionierung, 768 px: 33 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3185,17 +3269,18 @@ Ergebnis: PASS (0 Befunde).
 | 652.42 px | 1 | a |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**foerderung-hannover, 768 px — 13 verschiedene linke Kanten**
+**dimensionierung-verstehen, 768 px: 14 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 31 | div.section-inner, div.section-tag, div.brotkrume |
+| 20 px | 32 | div.section-inner, div.section-tag, div.brotkrume |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 70.95 px | 1 | a |
 | 156.34 px | 1 | span |
-| 180.05 px | 4 | th, td, td |
-| 278.55 px | 4 | th, td, td |
+| 212.3 px | 1 | a |
+| 242.09 px | 5 | th, td, td |
+| 290.28 px | 1 | a.btn-primary |
 | 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 424.09 px | 1 | span.tt-feld |
 | 491.97 px | 1 | span.tt-feld |
@@ -3203,25 +3288,7 @@ Ergebnis: PASS (0 Befunde).
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**foerderung-jetzt-mitnehmen, 768 px — 13 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 33 | div.section-inner, div.section-tag, div.brotkrume |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 70.95 px | 1 | a |
-| 156.34 px | 1 | span |
-| 180.05 px | 4 | th, td, td |
-| 270.86 px | 4 | th, td, td |
-| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 424.09 px | 1 | span.tt-feld |
-| 491.97 px | 1 | span.tt-feld |
-| 592.06 px | 1 | a.mobile-phone-cta |
-| 631.06 px | 1 | span.mobile-phone-label |
-| 700 px | 1 | div#hamburger.hamburger |
-
-**foerderung, 768 px — 15 verschiedene linke Kanten**
+**foerderung, 768 px: 15 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3241,7 +3308,43 @@ Ergebnis: PASS (0 Befunde).
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**foerdervorschuss, 768 px — 9 verschiedene linke Kanten**
+**foerderung-hannover, 768 px: 13 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 31 | div.section-inner, div.section-tag, div.brotkrume |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
+| 180.05 px | 4 | th, td, td |
+| 278.55 px | 4 | th, td, td |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
+
+**foerderung-jetzt-mitnehmen, 768 px: 13 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 20 px | 33 | div.section-inner, div.section-tag, div.brotkrume |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 70.95 px | 1 | a |
+| 156.34 px | 1 | span |
+| 180.05 px | 4 | th, td, td |
+| 270.86 px | 4 | th, td, td |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
+| 592.06 px | 1 | a.mobile-phone-cta |
+| 631.06 px | 1 | span.mobile-phone-label |
+| 700 px | 1 | div#hamburger.hamburger |
+
+**foerdervorschuss, 768 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3255,7 +3358,7 @@ Ergebnis: PASS (0 Befunde).
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**gasheizung-tauschen-oder-reparieren, 768 px — 12 verschiedene linke Kanten**
+**gasheizung-tauschen-oder-reparieren, 768 px: 12 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3272,7 +3375,7 @@ Ergebnis: PASS (0 Befunde).
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**hinweise, 768 px — 9 verschiedene linke Kanten**
+**hinweise, 768 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3286,7 +3389,7 @@ Ergebnis: PASS (0 Befunde).
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**impressum, 768 px — 7 verschiedene linke Kanten**
+**impressum, 768 px: 7 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3298,7 +3401,7 @@ Ergebnis: PASS (0 Befunde).
 | 551.03 px | 1 | span.tt-feld |
 | 618.91 px | 1 | span.tt-feld |
 
-**index, 768 px — 30 verschiedene linke Kanten**
+**index, 768 px: 30 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3333,7 +3436,7 @@ Ergebnis: PASS (0 Befunde).
 | 658.94 px | 1 | div.hc-value |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**karriere, 768 px — 12 verschiedene linke Kanten**
+**karriere, 768 px: 12 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3350,7 +3453,7 @@ Ergebnis: PASS (0 Befunde).
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**kontakt, 768 px — 15 verschiedene linke Kanten**
+**kontakt, 768 px: 15 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3370,15 +3473,15 @@ Ergebnis: PASS (0 Befunde).
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**kostenvergleich-waermepumpe, 768 px — 32 verschiedene linke Kanten**
+**kostenvergleich-waermepumpe, 768 px: 33 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
-| 24 px | 14 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
+| 0 px | 4 | div.nav-inner, header.page-head, div.container |
+| 24 px | 15 | a, img.nav-logo.logo-dark, div.page-head-inner |
 | 37 px | 1 | span.wz-dot |
 | 44 px | 1 | div.ib |
-| 57 px | 9 | div#wzStepBody, div, p.wz-intro |
+| 57 px | 17 | h2#rechner-einleitung, p.wz-intro, p.wz-intro |
 | 65 px | 4 | strong, span.d, div |
 | 69 px | 1 | span |
 | 95.7 px | 1 | a |
@@ -3394,20 +3497,21 @@ Ergebnis: PASS (0 Befunde).
 | 366.09 px | 1 | a |
 | 380.45 px | 1 | span.accent |
 | 390 px | 1 | button.wz-choice |
-| 416.56 px | 2 | div.topnav-actions, button.theme-toggle |
-| 420.56 px | 1 | span.tt-feld |
+| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 424.09 px | 1 | span.tt-feld |
 | 459.28 px | 1 | button.wz-step |
-| 466.58 px | 1 | a#wzModeLink |
 | 472.28 px | 1 | span.wz-dot |
-| 488.44 px | 1 | span.tt-feld |
+| 491.97 px | 1 | span.tt-feld |
 | 504.28 px | 1 | span |
-| 592.53 px | 1 | a.nav-cta |
+| 592.06 px | 1 | a.mobile-phone-cta |
 | 606.91 px | 1 | button.wz-step |
 | 619.91 px | 1 | span.wz-dot |
+| 631.06 px | 1 | span.mobile-phone-label |
 | 632.5 px | 1 | button#wzNext.wz-next |
 | 651.91 px | 1 | span |
+| 700 px | 1 | div#hamburger.hamburger |
 
-**preise, 768 px — 31 verschiedene linke Kanten**
+**preise, 768 px: 31 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3421,13 +3525,13 @@ Ergebnis: PASS (0 Befunde).
 | 126 px | 1 | svg |
 | 241 px | 2 | div.pa-cta-icon, svg |
 | 268 px | 1 | div.pa-card.pa-visible.dimmed |
-| 268.02 px | 1 | div.pa-card.pa-visible.dimmed |
+| 268.03 px | 1 | div.pa-card.pa-visible.dimmed |
 | 283 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
 | 284 px | 8 | div, div, h2 |
-| 284.02 px | 4 | div, div, h2 |
+| 284.03 px | 4 | div, div, h2 |
 | 297.5 px | 1 | div.section-tag |
 | 334.58 px | 1 | strong |
-| 364 px | 1 | svg |
+| 364.01 px | 1 | svg |
 | 368 px | 1 | svg |
 | 371 px | 1 | path |
 | 391 px | 1 | button#manufacturerVaillant.manufacturer-tab |
@@ -3443,7 +3547,7 @@ Ergebnis: PASS (0 Befunde).
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**propan-waermepumpe, 768 px — 13 verschiedene linke Kanten**
+**propan-waermepumpe, 768 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3461,7 +3565,7 @@ Ergebnis: PASS (0 Befunde).
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**prozess, 768 px — 22 verschiedene linke Kanten**
+**prozess, 768 px: 22 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3488,7 +3592,7 @@ Ergebnis: PASS (0 Befunde).
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**ratgeber, 768 px — 19 verschiedene linke Kanten**
+**ratgeber, 768 px: 19 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3512,7 +3616,7 @@ Ergebnis: PASS (0 Befunde).
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**rechner, 768 px — 18 verschiedene linke Kanten**
+**rechner, 768 px: 18 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3535,7 +3639,7 @@ Ergebnis: PASS (0 Befunde).
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-altbau, 768 px — 14 verschiedene linke Kanten**
+**waermepumpe-altbau, 768 px: 14 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3554,7 +3658,7 @@ Ergebnis: PASS (0 Befunde).
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-hannover, 768 px — 13 verschiedene linke Kanten**
+**waermepumpe-hannover, 768 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3572,7 +3676,7 @@ Ergebnis: PASS (0 Befunde).
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-laerm, 768 px — 16 verschiedene linke Kanten**
+**waermepumpe-laerm, 768 px: 16 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3593,7 +3697,7 @@ Ergebnis: PASS (0 Befunde).
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**waermepumpenstrom-hannover, 768 px — 13 verschiedene linke Kanten**
+**waermepumpenstrom-hannover, 768 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3611,7 +3715,7 @@ Ergebnis: PASS (0 Befunde).
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**wertsteigerung-waermepumpe, 768 px — 11 verschiedene linke Kanten**
+**wertsteigerung-waermepumpe, 768 px: 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3627,7 +3731,7 @@ Ergebnis: PASS (0 Befunde).
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**wp-kosten-hannover, 768 px — 13 verschiedene linke Kanten**
+**wp-kosten-hannover, 768 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3645,7 +3749,22 @@ Ergebnis: PASS (0 Befunde).
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**anfrage, 960 px — 25 verschiedene linke Kanten**
+**amortisation-waermepumpe, 960 px: 10 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 100 px | 18 | div.section-inner, div.section-tag, h1.section-title |
+| 122 px | 8 | li, strong, li |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
+
+**anfrage, 960 px: 25 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3675,7 +3794,7 @@ Ergebnis: PASS (0 Befunde).
 | 822.47 px | 1 | a.funnel-close-link |
 | 830.41 px | 1 | span#progressPercent.progress-percent |
 
-**barrierefreiheit, 960 px — 12 verschiedene linke Kanten**
+**barrierefreiheit, 960 px: 12 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3692,7 +3811,7 @@ Ergebnis: PASS (0 Befunde).
 | 823.06 px | 1 | span.mobile-phone-label |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**baubarkeitspruefung, 960 px — 13 verschiedene linke Kanten**
+**baubarkeitspruefung, 960 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3710,7 +3829,7 @@ Ergebnis: PASS (0 Befunde).
 | 823.06 px | 1 | span.mobile-phone-label |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**bewerbung, 960 px — 28 verschiedene linke Kanten**
+**bewerbung, 960 px: 28 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3743,7 +3862,7 @@ Ergebnis: PASS (0 Befunde).
 | 823.06 px | 1 | span.mobile-phone-label |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**datenschutz, 960 px — 10 verschiedene linke Kanten**
+**datenschutz, 960 px: 10 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3758,25 +3877,7 @@ Ergebnis: PASS (0 Befunde).
 | 717.03 px | 1 | span.tt-feld |
 | 784.91 px | 1 | span.tt-feld |
 
-**dimensionierung-verstehen, 960 px — 13 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 100 px | 30 | div.section-inner, div.section-tag, div.brotkrume |
-| 150.95 px | 1 | a |
-| 236.34 px | 1 | span |
-| 304.31 px | 1 | a |
-| 328.94 px | 5 | th, td, td |
-| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 616.09 px | 1 | span.tt-feld |
-| 683.97 px | 1 | span.tt-feld |
-| 784.06 px | 1 | a.mobile-phone-cta |
-| 823.06 px | 1 | span.mobile-phone-label |
-| 892 px | 1 | div#hamburger.hamburger |
-
-**dimensionierung, 960 px — 33 verschiedene linke Kanten**
+**dimensionierung, 960 px: 33 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3814,7 +3915,7 @@ Ergebnis: PASS (0 Befunde).
 | 851.27 px | 1 | a |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**foerderung-hannover, 960 px — 13 verschiedene linke Kanten**
+**dimensionierung-verstehen, 960 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3823,8 +3924,8 @@ Ergebnis: PASS (0 Befunde).
 | 100 px | 30 | div.section-inner, div.section-tag, div.brotkrume |
 | 150.95 px | 1 | a |
 | 236.34 px | 1 | span |
-| 260.05 px | 4 | th, td, td |
-| 361.95 px | 4 | th, td, td |
+| 304.31 px | 1 | a |
+| 328.94 px | 5 | th, td, td |
 | 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 616.09 px | 1 | span.tt-feld |
 | 683.97 px | 1 | span.tt-feld |
@@ -3832,25 +3933,7 @@ Ergebnis: PASS (0 Befunde).
 | 823.06 px | 1 | span.mobile-phone-label |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**foerderung-jetzt-mitnehmen, 960 px — 13 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 100 px | 32 | div.section-inner, div.section-tag, div.brotkrume |
-| 150.95 px | 1 | a |
-| 236.34 px | 1 | span |
-| 260.05 px | 4 | th, td, td |
-| 353.5 px | 4 | th, td, td |
-| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 616.09 px | 1 | span.tt-feld |
-| 683.97 px | 1 | span.tt-feld |
-| 784.06 px | 1 | a.mobile-phone-cta |
-| 823.06 px | 1 | span.mobile-phone-label |
-| 892 px | 1 | div#hamburger.hamburger |
-
-**foerderung, 960 px — 15 verschiedene linke Kanten**
+**foerderung, 960 px: 15 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3870,7 +3953,43 @@ Ergebnis: PASS (0 Befunde).
 | 823.06 px | 1 | span.mobile-phone-label |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**foerdervorschuss, 960 px — 9 verschiedene linke Kanten**
+**foerderung-hannover, 960 px: 13 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 100 px | 30 | div.section-inner, div.section-tag, div.brotkrume |
+| 150.95 px | 1 | a |
+| 236.34 px | 1 | span |
+| 260.05 px | 4 | th, td, td |
+| 361.95 px | 4 | th, td, td |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
+
+**foerderung-jetzt-mitnehmen, 960 px: 13 verschiedene linke Kanten**
+
+| Kante | Bloecke | Beispiele |
+|---|---|---|
+| 0 px | 3 | div.nav-inner, main#main-content, article.section |
+| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
+| 100 px | 32 | div.section-inner, div.section-tag, div.brotkrume |
+| 150.95 px | 1 | a |
+| 236.34 px | 1 | span |
+| 260.05 px | 4 | th, td, td |
+| 353.5 px | 4 | th, td, td |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
+| 784.06 px | 1 | a.mobile-phone-cta |
+| 823.06 px | 1 | span.mobile-phone-label |
+| 892 px | 1 | div#hamburger.hamburger |
+
+**foerdervorschuss, 960 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3884,7 +4003,7 @@ Ergebnis: PASS (0 Befunde).
 | 823.06 px | 1 | span.mobile-phone-label |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**gasheizung-tauschen-oder-reparieren, 960 px — 12 verschiedene linke Kanten**
+**gasheizung-tauschen-oder-reparieren, 960 px: 12 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3901,7 +4020,7 @@ Ergebnis: PASS (0 Befunde).
 | 823.06 px | 1 | span.mobile-phone-label |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**hinweise, 960 px — 9 verschiedene linke Kanten**
+**hinweise, 960 px: 9 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3915,7 +4034,7 @@ Ergebnis: PASS (0 Befunde).
 | 823.06 px | 1 | span.mobile-phone-label |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**impressum, 960 px — 11 verschiedene linke Kanten**
+**impressum, 960 px: 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3931,7 +4050,7 @@ Ergebnis: PASS (0 Befunde).
 | 717.03 px | 1 | span.tt-feld |
 | 784.91 px | 1 | span.tt-feld |
 
-**index, 960 px — 30 verschiedene linke Kanten**
+**index, 960 px: 30 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3966,7 +4085,7 @@ Ergebnis: PASS (0 Befunde).
 | 833.31 px | 1 | span#heroVideoToggleText |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**karriere, 960 px — 12 verschiedene linke Kanten**
+**karriere, 960 px: 12 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3983,7 +4102,7 @@ Ergebnis: PASS (0 Befunde).
 | 823.06 px | 1 | span.mobile-phone-label |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**kontakt, 960 px — 29 verschiedene linke Kanten**
+**kontakt, 960 px: 29 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -4017,15 +4136,15 @@ Ergebnis: PASS (0 Befunde).
 | 851.27 px | 1 | a |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**kostenvergleich-waermepumpe, 960 px — 32 verschiedene linke Kanten**
+**kostenvergleich-waermepumpe, 960 px: 34 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
-| 24 px | 14 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
+| 0 px | 4 | div.nav-inner, header.page-head, div.container |
+| 24 px | 15 | a, img.nav-logo.logo-dark, div.page-head-inner |
 | 37 px | 1 | span.wz-dot |
 | 44 px | 1 | div.ib |
-| 57 px | 9 | div#wzStepBody, div, p.wz-intro |
+| 57 px | 17 | h2#rechner-einleitung, p.wz-intro, p.wz-intro |
 | 65 px | 4 | strong, span.d, div |
 | 69 px | 1 | span |
 | 91.02 px | 1 | a |
@@ -4044,17 +4163,19 @@ Ergebnis: PASS (0 Befunde).
 | 576 px | 1 | button.wz-step |
 | 588.58 px | 1 | a#wzModeLink |
 | 589 px | 1 | span.wz-dot |
-| 608.56 px | 2 | div.topnav-actions, button.theme-toggle |
-| 612.56 px | 1 | span.tt-feld |
+| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
+| 616.09 px | 1 | span.tt-feld |
 | 621 px | 1 | span |
-| 680.44 px | 1 | span.tt-feld |
+| 683.97 px | 1 | span.tt-feld |
 | 760 px | 1 | button.wz-step |
 | 773 px | 1 | span.wz-dot |
-| 784.53 px | 1 | a.nav-cta |
+| 784.06 px | 1 | a.mobile-phone-cta |
 | 805 px | 1 | span |
+| 823.06 px | 1 | span.mobile-phone-label |
 | 824.5 px | 1 | button#wzNext.wz-next |
+| 892 px | 1 | div#hamburger.hamburger |
 
-**preise, 960 px — 38 verschiedene linke Kanten**
+**preise, 960 px: 38 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -4090,14 +4211,14 @@ Ergebnis: PASS (0 Befunde).
 | 655.05 px | 4 | td, td, td |
 | 664 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
 | 683.97 px | 1 | span.tt-feld |
-| 763.2 px | 1 | div.pa-card.pa-visible.dimmed |
-| 779.2 px | 8 | div, div, h2 |
+| 763.19 px | 1 | div.pa-card.pa-visible.dimmed |
+| 779.19 px | 8 | div, div, h2 |
 | 784.06 px | 1 | a.mobile-phone-cta |
 | 823.06 px | 1 | span.mobile-phone-label |
 | 829.6 px | 1 | svg |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**propan-waermepumpe, 960 px — 13 verschiedene linke Kanten**
+**propan-waermepumpe, 960 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -4115,7 +4236,7 @@ Ergebnis: PASS (0 Befunde).
 | 823.06 px | 1 | span.mobile-phone-label |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**prozess, 960 px — 35 verschiedene linke Kanten**
+**prozess, 960 px: 35 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -4155,7 +4276,7 @@ Ergebnis: PASS (0 Befunde).
 | 842.55 px | 1 | a |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**ratgeber, 960 px — 22 verschiedene linke Kanten**
+**ratgeber, 960 px: 22 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -4182,7 +4303,7 @@ Ergebnis: PASS (0 Befunde).
 | 823.06 px | 1 | span.mobile-phone-label |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**rechner, 960 px — 28 verschiedene linke Kanten**
+**rechner, 960 px: 28 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -4215,7 +4336,7 @@ Ergebnis: PASS (0 Befunde).
 | 823.06 px | 1 | span.mobile-phone-label |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-altbau, 960 px — 14 verschiedene linke Kanten**
+**waermepumpe-altbau, 960 px: 14 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -4234,7 +4355,7 @@ Ergebnis: PASS (0 Befunde).
 | 823.06 px | 1 | span.mobile-phone-label |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-hannover, 960 px — 13 verschiedene linke Kanten**
+**waermepumpe-hannover, 960 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -4252,7 +4373,7 @@ Ergebnis: PASS (0 Befunde).
 | 823.06 px | 1 | span.mobile-phone-label |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**waermepumpe-laerm, 960 px — 16 verschiedene linke Kanten**
+**waermepumpe-laerm, 960 px: 16 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -4273,7 +4394,7 @@ Ergebnis: PASS (0 Befunde).
 | 823.06 px | 1 | span.mobile-phone-label |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**waermepumpenstrom-hannover, 960 px — 12 verschiedene linke Kanten**
+**waermepumpenstrom-hannover, 960 px: 12 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -4290,7 +4411,7 @@ Ergebnis: PASS (0 Befunde).
 | 823.06 px | 1 | span.mobile-phone-label |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**wertsteigerung-waermepumpe, 960 px — 11 verschiedene linke Kanten**
+**wertsteigerung-waermepumpe, 960 px: 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -4306,7 +4427,7 @@ Ergebnis: PASS (0 Befunde).
 | 823.06 px | 1 | span.mobile-phone-label |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**wp-kosten-hannover, 960 px — 13 verschiedene linke Kanten**
+**wp-kosten-hannover, 960 px: 13 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|

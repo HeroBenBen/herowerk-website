@@ -31,6 +31,44 @@ const nurBericht = process.argv.includes('--nur-bericht');
 const konfig = JSON.parse(await readFile(path.join(hier, 'raster-expect.json'), 'utf8'));
 const TOL = konfig.toleranzPx ?? 0.5;
 
+// ── Konfigurations-Pruefung: jede Ausnahme braucht einen Grund ───────────────
+// Am 28.07.2026 gemessen: eine Ausnahme {"seite":"impressum","breite":320} OHNE
+// Feld `grund` liess einen echten Befund von 104 px still verschwinden, das Gate
+// meldete PASS und sagte darueber kein Wort. Eine Ausnahme im eigenen Pruefgate
+// ist ein Eingriff, kein Detail. Sie wird deshalb mechanisch erzwungen, VOR dem
+// ersten Seitenaufruf, und der Lauf bricht ab statt weiterzulaufen.
+// Lehre: _Learnings/agenten/feedback_gate_ausnahme_braucht_gemessenen_grund_2026-07-27.md
+function pruefeGruende(konfig) {
+  const fehlt = [];
+  const pruefe = (liste, ort) => {
+    (liste ?? []).forEach((e, i) => {
+      if (typeof e?.grund !== 'string' || e.grund.trim().length < 10) {
+        fehlt.push(`${ort}[${i}] = ${JSON.stringify(e)}`);
+      }
+    });
+  };
+  for (const [name, regel] of Object.entries(konfig.regeln ?? {})) {
+    pruefe(regel.ausnahmen, `regeln.${name}.ausnahmen`);
+    pruefe(regel.festeElemente, `regeln.${name}.festeElemente`);
+    pruefe(regel.inhaltsContainer, `regeln.${name}.inhaltsContainer`);
+  }
+  pruefe(konfig.ignorierteWurzeln, 'ignorierteWurzeln');
+  if (fehlt.length) {
+    console.error(
+      `ABBRUCH: ${fehlt.length} Eintrag/Eintraege in raster-expect.json haben kein Feld "grund" (oder einen zu kurzen).`
+    );
+    for (const f of fehlt) console.error(`  ${f}`);
+    console.error(
+      'Eine Ausnahme ohne gemessenen Grund ist eine stille Aufweichung des Gates und wirkt trotzdem.'
+    );
+    console.error(
+      'Jede Ausnahme braucht einen Grund, der die Messung nennt, und eine Einzelsichtung der dadurch verdeckten Faelle.'
+    );
+    process.exit(2);
+  }
+}
+pruefeGruende(konfig);
+
 // ── Bereichspruefung ────────────────────────────────────────────────────────
 // Eine physikalisch unmoegliche Messzahl ist ein Fehler im Messskript, nicht
 // ein Befund. Lehre feedback_unmoegliche_zahl_ist_ein_messfehler_kein_befund_2026-07-26.
@@ -106,11 +144,23 @@ function messen(cfg) {
     return el.tagName.toLowerCase() + (el.id ? '#' + el.id : '') + k;
   };
   const ignoriert = (el) => cfg.ignorierteWurzeln.some((i) => el.closest(i.wahl));
+  // Das Muster "nur fuer Vorleseprogramme sichtbar" (1x1 px, margin -1px,
+  // clip-path: inset(50%)) erzeugt ein Rechteck mit NULL sichtbarer Flaeche,
+  // das per Definition eine Kante ueberragt. Es traegt kein Raster und darf
+  // keinen Befund erzeugen. Gemessen 28.07.2026: `a.skip-link` steht auf jeder
+  // Seite bei left -1 px und war der EINZIGE Befund der neuen Regel 6 ueber
+  // 10.487 befundfaehige Elemente. Das gehoert in die Sichtbarkeitspruefung,
+  // nicht in eine Ausnahmeliste: ausgeschlossen wird die Ursache (keine
+  // sichtbare Flaeche), nicht ein Bauteilname.
+  const flaechenlos = (cs) =>
+    /inset\(\s*50%/.test(cs.clipPath || '') ||
+    /^rect\(0(px)?,?\s*0(px)?,?\s*0(px)?,?\s*0(px)?\)$/.test((cs.clip || '').replace(/\s+/g, ' '));
   const sichtbar = (el, cs) =>
     cs.display !== 'none' &&
     cs.visibility !== 'hidden' &&
     parseFloat(cs.opacity) !== 0 &&
-    !el.hasAttribute('hidden');
+    !el.hasAttribute('hidden') &&
+    !flaechenlos(cs);
   const klippt = (el) => {
     let a = el.parentElement;
     while (a && a !== document.documentElement) {
@@ -121,19 +171,29 @@ function messen(cfg) {
     return null;
   };
 
-  const erg = { r1: [], r2: [], r3: [], r4: [] };
+  const erg = { r1: [], r2: [], r3: [], r4: [], r5: [], r6: [] };
   // Abdeckung: eine Regel, die nichts prueft, meldet PASS und ist gefaehrlicher
   // als eine abgeschaltete. Deshalb weist das Gate aus, WIE VIELE Elemente je
-  // Regel tatsaechlich in den Test gelaufen sind.
-  erg.abdeckung = { elemente: 0, sichtbar: 0, r1r3: 0, r4: 0 };
+  // Regel tatsaechlich in den Test gelaufen sind. Fuer Regel 6 zaehlt seit dem
+  // 28.07.2026 die BEFUNDFAEHIGE Menge, nicht die Zahl der Seitenaufrufe: die
+  // alte Fassung meldete "232 Dokumente geprueft", waehrend sie auf 26 von 29
+  // Seiten baulich nichts messen konnte.
+  erg.abdeckung = { elemente: 0, sichtbar: 0, r1r3: 0, r4: 0, r5: 0, r6: 0 };
   const alle = [...document.querySelectorAll('body *')];
   erg.abdeckung.elemente = alle.length;
 
-  // "Zentriert" heisst: das Stylesheet setzt den waagerechten Aussenabstand auf
-  // 'auto'. Das ist die einzige belastbare Erkennung. Der berechnete Stil gibt
-  // dafuer nur den benutzten Pixelwert her, deshalb werden die Regeln des
-  // Stylesheets gelesen und gegen das Element geprueft.
-  const zentrierWahlen = [];
+  // "Beidseitig zentriert" heisst: das Stylesheet setzt BEIDE waagerechten
+  // Aussenabstaende auf 'auto'. Der berechnete Stil gibt dafuer nur den
+  // benutzten Pixelwert her, deshalb werden die Regeln des Stylesheets gelesen
+  // und gegen das Element geprueft.
+  // KORREKTUR 28.07.2026 zur Streichung vom selben Tag: die damalige Begruendung
+  // "auto-Raender sind per CSS-Definition symmetrisch" ist FALSCH. Sie gilt nur,
+  // wenn BEIDE Seiten auto sind. `margin-left: auto; margin-right: 0` ist
+  // rechtsbuendig und damit absichtlich unsymmetrisch. Die alte Fassung pruefte
+  // auf "links ODER rechts auto" und haette deshalb jede absichtliche
+  // Rechtsbuendigkeit als Befund gemeldet. Die neue Fassung trennt die Faelle.
+  const autoLinks = [];
+  const autoRechts = [];
   for (const bogen of document.styleSheets) {
     let regeln;
     try {
@@ -148,25 +208,25 @@ function messen(cfg) {
           continue;
         }
         if (!r.selectorText || !r.style) continue;
-        const ml = r.style.marginLeft,
-          mr = r.style.marginRight;
-        const mi = r.style.marginInline || r.style.margin || '';
-        if (ml === 'auto' || mr === 'auto' || /\bauto\b/.test(mi))
-          zentrierWahlen.push(r.selectorText);
+        if (r.style.marginLeft === 'auto') autoLinks.push(r.selectorText);
+        if (r.style.marginRight === 'auto') autoRechts.push(r.selectorText);
       }
     };
     sammle(regeln);
   }
-  const istZentriert = (el) => {
-    const st = el.getAttribute('style') || '';
-    if (/margin(-left|-right|-inline)?\s*:[^;]*auto/.test(st)) return true;
-    return zentrierWahlen.some((w) => {
+  const passt = (el, liste) =>
+    liste.some((w) => {
       try {
         return el.matches(w);
       } catch {
         return false;
       }
     });
+  const beidseitigAuto = (el) => {
+    const st = el.getAttribute('style') || '';
+    const inlL = /margin(-left|-inline)?\s*:[^;]*auto/.test(st);
+    const inlR = /margin(-right|-inline)?\s*:[^;]*auto/.test(st);
+    return (inlL || passt(el, autoLinks)) && (inlR || passt(el, autoRechts));
   };
 
   for (const el of alle) {
@@ -229,17 +289,56 @@ function messen(cfg) {
         });
       }
 
-      // Regel 5 ist am 28.07.2026 ERSATZLOS GESTRICHEN, nicht abgeschaltet.
-      // Begruendung, gemessen statt vermutet: mit `aktiv: true` erreichte sie
-      // ueber 232 Laeufe genau 8 Elemente von 67.539 sichtbaren, also 0,01
-      // Prozent, und fand 0 Befunde. Der Grund ist baulich: geprueft wurden nur
-      // Bloecke mit waagerechtem Aussenabstand `auto`, und die sind per
-      // CSS-Definition symmetrisch. Eine Asymmetrie kann dort nicht entstehen.
-      // Jede der drei frueheren Fassungen war entweder blind oder erzeugte
-      // Scheinbefunde (Protokoll im Archiv von raster-expect.json).
-      // Was die Regel abdecken sollte, deckt Regel 4 ab: eine echte
-      // Seitenrand-Abweichung eines breiten Containers. Ein dauerhaft
-      // abgeschaltetes Gate meldet PASS und ist gefaehrlicher als keins.
+      // Regel 5: erklaerter Seitenversatz. Am 28.07.2026 wieder scharf gestellt,
+      // nachdem die Streichung mit einer falschen CSS-Aussage begruendet war.
+      // Gemessene Deckungsluecke: ein Block, der schmaler ist als die
+      // Inhaltsbreite seines Containers, wird von KEINER anderen Regel erfasst.
+      // Regel 1 und 3 vergleichen nur gegen die Containerkante, Regel 4 springt
+      // unter `mindestAnteilBreite` (0,6) heraus. Nachgestellt am 28.07.2026:
+      // ein Block mit unerklaertem Versatz lief durch alle vier Regeln.
+      //
+      // Ein schmalerer Block darf genau drei Positionen einnehmen: buendig
+      // links, buendig rechts oder mittig. Jede andere Lage ist unerklaert.
+      // Zusaetzlich gilt: was das Stylesheet BEIDSEITIG auf `auto` setzt, muss
+      // mittig stehen; steht es das nicht, hat etwas die Zentrierung geschlagen.
+      // Absichtlich rechtsbuendige Bloecke (`margin-left: auto`, `margin-right: 0`)
+      // sind KEIN Befund; die alte Fassung meldete genau die als Fehler.
+      const r5 = cfg.regeln.r5_seitenversatz;
+      if (
+        (r5?.aktiv ?? true) &&
+        /^(block|flow-root|table)$/.test(cs.display) &&
+        /^(block|flow-root)$/.test(pcs.display) &&
+        !rollt(pcs.overflowX) &&
+        b.width >= (r5?.mindestBlockBreitePx ?? 24)
+      ) {
+        const inhLinks = pb.left + padL + bordL;
+        const inhRechts = pb.right - padR - bordR;
+        const inhBreite = inhRechts - inhLinks;
+        const tol5 = r5?.maxAbweichungPx ?? 1;
+        if (inhBreite >= 8 && inhBreite - b.width > tol5) {
+          erg.abdeckung.r5++;
+          const luckeLinks = b.left - inhLinks;
+          const luckeRechts = inhRechts - b.right;
+          const buendigLinks = Math.abs(luckeLinks) <= tol5;
+          const buendigRechts = Math.abs(luckeRechts) <= tol5;
+          const mittig = Math.abs(luckeLinks - luckeRechts) <= tol5;
+          const zentriertErklaert = beidseitigAuto(el);
+          if ((zentriertErklaert && !mittig) || (!buendigLinks && !buendigRechts && !mittig)) {
+            erg.r5.push({
+              block: wahl(el),
+              container: wahl(par),
+              abstandLinks: rr(luckeLinks),
+              abstandRechts: rr(luckeRechts),
+              abweichung: rr(Math.abs(luckeLinks - luckeRechts)),
+              blockBreite: rr(b.width),
+              inhaltsBreite: rr(inhBreite),
+              art: zentriertErklaert
+                ? 'beidseitig auto, steht aber nicht mittig'
+                : 'unerklaerter Versatz',
+            });
+          }
+        }
+      }
     }
   }
 
@@ -327,36 +426,77 @@ function messen(cfg) {
     document.querySelectorAll(w.wahl).forEach((el) => pruefeRand(el, 'Inhaltscontainer', wahl(el)));
   }
 
-  // Regel 6: waagerechte Rollbreite des DOKUMENTS.
+  // Regel 6: Fensterkanten-Ueberstand.
   // Die Regeln 1 bis 4 vergleichen Kind gegen Container. Ein Element, das
-  // ueber den Fensterrand hinausragt, ohne seinen Container zu verlassen,
+  // ueber den FENSTERrand hinausragt, ohne seinen Container zu verlassen,
   // faellt dort durch. Genau so blieb der Fehler auf datenschutz.html
-  // unentdeckt: Rollbreite 344 gegen Fensterbreite 320 bei 320 px, und alle
-  // vier Regeln meldeten sauber.
-  // Umgekehrt gilt: diese Regel ersetzt die anderen NICHT. Am 28.07.2026
-  // gemessen, ein Element 620 px ueber seinen Container hinaus, und die
-  // Rollbreite blieb bei 0 Ueberschuss, weil der Container klippt.
+  // unentdeckt: 344 px Inhalt in 320 px Fenster, alle vier Regeln sauber.
+  //
+  // NEU GEBAUT am 28.07.2026, weil die erste Fassung nichts gemessen hat.
+  // Sie las `documentElement.scrollWidth` gegen `clientWidth`. `css/site.css`
+  // setzt aber in Zeile 14 und 48 `overflow-x: clip` auf `html` und `body`,
+  // damit ist `scrollWidth` dauerhaft auf `clientWidth` geklemmt. Gemessene
+  // Gegenprobe mit demselben 400-px-Block als direktes `body`-Kind: auf
+  // `impressum` (ohne `site.css`) 5 Befunde bei 320 bis 414 px, auf `hinweise`
+  // (mit `site.css`) 0. Befundfaehig waren nur 3 von 30 Seiten, also 24 von 240
+  // Dokumenten, waehrend die Konsole "232 Dokumente geprueft" meldete.
+  // Zweite Blindstelle derselben Messgroesse: `scrollWidth` waechst nur nach
+  // rechts. Ein Block 176 px links AUS dem Fenster ergab 375 gegen 375, also
+  // 0 Ueberschuss, sogar auf einer Seite ohne `site.css`.
+  //
+  // Deshalb wird jetzt der Ueberstand DIREKT aus den Elementkanten gegen
+  // `clientWidth` gebildet, links wie rechts. `overflow-x: clip` auf `html`
+  // und `body` aendert daran nichts, denn die Elementkante bleibt messbar.
+  // Lehre: _Learnings/web/feedback_gate_misst_geklemmten_wert_2026-07-28.md
   const de = document.documentElement;
-  erg.r6 = {
+  const fensterBreite = de.clientWidth;
+  const tol6 = cfg.regeln.r6_fensterkanten_ueberstand?.toleranzPx ?? 0.5;
+  // Ein Element, das ZWISCHEN sich und `body` einen Vorfahren mit eigenem
+  // waagerechtem Ueberlauf hat, kann die Fensterkante gar nicht erreichen: es
+  // wird vorher abgeschnitten oder ist in einem rollbaren Kasten erreichbar.
+  // `html` und `body` zaehlen hier ausdruecklich NICHT, denn genau ihr
+  // `overflow-x: clip` war die Ursache der Blindheit.
+  const zwischenGeklippt = (el) => {
+    let a = el.parentElement;
+    while (a && a !== document.body && a !== de) {
+      if (getComputedStyle(a).overflowX !== 'visible') return wahl(a);
+      a = a.parentElement;
+    }
+    return null;
+  };
+  for (const el of alle) {
+    if (ignoriert(el)) continue;
+    const cs = getComputedStyle(el);
+    if (!sichtbar(el, cs)) continue;
+    const b = el.getBoundingClientRect();
+    if (b.width < 1 || b.height < 1) continue;
+    if (zwischenGeklippt(el)) continue;
+    erg.abdeckung.r6++;
+    const ueberLinks = -b.left;
+    const ueberRechts = b.right - fensterBreite;
+    if (ueberLinks > tol6 || ueberRechts > tol6) {
+      erg.r6.push({
+        element: wahl(el),
+        ueberstandLinks: rr(Math.max(0, ueberLinks)),
+        ueberstandRechts: rr(Math.max(0, ueberRechts)),
+        elementBreite: rr(b.width),
+        fensterBreite: rr(fensterBreite),
+        position: cs.position,
+      });
+    }
+  }
+  erg.r6.sort(
+    (a, c) =>
+      Math.max(c.ueberstandLinks, c.ueberstandRechts) -
+      Math.max(a.ueberstandLinks, a.ueberstandRechts)
+  );
+  // Die Rollbreite bleibt als KONTEXTZAHL im Bericht, aber sie ist kein Urteil
+  // mehr. Sie sagt nur noch, ob die Seite zusaetzlich waagerecht rollt.
+  erg.rollbreite = {
     scrollWidth: rr(de.scrollWidth),
     clientWidth: rr(de.clientWidth),
     ueberschuss: rr(de.scrollWidth - de.clientWidth),
   };
-  // Wer ragt heraus? Ohne diese Angabe ist der Befund nicht reparierbar.
-  if (erg.r6.ueberschuss > 0) {
-    const taeter = [];
-    for (const el of document.querySelectorAll('*')) {
-      if (ignoriert(el)) continue;
-      const cs = getComputedStyle(el);
-      if (!sichtbar(el, cs) || cs.position === 'fixed') continue;
-      const b = el.getBoundingClientRect();
-      if (b.width === 0 || b.height === 0) continue;
-      const raus = rr(b.right + window.scrollX - de.clientWidth);
-      if (raus > 0.5) taeter.push({ el: wahl(el), ueber: raus, breite: rr(b.width) });
-    }
-    taeter.sort((a, b) => b.ueber - a.ueber);
-    erg.r6.taeter = taeter.slice(0, 5);
-  }
 
   return erg;
 }
@@ -405,7 +545,12 @@ try {
         antwort = await page.goto(ziel, { waitUntil: 'networkidle' }).catch(() => null);
         if (antwort && antwort.ok()) break;
       }
-      if (versuche > 1) fehlversuche += versuche - 1;
+      // Fehlversuche exakt zaehlen. Die alte Fassung rechnete `versuche - 1` und
+      // liess damit den letzten, ebenfalls gescheiterten Versuch unter den Tisch
+      // fallen: bei 10 Seiten x 3 vergeblichen Versuchen meldete sie 20 statt 30.
+      // Gemessen am 28.07.2026 gegen einen Server, der dauerhaft 503 liefert.
+      const erfolgreich = antwort && antwort.ok();
+      fehlversuche += erfolgreich ? versuche - 1 : versuche;
       if (!antwort || !antwort.ok()) {
         // Transportfehler wird als eigene Gattung gefuehrt, nicht als Layoutbefund.
         transportfehler.push({
@@ -473,20 +618,45 @@ try {
           daten: f,
         });
       }
-      // Regel 6: waagerechte Rollbreite des Dokuments.
-      const r6 = konfig.regeln.r6_dokument_rollbreite;
-      const ausgenommen = (r6.ausnahmen ?? []).find(
-        (a) => a.seite === seite.name && (a.breite === undefined || a.breite === breite)
-      );
-      rollbreiteBericht.push({ seite: seite.name, breite, ...r.r6 });
-      if (r.r6.ueberschuss > (r6.toleranzPx ?? 0.5) && !ausgenommen) {
-        const wer = (r.r6.taeter ?? []).map((t) => `${t.el} ragt ${t.ueber} px hinaus`).join(', ');
+      for (const f of r.r5) {
+        if (
+          konfig.regeln.r5_seitenversatz.ausnahmen.some(
+            (a) => f.block.includes(a.block) && f.container.includes(a.container)
+          )
+        )
+          continue;
+        befunde.push({
+          seite: seite.name,
+          breite,
+          regel: 'R5',
+          text: `${f.block} steht in ${f.container} weder buendig noch mittig (${f.art}): links ${f.abstandLinks} px, rechts ${f.abstandRechts} px, Abweichung ${f.abweichung} px (Block ${f.blockBreite} px in Inhaltsbreite ${f.inhaltsBreite} px)`,
+          daten: f,
+        });
+      }
+      // Regel 6: Fensterkanten-Ueberstand.
+      const r6 = konfig.regeln.r6_fensterkanten_ueberstand;
+      rollbreiteBericht.push({ seite: seite.name, breite, ...r.rollbreite });
+      for (const f of r.r6) {
+        if (
+          (r6.ausnahmen ?? []).some(
+            (a) =>
+              f.element.includes(a.element) &&
+              (a.seite === undefined || a.seite === seite.name) &&
+              (a.breite === undefined || a.breite === breite)
+          )
+        )
+          continue;
+        const seiten = [];
+        if (f.ueberstandLinks > (r6.toleranzPx ?? 0.5))
+          seiten.push(`links ${f.ueberstandLinks} px`);
+        if (f.ueberstandRechts > (r6.toleranzPx ?? 0.5))
+          seiten.push(`rechts ${f.ueberstandRechts} px`);
         befunde.push({
           seite: seite.name,
           breite,
           regel: 'R6',
-          text: `Dokument rollt waagerecht: scrollWidth ${r.r6.scrollWidth} gegen clientWidth ${r.r6.clientWidth}, Ueberschuss ${r.r6.ueberschuss} px${wer ? '. Verursacher: ' + wer : ''}`,
-          daten: r.r6,
+          text: `${f.element} ragt aus dem Fenster: ${seiten.join(', ')} (Element ${f.elementBreite} px, Fenster ${f.fensterBreite} px, position ${f.position})`,
+          daten: f,
         });
       }
 
@@ -518,7 +688,14 @@ try {
 const heute = new Date().toISOString().slice(0, 10);
 const berichtVerzeichnis = path.join(wurzel, 'reports');
 await mkdir(berichtVerzeichnis, { recursive: true });
-const berichtPfad = path.join(berichtVerzeichnis, `${heute}_Raster-Befund_HERO.md`);
+// Lokaler Lauf und Live-Lauf bekommen GETRENNTE Dateinamen. Vorher schrieben
+// beide in dieselbe Datei, der zweite Lauf ueberschrieb den ersten, und im PR
+// [#83] lag deshalb nur der lokale Bericht, waehrend der Live-Beleg als
+// unversionierte Arbeitsbaum-Aenderung verschwand.
+const berichtPfad = path.join(
+  berichtVerzeichnis,
+  eigenerServer ? `${heute}_Raster-Befund_HERO.md` : `${heute}_Raster-Befund-LIVE_HERO.md`
+);
 
 const nachRegel = (r) => befunde.filter((b) => b.regel === r);
 const zeilen = [];
@@ -533,12 +710,13 @@ zeilen.push('');
 for (const [regel, titel] of [
   ['R1', 'Regel 1: Container-Ueberstand (hart)'],
   ['R3', 'Regel 3: Kind nimmt die Aussenbreite statt der Inhaltsbreite (hart)'],
-  ['R4', 'Regel 4: Seitenrand-Treue fester Elemente (hart)'],
-  ['R6', 'Regel 6: waagerechte Rollbreite des Dokuments (hart)'],
+  ['R4', 'Regel 4: Seitenrand-Treue vollbreiter Container (hart)'],
+  ['R5', 'Regel 5: erklaerter Seitenversatz schmalerer Bloecke (hart)'],
+  ['R6', 'Regel 6: Fensterkanten-Ueberstand (hart)'],
   ['R2', 'Regel 2: Kanten-Inventar'],
 ]) {
   const liste = nachRegel(regel);
-  zeilen.push(`## ${titel} — ${liste.length === 0 ? 'PASS' : liste.length + ' FAIL'}`);
+  zeilen.push(`## ${titel}: ${liste.length === 0 ? 'PASS' : liste.length + ' FAIL'}`);
   zeilen.push('');
   if (liste.length) {
     zeilen.push('| Seite | Breite | Befund |');
@@ -567,15 +745,35 @@ if (!eigenerServer) {
 zeilen.push('## Abdeckung (was die Regeln ueberhaupt angefasst haben)');
 zeilen.push('');
 zeilen.push(
-  '> Eine Regel, die nichts prueft, meldet PASS und ist gefaehrlicher als eine abgeschaltete. Diese Tabelle weist aus, wie viele Elemente je Regel tatsaechlich in den Test gelaufen sind. Steht in einer Spalte 0, ist die Regel auf dieser Seite wirkungslos.'
+  '> Eine Regel, die nichts prueft, meldet PASS und ist gefaehrlicher als eine abgeschaltete. Diese Tabelle weist aus, wie viele Elemente je Regel **befundfaehig** waren, also einen Befund haetten erzeugen koennen. Steht in einer Spalte 0, ist die Regel auf dieser Seite wirkungslos. Gezaehlt werden ausdruecklich NICHT die Seitenaufrufe: die erste Fassung von Regel 6 meldete "232 Dokumente geprueft" und konnte auf 26 von 29 Seiten baulich nichts messen.'
 );
 zeilen.push('');
-zeilen.push('| Seite | Breite | Elemente | davon sichtbar | in Regel 1+3 | in Regel 4 |');
-zeilen.push('|---|---|---|---|---|---|');
+zeilen.push(
+  '| Seite | Breite | Elemente | davon sichtbar | in Regel 1+3 | in Regel 4 | in Regel 5 | in Regel 6 |'
+);
+zeilen.push('|---|---|---|---|---|---|---|---|');
 for (const a of abdeckung)
   zeilen.push(
-    `| ${a.seite} | ${a.breite} px | ${a.elemente} | ${a.sichtbar} | ${a.r1r3} | ${a.r4} |`
+    `| ${a.seite} | ${a.breite} px | ${a.elemente} | ${a.sichtbar} | ${a.r1r3} | ${a.r4} | ${a.r5} | ${a.r6} |`
   );
+zeilen.push('');
+zeilen.push('## Waagerechte Rollbreite (Kontextzahl, kein Urteil)');
+zeilen.push('');
+zeilen.push(
+  '> `documentElement.scrollWidth` gegen `clientWidth`. Diese Zahl ist bewusst KEIN Pruefkriterium mehr: `css/site.css` setzt `overflow-x: clip` auf `html` und `body`, damit ist sie auf jeder Seite mit diesem Stylesheet auf `clientWidth` geklemmt. Das Urteil faellt Regel 6 aus den Elementkanten. Steht hier ein Ueberschuss, rollt die Seite zusaetzlich waagerecht.'
+);
+zeilen.push('');
+const rollAuffaellig = rollbreiteBericht.filter((r) => r.ueberschuss > 0.5);
+if (rollAuffaellig.length) {
+  zeilen.push('| Seite | Breite | scrollWidth | clientWidth | Ueberschuss |');
+  zeilen.push('|---|---|---|---|---|');
+  for (const r of rollAuffaellig)
+    zeilen.push(
+      `| ${r.seite} | ${r.breite} px | ${r.scrollWidth} | ${r.clientWidth} | ${r.ueberschuss} px |`
+    );
+} else {
+  zeilen.push(`Kein Ueberschuss auf ${rollbreiteBericht.length} Dokumenten.`);
+}
 zeilen.push('');
 zeilen.push('## Kanten-Inventar (Bericht)');
 zeilen.push('');
@@ -586,7 +784,7 @@ if (!konfig.regeln.r2_kanten_inventar.streng) {
   zeilen.push('');
 }
 for (const e of kantenBericht) {
-  zeilen.push(`**${e.seite}, ${e.breite} px — ${e.kanten.length} verschiedene linke Kanten**`);
+  zeilen.push(`**${e.seite}, ${e.breite} px: ${e.kanten.length} verschiedene linke Kanten**`);
   zeilen.push('');
   zeilen.push('| Kante | Bloecke | Beispiele |');
   zeilen.push('|---|---|---|');
@@ -609,16 +807,8 @@ for (const [k, n] of [...gruppiert.entries()].sort((a, c) => c[1] - a[1]))
   console.log(`  ${n}x  ${k}`);
 const summe = (k) => abdeckung.reduce((a, b) => a + b[k], 0);
 console.log(
-  `Abdeckung: ${summe('sichtbar')} sichtbare Elemente, davon ${summe('r1r3')} in Regel 1+3, ${summe('r4')} in Regel 4, ${rollbreiteBericht.length} Dokumente in Regel 6.`
+  `Abdeckung (befundfaehige Elemente): ${summe('sichtbar')} sichtbar, davon ${summe('r1r3')} in Regel 1+3, ${summe('r4')} in Regel 4, ${summe('r5')} in Regel 5, ${summe('r6')} in Regel 6.`
 );
-// Eine Regel ohne Pruefgegenstand meldet PASS, ohne etwas zu belegen.
-for (const [name, n] of [
-  ['Regel 1+3', summe('r1r3')],
-  ['Regel 4', summe('r4')],
-  ['Regel 6', rollbreiteBericht.length],
-])
-  if (n === 0)
-    console.log(`  WARNUNG: ${name} hat kein einziges Element geprueft und belegt damit nichts.`);
 if (!eigenerServer) {
   console.log(
     `Live-Lauf: ${transportfehler.length} Transportfehler nach je ${LIVE.versuche} Versuchen, ${fehlversuche} Fehlversuche insgesamt, Pause ${LIVE.pauseMs} ms je Aufruf.`
@@ -628,6 +818,35 @@ if (!eigenerServer) {
       console.log(`  TRANSPORT ${t.seite} ${t.breite} px: ${t.text}`);
 }
 console.log(`Befunddatei: ${path.relative(wurzel, berichtPfad)}`);
+
+// ── Gueltigkeit des Laufs ───────────────────────────────────────────────────
+// Ein Lauf, der nichts gemessen hat, ist UNGUELTIG, nicht gruen. Gemessen am
+// 28.07.2026 gegen einen Server, der dauerhaft 503 lieferte: 0 gemessene
+// Dokumente, 10 Transportfehler, drei Nullabdeckungs-Warnungen, und trotzdem
+// "Raster-Gate PASS" mit Rueckgabewert 0. Ein gruenes Ergebnis ohne Messung ist
+// die gefaehrlichste Ausgabe, die ein Pruefwerkzeug erzeugen kann.
+// Lehre: _Learnings/agenten/feedback_messung_deren_voraussetzung_still_scheitert_2026-07-28.md
+const soll = konfig.seiten.length * konfig.breiten.length;
+const anteilTransport = soll ? transportfehler.length / soll : 0;
+const maxAnteil = konfig.gueltigkeit?.maxAnteilTransportfehler ?? 0.05;
+const ungueltig = [];
+if (geprüft === 0) ungueltig.push('kein einziges Dokument gemessen');
+if (anteilTransport > maxAnteil)
+  ungueltig.push(
+    `${transportfehler.length} von ${soll} Aufrufen nicht ladbar (${(anteilTransport * 100).toFixed(1)} Prozent, Grenze ${(maxAnteil * 100).toFixed(1)} Prozent)`
+  );
+for (const [name, n] of [
+  ['Regel 1+3', summe('r1r3')],
+  ['Regel 4', summe('r4')],
+  ['Regel 5', summe('r5')],
+  ['Regel 6', summe('r6')],
+])
+  if (n === 0) ungueltig.push(`${name} hat kein einziges Element geprueft und belegt damit nichts`);
+if (ungueltig.length) {
+  console.error('Raster-Gate UNGUELTIG. Der Lauf belegt nichts und gilt nicht als bestanden:');
+  for (const u of ungueltig) console.error(`  ${u}`);
+  process.exit(4);
+}
 
 if (befunde.length && !nurBericht) {
   console.error(
