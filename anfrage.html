@@ -768,6 +768,10 @@
     .legal-footer .cookie-settings-button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 10px;border:0;background:transparent;color:var(--green);font:inherit;text-decoration:underline;cursor:pointer;}
     .cookie-settings-button[hidden]{display:none!important;}
     .cookie-settings-button:focus-visible{outline:3px solid var(--green);outline-offset:3px;border-radius:2px;}
+    /* 29.07.2026: Der pausierte consentmanager Tarif zeigt ein rotes Warnsymbol.
+       Nur die Pausenklasse wird ausgeblendet. Nach Buchung des Starter Tarifs
+       wird diese Regel von selbst wirkungslos. */
+    .cmprecallwarning{display:none!important;}
   </style>
   <link rel="preload" href="tokens.css?v=4c1b19042c" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="tokens.css?v=4c1b19042c"></noscript>
