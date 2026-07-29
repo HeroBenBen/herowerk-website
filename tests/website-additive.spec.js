@@ -2,8 +2,8 @@
 'use strict';
 /* global dataLayer, sessionStorage */
 const { test, expect } = require('@playwright/test');
-const AxeBuilder = require('@axe-core/playwright').default;
 const { gotoWithConsentRejected } = require('./helpers/consent');
+const { axeBefunde, pruefeGegenBekannte } = require('./helpers/axe');
 
 // O21: Auf einer Vercel-Preview laeuft kein PHP, deshalb liefert /api/rechner
 // (Proxy api/rechner.php) fuer action=preise und action=foerderung 404. Ohne Live-Preise
@@ -46,12 +46,38 @@ async function kvFulfillJson(route, payload) {
   });
 }
 
-test('@smoke Theme-Toggle setzt Light- und Dark-Mode per URL/LocalStorage', async ({ page }) => {
-  await gotoWithConsentRejected(page, '/?theme=light');
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
-  await page.locator('[data-theme-toggle]').filter({ visible: true }).first().click();
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-});
+// Der Umschalter sitzt je nach Breite an einer ANDEREN Stelle. Gemessen 29.07.2026
+// auf der Vercel-Vorschau, je Breite genau ein sichtbares Exemplar von dreien:
+//   375 px  -> nur im Telefon-Menue, also erst NACH Klick auf #hamburger sichtbar
+//   768 px  -> .nav-theme-standalone in der Kopfzeile
+//   1280 px -> der Umschalter in der Hauptnavigation
+// Der Test lief bis hierher blind gegen 375 px OHNE das Menue zu oeffnen und wartete
+// darum 60 s auf ein Element, das an dieser Breite gar nicht sichtbar sein SOLL. Das
+// war kein Seitenfehler, sondern ein veralteter Test: die Kopfzeile wurde am 25.07.
+// per GF-Entscheid von 9 auf 6 Punkte verschlankt (a2c4c1b), der Umschalter wanderte
+// dabei ins Menue. Die Pruefung deckt jetzt alle drei Breiten ab und wuerde damit
+// auffallen, wenn der Umschalter auf einer davon verschwindet.
+const UMSCHALTER_BREITEN = [
+  { breite: 375, menueOeffnen: true },
+  { breite: 768, menueOeffnen: false },
+  { breite: 1280, menueOeffnen: false },
+];
+
+for (const { breite, menueOeffnen } of UMSCHALTER_BREITEN) {
+  test(`@smoke Theme-Umschalter erreichbar und wirksam bei ${breite} px`, async ({ page }) => {
+    await page.setViewportSize({ width: breite, height: 900 });
+    await gotoWithConsentRejected(page, '/?theme=light');
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+    if (menueOeffnen) await page.locator('#hamburger').click();
+    const sichtbare = page.locator('[data-theme-toggle]').filter({ visible: true });
+    // Genau EIN sichtbarer Umschalter je Breite. Der GF-Entscheid vom 27.07. lautet
+    // "exakt ein Bauteil, keine zweite Variante" (be424ca); zwei gleichzeitig
+    // sichtbare Umschalter waeren ein Rueckschritt und muessen auffallen.
+    await expect(sichtbare).toHaveCount(1);
+    await sichtbare.first().click();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  });
+}
 
 test('@smoke Hersteller-Vorauswahl zeigt Wolf- und Vaillant-Karten im gemeinsamen Panel', async ({
   page,
@@ -59,7 +85,7 @@ test('@smoke Hersteller-Vorauswahl zeigt Wolf- und Vaillant-Karten im gemeinsame
   await page.route(/[?&]action=preise/, (route) => kvFulfillJson(route, KV_PREISE_FIXTURE));
   await gotoWithConsentRejected(page, '/preise.html?theme=dark');
   // Drift-fest: prueft, dass die Live-Preis-Verdrahtung (action=preise, Single Source)
-  // einen echten Eigenanteil rendert — nicht den "ab … Eigenanteil*"-Platzhalter. Kein
+  // einen echten Eigenanteil rendert, nicht den "ab … Eigenanteil*"-Platzhalter. Kein
   // hartkodierter Sheet-Preis (der bei jeder Preisaenderung driftet).
   await expect(page.locator('#wolfMinEigen')).toContainText(/ab [\d.]+ € Eigenanteil/);
   await page.locator('#manufacturerVaillant').click();
@@ -158,12 +184,13 @@ for (const path of [
   '/datenschutz.html?theme=dark',
   '/hinweise.html?theme=light',
 ]) {
-  test(`@a11y axe-core 0 Violations auf ${path}`, async ({ page }) => {
+  test(`@a11y axe-core ohne neue Befunde auf ${path}`, async ({ page }) => {
     await gotoWithConsentRejected(page, path, { waitUntil: 'networkidle' });
     await page.evaluate('document.fonts.ready');
     await page.waitForTimeout(250);
-    const results = await new AxeBuilder({ page }).analyze();
-    const summary = results.violations.map((v) => `${v.id} (${v.impact}): ${v.nodes.length}x`);
-    expect(summary, summary.join('\n')).toEqual([]);
+    const [seite, theme] = path.split('?theme=');
+    const gemessen = await axeBefunde(page);
+    const beanstandungen = pruefeGegenBekannte(gemessen, seite, theme);
+    expect(beanstandungen, beanstandungen.join('\n')).toEqual([]);
   });
 }

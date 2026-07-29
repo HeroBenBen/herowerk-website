@@ -33,6 +33,8 @@ declare const dataLayer: any[];
 declare function gtag(...args: any[]): void;
 
 interface Window {
+  /** consentmanager-API des Einwilligungsanbieters. Fundstelle: cdn.consentmanager.net/delivery/js/cmp_final.min.js, live geprueft 29.07.2026 (typeof window.__cmp === 'function' auf Vorschau und www.herowerk.de). */
+  __cmp?: any;
   /** WP-Rechner Thin Client: Wizard-Bridge-Handle (schaetzungsbasierter Bedarf). Fundstelle: kostenvergleich-waermepumpe.html:1076/1083 */
   WZ_BRIDGE?: any;
   /** WP-Rechner Thin Client: Test-Zwischenspeicher fuer den O4-Lead-Roundtrip. Fundstelle: tests/kv-thin-client.spec.js:595 */

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-18",
+  "generated": "2026-07-29",
   "rule": "section-id primär, H2-Fallback, FAQ separat; Fail bei >30% Wort-Abweichung",
   "threshold": 0.3,
   "pages": [
@@ -8,11 +8,11 @@
       "sections": [
         {
           "id": "class:hero",
-          "words": 174
+          "words": 69
         },
         {
           "id": "foerdervorschuss",
-          "words": 94
+          "words": 85
         },
         {
           "id": "schnellstart",
@@ -28,7 +28,7 @@
         },
         {
           "id": "prozess-start",
-          "words": 30
+          "words": 33
         },
         {
           "id": "ratgeber-start",
@@ -41,11 +41,11 @@
       "sections": [
         {
           "id": "preise-intro",
-          "words": 152
+          "words": 158
         },
         {
           "id": "preise",
-          "words": 252
+          "words": 536
         },
         {
           "id": "verbindlicher-preis",
@@ -79,15 +79,15 @@
       "sections": [
         {
           "id": "foerder",
-          "words": 349
+          "words": 436
         },
         {
           "id": "class:section",
-          "words": 339
+          "words": 476
         },
         {
           "id": "foerder-ablauf",
-          "words": 551
+          "words": 605
         },
         {
           "id": "faq[1]",
@@ -97,7 +97,7 @@
         {
           "id": "faq[2]",
           "question": "Sinkt die Förderung wirklich?",
-          "words": 38
+          "words": 56
         },
         {
           "id": "faq[3]",
@@ -119,7 +119,7 @@
       "sections": [
         {
           "id": "prozess",
-          "words": 179
+          "words": 181
         },
         {
           "id": "class:detail-final-cta",
@@ -132,13 +132,14 @@
       "sections": [
         {
           "id": "blog",
-          "words": 420,
+          "words": 445,
           "cardHrefs": [
             "/waermepumpe-altbau",
             "/wp-kosten-hannover",
             "/waermepumpenstrom-hannover",
             "/wertsteigerung-waermepumpe",
             "/gasheizung-tauschen-oder-reparieren",
+            "/amortisation-waermepumpe",
             "/foerderung-jetzt-mitnehmen",
             "/foerderung-hannover",
             "/foerdervorschuss",
@@ -155,6 +156,7 @@
             "/waermepumpenstrom-hannover",
             "/wertsteigerung-waermepumpe",
             "/gasheizung-tauschen-oder-reparieren",
+            "/amortisation-waermepumpe",
             "/foerderung-jetzt-mitnehmen",
             "/foerderung-hannover",
             "/foerdervorschuss",
@@ -219,7 +221,7 @@
       "sections": [
         {
           "id": "contact",
-          "words": 86
+          "words": 63
         }
       ]
     },
@@ -228,11 +230,11 @@
       "sections": [
         {
           "id": "h2-block[0]",
-          "words": 2
+          "words": 5
         },
         {
           "id": "h2-block[1]",
-          "words": 166
+          "words": 167
         },
         {
           "id": "h2-block[2]",
@@ -280,7 +282,7 @@
         },
         {
           "id": "h2-block[13]",
-          "words": 58
+          "words": 59
         }
       ]
     }
