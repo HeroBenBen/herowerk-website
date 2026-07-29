@@ -28,7 +28,7 @@
     gtag('set', 'url_passthrough', true);
   </script>
   <!-- (c) Opt-in-Loader: injiziert GA4 (G-1XT9BLBDW8) + Meta-Pixel (1348888427192043) ERST nach Consent -->
-  <script src="js/consent.js?v=5e2ae31749"></script>
+  <script src="js/consent.js?v=4b5d67e180"></script>
   <!-- ============================================================== -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/fonts.css?v=d3f3999a2f">
@@ -765,6 +765,9 @@
        hier nicht. */
     .legal-footer{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px;padding:24px 16px;font-size:.9rem;}
     .legal-footer a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 10px;}
+    .legal-footer .cookie-settings-button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 10px;border:0;background:transparent;color:var(--green);font:inherit;text-decoration:underline;cursor:pointer;}
+    .cookie-settings-button[hidden]{display:none!important;}
+    .cookie-settings-button:focus-visible{outline:3px solid var(--green);outline-offset:3px;border-radius:2px;}
   </style>
   <link rel="preload" href="tokens.css?v=4c1b19042c" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="tokens.css?v=4c1b19042c"></noscript>
@@ -2379,6 +2382,7 @@
   prefillFoerdervorschussFromUrl();
 </script>
 
-  <nav class="legal-footer" aria-label="Rechtliches"><a href="/impressum">Impressum</a> &middot; <a href="/datenschutz">Datenschutz</a> &middot; <a href="/barrierefreiheit">Barrierefreiheit</a></nav>
+  <nav class="legal-footer" aria-label="Rechtliches"><a href="/impressum">Impressum</a> &middot; <a href="/datenschutz">Datenschutz</a> &middot;
+    <button type="button" class="cookie-settings-button" hidden>Cookie-Einstellungen</button> &middot; <a href="/barrierefreiheit">Barrierefreiheit</a></nav>
 </body>
 </html>

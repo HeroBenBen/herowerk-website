@@ -42,6 +42,7 @@
 
   var ga4Loaded = false;
   var metaLoaded = false;
+  var cookieSettingsReady = false;
 
   // ----- GA4 (gtag.js) erst nach analytics-Einwilligung injizieren -----------
   function loadGA4() {
@@ -93,6 +94,8 @@
     if (typeof window.__cmp !== 'function') return;
     window.__cmp('getCMPData', null, function (data) {
       if (!data) return;
+      cookieSettingsReady = true;
+      syncCookieSettingsButtons();
 
       var purposes = data.purposeConsents || data.consent || {};
       var vendors = data.vendorConsents || {};
@@ -115,6 +118,39 @@
       if (analyticsOk) loadGA4();
       if (marketingOk) loadMetaPixel();
     });
+  }
+
+  // Der Footer-Knopf bleibt verborgen, solange die öffentliche CMP-Schnittstelle
+  // keine Daten zurückliefert. Der pausierte Dienst stellt bereits einen __cmp
+  // Stub bereit, deshalb reicht die reine Typprüfung nicht als Bereitschaftssignal.
+  // showScreenAdvanced öffnet laut consentmanager JavaScript API den Preference
+  // Manager für bestehende Einwilligungen.
+  function syncCookieSettingsButtons() {
+    var buttons = document.querySelectorAll('.cookie-settings-button');
+    var cmpAvailable = cookieSettingsReady && typeof window.__cmp === 'function';
+
+    buttons.forEach(function (button) {
+      button.hidden = !cmpAvailable;
+      if (button.dataset.cmpBound === '1') return;
+      button.dataset.cmpBound = '1';
+      button.addEventListener('click', function () {
+        if (typeof window.__cmp !== 'function') {
+          button.hidden = true;
+          return;
+        }
+        try {
+          window.__cmp('showScreenAdvanced');
+        } catch (e) {
+          button.hidden = true;
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', syncCookieSettingsButtons);
+  } else {
+    syncCookieSettingsButtons();
   }
 
   // consentmanager feuert __cmp('addEventListener', 'consent', ...) bei jeder

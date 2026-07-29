@@ -8,6 +8,7 @@ const root = path.resolve(process.env.CONSENT_CHECK_ROOT || path.join(__dirname,
 const cmpCodeId = 'd94854dc5273c';
 const cmpScriptUrl = `https://cdn.consentmanager.net/delivery/autoblocking/${cmpCodeId}.js`;
 const cmpDeliveryHost = 'https://a.delivery.consentmanager.net';
+const cmpCdnHost = 'https://cdn.consentmanager.net';
 const skippedDirectories = new Set(['.git', 'dist-ionos', 'node_modules', 'reports']);
 const errors = [];
 
@@ -80,10 +81,18 @@ function checkCsp(label, policy) {
     .split(';')
     .map((part) => part.trim())
     .find((part) => part.startsWith('script-src '));
-  const tokens = scriptDirective?.split(/\s+/).slice(1) || [];
+  const scriptTokens = scriptDirective?.split(/\s+/).slice(1) || [];
+  const styleDirective = policy
+    .split(';')
+    .map((part) => part.trim())
+    .find((part) => part.startsWith('style-src '));
+  const styleTokens = styleDirective?.split(/\s+/).slice(1) || [];
 
-  if (!tokens.includes(cmpDeliveryHost)) {
+  if (!scriptTokens.includes(cmpDeliveryHost)) {
     errors.push(`${label}: ${cmpDeliveryHost} fehlt als exakter Host in script-src.`);
+  }
+  if (!styleTokens.includes(cmpCdnHost)) {
+    errors.push(`${label}: ${cmpCdnHost} fehlt als exakter Host in style-src.`);
   }
 }
 
