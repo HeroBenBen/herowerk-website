@@ -35,11 +35,11 @@
   <link rel="stylesheet" href="css/fonts.css?v=d3f3999a2f">
   <link rel="preload" href="tokens.css?v=4c1b19042c" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="tokens.css?v=4c1b19042c"></noscript>
-  <link rel="stylesheet" href="css/site.css?v=53e1e77a8d">
+  <link rel="stylesheet" href="css/site.css?v=a999512a3e">
 <style>
 /* Fonts von der Site selbst (/fonts/, CSP font-src 'self') */
 </style>
-<title>Kosten-Vergleichsrechner: Öl und Gas oder Wärmepumpe | HeroWerk</title>
+<title>INTERN: Kostenvergleich Berater-Fassung, nicht veroeffentlichen</title>
 <meta name="description" content="Vergleiche Wärmepumpe mit neuer Öl- oder Gasheizung. Gib Heizart und Verbrauch ein und sieh Kosten, Förderung und Finanzierung bis 25 Jahre.">
 <link rel="canonical" href="https://www.herowerk.de/kostenvergleich-waermepumpe">
 <meta property="og:type" content="website">
@@ -802,10 +802,8 @@ function kvSetStatus(kind,message){
   document.getElementById('kvRetry').addEventListener('click',()=>calculate({showResults:true,scroll:true}));
 }
 function kvReadInputs(extra){
-  // GF-Entscheid 30.07.2026: der Beratermodus hat online nichts verloren.
-  // Die oeffentliche Seite sendet und kennt nur noch den Kundenmodus; die
-  // Berater-Fassung lebt als interne Kopie unter docs/intern/ (nie im Upload-Paket).
-  const q=new URLSearchParams({action:'kostenvergleich',origin:'https://herowerk.de',modus:'kunde'});
+  // Interne Fassung: sendet immer den Beratermodus.
+  const q=new URLSearchParams({action:'kostenvergleich',origin:'https://herowerk.de',modus:'berater'});
   KV_INPUT_IDS.forEach(id=>{const el=document.getElementById(id);if(!el)return;q.set(id,el.type==='checkbox'?(el.checked?'1':'0'):el.value);});
   Object.entries(extra||{}).forEach(([key,value])=>{if(value!==undefined&&value!==null&&value!=='')q.set(key,String(value));});
   return q;
@@ -945,10 +943,12 @@ kvLoadBootstrap();
   const $=id=>document.getElementById(id);
   const q=(root,sel)=>root?root.querySelector(sel):null;
   const qa=(root,sel)=>root?Array.from(root.querySelectorAll(sel)):[];
-  // GF-Entscheid 30.07.2026: Beratermodus aus der oeffentlichen Seite entfernt.
-  // isBerater ist hart false, der Adressparameter modus wird ignoriert, und der
-  // fruehere Fusszeilen-Link "Berater-Ansicht" (addFooterLink) ist ersatzlos weg.
-  const isBerater=()=>false;
+  // INTERNE BERATER-FASSUNG (GF-Entscheid 30.07.2026): Beratermodus dauerhaft an,
+  // kein Adressparameter, kein Umschalt-Link. Diese Datei liegt unter docs/intern/
+  // und gehoert NIE in ein Upload-Paket; sie wird lokal geoeffnet oder von Benjamin
+  // in den zugangsgeschuetzten Bereich gelegt. Die Daten kommen weiterhin live von
+  // https://www.herowerk.de/api/rechner (absolute Adressen).
+  const isBerater=()=>true;
   function ctaHtml(compact){
     return `<h3>Aus Richtwerten wird Ihr Angebot</h3><p>Der Rechner zeigt die Größenordnung. Ihr individuelles Angebot rechnet mit Ihrem Gebäude, Ihrer Heizlast und der aktuell besten Förderung, kostenlos und unverbindlich.</p>${compact?'':`<ul><li>Vor-Ort-Termin mit Meisterbetrieb aus der Region Hannover</li><li>Förderantrag übernehmen wir</li><li>Festpreis statt Richtwert</li></ul>`}<a href="${CTA_URL}">Individuelles Angebot anfragen</a>`;
   }
