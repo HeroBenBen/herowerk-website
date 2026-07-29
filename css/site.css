@@ -4394,8 +4394,32 @@ footer {
   text-decoration: none;
   transition: color 0.2s;
 }
-.footer-legal a:hover {
+.cookie-settings-button {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.cookie-settings-button[hidden] {
+  display: none !important;
+}
+.footer-legal .cookie-settings-button {
+  color: var(--g400);
+  font-size: 12px;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-legal a:hover,
+.footer-legal .cookie-settings-button:hover {
   color: var(--green);
+}
+.cookie-settings-button:focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 @media (max-width: 768px) {
   .footer-grid {
