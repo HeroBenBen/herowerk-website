@@ -323,6 +323,13 @@ nav.scrolled {
   }
 }
 
+/* 29.07.2026: Der pausierte consentmanager Tarif zeigt ein rotes Warnsymbol.
+   Nur die Pausenklasse wird ausgeblendet. Nach Buchung des Starter Tarifs
+   wird diese Regel von selbst wirkungslos. */
+.cmprecallwarning {
+  display: none !important;
+}
+
 /* ENDE Telefon-Block. Alles Folgende gilt wieder bis 960 px.
    ACHTUNG, hier ist schon einmal etwas schiefgegangen: beim ersten Anlauf war
    der 960er-Block weiter oben geschlossen und wieder hier geoeffnet worden.
