@@ -1,4 +1,4 @@
-# Raster-Befund 2026-07-28
+# Raster-Befund 2026-07-29
 
 Quelle: lokaler Arbeitsstand des Repos
 Vorgesehen: 30 Seiten x 8 Breiten = 240 Laeufe.
@@ -2943,8 +2943,8 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 763.48 px | 7 | div, div, h2 |
 | 846.39 px | 1 | svg |
 | 849.24 px | 1 | path |
-| 991.32 px | 1 | div.pa-card.pa-visible.dimmed |
-| 1005.32 px | 7 | div, div, h2 |
+| 991.33 px | 1 | div.pa-card.pa-visible.dimmed |
+| 1005.33 px | 7 | div, div, h2 |
 | 1087.22 px | 1 | svg |
 
 **propan-waermepumpe, 600 px: 13 verschiedene linke Kanten**
@@ -3543,7 +3543,7 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 651.91 px | 1 | span |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**preise, 768 px: 29 verschiedene linke Kanten**
+**preise, 768 px: 30 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
@@ -3556,7 +3556,8 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 123.85 px | 1 | path |
 | 126 px | 1 | svg |
 | 241 px | 2 | div.pa-cta-icon, svg |
-| 268 px | 2 | div.pa-card.pa-visible.dimmed, div.pa-card.pa-visible.dimmed |
+| 268 px | 1 | div.pa-card.pa-visible.dimmed |
+| 268.01 px | 1 | div.pa-card.pa-visible.dimmed |
 | 283 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
 | 284 px | 12 | div, div, h2 |
 | 297.5 px | 1 | div.section-tag |

@@ -23,6 +23,17 @@ async function rejectConsentIfVisible(page, options = {}) {
     await banner.waitFor({ state: 'visible', timeout });
   } catch (error) {
     if (!(error instanceof errors.TimeoutError)) throw error;
+    // Kein Dialog vorhanden. Das wird fuer DIESE Seite gemerkt, nicht nur der Fall
+    // "Dialog war da und wurde weggeklickt".
+    // GEMESSENER GRUND (29.07.2026): der Mandant 173772 liefert derzeit ueberhaupt
+    // keinen Dialog aus, weder live noch in der Vorschau. Ohne dieses Merken wartet
+    // der Helfer bei JEDER Navigation erneut die vollen 10 s. Der Navigationstest
+    // ruft sechs Ziele auf, macht 6 x 10 s = 60 s und reisst damit die Zeitgrenze von
+    // 60 s pro Testfall. Der Test war dadurch auch nach der Korrektur der Menuepunkte
+    // noch rot, aus einem voellig anderen Grund als vorher.
+    // Die Annahme dahinter: der Einwilligungszustand gilt pro Browser-Kontext. Wenn
+    // beim ersten Laden kein Dialog kommt, kommt er auch beim zweiten nicht.
+    consentHandledPages.add(page);
     return false;
   }
 

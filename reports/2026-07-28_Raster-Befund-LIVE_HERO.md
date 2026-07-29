@@ -1,9 +1,14 @@
 # Raster-Befund 2026-07-28
 
-Quelle: lokaler Arbeitsstand des Repos
+Quelle: https://www.herowerk.de
 Vorgesehen: 30 Seiten x 8 Breiten = 240 Laeufe.
-Gemessen: 240 Dokumente.
-Ergebnis: PASS (0 harte Befunde).
+Gemessen: 232 Dokumente, 8 nicht ladbar (siehe Transportfehler).
+Ergebnis: UNGUELTIG (0 harte Befunde).
+
+> **Dieser Lauf belegt nichts und gilt nicht als bestanden.** Die Zahl der Befunde ist deshalb ohne Aussage.
+> - Seite "amortisation-waermepumpe" konnte auf keiner der 8 Breiten geladen werden und ist damit ungeprueft
+
+> **Nicht ausgeliefert:** amortisation-waermepumpe. Die Seite liegt im Repo und in der Pruefliste, die gepruefte Adresse antwortet aber mit 404. Das ist eine Luecke in der Auslieferung, kein Lastproblem.
 
 > **Nicht alle Regeln stehen scharf.** Dieser Lauf urteilt eingeschraenkt:
 > - R2 (r2_kanten_inventar): aktiv true, streng false
@@ -20,6 +25,21 @@ Ergebnis: PASS (0 harte Befunde).
 
 ## Regel 2: Kanten-Inventar: PASS
 
+## Transportfehler (KEINE Layoutbefunde)
+
+> Je Seitenaufruf bis zu 3 Versuche mit 1500 ms Pause, dazu 250 ms Drosselung zwischen den Aufrufen. Fehlversuche insgesamt: 24. Ein Transportfehler ist ein abgerissener Verbindungsversuch unter Last, kein Seitenfehler, und bricht den Lauf nicht als Rasterfehler ab.
+
+| Seite | Breite | Befund |
+|---|---|---|
+| amortisation-waermepumpe | 320 px | nach 3 Versuch(en) nicht ladbar: https://www.herowerk.de/amortisation-waermepumpe.html (404) |
+| amortisation-waermepumpe | 360 px | nach 3 Versuch(en) nicht ladbar: https://www.herowerk.de/amortisation-waermepumpe.html (404) |
+| amortisation-waermepumpe | 375 px | nach 3 Versuch(en) nicht ladbar: https://www.herowerk.de/amortisation-waermepumpe.html (404) |
+| amortisation-waermepumpe | 390 px | nach 3 Versuch(en) nicht ladbar: https://www.herowerk.de/amortisation-waermepumpe.html (404) |
+| amortisation-waermepumpe | 414 px | nach 3 Versuch(en) nicht ladbar: https://www.herowerk.de/amortisation-waermepumpe.html (404) |
+| amortisation-waermepumpe | 600 px | nach 3 Versuch(en) nicht ladbar: https://www.herowerk.de/amortisation-waermepumpe.html (404) |
+| amortisation-waermepumpe | 768 px | nach 3 Versuch(en) nicht ladbar: https://www.herowerk.de/amortisation-waermepumpe.html (404) |
+| amortisation-waermepumpe | 960 px | nach 3 Versuch(en) nicht ladbar: https://www.herowerk.de/amortisation-waermepumpe.html (404) |
+
 ## Abdeckung (was die Regeln ueberhaupt angefasst haben)
 
 > Eine Regel, die nichts prueft, meldet PASS und ist gefaehrlicher als eine abgeschaltete. Diese Tabelle weist aus, wie viele Elemente je Regel **befundfaehig** waren, also einen Befund haetten erzeugen koennen. Gezaehlt werden ausdruecklich NICHT die Seitenaufrufe: die erste Fassung von Regel 6 meldete "232 Dokumente geprueft" und konnte auf 26 von 29 Seiten baulich nichts messen.
@@ -32,14 +52,14 @@ Ergebnis: PASS (0 harte Befunde).
 
 | Breite | Regel 1+3 | Regel 4 | Regel 5 | Regel 6 |
 |---|---|---|---|---|
-| 320 px | 4036 | 69 | 1 | 3506 |
-| 360 px | 4038 | 69 | 1 | 3506 |
-| 375 px | 4038 | 69 | 1 | 3507 |
-| 390 px | 4040 | 69 | 1 | 3507 |
-| 414 px | 4040 | 69 | 1 | 3507 |
-| 600 px | 4180 | 69 | 2 | 3642 |
-| 768 px | 4186 | 69 | 66 | 3692 |
-| 960 px | 4219 | 61 | 108 | 3690 |
+| 320 px | 4050 | 67 | 1 | 3508 |
+| 360 px | 4052 | 67 | 1 | 3508 |
+| 375 px | 4052 | 67 | 1 | 3509 |
+| 390 px | 4054 | 67 | 1 | 3509 |
+| 414 px | 4054 | 67 | 1 | 3509 |
+| 600 px | 4185 | 67 | 2 | 3635 |
+| 768 px | 4191 | 67 | 65 | 3695 |
+| 960 px | 4224 | 60 | 111 | 3693 |
 
 **Regeln ohne befundfaehiges Element ueber alle Breiten dieser Seite**
 
@@ -54,7 +74,6 @@ Ergebnis: PASS (0 harte Befunde).
 
 | Seite | Breite | Elemente | davon sichtbar | in Regel 1+3 | in Regel 4 | in Regel 5 | in Regel 6 |
 |---|---|---|---|---|---|---|---|
-| amortisation-waermepumpe | 320 px | 199 | 102 | 93 | 2 | 0 | 100 |
 | anfrage | 320 px | 832 | 100 | 42 | 0 | 1 | 6 |
 | barrierefreiheit | 320 px | 203 | 111 | 102 | 1 | 0 | 109 |
 | baubarkeitspruefung | 320 px | 207 | 112 | 103 | 2 | 0 | 110 |
@@ -62,21 +81,21 @@ Ergebnis: PASS (0 harte Befunde).
 | datenschutz | 320 px | 104 | 94 | 80 | 0 | 0 | 82 |
 | dimensionierung | 320 px | 710 | 79 | 71 | 2 | 0 | 52 |
 | dimensionierung-verstehen | 320 px | 201 | 109 | 99 | 2 | 0 | 89 |
-| foerderung | 320 px | 390 | 282 | 225 | 5 | 0 | 201 |
+| foerderung | 320 px | 393 | 290 | 236 | 5 | 0 | 209 |
 | foerderung-hannover | 320 px | 227 | 132 | 122 | 2 | 0 | 111 |
 | foerderung-jetzt-mitnehmen | 320 px | 305 | 213 | 202 | 1 | 0 | 145 |
-| foerdervorschuss | 320 px | 217 | 120 | 107 | 3 | 0 | 118 |
-| gasheizung-tauschen-oder-reparieren | 320 px | 206 | 111 | 102 | 2 | 0 | 109 |
+| foerdervorschuss | 320 px | 217 | 121 | 108 | 3 | 0 | 119 |
+| gasheizung-tauschen-oder-reparieren | 320 px | 204 | 109 | 100 | 2 | 0 | 107 |
 | hinweise | 320 px | 192 | 96 | 87 | 3 | 0 | 94 |
 | impressum | 320 px | 60 | 50 | 34 | 0 | 0 | 36 |
-| index | 320 px | 380 | 276 | 215 | 8 | 0 | 140 |
-| karriere | 320 px | 832 | 473 | 413 | 7 | 0 | 420 |
+| index | 320 px | 394 | 294 | 233 | 8 | 0 | 158 |
+| karriere | 320 px | 1098 | 581 | 509 | 7 | 0 | 516 |
 | kontakt | 320 px | 196 | 99 | 88 | 2 | 0 | 91 |
-| kostenvergleich-waermepumpe | 320 px | 746 | 74 | 65 | 0 | 0 | 72 |
-| preise | 320 px | 398 | 306 | 258 | 6 | 0 | 151 |
+| kostenvergleich-waermepumpe | 320 px | 1203 | 66 | 51 | 0 | 0 | 55 |
+| preise | 320 px | 408 | 316 | 268 | 6 | 0 | 151 |
 | propan-waermepumpe | 320 px | 203 | 111 | 102 | 1 | 0 | 109 |
 | prozess | 320 px | 240 | 130 | 116 | 3 | 0 | 97 |
-| ratgeber | 320 px | 444 | 340 | 320 | 5 | 0 | 179 |
+| ratgeber | 320 px | 430 | 326 | 307 | 5 | 0 | 177 |
 | rechner | 320 px | 229 | 137 | 125 | 2 | 0 | 80 |
 | waermepumpe-altbau | 320 px | 202 | 106 | 97 | 2 | 0 | 104 |
 | waermepumpe-hannover | 320 px | 191 | 97 | 88 | 2 | 0 | 95 |
@@ -84,7 +103,6 @@ Ergebnis: PASS (0 harte Befunde).
 | waermepumpenstrom-hannover | 320 px | 236 | 144 | 127 | 1 | 0 | 142 |
 | wertsteigerung-waermepumpe | 320 px | 286 | 194 | 184 | 1 | 0 | 125 |
 | wp-kosten-hannover | 320 px | 262 | 169 | 154 | 1 | 0 | 110 |
-| amortisation-waermepumpe | 360 px | 199 | 102 | 93 | 2 | 0 | 100 |
 | anfrage | 360 px | 832 | 100 | 42 | 0 | 1 | 6 |
 | barrierefreiheit | 360 px | 203 | 111 | 102 | 1 | 0 | 109 |
 | baubarkeitspruefung | 360 px | 207 | 112 | 103 | 2 | 0 | 110 |
@@ -92,21 +110,21 @@ Ergebnis: PASS (0 harte Befunde).
 | datenschutz | 360 px | 104 | 94 | 80 | 0 | 0 | 82 |
 | dimensionierung | 360 px | 710 | 79 | 71 | 2 | 0 | 52 |
 | dimensionierung-verstehen | 360 px | 201 | 109 | 100 | 2 | 0 | 89 |
-| foerderung | 360 px | 390 | 282 | 225 | 5 | 0 | 201 |
+| foerderung | 360 px | 393 | 290 | 236 | 5 | 0 | 209 |
 | foerderung-hannover | 360 px | 227 | 132 | 122 | 2 | 0 | 111 |
 | foerderung-jetzt-mitnehmen | 360 px | 305 | 213 | 202 | 1 | 0 | 145 |
-| foerdervorschuss | 360 px | 217 | 120 | 107 | 3 | 0 | 118 |
-| gasheizung-tauschen-oder-reparieren | 360 px | 206 | 111 | 102 | 2 | 0 | 109 |
+| foerdervorschuss | 360 px | 217 | 121 | 108 | 3 | 0 | 119 |
+| gasheizung-tauschen-oder-reparieren | 360 px | 204 | 109 | 100 | 2 | 0 | 107 |
 | hinweise | 360 px | 192 | 96 | 87 | 3 | 0 | 94 |
 | impressum | 360 px | 60 | 50 | 34 | 0 | 0 | 36 |
-| index | 360 px | 380 | 276 | 215 | 8 | 0 | 140 |
-| karriere | 360 px | 832 | 473 | 413 | 7 | 0 | 420 |
+| index | 360 px | 394 | 294 | 233 | 8 | 0 | 158 |
+| karriere | 360 px | 1098 | 581 | 509 | 7 | 0 | 516 |
 | kontakt | 360 px | 196 | 99 | 88 | 2 | 0 | 91 |
-| kostenvergleich-waermepumpe | 360 px | 746 | 74 | 65 | 0 | 0 | 72 |
-| preise | 360 px | 398 | 306 | 258 | 6 | 0 | 151 |
+| kostenvergleich-waermepumpe | 360 px | 1203 | 66 | 51 | 0 | 0 | 55 |
+| preise | 360 px | 408 | 316 | 268 | 6 | 0 | 151 |
 | propan-waermepumpe | 360 px | 203 | 111 | 102 | 1 | 0 | 109 |
 | prozess | 360 px | 240 | 130 | 116 | 3 | 0 | 97 |
-| ratgeber | 360 px | 444 | 340 | 320 | 5 | 0 | 179 |
+| ratgeber | 360 px | 430 | 326 | 307 | 5 | 0 | 177 |
 | rechner | 360 px | 229 | 137 | 125 | 2 | 0 | 80 |
 | waermepumpe-altbau | 360 px | 202 | 106 | 97 | 2 | 0 | 104 |
 | waermepumpe-hannover | 360 px | 191 | 97 | 88 | 2 | 0 | 95 |
@@ -114,7 +132,6 @@ Ergebnis: PASS (0 harte Befunde).
 | waermepumpenstrom-hannover | 360 px | 236 | 144 | 127 | 1 | 0 | 142 |
 | wertsteigerung-waermepumpe | 360 px | 286 | 194 | 185 | 1 | 0 | 125 |
 | wp-kosten-hannover | 360 px | 262 | 169 | 154 | 1 | 0 | 110 |
-| amortisation-waermepumpe | 375 px | 199 | 102 | 93 | 2 | 0 | 100 |
 | anfrage | 375 px | 832 | 100 | 42 | 0 | 1 | 6 |
 | barrierefreiheit | 375 px | 203 | 111 | 102 | 1 | 0 | 109 |
 | baubarkeitspruefung | 375 px | 207 | 112 | 103 | 2 | 0 | 110 |
@@ -122,21 +139,21 @@ Ergebnis: PASS (0 harte Befunde).
 | datenschutz | 375 px | 104 | 94 | 80 | 0 | 0 | 82 |
 | dimensionierung | 375 px | 710 | 79 | 71 | 2 | 0 | 52 |
 | dimensionierung-verstehen | 375 px | 201 | 109 | 100 | 2 | 0 | 89 |
-| foerderung | 375 px | 390 | 282 | 225 | 5 | 0 | 201 |
+| foerderung | 375 px | 393 | 290 | 236 | 5 | 0 | 209 |
 | foerderung-hannover | 375 px | 227 | 132 | 122 | 2 | 0 | 111 |
 | foerderung-jetzt-mitnehmen | 375 px | 305 | 213 | 202 | 1 | 0 | 145 |
-| foerdervorschuss | 375 px | 217 | 120 | 107 | 3 | 0 | 118 |
-| gasheizung-tauschen-oder-reparieren | 375 px | 206 | 111 | 102 | 2 | 0 | 109 |
+| foerdervorschuss | 375 px | 217 | 121 | 108 | 3 | 0 | 119 |
+| gasheizung-tauschen-oder-reparieren | 375 px | 204 | 109 | 100 | 2 | 0 | 107 |
 | hinweise | 375 px | 192 | 96 | 87 | 3 | 0 | 94 |
 | impressum | 375 px | 60 | 50 | 34 | 0 | 0 | 36 |
-| index | 375 px | 380 | 276 | 215 | 8 | 0 | 140 |
-| karriere | 375 px | 832 | 473 | 413 | 7 | 0 | 420 |
+| index | 375 px | 394 | 294 | 233 | 8 | 0 | 158 |
+| karriere | 375 px | 1098 | 581 | 509 | 7 | 0 | 516 |
 | kontakt | 375 px | 196 | 99 | 88 | 2 | 0 | 91 |
-| kostenvergleich-waermepumpe | 375 px | 746 | 74 | 65 | 0 | 0 | 72 |
-| preise | 375 px | 398 | 306 | 258 | 6 | 0 | 152 |
+| kostenvergleich-waermepumpe | 375 px | 1203 | 66 | 51 | 0 | 0 | 55 |
+| preise | 375 px | 408 | 316 | 268 | 6 | 0 | 152 |
 | propan-waermepumpe | 375 px | 203 | 111 | 102 | 1 | 0 | 109 |
 | prozess | 375 px | 240 | 130 | 116 | 3 | 0 | 97 |
-| ratgeber | 375 px | 444 | 340 | 320 | 5 | 0 | 179 |
+| ratgeber | 375 px | 430 | 326 | 307 | 5 | 0 | 177 |
 | rechner | 375 px | 229 | 137 | 125 | 2 | 0 | 80 |
 | waermepumpe-altbau | 375 px | 202 | 106 | 97 | 2 | 0 | 104 |
 | waermepumpe-hannover | 375 px | 191 | 97 | 88 | 2 | 0 | 95 |
@@ -144,7 +161,6 @@ Ergebnis: PASS (0 harte Befunde).
 | waermepumpenstrom-hannover | 375 px | 236 | 144 | 127 | 1 | 0 | 142 |
 | wertsteigerung-waermepumpe | 375 px | 286 | 194 | 185 | 1 | 0 | 125 |
 | wp-kosten-hannover | 375 px | 262 | 169 | 154 | 1 | 0 | 110 |
-| amortisation-waermepumpe | 390 px | 199 | 102 | 93 | 2 | 0 | 100 |
 | anfrage | 390 px | 832 | 100 | 42 | 0 | 1 | 6 |
 | barrierefreiheit | 390 px | 203 | 111 | 102 | 1 | 0 | 109 |
 | baubarkeitspruefung | 390 px | 207 | 112 | 103 | 2 | 0 | 110 |
@@ -152,21 +168,21 @@ Ergebnis: PASS (0 harte Befunde).
 | datenschutz | 390 px | 104 | 94 | 80 | 0 | 0 | 82 |
 | dimensionierung | 390 px | 710 | 79 | 71 | 2 | 0 | 52 |
 | dimensionierung-verstehen | 390 px | 201 | 109 | 100 | 2 | 0 | 89 |
-| foerderung | 390 px | 390 | 282 | 225 | 5 | 0 | 201 |
+| foerderung | 390 px | 393 | 290 | 236 | 5 | 0 | 209 |
 | foerderung-hannover | 390 px | 227 | 132 | 122 | 2 | 0 | 111 |
 | foerderung-jetzt-mitnehmen | 390 px | 305 | 213 | 202 | 1 | 0 | 145 |
-| foerdervorschuss | 390 px | 217 | 120 | 107 | 3 | 0 | 118 |
-| gasheizung-tauschen-oder-reparieren | 390 px | 206 | 111 | 102 | 2 | 0 | 109 |
+| foerdervorschuss | 390 px | 217 | 121 | 108 | 3 | 0 | 119 |
+| gasheizung-tauschen-oder-reparieren | 390 px | 204 | 109 | 100 | 2 | 0 | 107 |
 | hinweise | 390 px | 192 | 96 | 87 | 3 | 0 | 94 |
 | impressum | 390 px | 60 | 50 | 34 | 0 | 0 | 36 |
-| index | 390 px | 380 | 276 | 215 | 8 | 0 | 140 |
-| karriere | 390 px | 832 | 473 | 413 | 7 | 0 | 420 |
+| index | 390 px | 394 | 294 | 233 | 8 | 0 | 158 |
+| karriere | 390 px | 1098 | 581 | 509 | 7 | 0 | 516 |
 | kontakt | 390 px | 196 | 99 | 88 | 2 | 0 | 91 |
-| kostenvergleich-waermepumpe | 390 px | 746 | 74 | 65 | 0 | 0 | 72 |
-| preise | 390 px | 398 | 306 | 260 | 6 | 0 | 152 |
+| kostenvergleich-waermepumpe | 390 px | 1205 | 66 | 51 | 0 | 0 | 55 |
+| preise | 390 px | 408 | 316 | 270 | 6 | 0 | 152 |
 | propan-waermepumpe | 390 px | 203 | 111 | 102 | 1 | 0 | 109 |
 | prozess | 390 px | 240 | 130 | 116 | 3 | 0 | 97 |
-| ratgeber | 390 px | 444 | 340 | 320 | 5 | 0 | 179 |
+| ratgeber | 390 px | 430 | 326 | 307 | 5 | 0 | 177 |
 | rechner | 390 px | 229 | 137 | 125 | 2 | 0 | 80 |
 | waermepumpe-altbau | 390 px | 202 | 106 | 97 | 2 | 0 | 104 |
 | waermepumpe-hannover | 390 px | 191 | 97 | 88 | 2 | 0 | 95 |
@@ -174,7 +190,6 @@ Ergebnis: PASS (0 harte Befunde).
 | waermepumpenstrom-hannover | 390 px | 236 | 144 | 127 | 1 | 0 | 142 |
 | wertsteigerung-waermepumpe | 390 px | 286 | 194 | 185 | 1 | 0 | 125 |
 | wp-kosten-hannover | 390 px | 262 | 169 | 154 | 1 | 0 | 110 |
-| amortisation-waermepumpe | 414 px | 199 | 102 | 93 | 2 | 0 | 100 |
 | anfrage | 414 px | 832 | 100 | 42 | 0 | 1 | 6 |
 | barrierefreiheit | 414 px | 203 | 111 | 102 | 1 | 0 | 109 |
 | baubarkeitspruefung | 414 px | 207 | 112 | 103 | 2 | 0 | 110 |
@@ -182,21 +197,21 @@ Ergebnis: PASS (0 harte Befunde).
 | datenschutz | 414 px | 104 | 94 | 80 | 0 | 0 | 82 |
 | dimensionierung | 414 px | 710 | 79 | 71 | 2 | 0 | 52 |
 | dimensionierung-verstehen | 414 px | 201 | 109 | 100 | 2 | 0 | 89 |
-| foerderung | 414 px | 390 | 282 | 225 | 5 | 0 | 201 |
+| foerderung | 414 px | 393 | 290 | 236 | 5 | 0 | 209 |
 | foerderung-hannover | 414 px | 227 | 132 | 122 | 2 | 0 | 111 |
 | foerderung-jetzt-mitnehmen | 414 px | 305 | 213 | 202 | 1 | 0 | 145 |
-| foerdervorschuss | 414 px | 217 | 120 | 107 | 3 | 0 | 118 |
-| gasheizung-tauschen-oder-reparieren | 414 px | 206 | 111 | 102 | 2 | 0 | 109 |
+| foerdervorschuss | 414 px | 217 | 121 | 108 | 3 | 0 | 119 |
+| gasheizung-tauschen-oder-reparieren | 414 px | 204 | 109 | 100 | 2 | 0 | 107 |
 | hinweise | 414 px | 192 | 96 | 87 | 3 | 0 | 94 |
 | impressum | 414 px | 60 | 50 | 34 | 0 | 0 | 36 |
-| index | 414 px | 380 | 276 | 215 | 8 | 0 | 140 |
-| karriere | 414 px | 832 | 473 | 413 | 7 | 0 | 420 |
+| index | 414 px | 394 | 294 | 233 | 8 | 0 | 158 |
+| karriere | 414 px | 1098 | 581 | 509 | 7 | 0 | 516 |
 | kontakt | 414 px | 196 | 99 | 88 | 2 | 0 | 91 |
-| kostenvergleich-waermepumpe | 414 px | 746 | 74 | 65 | 0 | 0 | 72 |
-| preise | 414 px | 398 | 306 | 260 | 6 | 0 | 152 |
+| kostenvergleich-waermepumpe | 414 px | 1203 | 66 | 51 | 0 | 0 | 55 |
+| preise | 414 px | 408 | 316 | 270 | 6 | 0 | 152 |
 | propan-waermepumpe | 414 px | 203 | 111 | 102 | 1 | 0 | 109 |
 | prozess | 414 px | 240 | 130 | 116 | 3 | 0 | 97 |
-| ratgeber | 414 px | 444 | 340 | 320 | 5 | 0 | 179 |
+| ratgeber | 414 px | 430 | 326 | 307 | 5 | 0 | 177 |
 | rechner | 414 px | 229 | 137 | 125 | 2 | 0 | 80 |
 | waermepumpe-altbau | 414 px | 202 | 106 | 97 | 2 | 0 | 104 |
 | waermepumpe-hannover | 414 px | 191 | 97 | 88 | 2 | 0 | 95 |
@@ -204,7 +219,6 @@ Ergebnis: PASS (0 harte Befunde).
 | waermepumpenstrom-hannover | 414 px | 236 | 144 | 127 | 1 | 0 | 142 |
 | wertsteigerung-waermepumpe | 414 px | 286 | 194 | 185 | 1 | 0 | 125 |
 | wp-kosten-hannover | 414 px | 262 | 169 | 154 | 1 | 0 | 110 |
-| amortisation-waermepumpe | 600 px | 199 | 117 | 98 | 2 | 0 | 105 |
 | anfrage | 600 px | 832 | 100 | 42 | 0 | 1 | 6 |
 | barrierefreiheit | 600 px | 203 | 126 | 107 | 1 | 0 | 114 |
 | baubarkeitspruefung | 600 px | 207 | 127 | 108 | 2 | 0 | 115 |
@@ -212,21 +226,21 @@ Ergebnis: PASS (0 harte Befunde).
 | datenschutz | 600 px | 104 | 94 | 80 | 0 | 0 | 82 |
 | dimensionierung | 600 px | 710 | 94 | 76 | 2 | 0 | 57 |
 | dimensionierung-verstehen | 600 px | 201 | 124 | 105 | 2 | 0 | 94 |
-| foerderung | 600 px | 390 | 297 | 231 | 5 | 0 | 206 |
+| foerderung | 600 px | 393 | 305 | 242 | 5 | 0 | 214 |
 | foerderung-hannover | 600 px | 227 | 147 | 128 | 2 | 0 | 116 |
 | foerderung-jetzt-mitnehmen | 600 px | 305 | 228 | 208 | 1 | 0 | 150 |
-| foerdervorschuss | 600 px | 217 | 135 | 112 | 3 | 0 | 123 |
-| gasheizung-tauschen-oder-reparieren | 600 px | 206 | 126 | 107 | 2 | 0 | 114 |
+| foerdervorschuss | 600 px | 217 | 136 | 113 | 3 | 0 | 124 |
+| gasheizung-tauschen-oder-reparieren | 600 px | 204 | 124 | 105 | 2 | 0 | 112 |
 | hinweise | 600 px | 192 | 111 | 92 | 3 | 0 | 99 |
 | impressum | 600 px | 60 | 50 | 34 | 0 | 0 | 36 |
-| index | 600 px | 380 | 291 | 221 | 8 | 1 | 145 |
-| karriere | 600 px | 832 | 488 | 418 | 7 | 0 | 425 |
+| index | 600 px | 394 | 309 | 239 | 8 | 1 | 163 |
+| karriere | 600 px | 1098 | 596 | 514 | 7 | 0 | 521 |
 | kontakt | 600 px | 196 | 114 | 93 | 2 | 0 | 96 |
-| kostenvergleich-waermepumpe | 600 px | 746 | 89 | 70 | 0 | 0 | 77 |
-| preise | 600 px | 398 | 321 | 265 | 6 | 0 | 157 |
+| kostenvergleich-waermepumpe | 600 px | 1203 | 67 | 52 | 0 | 0 | 56 |
+| preise | 600 px | 408 | 331 | 275 | 6 | 0 | 157 |
 | propan-waermepumpe | 600 px | 203 | 126 | 107 | 1 | 0 | 114 |
 | prozess | 600 px | 240 | 145 | 121 | 3 | 0 | 102 |
-| ratgeber | 600 px | 444 | 355 | 325 | 5 | 0 | 184 |
+| ratgeber | 600 px | 430 | 341 | 312 | 5 | 0 | 182 |
 | rechner | 600 px | 229 | 152 | 130 | 2 | 0 | 85 |
 | waermepumpe-altbau | 600 px | 202 | 121 | 102 | 2 | 0 | 109 |
 | waermepumpe-hannover | 600 px | 191 | 112 | 93 | 2 | 0 | 100 |
@@ -234,7 +248,6 @@ Ergebnis: PASS (0 harte Befunde).
 | waermepumpenstrom-hannover | 600 px | 236 | 159 | 132 | 1 | 0 | 147 |
 | wertsteigerung-waermepumpe | 600 px | 286 | 209 | 190 | 1 | 0 | 130 |
 | wp-kosten-hannover | 600 px | 262 | 184 | 160 | 1 | 0 | 115 |
-| amortisation-waermepumpe | 768 px | 199 | 117 | 98 | 2 | 1 | 105 |
 | anfrage | 768 px | 832 | 100 | 42 | 0 | 1 | 6 |
 | barrierefreiheit | 768 px | 203 | 126 | 107 | 1 | 1 | 114 |
 | baubarkeitspruefung | 768 px | 207 | 127 | 108 | 2 | 2 | 115 |
@@ -242,21 +255,21 @@ Ergebnis: PASS (0 harte Befunde).
 | datenschutz | 768 px | 104 | 94 | 80 | 0 | 0 | 82 |
 | dimensionierung | 768 px | 710 | 94 | 76 | 2 | 2 | 57 |
 | dimensionierung-verstehen | 768 px | 201 | 124 | 105 | 2 | 3 | 94 |
-| foerderung | 768 px | 390 | 297 | 231 | 5 | 2 | 206 |
+| foerderung | 768 px | 393 | 305 | 242 | 5 | 2 | 214 |
 | foerderung-hannover | 768 px | 227 | 147 | 128 | 2 | 2 | 116 |
 | foerderung-jetzt-mitnehmen | 768 px | 305 | 228 | 209 | 1 | 2 | 150 |
-| foerdervorschuss | 768 px | 217 | 135 | 112 | 3 | 2 | 123 |
-| gasheizung-tauschen-oder-reparieren | 768 px | 206 | 126 | 107 | 2 | 2 | 114 |
+| foerdervorschuss | 768 px | 217 | 136 | 113 | 3 | 2 | 124 |
+| gasheizung-tauschen-oder-reparieren | 768 px | 204 | 124 | 105 | 2 | 2 | 112 |
 | hinweise | 768 px | 192 | 111 | 92 | 3 | 1 | 99 |
 | impressum | 768 px | 60 | 50 | 34 | 0 | 0 | 36 |
-| index | 768 px | 380 | 291 | 221 | 8 | 8 | 145 |
-| karriere | 768 px | 832 | 488 | 418 | 7 | 4 | 425 |
+| index | 768 px | 394 | 309 | 239 | 8 | 8 | 163 |
+| karriere | 768 px | 1098 | 596 | 514 | 7 | 4 | 521 |
 | kontakt | 768 px | 196 | 114 | 93 | 2 | 2 | 96 |
-| kostenvergleich-waermepumpe | 768 px | 746 | 89 | 70 | 0 | 1 | 77 |
-| preise | 768 px | 398 | 321 | 270 | 6 | 5 | 207 |
+| kostenvergleich-waermepumpe | 768 px | 1204 | 67 | 52 | 0 | 1 | 56 |
+| preise | 768 px | 408 | 331 | 280 | 6 | 5 | 217 |
 | propan-waermepumpe | 768 px | 203 | 126 | 107 | 1 | 2 | 114 |
 | prozess | 768 px | 240 | 145 | 121 | 3 | 2 | 102 |
-| ratgeber | 768 px | 444 | 355 | 325 | 5 | 3 | 184 |
+| ratgeber | 768 px | 430 | 341 | 312 | 5 | 3 | 182 |
 | rechner | 768 px | 229 | 152 | 130 | 2 | 1 | 85 |
 | waermepumpe-altbau | 768 px | 202 | 121 | 102 | 2 | 2 | 109 |
 | waermepumpe-hannover | 768 px | 191 | 112 | 93 | 2 | 2 | 100 |
@@ -264,7 +277,6 @@ Ergebnis: PASS (0 harte Befunde).
 | waermepumpenstrom-hannover | 768 px | 236 | 159 | 132 | 1 | 3 | 147 |
 | wertsteigerung-waermepumpe | 768 px | 286 | 209 | 190 | 1 | 2 | 130 |
 | wp-kosten-hannover | 768 px | 262 | 184 | 160 | 1 | 3 | 115 |
-| amortisation-waermepumpe | 960 px | 199 | 117 | 98 | 1 | 3 | 105 |
 | anfrage | 960 px | 832 | 172 | 89 | 0 | 1 | 7 |
 | barrierefreiheit | 960 px | 203 | 126 | 107 | 1 | 2 | 114 |
 | baubarkeitspruefung | 960 px | 207 | 127 | 108 | 1 | 4 | 115 |
@@ -272,21 +284,21 @@ Ergebnis: PASS (0 harte Befunde).
 | datenschutz | 960 px | 104 | 94 | 80 | 0 | 0 | 82 |
 | dimensionierung | 960 px | 710 | 94 | 76 | 2 | 3 | 57 |
 | dimensionierung-verstehen | 960 px | 201 | 124 | 105 | 2 | 4 | 94 |
-| foerderung | 960 px | 390 | 297 | 231 | 5 | 4 | 206 |
+| foerderung | 960 px | 393 | 305 | 242 | 5 | 4 | 214 |
 | foerderung-hannover | 960 px | 227 | 147 | 128 | 1 | 4 | 116 |
 | foerderung-jetzt-mitnehmen | 960 px | 305 | 228 | 209 | 1 | 3 | 150 |
-| foerdervorschuss | 960 px | 217 | 135 | 112 | 2 | 4 | 123 |
-| gasheizung-tauschen-oder-reparieren | 960 px | 206 | 126 | 107 | 1 | 4 | 114 |
+| foerdervorschuss | 960 px | 217 | 136 | 113 | 2 | 4 | 124 |
+| gasheizung-tauschen-oder-reparieren | 960 px | 204 | 124 | 105 | 1 | 4 | 112 |
 | hinweise | 960 px | 192 | 111 | 92 | 2 | 3 | 99 |
 | impressum | 960 px | 60 | 50 | 34 | 0 | 0 | 36 |
-| index | 960 px | 380 | 291 | 225 | 8 | 3 | 145 |
-| karriere | 960 px | 832 | 488 | 418 | 7 | 19 | 425 |
+| index | 960 px | 394 | 309 | 243 | 8 | 3 | 163 |
+| karriere | 960 px | 1098 | 596 | 514 | 7 | 25 | 521 |
 | kontakt | 960 px | 196 | 114 | 93 | 2 | 1 | 96 |
-| kostenvergleich-waermepumpe | 960 px | 746 | 89 | 70 | 0 | 1 | 77 |
-| preise | 960 px | 398 | 321 | 270 | 6 | 9 | 207 |
+| kostenvergleich-waermepumpe | 960 px | 1203 | 67 | 52 | 0 | 1 | 56 |
+| preise | 960 px | 408 | 331 | 280 | 6 | 9 | 217 |
 | propan-waermepumpe | 960 px | 203 | 126 | 107 | 1 | 3 | 114 |
 | prozess | 960 px | 240 | 123 | 99 | 3 | 3 | 99 |
-| ratgeber | 960 px | 444 | 355 | 325 | 5 | 4 | 184 |
+| ratgeber | 960 px | 430 | 341 | 312 | 5 | 4 | 182 |
 | rechner | 960 px | 229 | 152 | 130 | 2 | 2 | 85 |
 | waermepumpe-altbau | 960 px | 202 | 121 | 102 | 1 | 4 | 109 |
 | waermepumpe-hannover | 960 px | 191 | 112 | 93 | 1 | 4 | 100 |
@@ -299,23 +311,11 @@ Ergebnis: PASS (0 harte Befunde).
 
 > `documentElement.scrollWidth` gegen `clientWidth`. Diese Zahl ist bewusst KEIN Pruefkriterium mehr: `css/site.css` setzt `overflow-x: clip` auf `html` und `body`, damit ist sie auf jeder Seite mit diesem Stylesheet auf `clientWidth` geklemmt. Das Urteil faellt Regel 6 aus den Elementkanten. Steht hier ein Ueberschuss, rollt die Seite zusaetzlich waagerecht.
 
-Kein Ueberschuss auf 240 Dokumenten.
+Kein Ueberschuss auf 232 Dokumenten.
 
 ## Kanten-Inventar (Bericht)
 
 > Regel 2 laeuft als Bericht ohne Fehlerabbruch. Grund: Kanten-Erwartung noch nicht mit Benjamin ratifiziert (Uebergabe 26.07., BLOCKED-Kriterium Einheit 2). Bis dahin Bericht ohne Fehlerabbruch.
-
-**amortisation-waermepumpe, 320 px: 7 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 10 | div.section-inner, div.section-tag, h1.section-title |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 42 px | 6 | li, strong, li |
-| 136.27 px | 1 | a.mobile-phone-cta |
-| 175.27 px | 1 | span.mobile-phone-label |
-| 252 px | 1 | div#hamburger.hamburger |
 
 **anfrage, 320 px: 15 verschiedene linke Kanten**
 
@@ -418,19 +418,20 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**foerderung, 320 px: 10 verschiedene linke Kanten**
+**foerderung, 320 px: 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
 | 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
-| 39 px | 33 | div, div.foerder-inputs-grid, div.fi-group |
+| 39 px | 40 | div, div.foerder-inputs-grid, div.fi-group |
 | 43 px | 2 | button.active, button.active |
 | 60 px | 1 | span |
 | 136.27 px | 1 | a.mobile-phone-cta |
 | 159.42 px | 1 | button |
 | 162 px | 1 | button |
 | 175.27 px | 1 | span.mobile-phone-label |
+| 208.36 px | 1 | span.pct |
 | 252 px | 1 | div#hamburger.hamburger |
 
 **foerderung-hannover, 320 px: 10 verschiedene linke Kanten**
@@ -466,7 +467,7 @@ Kein Ueberschuss auf 240 Dokumenten.
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 10 | div.section-inner, div.section-tag, h1.section-title |
+| 20 px | 11 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 136.27 px | 1 | a.mobile-phone-cta |
 | 175.27 px | 1 | span.mobile-phone-label |
@@ -508,18 +509,19 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**index, 320 px: 19 verschiedene linke Kanten**
+**index, 320 px: 20 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 6 | div.nav-inner, main#main-content, section.hero |
-| 24 px | 24 | a, img.nav-logo.logo-dark, div.hero-inner |
+| 24 px | 22 | a, img.nav-logo.logo-dark, div.hero-inner |
 | 25 px | 4 | div.hc-row, div.hc-row, div.hc-result |
 | 43 px | 5 | div, div.hc-label, div |
 | 49 px | 3 | div.hc-fv-badge, div.hc-fv-text, strong |
-| 53 px | 2 | a#fvHomeCta.btn-primary.fv-badge-cta, div.fv-badge-note |
+| 53 px | 7 | div#fvHomeKontingent, div#fvHomeCount.fv-count, div#fvHomeUnit.fv-label |
 | 66 px | 4 | div.usp-text, h2, div.usp-text |
 | 91.28 px | 2 | div.usp-item, div.usp-icon |
+| 128.69 px | 1 | strong |
 | 133.28 px | 2 | div.usp-text, h2 |
 | 136.27 px | 1 | a.mobile-phone-cta |
 | 168 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
@@ -562,21 +564,24 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**kostenvergleich-waermepumpe, 320 px: 11 verschiedene linke Kanten**
+**kostenvergleich-waermepumpe, 320 px: 14 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 3 | div.nav-inner, header.page-head, div.container |
-| 16 px | 17 | div.page-head-inner, div.kicker, h1 |
-| 24 px | 2 | a, img.nav-logo.logo-dark |
-| 27 px | 8 | h2#rechner-einleitung, p.wz-intro, p.wz-intro |
-| 29 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
-| 49 px | 10 | div#wzStepBody, div, p.wz-intro |
-| 61 px | 5 | span, span, span |
-| 136.27 px | 1 | a.mobile-phone-cta |
-| 175.27 px | 1 | span.mobile-phone-label |
-| 192.5 px | 1 | button#wzNext.wz-next |
-| 252 px | 1 | div#hamburger.hamburger |
+| 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
+| 24 px | 18 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
+| 35.16 px | 1 | a |
+| 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
+| 57 px | 10 | div#wzStepBody, div, p.wz-intro |
+| 69 px | 5 | span, span, span |
+| 93.55 px | 1 | a |
+| 119.86 px | 1 | a |
+| 132.03 px | 2 | div.topnav-actions, button.theme-toggle |
+| 136.03 px | 1 | span.tt-feld |
+| 137.91 px | 1 | a#wzModeLink |
+| 184.5 px | 1 | button#wzNext.wz-next |
+| 203.42 px | 1 | a |
+| 203.91 px | 1 | span.tt-feld |
 
 **preise, 320 px: 8 verschiedene linke Kanten**
 
@@ -738,18 +743,6 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 175.27 px | 1 | span.mobile-phone-label |
 | 252 px | 1 | div#hamburger.hamburger |
 
-**amortisation-waermepumpe, 360 px: 7 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 10 | div.section-inner, div.section-tag, h1.section-title |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 42 px | 8 | li, strong, li |
-| 156.27 px | 1 | a.mobile-phone-cta |
-| 195.27 px | 1 | span.mobile-phone-label |
-| 292 px | 1 | div#hamburger.hamburger |
-
 **anfrage, 360 px: 15 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
@@ -860,18 +853,19 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 212.3 px | 1 | a |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**foerderung, 360 px: 9 verschiedene linke Kanten**
+**foerderung, 360 px: 10 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
 | 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
-| 39 px | 34 | div, div.foerder-inputs-grid, div.fi-group |
+| 39 px | 41 | div, div.foerder-inputs-grid, div.fi-group |
 | 43 px | 2 | button.active, button.active |
 | 60 px | 1 | span |
 | 156.27 px | 1 | a.mobile-phone-cta |
 | 182 px | 2 | button, button |
 | 195.27 px | 1 | span.mobile-phone-label |
+| 248.36 px | 1 | span.pct |
 | 292 px | 1 | div#hamburger.hamburger |
 
 **foerderung-hannover, 360 px: 10 verschiedene linke Kanten**
@@ -902,15 +896,14 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**foerdervorschuss, 360 px: 7 verschiedene linke Kanten**
+**foerdervorschuss, 360 px: 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 11 | div.section-inner, div.section-tag, h1.section-title |
+| 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 156.27 px | 1 | a.mobile-phone-cta |
-| 179.41 px | 1 | strong |
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
@@ -950,18 +943,19 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**index, 360 px: 19 verschiedene linke Kanten**
+**index, 360 px: 20 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 6 | div.nav-inner, main#main-content, section.hero |
-| 24 px | 27 | a, img.nav-logo.logo-dark, div.hero-inner |
+| 24 px | 24 | a, img.nav-logo.logo-dark, div.hero-inner |
 | 25 px | 4 | div.hc-row, div.hc-row, div.hc-result |
 | 43 px | 5 | div, div.hc-label, div |
 | 49 px | 3 | div.hc-fv-badge, div.hc-fv-text, strong |
-| 53 px | 2 | a#fvHomeCta.btn-primary.fv-badge-cta, div.fv-badge-note |
+| 53 px | 7 | div#fvHomeKontingent, div#fvHomeCount.fv-count, div#fvHomeUnit.fv-label |
 | 66 px | 4 | div.usp-text, h2, div.usp-text |
 | 111.28 px | 2 | div.usp-item, div.usp-icon |
+| 148.69 px | 1 | strong |
 | 153.28 px | 2 | div.usp-text, h2 |
 | 156.27 px | 1 | a.mobile-phone-cta |
 | 188 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
@@ -1003,23 +997,24 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**kostenvergleich-waermepumpe, 360 px: 13 verschiedene linke Kanten**
+**kostenvergleich-waermepumpe, 360 px: 14 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 3 | div.nav-inner, header.page-head, div.container |
-| 16 px | 18 | div.page-head-inner, div.kicker, h1 |
-| 24 px | 2 | a, img.nav-logo.logo-dark |
-| 27 px | 8 | h2#rechner-einleitung, p.wz-intro, p.wz-intro |
-| 29 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
-| 36 px | 1 | div.ib |
-| 49 px | 10 | div#wzStepBody, div, p.wz-intro |
-| 57 px | 2 | strong, span.d |
-| 61 px | 5 | span, span, span |
-| 156.27 px | 1 | a.mobile-phone-cta |
-| 195.27 px | 1 | span.mobile-phone-label |
-| 232.5 px | 1 | button#wzNext.wz-next |
-| 292 px | 1 | div#hamburger.hamburger |
+| 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
+| 24 px | 18 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
+| 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
+| 47.19 px | 1 | a |
+| 57 px | 10 | div#wzStepBody, div, p.wz-intro |
+| 69 px | 5 | span, span, span |
+| 74.75 px | 1 | a |
+| 172.03 px | 2 | div.topnav-actions, button.theme-toggle |
+| 176.03 px | 1 | span.tt-feld |
+| 184.63 px | 1 | a |
+| 188.94 px | 1 | a#wzModeLink |
+| 224.5 px | 1 | button#wzNext.wz-next |
+| 243.91 px | 1 | span.tt-feld |
+| 260.44 px | 1 | a |
 
 **preise, 360 px: 10 verschiedene linke Kanten**
 
@@ -1183,18 +1178,6 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 195.27 px | 1 | span.mobile-phone-label |
 | 292 px | 1 | div#hamburger.hamburger |
 
-**amortisation-waermepumpe, 375 px: 7 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 11 | div.section-inner, div.section-tag, h1.section-title |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 42 px | 8 | li, strong, li |
-| 163.77 px | 1 | a.mobile-phone-cta |
-| 202.77 px | 1 | span.mobile-phone-label |
-| 307 px | 1 | div#hamburger.hamburger |
-
 **anfrage, 375 px: 16 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
@@ -1308,18 +1291,19 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 212.3 px | 1 | a |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**foerderung, 375 px: 9 verschiedene linke Kanten**
+**foerderung, 375 px: 10 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
 | 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
-| 39 px | 34 | div, div.foerder-inputs-grid, div.fi-group |
+| 39 px | 41 | div, div.foerder-inputs-grid, div.fi-group |
 | 43 px | 2 | button.active, button.active |
 | 60 px | 1 | span |
 | 163.77 px | 1 | a.mobile-phone-cta |
 | 189.5 px | 2 | button, button |
 | 202.77 px | 1 | span.mobile-phone-label |
+| 263.36 px | 1 | span.pct |
 | 307 px | 1 | div#hamburger.hamburger |
 
 **foerderung-hannover, 375 px: 10 verschiedene linke Kanten**
@@ -1398,18 +1382,19 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**index, 375 px: 19 verschiedene linke Kanten**
+**index, 375 px: 20 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 6 | div.nav-inner, main#main-content, section.hero |
-| 24 px | 27 | a, img.nav-logo.logo-dark, div.hero-inner |
+| 24 px | 24 | a, img.nav-logo.logo-dark, div.hero-inner |
 | 25 px | 4 | div.hc-row, div.hc-row, div.hc-result |
 | 43 px | 5 | div, div.hc-label, div |
 | 49 px | 3 | div.hc-fv-badge, div.hc-fv-text, strong |
-| 53 px | 2 | a#fvHomeCta.btn-primary.fv-badge-cta, div.fv-badge-note |
+| 53 px | 7 | div#fvHomeKontingent, div#fvHomeCount.fv-count, div#fvHomeUnit.fv-label |
 | 66 px | 4 | div.usp-text, h2, div.usp-text |
 | 118.78 px | 2 | div.usp-item, div.usp-icon |
+| 156.19 px | 1 | strong |
 | 160.78 px | 2 | div.usp-text, h2 |
 | 163.77 px | 1 | a.mobile-phone-cta |
 | 195.5 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
@@ -1452,23 +1437,24 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**kostenvergleich-waermepumpe, 375 px: 13 verschiedene linke Kanten**
+**kostenvergleich-waermepumpe, 375 px: 14 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 3 | div.nav-inner, header.page-head, div.container |
-| 16 px | 18 | div.page-head-inner, div.kicker, h1 |
-| 24 px | 2 | a, img.nav-logo.logo-dark |
-| 27 px | 8 | h2#rechner-einleitung, p.wz-intro, p.wz-intro |
-| 29 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
-| 36 px | 1 | div.ib |
-| 49 px | 10 | div#wzStepBody, div, p.wz-intro |
-| 57 px | 2 | strong, span.d |
-| 61 px | 5 | span, span, span |
-| 163.77 px | 1 | a.mobile-phone-cta |
-| 202.77 px | 1 | span.mobile-phone-label |
-| 247.5 px | 1 | button#wzNext.wz-next |
-| 307 px | 1 | div#hamburger.hamburger |
+| 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
+| 24 px | 18 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
+| 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
+| 51.13 px | 1 | a |
+| 57 px | 10 | div#wzStepBody, div, p.wz-intro |
+| 69 px | 5 | span, span, span |
+| 78.69 px | 1 | a |
+| 141.44 px | 1 | a#wzModeLink |
+| 187.03 px | 2 | div.topnav-actions, button.theme-toggle |
+| 188.56 px | 1 | a |
+| 191.03 px | 1 | span.tt-feld |
+| 239.5 px | 1 | button#wzNext.wz-next |
+| 258.91 px | 1 | span.tt-feld |
+| 264.38 px | 1 | a |
 
 **preise, 375 px: 11 verschiedene linke Kanten**
 
@@ -1633,18 +1619,6 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 202.77 px | 1 | span.mobile-phone-label |
 | 307 px | 1 | div#hamburger.hamburger |
 
-**amortisation-waermepumpe, 390 px: 7 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 12 | div.section-inner, div.section-tag, h1.section-title |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 42 px | 8 | li, strong, li |
-| 171.27 px | 1 | a.mobile-phone-cta |
-| 210.27 px | 1 | span.mobile-phone-label |
-| 322 px | 1 | div#hamburger.hamburger |
-
 **anfrage, 390 px: 16 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
@@ -1760,19 +1734,20 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 212.3 px | 1 | a |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**foerderung, 390 px: 10 verschiedene linke Kanten**
+**foerderung, 390 px: 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
 | 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
-| 39 px | 34 | div, div.foerder-inputs-grid, div.fi-group |
+| 39 px | 41 | div, div.foerder-inputs-grid, div.fi-group |
 | 43 px | 2 | button.active, button.active |
 | 60 px | 1 | span |
 | 68 px | 2 | div, div#foerderSatzKfw.fr-satz |
 | 171.27 px | 1 | a.mobile-phone-cta |
 | 197 px | 2 | button, button |
 | 210.27 px | 1 | span.mobile-phone-label |
+| 278.36 px | 1 | span.pct |
 | 322 px | 1 | div#hamburger.hamburger |
 
 **foerderung-hannover, 390 px: 10 verschiedene linke Kanten**
@@ -1851,18 +1826,19 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**index, 390 px: 19 verschiedene linke Kanten**
+**index, 390 px: 20 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 6 | div.nav-inner, main#main-content, section.hero |
-| 24 px | 27 | a, img.nav-logo.logo-dark, div.hero-inner |
+| 24 px | 24 | a, img.nav-logo.logo-dark, div.hero-inner |
 | 25 px | 4 | div.hc-row, div.hc-row, div.hc-result |
 | 43 px | 5 | div, div.hc-label, div |
 | 49 px | 3 | div.hc-fv-badge, div.hc-fv-text, strong |
-| 53 px | 2 | a#fvHomeCta.btn-primary.fv-badge-cta, div.fv-badge-note |
+| 53 px | 7 | div#fvHomeKontingent, div#fvHomeCount.fv-count, div#fvHomeUnit.fv-label |
 | 66 px | 4 | div.usp-text, h2, div.usp-text |
 | 126.28 px | 2 | div.usp-item, div.usp-icon |
+| 163.69 px | 1 | strong |
 | 168.28 px | 2 | div.usp-text, h2 |
 | 171.27 px | 1 | a.mobile-phone-cta |
 | 203 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
@@ -1905,23 +1881,24 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**kostenvergleich-waermepumpe, 390 px: 13 verschiedene linke Kanten**
+**kostenvergleich-waermepumpe, 390 px: 14 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 3 | div.nav-inner, header.page-head, div.container |
-| 16 px | 18 | div.page-head-inner, div.kicker, h1 |
-| 24 px | 2 | a, img.nav-logo.logo-dark |
-| 27 px | 8 | h2#rechner-einleitung, p.wz-intro, p.wz-intro |
-| 29 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
-| 36 px | 1 | div.ib |
-| 49 px | 10 | div#wzStepBody, div, p.wz-intro |
-| 57 px | 4 | strong, span.d, div |
-| 61 px | 5 | span, span, span |
-| 171.27 px | 1 | a.mobile-phone-cta |
-| 210.27 px | 1 | span.mobile-phone-label |
-| 262.5 px | 1 | button#wzNext.wz-next |
-| 322 px | 1 | div#hamburger.hamburger |
+| 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
+| 24 px | 18 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
+| 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
+| 57 px | 10 | div#wzStepBody, div, p.wz-intro |
+| 58.63 px | 1 | a |
+| 69 px | 5 | span, span, span |
+| 86.19 px | 1 | a |
+| 148.94 px | 1 | a#wzModeLink |
+| 196.06 px | 1 | a |
+| 202.03 px | 2 | div.topnav-actions, button.theme-toggle |
+| 206.03 px | 1 | span.tt-feld |
+| 254.5 px | 1 | button#wzNext.wz-next |
+| 271.88 px | 1 | a |
+| 273.91 px | 1 | span.tt-feld |
 
 **preise, 390 px: 11 verschiedene linke Kanten**
 
@@ -2087,18 +2064,6 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 210.27 px | 1 | span.mobile-phone-label |
 | 322 px | 1 | div#hamburger.hamburger |
 
-**amortisation-waermepumpe, 414 px: 7 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 42 px | 8 | li, strong, li |
-| 183.27 px | 1 | a.mobile-phone-cta |
-| 222.27 px | 1 | span.mobile-phone-label |
-| 346 px | 1 | div#hamburger.hamburger |
-
 **anfrage, 414 px: 16 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
@@ -2214,19 +2179,20 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**foerderung, 414 px: 10 verschiedene linke Kanten**
+**foerderung, 414 px: 11 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
 | 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
-| 39 px | 34 | div, div.foerder-inputs-grid, div.fi-group |
+| 39 px | 41 | div, div.foerder-inputs-grid, div.fi-group |
 | 43 px | 2 | button.active, button.active |
 | 60 px | 1 | span |
 | 68 px | 2 | div, div#foerderSatzKfw.fr-satz |
 | 183.27 px | 1 | a.mobile-phone-cta |
 | 209 px | 2 | button, button |
 | 222.27 px | 1 | span.mobile-phone-label |
+| 302.36 px | 1 | span.pct |
 | 346 px | 1 | div#hamburger.hamburger |
 
 **foerderung-hannover, 414 px: 10 verschiedene linke Kanten**
@@ -2257,14 +2223,13 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**foerdervorschuss, 414 px: 7 verschiedene linke Kanten**
+**foerdervorschuss, 414 px: 6 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 13 | div.section-inner, div.section-tag, h1.section-title |
+| 20 px | 14 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 89.58 px | 1 | strong |
 | 183.27 px | 1 | a.mobile-phone-cta |
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
@@ -2305,18 +2270,19 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 110.22 px | 1 | a |
 | 116.88 px | 1 | span.tt-feld |
 
-**index, 414 px: 19 verschiedene linke Kanten**
+**index, 414 px: 20 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 6 | div.nav-inner, main#main-content, section.hero |
-| 24 px | 27 | a, img.nav-logo.logo-dark, div.hero-inner |
+| 24 px | 25 | a, img.nav-logo.logo-dark, div.hero-inner |
 | 25 px | 4 | div.hc-row, div.hc-row, div.hc-result |
 | 43 px | 5 | div, div.hc-label, div |
 | 49 px | 3 | div.hc-fv-badge, div.hc-fv-text, strong |
-| 53 px | 2 | a#fvHomeCta.btn-primary.fv-badge-cta, div.fv-badge-note |
+| 53 px | 7 | div#fvHomeKontingent, div#fvHomeCount.fv-count, div#fvHomeUnit.fv-label |
 | 66 px | 4 | div.usp-text, h2, div.usp-text |
 | 138.28 px | 2 | div.usp-item, div.usp-icon |
+| 175.69 px | 1 | strong |
 | 180.28 px | 2 | div.usp-text, h2 |
 | 183.27 px | 1 | a.mobile-phone-cta |
 | 215 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
@@ -2359,23 +2325,24 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**kostenvergleich-waermepumpe, 414 px: 13 verschiedene linke Kanten**
+**kostenvergleich-waermepumpe, 414 px: 14 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 3 | div.nav-inner, header.page-head, div.container |
-| 16 px | 18 | div.page-head-inner, div.kicker, h1 |
-| 24 px | 2 | a, img.nav-logo.logo-dark |
-| 27 px | 8 | h2#rechner-einleitung, p.wz-intro, p.wz-intro |
-| 29 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
-| 36 px | 1 | div.ib |
-| 49 px | 10 | div#wzStepBody, div, p.wz-intro |
-| 57 px | 5 | strong, span.d, div |
-| 61 px | 5 | span, span, span |
-| 183.27 px | 1 | a.mobile-phone-cta |
-| 222.27 px | 1 | span.mobile-phone-label |
-| 286.5 px | 1 | button#wzNext.wz-next |
-| 346 px | 1 | div#hamburger.hamburger |
+| 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
+| 24 px | 18 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
+| 29.27 px | 1 | a |
+| 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
+| 57 px | 10 | div#wzStepBody, div, p.wz-intro |
+| 69 px | 5 | span, span, span |
+| 98.19 px | 1 | a |
+| 208.06 px | 1 | a |
+| 226.03 px | 2 | div.topnav-actions, button.theme-toggle |
+| 230.03 px | 1 | span.tt-feld |
+| 237.52 px | 1 | a#wzModeLink |
+| 278.5 px | 1 | button#wzNext.wz-next |
+| 283.88 px | 1 | a |
+| 297.91 px | 1 | span.tt-feld |
 
 **preise, 414 px: 11 verschiedene linke Kanten**
 
@@ -2543,21 +2510,6 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 222.27 px | 1 | span.mobile-phone-label |
 | 346 px | 1 | div#hamburger.hamburger |
 
-**amortisation-waermepumpe, 600 px: 10 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 17 | div.section-inner, div.section-tag, h1.section-title |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 42 px | 8 | li, strong, li |
-| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 256.09 px | 1 | span.tt-feld |
-| 323.97 px | 1 | span.tt-feld |
-| 424.06 px | 1 | a.mobile-phone-cta |
-| 463.06 px | 1 | span.mobile-phone-label |
-| 532 px | 1 | div#hamburger.hamburger |
-
 **anfrage, 600 px: 18 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
@@ -2709,17 +2661,17 @@ Kein Ueberschuss auf 240 Dokumenten.
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
 | 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
-| 45 px | 34 | div, div.foerder-inputs-grid, div.fi-group |
+| 45 px | 41 | div, div.foerder-inputs-grid, div.fi-group |
 | 49 px | 2 | button.active, button.active |
 | 66 px | 1 | span |
 | 74 px | 4 | div, div#foerderSatzKfw.fr-satz, div |
 | 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 256.09 px | 1 | span.tt-feld |
-| 267.55 px | 1 | span.calc-dots |
 | 302 px | 2 | button, button |
 | 323.97 px | 1 | span.tt-feld |
 | 424.06 px | 1 | a.mobile-phone-cta |
 | 463.06 px | 1 | span.mobile-phone-label |
+| 482.36 px | 1 | span.pct |
 | 532 px | 1 | div#hamburger.hamburger |
 
 **foerderung-hannover, 600 px: 13 verschiedene linke Kanten**
@@ -2817,28 +2769,27 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 395.03 px | 1 | span.tt-feld |
 | 462.91 px | 1 | span.tt-feld |
 
-**index, 600 px: 25 verschiedene linke Kanten**
+**index, 600 px: 24 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 6 | div.nav-inner, main#main-content, section.hero |
-| 24 px | 28 | a, img.nav-logo.logo-dark, div.hero-inner |
+| 24 px | 26 | a, img.nav-logo.logo-dark, div.hero-inner |
 | 25 px | 4 | div.hc-row, div.hc-row, div.hc-result |
 | 43 px | 5 | div, div.hc-label, div |
 | 49 px | 3 | div.hc-fv-badge, div.hc-fv-text, strong |
-| 53 px | 2 | a#fvHomeCta.btn-primary.fv-badge-cta, div.fv-badge-note |
+| 53 px | 7 | div#fvHomeKontingent, div#fvHomeCount.fv-count, div#fvHomeUnit.fv-label |
 | 66 px | 4 | div.usp-text, h2, div.usp-text |
-| 120.89 px | 1 | a.fv-disclaimer-link |
 | 231.28 px | 2 | div.usp-item, div.usp-icon |
 | 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 256.09 px | 1 | span.tt-feld |
+| 268.69 px | 1 | strong |
 | 273.28 px | 2 | div.usp-text, h2 |
 | 306 px | 1 | a.btn-ghost |
 | 308 px | 4 | div.usp-item, div.usp-icon, div.usp-item |
 | 323.97 px | 1 | span.tt-feld |
 | 350 px | 4 | div.usp-text, h2, div.usp-text |
 | 424.06 px | 1 | a.mobile-phone-cta |
-| 424.98 px | 1 | a.fv-disclaimer-link |
 | 462.31 px | 1 | button#heroVideoToggle.hero-video-toggle |
 | 462.47 px | 1 | div.hc-result-value |
 | 463.06 px | 1 | span.mobile-phone-label |
@@ -2884,32 +2835,25 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 463.06 px | 1 | span.mobile-phone-label |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**kostenvergleich-waermepumpe, 600 px: 22 verschiedene linke Kanten**
+**kostenvergleich-waermepumpe, 600 px: 15 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 4 | div.nav-inner, header.page-head, div.container |
-| 16 px | 17 | div.page-head-inner, div.kicker, h1 |
-| 24 px | 2 | a, img.nav-logo.logo-dark |
-| 27 px | 8 | h2#rechner-einleitung, p.wz-intro, p.wz-intro |
-| 29 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
-| 36 px | 1 | div.ib |
-| 49 px | 10 | div#wzStepBody, div, p.wz-intro |
-| 57 px | 4 | strong, span.d, div |
-| 61 px | 5 | span, span, span |
+| 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
+| 24 px | 18 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
+| 37 px | 5 | span.wz-dot, span.wz-dot, span.wz-dot |
+| 57 px | 10 | div#wzStepBody, div, p.wz-intro |
+| 69 px | 5 | span, span, span |
 | 77.55 px | 1 | a |
 | 187.42 px | 1 | a |
-| 217.61 px | 1 | a.wz-link-btn |
-| 252.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 256.09 px | 1 | span.tt-feld |
+| 248.56 px | 2 | div.topnav-actions, button.theme-toggle |
+| 252.56 px | 1 | span.tt-feld |
 | 263.23 px | 1 | a |
-| 317.69 px | 1 | span.accent |
-| 323.97 px | 1 | span.tt-feld |
+| 320.44 px | 1 | span.tt-feld |
 | 347.94 px | 1 | a |
-| 424.06 px | 1 | a.mobile-phone-cta |
-| 463.06 px | 1 | span.mobile-phone-label |
-| 472.5 px | 1 | button#wzNext.wz-next |
-| 532 px | 1 | div#hamburger.hamburger |
+| 382.58 px | 1 | a#wzModeLink |
+| 424.53 px | 1 | a.nav-cta |
+| 464.5 px | 1 | button#wzNext.wz-next |
 
 **preise, 600 px: 31 verschiedene linke Kanten**
 
@@ -2943,8 +2887,8 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 763.48 px | 7 | div, div, h2 |
 | 846.39 px | 1 | svg |
 | 849.24 px | 1 | path |
-| 991.32 px | 1 | div.pa-card.pa-visible.dimmed |
-| 1005.32 px | 7 | div, div, h2 |
+| 991.31 px | 1 | div.pa-card.pa-visible.dimmed |
+| 1005.31 px | 7 | div, div, h2 |
 | 1087.22 px | 1 | svg |
 
 **propan-waermepumpe, 600 px: 13 verschiedene linke Kanten**
@@ -3145,21 +3089,6 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 463.06 px | 1 | span.mobile-phone-label |
 | 532 px | 1 | div#hamburger.hamburger |
 
-**amortisation-waermepumpe, 768 px: 10 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 19 | div.section-inner, div.section-tag, h1.section-title |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 42 px | 8 | li, strong, li |
-| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 424.09 px | 1 | span.tt-feld |
-| 491.97 px | 1 | span.tt-feld |
-| 592.06 px | 1 | a.mobile-phone-cta |
-| 631.06 px | 1 | span.mobile-phone-label |
-| 700 px | 1 | div#hamburger.hamburger |
-
 **anfrage, 768 px: 18 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
@@ -3320,24 +3249,26 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**foerderung, 768 px: 15 verschiedene linke Kanten**
+**foerderung, 768 px: 17 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
 | 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
-| 45 px | 33 | div, div.foerder-inputs-grid, div.fi-group |
+| 45 px | 40 | div, div.foerder-inputs-grid, div.fi-group |
 | 49 px | 2 | button.active, button.active |
 | 65 px | 1 | span |
 | 66 px | 1 | span |
-| 74 px | 4 | div, div#foerderSatzKfw.fr-satz, div |
-| 351.55 px | 1 | span.calc-dots |
+| 74 px | 5 | div, div#foerderSatzKfw.fr-satz, div |
+| 88 px | 2 | div, span |
 | 386 px | 2 | button, button |
 | 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 424.09 px | 1 | span.tt-feld |
 | 491.97 px | 1 | span.tt-feld |
 | 592.06 px | 1 | a.mobile-phone-cta |
+| 629.16 px | 1 | span#foerderSatzEffektiv |
 | 631.06 px | 1 | span.mobile-phone-label |
+| 650.36 px | 1 | span.pct |
 | 700 px | 1 | div#hamburger.hamburger |
 
 **foerderung-hannover, 768 px: 13 verschiedene linke Kanten**
@@ -3381,7 +3312,7 @@ Kein Ueberschuss auf 240 Dokumenten.
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 20 px | 22 | div.section-inner, div.section-tag, h1.section-title |
+| 20 px | 23 | div.section-inner, div.section-tag, h1.section-title |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
 | 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 424.09 px | 1 | span.tt-feld |
@@ -3433,28 +3364,27 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 551.03 px | 1 | span.tt-feld |
 | 618.91 px | 1 | span.tt-feld |
 
-**index, 768 px: 30 verschiedene linke Kanten**
+**index, 768 px: 29 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 6 | div.nav-inner, main#main-content, section.hero |
-| 24 px | 24 | a, img.nav-logo.logo-dark, div.hero-inner |
+| 24 px | 22 | a, img.nav-logo.logo-dark, div.hero-inner |
 | 25 px | 4 | div.hc-row, div.hc-row, div.hc-result |
 | 43 px | 5 | div, div.hc-label, div |
 | 49 px | 3 | div.hc-fv-badge, div.hc-fv-text, strong |
-| 53 px | 2 | a#fvHomeCta.btn-primary.fv-badge-cta, div.fv-badge-note |
+| 53 px | 7 | div#fvHomeKontingent, div#fvHomeCount.fv-count, div#fvHomeUnit.fv-label |
 | 87.25 px | 2 | div.usp-item, div.usp-icon |
-| 120.89 px | 1 | a.fv-disclaimer-link |
 | 139.25 px | 2 | div.usp-text, h2 |
 | 223.66 px | 2 | div.usp-item, div.usp-icon |
 | 259.83 px | 2 | div.usp-item, div.usp-icon |
 | 275.66 px | 2 | div.usp-text, h2 |
 | 311.83 px | 2 | div.usp-text, h2 |
+| 352.69 px | 1 | strong |
 | 388.97 px | 2 | div.usp-item, div.usp-icon |
 | 390 px | 1 | a.btn-ghost |
 | 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 424.09 px | 1 | span.tt-feld |
-| 424.98 px | 1 | a.fv-disclaimer-link |
 | 440.97 px | 2 | div.usp-text, h2 |
 | 468.44 px | 2 | div.usp-item, div.usp-icon |
 | 491.97 px | 1 | span.tt-feld |
@@ -3505,23 +3435,20 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**kostenvergleich-waermepumpe, 768 px: 33 verschiedene linke Kanten**
+**kostenvergleich-waermepumpe, 768 px: 29 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 4 | div.nav-inner, header.page-head, div.container |
-| 24 px | 15 | a, img.nav-logo.logo-dark, div.page-head-inner |
+| 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
+| 24 px | 13 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
 | 37 px | 1 | span.wz-dot |
-| 44 px | 1 | div.ib |
-| 57 px | 17 | h2#rechner-einleitung, p.wz-intro, p.wz-intro |
-| 65 px | 4 | strong, span.d, div |
+| 57 px | 9 | div#wzStepBody, div, p.wz-intro |
 | 69 px | 1 | span |
 | 95.7 px | 1 | a |
 | 169.09 px | 1 | button.wz-step |
 | 182.09 px | 1 | span.wz-dot |
 | 205.58 px | 1 | a |
 | 214.09 px | 1 | span |
-| 225.61 px | 1 | a.wz-link-btn |
 | 281.39 px | 1 | a |
 | 314.19 px | 1 | button.wz-step |
 | 327.19 px | 1 | span.wz-dot |
@@ -3529,19 +3456,18 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 366.09 px | 1 | a |
 | 380.45 px | 1 | span.accent |
 | 390 px | 1 | button.wz-choice |
-| 420.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 424.09 px | 1 | span.tt-feld |
+| 416.56 px | 2 | div.topnav-actions, button.theme-toggle |
+| 420.56 px | 1 | span.tt-feld |
 | 459.28 px | 1 | button.wz-step |
+| 466.58 px | 1 | a#wzModeLink |
 | 472.28 px | 1 | span.wz-dot |
-| 491.97 px | 1 | span.tt-feld |
+| 488.44 px | 1 | span.tt-feld |
 | 504.28 px | 1 | span |
-| 592.06 px | 1 | a.mobile-phone-cta |
+| 592.53 px | 1 | a.nav-cta |
 | 606.91 px | 1 | button.wz-step |
 | 619.91 px | 1 | span.wz-dot |
-| 631.06 px | 1 | span.mobile-phone-label |
 | 632.5 px | 1 | button#wzNext.wz-next |
 | 651.91 px | 1 | span |
-| 700 px | 1 | div#hamburger.hamburger |
 
 **preise, 768 px: 29 verschiedene linke Kanten**
 
@@ -3570,7 +3496,7 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 424.09 px | 1 | span.tt-feld |
 | 491.97 px | 1 | span.tt-feld |
 | 512 px | 1 | div.pa-card.pa-visible.dimmed |
-| 528 px | 8 | div, div, h2 |
+| 528 px | 10 | div, div, h2 |
 | 592.06 px | 1 | a.mobile-phone-cta |
 | 610 px | 1 | svg |
 | 613 px | 1 | path |
@@ -3779,21 +3705,6 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 631.06 px | 1 | span.mobile-phone-label |
 | 700 px | 1 | div#hamburger.hamburger |
 
-**amortisation-waermepumpe, 960 px: 10 verschiedene linke Kanten**
-
-| Kante | Bloecke | Beispiele |
-|---|---|---|
-| 0 px | 3 | div.nav-inner, main#main-content, article.section |
-| 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 100 px | 18 | div.section-inner, div.section-tag, h1.section-title |
-| 122 px | 8 | li, strong, li |
-| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 616.09 px | 1 | span.tt-feld |
-| 683.97 px | 1 | span.tt-feld |
-| 784.06 px | 1 | a.mobile-phone-cta |
-| 823.06 px | 1 | span.mobile-phone-label |
-| 892 px | 1 | div#hamburger.hamburger |
-
 **anfrage, 960 px: 25 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
@@ -3963,23 +3874,25 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 823.06 px | 1 | span.mobile-phone-label |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**foerderung, 960 px: 15 verschiedene linke Kanten**
+**foerderung, 960 px: 17 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, section#foerder.foerder-section |
 | 24 px | 7 | a, img.nav-logo.logo-dark, div.section-inner |
-| 65 px | 33 | div, div.foerder-inputs-grid, div.fi-group |
+| 65 px | 40 | div, div.foerder-inputs-grid, div.fi-group |
 | 69 px | 2 | button.active, button.active |
 | 85 px | 1 | span |
 | 86 px | 1 | span |
-| 94 px | 4 | div, div#foerderSatzKfw.fr-satz, div |
-| 447.55 px | 1 | span.calc-dots |
+| 94 px | 5 | div, div#foerderSatzKfw.fr-satz, div |
+| 108 px | 3 | div, span, div#effektivErklaerung |
 | 482 px | 2 | button, button |
 | 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 616.09 px | 1 | span.tt-feld |
 | 683.97 px | 1 | span.tt-feld |
 | 784.06 px | 1 | a.mobile-phone-cta |
+| 801.16 px | 1 | span#foerderSatzEffektiv |
+| 822.36 px | 1 | span.pct |
 | 823.06 px | 1 | span.mobile-phone-label |
 | 892 px | 1 | div#hamburger.hamburger |
 
@@ -4025,7 +3938,7 @@ Kein Ueberschuss auf 240 Dokumenten.
 |---|---|---|
 | 0 px | 3 | div.nav-inner, main#main-content, article.section |
 | 24 px | 3 | a, img.nav-logo.logo-dark, a.mob-bar-cta |
-| 100 px | 20 | div.section-inner, div.section-tag, h1.section-title |
+| 100 px | 21 | div.section-inner, div.section-tag, h1.section-title |
 | 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 616.09 px | 1 | span.tt-feld |
 | 683.97 px | 1 | span.tt-feld |
@@ -4094,7 +4007,7 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 241.03 px | 2 | div.usp-text, h2 |
 | 258 px | 1 | a.btn-ghost |
 | 360 px | 1 | aside.fv-badge-box |
-| 389 px | 1 | a#fvHomeCta.btn-primary.fv-badge-cta |
+| 389 px | 2 | div#fvHomeKontingent, div#fvHomeCount.fv-count |
 | 390.09 px | 2 | div.usp-item, div.usp-icon |
 | 409.02 px | 1 | div.hc-result-value |
 | 424.98 px | 1 | a.fv-disclaimer-link |
@@ -4166,22 +4079,19 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 851.27 px | 1 | a |
 | 892 px | 1 | div#hamburger.hamburger |
 
-**kostenvergleich-waermepumpe, 960 px: 34 verschiedene linke Kanten**
+**kostenvergleich-waermepumpe, 960 px: 29 verschiedene linke Kanten**
 
 | Kante | Bloecke | Beispiele |
 |---|---|---|
-| 0 px | 4 | div.nav-inner, header.page-head, div.container |
-| 24 px | 15 | a, img.nav-logo.logo-dark, div.page-head-inner |
+| 0 px | 5 | nav.topnav, div.topnav-inner, header.page-head |
+| 24 px | 13 | a.topnav-brand, img.nav-logo.logo-dark, div.page-head-inner |
 | 37 px | 1 | span.wz-dot |
-| 44 px | 1 | div.ib |
-| 57 px | 17 | h2#rechner-einleitung, p.wz-intro, p.wz-intro |
-| 65 px | 4 | strong, span.d, div |
+| 57 px | 9 | div#wzStepBody, div, p.wz-intro |
 | 69 px | 1 | span |
 | 91.02 px | 1 | a |
 | 200.89 px | 1 | a |
 | 208 px | 1 | button.wz-step |
 | 221 px | 1 | span.wz-dot |
-| 225.61 px | 1 | a.wz-link-btn |
 | 253 px | 1 | span |
 | 276.7 px | 1 | a |
 | 361.41 px | 1 | a |
@@ -4193,17 +4103,15 @@ Kein Ueberschuss auf 240 Dokumenten.
 | 576 px | 1 | button.wz-step |
 | 588.58 px | 1 | a#wzModeLink |
 | 589 px | 1 | span.wz-dot |
-| 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
-| 616.09 px | 1 | span.tt-feld |
+| 608.56 px | 2 | div.topnav-actions, button.theme-toggle |
+| 612.56 px | 1 | span.tt-feld |
 | 621 px | 1 | span |
-| 683.97 px | 1 | span.tt-feld |
+| 680.44 px | 1 | span.tt-feld |
 | 760 px | 1 | button.wz-step |
 | 773 px | 1 | span.wz-dot |
-| 784.06 px | 1 | a.mobile-phone-cta |
+| 784.53 px | 1 | a.nav-cta |
 | 805 px | 1 | span |
-| 823.06 px | 1 | span.mobile-phone-label |
 | 824.5 px | 1 | button#wzNext.wz-next |
-| 892 px | 1 | div#hamburger.hamburger |
 
 **preise, 960 px: 38 verschiedene linke Kanten**
 
@@ -4211,38 +4119,38 @@ Kein Ueberschuss auf 240 Dokumenten.
 |---|---|---|
 | 0 px | 4 | div.nav-inner, main#main-content, section#preise-intro.section |
 | 24 px | 27 | a, img.nav-logo.logo-dark, div.section-inner |
-| 40 px | 8 | div, div, h2 |
+| 40 px | 10 | div, div, h2 |
 | 44 px | 6 | li, strong, li |
 | 46 px | 2 | span.manufacturer-name, span#wolfMinEigen.manufacturer-price |
 | 96.25 px | 1 | div#paDetailArrow.pa-detail-arrow |
 | 96.39 px | 1 | svg |
 | 208.8 px | 1 | div.pa-card.pa-visible.dimmed |
-| 224.8 px | 8 | div, div, h2 |
+| 224.8 px | 10 | div, div, h2 |
 | 279.19 px | 1 | svg |
 | 282.19 px | 1 | path |
 | 347.45 px | 1 | em |
 | 393.59 px | 1 | div.pa-card.pa-visible.dimmed |
-| 409.59 px | 8 | div, div, h2 |
+| 409.59 px | 10 | div, div, h2 |
 | 461.98 px | 1 | svg |
 | 464.98 px | 1 | path |
 | 480 px | 1 | div.pa-detail-right |
 | 487 px | 1 | button#manufacturerVaillant.manufacturer-tab |
 | 491.06 px | 1 | a |
-| 500 px | 12 | div#paSpecsTitle.pa-specs-title, div#paSpecsSub.pa-specs-sub, table#paSpecsTable.pa-specs |
+| 500 px | 6 | div#paSpecsTitle.pa-specs-title, div#paSpecsSub.pa-specs-sub, table#paSpecsTable.pa-specs |
 | 509 px | 2 | span.manufacturer-name, span#vaillantMinEigen.manufacturer-price |
 | 578.39 px | 1 | div.pa-card.pa-visible.dimmed |
 | 594 px | 1 | a.pa-header-cta |
-| 594.39 px | 8 | div, div, h2 |
+| 594.39 px | 10 | div, div, h2 |
 | 612.09 px | 1 | button.theme-toggle.nav-theme-standalone |
 | 616.09 px | 1 | span.tt-feld |
 | 622 px | 2 | div.pa-cta-icon, svg |
 | 645.78 px | 1 | svg |
 | 648.63 px | 1 | path |
-| 655.05 px | 4 | td, td, td |
+| 655.05 px | 1 | td |
 | 664 px | 3 | div, div.pa-cta-text, div.pa-cta-sub |
 | 683.97 px | 1 | span.tt-feld |
 | 763.19 px | 1 | div.pa-card.pa-visible.dimmed |
-| 779.19 px | 8 | div, div, h2 |
+| 779.19 px | 10 | div, div, h2 |
 | 784.06 px | 1 | a.mobile-phone-cta |
 | 823.06 px | 1 | span.mobile-phone-label |
 | 829.59 px | 1 | svg |

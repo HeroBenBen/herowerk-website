@@ -1,5 +1,5 @@
 {
-  "_doku": "Erwartungsdatei fuer scripts/verify-raster.mjs (Fluchten-Pruefgate, GF-Auftrag 26.07.2026). Regel 1 (Container-Ueberstand) ist IMMER hart. Regeln 2 bis 5 sind hart, sobald 'streng' auf true steht; bis zur Ratifikation der Kanten-Erwartung durch Benjamin laeuft Regel 2 als Bericht ohne Fehlerabbruch. Jede Ausnahme braucht eine Begruendung im Feld 'grund' - eine Ausnahme ohne Grund ist eine stille Aufweichung.",
+  "_doku": "Erwartungsdatei fuer scripts/verify-raster.mjs (Fluchten-Pruefgate, GF-Auftrag 26.07.2026). Harte Regeln sind 1, 3, 4, 5 und 6; Regel 2 laeuft als Bericht ohne Fehlerabbruch, solange die Kanten-Erwartung nicht mit Benjamin ratifiziert ist. JEDE Ausnahme braucht ein Feld 'grund' mit mindestens zehn Zeichen; das Skript bricht sonst mit Rueckgabewert 2 ab, BEVOR es die erste Seite laedt. Gemessen am 28.07.2026: eine Ausnahme ohne 'grund' liess einen echten Befund von 104 px still verschwinden und das Gate meldete PASS. Ein Lauf ohne gemessene Dokumente, mit zu vielen Transportfehlern oder mit einer harten Regel ohne befundfaehiges Element ist UNGUELTIG (Rueckgabewert 4), nicht gruen.",
   "breiten": [
     320,
     360,
@@ -11,6 +11,10 @@
     960
   ],
   "seiten": [
+    {
+      "pfad": "/amortisation-waermepumpe.html",
+      "name": "amortisation-waermepumpe"
+    },
     {
       "pfad": "/anfrage.html",
       "name": "anfrage"
@@ -32,12 +36,16 @@
       "name": "datenschutz"
     },
     {
+      "pfad": "/dimensionierung.html",
+      "name": "dimensionierung"
+    },
+    {
       "pfad": "/dimensionierung-verstehen.html",
       "name": "dimensionierung-verstehen"
     },
     {
-      "pfad": "/dimensionierung.html",
-      "name": "dimensionierung"
+      "pfad": "/foerderung.html",
+      "name": "foerderung"
     },
     {
       "pfad": "/foerderung-hannover.html",
@@ -46,10 +54,6 @@
     {
       "pfad": "/foerderung-jetzt-mitnehmen.html",
       "name": "foerderung-jetzt-mitnehmen"
-    },
-    {
-      "pfad": "/foerderung.html",
-      "name": "foerderung"
     },
     {
       "pfad": "/foerdervorschuss.html",
@@ -178,25 +182,56 @@
         }
       ],
       "mindestAnteilBreite": 0.6,
-      "grundZentrierteSpalten": "Regel 4 laeuft auf ALLEN Breiten. Ein Container, der nur durch seine eigene max-width schmaler ist als der verfuegbare Inhaltsbereich, ist eine bewusst zentrierte Textspalte und wird uebersprungen (Sache von Regel 5). Gemessen 27.07.2026: ohne diese Unterscheidung meldete Regel 4 bei 960 px sieben Textseiten mit '.section-inner sitzt bei 100/860', also eine 760-px-Spalte im 912-px-Inhaltsbereich. Ein zu kleiner Seitenrand faellt weiterhin auf, belegt am 20-px-Rand von .detail-final-cta, den dieselbe Erweiterung auf sieben Seiten gemeldet hat und der daraufhin auf 24 px korrigiert wurde. NACHTRAG 27.07.2026 (R14-Befund B3): Der Sprung heraus gilt nur, wenn der Block auch WIRKLICH mittig steht (linker Rand gleich rechter Rand innerhalb der Toleranz). Ohne diese zweite Bedingung rutschte eine linksbuendig verschobene Spalte durch, nachgestellt mit margin-left 0 auf hinweise.html: 0/760 statt 100/860 bei 960 px, Gate meldete 0 Befunde. Der Verweis auf Regel 5 traegt nicht, solange r5_symmetrie.aktiv auf false steht."
+      "grundZentrierteSpalten": "Regel 4 laeuft auf ALLEN Breiten. Ein Container, der nur durch seine eigene max-width schmaler ist als der verfuegbare Inhaltsbereich, ist eine bewusst zentrierte Textspalte und wird uebersprungen; er faellt dann unter Regel 5. Gemessen 27.07.2026: ohne diese Unterscheidung meldete Regel 4 bei 960 px sieben Textseiten mit '.section-inner sitzt bei 100/860', also eine 760-px-Spalte im 912-px-Inhaltsbereich. Ein zu kleiner Seitenrand faellt weiterhin auf, belegt am 20-px-Rand von .detail-final-cta, den dieselbe Erweiterung auf sieben Seiten gemeldet hat und der daraufhin auf 24 px korrigiert wurde. NACHTRAG 27.07.2026 (R14-Befund B3): Der Sprung heraus gilt nur, wenn der Block auch WIRKLICH mittig steht (linker Rand gleich rechter Rand innerhalb der Toleranz). Ohne diese zweite Bedingung rutschte eine linksbuendig verschobene Spalte durch, nachgestellt mit margin-left 0 auf hinweise.html: 0/760 statt 100/860 bei 960 px, Gate meldete 0 Befunde. NACHTRAG 28.07.2026: Der Verweis auf Regel 5 traegt wieder, sie ist seit dem 28.07.2026 scharf.",
+      "abdeckung_gemessen": "28.07.2026, 240 Dokumente: 544 befundfaehige Elemente. Auf anfrage, datenschutz, impressum und kostenvergleich-waermepumpe ueber alle acht Breiten 0, gemessen und nachgeprueft: keine dieser vier Seiten traegt einen der hinterlegten Container (section-inner, hero-inner, fv-inner, mobile-bottom-bar), Zaehlung im Markup je 0 Treffer gegen 9 auf index und 4 auf hinweise. Baulich, kein Versaeumnis, und im Bericht ausgewiesen."
     },
-    "r5_symmetrie": {
-      "aktiv": false,
-      "streng": false,
-      "beschreibung": "ABGESCHALTET. Symmetrie zentrierter Bloecke.",
-      "grundAbschaltung": "Drei Fassungen gebaut, keine traegt. (1) 'Container ist reiner Blockcontainer': erreichte KEIN Element, weil zentrierte Bloecke hier in Flex- und Rasterschachteln stehen. (2) 'Luecken aehnlich gross' (Verhaeltnis): 316 Scheinbefunde, weil in einer Flex-Reihe jedes Element zufaellig aehnliche Luecken hat. (3) Erkennung ueber margin:auto in den Regeln des Stylesheets: fand lokal 5 Elemente und live 0, also unzuverlaessig; ausserdem sind auto-Raender per Definition symmetrisch, eine Asymmetrie kann dort gar nicht entstehen. Eine Regel, die entweder falsch anschlaegt oder nie prueft, meldet PASS ohne etwas zu belegen und ist gefaehrlicher als eine abgeschaltete. Deshalb bewusst AUS, mit Beleg, statt gruen zu wirken. Wiederaufnahme nur mit einem Fall, den sie nachweislich faengt.",
+    "r5_seitenversatz": {
+      "aktiv": true,
+      "streng": true,
+      "beschreibung": "Ein Block, der schmaler ist als die Inhaltsbreite seines Blockcontainers, steht buendig links, buendig rechts oder mittig. Jede andere Lage ist unerklaerter Versatz. Zusaetzlich: was das Stylesheet BEIDSEITIG auf margin auto setzt, muss mittig stehen.",
       "maxAbweichungPx": 1,
+      "mindestBlockBreitePx": 24,
+      "wiederaufnahme": "Am 28.07.2026 wieder scharf gestellt. Die Streichung vom selben Tag war mit einer falschen CSS-Aussage begruendet: 'auto-Raender sind per CSS-Definition symmetrisch' gilt NUR, wenn beide Seiten auto sind. Die Messzahl der Streichung (8 von 67.539 Elementen) war richtig, die Begruendung nicht, und die Deckungsluecke ist real.",
+      "deckungsluecke_gemessen": "Nachgestellt am 28.07.2026 auf hinweise.html bei 375 px: ein Block, der weder buendig noch mittig steht, laeuft durch die Regeln 1, 3, 4 und 6 hindurch. Regel 1 und 3 vergleichen nur gegen die Containerkante, Regel 4 springt unter mindestAnteilBreite 0,6 heraus, Regel 6 misst gegen die Fensterkante. Die alte Regel 5 fing den Fall, das neue Gate meldete 0.",
+      "bewusst_KEIN_befund": "Ein Block mit margin-left auto und margin-right 0 ist absichtlich RECHTSBUENDIG und kein Fehler. Die alte Fassung prueft auf 'links ODER rechts auto' und haette jede absichtliche Rechtsbuendigkeit gemeldet; das ist die Scheinbefund-Falle der dritten verworfenen Fassung in neuer Form. Deshalb ist Buendigkeit zu einer Seite ausdruecklich zulaessig, und nur beidseitig erklaerte Zentrierung muss auch mittig stehen.",
+      "abdeckung_gemessen": "28.07.2026 auf dem Stand nach der Reparatur, 30 Seiten x 8 Breiten = 240 Dokumente: 181 befundfaehige Elemente, 0 Befunde. Auf datenschutz und impressum ueber alle acht Breiten 0 Elemente, weil beide Seiten eine einspaltige Textstrecke ohne schmalere Bloecke tragen; der Fall steht im Bericht unter 'Regeln ohne befundfaehiges Element' ausdruecklich drin.",
+      "ausnahmen": [],
+      "historie": "Am 28.07.2026 zuerst ersatzlos gestrichen, am selben Tag wieder scharf gestellt. Die Streichung war mit dem Satz begruendet, waagerechte auto-Raender seien per CSS-Definition symmetrisch. Das gilt nur, wenn BEIDE Seiten auto sind; margin-left auto mit margin-right 0 ist rechtsbuendig. Zweiter, schwererer Befund der Abnahme: die Messzahl der Streichung (8 von 67.539 Elementen) stammt aus einem TOTEN Scanner. Die Erkennung lief ueber die Regeln der Stylesheets mit der Bedingung 'if (r.cssRules)'. In Chromium erbt CSSStyleRule von CSSGroupingRule und hat ein cssRules, das LEER aber WAHR ist; damit wurde jede Stilregel als Gruppenregel behandelt und uebersprungen, bevor ihr Rand je gelesen wurde. index.html bindet vier Stylesheets ein, drei lesbar (das vierte gehoert dem Einwilligungsdialog und wirft beim Zugriff). Gemessen ueber die drei: alte Bedingung 0 Selektoren mit margin-left auto und 0 mit margin-right auto, korrigierte 19 und 18, davon 18 beidseitig, und alle 18 stehen in css/site.css. Die alte Regel hat also nie eine Stylesheet-Regel gesehen, nur Elemente mit style-Attribut. Frueher verworfene Fassungen: (1) 'Container ist reiner Blockcontainer' erreichte kein Element. (2) 'Luecken aehnlich gross' erzeugte 316 Scheinbefunde in Flex-Reihen. (3) Erkennung ueber auto-Raender mit ODER-Verknuepfung haette jede absichtliche Rechtsbuendigkeit gemeldet.",
+      "was_die_vierte_fassung_anders_macht": "Sie haengt nicht mehr allein an der Erkennung von auto-Raendern, sondern an der Geometrie: ein schmalerer Block steht buendig links, buendig rechts oder mittig. Die beidseitig erklaerte Zentrierung ist eine zusaetzliche, schaerfere Bedingung und laeuft jetzt ueber einen reparierten Stylesheet-Scanner.",
+      "bekannte_grenze_gemessen": "ZWEI Grenzen, beide aus dem Gate selbst belegt, nicht aus Handproben. ERSTENS die Bauart: Regel 5 verlangt einen Blockcontainer als Eltern und ein Blockelement als Kind. In Flex- und Rasterschachteln bestimmt der Container die Lage, nicht der Rand; eine Pruefung dort hat am 26.07.2026 in der zweiten Fassung 316 Scheinbefunde erzeugt. ZWEITENS und wichtiger die Breite: Regel 5 erreicht auf den Telefonbreiten fast nichts, weil dort nahezu jeder Block die volle Inhaltsbreite fuellt und damit gar nicht erst in die Pruefung faellt. Die Abdeckung je Breite steht seit dem 29.07.2026 als eigene Tabelle im Bericht. DARAUS FOLGT, ausdruecklich: Regel 5 schuetzt die breiten Ansichten, nicht das Telefon. Der Ursprungsfehler dieses Gates vom 26.07.2026 war ein Telefonfehler; ihn faengt Regel 1 und Regel 6, nicht Regel 5. Wer Regel 5 als Telefonschutz liest, liest sie falsch."
+    },
+    "r6_fensterkanten_ueberstand": {
+      "aktiv": true,
+      "streng": true,
+      "toleranzPx": 0.5,
+      "beschreibung": "Kein sichtbares Element ragt ueber die linke oder rechte Fensterkante hinaus. Gemessen wird der Ueberstand DIREKT aus den Elementkanten gegen documentElement.clientWidth, beide Seiten.",
+      "warum": "Die Regeln 1 bis 4 vergleichen Kind gegen Container. Ein Element, das ueber den Fensterrand ragt, ohne seinen Container zu verlassen, faellt dort durch. Genau so blieb datenschutz.html unentdeckt: 344 px Inhalt in 320 px Fenster, alle vier Regeln sauber.",
+      "warum_nicht_scrollWidth": "Die erste Fassung vom 28.07.2026 las documentElement.scrollWidth gegen clientWidth und hat damit NICHTS gemessen: css/site.css setzt in Zeile 14 und 48 overflow-x auf clip fuer html und body, also ist scrollWidth dauerhaft auf clientWidth geklemmt. Gegenprobe mit demselben 400-px-Block als direktes body-Kind: auf impressum (ohne site.css) 5 Befunde bei 320/360/375/390/414 px, auf hinweise (mit site.css) 0. Befundfaehig waren 3 von 30 Seiten, also 24 von 240 Dokumenten, waehrend die Konsole '232 Dokumente geprueft' meldete. Zweite Blindstelle: scrollWidth waechst nur nach rechts, ein Block 176 px links AUS dem Fenster ergab 375 gegen 375.",
+      "nicht_ersetzbar": "Regel 6 ersetzt die anderen NICHT. Ein Element 620 px ueber seinem Container erzeugt keinen Fensterueberstand, wenn der Container klippt.",
+      "abdeckung_gemessen": "28.07.2026 auf dem Stand nach der Reparatur, 30 Seiten x 8 Breiten = 240 Dokumente: 28.557 befundfaehige Elemente, 0 Befunde. Zum Vergleich meldete die erste Fassung '232 Dokumente' und konnte davon nur auf 3 von 30 Seiten ueberhaupt anschlagen, also 24 von 240.",
       "ausnahmen": []
     }
   },
   "ignorierteWurzeln": [
     {
       "wahl": "[id^=\"cmp\"]",
-      "grund": "Einwilligungsdialog des Anbieters, fremdes Markup ausserhalb unseres Rasters."
+      "grund": "Einwilligungsdialog des Anbieters consentmanager, erkannt an der Kennung. Fremdes Markup ausserhalb unseres Rasters, von uns nur konfigurierbar, nicht umbaubar (docs/compliance/bfsg-scope.md Abschnitt 2)."
     },
     {
       "wahl": "[class^=\"cmp\"]",
-      "grund": "wie oben"
+      "grund": "Einwilligungsdialog des Anbieters consentmanager, zweite Auszeichnungsform ueber die Klasse statt ueber die Kennung. Fremdes Markup ausserhalb unseres Rasters, von uns nur konfigurierbar, nicht umbaubar (docs/compliance/bfsg-scope.md Abschnitt 2)."
     }
-  ]
+  ],
+  "liveLauf": {
+    "versuche": 3,
+    "wartenMs": 1500,
+    "pauseMs": 250,
+    "warum": "Am 28.07.2026 meldete der Live-Lauf 32 Befunde 'Seite nicht ladbar' auf 27 verschiedenen Seiten und allen 8 Breiten; 20 Einzelabrufe ergaben 20 mal HTTP 200. Gemessene Ursache: IONOS liefert x-ws-ratelimit-limit 1000, der Lauf erzeugt bei 232 Seitenaufrufen ueber 2.000 Anfragen. Ein Wiederholungsversuch allein reicht gegen ein Mengenproblem nicht, deshalb zusaetzlich eine Pause. Transportfehler werden getrennt von Layoutbefunden ausgewiesen und brechen den Lauf nicht als Rasterfehler ab."
+  },
+  "gueltigkeit": {
+    "maxAnteilTransportfehler": 0.05,
+    "grund": "Am 28.07.2026 gegen einen Server gemessen, der dauerhaft 503 lieferte: 0 gemessene Dokumente, 10 Transportfehler, drei Nullabdeckungs-Warnungen, und trotzdem 'Raster-Gate PASS' mit Rueckgabewert 0. Ein Lauf, der nichts gemessen hat, ist ungueltig, nicht gruen. Ueberschreitet der Anteil nicht ladbarer Aufrufe diese Grenze, oder hat eine harte Regel kein befundfaehiges Element, endet der Lauf mit Rueckgabewert 4.",
+    "abdeckung_je_seite": "Der Bericht fuehrt seit dem 28.07.2026 eine eigene Liste 'Regeln ohne befundfaehiges Element ueber alle Breiten dieser Seite'. Grund: eine Gesamtsumme verdeckt, WO nichts gemessen wurde. Der Lauf wird davon nicht ungueltig, denn 0 Elemente sind haeufig baulich richtig (Regel 4 greift nur auf vollbreiten Containern, Regel 6 nur auf Elementen, die die Fensterkante erreichen koennen). Ungueltig wird der Lauf erst, wenn eine harte Regel ueber den GANZEN Lauf kein Element erreicht.",
+    "seite_nie_geladen": "Eine Seite, die auf KEINER Breite geladen werden konnte, macht den Lauf ungueltig. Bis zum 29.07.2026 fiel so ein Fall unter die 5-Prozent-Grenze und der Lauf meldete PASS ueber 30 Seiten, obwohl eine davon nie gemessen wurde. Gemessen am Live-Lauf vom 28.07.: amortisation-waermepumpe.html liegt im Hauptzweig und antwortet live mit 404, 8 von 240 Aufrufen, 3,33 Prozent."
+  }
 }
