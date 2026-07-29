@@ -48,9 +48,30 @@ var LABEL_AUFGABEN = 'Aufgaben';
 var LABEL_PROFIL = 'Profil';
 var LABEL_FREUEN = 'Darauf kannst du dich freuen';
 
-var SINGLE_LABELS = [LABEL_ID, LABEL_BESCHAEFTIGUNG, LABEL_STANDORT, LABEL_ICON, LABEL_TEASER];
-var LIST_LABELS = [LABEL_AUFGABEN, LABEL_PROFIL, LABEL_FREUEN];
+// Verguetung (neu 29.07.2026). Der Feed liefert daraus verguetung = { wert, einheit,
+// kurz, absaetze }. Die Feldnamen wert und einheit sind FEST VERDRAHTET gegen
+// scripts/build-structured-data.mjs: nur unter genau diesen Namen zieht das
+// JobPosting-Markup baseSalary nach. Nicht umbenennen.
+var LABEL_VERG_WERT = 'Vergütung Wert';
+var LABEL_VERG_EINHEIT = 'Vergütung Einheit';
+var LABEL_VERG_KURZ = 'Vergütung Kurz';
+var LABEL_VERGUETUNG = 'Vergütung';
+
+var SINGLE_LABELS = [
+  LABEL_ID,
+  LABEL_BESCHAEFTIGUNG,
+  LABEL_STANDORT,
+  LABEL_ICON,
+  LABEL_TEASER,
+  LABEL_VERG_WERT,
+  LABEL_VERG_EINHEIT,
+  LABEL_VERG_KURZ,
+];
+var LIST_LABELS = [LABEL_AUFGABEN, LABEL_PROFIL, LABEL_FREUEN, LABEL_VERGUETUNG];
 var ALL_LABELS = SINGLE_LABELS.concat(LIST_LABELS);
+
+// Zulaessige Einheiten fuer die Verguetung (schema.org QuantitativeValue unitText).
+var VERG_EINHEITEN = ['HOUR', 'MONTH'];
 
 // Reihenfolge der Zeilen in einem frisch angelegten Detail-Tab (Template).
 var DETAIL_TEMPLATE_ORDER = [
@@ -59,6 +80,10 @@ var DETAIL_TEMPLATE_ORDER = [
   LABEL_STANDORT,
   LABEL_ICON,
   LABEL_TEASER,
+  LABEL_VERG_WERT,
+  LABEL_VERG_EINHEIT,
+  LABEL_VERG_KURZ,
+  LABEL_VERGUETUNG,
   LABEL_AUFGABEN,
   LABEL_PROFIL,
   LABEL_FREUEN,
@@ -147,6 +172,10 @@ function buildFeed_() {
       icon: normalizeIcon_(parsed.icon),
       order: order,
     });
+    var verg = buildVerguetung_(parsed);
+    if (verg) out[out.length - 1].verguetung = verg;
+    var leist = BAUSTEINE_FOR_(id);
+    if (leist.length) out[out.length - 1].leistungen = leist;
   }
   out.sort(function (a, b) {
     return a.order - b.order;
@@ -166,6 +195,10 @@ function parseDetailTab_(sheet) {
     standort: '',
     icon: '',
     teaser: '',
+    vergWert: '',
+    vergEinheit: '',
+    vergKurz: '',
+    verguetung: [],
     aufgaben: [],
     profil: [],
     freuen: [],
@@ -181,7 +214,13 @@ function parseDetailTab_(sheet) {
       else if (labelRaw === LABEL_STANDORT) res.standort = valRaw;
       else if (labelRaw === LABEL_ICON) res.icon = valRaw;
       else if (labelRaw === LABEL_TEASER) res.teaser = valRaw;
-      else if (labelRaw === LABEL_AUFGABEN) {
+      else if (labelRaw === LABEL_VERG_WERT) res.vergWert = valRaw;
+      else if (labelRaw === LABEL_VERG_EINHEIT) res.vergEinheit = valRaw;
+      else if (labelRaw === LABEL_VERG_KURZ) res.vergKurz = valRaw;
+      else if (labelRaw === LABEL_VERGUETUNG) {
+        current = res.verguetung;
+        if (valRaw) current.push(valRaw);
+      } else if (labelRaw === LABEL_AUFGABEN) {
         current = res.aufgaben;
         if (valRaw) current.push(valRaw);
       } else if (labelRaw === LABEL_PROFIL) {
@@ -198,6 +237,24 @@ function parseDetailTab_(sheet) {
     }
   }
   return res;
+}
+
+/**
+ * Baut aus den vier geparsten Verguetungs-Feldern das Feed-Objekt.
+ * Gibt null zurueck, wenn die Rolle keine Verguetung fuehrt. Das ist der Normalfall
+ * fuer die fuenf Rollen ohne Baustein und fuer shk-meister (GF-Entscheid 28.07.2026:
+ * die Rolle mit Technischer Betriebsleitung bekommt KEINEN Verguetungsblock).
+ *
+ * Halb gefuellt ist ein Fehler, nicht ein Teilzustand: ohne Zahl UND Einheit zieht
+ * das JobPosting-Markup kein baseSalary, dann darf auch die Seite keine Zahl zeigen.
+ */
+function buildVerguetung_(parsed) {
+  var wert = num_(String(parsed.vergWert || '').replace(',', '.'), 0);
+  var einheit = String(parsed.vergEinheit || '').trim().toUpperCase();
+  var kurz = String(parsed.vergKurz || '').trim();
+  var absaetze = parsed.verguetung || [];
+  if (!wert || VERG_EINHEITEN.indexOf(einheit) < 0) return null;
+  return { wert: wert, einheit: einheit, kurz: kurz, absaetze: absaetze };
 }
 
 // "Anlagenmechaniker:in ... (m/w/d)" -> { name: "Anlagenmechaniker:in ...", mwd: "(m/w/d)" }
@@ -490,6 +547,247 @@ function populateAll() {
   ui.alert(SERVICE_NAME, msg, ui.ButtonSet.OK);
 }
 
+// ---------------------------------------------------------------------------
+// Verguetung und rollenuebergreifende Bausteine (29.07.2026)
+//
+// QUELLE, WORTWOERTLICH, NICHT UMFORMULIEREN UND NICHT RUNDEN:
+//   07_HR_Personal/Anzeigen/2026-07-27_Website-Textbausteine_Verguetung-und-Bonus_HeroWerk.md
+//   Abschnitt 3 (Verguetung je Rolle), Abschnitt 2 (Bausteine).
+//
+// GRUNDSATZ (GF-Entscheid 27.07.2026): Der Modelltreiber ist der BUDGETDECKEL, der
+// hier stehende Wert ist der ANZEIGENWERT und liegt darunter. Der Deckel steht
+// NIRGENDS in dieser Datei und darf nirgends veroeffentlicht werden.
+//
+// FUENF ROLLEN OHNE VERGUETUNG, bewusst: shk-meister (Technische Betriebsleitung,
+// GF-Entscheid 28.07.2026), sowie technischer-aussendienst, disponent,
+// finanzbuchhalter und planer-elektro (im Modell existiert kein eigener Treiber,
+// nicht erfinden).
+//
+// VERBOT V5: keine Bonus-Betraege, keine Bonus-Mechanik, keine Zulagen-Hoehe.
+// VERBOT V3: keine Privatnutzung des Firmenwagens bei Montagerollen.
+// ---------------------------------------------------------------------------
+
+function VERGUETUNG_() {
+  return {
+    anlagenmechaniker: {
+      wert: 20,
+      einheit: 'HOUR',
+      kurz: '20,00 EUR brutto pro Stunde zum Einstieg.',
+      absaetze: [
+        '20,00 EUR brutto pro Stunde zum Einstieg. Das sind rund 3.467 EUR brutto im Monat bei 40 Wochenstunden.',
+        'Dieser Einstiegswert gilt mit abgeschlossener Ausbildung und Führerschein Klasse B. Mehr ist drin, und darüber sprechen wir im Gespräch: Kälteschein Kategorie I, mindestens zwei Jahre Erfahrung in der Wärmepumpen-Montage, oder Erfahrung als Verantwortlicher auf der Baustelle. Diese Kriterien gelten bei uns für alle gleich.',
+      ],
+    },
+    quereinsteiger: {
+      wert: 15,
+      einheit: 'HOUR',
+      kurz: '15,00 EUR brutto pro Stunde im Einstieg.',
+      absaetze: [
+        '15,00 EUR brutto pro Stunde im Einstieg. Das sind rund 2.600 EUR brutto im Monat bei 40 Wochenstunden.',
+        'Wir arbeiten dich selbst ein, Schritt für Schritt und am echten Objekt. Wer sich bewährt, für den ist mehr drin, bei der Vergütung wie bei der Verantwortung. Was möglich ist, hängt von dir ab, und darüber reden wir offen, sobald wir sehen, wie du arbeitest.',
+      ],
+    },
+    gala: {
+      wert: 17,
+      einheit: 'HOUR',
+      kurz: '17,00 EUR brutto pro Stunde zum Einstieg.',
+      absaetze: [
+        '17,00 EUR brutto pro Stunde zum Einstieg. Das sind rund 2.947 EUR brutto im Monat bei 40 Wochenstunden. Mit Erfahrung im Garten- und Landschaftsbau, im Tiefbau oder mit Maschinenschein steigst du höher ein.',
+      ],
+    },
+    'quereinsteiger-fundamentbau': {
+      wert: 17,
+      einheit: 'HOUR',
+      kurz: '17,00 EUR brutto pro Stunde zum Einstieg.',
+      absaetze: [
+        '17,00 EUR brutto pro Stunde zum Einstieg. Das sind rund 2.947 EUR brutto im Monat bei 40 Wochenstunden. Mit Erfahrung im Garten- und Landschaftsbau, im Tiefbau oder mit Maschinenschein steigst du höher ein.',
+      ],
+    },
+    elektriker: {
+      wert: 21,
+      einheit: 'HOUR',
+      kurz: '21,00 EUR brutto pro Stunde zum Einstieg.',
+      absaetze: [
+        '21,00 EUR brutto pro Stunde zum Einstieg. Das sind rund 3.640 EUR brutto im Monat bei 40 Wochenstunden.',
+        'Mehr ist drin bei Erfahrung mit Wärmepumpen-Anschluss, PV und Speicher oder mit Zählerplatz-Berechtigung.',
+      ],
+    },
+    service: {
+      wert: 21.5,
+      einheit: 'HOUR',
+      kurz: '21,50 EUR brutto pro Stunde zum Einstieg.',
+      absaetze: [
+        '21,50 EUR brutto pro Stunde zum Einstieg. Das sind rund 3.727 EUR brutto im Monat bei 40 Wochenstunden.',
+        'Mehr ist drin mit Kälteschein, Herstellerzertifikaten oder Erfahrung in der Störungsdiagnose an Wärmepumpen.',
+        'Du fährst feste Touren in der Region Hannover und bist abends zu Hause.',
+      ],
+    },
+    'shk-meister-montage': {
+      wert: 4500,
+      einheit: 'MONTH',
+      kurz: '4.500 EUR brutto im Monat zum Einstieg, das sind 54.000 EUR im Jahr.',
+      absaetze: [
+        '4.500 EUR brutto im Monat zum Einstieg, das sind 54.000 EUR im Jahr.',
+        'Dieser Wert gilt mit Meisterbrief und Erfahrung im Heizungsbau. Mehr ist drin, und darüber sprechen wir im Gespräch, etwa bei nachgewiesener Personalverantwortung oder Erfahrung in der Wärmepumpen-Planung.',
+        'Unsere technische Betriebsleitung ist besetzt. Wir suchen dich für ein weiteres Montageteam, nicht als Ersatz.',
+        'Ein Betrieb wie unserer darf nicht an einer einzigen Person hängen. Deshalb stellen wir die technische Betriebsleitung auf mehr als nur zwei Schultern. Wenn du willst, wächst du in die stellvertretende technische Betriebsleitung hinein, und dafür gibt es eine feste Zulage. Die Details besprechen wir im Gespräch.',
+      ],
+    },
+    elektromeister: {
+      wert: 4500,
+      einheit: 'MONTH',
+      kurz: '4.500 EUR brutto im Monat zum Einstieg, plus Zulage bei Übernahme der Konzession.',
+      absaetze: [
+        '4.500 EUR brutto im Monat zum Einstieg.',
+        'Die Konzessionsträgerschaft Elektro und die technische Betriebsleitung für diesen Bereich bauen wir mit dir auf. Übernimmst du sie, kommt eine feste Zulage dazu. Die Details besprechen wir im Gespräch.',
+        'Du baust den Elektro-Bereich mit auf und entscheidest mit, wie er aussieht.',
+      ],
+    },
+    'planer-shk': {
+      wert: 3600,
+      einheit: 'MONTH',
+      kurz: '3.600 EUR brutto im Monat zum Einstieg.',
+      absaetze: [
+        '3.600 EUR brutto im Monat zum Einstieg. Mehr ist drin mit Erfahrung in der Wärmepumpen-Auslegung, im hydraulischen Abgleich oder mit einer Planungssoftware, die du sicher beherrschst.',
+      ],
+    },
+    vad: {
+      wert: 3000,
+      einheit: 'MONTH',
+      kurz: '3.000 EUR brutto im Monat als Fixum, plus Provision ohne Deckel.',
+      absaetze: [
+        '3.000 EUR brutto im Monat als Fixum. Dazu kommt deine Provision auf den eigenen Umsatz, und die ist nach oben nicht gedeckelt.',
+        'Damit entscheidest du selbst mit, was am Monatsende auf deinem Konto steht. Bei unseren Auftragsgrößen ist die Provision der größere Teil des Einkommens, und wer sich reinhängt, verdient hier sehr gut. Eine Obergrenze gibt es nicht. Das Modell erklären wir dir im Gespräch.',
+        'Du bekommst qualifizierte Termine, einen Rechner, der beim Kunden rechnet, und ein Firmenfahrzeug, das du auch privat nutzen darfst.',
+      ],
+    },
+    va: {
+      wert: 3000,
+      einheit: 'MONTH',
+      kurz: '3.000 EUR brutto im Monat zum Einstieg, plus Prämie je Abschluss.',
+      absaetze: [
+        '3.000 EUR brutto im Monat zum Einstieg, plus eine Prämie für jeden Abschluss, an dem du mitgewirkt hast. Die Höhe besprechen wir im Gespräch.',
+      ],
+    },
+    backoffice: {
+      wert: 3500,
+      einheit: 'MONTH',
+      kurz: '3.500 EUR brutto im Monat zum Einstieg.',
+      absaetze: [
+        '3.500 EUR brutto im Monat zum Einstieg. Mehr ist drin mit Erfahrung in der Auftragsabwicklung im Handwerk, mit Förderanträgen oder in der Rechnungsstellung.',
+      ],
+    },
+    hr: {
+      wert: 3500,
+      einheit: 'MONTH',
+      kurz: '3.500 EUR brutto im Monat zum Einstieg.',
+      absaetze: [
+        '3.500 EUR brutto im Monat zum Einstieg. Mehr ist drin mit Erfahrung im gewerblichen Recruiting oder in der Lohnvorbereitung.',
+        'Du baust den Personalbereich von Grund auf mit auf. Das ist keine Verwaltungsstelle.',
+      ],
+    },
+    assistenz: {
+      wert: 3000,
+      einheit: 'MONTH',
+      kurz: '3.000 EUR brutto im Monat zum Einstieg.',
+      absaetze: [
+        '3.000 EUR brutto im Monat zum Einstieg. Mehr ist drin mit Erfahrung in der Geschäftsführungs-Assistenz oder im Projektmanagement.',
+      ],
+    },
+  };
+}
+
+// Wortlaut der vier rollenuebergreifenden Bausteine. Absichtlich CODE-OWNED und
+// NICHT ueber das Sheet aenderbar: dieser Wortlaut ist am 28.07.2026 so an die
+// Agentur fuer Arbeit gemeldet worden. Eine abweichende Fassung auf der Webseite
+// waere ein Widerspruch zur gemeldeten Anzeige.
+var BAUSTEIN_FAHRZEUG = {
+  titel: 'Dein Fahrzeug',
+  text: 'Dein Installationsvan steht bei dir. Du startest morgens von zu Hause direkt zur Baustelle, kein Umweg über den Betrieb, kein Fahrzeug abholen. Das spart dir jeden Tag Zeit.',
+};
+var BAUSTEIN_FAHRZEUG_SERVICE = {
+  titel: 'Dein Fahrzeug',
+  text: 'Dein Installationsvan steht bei dir. Du startest morgens von zu Hause direkt zur ersten Tour, kein Umweg über den Betrieb, kein Fahrzeug abholen. Das spart dir jeden Tag Zeit.',
+};
+// KORREKTUR GF 29.07.2026: Die alte Fassung sagte "an Qualitaet gekoppelt, nicht
+// an Tempo". Das ist faktisch falsch. Der Bonus haengt im Kern an der
+// Produktivitaet, also an dem, was ein Team in der Woche schafft; Qualitaet ist
+// die Bedingung, nicht der Treiber. Eine Anzeige, die das Gegenteil verspricht,
+// erzeugt beim ersten Bonusgespraech einen Widerspruch.
+// Verbot V5 bleibt: kein Betrag, keine Schwelle, keine Mechanik.
+var BAUSTEIN_BONUS_MONTAGE = {
+  titel: 'Bonus',
+  text: 'Dazu kommt ein leistungsabhängiger Bonus, der bei uns einen spürbaren Teil des Einkommens ausmacht. Er hängt daran, was ihr als Team in der Woche schafft, und daran, dass die Anlage sauber übergeben wird. Wie er genau funktioniert, erklären wir dir im Gespräch.',
+};
+var BAUSTEIN_BONUS_QUEREINSTIEG = {
+  titel: 'Bonus',
+  text: 'Dazu kommt ein leistungsabhängiger Bonus, der bei uns einen spürbaren Teil des Einkommens ausmacht. Er hängt daran, was ihr als Team in der Woche schafft, und daran, dass die Anlage sauber übergeben wird. Du bist vom ersten Tag an bonusberechtigt. Wie er genau funktioniert, erklären wir dir im Gespräch.',
+};
+var BAUSTEIN_BONUS_BUERO = {
+  titel: 'Bonus',
+  text: 'Auch du bist am leistungsabhängigen Bonus beteiligt. Er hängt daran, was der Betrieb in der Woche schafft, und deine Arbeit im Büro entscheidet mit darüber. Wie der Bonus funktioniert, erklären wir dir im Gespräch.',
+};
+// GF-Entscheid 29.07.2026: Der Baustein "Vermoegenswirksame Leistungen" faellt aus
+// der Aussenkommunikation und wird durch den Arbeitgeberzuschuss zur Altersvorsorge
+// ersetzt. Beworben wird der ERHOEHTE Zuschuss, die eigene Hoehe bleibt draussen und
+// wird erst im Gespraech genannt, gleiche Logik wie beim Bonus.
+// Der gesetzliche Mindestzuschuss betraegt 15 Prozent des umgewandelten Entgelts,
+// soweit der Arbeitgeber dadurch Sozialversicherungsbeitraege einspart
+// [verifiziert: Paragraf 1a Absatz 1a BetrAVG, seit 01.01.2022 auch fuer Altzusagen].
+var BAUSTEIN_ALTERSVORSORGE = {
+  titel: 'Altersvorsorge',
+  text: 'Wir zahlen mehr in deine betriebliche Altersvorsorge ein, als wir müssten, weil uns das Thema wichtig ist. Was das für dich heißt, besprechen wir im Gespräch.',
+};
+var BAUSTEIN_VERSPRECHEN = {
+  titel: 'Wir melden uns innerhalb von 48 Stunden.',
+  text: 'Ein Lebenslauf reicht, ein Anschreiben brauchen wir nicht. Nach deinem bisherigen Gehalt fragen wir nicht.',
+};
+
+/**
+ * Liefert die rollenuebergreifenden Bausteine einer Rolle in Anzeigereihenfolge.
+ * Leeres Array fuer die fuenf Rollen ohne Verguetungsblock.
+ *
+ * BERECHTIGUNG, nicht aendern: vad und va bekommen KEINEN Bonus-Baustein
+ * (laut 71b_Bonus_Detail nicht bonusberechtigt), bei ihnen stehen Provision
+ * beziehungsweise Abschlusspraemie bereits im Verguetungsblock.
+ * FAHRZEUG nur bei Montagerollen, und dort ohne jede Privatnutzung (Verbot V3).
+ */
+function BAUSTEINE_FOR_(id) {
+  // GF-Korrektur 29.07.2026: Der Quereinsteiger Montage fuehrt KEINEN eigenen
+  // Installationsvan, den fuehrt der SHK-Geselle als Teamleiter. Der Baustein
+  // "Dein Fahrzeug" darf dort nicht stehen, sonst verspricht die Anzeige etwas,
+  // was der Betrieb nicht haelt.
+  var MONTAGE_FAHRZEUG = [
+    'anlagenmechaniker',
+    'quereinsteiger-fundamentbau',
+    'gala',
+    'elektriker',
+    'shk-meister-montage',
+    'elektromeister',
+  ];
+  var BONUS_BUERO = ['service', 'planer-shk', 'backoffice', 'hr', 'assistenz'];
+  var OHNE_BONUS = ['vad', 'va'];
+  if (!VERGUETUNG_()[id]) return [];
+
+  var out = [];
+  if (id === 'service') out.push(BAUSTEIN_FAHRZEUG_SERVICE);
+  else if (MONTAGE_FAHRZEUG.indexOf(id) >= 0) out.push(BAUSTEIN_FAHRZEUG);
+
+  if (OHNE_BONUS.indexOf(id) < 0) {
+    if (id === 'quereinsteiger') {
+      out.push(BAUSTEIN_BONUS_QUEREINSTIEG);
+    } else if (BONUS_BUERO.indexOf(id) >= 0) {
+      out.push(BAUSTEIN_BONUS_BUERO);
+    } else {
+      out.push(BAUSTEIN_BONUS_MONTAGE);
+    }
+  }
+
+  out.push(BAUSTEIN_ALTERSVORSORGE);
+  out.push(BAUSTEIN_VERSPRECHEN);
+  return out;
+}
+
 // Freigegebener Go-Live-Roster (28.06.2026). Reihenfolge = Anzeige; Nr = Sortier-order.
 // kategorie MUSS exakt einer data-kategorie-Gruppe in karriere.html entsprechen.
 function ROSTER_() {
@@ -728,6 +1026,11 @@ function writeDetailContent_(ss, role) {
   rows.push([LABEL_STANDORT, DEFAULT_STANDORT]);
   rows.push([LABEL_ICON, role.icon]);
   rows.push([LABEL_TEASER, role.teaser]);
+  var verg = VERGUETUNG_()[role.id] || null;
+  rows.push([LABEL_VERG_WERT, verg ? verg.wert : '']);
+  rows.push([LABEL_VERG_EINHEIT, verg ? verg.einheit : '']);
+  rows.push([LABEL_VERG_KURZ, verg ? verg.kurz : '']);
+  appendList_(rows, LABEL_VERGUETUNG, verg ? verg.absaetze : []);
   appendList_(rows, LABEL_AUFGABEN, role.aufgaben);
   appendList_(rows, LABEL_PROFIL, role.profil);
   appendList_(rows, LABEL_FREUEN, role.freuen);

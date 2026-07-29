@@ -240,6 +240,37 @@
   max-width: 820px;
 }
 
+/* Verguetung: die Zahl steht auf der GESCHLOSSENEN Karte, nicht hinter
+   "Mehr erfahren". Ein Bewerber aus der Agentur-fuer-Arbeit-Anzeige soll
+   dieselbe Zahl ohne einen einzigen Klick wiederfinden.
+   Kontrast gemessen 29.07.2026: dunkel 7,16:1, hell 6,99:1. */
+.kar-role-pay {
+  color: var(--green);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 10px 0 0;
+  max-width: 820px;
+}
+
+[data-theme='light'] .kar-role-pay {
+  color: var(--color-accent-on-light);
+}
+
+.kar-detail-pay p,
+.kar-detail-bausteine p:not(.kar-detail-h) {
+  color: var(--g300);
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0 0 10px;
+  max-width: 820px;
+}
+
+.kar-detail-pay {
+  margin-bottom: 6px;
+}
+
 .kar-role-detail {
   display: none;
   margin-top: 4px;
