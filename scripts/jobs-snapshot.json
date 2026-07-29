@@ -1,8 +1,8 @@
 {
   "_hinweis": "Erzeugt aus /api/jobs (Google Sheet Hero_Jobs_Website). NICHT von Hand aendern. Neu holen: npm run build:seo:jobs",
-  "abgerufenAm": "2026-07-28",
+  "abgerufenAm": "2026-07-29",
   "datePosted": "2026-07-28",
-  "validThrough": "2026-10-26",
+  "validThrough": "2026-10-27",
   "rollen": [
     {
       "id": "shk-meister",
@@ -66,7 +66,36 @@
         "Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub."
       ],
       "icon": "medal",
-      "order": 2
+      "order": 2,
+      "verguetung": {
+        "wert": 4500,
+        "einheit": "MONTH",
+        "kurz": "4.500 EUR brutto im Monat zum Einstieg, das sind 54.000 EUR im Jahr.",
+        "absaetze": [
+          "4.500 EUR brutto im Monat zum Einstieg, das sind 54.000 EUR im Jahr.",
+          "Dieser Wert gilt mit Meisterbrief und Erfahrung im Heizungsbau. Mehr ist drin, und darüber sprechen wir im Gespräch, etwa bei nachgewiesener Personalverantwortung oder Erfahrung in der Wärmepumpen-Planung.",
+          "Unsere technische Betriebsleitung ist besetzt. Wir suchen dich für ein weiteres Montageteam, nicht als Ersatz.",
+          "Ein Betrieb wie unserer darf nicht an einer einzigen Person hängen. Deshalb stellen wir die technische Betriebsleitung auf mehr als nur zwei Schultern. Wenn du willst, wächst du in die stellvertretende technische Betriebsleitung hinein, und dafür gibt es eine feste Zulage. Die Details besprechen wir im Gespräch."
+        ]
+      },
+      "leistungen": [
+        {
+          "titel": "Dein Fahrzeug",
+          "text": "Dein Installationsvan steht bei dir. Du startest morgens von zu Hause direkt zur Baustelle, kein Umweg über den Betrieb, kein Fahrzeug abholen. Das spart dir jeden Tag Zeit."
+        },
+        {
+          "titel": "Bonus",
+          "text": "Dazu kommt ein leistungsabhängiger Bonus, der bei uns einen spürbaren Teil des Einkommens ausmacht. Er hängt daran, was ihr als Team in der Woche schafft, und daran, dass die Anlage sauber übergeben wird. Wie er genau funktioniert, erklären wir dir im Gespräch."
+        },
+        {
+          "titel": "Altersvorsorge",
+          "text": "Wir zahlen mehr in deine betriebliche Altersvorsorge ein, als wir müssten, weil uns das Thema wichtig ist. Was das für dich heißt, besprechen wir im Gespräch."
+        },
+        {
+          "titel": "Wir melden uns innerhalb von 48 Stunden.",
+          "text": "Ein Lebenslauf reicht, ein Anschreiben brauchen wir nicht. Nach deinem bisherigen Gehalt fragen wir nicht."
+        }
+      ]
     },
     {
       "id": "anlagenmechaniker",
@@ -98,7 +127,34 @@
         "Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub."
       ],
       "icon": "wrench",
-      "order": 3
+      "order": 3,
+      "verguetung": {
+        "wert": 20,
+        "einheit": "HOUR",
+        "kurz": "20,00 EUR brutto pro Stunde zum Einstieg.",
+        "absaetze": [
+          "20,00 EUR brutto pro Stunde zum Einstieg. Das sind rund 3.467 EUR brutto im Monat bei 40 Wochenstunden.",
+          "Dieser Einstiegswert gilt mit abgeschlossener Ausbildung und Führerschein Klasse B. Mehr ist drin, und darüber sprechen wir im Gespräch: Kälteschein Kategorie I, mindestens zwei Jahre Erfahrung in der Wärmepumpen-Montage, oder Erfahrung als Verantwortlicher auf der Baustelle. Diese Kriterien gelten bei uns für alle gleich."
+        ]
+      },
+      "leistungen": [
+        {
+          "titel": "Dein Fahrzeug",
+          "text": "Dein Installationsvan steht bei dir. Du startest morgens von zu Hause direkt zur Baustelle, kein Umweg über den Betrieb, kein Fahrzeug abholen. Das spart dir jeden Tag Zeit."
+        },
+        {
+          "titel": "Bonus",
+          "text": "Dazu kommt ein leistungsabhängiger Bonus, der bei uns einen spürbaren Teil des Einkommens ausmacht. Er hängt daran, was ihr als Team in der Woche schafft, und daran, dass die Anlage sauber übergeben wird. Wie er genau funktioniert, erklären wir dir im Gespräch."
+        },
+        {
+          "titel": "Altersvorsorge",
+          "text": "Wir zahlen mehr in deine betriebliche Altersvorsorge ein, als wir müssten, weil uns das Thema wichtig ist. Was das für dich heißt, besprechen wir im Gespräch."
+        },
+        {
+          "titel": "Wir melden uns innerhalb von 48 Stunden.",
+          "text": "Ein Lebenslauf reicht, ein Anschreiben brauchen wir nicht. Nach deinem bisherigen Gehalt fragen wir nicht."
+        }
+      ]
     },
     {
       "id": "quereinsteiger",
@@ -130,7 +186,30 @@
         "Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub."
       ],
       "icon": "learning",
-      "order": 4
+      "order": 4,
+      "verguetung": {
+        "wert": 15,
+        "einheit": "HOUR",
+        "kurz": "15,00 EUR brutto pro Stunde im Einstieg.",
+        "absaetze": [
+          "15,00 EUR brutto pro Stunde im Einstieg. Das sind rund 2.600 EUR brutto im Monat bei 40 Wochenstunden.",
+          "Wir arbeiten dich selbst ein, Schritt für Schritt und am echten Objekt. Wer sich bewährt, für den ist mehr drin, bei der Vergütung wie bei der Verantwortung. Was möglich ist, hängt von dir ab, und darüber reden wir offen, sobald wir sehen, wie du arbeitest."
+        ]
+      },
+      "leistungen": [
+        {
+          "titel": "Bonus",
+          "text": "Dazu kommt ein leistungsabhängiger Bonus, der bei uns einen spürbaren Teil des Einkommens ausmacht. Er hängt daran, was ihr als Team in der Woche schafft, und daran, dass die Anlage sauber übergeben wird. Du bist vom ersten Tag an bonusberechtigt. Wie er genau funktioniert, erklären wir dir im Gespräch."
+        },
+        {
+          "titel": "Altersvorsorge",
+          "text": "Wir zahlen mehr in deine betriebliche Altersvorsorge ein, als wir müssten, weil uns das Thema wichtig ist. Was das für dich heißt, besprechen wir im Gespräch."
+        },
+        {
+          "titel": "Wir melden uns innerhalb von 48 Stunden.",
+          "text": "Ein Lebenslauf reicht, ein Anschreiben brauchen wir nicht. Nach deinem bisherigen Gehalt fragen wir nicht."
+        }
+      ]
     },
     {
       "id": "elektromeister",
@@ -162,7 +241,35 @@
         "Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub."
       ],
       "icon": "shield",
-      "order": 5
+      "order": 5,
+      "verguetung": {
+        "wert": 4500,
+        "einheit": "MONTH",
+        "kurz": "4.500 EUR brutto im Monat zum Einstieg, plus Zulage bei Übernahme der Konzession.",
+        "absaetze": [
+          "4.500 EUR brutto im Monat zum Einstieg.",
+          "Die Konzessionsträgerschaft Elektro und die technische Betriebsleitung für diesen Bereich bauen wir mit dir auf. Übernimmst du sie, kommt eine feste Zulage dazu. Die Details besprechen wir im Gespräch.",
+          "Du baust den Elektro-Bereich mit auf und entscheidest mit, wie er aussieht."
+        ]
+      },
+      "leistungen": [
+        {
+          "titel": "Dein Fahrzeug",
+          "text": "Dein Installationsvan steht bei dir. Du startest morgens von zu Hause direkt zur Baustelle, kein Umweg über den Betrieb, kein Fahrzeug abholen. Das spart dir jeden Tag Zeit."
+        },
+        {
+          "titel": "Bonus",
+          "text": "Dazu kommt ein leistungsabhängiger Bonus, der bei uns einen spürbaren Teil des Einkommens ausmacht. Er hängt daran, was ihr als Team in der Woche schafft, und daran, dass die Anlage sauber übergeben wird. Wie er genau funktioniert, erklären wir dir im Gespräch."
+        },
+        {
+          "titel": "Altersvorsorge",
+          "text": "Wir zahlen mehr in deine betriebliche Altersvorsorge ein, als wir müssten, weil uns das Thema wichtig ist. Was das für dich heißt, besprechen wir im Gespräch."
+        },
+        {
+          "titel": "Wir melden uns innerhalb von 48 Stunden.",
+          "text": "Ein Lebenslauf reicht, ein Anschreiben brauchen wir nicht. Nach deinem bisherigen Gehalt fragen wir nicht."
+        }
+      ]
     },
     {
       "id": "elektriker",
@@ -194,7 +301,34 @@
         "Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub."
       ],
       "icon": "zap",
-      "order": 6
+      "order": 6,
+      "verguetung": {
+        "wert": 21,
+        "einheit": "HOUR",
+        "kurz": "21,00 EUR brutto pro Stunde zum Einstieg.",
+        "absaetze": [
+          "21,00 EUR brutto pro Stunde zum Einstieg. Das sind rund 3.640 EUR brutto im Monat bei 40 Wochenstunden.",
+          "Mehr ist drin bei Erfahrung mit Wärmepumpen-Anschluss, PV und Speicher oder mit Zählerplatz-Berechtigung."
+        ]
+      },
+      "leistungen": [
+        {
+          "titel": "Dein Fahrzeug",
+          "text": "Dein Installationsvan steht bei dir. Du startest morgens von zu Hause direkt zur Baustelle, kein Umweg über den Betrieb, kein Fahrzeug abholen. Das spart dir jeden Tag Zeit."
+        },
+        {
+          "titel": "Bonus",
+          "text": "Dazu kommt ein leistungsabhängiger Bonus, der bei uns einen spürbaren Teil des Einkommens ausmacht. Er hängt daran, was ihr als Team in der Woche schafft, und daran, dass die Anlage sauber übergeben wird. Wie er genau funktioniert, erklären wir dir im Gespräch."
+        },
+        {
+          "titel": "Altersvorsorge",
+          "text": "Wir zahlen mehr in deine betriebliche Altersvorsorge ein, als wir müssten, weil uns das Thema wichtig ist. Was das für dich heißt, besprechen wir im Gespräch."
+        },
+        {
+          "titel": "Wir melden uns innerhalb von 48 Stunden.",
+          "text": "Ein Lebenslauf reicht, ein Anschreiben brauchen wir nicht. Nach deinem bisherigen Gehalt fragen wir nicht."
+        }
+      ]
     },
     {
       "id": "gala",
@@ -226,7 +360,33 @@
         "Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub."
       ],
       "icon": "layers",
-      "order": 7
+      "order": 7,
+      "verguetung": {
+        "wert": 17,
+        "einheit": "HOUR",
+        "kurz": "17,00 EUR brutto pro Stunde zum Einstieg.",
+        "absaetze": [
+          "17,00 EUR brutto pro Stunde zum Einstieg. Das sind rund 2.947 EUR brutto im Monat bei 40 Wochenstunden. Mit Erfahrung im Garten- und Landschaftsbau, im Tiefbau oder mit Maschinenschein steigst du höher ein."
+        ]
+      },
+      "leistungen": [
+        {
+          "titel": "Dein Fahrzeug",
+          "text": "Dein Installationsvan steht bei dir. Du startest morgens von zu Hause direkt zur Baustelle, kein Umweg über den Betrieb, kein Fahrzeug abholen. Das spart dir jeden Tag Zeit."
+        },
+        {
+          "titel": "Bonus",
+          "text": "Dazu kommt ein leistungsabhängiger Bonus, der bei uns einen spürbaren Teil des Einkommens ausmacht. Er hängt daran, was ihr als Team in der Woche schafft, und daran, dass die Anlage sauber übergeben wird. Wie er genau funktioniert, erklären wir dir im Gespräch."
+        },
+        {
+          "titel": "Altersvorsorge",
+          "text": "Wir zahlen mehr in deine betriebliche Altersvorsorge ein, als wir müssten, weil uns das Thema wichtig ist. Was das für dich heißt, besprechen wir im Gespräch."
+        },
+        {
+          "titel": "Wir melden uns innerhalb von 48 Stunden.",
+          "text": "Ein Lebenslauf reicht, ein Anschreiben brauchen wir nicht. Nach deinem bisherigen Gehalt fragen wir nicht."
+        }
+      ]
     },
     {
       "id": "quereinsteiger-fundamentbau",
@@ -258,7 +418,33 @@
         "Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub."
       ],
       "icon": "learning",
-      "order": 8
+      "order": 8,
+      "verguetung": {
+        "wert": 17,
+        "einheit": "HOUR",
+        "kurz": "17,00 EUR brutto pro Stunde zum Einstieg.",
+        "absaetze": [
+          "17,00 EUR brutto pro Stunde zum Einstieg. Das sind rund 2.947 EUR brutto im Monat bei 40 Wochenstunden. Mit Erfahrung im Garten- und Landschaftsbau, im Tiefbau oder mit Maschinenschein steigst du höher ein."
+        ]
+      },
+      "leistungen": [
+        {
+          "titel": "Dein Fahrzeug",
+          "text": "Dein Installationsvan steht bei dir. Du startest morgens von zu Hause direkt zur Baustelle, kein Umweg über den Betrieb, kein Fahrzeug abholen. Das spart dir jeden Tag Zeit."
+        },
+        {
+          "titel": "Bonus",
+          "text": "Dazu kommt ein leistungsabhängiger Bonus, der bei uns einen spürbaren Teil des Einkommens ausmacht. Er hängt daran, was ihr als Team in der Woche schafft, und daran, dass die Anlage sauber übergeben wird. Wie er genau funktioniert, erklären wir dir im Gespräch."
+        },
+        {
+          "titel": "Altersvorsorge",
+          "text": "Wir zahlen mehr in deine betriebliche Altersvorsorge ein, als wir müssten, weil uns das Thema wichtig ist. Was das für dich heißt, besprechen wir im Gespräch."
+        },
+        {
+          "titel": "Wir melden uns innerhalb von 48 Stunden.",
+          "text": "Ein Lebenslauf reicht, ein Anschreiben brauchen wir nicht. Nach deinem bisherigen Gehalt fragen wir nicht."
+        }
+      ]
     },
     {
       "id": "service",
@@ -290,7 +476,35 @@
         "Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub."
       ],
       "icon": "gear",
-      "order": 9
+      "order": 9,
+      "verguetung": {
+        "wert": 21.5,
+        "einheit": "HOUR",
+        "kurz": "21,50 EUR brutto pro Stunde zum Einstieg.",
+        "absaetze": [
+          "21,50 EUR brutto pro Stunde zum Einstieg. Das sind rund 3.727 EUR brutto im Monat bei 40 Wochenstunden.",
+          "Mehr ist drin mit Kälteschein, Herstellerzertifikaten oder Erfahrung in der Störungsdiagnose an Wärmepumpen.",
+          "Du fährst feste Touren in der Region Hannover und bist abends zu Hause."
+        ]
+      },
+      "leistungen": [
+        {
+          "titel": "Dein Fahrzeug",
+          "text": "Dein Installationsvan steht bei dir. Du startest morgens von zu Hause direkt zur ersten Tour, kein Umweg über den Betrieb, kein Fahrzeug abholen. Das spart dir jeden Tag Zeit."
+        },
+        {
+          "titel": "Bonus",
+          "text": "Auch du bist am leistungsabhängigen Bonus beteiligt. Er hängt daran, was der Betrieb in der Woche schafft, und deine Arbeit im Büro entscheidet mit darüber. Wie der Bonus funktioniert, erklären wir dir im Gespräch."
+        },
+        {
+          "titel": "Altersvorsorge",
+          "text": "Wir zahlen mehr in deine betriebliche Altersvorsorge ein, als wir müssten, weil uns das Thema wichtig ist. Was das für dich heißt, besprechen wir im Gespräch."
+        },
+        {
+          "titel": "Wir melden uns innerhalb von 48 Stunden.",
+          "text": "Ein Lebenslauf reicht, ein Anschreiben brauchen wir nicht. Nach deinem bisherigen Gehalt fragen wir nicht."
+        }
+      ]
     },
     {
       "id": "planer-shk",
@@ -322,7 +536,29 @@
         "Unbefristete Festanstellung und 30 Tage Urlaub."
       ],
       "icon": "layout",
-      "order": 10
+      "order": 10,
+      "verguetung": {
+        "wert": 3600,
+        "einheit": "MONTH",
+        "kurz": "3.600 EUR brutto im Monat zum Einstieg.",
+        "absaetze": [
+          "3.600 EUR brutto im Monat zum Einstieg. Mehr ist drin mit Erfahrung in der Wärmepumpen-Auslegung, im hydraulischen Abgleich oder mit einer Planungssoftware, die du sicher beherrschst."
+        ]
+      },
+      "leistungen": [
+        {
+          "titel": "Bonus",
+          "text": "Auch du bist am leistungsabhängigen Bonus beteiligt. Er hängt daran, was der Betrieb in der Woche schafft, und deine Arbeit im Büro entscheidet mit darüber. Wie der Bonus funktioniert, erklären wir dir im Gespräch."
+        },
+        {
+          "titel": "Altersvorsorge",
+          "text": "Wir zahlen mehr in deine betriebliche Altersvorsorge ein, als wir müssten, weil uns das Thema wichtig ist. Was das für dich heißt, besprechen wir im Gespräch."
+        },
+        {
+          "titel": "Wir melden uns innerhalb von 48 Stunden.",
+          "text": "Ein Lebenslauf reicht, ein Anschreiben brauchen wir nicht. Nach deinem bisherigen Gehalt fragen wir nicht."
+        }
+      ]
     },
     {
       "id": "planer-elektro",
@@ -418,7 +654,27 @@
         "Unbefristete Festanstellung und 30 Tage Urlaub."
       ],
       "icon": "chat",
-      "order": 13
+      "order": 13,
+      "verguetung": {
+        "wert": 3000,
+        "einheit": "MONTH",
+        "kurz": "3.000 EUR brutto im Monat als Fixum, plus Provision ohne Deckel.",
+        "absaetze": [
+          "3.000 EUR brutto im Monat als Fixum. Dazu kommt deine Provision auf den eigenen Umsatz, und die ist nach oben nicht gedeckelt.",
+          "Damit entscheidest du selbst mit, was am Monatsende auf deinem Konto steht. Bei unseren Auftragsgrößen ist die Provision der größere Teil des Einkommens, und wer sich reinhängt, verdient hier sehr gut. Eine Obergrenze gibt es nicht. Das Modell erklären wir dir im Gespräch.",
+          "Du bekommst qualifizierte Termine, einen Rechner, der beim Kunden rechnet, und ein Firmenfahrzeug, das du auch privat nutzen darfst."
+        ]
+      },
+      "leistungen": [
+        {
+          "titel": "Altersvorsorge",
+          "text": "Wir zahlen mehr in deine betriebliche Altersvorsorge ein, als wir müssten, weil uns das Thema wichtig ist. Was das für dich heißt, besprechen wir im Gespräch."
+        },
+        {
+          "titel": "Wir melden uns innerhalb von 48 Stunden.",
+          "text": "Ein Lebenslauf reicht, ein Anschreiben brauchen wir nicht. Nach deinem bisherigen Gehalt fragen wir nicht."
+        }
+      ]
     },
     {
       "id": "va",
@@ -450,7 +706,25 @@
         "Unbefristete Festanstellung und 30 Tage Urlaub."
       ],
       "icon": "clipboard",
-      "order": 14
+      "order": 14,
+      "verguetung": {
+        "wert": 3000,
+        "einheit": "MONTH",
+        "kurz": "3.000 EUR brutto im Monat zum Einstieg, plus Prämie je Abschluss.",
+        "absaetze": [
+          "3.000 EUR brutto im Monat zum Einstieg, plus eine Prämie für jeden Abschluss, an dem du mitgewirkt hast. Die Höhe besprechen wir im Gespräch."
+        ]
+      },
+      "leistungen": [
+        {
+          "titel": "Altersvorsorge",
+          "text": "Wir zahlen mehr in deine betriebliche Altersvorsorge ein, als wir müssten, weil uns das Thema wichtig ist. Was das für dich heißt, besprechen wir im Gespräch."
+        },
+        {
+          "titel": "Wir melden uns innerhalb von 48 Stunden.",
+          "text": "Ein Lebenslauf reicht, ein Anschreiben brauchen wir nicht. Nach deinem bisherigen Gehalt fragen wir nicht."
+        }
+      ]
     },
     {
       "id": "hr",
@@ -482,7 +756,30 @@
         "Unbefristete Festanstellung und 30 Tage Urlaub."
       ],
       "icon": "users",
-      "order": 15
+      "order": 15,
+      "verguetung": {
+        "wert": 3500,
+        "einheit": "MONTH",
+        "kurz": "3.500 EUR brutto im Monat zum Einstieg.",
+        "absaetze": [
+          "3.500 EUR brutto im Monat zum Einstieg. Mehr ist drin mit Erfahrung im gewerblichen Recruiting oder in der Lohnvorbereitung.",
+          "Du baust den Personalbereich von Grund auf mit auf. Das ist keine Verwaltungsstelle."
+        ]
+      },
+      "leistungen": [
+        {
+          "titel": "Bonus",
+          "text": "Auch du bist am leistungsabhängigen Bonus beteiligt. Er hängt daran, was der Betrieb in der Woche schafft, und deine Arbeit im Büro entscheidet mit darüber. Wie der Bonus funktioniert, erklären wir dir im Gespräch."
+        },
+        {
+          "titel": "Altersvorsorge",
+          "text": "Wir zahlen mehr in deine betriebliche Altersvorsorge ein, als wir müssten, weil uns das Thema wichtig ist. Was das für dich heißt, besprechen wir im Gespräch."
+        },
+        {
+          "titel": "Wir melden uns innerhalb von 48 Stunden.",
+          "text": "Ein Lebenslauf reicht, ein Anschreiben brauchen wir nicht. Nach deinem bisherigen Gehalt fragen wir nicht."
+        }
+      ]
     },
     {
       "id": "assistenz",
@@ -514,7 +811,29 @@
         "Unbefristete Festanstellung und 30 Tage Urlaub."
       ],
       "icon": "briefcase",
-      "order": 16
+      "order": 16,
+      "verguetung": {
+        "wert": 3000,
+        "einheit": "MONTH",
+        "kurz": "3.000 EUR brutto im Monat zum Einstieg.",
+        "absaetze": [
+          "3.000 EUR brutto im Monat zum Einstieg. Mehr ist drin mit Erfahrung in der Geschäftsführungs-Assistenz oder im Projektmanagement."
+        ]
+      },
+      "leistungen": [
+        {
+          "titel": "Bonus",
+          "text": "Auch du bist am leistungsabhängigen Bonus beteiligt. Er hängt daran, was der Betrieb in der Woche schafft, und deine Arbeit im Büro entscheidet mit darüber. Wie der Bonus funktioniert, erklären wir dir im Gespräch."
+        },
+        {
+          "titel": "Altersvorsorge",
+          "text": "Wir zahlen mehr in deine betriebliche Altersvorsorge ein, als wir müssten, weil uns das Thema wichtig ist. Was das für dich heißt, besprechen wir im Gespräch."
+        },
+        {
+          "titel": "Wir melden uns innerhalb von 48 Stunden.",
+          "text": "Ein Lebenslauf reicht, ein Anschreiben brauchen wir nicht. Nach deinem bisherigen Gehalt fragen wir nicht."
+        }
+      ]
     },
     {
       "id": "disponent",
@@ -610,7 +929,29 @@
         "Unbefristete Festanstellung und 30 Tage Urlaub."
       ],
       "icon": "file",
-      "order": 20
+      "order": 20,
+      "verguetung": {
+        "wert": 3500,
+        "einheit": "MONTH",
+        "kurz": "3.500 EUR brutto im Monat zum Einstieg.",
+        "absaetze": [
+          "3.500 EUR brutto im Monat zum Einstieg. Mehr ist drin mit Erfahrung in der Auftragsabwicklung im Handwerk, mit Förderanträgen oder in der Rechnungsstellung."
+        ]
+      },
+      "leistungen": [
+        {
+          "titel": "Bonus",
+          "text": "Auch du bist am leistungsabhängigen Bonus beteiligt. Er hängt daran, was der Betrieb in der Woche schafft, und deine Arbeit im Büro entscheidet mit darüber. Wie der Bonus funktioniert, erklären wir dir im Gespräch."
+        },
+        {
+          "titel": "Altersvorsorge",
+          "text": "Wir zahlen mehr in deine betriebliche Altersvorsorge ein, als wir müssten, weil uns das Thema wichtig ist. Was das für dich heißt, besprechen wir im Gespräch."
+        },
+        {
+          "titel": "Wir melden uns innerhalb von 48 Stunden.",
+          "text": "Ein Lebenslauf reicht, ein Anschreiben brauchen wir nicht. Nach deinem bisherigen Gehalt fragen wir nicht."
+        }
+      ]
     }
   ]
 }
