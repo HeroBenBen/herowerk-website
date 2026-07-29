@@ -2,24 +2,6 @@
   "stand": "2026-07-29",
   "zweck": "Bekannte, gemessene axe-Befunde im EIGENEN Markup. Das Gate bleibt hart: jeder NEUE Befund und jeder GEWACHSENE Befund laesst den Lauf rot werden. Zusaetzlich wird jeder Eintrag gegengeprueft, der nicht mehr auftritt oder kleiner geworden ist: dann ist der Eintrag veraltet und MUSS entfernt oder verkleinert werden, sonst bricht der Lauf ebenfalls ab. Ein Eintrag hier ist eine Stundung mit Verfallsdatum, keine Ausnahme auf Dauer.",
   "regel": "Neue Eintraege nur mit gemessenem Grund, Datum und benanntem Rueckweg. Ein Eintrag ohne Feld grund oder ohne Feld seit laesst das Gate abbrechen.",
-  "befunde": [
-    {
-      "seite": "/preise.html",
-      "theme": "light",
-      "regel": "color-contrast",
-      "knoten": 1,
-      "seit": "2026-07-29",
-      "grund": "Gemessen 29.07.2026 auf der Vercel-Vorschau: span in #paJazFootnote traegt style=opacity:0.7 und unterschreitet im Hellmodus das Kontrastverhaeltnis 4.5:1. Behebung heisst CSS/HTML aendern, das ist im Auftrag der Gate-Reparatur ausdruecklich ausgeschlossen.",
-      "rueckweg": "Deckkraft 0.7 aus dem Fussnoten-span entfernen und die Farbe ueber eine CI-Variable mit geprueftem Kontrast setzen, danach diesen Eintrag streichen."
-    },
-    {
-      "seite": "/foerderung.html",
-      "theme": "light",
-      "regel": "link-in-text-block",
-      "knoten": 5,
-      "seit": "2026-07-29",
-      "grund": "Gemessen 29.07.2026 auf der Vercel-Vorschau: fuenf Sternchen-Verweise auf #e6-fussnote tragen color:inherit und text-decoration:none. Im Hellmodus sind sie damit im Fliesstext nur ueber die Position erkennbar, nicht ueber Farbe oder Unterstreichung. Behebung heisst CSS/HTML aendern, im Auftrag ausgeschlossen.",
-      "rueckweg": "Den Fussnoten-Verweisen eine eigene Auszeichnung geben (Unterstreichung oder hochgestelltes Zeichen mit ausreichendem Kontrast), danach diesen Eintrag streichen."
-    }
-  ]
+  "leer_ist_der_sollzustand": "Die Liste ist leer, und leer ist das Ziel, kein Versehen. Die beiden Eintraege vom 29.07.2026 (color-contrast auf /preise.html theme=light, link-in-text-block auf /foerderung.html theme=light) sind durch das Buendel Consent, CSP und Kontrast behoben, Commit 4bad386 aus PR 84. Gemessen am 29.07.2026 gegen main 7d595f1 mit npx playwright test --grep @a11y: axe meldet beide Regeln auf beiden Seiten nicht mehr, und das Gate hat die beiden Eintraege von sich aus als VERALTET beanstandet und den Lauf rot gefaerbt. Der in beiden Eintraegen benannte Rueckweg lautete woertlich, den Eintrag nach der Behebung zu streichen. Genau das ist hier geschehen.",
+  "befunde": []
 }
