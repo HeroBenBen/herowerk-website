@@ -90,6 +90,13 @@ jobs:
       # Cache aus .htaccess Bestandsbesuchern alte Dateien aus (zweimal real
       # passiert: Lead-Handoff 04.07., Umschalter-Optik 25.07.).
       - run: npm run verify:assets
+      # Versions-Gate (30.07.2026): läuft bewusst vor Consent, Raster und Mobile.
+      # Raster und Mobile schreiben Berichte nach reports/; danach wäre der
+      # Arbeitsbaum nicht sauber und der Schmutz-Abbruch des Stempels müsste rot
+      # werden, obwohl der Checkout vor diesen Berichtsläufen sauber war.
+      - run: scripts/make-ionos-bundle.sh /tmp/bundle-pruefung
+      - run: scripts/stamp-version.sh --check /tmp/bundle-pruefung
+      - run: scripts/stamp-version.sh --selbsttest
       # Consent-Gate (25.07.2026): Auf allen produktiven Seiten muss das synchrone
       # CMP-Autoblocking das erste Skript sein. Beide CSP-Quellen müssen den
       # Delivery-Host unter script-src erlauben; connect-src allein reicht nicht.

@@ -4,9 +4,9 @@
 # Enthaelt NUR Laufzeit-Dateien - keine Build-/Test-/Dev-/CI-Artefakte.
 # Aufruf:  scripts/make-ionos-bundle.sh [ZIELORDNER]
 #          (Default-Ziel: ./dist-ionos)
-# WICHTIG: Bundle erst aus main schneiden, NACHDEM die offenen PRs
-#          (Trust-Strip-Icons + diese Deploy-Config) gemergt sind,
-#          damit alle Aenderungen enthalten sind.
+# WICHTIG: Jeder Upload, auch ein Einzeldatei-Upload, wird aus einem frisch
+#          gebauten Bündel gezogen und nimmt version.json mit. Sonst lügt der
+#          Versionsstempel.
 # ============================================================
 set -euo pipefail
 
@@ -16,6 +16,8 @@ OUT="${1:-$SRC/dist-ionos}"
 rm -rf "$OUT"
 mkdir -p "$OUT"
 
+# Warum 2026-07-30: docs/ enthält interne Beraterseiten und darf nicht in den Webroot.
+# Warum 2026-07-30: lokale Prüfläufe erzeugen HTML-Berichte, die kein Website-Inhalt sind.
 rsync -a \
   --exclude '.git/' \
   --exclude '.github/' \
@@ -23,7 +25,10 @@ rsync -a \
   --exclude 'node_modules/' \
   --exclude 'tests/' \
   --exclude 'baseline/' \
+  --exclude 'docs/' \
   --exclude 'reports/' \
+  --exclude 'test-results/' \
+  --exclude 'playwright-report/' \
   --exclude 'scripts/' \
   --exclude 'schemas/' \
   --exclude 'apps-script/' \
@@ -63,11 +68,13 @@ fi
 # umstellten, lief sie nicht mehr mit und die Versionierung verschwand still aus
 # der Auslieferung (Umschalter-Defekt 25.07.). Genau das darf nicht wieder passieren.
 "$SRC/scripts/version-assets.sh" "$OUT"
+"$SRC/scripts/stamp-version.sh" "$OUT"
 
 echo "============================================"
 echo "IONOS-Bundle erstellt: $OUT"
 echo "  Dateien gesamt : $(find "$OUT" -type f | wc -l | tr -d ' ')"
-echo "  HTML-Seiten    : $(find "$OUT" -maxdepth 1 -name '*.html' | wc -l | tr -d ' ')"
+echo "  HTML-Seiten    : $(find "$OUT" -type f -name '*.html' | wc -l | tr -d ' ')"
+echo "  Gestempelter Commit : $(git -C "$SRC" rev-parse --short=10 HEAD)"
 echo "  Groesse        : $(du -sh "$OUT" | cut -f1)"
 echo "  .htaccess      : vorhanden"
 echo "============================================"
