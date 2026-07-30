@@ -32,6 +32,9 @@ name: HeroWerk CI (Hard-Gates + ausgewiesene Berichte)
 on:
   pull_request:
     branches: [main, production]
+    # 2026-07-30: Das Label /baseline-update muss denselben Preview-Resolver nutzen.
+    # Ein eigener Workflow wäre eine zweite Wahrheit für dieselbe Vorschau-URL.
+    types: [opened, synchronize, reopened, labeled]
     # production: der Release-PR von main nach production (T4-2) durchlaeuft dieselbe Kette
 
 # Least-Privilege-Token (T1-6b-Followup O2): expliziter Block ersetzt die Defaults.
@@ -303,20 +306,75 @@ jobs:
       - run: node scripts/hubspot-schema-check.js
         # Validiert Webhook-Payload gegen schemas/hubspot-property-schema.json
 
-  # Job 9: Visual-Regression, INAKTIV, misst derzeit nichts (festgestellt 29.07.2026)
+  # Job 9a: Baseline-Erzeugung, nur wenn Benjamin am PR das Label /baseline-update setzt.
+  # Die Bilder werden im PR-Zweig erzeugt und erscheinen im Diff, der Merge ist die Sichtfreigabe.
+  visual-baseline-update:
+    name: visual-baseline-update
+    if: contains(github.event.pull_request.labels.*.name, '/baseline-update')
+    runs-on: ubuntu-latest
+    needs: [lint, resolve-preview]
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+      - run: npm ci
+      - run: npx playwright install --with-deps
+      - name: Referenzbilder erzeugen
+        env:
+          PREVIEW_URL: ${{ needs.resolve-preview.outputs.url }}
+          BASELINE_UPDATE: '1'
+        run: |
+          npx playwright test --grep "@visual" --update-snapshots -- --theme=dark
+          npx playwright test --grep "@visual" --update-snapshots -- --theme=light
+          COUNT="$(find baseline/visual -maxdepth 1 -type f -name '*.png' | wc -l | tr -d ' ')"
+          echo "Visual-Baseline-PNG: $COUNT"
+          if [ "$COUNT" != "16" ]; then
+            echo "::error::Erwartet: 16 PNG in baseline/visual, gefunden: $COUNT"
+            exit 1
+          fi
+          EXTRA="$(find baseline/visual -maxdepth 1 -type f ! -name '*.png' ! -name '.gitkeep' -print)"
+          if [ -n "$EXTRA" ]; then
+            echo "::error::Nicht-PNG-Dateien in baseline/visual:"
+            echo "$EXTRA"
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: visual-baseline-${{ github.run_number }}
+          path: baseline/visual/*.png
+          if-no-files-found: error
+      - name: Referenzbilder committen
+        env:
+          PREVIEW_URL: ${{ needs.resolve-preview.outputs.url }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add baseline/visual/*.png
+          if git diff --cached --quiet; then
+            echo "Keine Bildänderung zu committen."
+            exit 0
+          fi
+          COUNT="$(git diff --cached --name-only -- 'baseline/visual/*.png' | wc -l | tr -d ' ')"
+          git commit -m "test(visual): Baseline aus CI-Lauf ${{ github.run_number }}" -m "Vorschau: $PREVIEW_URL" -m "Bilder: $COUNT"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
+
+  # Job 9: Visual-Regression, wartet auf ratifizierte Baseline (festgestellt 29.07.2026)
   #
-  # Der Job war in den letzten 20 ausgefuehrten Laeufen 20 mal gruen. Gemessen hat er
-  # dabei nichts: baseline/visual/ enthaelt ausser .gitkeep keine einzige PNG, und
-  # tests/visual/visual-shared.js ruft deshalb in JEDEM Testfall test.skip() auf. Ein
-  # gruener Haken ohne Messung ist gefaehrlicher als ein roter, weil er Sicherheit
-  # vortaeuscht. Der Job behaelt seine Verdrahtung, heisst aber jetzt so, wie er sich
-  # verhaelt, und darf ausdruecklich NICHT als Pflichtpruefung in den Branch-Schutz.
+  # Der Job war in den letzten 20 ausgeführten Läufen 20 mal grün. Gemessen hat er
+  # dabei nichts: baseline/visual/ enthält außer .gitkeep keine einzige PNG, und
+  # tests/visual/visual-shared.js rief deshalb in JEDEM Testfall test.skip() auf. Ein
+  # grüner Haken ohne Messung ist gefährlicher als ein roter, weil er Sicherheit
+  # vortäuscht. Der Test schlägt jetzt ohne PNG hart fehl und wird erst nach der
+  # Baseline-Erzeugung grün.
   #
-  # RUECKWEG: Benjamin setzt an einem PR das Label /baseline-update, der Lauf legt die
+  # RÜCKWEG: Benjamin setzt an einem PR das Label /baseline-update, der Lauf legt die
   # ersten ratifizierten Screenshots in baseline/visual/ ab. Ab der ersten PNG laufen
-  # die Faelle echt, dann Namen und diesen Kommentar zuruecknehmen.
+  # die Fälle echt, dann Namen und diesen Kommentar zurücknehmen.
   visual-regression-inaktiv:
-    name: visual-regression (inaktiv, keine ratifizierte Baseline)
+    name: visual-regression (wartet auf ratifizierte Baseline)
     runs-on: ubuntu-latest
     needs: [lint, resolve-preview]
     strategy:

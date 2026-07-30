@@ -18,8 +18,13 @@ mkdir -p "$OUT"
 
 # Warum 2026-07-30: docs/ enthält interne Beraterseiten und darf nicht in den Webroot.
 # Warum 2026-07-30: lokale Prüfläufe erzeugen HTML-Berichte, die kein Website-Inhalt sind.
+# Warum 2026-07-30: .git ist in Worktrees eine Datei, .git/ trifft sie nicht.
+# Warum 2026-07-30: .gitleaks.toml und .vercelignore sind Entwickler-Zubehör, kein Website-Inhalt.
 rsync -a \
+  --exclude '.git' \
   --exclude '.git/' \
+  --exclude '.gitleaks.toml' \
+  --exclude '.vercelignore' \
   --exclude '.github/' \
   --exclude '.claude/' \
   --exclude 'node_modules/' \
