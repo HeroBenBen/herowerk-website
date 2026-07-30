@@ -8,6 +8,7 @@
     "test:visual": "playwright test --grep @visual",
     "baseline:generate": "node scripts/content-fidelity-check.js --generate",
     "verify:assets": "scripts/version-assets.sh --check",
+    "verify:version": "scripts/make-ionos-bundle.sh /tmp/bundle-pruefung && scripts/stamp-version.sh --check /tmp/bundle-pruefung && scripts/stamp-version.sh --selbsttest",
     "verify:consent": "node scripts/consent-integration-check.js",
     "verify:wp-analytics": "node scripts/verify-wp-analytics.mjs",
     "verify:raster": "node scripts/verify-raster.mjs",
