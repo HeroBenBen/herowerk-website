@@ -670,7 +670,9 @@ function kvBootstrapPayload(params) {
  */
 var KV_DEFAULTS = {
   heizart: 'gas', bedarf: 20000, eta: 85, invWP: 30000, jaz: 3.8, laufzeit: 20,
-  neuFossilTog: true, vglBrennstoff: 'gas', gasInvest: 12000, oelInvest: 16000,
+  // oelInvest 17500 seit 30.07.2026 (GF-Entscheid M5, Marktanalyse Niedersachsen
+  // 12.000 bis 22.000 EUR inkl. Tank-Erneuerung und Warmwasser).
+  neuFossilTog: true, vglBrennstoff: 'gas', gasInvest: 12000, oelInvest: 17500,
   gaspreis: 12, gasStg: 2.5, oelpreis: 11, oelStg: 2.5,
   strompreis: 32, stromEntw: 1.5, co2preis: 55, co2Pfad: 250,
   bioTog: true, bioAufpreis: 2.5,
