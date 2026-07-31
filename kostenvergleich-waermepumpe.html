@@ -168,6 +168,7 @@
   .wz-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start;}
   .wz-main{min-width:0;}
   .wz-stepper{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:18px;}
+  .wz-stepper-mobile{display:none;}
   .wz-step{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--hero-card);border:1px solid var(--hero-separator);border-radius:10px;color:var(--hero-muted);font-weight:700;font-size:0.82rem;text-align:left;cursor:not-allowed;min-height:48px;}
   .wz-step .wz-dot{width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--hero-separator);font-family:'Barlow',sans-serif;font-weight:800;flex-shrink:0;}
   .wz-step.is-active{border-color:var(--hero-accent);color:var(--hero-white);}
@@ -186,7 +187,7 @@
   .wz-help{display:none;margin-top:12px;}
   .wz-help.is-visible{display:block;}
   .wz-nav{display:flex;justify-content:space-between;gap:12px;margin-top:22px;}
-  .wz-nav button,.wz-link-btn{padding:12px 18px;border-radius:8px;border:1px solid var(--hero-separator);background:var(--hero-card);color:var(--hero-white);font-weight:800;cursor:pointer;}
+  .wz-nav button,.wz-link-btn{min-height:44px;padding:12px 18px;border-radius:8px;border:1px solid var(--hero-separator);background:var(--hero-card);color:var(--hero-white);font-weight:800;cursor:pointer;}
   .wz-nav button:focus-visible,.wz-link-btn:focus-visible,.wz-cta a:focus-visible,.wz-bottom-cta a:focus-visible{outline:2px solid var(--hero-accent);outline-offset:2px;}
   .wz-nav .wz-next,.wz-cta a,.wz-bottom-cta a{background:var(--hero-accent);color:var(--hero-bg);border-color:var(--hero-accent);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;}
   .wz-nav button:disabled{opacity:0.45;cursor:not-allowed;}
@@ -209,8 +210,6 @@
   .wz-result-cta .wz-cta{position:static;}
   .wz-details{margin-top:10px;overflow-x:hidden;}
   .wz-details .cc{max-width:100%;overflow-x:hidden;}
-  .wz-details .cc>div[style*="overflow-x:auto"]{max-width:100%;overflow-x:auto;}
-  .wz-details .bt{width:max-content;min-width:100%;}
   .wz-details summary{cursor:pointer;font-weight:800;color:var(--hero-accent);padding:16px 0;}
   .wz-details summary:focus-visible{outline:2px solid var(--hero-accent);outline-offset:2px;}
   #wzFoerderAufbau{display:none;}
@@ -229,8 +228,8 @@
   }
   @media(max-width:760px){
     .container{padding:16px;}
-    section[aria-labelledby="rechner-einleitung"]{padding:10px;margin-bottom:8px;}
-    #rechner-einleitung{font-size:1.15rem;line-height:1.15;margin-bottom:7px;}
+    section[aria-labelledby="rechner-einleitung"]{padding:5px 0;margin-bottom:8px;}
+    #rechner-einleitung{display:none;}
     section[aria-labelledby="rechner-einleitung"] .wz-intro{font-size:0.8rem;line-height:1.25;margin-bottom:6px;}
     section[aria-labelledby="rechner-einleitung"] .d{font-size:0.74rem;line-height:1.3;}
     .wz-stepper{grid-template-columns:1fr;}
@@ -238,8 +237,14 @@
     .wz-result-cta{grid-template-columns:1fr;}
     body.wz-customer .sg label{flex-wrap:wrap;gap:6px;}
     body.wz-customer .sg label .v{min-width:auto;}
-    body.wz-customer .wz-chip{margin-left:0;}
+    body.wz-customer .wz-chip{margin:6px 0 0;white-space:normal;max-width:100%;}
+    body.wz-customer #wzChip_kredZins{display:flex;width:fit-content;}
     body.wz-customer .wz-bottom-cta{max-width:100vw;box-sizing:border-box;}
+    body.wz-customer .wz-main>section.card{padding:0;border:0;background:transparent;box-shadow:none;}
+    body.wz-customer .wz-nav{position:fixed;left:16px;right:16px;bottom:12px;z-index:52;margin:0;padding:8px;background:var(--hero-bg);border:1px solid var(--hero-separator);border-radius:10px;}
+    body.wz-customer.wz-mobile-cta .wz-nav{bottom:calc(var(--wz-bottom-cta-height, 72px) + 4px);}
+    body.wz-customer.wz-mobile-cta{padding-bottom:144px;}
+    body.wz-customer.wz-result-step .wz-nav{display:none;}
   }
   input[type="range"]:focus-visible,select:focus-visible{outline:2px solid var(--hero-accent);outline-offset:2px;}
   .tog input:focus-visible+.sl{outline:2px solid var(--hero-accent);outline-offset:2px;}
@@ -247,10 +252,10 @@
   .wz-optgrid.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));}
   @media(max-width:600px){
     .wz-optgrid.cols{grid-template-columns:1fr 1fr;gap:8px;}
-    .wz-optgrid .wz-optcard{padding:10px 12px;gap:8px;}
+    .wz-optgrid .wz-optcard{padding:10px 12px;gap:8px;flex-direction:column;align-items:flex-start;}
     .wz-optgrid .wz-optcard .wz-opt-title{font-size:0.85rem;}
     .wz-optgrid .wz-optcard .wz-opt-sub{font-size:0.72rem;}
-    .wz-optgrid .wz-optcard .wz-opt-check{width:18px;height:18px;}
+    .wz-optgrid .wz-optcard .wz-opt-check{width:22px;height:22px;margin-left:0;order:-1;}
   }
   .wz-optcard{display:flex;align-items:center;gap:12px;background:var(--hero-card);border:2px solid var(--hero-separator);border-radius:14px;padding:14px 16px;cursor:pointer;text-align:left;width:100%;color:var(--hero-white);font-family:'Inter',sans-serif;}
   .wz-optcard:hover,.wz-optcard:focus-visible{border-color:var(--hero-accent);outline:none;}
@@ -283,7 +288,7 @@
   [data-theme='light'] .wz-opt-sub{color:#4B5563;}
   [data-theme='light'] #wzTreppeHint{color:#4B5563;}
   .grid-2>*,.cg3>*,.cg2>*,.results-grid>*,.wz-layout>*{min-width:0;}
-  .cc,.card,.rc,.pb,.ib,.abox{max-width:100%;overflow-wrap:anywhere;}
+  .cc,.card,.rc,.pb,.ib,.abox{max-width:100%;overflow-wrap:break-word;}
   #results canvas{max-width:100%!important;}
   .wz-herocalc .ln,.wz-cta .ln,.pb .ln{flex-wrap:wrap;}
   [data-theme='light'] .wz-herocalc{background:#F4F1EA;border-color:#DDD8CC;}
@@ -291,9 +296,10 @@
   #wzFoerderTreppe .tr-col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;cursor:pointer;min-width:0;}
   #wzFoerderTreppe .tr-bar{width:100%;border-radius:6px 6px 0 0;background:var(--hero-separator);}
   #wzFoerderTreppe .tr-col.is-active .tr-bar{background:var(--hero-accent);}
-  #wzFoerderTreppe .tr-pct{font-size:0.7rem;font-weight:800;color:var(--hero-muted);}
+  #wzFoerderTreppe .tr-pct{font-size:0.7rem;font-weight:800;color:var(--hero-muted);white-space:nowrap;}
   #wzFoerderTreppe .tr-col.is-active .tr-pct{color:var(--hero-accent);}
-  #wzFoerderTreppe .tr-lbl{font-size:0.6rem;color:var(--hero-muted);white-space:nowrap;}
+  #wzFoerderTreppe .tr-lbl{font-size:0.6rem;color:var(--hero-muted);line-height:1.05;text-align:center;}
+  #wzFoerderTreppe .tr-lbl span{display:block;white-space:nowrap;}
   #wzTreppeHint{font-size:0.78rem;color:var(--hero-muted);margin-bottom:14px;}
   .wz-cta .ln{display:flex;justify-content:space-between;gap:10px;font-size:0.84rem;padding:3px 0;}
   .wz-cta .ln .lbl{color:var(--hero-muted);}
@@ -314,6 +320,27 @@
   .chart-daten-details summary:hover{color:var(--hero-white);}
   .chart-daten-details summary:focus-visible{outline:3px solid var(--green);outline-offset:2px;}
   .chart-daten-details table{margin-top:8px;font-size:0.82rem;}
+  .chart-summary-mobile{display:none;}
+  .mobile-head-note,.mobile-kv-list,.mobile-year-details,.mobile-year-answer,.wz-mobile-step-title,.wz-mobile-step-lead{display:none;}
+  .rechner-intro-details>summary,.wz-mobile-explain>summary{display:none;}
+  .kv-mobile-card .ln,.mobile-year-card .ln{display:flex;justify-content:space-between;gap:12px;padding:4px 0;border-top:1px solid var(--hero-separator);font-size:0.86rem;}
+  .kv-mobile-card .lbl,.mobile-year-card .lbl{color:var(--hero-muted);}
+  .kv-mobile-card .vv,.mobile-year-card .vv,.year-bar-row .year-value{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:800;}
+  .mobile-year-details summary{cursor:pointer;font-size:0.88rem;font-weight:800;color:var(--hero-accent);padding:12px 0;min-height:44px;}
+  .mobile-year-details summary:focus-visible{outline:3px solid var(--green);outline-offset:2px;}
+  .year-bar-row{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--hero-separator);}
+  .year-bar-row .year-label{color:var(--hero-muted);font-variant-numeric:tabular-nums;font-size:0.82rem;}
+  .year-bar-track{height:8px;border-radius:999px;background:var(--hero-separator);overflow:hidden;}
+  .year-bar-fill{display:block;height:100%;border-radius:999px;background:var(--hero-accent);}
+  .year-bar-fill.is-negative{background:var(--hero-red);}
+  .mobile-year-card{padding:12px 0;border-top:1px solid var(--hero-separator);}
+  .mobile-year-card h4{font-family:'Barlow',sans-serif;font-size:0.9rem;color:var(--hero-white);margin-bottom:6px;}
+  .wz-step-note{margin-bottom:16px;}
+  .wz-step-note summary{cursor:pointer;color:var(--hero-muted);font-size:0.86rem;font-weight:800;min-height:44px;display:flex;align-items:center;}
+  .wz-step-note summary:focus-visible{outline:3px solid var(--green);outline-offset:2px;}
+  .mobile-year-answer{padding:12px;border:1px solid var(--hero-accent);border-radius:8px;margin:8px 0 4px;}
+  .mobile-year-answer strong{display:block;color:var(--hero-accent);font-family:'Barlow',sans-serif;font-size:1rem;}
+  .mobile-year-answer span{display:block;color:var(--hero-muted);font-size:0.82rem;margin-top:3px;}
 
   .page-head{margin-top:64px;padding:40px 24px 28px;border-bottom:1px solid rgba(183,217,0,0.10);}
   .page-head-inner{max-width:1320px;margin:0 auto;}
@@ -371,6 +398,7 @@
   [data-theme='light'] .wz-step{background:#FFFFFF;border-color:#DDD8CC;color:#5A6470;}
   [data-theme='light'] .wz-step.is-active{border-color:#4F6000;color:#1C2B36;}
   [data-theme='light'] .wz-step.is-active .wz-dot,[data-theme='light'] .wz-step.is-done .wz-dot{background:#B7D900;color:#1C2B36;border-color:#B7D900;}
+  [data-theme='light'] .year-bar-track{background:#DDD8CC;}
   [data-theme='light'] .wz-choice{background:#FFFFFF;color:#1C2B36;border-color:#DDD8CC;}
   [data-theme='light'] .wz-choice.is-selected{background:#B7D900;color:#1C2B36;border-color:#B7D900;}
   [data-theme='light'] .wz-nav button,[data-theme='light'] .wz-link-btn{background:#FFFFFF;color:#1C2B36;border-color:#DDD8CC;}
@@ -379,11 +407,115 @@
   [data-theme='light'] .wz-chip.market{background:#EBE7DC;color:#5A6470;}
   [data-theme='light'] .wz-chip.own{background:#B7D900;color:#1C2B36;}
   @media(max-width:760px){
-    .page-head{padding:12px 16px 4px;}
-    .page-head .kicker{font-size:11px;margin-bottom:4px;}
-    .page-head h1{font-size:26px;margin-bottom:6px;}
-    .page-head .lead{font-size:14px;line-height:1.25;}
-    .page-head .badge{font-size:0.68rem;margin-top:8px;padding:4px 10px;}
+    .page-head{padding:10px 16px 8px;}
+    .page-head .kicker,.page-head .badge,.page-head .lead{display:none;}
+    .page-head h1{font-size:24px;margin-bottom:4px;line-height:1.1;}
+    .page-head .mobile-head-note{display:block;font-size:0.82rem;line-height:1.25;color:var(--hero-muted);max-width:34rem;}
+    section[aria-labelledby="rechner-einleitung"]{padding:5px 0;margin-bottom:8px;}
+    #rechner-einleitung{display:none;}
+    .rechner-intro-details{display:block;}
+    .rechner-intro-details>summary{cursor:pointer;color:var(--hero-muted);font-size:0.82rem;font-weight:800;min-height:44px;display:flex;align-items:center;}
+    .rechner-intro-details>summary:focus-visible{outline:3px solid var(--green);outline-offset:2px;}
+    .rechner-intro-details .wz-intro,.rechner-intro-details .d{font-size:0.8rem;line-height:1.35;margin-bottom:8px;}
+    .cc{padding:18px 14px;border-radius:12px;}
+    .cc h3{font-size:0.92rem;margin-bottom:10px;}
+    .bt th{white-space:normal;}
+    .desktop-kv-table{display:none;}
+    .chart-summary-desktop{display:none;}
+    .chart-summary-mobile{display:inline;}
+    .mobile-kv-list,.mobile-year-details,.mobile-year-answer{display:block;}
+    .kv-mobile-card{padding:14px 12px;text-align:left;border-radius:10px;border-left:3px solid var(--hero-separator);margin-bottom:10px;}
+    .kv-mobile-card.is-wp{border-left-color:var(--hero-accent);}
+    .kv-mobile-card-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:6px;}
+    .kv-mobile-card .ml{font-size:0.9rem;text-transform:none;letter-spacing:0;margin:0;color:var(--hero-white);min-width:0;}
+    .kv-mobile-card .mv{text-align:right;font-size:1.15rem;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--hero-white);}
+    .kv-mobile-card.is-wp .mv{color:var(--hero-accent);}
+    .kv-mobile-card .ln.neg .vv{color:var(--hero-red);}
+    .wz-details .cc{padding:16px 12px;}
+    .wz-stepper-desktop{display:none;}
+    .schrittleiste{
+      display:flex;justify-content:space-between;align-items:center;
+      background:var(--color-surface-tertiary);
+      border:1px solid var(--color-border-subtle);
+      border-radius:99px;
+      padding:8px 14px;
+      font-size:.8rem;
+      color:var(--color-text-secondary);
+      min-height:44px;
+      box-sizing:border-box;
+      margin:14px 0;
+    }
+    .schrittleiste .punkte{display:flex;gap:5px;align-items:center;}
+    .schrittleiste .punkte i{
+      width:7px;height:7px;border-radius:99px;
+      background:var(--color-border-strong);display:block;
+    }
+    .schrittleiste .punkte i.an{background:var(--color-accent-primary);width:20px;}
+    .wz-mobile-step-title{display:block;font-family:'Barlow',sans-serif;font-size:1.25rem;line-height:1.2;margin:0 0 4px;color:var(--hero-white);}
+    .wz-mobile-step-lead{display:block;color:var(--hero-muted);font-size:0.84rem;line-height:1.35;margin:0 0 14px;}
+    .wz-step-desktop-intro{display:none;}
+    .wz-mobile-explain{margin:8px 0 12px;}
+    .wz-mobile-explain>summary{display:flex;align-items:center;cursor:pointer;color:var(--hero-muted);font-size:0.82rem;font-weight:800;min-height:44px;}
+    .wz-mobile-explain>summary:focus-visible{outline:3px solid var(--green);outline-offset:2px;}
+    body.wz-customer .tg{flex-direction:column;align-items:flex-start;gap:8px;}
+    body.wz-customer .tog{width:48px;height:26px;}
+    body.wz-customer #tab-foerderung .card{display:flex;flex-direction:column;}
+    body.wz-customer #tab-foerderung .card>h3{order:0;}
+    body.wz-customer #tab-foerderung .card>.selg{order:1;}
+    body.wz-customer #tab-foerderung .card>.tg,body.wz-customer #tab-foerderung .card>#wzIncomeBlock,body.wz-customer #tab-foerderung .card>.ib,body.wz-customer #tab-foerderung .card>div:not(.selg){order:2;}
+    body.wz-customer #tab-foerderung .card>.wz-step-note{order:9;margin-top:8px;margin-bottom:0;}
+    body.wz-customer #tab-foerderung .card>.wz-mobile-explain{order:9;margin-top:8px;margin-bottom:0;}
+    body.wz-customer #tab-finanzierung .card{display:flex;flex-direction:column;}
+    body.wz-customer #tab-finanzierung .card>h3{order:0;}
+    body.wz-customer #tab-finanzierung .card>.grid-2{order:1;}
+    body.wz-customer #tab-finanzierung .card>.wz-mobile-explain{order:9;margin-top:8px;margin-bottom:0;}
+    details.klapp{
+      background:var(--color-surface-secondary);
+      border:1px solid var(--color-border-subtle);
+      border-radius:10px;
+      margin:9px 0;
+    }
+    details.klapp>summary{
+      cursor:pointer;
+      padding:11px 13px;
+      font-weight:600;
+      font-size:.92rem;
+      list-style:none;
+      display:flex;justify-content:space-between;align-items:center;
+      color:var(--color-text-primary);
+      min-height:0;
+    }
+    details.klapp>summary::-webkit-details-marker{display:none;}
+    details.klapp>summary::after{content:"▾";color:var(--color-accent-primary);font-size:1rem;}
+    details.klapp[open]>summary::after{content:"▴";}
+    details.klapp .inhalt{padding:0 13px 13px;font-size:.86rem;color:var(--color-text-secondary);}
+    .wahlkarte{
+      background:var(--color-surface-tertiary);
+      border:1px solid var(--color-border-strong);
+      border-radius:10px;
+      padding:13px;
+      margin-bottom:8px;
+      font-size:.94rem;
+      font-weight:600;
+    }
+    body.wz-customer .wz-main .card,
+    body.wz-customer .wz-main .cc,
+    body.wz-customer .wz-main .rc,
+    body.wz-customer .wz-main .pb,
+    body.wz-customer .wz-main .ib,
+    body.wz-customer .wz-main .abox,
+    body.wz-customer .wz-main .wz-cta,
+    body.wz-customer .wz-main .wz-herocalc,
+    body.wz-customer .wz-main .mobile-year-answer,
+    body.wz-customer .wz-main .kv-mobile-card,
+    body.wz-customer .wz-main .mobile-year-card{border-radius:10px;}
+    body.wz-customer .container>section[aria-labelledby="rechner-einleitung"]{background:transparent;border:0;box-shadow:none;padding:0;}
+    body.wz-customer #tab-foerderung .card>h3{display:none;}
+    body.wz-customer #tab-foerderung>.card{padding:10px 12px;}
+    body.wz-customer #tab-foerderung .card>.selg{margin-bottom:0;}
+    body.wz-customer #tab-foerderung .card>.selg>label{font-size:.8rem;line-height:1.2;margin-bottom:4px;}
+    body.wz-customer #tab-foerderung #wzFoerderTreppe{margin:6px 0 0;height:96px;}
+    body.wz-customer #tab-foerderung #wzTreppeHint{margin:4px 0 0;font-size:.72rem;line-height:1.2;}
   }
   /* M6 (Entscheid 29.07.): Ladezustand statt alter Werte. calculate() setzt
      body.kv-busy fuer die Dauer der Server-Antwort; berechnete WERTE werden als
@@ -392,6 +524,8 @@
      aktuell da. */
   @keyframes kvShimmer{to{background-position:-200% 0;}}
   .kv-busy #results .mv,.kv-busy #results .vv,.kv-busy #results .ms,
+  .kv-busy #results .mobile-year-answer strong,.kv-busy #results .mobile-year-answer span,
+  .kv-busy #results .year-bar-row .year-value,
   .kv-busy #wzHero .wz-big,
   .kv-busy #vFEink,.kv-busy #fEinkAnr,.kv-busy #fEinkBonusLbl,.kv-busy #fGrundPct,
   .kv-busy #fKlimaPct,.kv-busy #fQuote,.kv-busy #fGrenzeLbl,.kv-busy #fBasis,
@@ -400,19 +534,21 @@
     background:linear-gradient(90deg,var(--hero-separator) 25%,rgba(127,127,127,.28) 50%,var(--hero-separator) 75%);
     background-size:200% 100%;animation:kvShimmer 1.1s linear infinite;border-radius:6px;}
   .kv-busy #results .mv *,.kv-busy #results .vv *,.kv-busy #results .ms *{color:transparent!important;}
-  .kv-busy #results canvas,.kv-busy #results table,.kv-busy #fBadges,
+  .kv-busy #results canvas,.kv-busy #results table,.kv-busy #results .mobile-year-answer,
+  .kv-busy #results .year-bar-row,.kv-busy #fBadges,
   .kv-busy #wzFoerderTreppe,.kv-busy #wzTreppeHint,.kv-busy #wzFoerderAufbau,
   .kv-busy #wzHero p,.kv-busy #wzLiveFoerder,.kv-busy #co2Box,
   .kv-busy #dreiWegeBox .ib,.kv-busy #cashflowBox .ib,.kv-busy #assBox,
   .kv-busy #bedarfLive,.kv-busy #etaLive,.kv-busy #wzVerbLive,.kv-busy #wzEstBox{opacity:.45;transition:opacity .2s;}
-  @media (prefers-reduced-motion:reduce){.kv-busy #results .mv,.kv-busy #results .vv,.kv-busy #results .ms,.kv-busy #wzHero .wz-big,.kv-busy #vFEink,.kv-busy #fEinkAnr,.kv-busy #fEinkBonusLbl,.kv-busy #fGrundPct,.kv-busy #fKlimaPct,.kv-busy #fQuote,.kv-busy #fGrenzeLbl,.kv-busy #fBasis,.kv-busy #fBetrag,.kv-busy #fNetto{animation:none;}}
+  .kv-busy #results .mobile-year-answer,.kv-busy #results .year-bar-row{opacity:.45!important;}
+  @media (prefers-reduced-motion:reduce){.kv-busy #results .mv,.kv-busy #results .vv,.kv-busy #results .ms,.kv-busy #results .mobile-year-answer strong,.kv-busy #results .mobile-year-answer span,.kv-busy #results .year-bar-row .year-value,.kv-busy #wzHero .wz-big,.kv-busy #vFEink,.kv-busy #fEinkAnr,.kv-busy #fEinkBonusLbl,.kv-busy #fGrundPct,.kv-busy #fKlimaPct,.kv-busy #fQuote,.kv-busy #fGrenzeLbl,.kv-busy #fBasis,.kv-busy #fBetrag,.kv-busy #fNetto{animation:none;}}
 </style>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
   <nav>
     <div class="nav-inner">
-      <a href="/" style="display:inline-block;" aria-label="HeroWerk, zur Startseite"><img src="herowerk-logo-stacked.png?v=3805a3a2a6" alt="HeroWerk, Meisterbetrieb für Wärmepumpen" class="nav-logo logo-dark" width="607" height="337" decoding="async"><img src="herowerk-logo-stacked-light.png?v=8c40e63d7e" alt="" aria-hidden="true" class="nav-logo logo-light" width="607" height="337" decoding="async"></a>
+      <a href="/" style="display:inline-block;" aria-label="HeroWerk, zur Startseite"><img src="/herowerk-logo-stacked.png?v=3805a3a2a6" alt="HeroWerk, Meisterbetrieb für Wärmepumpen" class="nav-logo logo-dark" width="607" height="337" decoding="async"><img src="/herowerk-logo-stacked-light.png?v=8c40e63d7e" alt="" aria-hidden="true" class="nav-logo logo-light" width="607" height="337" decoding="async"></a>
       <div class="nav-links">
         <a href="/preise">Preise</a>
         <a href="/rechner">Rechner</a>
@@ -453,21 +589,28 @@
     <div class="kicker">Kosten-Vergleichsrechner</div>
     <h1>Neue Öl- oder Gasheizung <span class="accent">oder Wärmepumpe?</span></h1>
     <p class="lead">Der ehrliche Vergleich über einen Zeitraum, den du selbst wählst, bis zu 25 Jahre: Anschaffung, Förderung und Heizkosten von Öl, Gas und Wärmepumpe, gerechnet nach der BEG-Reform 2026.</p>
+    <p class="mobile-head-note">Unverbindlicher Vergleich von Öl, Gas und Wärmepumpe über bis zu 25 Jahre, ohne Anmeldung.</p>
     <span class="badge">Region Hannover</span>
   </div>
 </header>
 <div class="container">
   <section class="cc" aria-labelledby="rechner-einleitung">
     <h2 id="rechner-einleitung">Was dieser Rechner für dich macht</h2>
-    <p class="wz-intro">Er vergleicht zwei Wege über einen Zeitraum, den du selbst wählst, bis zu 25 Jahre: noch einmal eine neue Öl- oder Gasheizung, oder der Umstieg auf eine Wärmepumpe. Gerechnet wird nicht nur der Kaufpreis, sondern das, was am Ende zählt: Anschaffung nach Förderung, Energiekosten Jahr für Jahr, der steigende CO2-Preis und auf Wunsch die Finanzierung mit monatlicher Rate.</p>
-    <p class="wz-intro"><strong>Was du dafür brauchst:</strong> deine heutige Heizungsart und ungefähr deinen Jahresverbrauch. Wenn du den nicht zur Hand hast, schätzen wir ihn aus Baujahr, Wohnfläche und Gebäudetyp. Alles Weitere ist freiwillig und macht das Ergebnis nur genauer.</p>
-    <p class="wz-intro"><strong>Was am Ende herauskommt:</strong> dein Kostenunterschied über den gewählten Zeitraum, das Jahr, ab dem sich der Umstieg gerechnet hat, deine voraussichtliche Förderung nach der BEG-Reform 2026 und der Betrag, der nach Abzug der Förderung übrig bleibt. Du kannst jede Annahme selbst verstellen und siehst sofort, wie sie wirkt. <a href="/amortisation-waermepumpe">Wie diese Rechnung funktioniert, erklären wir im Ratgeber.</a></p>
-    <p class="d">Der Rechner ist eine Orientierung, kein Angebot. Wie deine Zahlen konkret aussehen, sagt dir eine Beratung vor Ort.</p>
+    <details class="rechner-intro-details klapp" data-mobile-collapsed open>
+      <summary>So rechnet der Vergleich</summary>
+      <div class="inhalt">
+        <p class="wz-intro">Er vergleicht zwei Wege über einen Zeitraum, den du selbst wählst, bis zu 25 Jahre: noch einmal eine neue Öl- oder Gasheizung, oder der Umstieg auf eine Wärmepumpe. Gerechnet wird nicht nur der Kaufpreis, sondern das, was am Ende zählt: Anschaffung nach Förderung, Energiekosten Jahr für Jahr, der steigende CO2-Preis und auf Wunsch die Finanzierung mit monatlicher Rate.</p>
+        <p class="wz-intro"><strong>Was du dafür brauchst:</strong> deine heutige Heizungsart und ungefähr deinen Jahresverbrauch. Wenn du den nicht zur Hand hast, schätzen wir ihn aus Baujahr, Wohnfläche und Gebäudetyp. Alles Weitere ist freiwillig und macht das Ergebnis nur genauer.</p>
+        <p class="wz-intro"><strong>Was am Ende herauskommt:</strong> dein Kostenunterschied über den gewählten Zeitraum, das Jahr, ab dem sich der Umstieg gerechnet hat, deine voraussichtliche Förderung nach der BEG-Reform 2026 und der Betrag, der nach Abzug der Förderung übrig bleibt. Du kannst jede Annahme selbst verstellen und siehst sofort, wie sie wirkt. <a href="/amortisation-waermepumpe">Wie diese Rechnung funktioniert, erklären wir im Ratgeber.</a></p>
+        <p class="d">Der Rechner ist eine Orientierung, kein Angebot. Wie deine Zahlen konkret aussehen, sagt dir eine Beratung vor Ort.</p>
+      </div>
+    </details>
   </section>
   <div id="wzShell" class="wz-shell" hidden>
     <div class="wz-layout">
       <main id="main-content" class="wz-main" tabindex="-1">
-        <div id="wzStepper" class="wz-stepper" aria-label="Fortschritt"></div>
+        <div id="wzStepper" class="wz-stepper wz-stepper-desktop" aria-label="Fortschritt"></div>
+        <div id="wzMobileStepper" class="schrittleiste wz-stepper-mobile" aria-label="Fortschritt"></div>
         <section class="card" aria-live="polite">
           <div id="wzStepBody"></div>
           <div class="wz-nav">
@@ -503,9 +646,9 @@
           <div class="wz-opt-sub" id="bedarfLive" style="margin-top:6px"></div></div>
         <div class="sg" id="wzEtaGroup"><label>Wirkungsgrad Ihrer heutigen Heizung <span class="ii" data-tooltip="Wie viel von der abgerechneten Energie wirklich als Wärme im Haus ankommt. Gas wird brennwertbezogen abgerechnet, deshalb liegen die Werte unter Prospektangaben. Typisch: Heizwertkessel vor 1990 rund 70 %, Niedertemperaturkessel rund 80 % (Verbraucherzentrale NRW 2020), Brennwertkessel im Feld 85 bis 87 %, gut eingestellt 93 bis 95 % (BEE/ECONSULT-Feldstudien 2018, vzbv-Brennwertcheck 2011). Stand 15.07.2026.">i</span> <span class="v" id="vEta">85 %</span></label>
           <input type="range" id="eta" min="65" max="98" step="1" value="85">
-          <div class="wz-opt-sub" id="etaHerkunft" style="margin-top:6px;display:none"></div>
-          <div class="wz-opt-sub" id="etaLive" style="margin-top:6px"></div>
-          <div class="wz-opt-sub" style="margin-top:6px">So lesen Sie das: Sie kaufen 1 Kilowattstunde Gas oder Öl ein. Ihre Heizung macht daraus zum Beispiel 0,85 Kilowattstunden Wärme, der Rest geht verloren. Die Wärmepumpe dreht das um: Aus 1 Kilowattstunde Strom macht sie rund 3,8 Kilowattstunden Wärme. Das ist ein Wirkungsgrad von 380 Prozent, und genau das ist die Magie hinter der Wärmepumpe.</div></div>
+          <div class="wz-opt-sub" id="etaHerkunft" data-mobile-summary="Woher kommt der Wirkungsgrad?" style="margin-top:6px;display:none"></div>
+          <div class="wz-opt-sub" id="etaLive" data-mobile-summary="So wirkt der Wirkungsgrad" style="margin-top:6px"></div>
+          <div class="wz-opt-sub" data-mobile-summary="Was bedeutet Wirkungsgrad?" style="margin-top:6px">So lesen Sie das: Sie kaufen 1 Kilowattstunde Gas oder Öl ein. Ihre Heizung macht daraus zum Beispiel 0,85 Kilowattstunden Wärme, der Rest geht verloren. Die Wärmepumpe dreht das um: Aus 1 Kilowattstunde Strom macht sie rund 3,8 Kilowattstunden Wärme. Das ist ein Wirkungsgrad von 380 Prozent, und genau das ist die Magie hinter der Wärmepumpe.</div></div>
       </div>
       <div class="card" id="wzWpCard">
         <h3>Neue Wärmepumpe</h3>
@@ -519,12 +662,12 @@
     </div>
     <div class="card hl" id="wzCompareCard">
       <h3>Der ehrliche Vergleich: Wenn Ihre Heizung jetzt ausfällt <span class="ii" data-tooltip="Richtwerte inkl. Einbau (Verbraucherzentrale/co2online, marktabhängig): neue Gas-Brennwertheizung ca. 8.000 bis 15.000 €, neue Ölheizung ca. 12.000 bis 20.000 €. Diese Anschaffung würde ohnehin anfallen und bekommt keine Förderung.">i</span></h3>
-      <div class="ib" style="margin-bottom:16px"><span class="d">Die meisten Eigentümer stehen nicht vor der Wahl „Wärmepumpe oder nichts", sondern <strong>„neue Heizung ODER neue Wärmepumpe"</strong>. Auch eine neue Gas- oder Ölheizung kostet Anschaffung und Einbau, bekommt aber keine Förderung und trägt steigende CO₂- und Biotreppe-Kosten. Deshalb zählt die <strong>Mehrinvestition</strong>, nicht der volle Wärmepumpen-Preis. Hinweis: In Kommunen mit beschlossener Wärmeplanung (Großstädte wie Hannover) ist der Einbau einer neuen reinen Gas-/Ölheizung nach GEG §71 nur noch eingeschränkt bzw. mit steigendem EE-Anteil zulässig. Der Rechner rechnet zugunsten der fossilen Variante nur mit der Biotreppe.</span></div>
+      <div class="ib" data-mobile-summary="Warum vergleichen wir mit einer neuen Heizung?" style="margin-bottom:16px"><span class="d">Die meisten Eigentümer stehen nicht vor der Wahl „Wärmepumpe oder nichts", sondern <strong>„neue Heizung ODER neue Wärmepumpe"</strong>. Auch eine neue Gas- oder Ölheizung kostet Anschaffung und Einbau, bekommt aber keine Förderung und trägt steigende CO₂- und Biotreppe-Kosten. Deshalb zählt die <strong>Mehrinvestition</strong>, nicht der volle Wärmepumpen-Preis. Hinweis: In Kommunen mit beschlossener Wärmeplanung (Großstädte wie Hannover) ist der Einbau einer neuen reinen Gas-/Ölheizung nach GEG §71 nur noch eingeschränkt bzw. mit steigendem EE-Anteil zulässig. Der Rechner rechnet zugunsten der fossilen Variante nur mit der Biotreppe.</span></div>
       <div class="tg"><label class="tog"><input type="checkbox" id="neuFossilTog" checked onchange="toggleNeuFossil()"><span class="sl"></span></label>
         <div class="tl">Neue fossile Anlage als realistischen Vergleich einrechnen<small>Vergleicht Investition + Folgekosten: neue Ölheizung gegen neue Gasheizung gegen neue Wärmepumpe. (Aktiviert zugleich die Biotreppe, da die Alternative eine neue Öl- oder Gasheizung wäre.)</small></div></div>
       <div id="neuFossilOpt">
         <div class="selg" id="vglGroup"><label>Wenn Sie heute eine neue Heizung einbauen müssten: Gas oder Öl? <span class="ii" data-tooltip="Diese Wahl steuert den Kern-Vergleich: Investition und Brennstoffpreis der neuen fossilen Alternative. Wo kein Gasanschluss möglich ist, ist Öl der realistische Vergleich.">i</span></label>
-          <div class="wz-choice-grid"><button type="button" class="wz-choice" data-vgl-fuel="gas" aria-label="Vergleich mit neuer Gasheizung">Gas</button><button type="button" class="wz-choice" data-vgl-fuel="oel" aria-label="Vergleich mit neuer Ölheizung">Öl</button></div>
+          <div class="wz-choice-grid"><button type="button" class="wz-choice wahlkarte" data-vgl-fuel="gas" aria-label="Vergleich mit neuer Gasheizung">Gas</button><button type="button" class="wz-choice wahlkarte" data-vgl-fuel="oel" aria-label="Vergleich mit neuer Ölheizung">Öl</button></div>
           <select id="vglBrennstoff" hidden aria-hidden="true"><option value="gas" selected>Gas</option><option value="oel">Öl</option></select>
         </div>
         <div class="grid-2">
@@ -601,8 +744,13 @@
   <div id="tab-foerderung" class="tab-content">
     <div class="card">
       <h3>KfW 458: Heizungsförderung (Reform ab 21.07.2026)</h3>
-      <p style="color:var(--hero-muted);font-size:0.85rem;margin-bottom:16px;">Max. 80 %<sup><a href="#foerder-80-hinweis">*</a></sup> der förderfähigen Kosten. Klimabonus und Bemessungsgrenze sinken halbjährlich zu festen Stichtagen: Früh beantragen lohnt sich. Boni setzen selbstnutzende Eigentümer voraus; Antrag vor Vorhabensbeginn; kein Rechtsanspruch, vorbehaltlich verfügbarer Haushaltsmittel. Stand 07/2026.</p>
-      <p class="hc-footnote" id="foerder-80-hinweis">*Bis zu 80 Prozent Förderung = Grundförderung 30 Prozent + Klimabonus 16 Prozent + Einkommensbonus 40 Prozent. Voraussetzungen: selbstnutzende Eigentümer, funktionsfähige Öl-, Kohle-, Gasetagen- oder Nachtspeicherheizung oder Gas- bzw. Biomasseheizung ab 20 Jahren, anrechenbares zu versteuerndes Haushaltseinkommen bis 30.000 Euro (bei mindestens einem minderjährigen Kind werden einmalig 10.000 Euro abgezogen), Antrag im Zeitraum 21.07.2026 bis 31.01.2027 (danach sinkt der Klimabonus halbjährlich). Gedeckelt auf 80 Prozent von höchstens 28.000 Euro förderfähigen Kosten der ersten Wohneinheit, also höchstens 22.400 Euro Zuschuss.</p>
+      <details class="wz-step-note klapp" data-mobile-collapsed open>
+        <summary>Förderdetails und rechtliche Hinweise</summary>
+        <div class="inhalt">
+          <p style="color:var(--hero-muted);font-size:0.85rem;margin-bottom:16px;">Max. 80 %<sup><a href="#foerder-80-hinweis">*</a></sup> der förderfähigen Kosten. Klimabonus und Bemessungsgrenze sinken halbjährlich zu festen Stichtagen: Früh beantragen lohnt sich. Boni setzen selbstnutzende Eigentümer voraus; Antrag vor Vorhabensbeginn; kein Rechtsanspruch, vorbehaltlich verfügbarer Haushaltsmittel. Stand 07/2026.</p>
+          <p class="hc-footnote" id="foerder-80-hinweis" tabindex="-1">*Bis zu 80 Prozent Förderung = Grundförderung 30 Prozent + Klimabonus 16 Prozent + Einkommensbonus 40 Prozent. Voraussetzungen: selbstnutzende Eigentümer, funktionsfähige Öl-, Kohle-, Gasetagen- oder Nachtspeicherheizung oder Gas- bzw. Biomasseheizung ab 20 Jahren, anrechenbares zu versteuerndes Haushaltseinkommen bis 30.000 Euro (bei mindestens einem minderjährigen Kind werden einmalig 10.000 Euro abgezogen), Antrag im Zeitraum 21.07.2026 bis 31.01.2027 (danach sinkt der Klimabonus halbjährlich). Gedeckelt auf 80 Prozent von höchstens 28.000 Euro förderfähigen Kosten der ersten Wohneinheit, also höchstens 22.400 Euro Zuschuss.</p>
+        </div>
+      </details>
       <div class="selg"><label>Geplanter Fördermittelantrag / geplante Installation <span class="ii" data-tooltip="Mit der BEG-Reform (ab 21.07.2026) sinkt der Klimageschwindigkeitsbonus erstmals zum 01.02.2027 und danach jeweils zum 1. Februar und 1. August um 4 %-Punkte; ab 01.08.2028 entfällt er. Die Bemessungsgrenze sinkt zu denselben Stichtagen um je 750 €, bis Ende 2030 auf 22.000 €.">i</span></label>
         <select id="fHalbjahr" onchange="updateFoerderung()">
           <option value="h2-2026" selected>21.07.2026 bis 31.01.2027</option>
@@ -626,9 +774,9 @@
         <input type="range" id="fEinkSlider" min="15000" max="120000" step="1000" value="60000" oninput="updateFoerderung()"></div>
       <div class="tg"><label class="tog"><input type="checkbox" id="fKind" onchange="updateFoerderung()"><span class="sl"></span></label>
         <div class="tl">Minderjähriges Kind im Haushalt<small>Einmaliger Familienzuschlag: 10.000 € Abzug vom zu versteuernden Einkommen, unabhängig von der Kinderzahl (KfW-Regel, Nachweis Meldebescheinigung).</small></div></div>
-      <div class="ib" style="margin-bottom:14px;"><span class="d">Anrechenbares Einkommen: <strong id="fEinkAnr" style="color:var(--hero-white);">60.000 €</strong> → Einkommensbonus: <strong id="fEinkBonusLbl" style="color:var(--hero-accent);">+0 %</strong><br>Stufen: bis 30.000 € = +40 % · bis 40.000 € = +30 % · bis 50.000 € = +10 %</span></div>
+      <div class="ib" data-mobile-summary="Wie wird der Einkommensbonus berechnet?" style="margin-bottom:14px;"><span class="d">Anrechenbares Einkommen: <strong id="fEinkAnr" style="color:var(--hero-white);">60.000 €</strong> → Einkommensbonus: <strong id="fEinkBonusLbl" style="color:var(--hero-accent);">+0 %</strong><br>Stufen: bis 30.000 € = +40 % · bis 40.000 € = +30 % · bis 50.000 € = +10 %</span></div>
       </div>
-      <div class="ib" style="margin-bottom:4px;"><span class="d"><strong>Entfallen ab 21.07.2026:</strong> Effizienzbonus (5 % für natürliche Kältemittel) und Emissionsminderungszuschlag. <strong style="color:var(--hero-accent);">Tipp:</strong> Jedes Halbjahr Warten kostet 4 %-Punkte Klimabonus, ab 2027 zusätzlich 750 € Bemessungsgrenze.</span></div>
+      <div class="ib" data-mobile-summary="Was ändert sich mit der Reform 2026?" style="margin-bottom:4px;"><span class="d"><strong>Entfallen ab 21.07.2026:</strong> Effizienzbonus (5 % für natürliche Kältemittel) und Emissionsminderungszuschlag. <strong style="color:var(--hero-accent);">Tipp:</strong> Jedes Halbjahr Warten kostet 4 %-Punkte Klimabonus, ab 2027 zusätzlich 750 € Bemessungsgrenze.</span></div>
       <div id="wzFoerderAufbau" class="ib"></div>
       <div style="margin-top:20px;padding:16px;background:var(--hero-bg);border-radius:8px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
@@ -649,7 +797,7 @@
   <div id="tab-finanzierung" class="tab-content">
     <div class="card hl">
       <h3>Finanzierung <span class="ii" data-tooltip="Die meisten Kunden zahlen die Wärmepumpe nicht bar, sondern über einen Kredit. Hier legen Sie Rate und Laufzeit fest. Danach zeigt der monatliche Vergleich im Ergebnis, wie sich Rate + Betrieb gegen eine (ebenfalls finanzierte) neue fossile Heizung schlägt.">i</span></h3>
-      <p style="color:var(--hero-muted);font-size:0.85rem;margin-bottom:16px;">Die wenigsten zahlen die neue Heizung bar, egal ob Wärmepumpe oder Gaskessel. Legen Sie hier Ihre Finanzierung fest. Im Ergebnis vergleichen wir dann fair: neue Wärmepumpe finanziert gegen neue fossile Anlage finanziert, jeweils Rate plus laufende Kosten.</p>
+      <p data-mobile-summary="Wie funktioniert der Finanzierungsvergleich?" style="color:var(--hero-muted);font-size:0.85rem;margin-bottom:16px;">Die wenigsten zahlen die neue Heizung bar, egal ob Wärmepumpe oder Gaskessel. Legen Sie hier Ihre Finanzierung fest. Im Ergebnis vergleichen wir dann fair: neue Wärmepumpe finanziert gegen neue fossile Anlage finanziert, jeweils Rate plus laufende Kosten.</p>
       <div class="grid-2">
         <div>
           <div class="tg"><label class="tog"><input type="checkbox" id="finanzTog"><span class="sl"></span></label>
@@ -659,10 +807,10 @@
               <input type="range" id="kredLZ" min="5" max="20" step="1" value="10"></div>
             <div class="sg"><label>Zinssatz (effektiv) <span class="ii" id="kredZinsTooltip" data-tooltip="Rechenannahme wird geladen.">i</span> <span class="v" id="vKredZins"></span></label>
               <input type="range" id="kredZins" min="0.0" max="9.0" step="0.01"></div>
-            <div class="ib"><span class="d"><strong>Welcher Kredit?</strong> <span id="kredZinsInfo">Rechenannahme wird geladen.</span></span></div>
+            <div class="ib" data-mobile-summary="Welcher Kredit wird angenommen?"><span class="d"><strong>Welcher Kredit?</strong> <span id="kredZinsInfo">Rechenannahme wird geladen.</span></span></div>
           </div>
         </div>
-        <div class="ib"><span class="d"><strong>Der Denkfehler, den wir auflösen:</strong> Viele vergleichen die finanzierte Wärmepumpe mit der „alten Gasrechnung". Das ist unfair, denn die alte Heizung ist am Ende. Der ehrliche Vergleich lautet: neue WP-Rate + WP-Strom gegen neue Gas-/Öl-Rate + steigende Brennstoffkosten. Genau das rechnet der monatliche Vergleich im Ergebnis.</span></div>
+        <div class="ib" data-mobile-summary="Warum vergleichen wir beide neuen Heizungen?"><span class="d"><strong>Der Denkfehler, den wir auflösen:</strong> Viele vergleichen die finanzierte Wärmepumpe mit der „alten Gasrechnung". Das ist unfair, denn die alte Heizung ist am Ende. Der ehrliche Vergleich lautet: neue WP-Rate + WP-Strom gegen neue Gas-/Öl-Rate + steigende Brennstoffkosten. Genau das rechnet der monatliche Vergleich im Ergebnis.</span></div>
       </div>
     </div>
   </div>
@@ -734,11 +882,11 @@
       <div class="cc" id="sensiBox"></div>
     </div>
     <div class="cc" id="immoBox" style="display:none"></div>
-    <div class="cc"><h3>Detailtabelle</h3><div style="overflow-x:auto"><table class="bt" id="detTbl"></table></div></div>
+    <div class="cc"><h3>Detailtabelle</h3><table class="bt desktop-kv-table" id="detTbl"></table><div class="mobile-year-details" id="detMobile"></div></div>
     <div class="abox" id="assBox"></div>
   </div>
 </div>
-<div class="footer">© 2026 <a href="https://www.herowerk.de">HeroWerk GmbH</a> · <a href="https://www.herowerk.de/impressum">Impressum</a> · <a href="https://www.herowerk.de/datenschutz">Datenschutz</a> · <button type="button" class="cookie-settings-button" hidden>Cookie-Einstellungen</button> · <a href="https://www.herowerk.de/barrierefreiheit">Barrierefreiheit</a> · Diese Seite speichert nur Ihre Hell-/Dunkel-Auswahl im Browser (localStorage hero-theme), keine Eingaben. · Unverbindliche Modellrechnung auf Basis Ihrer Eingaben und dokumentierter Annahmen; keine Zusicherung von Einsparungen oder Förderungen. Die Förderentscheidung liegt beim Fördergeber (KfW), kein Rechtsanspruch. Kein steuerlicher oder finanzieller Rat. Quellen: siehe Annahmen-Box im Ergebnisbereich.</div>
+<footer class="footer">© 2026 <a href="https://www.herowerk.de">HeroWerk GmbH</a> · <a href="https://www.herowerk.de/impressum">Impressum</a> · <a href="https://www.herowerk.de/datenschutz">Datenschutz</a> · <button type="button" class="cookie-settings-button" hidden>Cookie-Einstellungen</button> · <a href="https://www.herowerk.de/barrierefreiheit">Barrierefreiheit</a> · Diese Seite speichert nur Ihre Hell-/Dunkel-Auswahl im Browser (localStorage hero-theme), keine Eingaben. · Unverbindliche Modellrechnung auf Basis Ihrer Eingaben und dokumentierter Annahmen; keine Zusicherung von Einsparungen oder Förderungen. Die Förderentscheidung liegt beim Fördergeber (KfW), kein Rechtsanspruch. Kein steuerlicher oder finanzieller Rat. Quellen: siehe Annahmen-Box im Ergebnisbereich.</footer>
 
 <script>
 // ===== SLIDER BINDINGS =====
@@ -810,6 +958,28 @@ function fix(v,n){return Number(v||0).toFixed(n).replace('.',',');}
 function pct(v){return Number(v||0).toLocaleString('de-DE',{maximumFractionDigits:1})+' %';}
 function kvLine(label,value,extra){return `<div class="ln${extra?' '+extra:''}"><span class="lbl">${label}</span><span class="vv">${value}</span></div>`;}
 function kvCard(label,value,sub,extra){return `<div class="rc${extra?' '+extra:''}"><div class="ml">${label}</div><div class="mv">${value}</div>${sub?`<div class="ms">${sub}</div>`:''}</div>`;}
+function kvMobileCard(label,value,lines,extra){
+  return `<div class="rc kv-mobile-card${extra?' '+extra:''}"><div class="kv-mobile-card-head"><div class="ml">${label}</div><div class="mv">${value}</div></div>${(lines||[]).map(line=>kvLine(line[0],line[1],line[2])).join('')}</div>`;
+}
+function kvMobileYearAnswer(ergebnis,system){
+  const breakEven=ergebnis.breakEvenSofort?'Ab sofort im Plus':(ergebnis.breakEven?'Ab Jahr '+ergebnis.breakEven+' im Plus':'Innerhalb von '+system.laufzeit+' Jahren noch nicht im Plus');
+  return `<div class="mobile-year-answer"><strong>${breakEven}</strong><span>Gesamtersparnis über ${system.laufzeit} Jahre: ${eur(ergebnis.cumSav)}</span></div>`;
+}
+function kvMobileYearContent(labels,datasets){
+  const reihen=datasets.filter(d=>d&&d.data);
+  if(!reihen.length)return '';
+  if(reihen.length===1){
+    const werte=reihen[0].data.map(v=>Math.round(Number(v)||0));
+    const max=Math.max(1,...werte.map(v=>Math.abs(v)));
+    return labels.map((lab,i)=>`<div class="year-bar-row"><span class="year-label">${lab}</span><span class="year-bar-track" aria-hidden="true"><span class="year-bar-fill${werte[i]<0?' is-negative':''}" style="width:${Math.round(Math.abs(werte[i])/max*100)}%"></span></span><span class="year-value">${eurSigned(werte[i])}</span></div>`).join('');
+  }
+  return labels.map((lab,i)=>`<div class="mobile-year-card"><h4>${lab}</h4>${reihen.map(r=>kvLine(r.label,eur(Math.round(Number(r.data[i])||0)))).join('')}</div>`).join('');
+}
+function kvMobileYearDetails(titel,labels,datasets){
+  const content=kvMobileYearContent(labels,datasets);
+  if(!content)return '';
+  return `<details class="mobile-year-details klapp" aria-label="${titel}"><summary>Alle ${labels.length} Jahre im Detail</summary><div class="inhalt">${content}</div></details>`;
+}
 function kvStatusHost(){
   let host=document.getElementById('kvStatus');
   if(!host){host=document.createElement('div');host.id='kvStatus';host.setAttribute('role','status');host.setAttribute('aria-live','polite');host.style.cssText='max-width:1200px;margin:12px auto;padding:0 20px;';const results=document.getElementById('results');results.parentNode.insertBefore(host,results);}
@@ -866,7 +1036,7 @@ function renderFoerderTreppe(){
   const host=document.getElementById('wzFoerderTreppe'),hint=document.getElementById('wzTreppeHint');
   const r=KV_STATE.last;if(!host||!r||!r.foerder||!Array.isArray(r.foerder.treppe))return;
   const orig=document.getElementById('fHalbjahr').value;const data=r.foerder.treppe;const maxQ=Math.max(1,...data.map(d=>d.quote));
-  host.innerHTML=data.map(d=>{const h=Math.max(10,Math.round(d.quote/maxQ*64));const yy=d.periode.slice(-2);const short=d.periode==='h2-2026'?'ab 07/26':(d.periode.indexOf('h1')===0?'ab 02/':'ab 08/')+yy;return `<div class="tr-col${d.periode===orig?' is-active':''}" data-tr="${d.periode}" title="${d.label}" role="button" aria-label="Zeitraum ${d.label}: ${d.quote} Prozent"><span class="tr-pct">${d.quote} %</span><div class="tr-bar" style="height:${h}px"></div><span class="tr-lbl">${short}</span></div>`;}).join('');
+  host.innerHTML=data.map(d=>{const h=Math.max(10,Math.round(d.quote/maxQ*50));const yy=d.periode.slice(-2);const monat=d.periode==='h2-2026'?'07/26':(d.periode.indexOf('h1')===0?'02/':'08/')+yy;return `<div class="tr-col${d.periode===orig?' is-active':''}" data-tr="${d.periode}" title="${d.label}" role="button" aria-label="Zeitraum ${d.label}: ${d.quote} Prozent"><span class="tr-pct">${d.quote} %</span><div class="tr-bar" style="height:${h}px"></div><span class="tr-lbl"><span>ab</span><span>${monat}</span></span></div>`;}).join('');
   host.querySelectorAll('.tr-col').forEach(c=>c.addEventListener('click',()=>{const sel=document.getElementById('fHalbjahr');sel.value=c.dataset.tr;sel.dispatchEvent(new Event('change',{bubbles:true}));}));
   const cur=data.find(d=>d.periode===orig),first=data[0];if(hint&&cur)hint.textContent='Jedes Warten kostet Förderung: Im gewählten Zeitraum bekommen Sie '+cur.quote+' Prozent'+(cur.quote<first.quote?', im ersten Zeitraum wären es '+first.quote+' Prozent':'')+'.';
 }
@@ -907,7 +1077,7 @@ function kvRender(data,showResults){
   document.getElementById('kpiGrid').innerHTML=cards.join('');
 
   const dreiBox=document.getElementById('dreiWegeBox');dreiBox.style.display=d.aktiv?'block':'none';
-  if(d.aktiv){const rows=[['Neue Ölheizung',d.oel],['Neue Gasheizung',d.gas],['Neue Wärmepumpe',d.wp]];const result=d.vorteil>=0?'Über '+s.laufzeit+' Jahre '+eur(d.vorteil)+' günstiger'+(i.mehrInvest>0?' · Mehrinvestition '+eur(i.mehrInvest):''):eur(-d.vorteil)+' unter der Wärmepumpe';dreiBox.innerHTML=`<h3>Gesamtkosten über ${s.laufzeit} Jahre</h3><div role="region" aria-label="Drei-Wege-Kostenvergleich, horizontal scrollbar" tabindex="0" style="max-width:100%;overflow-x:auto"><table class="bt"><thead><tr><th>Weg</th><th class="r">Anschaffung</th><th class="r">Betrieb ${s.laufzeit} J.</th><th class="r">Gesamt ${s.laufzeit} J.</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r[0]}</td><td class="r">${eur(r[1].invest)}</td><td class="r">${eur(r[1].betrieb)}</td><td class="r">${eur(r[1].gesamt)}</td></tr>`).join('')}</tbody></table></div><div class="ib"><strong>${result}</strong></div>`;}
+  if(d.aktiv){const rows=[['Neue Ölheizung',d.oel],['Neue Gasheizung',d.gas],['Wärmepumpe',d.wp]];const mobileRows=[['Wärmepumpe',d.wp,'is-wp'],['Neue Gasheizung',d.gas,''],['Neue Ölheizung',d.oel,'']];const result=d.vorteil>=0?'Über '+s.laufzeit+' Jahre '+eur(d.vorteil)+' günstiger'+(i.mehrInvest>0?' · Mehrinvestition '+eur(i.mehrInvest):''):eur(-d.vorteil)+' unter der Wärmepumpe';dreiBox.innerHTML=`<h3>Gesamtkosten über ${s.laufzeit} Jahre</h3><table class="bt desktop-kv-table"><thead><tr><th>Weg</th><th class="r">Anschaffung</th><th class="r">Betrieb ${s.laufzeit} J.</th><th class="r">Gesamt ${s.laufzeit} J.</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r[0]}</td><td class="r">${eur(r[1].invest)}</td><td class="r">${eur(r[1].betrieb)}</td><td class="r">${eur(r[1].gesamt)}</td></tr>`).join('')}</tbody></table><div class="mobile-kv-list">${mobileRows.map(r=>{const lines=[[r[1]===d.wp?'Anschaffung nach Förderung':'Anschaffung',eur(r[1].invest)],['Betrieb '+s.laufzeit+' J.',eur(r[1].betrieb)]];if(r[1]!==d.wp)lines.push(['Mehrkosten gegenüber Wärmepumpe','+'+eur(r[1].gesamt-d.wp.gesamt),'neg']);return kvMobileCard(r[0],eur(r[1].gesamt),lines,r[2]);}).join('')}</div><div class="ib"><strong>${result}</strong></div>`;}
 
   const labels=data.charts.labels;const css=getComputedStyle(document.documentElement);const tick=(css.getPropertyValue('--hero-muted')||'#ccc').trim();const grid=(css.getPropertyValue('--hero-separator')||'#333').trim();const opts={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:tick}}},scales:{x:{ticks:{color:tick},grid:{color:grid}},y:{ticks:{color:tick},grid:{color:grid}}}};
   const breakDatasets=[{label:'Energie und CO₂',data:data.charts.sparEnergieCo2,backgroundColor:'rgba(183,217,0,.7)'},{label:'Dynamischer Tarif',data:data.charts.sparDyn,backgroundColor:'rgba(30,136,229,.7)'},{label:'Bio-Aufschlag',data:data.charts.bioAufschlag,backgroundColor:'rgba(229,57,53,.6)'},{label:'Wartungsdifferenz',data:data.charts.wartungDelta,backgroundColor:'rgba(158,158,158,.5)'}];
@@ -923,14 +1093,14 @@ function kvRender(data,showResults){
     const reihen=datasets.filter(d=>d&&d.data);
     const kopf='<tr><th scope="col">Jahr</th>'+reihen.map(d=>'<th scope="col" class="r">'+d.label+'</th>').join('')+'</tr>';
     const koerper=labels.map((lab,i)=>'<tr><th scope="row">'+lab+'</th>'+reihen.map(d=>'<td class="r">'+eur(Math.round(Number(d.data[i])||0))+'</td>').join('')+'</tr>').join('');
-    ziel.innerHTML='<details class="chart-daten-details"><summary>'+titel+' als Tabelle anzeigen</summary>'
-      +'<div role="region" aria-label="'+titel+', Werte als Tabelle, waagerecht rollbar" tabindex="0" style="max-width:100%;overflow-x:auto">'
-      +'<table class="bt"><caption class="visually-hidden">'+titel+', Werte je Jahr in Euro</caption><thead>'+kopf+'</thead><tbody>'+koerper+'</tbody></table></div></details>';
+    ziel.innerHTML=kvMobileYearAnswer(e,s)+'<details class="chart-daten-details klapp"><summary><span class="chart-summary-desktop">'+titel+' als Tabelle anzeigen</span><span class="chart-summary-mobile">Alle '+labels.length+' Jahre im Detail</span></summary><div class="inhalt">'
+      +'<table class="bt desktop-kv-table"><caption class="visually-hidden">'+titel+', Werte je Jahr in Euro</caption><thead>'+kopf+'</thead><tbody>'+koerper+'</tbody></table>'
+      +'<div class="mobile-year-details">'+kvMobileYearContent(labels,reihen)+'</div></div></details>';
   }
   if(window.Chart){if(cM)cM.destroy();if(cB)cB.destroy();if(cH)cH.destroy();cM=new Chart(document.getElementById('cMain'),{type:'line',data:{labels,datasets:[{label:'Ihr Vorteil',data:data.charts.vermoegen,borderColor:'#B7D900',backgroundColor:'rgba(183,217,0,.15)',fill:true,tension:.25},{label:'Null-Linie',data:data.charts.nullLinie,borderColor:'#E53935',borderDash:[6,4],pointRadius:0}]},options:opts});cB=new Chart(document.getElementById('cBreak'),{type:'bar',data:{labels,datasets:breakDatasets},options:opts});cH=new Chart(document.getElementById('cHeat'),{type:'bar',data:{labels,datasets:[{label:'Heizkosten Gas/Öl',data:data.charts.heizFossil,backgroundColor:'rgba(229,57,53,.65)'},{label:'Heizkosten Wärmepumpe',data:data.charts.heizWp,backgroundColor:'rgba(183,217,0,.65)'},{label:'Jährliche Ersparnis',type:'line',data:data.charts.heizDiff,borderColor:'#FF9800',borderWidth:3}]},options:opts});}
   kvDatenTabelle('cMainDaten','Kumulative Ersparnis',labels,[{label:'Ihr Vorteil',data:data.charts.vermoegen}]);
   kvDatenTabelle('cBreakDaten','Jährliche Ersparnis nach Bestandteilen',labels,breakDatasets);
-  kvDatenTabelle('cHeatDaten','Heizkosten pro Jahr',labels,[{label:'Heizkosten Gas oder Öl',data:data.charts.heizFossil},{label:'Heizkosten Waermepumpe',data:data.charts.heizWp},{label:'Jährliche Ersparnis',data:data.charts.heizDiff}]);
+  kvDatenTabelle('cHeatDaten','Heizkosten pro Jahr',labels,[{label:'Heizkosten Gas oder Öl',data:data.charts.heizFossil},{label:'Heizkosten Wärmepumpe',data:data.charts.heizWp},{label:'Jährliche Ersparnis',data:data.charts.heizDiff}]);
 
   const cf=document.getElementById('cashflowBox');cf.style.display=fin.aktiv?'block':'none';
   if(fin.aktiv){
@@ -938,9 +1108,10 @@ function kvRender(data,showResults){
     else {const mon=(fin.monDiff>=0?'+':'−')+Math.abs(Math.round(fin.monDiff)).toLocaleString('de-DE')+' €/Mo.';cf.innerHTML=`<h3>Monatlicher Vergleich</h3><p class="d">Aktivieren Sie „Neue fossile Anlage“ in Schritt 1 für den faireren Vergleich.</p><div class="cg3">${kvCard('Bestehende '+s.heizLabel+'heizung',Math.round(fin.monFossil).toLocaleString('de-DE')+' €/Mo.','Im 1. Jahr · steigend')}${kvCard('Wärmepumpe',Math.round(fin.monGesWP).toLocaleString('de-DE')+' €/Mo.',Math.round(fin.monRate)+' € Rate + '+Math.round(fin.monWPStrom)+' € Strom/Wartung')}${kvCard('Monatlicher Cashflow',mon,fin.monDiff>=0?'Günstiger trotz Kreditrate':'Amortisiert sich über die Jahre',fin.monDiff>=0?'pos':'neg')}</div><div class="ib">${fin.kredLZ<=s.laufzeit?'Nach Kreditende ('+fin.kredLZ+' J.)':'Am Ende des Betrachtungszeitraums ('+s.laufzeit+' J., Kredit läuft noch)'}: Wärmepumpe ~${Math.round(fin.endWpMon)} €/Mo. · Fossil ~${Math.round(fin.endFossilMon)} €/Mo.</div>`;}
   }
   document.getElementById('co2Box').innerHTML=`<h3>Ihr Klima-Beitrag</h3><div style="text-align:center;margin:20px 0"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.5rem;color:var(--hero-green)">${fix(data.co2.gesamt,1)} t CO₂</div><div class="d">in ${s.laufzeit} Jahren eingespart (Ø ${fix(data.co2.proJahr,1)} t/Jahr)</div></div><div class="cg2"><div class="ib" style="text-align:center"><strong>${data.co2.fluege} Flüge</strong></div><div class="ib" style="text-align:center"><strong>${data.co2.baeume} Bäume</strong></div></div>`;
-  document.getElementById('sensiBox').innerHTML=`<h3>Was wäre wenn? (Szenarien)</h3><table class="bt"><tbody><tr><td>Best Case</td><td class="r">${eur(data.sensi.best)}</td></tr><tr><td>Basis</td><td class="r">${eur(data.sensi.basis)}</td></tr><tr><td>Worst Case</td><td class="r">${eur(data.sensi.worst)}</td></tr></tbody></table>`;
+  document.getElementById('sensiBox').innerHTML=`<h3>Was wäre wenn? (Szenarien)</h3><table class="bt desktop-kv-table"><tbody><tr><td>Best Case</td><td class="r">${eur(data.sensi.best)}</td></tr><tr><td>Basis</td><td class="r">${eur(data.sensi.basis)}</td></tr><tr><td>Worst Case</td><td class="r">${eur(data.sensi.worst)}</td></tr></tbody></table><div class="mobile-kv-list">${kvMobileCard('Best Case',eur(data.sensi.best),[],'is-wp')}${kvMobileCard('Basis',eur(data.sensi.basis),[])}${kvMobileCard('Worst Case',eur(data.sensi.worst),[])}</div>`;
   const im=document.getElementById('immoBox');im.style.display=data.immo.aktiv?'block':'none';if(data.immo.aktiv)im.innerHTML=`<h3>Wertsteigerung Ihrer Immobilie</h3><div class="cg3"><div class="rc"><div class="ml">Hauswert heute</div><div class="mv">${eur(data.immo.hausWert)}</div></div><div class="rc pos"><div class="ml">Wertzuwachs durch WP</div><div class="mv">+${eur(data.immo.wertzuwachs)}</div><div class="ms">${Math.round(data.immo.prozent)} % von ${eur(data.immo.hausWert)}</div></div></div>`;
   document.getElementById('detTbl').innerHTML='<thead><tr><th>Jahr</th><th class="r">Fossil ges.</th><th class="r">WP-Kosten</th><th class="r">Ersparnis/J.</th><th class="r">Ersparnis kum.</th></tr></thead><tbody>'+data.jahre.map(row=>`<tr><td>${row.cY}</td><td class="r">${eur(row.fossilG)}</td><td class="r">${eur(row.wpGes)}</td><td class="r">${eur(row.mehrK)}</td><td class="r">${eur(row.cumSav)}</td></tr>`).join('')+'</tbody>';
+  const detMobile=document.getElementById('detMobile');if(detMobile)detMobile.innerHTML=kvMobileYearAnswer(e,s)+kvMobileYearDetails('Detailtabelle',data.jahre.map(row=>row.cY),[{label:'Fossil ges.',data:data.jahre.map(row=>row.fossilG)},{label:'WP-Kosten',data:data.jahre.map(row=>row.wpGes)},{label:'Ersparnis/J.',data:data.jahre.map(row=>row.mehrK)},{label:'Ersparnis kum.',data:data.jahre.map(row=>row.cumSav)}]);
   document.getElementById('assBox').innerHTML=`<strong>Annahmen & Hinweise:</strong><br>• Bestandsheizung: ${s.heizLabelBestand}, ${Number(data.annahmen.bedarf).toLocaleString('de-DE')} kWh Brennstoff/J., Nutzungsgrad ${s.etaProzent} % · WP-Strom ${s.laufzeit}J.: ${eur(s.wpStrom*s.laufzeit)}<br>• Wartung: WP ${data.annahmen.wartungWp}€/J. · Fossil ${data.annahmen.wartungFossil}€/J.<br>• Förderung: KfW 458 ${f.quote}% (${eur(f.betrag)}) · Fördermittelantrag ${f.label}, Bemessungsgrenze ${eur(f.grenze)}<br>• Unverbindliche Modellrechnung, ohne Gewähr.`;
   if(showResults){document.getElementById('results').classList.add('visible');}
   if(typeof window.WZ_AFTER_KV_RENDER==='function')window.WZ_AFTER_KV_RENDER(data);
@@ -1097,6 +1268,7 @@ kvLoadBootstrap();
     $('wzBack').addEventListener('click',()=>goStep(WZ.current-1));
     $('wzNext').addEventListener('click',()=>{if(WZ.current<4)goStep(WZ.current+1);});
     goStep(0,true);
+    window.setTimeout(openFoerderHashTarget,0);
   }
 
   document.addEventListener('click',event=>{
@@ -1114,15 +1286,92 @@ kvLoadBootstrap();
   function renderStepper(){
     $('wzStepper').innerHTML=WZ_LABELS.map((label,i)=>`<button type="button" class="wz-step" data-step="${i}" aria-label="${label}"><span class="wz-dot">${i+1}</span><span>${label}</span></button>`).join('');
     qa($('wzStepper'),'.wz-step').forEach(btn=>btn.addEventListener('click',()=>{const i=Number(btn.dataset.step);if(i<=WZ.maxVisited)goStep(i);}));
+    $('wzMobileStepper').innerHTML='<span class="wz-stepper-label">Schritt 1 von '+WZ_LABELS.length+'</span><span class="punkte" aria-hidden="true">'+WZ_LABELS.map((_,i)=>'<i'+(i===0?' class="an"':'')+'></i>').join('')+'</span>';
   }
   function updateStepper(){
+    const mobileLabel='Schritt '+(WZ.current+1)+' von '+WZ_LABELS.length;
+    const mobileLabelNode=q($('wzMobileStepper'),'.wz-stepper-label');
+    if(mobileLabelNode)mobileLabelNode.textContent=mobileLabel;
+    qa($('wzMobileStepper'),'.punkte i').forEach((point,i)=>point.classList.toggle('an',i===WZ.current));
     qa($('wzStepper'),'.wz-step').forEach((btn,i)=>{
       btn.classList.toggle('is-active',i===WZ.current);
       btn.classList.toggle('is-visited',i<=WZ.maxVisited);
       btn.classList.toggle('is-done',i<WZ.current);
+      btn.tabIndex=0;
+      btn.setAttribute('aria-disabled',i>WZ.maxVisited?'true':'false');
       q(btn,'.wz-dot').textContent=i<WZ.current?'✓':String(i+1);
     });
   }
+  function mobileSummaryFor(el){
+    if(el.dataset.mobileSummary)return el.dataset.mobileSummary;
+    const strong=el.querySelector&&el.querySelector('strong');
+    if(strong){
+      const text=strong.textContent.replace(/\s+/g,' ').replace(/:$/,'').trim();
+      if(text)return text.slice(0,72);
+    }
+    const tl=el.closest('.tl');
+    if(tl){
+      const text=Array.from(tl.childNodes).filter(node=>node.nodeType===Node.TEXT_NODE).map(node=>node.textContent).join(' ').replace(/\s+/g,' ').trim();
+      if(text)return 'Warum: '+text.slice(0,60);
+    }
+    const group=el.closest('.sg,.selg');
+    const label=group&&group.querySelector('label');
+    if(label)return 'Mehr zu '+label.textContent.replace(/\s+/g,' ').trim().slice(0,60);
+    const card=el.closest('.cc,.card');
+    const heading=card&&card.querySelector(':scope>h3');
+    if(heading)return 'Hintergrund zu '+heading.textContent.replace(/\s+/g,' ').trim().slice(0,52);
+    return 'Hintergrund und Annahmen';
+  }
+  function prepareMobileExplanations(){
+    if(!window.matchMedia('(max-width:760px)').matches)return;
+    const body=$('wzStepBody');
+    if(!body)return;
+    qa(body,'.ib,.wz-opt-sub,.wz-herocalc,.tl small,p').forEach(el=>{
+      if(el.closest('details')||el.closest('button')||el.classList.contains('wz-mobile-step-lead')||el.classList.contains('wz-step-desktop-intro'))return;
+      const cs=getComputedStyle(el);
+      if(cs.display==='none'||cs.visibility==='hidden')return;
+      const lineHeight=parseFloat(cs.lineHeight)||parseFloat(cs.fontSize)*1.4;
+      if(el.getBoundingClientRect().height/lineHeight<=3.05)return;
+      const details=document.createElement('details');
+      details.className='wz-mobile-explain klapp';
+      details.dataset.mobileCollapsed='';
+      details.open=true;
+      const summary=document.createElement('summary');
+      summary.textContent=mobileSummaryFor(el);
+      const content=document.createElement('div');
+      content.className='inhalt';
+      el.parentNode.insertBefore(details,el);
+      content.appendChild(el);
+      details.append(summary,content);
+    });
+  }
+  function syncMobileCollapsibles(){
+    const mobile=window.matchMedia('(max-width:760px)').matches;
+    const bottomCta=$('wzBottomCta');
+    if(mobile&&bottomCta&&!bottomCta.hidden)document.body.style.setProperty('--wz-bottom-cta-height',bottomCta.offsetHeight+'px');
+    prepareMobileExplanations();
+    document.querySelectorAll('details[data-mobile-collapsed]').forEach(details=>{
+      if(!mobile){details.open=true;delete details.dataset.mobileInitialized;return;}
+      if(!details.dataset.mobileInitialized){details.open=false;details.dataset.mobileInitialized='1';}
+    });
+    updateStepper();
+  }
+  function openFoerderHashTarget(){
+    if(window.location.hash!=='#foerder-80-hinweis')return;
+    history.replaceState(null,'',window.location.pathname+window.location.search);
+    if(document.body.classList.contains('wz-customer')&&WZ.current!==2)goStep(2);
+    else if(!document.body.classList.contains('wz-customer')&&typeof switchTab==='function')switchTab('foerderung');
+    window.setTimeout(()=>{
+      const target=document.getElementById('foerder-80-hinweis');
+      if(!target)return;
+      const details=target.closest('details');
+      if(details)details.open=true;
+      target.focus({preventScroll:true});
+      target.scrollIntoView({behavior:'smooth',block:'center'});
+    },60);
+  }
+  window.addEventListener('resize',syncMobileCollapsibles);
+  window.addEventListener('hashchange',openFoerderHashTarget);
   function clearStepBody(){
     const body=$('wzStepBody'),store=$('wzHiddenStore');
     Array.from(body.children).forEach(ch=>{if(ch.dataset&&ch.dataset.wzReusable)store.appendChild(ch);else ch.remove();});
@@ -1145,11 +1394,13 @@ kvLoadBootstrap();
     WZ.current=i;WZ.maxVisited=Math.max(WZ.maxVisited,i);
     clearStepBody();
     document.body.classList.toggle('wz-mobile-cta',i>=1&&i<4);
+    document.body.classList.toggle('wz-result-step',i===4);
     if(i===0)renderStep1();
     if(i===1)renderStep2();
     if(i===2)renderStep3();
     if(i===3)renderStep4();
     if(i===4)renderStep5();
+    syncMobileCollapsibles();
     $('wzBack').disabled=i===0;
     $('wzNext').textContent=i===3?'Ergebnis berechnen':'Weiter';
     $('wzNext').style.display=i===4?'none':'';
@@ -1161,10 +1412,10 @@ kvLoadBootstrap();
   function step1Valid(){return !!WZ.step1.heizart&&!!WZ.step1.bedarf;}
 
   // N2-Schaetzkonstanten, belegt aus herowerk-website apps-script/rechner-backend/Code.gs (Dimensionierungsrechner)
-  function wzOpt(grp,val,title,sub){return `<button type="button" class="wz-optcard" data-wz-grp="${grp}" data-wz-val="${val}"><span><span class="wz-opt-title">${title}</span>${sub?`<span class="wz-opt-sub">${sub}</span>`:''}</span><span class="wz-opt-check">✓</span></button>`;}
+  function wzOpt(grp,val,title,sub){return `<button type="button" class="wz-optcard wahlkarte" data-wz-grp="${grp}" data-wz-val="${val}"><span><span class="wz-opt-title">${title}</span>${sub?`<span class="wz-opt-sub">${sub}</span>`:''}</span><span class="wz-opt-check">✓</span></button>`;}
   function renderStep1(){
-    addStatic(`<p class="wz-intro">Drei Angaben zu Ihrer heutigen Heizung genügen. Alles Weitere belegen wir mit marktüblichen Richtwerten vor, die Sie jederzeit anpassen können.</p>
-      <div class="selg"><label>Heizungsart bisher</label><div class="wz-choice-grid"><button type="button" class="wz-choice" data-wz-heizart="gas" aria-label="Gas">Gas</button><button type="button" class="wz-choice" data-wz-heizart="oel" aria-label="Öl">Öl</button></div></div>
+    addStatic(`<h2 class="wz-mobile-step-title">Womit heizen Sie heute?</h2><p class="wz-mobile-step-lead">Wählen Sie Gas oder Öl; danach fragen wir nur die Angaben ab, die für Ihren Vergleich nötig sind.</p><p class="wz-intro wz-step-desktop-intro">Drei Angaben zu Ihrer heutigen Heizung genügen. Alles Weitere belegen wir mit marktüblichen Richtwerten vor, die Sie jederzeit anpassen können.</p>
+      <div class="selg"><label>Heizungsart bisher</label><div class="wz-choice-grid"><button type="button" class="wz-choice wahlkarte" data-wz-heizart="gas" aria-label="Gas">Gas</button><button type="button" class="wz-choice wahlkarte" data-wz-heizart="oel" aria-label="Öl">Öl</button></div></div>
       <div id="wzSecVerbrauch" class="wz-hidden">
       <div class="selg"><label>Kennen Sie Ihren Jahresverbrauch?</label>
         <div class="wz-optgrid">
@@ -1176,8 +1427,8 @@ kvLoadBootstrap();
         <div class="sg"><label>Jahresverbrauch <span class="v" id="wzVerbVal"></span></label>
           <input type="range" id="wzVerbSlider" min="5000" max="80000" step="500" value="20000" aria-label="Jahresverbrauch">
           <div class="wz-minmax"><span id="wzVMin">5.000 kWh</span><span id="wzVMax">80.000 kWh</span></div>
-          <div class="wz-opt-sub" id="wzVHinweis" style="margin-top:6px">Steht auf Ihrer letzten Jahresabrechnung.</div>
-          <div class="wz-opt-sub" id="wzVerbLive" style="margin-top:6px"></div></div>
+          <div class="wz-opt-sub" id="wzVHinweis" data-mobile-summary="Wo finde ich meinen Verbrauch?" style="margin-top:6px">Steht auf Ihrer letzten Jahresabrechnung.</div>
+          <div class="wz-opt-sub" id="wzVerbLive" data-mobile-summary="So wird Ihr Verbrauch umgerechnet" style="margin-top:6px"></div></div>
       </div>
       <div id="wzVUnknown" class="wz-help">
         <div class="selg"><label>Was für ein Gebäude haben Sie?</label><div class="wz-optgrid cols">
@@ -1306,6 +1557,7 @@ kvLoadBootstrap();
     show('wzSecKessel',bonusOk);
     const eg=$('wzEtaGroup');
     if(eg&&!isBerater())eg.classList.toggle('wz-hidden',!(bonusOk&&!!s.rohr));
+    window.requestAnimationFrame(syncMobileCollapsibles);
   }
   function hydrateStep1(){
     qa($('wzStepBody'),'[data-wz-heizart]').forEach(b=>{b.classList.toggle('is-selected',b.dataset.wzHeizart===WZ.step1.heizart);b.addEventListener('click',()=>{WZ.step1.heizart=b.dataset.wzHeizart;setControl('heizart',WZ.step1.heizart,['change']);touch('heizart');wzAutoUnit();wzApplyEtaDefault();hydrateStep1();updateNavState();});});
@@ -1360,17 +1612,18 @@ kvLoadBootstrap();
     updateStep1Reveal();
   }
   function renderStep2(){
-    addStatic(`<p class="wz-intro">Die ehrliche Vergleichsfrage lautet: neue Gas- oder Ölheizung oder neue Wärmepumpe? Beides kostet Anschaffung und Einbau. Prüfen Sie die Richtwerte und passen Sie Ihr Wärmepumpen-Angebot an, falls Ihnen schon eines vorliegt.</p>`);
+    addStatic(`<h2 class="wz-mobile-step-title">Was möchten Sie vergleichen?</h2><p class="wz-mobile-step-lead">Prüfen Sie die Richtwerte für Wärmepumpe und neue Gas- oder Ölheizung.</p><p class="wz-intro wz-step-desktop-intro">Die ehrliche Vergleichsfrage lautet: neue Gas- oder Ölheizung oder neue Wärmepumpe? Beides kostet Anschaffung und Einbau. Prüfen Sie die Richtwerte und passen Sie Ihr Wärmepumpen-Angebot an, falls Ihnen schon eines vorliegt.</p>`);
     place($('wzWpCard'));place($('wzCompareCard'));
   }
   function renderStep3(){
-    addStatic(`<p class="wz-intro">Ihre Förderung nach der BEG-Reform. Die Grundförderung bekommt jeder Heizungstausch, die Boni hängen von Ihren Angaben ab.</p>`);
+    addStatic(`<h2 class="wz-mobile-step-title">Wann möchten Sie den Antrag stellen?</h2><p class="wz-mobile-step-lead">Die Treppe zeigt den Zuschuss je Zeitraum.</p><p class="wz-intro wz-step-desktop-intro">Ihre Förderung nach der BEG-Reform. Die Grundförderung bekommt jeder Heizungstausch, die Boni hängen von Ihren Angaben ab.</p>`);
     place($('tab-foerderung'));
     renderFoerderAufbau();
   }
   function renderStep4(){
-    addStatic(`<p class="wz-intro">Die wenigsten zahlen eine neue Heizung bar, egal ob Wärmepumpe oder Gaskessel. Legen Sie hier optional Laufzeit und Zins fest, dann vergleicht das Ergebnis beide Wege fair als monatliche Rate plus Betriebskosten.</p>`);
+    addStatic(`<h2 class="wz-mobile-step-title">Wie möchten Sie finanzieren?</h2><p class="wz-mobile-step-lead">Aktivieren Sie den Kredit nur, wenn Sie Wärmepumpe und Vergleichsheizung finanziert sehen möchten.</p><p class="wz-intro wz-step-desktop-intro">Die wenigsten zahlen eine neue Heizung bar, egal ob Wärmepumpe oder Gaskessel. Legen Sie hier optional Laufzeit und Zins fest, dann vergleicht das Ergebnis beide Wege fair als monatliche Rate plus Betriebskosten.</p>`);
     place($('tab-finanzierung'));
+    $('finanzTog').addEventListener('change',()=>window.requestAnimationFrame(syncMobileCollapsibles),{once:true});
   }
   function renderStep5(){
     buildCustomerResultsLayout();
@@ -1420,7 +1673,7 @@ kvLoadBootstrap();
   }
   function prepareIncomeDiscreet(){
     const block=$('wzIncomeBlock');if(!block||$('wzIncomeDiscreet'))return;
-    const d=document.createElement('div');d.id='wzIncomeDiscreet';d.className='ib';
+    const d=document.createElement('div');d.id='wzIncomeDiscreet';d.className='ib';d.dataset.mobileSummary='Wie behandeln wir Ihre Einkommensangabe?';
     d.innerHTML=`<p class="d">Transparenz: Ihre Angaben werden verschlüsselt an unseren Rechner übertragen und nur für diese Berechnung verwendet. Sie werden nicht als Lead gespeichert.</p><p class="d" style="margin-top:8px">Je nach zu versteuerndem Haushaltseinkommen sind bis zu 40 Prozentpunkte zusätzliche Förderung möglich.</p><a class="wz-link-btn" style="display:inline-block;margin-top:12px;text-decoration:none" href="${CTA_URL}">Diskret im persönlichen Gespräch besprechen</a>`;
     block.appendChild(d);
   }
@@ -1460,8 +1713,9 @@ kvLoadBootstrap();
     const level2=document.createElement('div');level2.id='wzLevel2';
     const action=document.createElement('div');action.id='wzResultCta';action.className='wz-result-cta';
     action.innerHTML=`<div class="wz-cta">${ctaHtml(true)}</div><button type="button" class="wz-link-btn" id="wzEditInputs">Angaben ändern</button>`;
-    const details=document.createElement('details');details.id='wzDetails';details.className='wz-details';
-    details.innerHTML=`<summary>Alle Details, Diagramme und Annahmen</summary><div id="wzDetailsInner"></div>`;
+    const details=document.createElement('details');details.id='wzDetails';details.className='wz-details klapp';
+    details.dataset.mobileCollapsed='';
+    details.innerHTML=`<summary>Alle Details, Diagramme und Annahmen</summary><div class="inhalt" id="wzDetailsInner"></div>`;
     details.open=true;
     (lead||results.firstChild).after(hero,level2,action,details);
     [drei,mainChart,cash,kpi].forEach(n=>n&&level2.appendChild(n));
@@ -1478,13 +1732,13 @@ kvLoadBootstrap();
     let rechnung='';
     if(d.aktiv){
       const fossil=d[s.vglFuel];
-      rechnung=`<div class="wz-herocalc"><div class="wz-hc-title">So kommen wir auf diese Zahl:</div>
+      rechnung=`<div class="wz-herocalc" data-mobile-summary="So entsteht Ihr Ergebnis"><div class="wz-hc-title">So kommen wir auf diese Zahl:</div>
         <div class="ln"><span class="lbl">Gesamtkosten für eine neue ${fuel}heizung mit Betriebskosten (Wartung + ${fuel}) über ${lz} Jahre</span><span class="vv">${eur(fossil.gesamt)}</span></div>
         <div class="ln"><span class="lbl">Gesamtkosten für eine neue Wärmepumpe mit Betriebskosten (Wartung + Strom) über ${lz} Jahre, nach Abzug der Förderung</span><span class="vv">−${eur(d.wp.gesamt)}</span></div>
         <div class="ln wz-hc-sum"><span class="lbl"><strong>Ihr Vorteil mit der Wärmepumpe</strong></span><span class="vv">siehe Ergebnis oben</span></div></div>`;
     } else {
       const weiter=e.wpNG+i.netto+e.totWPK;
-      rechnung=`<div class="wz-herocalc"><div class="wz-hc-title">So kommen wir auf diese Zahl (Vergleich: Sie behalten Ihre ${fuel}heizung):</div>
+      rechnung=`<div class="wz-herocalc" data-mobile-summary="So entsteht Ihr Ergebnis"><div class="wz-hc-title">So kommen wir auf diese Zahl (Vergleich: Sie behalten Ihre ${fuel}heizung):</div>
         <div class="ln"><span class="lbl">Was der Weiterbetrieb Ihrer ${fuel}heizung kostet: ${fuel}, Wartung und CO₂-Preis über ${lz} Jahre</span><span class="vv">${eur(weiter)}</span></div>
         <div class="ln"><span class="lbl">Was die Wärmepumpe stattdessen kostet: Strom und Wartung über ${lz} Jahre</span><span class="vv">−${eur(e.totWPK)}</span></div>
         <div class="ln"><span class="lbl">Anschaffung der Wärmepumpe, nach Abzug der Förderung</span><span class="vv">−${eur(i.netto)}</span></div>
@@ -1500,6 +1754,7 @@ kvLoadBootstrap();
 
   window.WZ_AFTER_KV_RENDER=response=>{
     renderLiveFoerder();renderFoerderAufbau();updateEtaLive();updateHero(response);
+    window.requestAnimationFrame(syncMobileCollapsibles);
     if(WZ.current===4&&!WZ.resultTracked){
       gtag('event','wz_ergebnis_erreicht',{
         quote_ohne_einkommen:response.foerder.quoteOhneEinkommen,

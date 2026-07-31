@@ -191,6 +191,96 @@ async function chart2Labels(page) {
   );
 }
 
+async function expectOneMobileYearDeck(page) {
+  const counts = await page.evaluate(() => {
+    const sichtbar = (element) => window.getComputedStyle(element).display !== 'none';
+    const chartIds = ['cMainDaten', 'cBreakDaten', 'cHeatDaten'];
+    return {
+      chartDetails: chartIds.map((id) => document.querySelectorAll(`#${id} details`).length),
+      chartMobileDetails: chartIds.map(
+        (id) => document.querySelectorAll(`#${id} details.mobile-year-details`).length
+      ),
+      mobileYearDetailDecks: document.querySelectorAll('details.mobile-year-details').length,
+      mobileYearContainers: document.querySelectorAll('div.mobile-year-details').length,
+      mainRows: document.querySelectorAll('#cMainDaten .year-bar-row').length,
+      breakCards: document.querySelectorAll('#cBreakDaten .mobile-year-card').length,
+      heatCards: document.querySelectorAll('#cHeatDaten .mobile-year-card').length,
+      mobileSummaries: chartIds.map((id) => {
+        const summary = document.querySelector(`#${id} .chart-daten-details summary`);
+        const desktop = summary && summary.querySelector('.chart-summary-desktop');
+        const mobile = summary && summary.querySelector('.chart-summary-mobile');
+        return {
+          desktopText: desktop ? desktop.textContent.trim() : '',
+          mobileText: mobile ? mobile.textContent.trim() : '',
+          desktopVisible: desktop ? sichtbar(desktop) : null,
+          mobileVisible: mobile ? sichtbar(mobile) : null,
+        };
+      }),
+    };
+  });
+  expect(counts.chartDetails).toEqual([1, 1, 1]);
+  expect(counts.chartMobileDetails).toEqual([0, 0, 0]);
+  expect(counts.mobileYearDetailDecks).toBe(1);
+  expect(counts.mobileYearContainers).toBe(4);
+  expect(counts.mainRows).toBe(20);
+  expect(counts.breakCards).toBe(20);
+  expect(counts.heatCards).toBe(20);
+  expect(counts.mobileSummaries).toEqual([
+    {
+      desktopText: 'Kumulative Ersparnis als Tabelle anzeigen',
+      mobileText: 'Alle 20 Jahre im Detail',
+      desktopVisible: false,
+      mobileVisible: true,
+    },
+    {
+      desktopText: 'Jährliche Ersparnis nach Bestandteilen als Tabelle anzeigen',
+      mobileText: 'Alle 20 Jahre im Detail',
+      desktopVisible: false,
+      mobileVisible: true,
+    },
+    {
+      desktopText: 'Heizkosten pro Jahr als Tabelle anzeigen',
+      mobileText: 'Alle 20 Jahre im Detail',
+      desktopVisible: false,
+      mobileVisible: true,
+    },
+  ]);
+}
+
+async function expectNoMobileChartOverflow(page) {
+  const overflow = await page.evaluate(() => {
+    const details = /** @type {NodeListOf<HTMLDetailsElement>} */ (
+      document.querySelectorAll('#results details')
+    );
+    details.forEach((element) => {
+      element.open = true;
+    });
+    const sichtbar = (element) => {
+      const b = element.getBoundingClientRect();
+      const cs = window.getComputedStyle(element);
+      return b.width > 0 && b.height > 0 && cs.visibility !== 'hidden' && cs.display !== 'none';
+    };
+    return {
+      documentOverflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      elementOverflow: [...document.querySelectorAll('#results *')]
+        .filter(sichtbar)
+        .map((element) => {
+          const b = element.getBoundingClientRect();
+          return {
+            tag: element.tagName.toLowerCase(),
+            id: element.id,
+            className: typeof element.className === 'string' ? element.className : '',
+            left: b.left,
+            right: b.right,
+          };
+        })
+        .filter((element) => element.left < -1 || element.right > window.innerWidth + 1),
+    };
+  });
+  expect(overflow.documentOverflow).toBe(0);
+  expect(overflow.elementOverflow).toEqual([]);
+}
+
 test('O3 Contract: Source, Bootstrap und serverseitige Periodeneigenschaft', async () => {
   const source = fs.readFileSync(
     path.resolve(__dirname, '..', 'kostenvergleich-waermepumpe.html'),
@@ -247,7 +337,7 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
   const dark = collectErrors(page);
 
   await page.setViewportSize({ width: 375, height: 812 });
-  await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?modus=berater&theme=dark`, {
+  await page.goto(`${baseURL}/docs/intern/kostenvergleich-berater.html?theme=dark`, {
     waitUntil: 'domcontentloaded',
   });
   await acceptConsent(page);
@@ -269,9 +359,12 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
   await expect(page.locator('#kpiGrid')).toContainText('Jahr 6');
   await expect(page.locator('#pathSummary')).toContainText('45.389 €');
   await expect(page.locator('#dreiWegeBox')).toContainText('45.389 €');
+  await expect(page.locator('#dreiWegeBox .mobile-kv-list')).toBeVisible();
+  await expectOneMobileYearDeck(page);
+  await expectNoMobileChartOverflow(page);
   await expect(
-    page.getByRole('region', { name: 'Drei-Wege-Kostenvergleich, horizontal scrollbar' })
-  ).toBeVisible();
+    page.getByRole('region', { name: /horizontal scrollbar|waagerecht rollbar/ })
+  ).toHaveCount(0);
   await expect(page.locator('#sensiBox')).toContainText('45.389 €');
   expect(await page.evaluate(() => Math.round(KV_STATE.last.ergebnis.wpNG))).toBe(45389);
   expect(await page.locator('#kpiGrid .ml').allTextContents()).toEqual([
@@ -438,6 +531,28 @@ test('O3 Kunde Light 375: lokaler Consent, Alt-/EU-Text, fünf Förderanker und 
   await acceptConsent(page);
   await page.evaluate(() => gtag('consent', 'update', { analytics_storage: 'granted' }));
   await page.waitForFunction(() => typeof KV_STATE !== 'undefined' && KV_STATE.last);
+  await expectOneMobileYearDeck(page);
+  await expectNoMobileChartOverflow(page);
+  await page.evaluate(() => document.body.classList.add('kv-busy'));
+  const busyProof = await page.evaluate(() => {
+    const answer = document.querySelector('#cMainDaten .mobile-year-answer');
+    const row = document.querySelector('#cMainDaten .year-bar-row');
+    const answerStrong = answer && answer.querySelector('strong');
+    const rowValue = row && row.querySelector('.year-value');
+    return {
+      answerOpacity: answer ? window.getComputedStyle(answer).opacity : null,
+      rowOpacity: row ? window.getComputedStyle(row).opacity : null,
+      answerValueColor: answerStrong ? window.getComputedStyle(answerStrong).color : null,
+      rowValueColor: rowValue ? window.getComputedStyle(rowValue).color : null,
+    };
+  });
+  expect(busyProof).toEqual({
+    answerOpacity: '0.45',
+    rowOpacity: '0.45',
+    answerValueColor: 'rgba(0, 0, 0, 0)',
+    rowValueColor: 'rgba(0, 0, 0, 0)',
+  });
+  await page.evaluate(() => document.body.classList.remove('kv-busy'));
   expect(await page.evaluate(() => sessionStorage.getItem('hero_kv_sitzung'))).toMatch(
     /^[a-z0-9]+-[a-z0-9]+$/
   );
@@ -470,6 +585,33 @@ test('O3 Kunde Light 375: lokaler Consent, Alt-/EU-Text, fünf Förderanker und 
   await expect(page.locator('#fQuote a[href="#foerder-80-hinweis"]')).toHaveCount(1);
   await expect(page.locator('#wzLiveFoerder a[href="#foerder-80-hinweis"]')).toHaveCount(1);
   await expect(page.locator('a[href="#foerder-80-hinweis"]')).toHaveCount(5);
+  await page.locator('#fQuote a[href="#foerder-80-hinweis"]').click();
+  await expect.poll(() => new URL(page.url()).hash).toBe('');
+  await expect(
+    page.locator('#foerder-80-hinweis').locator('xpath=ancestor::details[1]')
+  ).toHaveAttribute('open', '');
+  const schrittfolge = [];
+  for (let index = 0; index < 4; index += 1) {
+    await page
+      .locator('#wzNext')
+      .evaluate((button) => /** @type {HTMLButtonElement} */ (button).click());
+    schrittfolge.push(await page.locator('#wzMobileStepper .wz-stepper-label').textContent());
+  }
+  await page
+    .locator('#wzBack')
+    .evaluate((button) => /** @type {HTMLButtonElement} */ (button).click());
+  schrittfolge.push(await page.locator('#wzMobileStepper .wz-stepper-label').textContent());
+  expect(schrittfolge).toEqual([
+    'Schritt 4 von 5',
+    'Schritt 5 von 5',
+    'Schritt 5 von 5',
+    'Schritt 5 von 5',
+    'Schritt 4 von 5',
+  ]);
+  await page
+    .locator('#wzBack')
+    .evaluate((button) => /** @type {HTMLButtonElement} */ (button).click());
+  await expect(page.locator('#wzMobileStepper .wz-stepper-label')).toHaveText('Schritt 3 von 5');
 
   await nextWizardStep(page);
   await nextWizardStep(page);
@@ -609,7 +751,7 @@ test('O4 Writer: jeder Anfrage-CTA schreibt ausschließlich das v1-Contract-Sche
   );
   async function expectWriterPayload(cta) {
     await page.evaluate(() => sessionStorage.removeItem('hero_kv_lead'));
-    await cta.click({ force: true });
+    await cta.evaluate((link) => /** @type {HTMLAnchorElement} */ (link).click());
     const payload = await page.evaluate(() => JSON.parse(sessionStorage.getItem('hero_kv_lead')));
     expect(Object.keys(payload).sort()).toEqual([
       'ergebnis',
@@ -668,6 +810,12 @@ test('O4 Writer: jeder Anfrage-CTA schreibt ausschließlich das v1-Contract-Sche
   await expectWriterPayload(page.locator('#wzBottomCta a[href="/anfrage.html"]'));
 
   await nextWizardStep(page);
+  await page
+    .locator('#wzIncomeDiscreet')
+    .locator('xpath=ancestor::details[1]')
+    .evaluate((details) => {
+      /** @type {HTMLDetailsElement} */ (details).open = true;
+    });
   await expectWriterPayload(page.locator('#wzIncomeDiscreet a[href="/anfrage.html"]'));
 
   await nextWizardStep(page);
