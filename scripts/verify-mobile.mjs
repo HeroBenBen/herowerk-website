@@ -28,10 +28,13 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
 
 const hier = path.dirname(fileURLToPath(import.meta.url));
 const wurzel = path.resolve(process.env.MOBILE_ROOT || path.join(hier, '..'));
 const nurBericht = process.argv.includes('--nur-bericht');
+const require = createRequire(import.meta.url);
+const engine = require(path.join(wurzel, 'apps-script/rechner-backend/kv_engine.gs'));
 
 const BREITEN = [320, 360, 390, 414];
 const MODI = ['dark', 'light'];
@@ -58,6 +61,7 @@ const KERNSEITEN = [
   '/foerderung-hannover.html',
   '/waermepumpe-hannover.html',
   '/waermepumpe-laerm.html',
+  '/kostenvergleich-waermepumpe.html',
 ];
 
 // ── Statischer Server auf dem Arbeitsstand ──────────────────────────────────
@@ -109,6 +113,7 @@ async function starteServer() {
 
 // ── Befund-Sammlung ─────────────────────────────────────────────────────────
 const befunde = [];
+const rechnerMessungen = [];
 const abdeckung = { punkte: new Map(), laeufe: 0 };
 function melde(punkt, seite, breite, modus, text) {
   befunde.push({ punkt, seite, breite, modus, text });
@@ -140,6 +145,324 @@ async function menueOeffnen(page) {
   return treffer;
 }
 
+function bool(value, fallback) {
+  if (value === null) return fallback;
+  return ['1', 'true', 'ja'].includes(String(value).toLowerCase());
+}
+
+function mapRechnerInputs(query) {
+  const out = { ...engine.KV_DEFAULTS };
+  Object.keys(out).forEach((key) => {
+    if (key === 'proklimaTog' || !query.has(key)) return;
+    const current = out[key];
+    if (typeof current === 'boolean') out[key] = bool(query.get(key), current);
+    else if (typeof current === 'number') out[key] = Number(query.get(key));
+    else out[key] = query.get(key);
+  });
+  out.proklimaTog = false;
+  if (!engine.KV_PARAMS_SEED.perioden[out.fHalbjahr]) out.fHalbjahr = 'h2-2026';
+  if (query.get('bedarfModus') === 'schaetzung') {
+    out.bedarf = engine.kvSchaetzeBedarf(
+      query.get('geb'),
+      query.get('bj'),
+      query.get('san'),
+      Number(query.get('flaeche')),
+      engine.KV_PARAMS_SEED
+    );
+  }
+  return out;
+}
+
+async function installRechnerApi(page) {
+  await page.route('**/api/rechner**', async (route) => {
+    const url = new URL(route.request().url());
+    const action = url.searchParams.get('action');
+    let payload;
+    let status = 200;
+    if (action === 'kv_bootstrap') {
+      payload = engine.kvBootstrapPayload(engine.KV_PARAMS_SEED);
+      payload.aktivePeriode = 'alt';
+    } else if (action === 'kostenvergleich') {
+      payload = engine.kvCalculate(mapRechnerInputs(url.searchParams), engine.KV_PARAMS_SEED);
+    } else if (action === 'preise') {
+      payload = { wolf: [], vaillant: [] };
+    } else {
+      status = 400;
+      payload = { error: true, message: 'unknown_action' };
+    }
+    await route.fulfill({
+      status,
+      contentType: 'application/json; charset=utf-8',
+      body: JSON.stringify(payload),
+    });
+  });
+}
+
+async function messeRechnerSchritte(page, seite, breite, modus) {
+  await page.waitForFunction(() => typeof KV_STATE !== 'undefined' && KV_STATE.last, null, {
+    timeout: 10000,
+  });
+  const messen = async (schritt) => {
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.waitForTimeout(120);
+    return page.evaluate((nr) => {
+      const TOLERANZ = 1;
+      const sichtbar = (el) => {
+        const b = el.getBoundingClientRect();
+        const cs = getComputedStyle(el);
+        const flaechenlos =
+          /inset\(\s*50%/.test(cs.clipPath || '') ||
+          /^rect\(0(px)?,?\s*0(px)?,?\s*0(px)?,?\s*0(px)?\)$/.test(
+            (cs.clip || '').replace(/\s+/g, ' ')
+          );
+        return (
+          b.width > 0 &&
+          b.height > 0 &&
+          cs.visibility !== 'hidden' &&
+          cs.display !== 'none' &&
+          !el.hasAttribute('hidden') &&
+          !flaechenlos
+        );
+      };
+      const bottomCta = document.querySelector('#wzBottomCta');
+      const ctaBox = bottomCta && sichtbar(bottomCta) ? bottomCta.getBoundingClientRect() : null;
+      const sichtUnterkante = ctaBox
+        ? Math.min(window.innerHeight, ctaBox.top)
+        : window.innerHeight;
+      const ziel =
+        nr === 5
+          ? document.querySelector('#wzHero .wz-big')
+          : [
+              ...document.querySelectorAll(
+                '#wzStepBody button.wz-choice,#wzStepBody .wz-optcard,#wzStepBody label.tog,#wzStepBody input:not([type=hidden]),#wzStepBody select,#wzStepBody textarea'
+              ),
+            ].find(sichtbar);
+      const next = document.querySelector('#wzNext');
+      const zb = ziel ? ziel.getBoundingClientRect() : null;
+      const nb = next && sichtbar(next) ? next.getBoundingClientRect() : null;
+      const elementUeberlauf = [...document.querySelectorAll('body *')]
+        .filter(sichtbar)
+        .map((el) => {
+          const b = el.getBoundingClientRect();
+          return {
+            wahl:
+              el.tagName.toLowerCase() +
+              (el.id ? '#' + el.id : '') +
+              (typeof el.className === 'string' && el.className.trim()
+                ? '.' + el.className.trim().split(/\s+/).slice(0, 3).join('.')
+                : ''),
+            links: +b.left.toFixed(2),
+            rechts: +b.right.toFixed(2),
+            breite: +b.width.toFixed(2),
+          };
+        })
+        .filter((el) => {
+          // Gemessene Ausnahme: Die Sprungmarke ist unsichtbar, 1 x 1 px
+          // gross und liegt bauartbedingt bei left -1 px.
+          if (
+            el.wahl.startsWith('a.skip-link') &&
+            el.links >= -1.1 &&
+            el.links < 0 &&
+            el.breite <= 1.1
+          )
+            return false;
+          return el.rechts > window.innerWidth + TOLERANZ || el.links < -TOLERANZ;
+        });
+      const details = [...document.querySelectorAll('#wzStepBody details')];
+      const detailsZustand = details.map((element) => element.open);
+      details.forEach((element) => {
+        element.open = true;
+      });
+      const langeTextbloecke = [
+        ...document.querySelectorAll(
+          '#wzStepBody .ib,#wzStepBody .wz-opt-sub,#wzStepBody .wz-herocalc,#wzStepBody .tl small,#wzStepBody p'
+        ),
+      ].filter((element) => {
+        const b = element.getBoundingClientRect();
+        const cs = getComputedStyle(element);
+        const lineHeight = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.4;
+        return (
+          b.width > 0 &&
+          b.height > 0 &&
+          cs.visibility !== 'hidden' &&
+          cs.display !== 'none' &&
+          b.height / lineHeight > 3.05
+        );
+      });
+      const textbloecke = {
+        gesamt: langeTextbloecke.length,
+        zuklappbar: langeTextbloecke.filter((element) => element.closest('details')).length,
+      };
+      details.forEach((element, index) => {
+        element.open = detailsZustand[index];
+      });
+      return {
+        schritt: nr,
+        ziel: nr === 5 ? 'erste Ergebniszahl' : 'erste Bedienstelle',
+        top: zb ? Math.round(zb.top + window.scrollY) : null,
+        sichtUnterkante: Math.round(sichtUnterkante),
+        sichtbar: zb ? zb.bottom <= sichtUnterkante && zb.right <= window.innerWidth : false,
+        weiterSichtbar: nb
+          ? nb.bottom <= sichtUnterkante && nb.right <= window.innerWidth
+          : nr === 5,
+        elementUeberlauf,
+        textbloecke,
+      };
+    }, schritt);
+  };
+
+  const erfassen = async (schritt) => {
+    const messung = await messen(schritt);
+    const { elementUeberlauf, ...bericht } = messung;
+    rechnerMessungen.push({ seite, breite, modus, ...bericht });
+    zaehle(3, 1);
+    for (const el of elementUeberlauf) {
+      melde(
+        3,
+        seite,
+        breite,
+        modus,
+        `Schritt ${schritt}: Element ueber Fensterkante: ${el.wahl} links ${el.links}, rechts ${el.rechts}, Breite ${el.breite}`
+      );
+    }
+  };
+
+  await page.locator('[data-wz-heizart="gas"]').click();
+  await page.locator('[data-wz-grp="vmode"][data-wz-val="known"]').click();
+  await page.locator('[data-wz-grp="altgas"][data-wz-val="ja"]').click();
+  await page.locator('[data-wz-grp="rohr"][data-wz-val="metall"]').click();
+  await page.locator('[data-wz-grp="kbj"][data-wz-val="1990-2010"]').click();
+  await erfassen(1);
+  await page.locator('#wzNext').click();
+  await erfassen(2);
+  await page.locator('#wzNext').click();
+  await erfassen(3);
+  await page.locator('#wzNext').click();
+  await page.evaluate(() => {
+    const finanzierung = document.querySelector('#finanzTog');
+    finanzierung.checked = true;
+    finanzierung.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+  await page.waitForTimeout(150);
+  await erfassen(4);
+  await page.locator('#wzNext').click();
+  await page.waitForFunction(() => document.querySelector('#wzHero .wz-big'));
+  await erfassen(5);
+}
+
+async function pruefeRechnerJahrestabellen(page, seite, breite, modus) {
+  await page.waitForFunction(
+    () =>
+      document.querySelector('#cMainDaten details.chart-daten-details') &&
+      document.querySelector('#detMobile details.mobile-year-details'),
+    null,
+    { timeout: 10000 }
+  );
+  const messung = await page.evaluate(() => {
+    const ids = ['cMainDaten', 'cBreakDaten', 'cHeatDaten'];
+    const sichtbar = (element) => {
+      const b = element.getBoundingClientRect();
+      const cs = getComputedStyle(element);
+      return b.width > 0 && b.height > 0 && cs.visibility !== 'hidden' && cs.display !== 'none';
+    };
+    document.querySelectorAll('#results details').forEach((element) => {
+      element.open = true;
+    });
+    return {
+      chartDetails: ids.map((id) => document.querySelectorAll(`#${id} details`).length),
+      chartMobileDetails: ids.map(
+        (id) => document.querySelectorAll(`#${id} details.mobile-year-details`).length
+      ),
+      detailDecks: document.querySelectorAll('details.mobile-year-details').length,
+      mobileContainer: document.querySelectorAll('div.mobile-year-details').length,
+      mainRows: document.querySelectorAll('#cMainDaten .year-bar-row').length,
+      breakCards: document.querySelectorAll('#cBreakDaten .mobile-year-card').length,
+      heatCards: document.querySelectorAll('#cHeatDaten .mobile-year-card').length,
+      summaryTexte: ids.map((id) => {
+        const summary = document.querySelector(`#${id} .chart-daten-details summary`);
+        const mobile = summary && summary.querySelector('.chart-summary-mobile');
+        return mobile ? mobile.textContent.trim() : '';
+      }),
+      dokumentUeberlauf:
+        document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      elementUeberlauf: [...document.querySelectorAll('#results *')]
+        .filter(sichtbar)
+        .map((element) => {
+          const b = element.getBoundingClientRect();
+          return {
+            wahl:
+              element.tagName.toLowerCase() +
+              (element.id ? '#' + element.id : '') +
+              (typeof element.className === 'string' && element.className.trim()
+                ? '.' + element.className.trim().split(/\s+/).slice(0, 3).join('.')
+                : ''),
+            links: +b.left.toFixed(2),
+            rechts: +b.right.toFixed(2),
+            breite: +b.width.toFixed(2),
+          };
+        })
+        .filter((element) => element.links < -1 || element.rechts > window.innerWidth + 1),
+    };
+  });
+  zaehle(3, 1);
+  if (messung.chartDetails.some((wert) => wert !== 1))
+    melde(
+      3,
+      seite,
+      breite,
+      modus,
+      `Diagramm-Jahrestabellen haben nicht genau einen Deckel: ${messung.chartDetails.join(', ')}`
+    );
+  if (messung.chartMobileDetails.some((wert) => wert !== 0))
+    melde(
+      3,
+      seite,
+      breite,
+      modus,
+      `Innerer mobile-year-details-Deckel in Diagramm-Tabelle gefunden: ${messung.chartMobileDetails.join(', ')}`
+    );
+  if (messung.detailDecks !== 1 || messung.mobileContainer !== 4)
+    melde(
+      3,
+      seite,
+      breite,
+      modus,
+      `mobile-year-details Zaehler falsch: details ${messung.detailDecks}, div ${messung.mobileContainer}`
+    );
+  if (messung.mainRows !== 20 || messung.breakCards !== 20 || messung.heatCards !== 20)
+    melde(
+      3,
+      seite,
+      breite,
+      modus,
+      `Jahreszeilen falsch: Balken ${messung.mainRows}, Karten ${messung.breakCards}/${messung.heatCards}`
+    );
+  if (messung.summaryTexte.some((text) => text !== 'Alle 20 Jahre im Detail'))
+    melde(
+      3,
+      seite,
+      breite,
+      modus,
+      `Mobile Summary abweichend: ${messung.summaryTexte.join(' | ')}`
+    );
+  if (messung.dokumentUeberlauf > TOL)
+    melde(
+      3,
+      seite,
+      breite,
+      modus,
+      `Geoeffnete Rechner-Details rollen waagerecht: ${messung.dokumentUeberlauf} px`
+    );
+  for (const element of messung.elementUeberlauf)
+    melde(
+      3,
+      seite,
+      breite,
+      modus,
+      `Geoeffnete Rechner-Details ueber Fensterkante: ${element.wahl} links ${element.links}, rechts ${element.rechts}, Breite ${element.breite}`
+    );
+}
+
 // ── Hauptlauf ───────────────────────────────────────────────────────────────
 const externeBasis = process.env.MOBILE_BASE_URL;
 const { server, basis } = externeBasis
@@ -156,6 +479,7 @@ for (const seite of KERNSEITEN) {
         isMobile: false,
       });
       const page = await ctx.newPage();
+      if (seite === '/kostenvergleich-waermepumpe.html') await installRechnerApi(page);
       const url = basis + (externeBasis ? seite.replace(/\.html$/, '') : seite);
       const antwort = await page.goto(url, { waitUntil: 'domcontentloaded' }).catch(() => null);
       if (!antwort || antwort.status() >= 400) {
@@ -188,6 +512,10 @@ for (const seite of KERNSEITEN) {
           modus,
           `Dokument rollt waagerecht: scrollWidth ${rollbreite.scroll} gegen clientWidth ${rollbreite.client}`
         );
+      }
+      if (seite === '/kostenvergleich-waermepumpe.html') {
+        await messeRechnerSchritte(page, seite, breite, modus);
+        await pruefeRechnerJahrestabellen(page, seite, breite, modus);
       }
 
       // Punkt 9: Eingabefelder mindestens 16 px, sonst zoomt iOS beim Antippen
@@ -234,7 +562,7 @@ for (const seite of KERNSEITEN) {
       await menueOeffnen(page);
       const klein = await page.evaluate((min) => {
         const sel =
-          'nav a, nav button, .mobile-menu a, .mobile-menu button, .mobile-bottom-bar a, .btn-primary, .btn-ghost, [aria-expanded], summary';
+          'nav a, nav button, .mobile-menu a, .mobile-menu button, .mobile-bottom-bar a, .btn-primary, .btn-ghost, .wz-nav button, [aria-expanded], summary';
         return [...document.querySelectorAll(sel)]
           .filter((e) => {
             const b = e.getBoundingClientRect();
@@ -512,6 +840,38 @@ if (befunde.length) {
   zeilen.push('Keine Befunde.');
 }
 zeilen.push('');
+if (rechnerMessungen.length) {
+  zeilen.push('## Rechner-Seite, Hoehe bis zur Bedienstelle');
+  zeilen.push('');
+  zeilen.push(
+    'Diese Messung berichtet nur. Akzeptanz ist die Sichtbarkeit im ersten Bildschirm, nicht ein harter Pixel-Abbruch.'
+  );
+  zeilen.push('');
+  zeilen.push(
+    '| Seite | Breite | Modus | Schritt | Ziel | Oberkante ab Dokumentanfang | Sichtbare Unterkante | Ziel sichtbar | Weiter sichtbar |'
+  );
+  zeilen.push('|---|---:|---|---:|---|---:|---:|---|---|');
+  for (const m of rechnerMessungen) {
+    zeilen.push(
+      `| ${m.seite} | ${m.breite} | ${m.modus} | ${m.schritt} | ${m.ziel} | ${m.top ?? 'nicht gefunden'} | ${m.sichtUnterkante} | ${m.sichtbar ? 'ja' : 'nein'} | ${m.weiterSichtbar ? 'ja' : 'nein'} |`
+    );
+  }
+  zeilen.push('');
+  zeilen.push('## Rechner-Seite, lange Textbloecke');
+  zeilen.push('');
+  zeilen.push(
+    'Gezählt werden dieselben erklärenden Blocktypen, die die mobile Aufklapp-Mechanik verarbeitet. Gemessen wird bei geöffneten Details, damit auch der zugeklappte Inhalt in die Gesamtzahl eingeht.'
+  );
+  zeilen.push('');
+  zeilen.push('| Breite | Modus | Schritt | Gesamt | Davon zuklappbar |');
+  zeilen.push('|---:|---|---:|---:|---:|');
+  for (const m of rechnerMessungen) {
+    zeilen.push(
+      `| ${m.breite} | ${m.modus} | ${m.schritt} | ${m.textbloecke.gesamt} | ${m.textbloecke.zuklappbar} |`
+    );
+  }
+  zeilen.push('');
+}
 zeilen.push('## Was dieser Lauf NICHT abdeckt');
 zeilen.push('');
 zeilen.push(
