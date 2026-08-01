@@ -415,6 +415,15 @@ nav.scrolled {
     border-bottom: 1px solid var(--color-border-subtle, #2d3a47);
     margin-bottom: 8px;
   }
+  /* Zweite Kopfzeile des Menüs: Bewegung. Beide Einstellungen sollen als EIN
+     Block gelesen werden, deshalb fällt die Trennlinie ZWISCHEN ihnen weg.
+     Achtung: .mm-kopf trägt eine border-bottom, keine border-top; ein
+     border-top: 0 wäre wirkungslos. Die Zeilen müssen zudem gleich hoch
+     bleiben, also kein zusätzlicher padding-top. */
+  .mobile-menu .mm-kopf:has(+ .mm-kopf-bewegung) {
+    border-bottom: 0;
+    margin-bottom: 0;
+  }
   .mobile-menu .mm-kopf-label {
     font-size: 14px;
     font-weight: 500;
@@ -653,46 +662,89 @@ nav.scrolled {
   opacity: 0.45;
   pointer-events: none;
 }
-/* Halteknopf fuer das Hintergrundvideo (WCAG 2.2.2 "Pausieren, Stoppen,
-   Ausblenden": bewegter Inhalt, der laenger als fuenf Sekunden laeuft und
-   automatisch startet, braucht eine sichtbare Bedienmoeglichkeit).
-   Trefferflaeche 44 x 44 px (WCAG 2.5.5). Der Knopf sitzt in der unteren
-   rechten Ecke des Hero-Bereichs, ausserhalb des Textblocks, und erscheint
-   nur, wenn das Skript laeuft: ohne Skript spielt das Video zwar, aber der
-   Knopf koennte es nicht anhalten. */
+/* Halteknopf des Hintergrundvideos (WCAG 2.2.2). GF-Entscheid 01.08.2026:
+   In der schmalen Ansicht steht er nicht mehr in der Fläche, dort trägt die
+   Zeile Bewegung im Klappmenü die Bedienung. Ab 961 Pixel gibt es keinen
+   Hamburger und kein Klappmenü, deshalb bleibt hier ein Bedienelement stehen,
+   aber als dezentes rundes Pause-Zeichen ohne Text.
+   Trefferfläche 44 x 44 Pixel (WCAG 2.5.5).
+   Fläche und Rahmen sind DECKEND und gegenläufig gefärbt: der Grund ist ein
+   laufendes Video, seine Helligkeit wechselt Bild für Bild. Ein durchscheinender
+   Knopf könnte deshalb keinen festen Kontrastwert halten. Die dunkle Fläche
+   trägt gegen helle Videobilder, der helle Saum gegen dunkle. */
 .hero-video-toggle {
-  position: absolute;
-  right: 16px;
-  bottom: 16px;
-  z-index: 3;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-width: 44px;
-  min-height: 44px;
-  padding: 0 14px;
-  box-sizing: border-box;
-  border: 1px solid var(--color-text-tertiary, #a0a6ad);
-  border-radius: 999px;
-  background: rgba(28, 43, 54, 0.82);
-  color: #ffffff;
-  font:
-    700 13px/1 'Inter',
-    sans-serif;
-  cursor: pointer;
+  display: none;
 }
 html:not(.js-an) .hero-video-toggle {
   display: none;
 }
-.hero-video-toggle:focus-visible {
-  outline: 3px solid var(--color-accent-primary, #b7d900);
-  outline-offset: 2px;
-}
-@media (max-width: 600px) {
+@media (min-width: 961px) {
   .hero-video-toggle {
-    right: 12px;
-    bottom: 12px;
+    position: absolute;
+    top: auto;
+    right: 16px;
+    bottom: 16px;
+    left: auto;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    padding: 0;
+    box-sizing: border-box;
+    border: 1.5px solid #ffffff;
+    border-radius: 999px;
+    background: #1c2b36;
+    cursor: pointer;
+  }
+  html:not(.js-an) .hero-video-toggle {
+    display: none;
+  }
+  /* Der Text wird versteckt, nicht entfernt: mit display:none fällt er aus dem
+     Baum, und die Fassung ohne aria-label hätte dann gar keinen Namen mehr. */
+  .hero-video-toggle #heroVideoToggleText {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  /* Pause: zwei gleich breite Balken mit gleich breiter Lücke, ganze Pixel. */
+  .hero-video-toggle::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 14px;
+    border-left: 4px solid #ffffff;
+    border-right: 4px solid #ffffff;
+  }
+  /* Steht das Video, zeigt der Knopf das Abspiel-Dreieck statt der Pause. */
+  .hero-video-toggle[aria-checked='false']::before {
+    width: 0;
+    height: 0;
+    border-left: 13px solid #ffffff;
+    border-right: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    margin-left: 3px;
+  }
+  .hero-video-toggle:focus-visible {
+    outline: 3px solid var(--color-accent-primary, #b7d900);
+    outline-offset: 2px;
+  }
+  [data-theme='light'] .hero-video-toggle {
+    background: #ffffff;
+    border-color: #1c2b36;
+  }
+  [data-theme='light'] .hero-video-toggle::before {
+    border-left-color: #1c2b36;
+    border-right-color: #1c2b36;
+  }
+  [data-theme='light'] .hero-video-toggle[aria-checked='false']::before {
+    border-left-color: #1c2b36;
   }
 }
 .hero-inner {

@@ -35,6 +35,13 @@ export function mapRechnerInputs(query) {
   return out;
 }
 
+export async function klemmeEinwilligungAb(page) {
+  const anbieterAbweisen = (route) => route.abort();
+  await page.route('https://cdn.consentmanager.net/**', anbieterAbweisen);
+  await page.route('**/consentmanager.net/**', anbieterAbweisen);
+  await page.route('**://*.consentmanager.net/**', anbieterAbweisen);
+}
+
 export async function installRechnerApi(page) {
   await page.route('**/api/rechner**', async (route) => {
     const url = new URL(route.request().url());

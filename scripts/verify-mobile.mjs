@@ -30,6 +30,7 @@ import path from 'node:path';
 import {
   engine,
   installRechnerApi,
+  klemmeEinwilligungAb,
   messeRechnerSchritte,
   pruefeRechnerJahrestabellen,
   wurzel,
@@ -244,6 +245,7 @@ for (const seite of KERNSEITEN) {
         isMobile: false,
       });
       const page = await ctx.newPage();
+      await klemmeEinwilligungAb(page);
       if (seite === '/kostenvergleich-waermepumpe.html') await installRechnerApi(page);
       const url = basis + (externeBasis ? seite.replace(/\.html$/, '') : seite);
       const antwort = await page.goto(url, { waitUntil: 'domcontentloaded' }).catch(() => null);
@@ -259,7 +261,6 @@ for (const seite of KERNSEITEN) {
         continue;
       }
       await page.waitForTimeout(700);
-      await page.evaluate(() => document.querySelector('#cmpbox')?.remove());
       await modusSetzen(page, modus);
       abdeckung.laeufe++;
 
@@ -410,25 +411,32 @@ for (const seite of KERNSEITEN) {
           );
       }
 
-      // Punkt 6: Hintergrundvideo mit Halteknopf, Wirkung geprueft
+      // Punkt 6: Hintergrundvideo mit Bewegungsschalter, Wirkung geprüft
       if (seite === '/index.html') {
         const video = await page.evaluate(async () => {
           const v = document.getElementById('heroVideo');
-          const k = document.getElementById('heroVideoToggle');
+          const k = document.querySelector('[data-motion-switch]');
           if (!v || !k) return { fehlt: true };
+          const b = k.getBoundingClientRect();
+          if (b.width <= 0 || b.height <= 0 || getComputedStyle(k).visibility === 'hidden') {
+            return { fehlt: false, ausgeblendet: true };
+          }
           const vorher = v.paused;
           k.click();
           await new Promise((f) => setTimeout(f, 300));
-          const b = k.getBoundingClientRect();
           return {
             fehlt: false,
+            ausgeblendet: false,
             vorher,
             nachher: v.paused,
             knopf: { w: +b.width.toFixed(2), h: +b.height.toFixed(2) },
           };
         });
         zaehle(6, 1);
-        if (video.fehlt) melde(6, seite, breite, modus, 'Hintergrundvideo oder Halteknopf fehlt');
+        if (video.fehlt)
+          melde(6, seite, breite, modus, 'Hintergrundvideo oder Bewegungsschalter fehlt');
+        else if (video.ausgeblendet)
+          melde(6, seite, breite, modus, 'Bewegungsschalter im Klappmenü ist ausgeblendet');
         else {
           if (video.vorher === video.nachher)
             melde(
@@ -436,10 +444,10 @@ for (const seite of KERNSEITEN) {
               seite,
               breite,
               modus,
-              'Halteknopf ohne Wirkung, Zustand blieb ' + video.vorher
+              'Bewegungsschalter ohne Wirkung, Zustand blieb ' + video.vorher
             );
           if (video.knopf.h + 0.5 < MIN_TREFFER)
-            melde(6, seite, breite, modus, 'Halteknopf nur ' + video.knopf.h + ' px hoch');
+            melde(6, seite, breite, modus, 'Bewegungsschalter nur ' + video.knopf.h + ' px hoch');
         }
       }
 
@@ -468,11 +476,11 @@ for (const breite of BREITEN) {
     deviceScaleFactor: 2,
   });
   const page = await ctx.newPage();
+  await klemmeEinwilligungAb(page);
   await page.goto(basis + (externeBasis ? '/anfrage' : '/anfrage.html'), {
     waitUntil: 'domcontentloaded',
   });
   await page.waitForTimeout(800);
-  await page.evaluate(() => document.querySelector('#cmpbox')?.remove());
   zaehle(1, 1);
 
   const lauf = await page.evaluate(async () => {
@@ -523,6 +531,7 @@ for (const seite of ['/index.html', '/preise.html']) {
     deviceScaleFactor: 2,
   });
   const page = await ctx.newPage();
+  await klemmeEinwilligungAb(page);
   await page.goto(basis + (externeBasis ? seite.replace(/\.html$/, '') : seite), {
     waitUntil: 'load',
   });

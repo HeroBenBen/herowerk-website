@@ -312,7 +312,8 @@ body {
    (WCAG 2.5.5). Rahmen text-tertiary, gemessen 5,91 dunkel und 6,01 hell,
    damit ueber der Norm 3,0 fuer Bedienelemente (WCAG 1.4.11).
    ═════════════════════════════════════════════════════════════════════════ */
-.theme-toggle[data-theme-switch] {
+.theme-toggle[data-theme-switch],
+.theme-toggle[data-motion-switch] {
   box-sizing: border-box;
   /* KEIN display hier. Die Basisregel .theme-toggle setzt bereits
      inline-flex, und css/site.css blendet den freistehenden Umschalter ueber
@@ -339,7 +340,8 @@ body {
   cursor: pointer;
   white-space: nowrap;
 }
-.theme-toggle[data-theme-switch] .tt-feld {
+.theme-toggle[data-theme-switch] .tt-feld,
+.theme-toggle[data-motion-switch] .tt-feld {
   /* Der Reset `* { box-sizing: border-box }` steht in css/site.css, und vier
      Seiten laden die nicht. Dort zaehlte der Innenabstand zur Breite dazu:
      66 + 12 + 12 = 90 px statt 67,9 [gemessen 27.07.2026 auf datenschutz.html
@@ -374,16 +376,19 @@ body {
    ratifizierten Masse 163,97 x 44 px veraendert, der Schatten laesst sie
    unberuehrt [gemessen: 163,44 x 44 px im Hell-Modus vor und nach der
    Aenderung]. */
-.theme-toggle[data-theme-switch] .tt-feld[data-aktiv='true'] {
+.theme-toggle[data-theme-switch] .tt-feld[data-aktiv='true'],
+.theme-toggle[data-motion-switch] .tt-feld[data-aktiv='true'] {
   background: var(--color-accent-primary, #b7d900);
   color: var(--color-accent-primary-text, #1c2b36);
   font-weight: 700;
   box-shadow: inset 0 0 0 2px var(--color-accent-primary-text, #1c2b36);
 }
-.theme-toggle[data-theme-switch] .tt-feld svg {
+.theme-toggle[data-theme-switch] .tt-feld svg,
+.theme-toggle[data-motion-switch] .tt-feld svg {
   flex: 0 0 auto;
 }
-.theme-toggle[data-theme-switch]:focus-visible {
+.theme-toggle[data-theme-switch]:focus-visible,
+.theme-toggle[data-motion-switch]:focus-visible {
   outline: 3px solid var(--color-text-primary);
   outline-offset: 2px;
 }
@@ -427,7 +432,8 @@ body {
    Sinnbild und ihr Verhalten, ohne das waeren sie tote Knoepfe. Die Marke
    js-an setzt das Skript sofort beim Parsen des Kopfes, also vor dem ersten
    Bild - kein Nachrutschen der Kopfzeile. */
-html:not(.js-an) [data-theme-toggle] {
+html:not(.js-an) [data-theme-toggle],
+html:not(.js-an) [data-motion-toggle] {
   display: none;
 }
 .theme-toggle-icon {
@@ -471,7 +477,7 @@ html:not(.js-an) [data-theme-toggle] {
    Kanten-Loesung gewaehlt (Fassung C2); sie steht oben an der Regel fuer
    .tt-feld[data-aktiv='true']. Die Flaechenfarbe der Schiene bleibt damit
    unveraendert, der Zustand wird ueber die Umrisslinie getragen. */
-[data-theme='light'] .theme-toggle:not([data-theme-switch]) {
+[data-theme='light'] .theme-toggle:not([data-theme-switch]):not([data-motion-switch]) {
   color: var(--color-text-primary);
   background: var(--green);
   border-color: var(--green-dark);
