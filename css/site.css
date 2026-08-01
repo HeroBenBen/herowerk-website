@@ -1756,6 +1756,27 @@ section {
   background: var(--green);
   opacity: 0.5;
 }
+/* Warum 2026-08-01: Der Balken war nur fuer den Dunkelmodus entworfen. Im Hellmodus
+   lag die Spur bei Kontrast 1,0 (unsichtbar) und die Fuellung bei 1,62. GF-Entscheid
+   01.08.: Die aktive Fuellung bleibt CI-Gruen. Den Kontrast traegt eine dunkle
+   Innenkante. Erledigte Segmente nutzen den sichtgleichen Mischton #d4e866 bei
+   voller Deckkraft, damit ihre Kante unverblasst bleibt. */
+[data-theme='light'] .wizard-progress-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: #ddd8cc;
+  box-shadow: inset 0 0 0 1px #5a6470;
+}
+[data-theme='light'] .wizard-progress-bar.active {
+  background: #b7d900;
+  box-shadow: inset 0 0 0 1px #4f6000;
+}
+/* opacity:1 hebt die 0.5 der Basisregel auf; die Blaesse kommt aus der Fuellfarbe, damit die dunkle Kante voll wirkt. Nicht wegkuerzen. */
+[data-theme='light'] .wizard-progress-bar.done {
+  background: #d4e866;
+  opacity: 1;
+  box-shadow: inset 0 0 0 1px #4f6000;
+}
 
 .wizard-step {
   display: none;
