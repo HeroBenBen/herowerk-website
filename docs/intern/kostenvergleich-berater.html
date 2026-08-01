@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="/css/fonts.css?v=d3f3999a2f">
   <link rel="preload" href="/tokens.css?v=4c1b19042c" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="/tokens.css?v=4c1b19042c"></noscript>
-  <link rel="stylesheet" href="/css/site.css?v=53e1e77a8d">
+  <link rel="stylesheet" href="/css/site.css?v=faaca0218e">
 <style>
 /* Fonts von der Site selbst (/fonts/, CSP font-src 'self') */
 </style>
@@ -377,11 +377,12 @@
   [data-theme='light'] .ib{background:#F4F1EA;border:1px solid #DDD8CC;}
   [data-theme='light'] select,[data-theme='light'] .wz-number{background:#FFFFFF;color:#1C2B36;border-color:#DDD8CC;}
   [data-theme='light'] select option{background:#FFFFFF;color:#1C2B36;}
-  [data-theme='light'] input[type="range"]{background:#DDD8CC;}
-  [data-theme='light'] input[type="range"]::-webkit-slider-thumb{background:#B7D900;border-color:#F4F1EA;}
-  [data-theme='light'] input[type="range"]::-moz-range-thumb{background:#B7D900;border-color:#F4F1EA;}
-  [data-theme='light'] .tog .sl{background:#C9C4B8;}
-  [data-theme='light'] .tog input:checked+.sl{background:#B7D900;}
+  [data-theme='light'] input[type="range"]{background:#ddd8cc;box-shadow:inset 0 0 0 1px #5a6470;}
+  [data-theme='light'] input[type="range"]::-webkit-slider-thumb{background:#b7d900;border-color:#4f6000;}
+  [data-theme='light'] input[type="range"]::-moz-range-thumb{background:#b7d900;border-color:#4f6000;}
+  [data-theme='light'] .tog .sl{background:#c9c4b8;box-shadow:inset 0 0 0 1px #5a6470;}
+  [data-theme='light'] .tog input:checked+.sl{background:#b7d900;box-shadow:inset 0 0 0 1px #4f6000;}
+  [data-theme='light'] .tog .sl::before{box-shadow:0 0 0 1px #5a6470;}
   [data-theme='light'] .btn-calc{background:#B7D900;color:#1C2B36;}
   [data-theme='light'] .bt th{border-bottom-color:#B7D900;}
   [data-theme='light'] .bt td{border-bottom-color:#DDD8CC;}
