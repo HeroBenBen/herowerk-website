@@ -30,6 +30,7 @@ import path from 'node:path';
 import {
   engine,
   installRechnerApi,
+  klemmeEinwilligungAb,
   messeRechnerSchritte,
   pruefeRechnerJahrestabellen,
   wurzel,
@@ -244,6 +245,7 @@ for (const seite of KERNSEITEN) {
         isMobile: false,
       });
       const page = await ctx.newPage();
+      await klemmeEinwilligungAb(page);
       if (seite === '/kostenvergleich-waermepumpe.html') await installRechnerApi(page);
       const url = basis + (externeBasis ? seite.replace(/\.html$/, '') : seite);
       const antwort = await page.goto(url, { waitUntil: 'domcontentloaded' }).catch(() => null);
@@ -259,7 +261,6 @@ for (const seite of KERNSEITEN) {
         continue;
       }
       await page.waitForTimeout(700);
-      await page.evaluate(() => document.querySelector('#cmpbox')?.remove());
       await modusSetzen(page, modus);
       abdeckung.laeufe++;
 
@@ -475,11 +476,11 @@ for (const breite of BREITEN) {
     deviceScaleFactor: 2,
   });
   const page = await ctx.newPage();
+  await klemmeEinwilligungAb(page);
   await page.goto(basis + (externeBasis ? '/anfrage' : '/anfrage.html'), {
     waitUntil: 'domcontentloaded',
   });
   await page.waitForTimeout(800);
-  await page.evaluate(() => document.querySelector('#cmpbox')?.remove());
   zaehle(1, 1);
 
   const lauf = await page.evaluate(async () => {
@@ -530,6 +531,7 @@ for (const seite of ['/index.html', '/preise.html']) {
     deviceScaleFactor: 2,
   });
   const page = await ctx.newPage();
+  await klemmeEinwilligungAb(page);
   await page.goto(basis + (externeBasis ? seite.replace(/\.html$/, '') : seite), {
     waitUntil: 'load',
   });
