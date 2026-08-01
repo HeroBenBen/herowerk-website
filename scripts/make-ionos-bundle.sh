@@ -18,8 +18,14 @@ mkdir -p "$OUT"
 
 # Warum 2026-07-30: docs/ enthält interne Beraterseiten und darf nicht in den Webroot.
 # Warum 2026-07-30: lokale Prüfläufe erzeugen HTML-Berichte, die kein Website-Inhalt sind.
+# Warum 2026-08-01: .git ist in einem Worktree eine Datei und darf nicht ins Bündel.
+# Warum 2026-08-01: .gitleaks.toml ist interne Secret-Scan-Konfiguration, keine Laufzeit-Datei.
+# Warum 2026-08-01: .vercelignore steuert Vercel und gehört nicht in den IONOS-Webroot.
 rsync -a \
   --exclude '.git/' \
+  --exclude '.git' \
+  --exclude '.gitleaks.toml' \
+  --exclude '.vercelignore' \
   --exclude '.github/' \
   --exclude '.claude/' \
   --exclude 'node_modules/' \
@@ -52,6 +58,25 @@ if [ ! -f "$OUT/.htaccess" ]; then
   echo "FEHLER: .htaccess fehlt im Bundle." >&2
   exit 1
 fi
+
+# Nur .htaccess und .well-known sind in der obersten Bündel-Ebene erlaubt.
+FREMDE_PUNKTDATEIEN=()
+for PUNKTDATEI in "$OUT"/.[!.]* "$OUT"/..?*; do
+  if [ ! -e "$PUNKTDATEI" ] && [ ! -L "$PUNKTDATEI" ]; then
+    continue
+  fi
+  PUNKTNAME="${PUNKTDATEI##*/}"
+  case "$PUNKTNAME" in
+    .htaccess | .well-known) ;;
+    *) FREMDE_PUNKTDATEIEN+=("$PUNKTNAME") ;;
+  esac
+done
+if [ "${#FREMDE_PUNKTDATEIEN[@]}" -gt 0 ]; then
+  echo "FEHLER: Fremde Punktdateien oder Punktverzeichnisse in der obersten Bündel-Ebene: ${FREMDE_PUNKTDATEIEN[*]}" >&2
+  echo "Ausweg: Gehört der Name in den Webroot, ergänze ihn in der Freiliste. Andernfalls ergänze ihn als --exclude im rsync-Aufruf. Nicht nachträglich aus dem fertigen Bündel löschen." >&2
+  exit 1
+fi
+echo "Punktdatei-Wächter: oberste Ebene $OUT geprüft, nur .htaccess und .well-known erlaubt, keine fremden Treffer."
 
 # ── Cache-Busting: Content-Hash an lokale JS/CSS-Referenzen anhaengen ────────
 # Grund (2026-07-04): .htaccess cacht JS/CSS 1 Jahr (ExpiresByType ... "access
