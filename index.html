@@ -116,6 +116,10 @@
         <span class="mm-kopf-label">Ansicht</span>
         <button type="button" class="theme-toggle" data-theme-toggle data-theme-switch>Light-Mode</button>
       </div>
+      <div class="mm-kopf mm-kopf-bewegung">
+        <span class="mm-kopf-label">Bewegung</span>
+        <button type="button" class="theme-toggle" data-motion-toggle data-motion-switch>Bewegung</button>
+      </div>
       <div class="mm-nav">
         <a href="/preise" onclick="toggleMenu()">Preise<svg class="mm-pfeil" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"/></svg></a>
         <a href="/rechner" onclick="toggleMenu()">Rechner<svg class="mm-pfeil" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"/></svg></a>
@@ -134,11 +138,12 @@
 
   <!-- HERO -->
   <section class="hero">
-    <!-- Das Video traegt kein autoplay-Attribut mehr. Der Start laeuft ueber
+    <!-- Das Video trägt kein autoplay-Attribut mehr. Der Start läuft über
          js/site.js und richtet sich nach der Systemeinstellung "Bewegung
          reduzieren": ist sie gesetzt, bleibt das Standbild stehen. Ohne
          Skript zeigt die Seite dasselbe Standbild, das poster ohnehin
-         liefert. Bedienung ueber den Halteknopf darunter (WCAG 2.2.2). -->
+         liefert. In der schmalen Ansicht sitzt die Bedienung im Klappmenü,
+         ab 961 Pixel als Symbol im Videobereich (WCAG 2.2.2). -->
     <video class="hero-bg-video" id="heroVideo" muted loop playsinline preload="metadata" poster="foerderung-waermepumpe-poster.jpg?v=9e48ffac25" aria-hidden="true">
       <source src="foerderung-waermepumpe.mp4?v=29bc998ea5" type="video/mp4">
     </video>

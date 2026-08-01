@@ -2466,44 +2466,80 @@ if (document.readyState === 'loading') {
    ═══════════════════════════════════════════════════════════════════════ */
 function heroVideoSteuerung() {
   const video = document.getElementById('heroVideo');
-  const knopf = document.getElementById('heroVideoToggle');
+  if (!video) return;
+
+  const flaechenknopf = document.getElementById('heroVideoToggle');
+  const menueschalter = document.querySelector('[data-motion-switch]');
   const beschriftung = document.getElementById('heroVideoToggleText');
-  if (!video || !knopf || !beschriftung) return;
+  const speicherschluessel = 'hero-motion';
+  const erlaubteZustaende = ['an', 'aus'];
 
   const wenigerBewegung =
     window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function beschriften(laeuft) {
-    beschriftung.textContent = laeuft ? 'Video anhalten' : 'Video abspielen';
-    knopf.setAttribute('aria-pressed', laeuft ? 'false' : 'true');
-    knopf.setAttribute(
-      'aria-label',
-      laeuft ? 'Hintergrundvideo anhalten' : 'Hintergrundvideo abspielen'
-    );
-  }
-
-  if (wenigerBewegung) {
-    video.pause();
-    beschriften(false);
-  } else {
-    const start = video.play();
-    if (start && typeof start.catch === 'function') start.catch(() => beschriften(false));
-    beschriften(true);
-  }
-
-  knopf.addEventListener('click', function () {
-    if (video.paused) {
-      const p = video.play();
-      if (p && typeof p.catch === 'function') p.catch(() => beschriften(false));
-      beschriften(true);
-    } else {
-      video.pause();
-      beschriften(false);
+  function gespeichertenZustandLesen() {
+    try {
+      const gespeichert = localStorage.getItem(speicherschluessel);
+      return erlaubteZustaende.includes(gespeichert) ? gespeichert : null;
+    } catch {
+      return null;
     }
-  });
+  }
 
-  video.addEventListener('play', () => beschriften(true));
-  video.addEventListener('pause', () => beschriften(false));
+  function zustandSpeichern(laeuft) {
+    try {
+      localStorage.setItem(speicherschluessel, laeuft ? 'an' : 'aus');
+    } catch {
+      // Ohne verfügbaren Speicher bleibt die Wahl für den aktuellen Aufruf wirksam.
+    }
+  }
+
+  function anzeigen(laeuft) {
+    if (flaechenknopf) {
+      flaechenknopf.removeAttribute('aria-pressed');
+      flaechenknopf.setAttribute('role', 'switch');
+      flaechenknopf.setAttribute('aria-checked', laeuft ? 'true' : 'false');
+      flaechenknopf.setAttribute(
+        'aria-label',
+        laeuft ? 'Hintergrundvideo anhalten' : 'Hintergrundvideo abspielen'
+      );
+    }
+    if (beschriftung) beschriftung.textContent = laeuft ? 'Video anhalten' : 'Video abspielen';
+    if (menueschalter) {
+      menueschalter.setAttribute('role', 'switch');
+      menueschalter.setAttribute('aria-checked', laeuft ? 'true' : 'false');
+      menueschalter.setAttribute('aria-label', 'Bewegung: Aus oder An');
+      menueschalter.innerHTML =
+        `<span class="tt-feld" data-aktiv="${laeuft ? 'false' : 'true'}">Aus</span>` +
+        `<span class="tt-feld" data-aktiv="${laeuft ? 'true' : 'false'}">An</span>`;
+    }
+  }
+
+  function bewegungSetzen(laeuft, speichern) {
+    if (speichern) zustandSpeichern(laeuft);
+    if (!laeuft) {
+      video.pause();
+      anzeigen(false);
+      return;
+    }
+    const start = video.play();
+    anzeigen(true);
+    if (start && typeof start.catch === 'function') start.catch(() => anzeigen(false));
+  }
+
+  function umschalten(event) {
+    const feld = event.target instanceof Element ? event.target.closest('.tt-feld') : null;
+    if (feld && feld.dataset.aktiv === 'true') return;
+    bewegungSetzen(video.paused, true);
+  }
+
+  if (flaechenknopf) flaechenknopf.addEventListener('click', umschalten);
+  if (menueschalter) menueschalter.addEventListener('click', umschalten);
+  video.addEventListener('play', () => anzeigen(true));
+  video.addEventListener('pause', () => anzeigen(false));
+
+  const gespeichert = gespeichertenZustandLesen();
+  bewegungSetzen(!wenigerBewegung && gespeichert !== 'aus', false);
 }
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', heroVideoSteuerung);
