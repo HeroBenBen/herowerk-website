@@ -181,6 +181,7 @@ for (const path of [
   '/ratgeber.html?theme=dark',
   '/kontakt.html?theme=light',
   '/impressum.html?theme=light',
+  '/datenschutz.html?theme=light',
   '/datenschutz.html?theme=dark',
   '/hinweise.html?theme=light',
 ]) {
