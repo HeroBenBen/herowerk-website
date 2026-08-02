@@ -301,12 +301,37 @@
   #wzFoerderTreppe .tr-lbl{font-size:0.6rem;color:var(--hero-muted);line-height:1.05;text-align:center;}
   #wzFoerderTreppe .tr-lbl span{display:block;white-space:nowrap;}
   #wzTreppeHint{font-size:0.78rem;color:var(--hero-muted);margin-bottom:14px;}
+  #wzFoerderTreppe{height:132px;}
+  #wzFoerderTreppe .tr-eur{font-size:0.72rem;font-weight:800;color:var(--hero-muted);white-space:nowrap;}
+  #wzFoerderTreppe .tr-col.is-active .tr-eur{color:var(--hero-accent);}
+  #wzFoerderTreppe .tr-pct{font-size:0.62rem;font-weight:600;color:var(--hero-muted);}
+  #wzFoerderTreppe .tr-col.is-active .tr-pct{color:var(--hero-muted);}
+  #wzTreppeVerlust{margin:10px 0 4px;padding:8px 10px;border-radius:8px;border:1px solid rgba(183,217,0,0.35);font-size:0.8rem;line-height:1.35;color:var(--hero-white);}
+  #wzTreppeVerlust:empty{display:none;}
+  /* Zwischenstufe wie im Foerderrechner. Ohne sie steht der Euro-Betrag zwischen 401
+     und rund 425 Pixel noch auf 0,72 rem und laeuft ueber die Spalte hinaus. */
+  @media (max-width:520px){
+    #wzFoerderTreppe{gap:4px;}
+    #wzFoerderTreppe .tr-eur{font-size:0.6rem;letter-spacing:-0.02em;}
+    #wzFoerderTreppe .tr-pct{font-size:0.58rem;}
+  }
+  @media (max-width:400px){
+    #wzFoerderTreppe{gap:3px;}
+    #wzFoerderTreppe .tr-eur{font-size:0.54rem;letter-spacing:-0.04em;white-space:normal;line-height:1.15;}
+  }
   .wz-cta .ln{display:flex;justify-content:space-between;gap:10px;font-size:0.84rem;padding:3px 0;}
   .wz-cta .ln .lbl{color:var(--hero-muted);}
   .wz-cta .ln .vv{font-weight:bold;white-space:nowrap;}
   [data-theme='light'] #wzFoerderTreppe .tr-bar{background:#DDD8CC;}
   [data-theme='light'] #wzFoerderTreppe .tr-col.is-active .tr-bar{background:#B7D900;}
   [data-theme='light'] #wzFoerderTreppe .tr-col.is-active .tr-pct{color:#4F6000;}
+  [data-theme='light'] #wzFoerderTreppe .tr-bar{box-shadow:inset 0 0 0 1px #5A6470;}
+  [data-theme='light'] #wzFoerderTreppe .tr-col.is-active .tr-bar{box-shadow:inset 0 0 0 1px #4F6000;}
+  [data-theme='light'] #wzFoerderTreppe .tr-eur{color:#4B5563;}
+  [data-theme='light'] #wzFoerderTreppe .tr-col.is-active .tr-eur{color:#4F6000;}
+  [data-theme='light'] #wzFoerderTreppe .tr-pct{color:#4B5563;}
+  [data-theme='light'] #wzFoerderTreppe .tr-col.is-active .tr-pct{color:#4B5563;}
+  [data-theme='light'] #wzTreppeVerlust{color:#1C2B36;border-color:#4F6000;}
   [data-theme='light'] .wz-optcard{background:#FFFFFF;border-color:#DDD8CC;color:#1C2B36;}
   [data-theme='light'] .wz-optcard.is-selected{background:rgba(183,217,0,0.20);border-color:#4F6000;}
   [data-theme='light'] .wz-optcard.is-selected .wz-opt-check{background:#B7D900;border-color:#B7D900;color:#1C2B36;}
@@ -515,7 +540,8 @@
     body.wz-customer #tab-foerderung>.card{padding:10px 12px;}
     body.wz-customer #tab-foerderung .card>.selg{margin-bottom:0;}
     body.wz-customer #tab-foerderung .card>.selg>label{font-size:.8rem;line-height:1.2;margin-bottom:4px;}
-    body.wz-customer #tab-foerderung #wzFoerderTreppe{margin:6px 0 0;height:96px;}
+    body.wz-customer #tab-foerderung #wzFoerderTreppe{margin:6px 0 0;height:132px;}
+    body.wz-customer #tab-foerderung #wzTreppeVerlust{margin:6px 0 0;font-size:.74rem;line-height:1.25;}
     body.wz-customer #tab-foerderung #wzTreppeHint{margin:4px 0 0;font-size:.72rem;line-height:1.2;}
   }
 </style>
@@ -723,7 +749,7 @@
       <details class="wz-step-note klapp" data-mobile-collapsed open>
         <summary>Förderdetails und rechtliche Hinweise</summary>
         <div class="inhalt">
-          <p style="color:var(--hero-muted);font-size:0.85rem;margin-bottom:16px;">Max. 80 %<sup><a href="#foerder-80-hinweis">*</a></sup> der förderfähigen Kosten. Klimabonus und Bemessungsgrenze sinken halbjährlich zu festen Stichtagen: Früh beantragen lohnt sich. Boni setzen selbstnutzende Eigentümer voraus; Antrag vor Vorhabensbeginn; kein Rechtsanspruch, vorbehaltlich verfügbarer Haushaltsmittel. Stand 07/2026.</p>
+          <p style="color:var(--hero-muted);font-size:0.85rem;margin-bottom:16px;">Max. 80 %<sup><a href="#foerder-80-hinweis" style="color:inherit;text-decoration:underline;">*</a></sup> der förderfähigen Kosten. Klimabonus und Bemessungsgrenze sinken halbjährlich zu festen Stichtagen: Früh beantragen lohnt sich. Boni setzen selbstnutzende Eigentümer voraus; Antrag vor Vorhabensbeginn; kein Rechtsanspruch, vorbehaltlich verfügbarer Haushaltsmittel. Stand 07/2026.</p>
           <p class="hc-footnote" id="foerder-80-hinweis" tabindex="-1">*Bis zu 80 Prozent Förderung = Grundförderung 30 Prozent + Klimabonus 16 Prozent + Einkommensbonus 40 Prozent. Voraussetzungen: selbstnutzende Eigentümer, funktionsfähige Öl-, Kohle-, Gasetagen- oder Nachtspeicherheizung oder Gas- bzw. Biomasseheizung ab 20 Jahren, anrechenbares zu versteuerndes Haushaltseinkommen bis 30.000 Euro (bei mindestens einem minderjährigen Kind werden einmalig 10.000 Euro abgezogen), Antrag im Zeitraum 21.07.2026 bis 31.01.2027 (danach sinkt der Klimabonus halbjährlich). Gedeckelt auf 80 Prozent von höchstens 28.000 Euro förderfähigen Kosten der ersten Wohneinheit, also höchstens 22.400 Euro Zuschuss.</p>
         </div>
       </details>
@@ -736,7 +762,7 @@
           <option value="h2-2028">01.08.2028 bis 31.01.2029</option>
           <option value="h1-2029">01.02. bis 31.07.2029</option>
         </select>
-      <div id="wzFoerderTreppe"></div><div id="wzTreppeHint"></div></div>
+      <div id="wzFoerderTreppe"></div><div id="wzTreppeVerlust"></div><div id="wzTreppeHint"></div></div>
       <div class="tg wz-gov"><label class="tog"><input type="checkbox" id="fGrund" checked onchange="updateFoerderung()"><span class="sl"></span></label>
         <div class="tl">Grundförderung: <span id="fGrundPct">30 %</span><small>Für jeden Heizungstausch auf eine Wärmepumpe</small></div></div>
       <div class="tg wz-gov"><label class="tog"><input type="checkbox" id="fEU" checked onchange="updateFoerderung()"><span class="sl"></span></label>
@@ -1007,12 +1033,43 @@ async function kvLoadBootstrap(){
 function scheduleKvCalculation(delay){clearTimeout(KV_STATE.timer);KV_STATE.timer=setTimeout(()=>calculate({showResults:false}),delay==null?350:delay);}
 function updateFoerderung(){scheduleKvCalculation(350);}
 function renderFoerderTreppe(){
-  const host=document.getElementById('wzFoerderTreppe'),hint=document.getElementById('wzTreppeHint');
-  const r=KV_STATE.last;if(!host||!r||!r.foerder||!Array.isArray(r.foerder.treppe))return;
-  const orig=document.getElementById('fHalbjahr').value;const data=r.foerder.treppe;const maxQ=Math.max(1,...data.map(d=>d.quote));
-  host.innerHTML=data.map(d=>{const h=Math.max(10,Math.round(d.quote/maxQ*50));const yy=d.periode.slice(-2);const monat=d.periode==='h2-2026'?'07/26':(d.periode.indexOf('h1')===0?'02/':'08/')+yy;return `<div class="tr-col${d.periode===orig?' is-active':''}" data-tr="${d.periode}" title="${d.label}" role="button" aria-label="Zeitraum ${d.label}: ${d.quote} Prozent"><span class="tr-pct">${d.quote} %</span><div class="tr-bar" style="height:${h}px"></div><span class="tr-lbl"><span>ab</span><span>${monat}</span></span></div>`;}).join('');
+  const host=document.getElementById('wzFoerderTreppe'),hint=document.getElementById('wzTreppeHint'),verlust=document.getElementById('wzTreppeVerlust');
+  const r=KV_STATE.last;
+  // Vollstaendig abraeumen, nicht halb: sonst blieben alte Balken und der alte
+  // Hinweissatz unter einem geleerten Verlust-Kasten stehen.
+  if(!host||!r||!r.foerder||!Array.isArray(r.foerder.treppe)||r.foerder.treppe.length<2){if(host)host.innerHTML='';if(hint)hint.textContent='';if(verlust)verlust.textContent='';return;}
+  const orig=document.getElementById('fHalbjahr').value;const data=r.foerder.treppe;
+  // Alter Server-Stand ohne Euro je Stufe: heutige Prozent-Ansicht statt "NaN EUR".
+  const mitEuro=data.every(d=>typeof d.betrag==='number'&&isFinite(d.betrag));
+  const maxQ=Math.max(1,...data.map(d=>d.quote));const maxE=Math.max(1,...data.map(d=>mitEuro?d.betrag:0));
+  const eur=n=>Number(n).toLocaleString('de-DE')+' €';
+  const zeitraumName=p=>p==='h2-2026'?'Juli 2026':(p.indexOf('h1')===0?'Februar ':'August ')+'20'+p.slice(-2);
+  host.innerHTML=data.map(d=>{
+    const h=Math.max(10,Math.round((mitEuro?d.betrag/maxE:d.quote/maxQ)*(mitEuro?62:50)));
+    const yy=d.periode.slice(-2);const monat=d.periode==='h2-2026'?'07/26':(d.periode.indexOf('h1')===0?'02/':'08/')+yy;
+    // Nur das Zeichen, KEIN Link: die Stufe traegt role="button", ein fokussierbarer
+    // Nachfahre darin ist der axe-Befund nested-interactive.
+    const stern=d.quote===80?'*':'';
+    const kopf=mitEuro?`<span class="tr-eur">${eur(d.betrag)}</span><span class="tr-pct">${d.quote} %${stern}</span>`:`<span class="tr-pct">${d.quote} %${stern}</span>`;
+    const beschriftung=mitEuro?`Zeitraum ${d.label}: ${eur(d.betrag)}, ${d.quote} Prozent`:`Zeitraum ${d.label}: ${d.quote} Prozent`;
+    return `<div class="tr-col${d.periode===orig?' is-active':''}" data-tr="${d.periode}" title="${d.label}" role="button" aria-label="${beschriftung}">${kopf}<div class="tr-bar" style="height:${h}px"></div><span class="tr-lbl"><span>ab</span><span>${monat}</span></span></div>`;
+  }).join('');
   host.querySelectorAll('.tr-col').forEach(c=>c.addEventListener('click',()=>{const sel=document.getElementById('fHalbjahr');sel.value=c.dataset.tr;sel.dispatchEvent(new Event('change',{bubbles:true}));}));
-  const cur=data.find(d=>d.periode===orig),first=data[0];if(hint&&cur)hint.textContent='Jedes Warten kostet Förderung: Im gewählten Zeitraum bekommen Sie '+cur.quote+' Prozent'+(cur.quote<first.quote?', im ersten Zeitraum wären es '+first.quote+' Prozent':'')+'.';
+  const cur=data.find(d=>d.periode===orig),first=data[0];
+  // Fussnoten-Verweis EINMAL hier, ausserhalb jedes Elements mit Rolle.
+  const sternHinweis=data.some(d=>d.quote===80)?' <a href="#foerder-80-hinweis" style="color:inherit;text-decoration:underline;">*Was 80 Prozent bedeutet</a>':'';
+  if(hint&&cur)hint.innerHTML='Jedes Warten kostet Förderung: Im gewählten Zeitraum bekommen Sie '+cur.quote+' Prozent'+(cur.quote<first.quote?', im ersten Zeitraum wären es '+first.quote+' Prozent':'')+'.'+sternHinweis;
+  // Bezug ist die GEWAEHLTE Stufe, nicht blind die erste: ein Vergleich gegen einen
+  // abgelaufenen Zeitraum bewuerbe einen Betrag, den niemand mehr beantragen kann.
+  if(verlust){
+    const i=Math.max(0,data.findIndex(d=>d.periode===orig));const bezug=data[i],naechste=data[i+1]||null,letzte=data[data.length-1];
+    if(!mitEuro){verlust.textContent='';}
+    else if(!naechste){verlust.textContent='Das ist der letzte Zeitraum, für den die Fördersätze feststehen.';}
+    else{
+      verlust.innerHTML=`Wer bis ${zeitraumName(naechste.periode)} wartet, bekommt <strong>${eur(bezug.betrag-naechste.betrag)} weniger</strong> Zuschuss.`
+        +(letzte!==naechste?` Bis ${zeitraumName(letzte.periode)} sind es <strong>${eur(bezug.betrag-letzte.betrag)} weniger</strong>.`:'');
+    }
+  }
 }
 function toggleImmo(){document.getElementById('immoOpt').style.display=document.getElementById('immoTog').checked?'block':'none';}
 function toggleDynTarif(){document.getElementById('dynTarifOpt').style.display=document.getElementById('dynTarifTog').checked?'block':'none';}
@@ -1022,7 +1079,7 @@ let cM=null,cB=null,cH=null;
 function kvRender(data,showResults){
   KV_STATE.last=data;const f=data.foerder,i=data.invest,s=data.system,e=data.ergebnis,d=data.dreiWege,fin=data.finanzierung;
   const periodSelect=document.getElementById('fHalbjahr'),activeOption=periodSelect&&periodSelect.querySelector(`option[value="${f.periode}"]`);if(activeOption&&activeOption.textContent==='Aktuell gültiger Antragszeitraum')activeOption.textContent=f.label;
-  const foerderNote=f.quote===80?'<sup><a href="#foerder-80-hinweis">*</a></sup>':'';
+  const foerderNote=f.quote===80?'<sup><a href="#foerder-80-hinweis" style="color:inherit;text-decoration:underline;">*</a></sup>':'';
   document.getElementById('vFEink').textContent=Number(f.zvE).toLocaleString('de-DE')+' €';document.getElementById('fEinkAnr').textContent=Number(f.anrechenbar).toLocaleString('de-DE')+' €';document.getElementById('fEinkBonusLbl').textContent='+'+f.einkommen+' %';document.getElementById('fGrundPct').textContent=f.grundPct+' %';document.getElementById('fKlimaPct').textContent=f.klimaPct+' %';document.getElementById('fQuote').innerHTML=f.quote+' %'+foerderNote+(f.gekappt?' (gekappt)':'');document.getElementById('fGrenzeLbl').textContent=eur(f.grenze);document.getElementById('fBasis').textContent=eur(f.basis);document.getElementById('fBetrag').textContent=eur(f.anzeigeBetrag);document.getElementById('fNetto').textContent=eur(f.netto);document.getElementById('fBadges').innerHTML=[{n:'Grund '+f.grundPct+'%',a:f.grund>0},{n:'Klima '+f.klimaPct+'%',a:f.klima>0},{n:'Einkommen '+f.einkommen+'%',a:f.einkommen>0}].map(x=>`<span class="fb ${x.a?'a':'i'}">${x.n}</span>`).join('');
   renderFoerderTreppe();
   const fossilName='Neue '+s.heizLabel+'heizung';
@@ -1619,7 +1676,7 @@ kvLoadBootstrap();
     if(vgl&&$('neuFossilTog')&&$('neuFossilTog').checked)rows.push(['Vergleich',vgl.value==='oel'?'Neue Ölheizung':'Neue Gasheizung']);
     rows.push(['Antrag',f.label]);
     if(WZ.touched.has('fEinkSlider'))rows.push(['Einkommen (anrechenbar)',f.anrechenbar.toLocaleString('de-DE')+' €']);
-    const quoteNote=f.quote===80?'<sup><a href="#foerder-80-hinweis">*</a></sup>':'';
+    const quoteNote=f.quote===80?'<sup><a href="#foerder-80-hinweis" style="color:inherit;text-decoration:underline;">*</a></sup>':'';
     host.innerHTML=`<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accent);">${f.quote} %${quoteNote}</div><div style="font-size:0.8rem;color:var(--hero-muted);">Ihre Förderquote (KfW 458)</div></div>
       <div class="ln"><span class="lbl">Ihre Wärmepumpe</span><span class="vv">${inv.toLocaleString('de-DE')} €</span></div>
       <div class="ln"><span class="lbl">Ihr Zuschuss (KfW 458)</span><span class="vv" style="color:var(--hero-green)">−${betrag.toLocaleString('de-DE')} €</span></div>
@@ -1644,7 +1701,7 @@ kvLoadBootstrap();
       rows.push(`<div class="ln"><span class="lbl">Klimageschwindigkeitsbonus: entfällt für diesen Zeitraum</span><span class="vv">+0 %</span></div>`);
     }
     if(f.einkommen>0)rows.push(`<div class="ln"><span class="lbl">Einkommensbonus (anrechenbares Einkommen ${f.anrechenbar.toLocaleString('de-DE')} €)</span><span class="vv">+${f.einkommen} %</span></div>`);
-    if(f.gekappt)rows.push(`<div class="ln"><span class="lbl">Gesetzlicher Deckel: mehr als 80 %<sup><a href="#foerder-80-hinweis">*</a></sup> gibt es nicht</span><span class="vv">80 %<sup><a href="#foerder-80-hinweis">*</a></sup></span></div>`);
+    if(f.gekappt)rows.push(`<div class="ln"><span class="lbl">Gesetzlicher Deckel: mehr als 80 %<sup><a href="#foerder-80-hinweis" style="color:inherit;text-decoration:underline;">*</a></sup> gibt es nicht</span><span class="vv">80 %<sup><a href="#foerder-80-hinweis" style="color:inherit;text-decoration:underline;">*</a></sup></span></div>`);
     host.innerHTML=`<strong>So setzt sich Ihre Förderung zusammen:</strong>`+rows.join('');
   }
   function prepareIncomeDiscreet(){

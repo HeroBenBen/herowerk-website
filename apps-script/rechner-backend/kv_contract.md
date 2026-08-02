@@ -134,7 +134,13 @@ Feld mit `[gerundet]` markiert und der ungerundete Partner steht daneben.
     "kumCap": 18000.0,             // 0.6*invWP — ENGINE, ungerundet
     "totalFoerderung": 12880.0,    // ungerundet, fließt in invest.netto
     "treppe": [                    // Degressions-Treppe: Quote je REFORM-Periode
-      { "periode": "h2-2026", "quote": 46, "label": "21.07.2026 bis 31.01.2027" }
+      {
+        "periode": "h2-2026", "quote": 46, "label": "21.07.2026 bis 31.01.2027",
+        "grenze": 28000, "basis": 28000,
+        // Euro-Zuschuss je Stufe nach dem ANZEIGE-Pfad (Kanon 1.2): Basis ist die Investition,
+        // gekappt auf die Grenze DIESER Periode, gerundet wie anzeigeBetrag (Orakel Z.135).
+        "betrag": 12880
+      }
     ],
     // NUR für den Lead (Abschnitt 4). NICHT anzeigen.
     "quoteOhneEinkommen": 46,

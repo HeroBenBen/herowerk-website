@@ -433,6 +433,21 @@ function foerderung_(p) {
   const heuteEff = heuteAbStichtagIso_(kvParams) + 'T12:00:00';
   const out = foerderCalc_(args, f, heuteEff, foerderPeriodenAusKv_(kvParams));
   if (marke === 'vaillant') out.vorlaeufig = true;
+  // Degressions-Treppe fuer die Anzeige (Maengelpunkte G4/M4, GF-Entscheid 02.08.2026).
+  // Gerechnet wird mit DEMSELBEN reinen Kern, je Reform-Periode einmal, mit dem Stichtag
+  // der Periode als Antragsdatum. Keine eigene Foerderregel, keine zusaetzliche Sheet-Lesung:
+  // f und kvParams sind bereits geladen und werden wiederverwendet.
+  const perioden = foerderPeriodenAusKv_(kvParams);
+  out.treppe = (kvParams.periodenReihenfolge || []).map(function (id) {
+    const per = kvParams.perioden[id];
+    const stufe = foerderCalc_(args, f, String(per.gueltigAb) + 'T12:00:00', perioden);
+    return {
+      periode: id,
+      label: stufe.periodeLabel,
+      quote: stufe.kfwSatz,
+      betrag: stufe.zuschussGesamt
+    };
+  });
   return out;
 }
 

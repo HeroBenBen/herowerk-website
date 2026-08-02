@@ -1904,6 +1904,79 @@ function updateSelbstnutzungOptionen() {
   if (!sel.value) sel.value = '1';
 }
 
+// Balkenhoehe folgt dem EURO-Betrag, nicht der Quote: ohne Klimabonus steht die Quote flach
+// auf 30 Prozent, waehrend der Zuschuss ueber die sinkende Bemessungsgrenze faellt.
+function hwTreppeAufbauen(treppe, aktivePeriode) {
+  const host = document.getElementById('hwTreppe');
+  if (!host || !Array.isArray(treppe) || treppe.length < 2) {
+    if (host) host.innerHTML = '';
+    return;
+  }
+  // Alter Server-Stand ohne Euro je Stufe: dann gar keine Treppe statt "NaN €".
+  // Die Anzeige lebt hier ausschliesslich vom Euro-Betrag.
+  if (!treppe.every((d) => typeof d.betrag === 'number' && isFinite(d.betrag))) {
+    host.innerHTML = '';
+    return;
+  }
+  const eur = (n) => Number(n).toLocaleString('de-DE') + ' €';
+  const monat = (p) =>
+    p === 'h2-2026' ? '07/26' : (p.indexOf('h1') === 0 ? '02/' : '08/') + p.slice(-2);
+  // Sonderfall wie bei monat(): die erste Reform-Periode beginnt am 21.07.2026, nicht im August.
+  const zeitraumName = (p) =>
+    p === 'h2-2026'
+      ? 'Juli 2026'
+      : (p.indexOf('h1') === 0 ? 'Februar ' : 'August ') + '20' + p.slice(-2);
+  const maxE = Math.max(1, ...treppe.map((d) => d.betrag));
+  const letzte = treppe[treppe.length - 1];
+  // Bezug ist die AKTIVE Stufe, nicht blind die erste: ab Februar 2027 ist der erste
+  // Zeitraum vorbei, und ein Vergleich gegen ihn bewuerbe einen Betrag, den niemand
+  // mehr beantragen kann. Faellt die aktive Stufe aus, gilt die erste als Bezug.
+  const iAktiv = Math.max(
+    0,
+    treppe.findIndex((d) => d.periode === aktivePeriode)
+  );
+  const bezug = treppe[iAktiv];
+  const naechste = treppe[iAktiv + 1] || null;
+  const spalten = treppe
+    .map((d) => {
+      const hoehe = Math.max(10, Math.round((d.betrag / maxE) * 62));
+      const aktiv = d.periode === aktivePeriode ? ' is-active' : '';
+      // Sternchen-Baustein an JEDER 80-Prozent-Nennung (Foerder-Kanon Abschnitt 6 Punkt 12
+      // und 7.1). NUR das Zeichen, KEIN Link: ein fokussierbarer Nachfahre in einem Element
+      // mit Rolle ist der axe-Befund nested-interactive, und axe-accessibility ist eine der
+      // elf Pflicht-Pruefungen. Der Verweis auf die Fussnote steht einmal unter der Treppe.
+      const stern = d.quote === 80 ? '*' : '';
+      // role="img" ist Pflicht: aria-label auf einem div OHNE Rolle ist nach
+      // aria-prohibited-attr ein Befund. Der Bestand im Amortisierungsrechner loest es
+      // ueber role="button", weil die Stufen dort anklickbar sind; hier sind sie es nicht.
+      return (
+        `<div class="tr-col${aktiv}" role="img" title="${d.label}" aria-label="Antragszeitraum ${d.label}: ${eur(d.betrag)}, ${d.quote} Prozent">` +
+        `<span class="tr-eur">${eur(d.betrag)}</span><span class="tr-pct">${d.quote} %${stern}</span>` +
+        `<div class="tr-bar" style="height:${hoehe}px"></div>` +
+        `<span class="tr-lbl"><span>ab</span><span>${monat(d.periode)}</span></span></div>`
+      );
+    })
+    .join('');
+  const verlustSatz = naechste
+    ? `Wer bis ${zeitraumName(naechste.periode)} wartet, bekommt <strong>${eur(bezug.betrag - naechste.betrag)} weniger</strong> Zuschuss.` +
+      (letzte !== naechste
+        ? ` Bis ${zeitraumName(letzte.periode)} sind es <strong>${eur(bezug.betrag - letzte.betrag)} weniger</strong>.`
+        : '')
+    : 'Das ist der letzte Zeitraum, für den die Fördersätze feststehen.';
+  // Der Fussnoten-Verweis steht EINMAL unter der Treppe, ausserhalb jedes Elements
+  // mit Rolle, und nur wenn eine Stufe 80 Prozent erreicht.
+  // Farbe wie bei den sechs vorhandenen Fussnoten-Verweisen dieser Seite, sonst
+  // faerbt der Browser den Verweis im Dunkelmodus blauviolett ein.
+  const sternHinweis = treppe.some((d) => d.quote === 80)
+    ? ' <a href="#e6-fussnote" style="color:inherit;text-decoration:underline;">*Was 80 Prozent bedeutet</a>'
+    : '';
+  host.innerHTML =
+    '<div class="tr-titel">Deine Förderung nach Antragszeitraum</div>' +
+    `<div class="tr-reihe">${spalten}</div>` +
+    `<div class="tr-verlust">${verlustSatz}</div>` +
+    `<div class="tr-hint">Jedes Warten kostet Förderung: Im Antragszeitraum ${bezug.label} bekommst du ${eur(bezug.betrag)}.${sternHinweis}</div>`;
+}
+
 async function calculateFoerder() {
   const weEl = document.getElementById('wohneinheiten');
   if (!weEl) return;
@@ -1959,6 +2032,7 @@ async function calculateFoerder() {
     document.getElementById('foerderBreakdown').innerHTML =
       '<div style="border:1px solid rgba(232,168,56,0.35);border-radius:12px;padding:14px;color:var(--g300);">Berechnung gerade nicht verfügbar. Bitte Beratung anfragen.</div>';
     showFoerderSlot(document.getElementById('effektivSatzBox'), false);
+    hwTreppeAufbauen(null, null);
     return;
   }
 
@@ -1982,6 +2056,7 @@ async function calculateFoerder() {
       (data.periodeLabel ? 'Antragszeitraum ' + data.periodeLabel : '') +
       (data.hinweis ? ' ' + data.hinweis : '');
   }
+  hwTreppeAufbauen(data.treppe, data.periode);
 
   const effektivBox = document.getElementById('effektivSatzBox');
   if (effektivSatz < kfwSatz) {

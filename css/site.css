@@ -6543,3 +6543,132 @@ samp {
   line-height: 0;
   margin-left: 0;
 }
+
+#hwTreppe {
+  margin: 18px 0 4px;
+}
+#hwTreppe .tr-titel {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 10px;
+}
+/* 132 statt 110: die Euro-Zeile kommt als vierter Kindknoten dazu und der Balken
+   waechst von 50 auf 62 Pixel. Mit 110 steht die hoechste Spalte 18 Pixel ueber. */
+#hwTreppe .tr-reihe {
+  display: flex;
+  gap: 6px;
+  align-items: flex-end;
+  height: 132px;
+}
+#hwTreppe .tr-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+/* Woertlicher Wert statt var(--g600): die Marke traegt in tokens.css je Modus einen
+   anderen Wert (dunkel #4b5563, hell #5a6470), hier ist genau der Hellmodus-Ton
+   gemeint. Die Fuellung bleibt wie im abgenommenen Entwurf. */
+#hwTreppe .tr-bar {
+  width: 100%;
+  border-radius: 6px 6px 0 0;
+  background: #5a6470;
+}
+#hwTreppe .tr-col.is-active .tr-bar {
+  background: #b7d900;
+}
+#hwTreppe .tr-eur {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--g300);
+  white-space: nowrap;
+}
+#hwTreppe .tr-col.is-active .tr-eur {
+  color: #b7d900;
+}
+#hwTreppe .tr-pct {
+  font-size: 0.62rem;
+  color: var(--g400);
+  white-space: nowrap;
+}
+#hwTreppe .tr-lbl {
+  font-size: 0.58rem;
+  color: var(--g400);
+  line-height: 1.05;
+  text-align: center;
+}
+#hwTreppe .tr-lbl span {
+  display: block;
+  white-space: nowrap;
+}
+#hwTreppe .tr-hint {
+  font-size: 0.78rem;
+  color: var(--g400);
+  margin-top: 10px;
+  line-height: 1.4;
+}
+#hwTreppe .tr-verlust {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(183, 217, 0, 0.35);
+  font-size: 0.8rem;
+  color: var(--white);
+  line-height: 1.35;
+}
+@media (max-width: 520px) {
+  #hwTreppe .tr-reihe {
+    gap: 4px;
+  }
+  #hwTreppe .tr-eur {
+    font-size: 0.6rem;
+    letter-spacing: -0.02em;
+  }
+  #hwTreppe .tr-pct {
+    font-size: 0.58rem;
+  }
+}
+/* Sehr schmale Ansicht: eine Spalte ist bei 320 Pixel nur rund 27 Pixel breit,
+   "22.400 €" braucht bei 0,6 rem rund 38. Deshalb kleiner, enger und mit erlaubtem
+   Umbruch. Kein Weglassen der Einheit. Nachzuweisen mit Beleg 10b. */
+@media (max-width: 400px) {
+  #hwTreppe .tr-reihe {
+    gap: 3px;
+  }
+  #hwTreppe .tr-eur {
+    font-size: 0.54rem;
+    letter-spacing: -0.04em;
+    white-space: normal;
+    line-height: 1.15;
+  }
+}
+[data-theme='light'] #hwTreppe .tr-titel {
+  color: #1c2b36;
+}
+[data-theme='light'] #hwTreppe .tr-bar {
+  background: #ddd8cc;
+  box-shadow: inset 0 0 0 1px #5a6470;
+}
+[data-theme='light'] #hwTreppe .tr-col.is-active .tr-bar {
+  background: #b7d900;
+  box-shadow: inset 0 0 0 1px #4f6000;
+}
+[data-theme='light'] #hwTreppe .tr-eur {
+  color: #4b5563;
+}
+[data-theme='light'] #hwTreppe .tr-col.is-active .tr-eur {
+  color: #4f6000;
+}
+[data-theme='light'] #hwTreppe .tr-pct,
+[data-theme='light'] #hwTreppe .tr-lbl,
+[data-theme='light'] #hwTreppe .tr-hint {
+  color: #4b5563;
+}
+[data-theme='light'] #hwTreppe .tr-verlust {
+  color: #1c2b36;
+  border-color: #4f6000;
+}
