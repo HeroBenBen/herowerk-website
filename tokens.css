@@ -825,3 +825,14 @@ html:not(.js-an) [data-motion-toggle] {
 [data-theme='light'] .trust-headline em {
   color: var(--color-text-primary) !important;
 }
+
+/* G11: Hellmodus-Fassung fuer den Knopf "Cookie-Einstellungen" in der
+   Rechtsfusszeile. Die breite Hell-Regel weiter oben faerbt nur a-Elemente auf
+   den dunklen CI-Ton um; der Knopf ist ein button und blieb deshalb auf dem
+   hellen CI-Gruen stehen (1,44 zu 1 auf #f4f1ea, gemessen 02.08.2026 gegen
+   LIVE). Betrifft impressum, datenschutz und anfrage, die einzigen Seiten
+   ohne css/site.css. Die Merkmalsstaerke schlaegt die seiteneigene Regel,
+   deshalb ohne !important. */
+[data-theme='light'] .legal-footer .cookie-settings-button {
+  color: var(--color-accent-on-light);
+}

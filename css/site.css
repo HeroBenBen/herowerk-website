@@ -213,6 +213,16 @@ nav.scrolled {
   margin: 2.5px 0;
   transition: 0.3s;
 }
+/* G10: Hellmodus-Fassung fuer die drei Balken des Menue-Symbols. Ohne sie
+   haengt die Balkenfarbe an --white und damit an der Ladereihenfolge der
+   Stildateien. Diese Regel macht die Farbe von der Reihenfolge unabhaengig,
+   damit der Fehler nicht wiederkehrt, wenn eine neue Seite die Reihenfolge
+   erneut vertauscht. Gegenprobe 02.08. auf index, foerderung, preise,
+   karriere und ratgeber: Farbwert vorher wie nachher rgb(28, 43, 54),
+   also ohne Wirkung auf gesunde Seiten. */
+[data-theme='light'] .hamburger span {
+  background: var(--color-text-primary);
+}
 .mobile-menu {
   display: none;
 }
