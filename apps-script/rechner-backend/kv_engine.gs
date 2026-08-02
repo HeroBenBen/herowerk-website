@@ -467,7 +467,14 @@ function kvCalculate(inputs, params) {
     for (var kk in inputs) { if (Object.prototype.hasOwnProperty.call(inputs, kk)) alt[kk] = inputs[kk]; }
     alt.fHalbjahr = key;
     var fi = kvFoerder(alt, params);
-    return { periode: key, quote: fi.q, label: fi.label };
+    // Euro-Zuschuss je Stufe nach dem ANZEIGE-Pfad (Kanon 1.2): Basis ist die Investition,
+    // gekappt auf die Grenze DIESER Periode, gerundet wie anzeigeBetrag (Orakel Z.135).
+    var basisStufe = Math.min(investWP, fi.grenze);
+    return {
+      periode: key, quote: fi.q, label: fi.label,
+      grenze: fi.grenze, basis: basisStufe,
+      betrag: Math.round(basisStufe * fi.q / 100)
+    };
   });
 
   // Anzeige-Pfad Förderbox (updateFoerderung, Orakel Z.124 bis 142).
