@@ -1,8 +1,23 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <!-- (a) consentmanager CMP (Autoblocking): erstes Skript nach <head> -->
-  <script type="text/javascript" data-cmp-ab="1" src="https://cdn.consentmanager.net/delivery/autoblocking/d94854dc5273c.js" data-cmp-host="a.delivery.consentmanager.net" data-cmp-cdn="cdn.consentmanager.net" data-cmp-codesrc="0"></script>
+  <!-- ConsentManager nur auf den beiden oeffentlichen HeroWerk-Domains -->
+  <script>
+    (function () {
+      var host = window.location.hostname.toLowerCase().replace(/\.$/, '');
+      var productionHosts = ['herowerk.de', 'www.herowerk.de'];
+
+      if (productionHosts.indexOf(host) === -1) return;
+
+      document.write(
+        '<script type="text/javascript" data-cmp-ab="1"' +
+          ' src="https://cdn.consentmanager.net/delivery/autoblocking/d94854dc5273c.js"' +
+          ' data-cmp-host="a.delivery.consentmanager.net"' +
+          ' data-cmp-cdn="cdn.consentmanager.net"' +
+          ' data-cmp-codesrc="0"></' + 'script>'
+      );
+    }());
+  </script>
   <meta charset="UTF-8">
   <!-- ============================================================== -->
   <!-- HeroWerk Consent + Analytics (Opt-in, Google Consent Mode v2)   -->

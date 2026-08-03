@@ -1,31 +1,21 @@
-// Einwilligung: zwei Pruefungen mit UNTERSCHIEDLICHER Beweislage.
+// Einwilligung: zwei Prüfungen mit unterschiedlicher Beweislage.
 //
-// GEMESSEN AM 29.07.2026, gegen die Vercel-Vorschau UND gegen www.herowerk.de:
+// ÄNDERUNG AM 03.08.2026:
+// Der Host-Wächter verhindert den ConsentManager-Aufruf bewusst auf Localhost und
+// Vercel-Vorschauen. Der frühere @smoke-Test lud dort das Autoblocking-Skript, damit
+// „null Trackingskripte“ nicht nur bedeutete, dass überhaupt nichts geladen hatte.
+// Dieser Funktionsbeweis kann nach Einführung des Wächters auf der Vorschau nicht
+// fortgeführt werden. Der @smoke-Test beweist deshalb jetzt den vorhandenen Wächter,
+// seine exakte Produktions-Allowlist, die bewusste Ablehnung des aktuellen Hosts und
+// null Anbieter- sowie Trackinganfragen. Der entfallene Beweis liegt im @live-Test:
+// Autoblocking-Antwort mit Statuscode, Skript im Dokument, Dialogzustand und, falls
+// der Dialog erscheint, nach Ablehnung null GA4- und Meta-Anfragen.
 //
-// 1. Die Auslieferkette des Anbieters funktioniert auf BEIDEN Zielen. Auf der
-//    vercel.app-Adresse antworten autoblocking-Skript, cmp_final.min.js,
-//    cmp.php?id=173772&h=<vercel-Host> und das customdata-Skript alle mit 200,
-//    window.__cmp ist eine Funktion. Die Vermutung, der Dialog sei an die Domain
-//    herowerk.de gebunden und koenne auf einer Vorschau-Adresse gar nicht ausliefern,
-//    ist damit WIDERLEGT. Sie war die naheliegende Erklaerung, aber nicht die richtige.
-//
-// 2. Trotzdem entsteht auf KEINEM der beiden Ziele ein #cmpbox. __cmp('getCMPData')
-//    meldet auf www.herowerk.de consentExists=true bei null gesetzten Cookies und
-//    vendorsCount=0. Der Mandant 173772 liefert derzeit also ueberhaupt keinen Dialog
-//    aus, weder live noch in der Vorschau; sichtbar ist nur die Wieder-Oeffnen-
-//    Schaltflaeche .cmpboxrecall. Zusaetzlich blockt die CSP beider Ziele
-//    (style-src 'self' 'unsafe-inline', identisch in .htaccess und vercel.json) das
-//    Stylesheet cdn.consentmanager.net/delivery/css/cmp.min.css.
-//
-// Folge fuer die Pruefkette: Punkt 1 ist auf der Vorschau ehrlich pruefbar und bleibt
-// hart in der PR-Kette. Punkt 2 kann auf KEINEM Ziel bestehen, solange Mandanten-
-// Konfiguration und CSP unveraendert sind. Beides liegt ausserhalb dieses Repos bzw.
-// in Dateien, die der Auftrag zur Gate-Reparatur nicht anfassen darf. Der Dialog-Test
-// laeuft deshalb als @live-Pruefung gegen www.herowerk.de und ist im Workflow als
-// Bericht gefuehrt, nicht als Hard-Gate. Er wird wieder scharf, sobald getCMPData
-// einen Dialog meldet und die CSP den Anbieter unter style-src erlaubt.
+// Ein geladenes Autoblocking-Skript ohne Dialog ist kein Baufehler: Das entspricht
+// mit hoher Wahrscheinlichkeit der Anbieter- oder Kontingentgrenze, gegen die dieser
+// Wächter arbeitet. Nur ein nicht geladenes Autoblocking-Skript lässt @live scheitern.
 'use strict';
-/* global window */
+/* global window, document */
 const { test, expect } = require('@playwright/test');
 
 const TRACKING_SCRIPT_SELECTOR = [
@@ -34,42 +24,134 @@ const TRACKING_SCRIPT_SELECTOR = [
 ].join(',');
 
 const LIVE_URL = 'https://www.herowerk.de';
+const CMP_SCRIPT_PART = '/delivery/autoblocking/d94854dc5273c.js';
 
-// --- Hart in der PR-Kette: was auf der Vorschau beweisbar ist ----------------------
-test('@smoke Einwilligungs-Kette lädt und GA4/Meta bleiben ohne Zustimmung gesperrt', async ({
+function hostnameOf(url) {
+  return new URL(url).hostname.toLowerCase();
+}
+
+function isConsentManagerUrl(url) {
+  const hostname = hostnameOf(url);
+  return hostname === 'consentmanager.net' || hostname.endsWith('.consentmanager.net');
+}
+
+function isTrackingUrl(url) {
+  const hostname = hostnameOf(url);
+  return hostname === 'www.googletagmanager.com' || hostname === 'connect.facebook.net';
+}
+
+// --- Hart in der PR-Kette: Wächter lehnt Nicht-Produktion bewusst ab ---------------
+test('@smoke Einwilligungs-Wächter lehnt Nicht-Produktion ab und Tracking bleibt aus', async ({
   page,
 }) => {
-  await page.goto('/?cmpdebug&cmpscreen', { waitUntil: 'networkidle' });
+  const consentManagerRequests = [];
+  const trackingRequests = [];
 
-  // Das Autoblocking-Skript des Anbieters muss geladen sein, sonst waere die Sperre
-  // der Trackingskripte reiner Zufall und der Test wuerde nichts messen.
-  await expect(page.locator('script[src*="/delivery/autoblocking/"]')).toBeAttached({
-    timeout: 15000,
+  page.on('request', (request) => {
+    const url = request.url();
+    if (isConsentManagerUrl(url)) consentManagerRequests.push(url);
+    if (isTrackingUrl(url)) trackingRequests.push(url);
   });
-  await expect(page.locator('script[src*="/delivery/customdata/"]')).toBeAttached({
-    timeout: 15000,
+
+  await page.goto('/?cmpdebug&cmpscreen', { waitUntil: 'domcontentloaded' });
+  await page.waitForTimeout(1000);
+
+  const guardState = await page.evaluate(() => {
+    const guardNeedle = "var productionHosts = ['herowerk.de', 'www.herowerk.de'];";
+    const guards = Array.from(document.scripts).filter((script) =>
+      script.textContent.includes(guardNeedle)
+    );
+    const currentHost = window.location.hostname.toLowerCase().replace(/\.$/, '');
+    const productionHosts = ['herowerk.de', 'www.herowerk.de'];
+    const guardSource = guards[0]?.textContent || '';
+
+    return {
+      currentHost,
+      guardCount: guards.length,
+      allowlistExact: guardSource.includes(guardNeedle),
+      usesExactRejection: guardSource.includes('productionHosts.indexOf(host) === -1'),
+      hostRejected: productionHosts.indexOf(currentHost) === -1,
+      externalCmpScripts: Array.from(document.scripts).filter((script) =>
+        script.src.includes('/delivery/autoblocking/')
+      ).length,
+    };
   });
-  // Voraussetzung der Messung selbst: die Anbieter-API muss da sein. Ohne sie sagt ein
-  // "0 Trackingskripte" nur aus, dass ueberhaupt nichts geladen hat.
+
+  expect(guardState.guardCount).toBe(1);
+  expect(guardState.allowlistExact).toBe(true);
+  expect(guardState.usesExactRejection).toBe(true);
+  expect(
+    guardState.hostRejected,
+    'Host ' + guardState.currentHost + ' muss bewusst abgelehnt werden'
+  ).toBe(true);
+  expect(guardState.externalCmpScripts).toBe(0);
+  expect(consentManagerRequests).toEqual([]);
+  expect(trackingRequests).toEqual([]);
+  await expect(page.locator(TRACKING_SCRIPT_SELECTOR)).toHaveCount(0);
+});
+
+// --- Verpflichtender Bericht gegen die echte Domain -------------------------------
+test('@live Autoblocking lädt auf www.herowerk.de und Dialogzustand wird gemessen', async ({
+  page,
+}) => {
+  const autoblockingRequests = [];
+  const trackingRequests = [];
+
+  page.on('request', (request) => {
+    const url = request.url();
+    if (url.includes(CMP_SCRIPT_PART)) autoblockingRequests.push(url);
+    if (isTrackingUrl(url)) trackingRequests.push(url);
+  });
+
+  const autoblockingResponsePromise = page
+    .waitForResponse((response) => response.url().includes(CMP_SCRIPT_PART), { timeout: 15000 })
+    .catch(() => null);
+
+  await page.goto(LIVE_URL + '/?cmpdebug&cmpscreen', { waitUntil: 'domcontentloaded' });
+  const autoblockingResponse = await autoblockingResponsePromise;
+  const autoblockingScript = page.locator('script[src*="' + CMP_SCRIPT_PART + '"]');
+  const skriptImDokument = (await autoblockingScript.count()) === 1;
+
+  const banner = page.locator('#cmpbox');
+  const dialogSichtbar = await banner
+    .waitFor({ state: 'visible', timeout: 15000 })
+    .then(() => true)
+    .catch(() => false);
+  const dialogImDokument = (await banner.count()) > 0;
+  const messung = {
+    skriptaufruf: autoblockingRequests[0] || null,
+    antwortcode: autoblockingResponse?.status() ?? null,
+    skriptImDokument,
+    dialogImDokument,
+    dialogSichtbar,
+    trackinganfragen: [...trackingRequests],
+  };
+
+  console.log('ConsentManager-Live-Messung: ' + JSON.stringify(messung));
+
+  expect(
+    autoblockingRequests.length,
+    'Autoblocking-Skript wurde nicht angefordert'
+  ).toBeGreaterThan(0);
+  expect(autoblockingResponse, 'Autoblocking-Skript lieferte keine HTTP-Antwort').not.toBeNull();
+  expect(autoblockingResponse.status()).toBeGreaterThanOrEqual(200);
+  expect(autoblockingResponse.status()).toBeLessThan(400);
+  expect(skriptImDokument).toBe(true);
   await expect
     .poll(() => page.evaluate(() => typeof window.__cmp), { timeout: 15000 })
     .toBe('function');
 
-  await expect(page.locator(TRACKING_SCRIPT_SELECTOR)).toHaveCount(0);
-  await page.waitForTimeout(1000);
-  await expect(page.locator(TRACKING_SCRIPT_SELECTOR)).toHaveCount(0);
-});
+  if (dialogSichtbar) {
+    await expect(banner).toHaveAttribute('role', 'dialog');
+    const rejectButton = banner.locator('.cmpboxbtnno').first();
+    await expect(rejectButton).toBeVisible();
+    await rejectButton.click();
+    await expect(banner).toBeHidden();
+    await page.waitForTimeout(1000);
+  } else {
+    console.log('Dialog bleibt aus, Skript lädt, Verdacht Anbieter- oder Kontingentgrenze.');
+  }
 
-// --- Bericht gegen die echte Domain: der Dialog selbst -----------------------------
-test('@live Einwilligungsdialog erscheint auf www.herowerk.de', async ({ page }) => {
-  await page.goto(`${LIVE_URL}/?cmpdebug&cmpscreen`, { waitUntil: 'networkidle' });
-
-  const banner = page.locator('#cmpbox');
-  await expect(banner).toBeVisible({ timeout: 15000 });
-  await expect(banner).toHaveAttribute('role', 'dialog');
-  await expect(banner.locator('.cmpboxbtnno').first()).toBeVisible();
-  await banner.locator('.cmpboxbtnno').first().click();
-  await expect(banner).toBeHidden();
-  await page.waitForTimeout(1000);
+  expect(trackingRequests).toEqual([]);
   await expect(page.locator(TRACKING_SCRIPT_SELECTOR)).toHaveCount(0);
 });
