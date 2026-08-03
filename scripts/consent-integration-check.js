@@ -6,10 +6,29 @@ const path = require('node:path');
 
 const root = path.resolve(process.env.CONSENT_CHECK_ROOT || path.join(__dirname, '..'));
 const cmpCodeId = 'd94854dc5273c';
-const cmpScriptUrl = `https://cdn.consentmanager.net/delivery/autoblocking/${cmpCodeId}.js`;
+const cmpScriptUrl = 'https://cdn.consentmanager.net/delivery/autoblocking/' + cmpCodeId + '.js';
 const cmpDeliveryHost = 'https://a.delivery.consentmanager.net';
 const cmpCdnHost = 'https://cdn.consentmanager.net';
-const skippedDirectories = new Set(['.git', 'dist-ionos', 'node_modules', 'reports']);
+const guardMarker = '<!-- ConsentManager nur auf den beiden oeffentlichen HeroWerk-Domains -->';
+const expectedGuard = [
+  '  ' + guardMarker,
+  '  <script>',
+  '    (function () {',
+  "      var host = window.location.hostname.toLowerCase().replace(/\\.$/, '');",
+  "      var productionHosts = ['herowerk.de', 'www.herowerk.de'];",
+  '',
+  '      if (productionHosts.indexOf(host) === -1) return;',
+  '',
+  '      document.write(',
+  '        \'<script type="text/javascript" data-cmp-ab="1"\' +',
+  '          \' src="https://cdn.consentmanager.net/delivery/autoblocking/d94854dc5273c.js"\' +',
+  '          \' data-cmp-host="a.delivery.consentmanager.net"\' +',
+  '          \' data-cmp-cdn="cdn.consentmanager.net"\' +',
+  "          ' data-cmp-codesrc=\"0\"></' + 'script>'",
+  '      );',
+  '    }());',
+  '  </script>',
+].join('\n');
 const errors = [];
 
 function read(relativePath) {
@@ -20,59 +39,50 @@ function count(source, needle) {
   return source.split(needle).length - 1;
 }
 
-function listHtml(relativeDirectory = '') {
-  const absoluteDirectory = path.join(root, relativeDirectory);
-  return fs.readdirSync(absoluteDirectory, { withFileTypes: true }).flatMap((entry) => {
-    const relativePath = path.join(relativeDirectory, entry.name);
-    if (entry.isDirectory()) {
-      return skippedDirectories.has(entry.name) ? [] : listHtml(relativePath);
-    }
-    return entry.isFile() && entry.name.endsWith('.html') ? [relativePath] : [];
-  });
+function listTopLevelHtml() {
+  return fs
+    .readdirSync(root, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith('.html'))
+    .map((entry) => entry.name)
+    .sort();
 }
 
 function checkCmpPage(relativePath, source) {
-  const scriptTags = [...source.matchAll(/<script\b[^>]*>/gi)];
-  const cmpTags = scriptTags.filter((match) => match[0].includes(`${cmpCodeId}.js`));
+  const guardMarkerCount = count(source, guardMarker);
+  const exactGuardCount = count(source, expectedGuard);
+  const firstScriptPosition = source.search(/<script\b/i);
+  const guardPosition = source.indexOf(expectedGuard);
+  const guardScriptPosition = guardPosition === -1 ? -1 : source.indexOf('<script>', guardPosition);
   const defaultPosition = source.indexOf("gtag('consent', 'default'");
   const loaderPosition = source.indexOf('js/consent.js?v=');
 
-  if (cmpTags.length !== 1) {
-    errors.push(`${relativePath}: ${cmpTags.length} statt genau 1 CMP-Skript.`);
-    return;
+  if (guardMarkerCount !== 1) {
+    errors.push(relativePath + ': ' + guardMarkerCount + ' statt genau 1 ConsentManager-Wächter.');
+  }
+  if (exactGuardCount !== 1) {
+    errors.push(relativePath + ': ConsentManager-Wächter fehlt oder weicht von der Vorgabe ab.');
   }
 
-  const cmpTag = cmpTags[0];
-  const requiredFragments = [
-    `src="${cmpScriptUrl}"`,
-    'data-cmp-ab="1"',
-    'data-cmp-host="a.delivery.consentmanager.net"',
-    'data-cmp-cdn="cdn.consentmanager.net"',
-    'data-cmp-codesrc="0"',
-  ];
-
-  for (const fragment of requiredFragments) {
-    if (!cmpTag[0].includes(fragment)) {
-      errors.push(`${relativePath}: CMP-Skript enthält nicht ${fragment}.`);
-    }
+  const sourceWithoutGuard = exactGuardCount === 1 ? source.replace(expectedGuard, '') : source;
+  if (sourceWithoutGuard.includes(cmpScriptUrl)) {
+    errors.push(relativePath + ': ungeschützter ConsentManager-Skriptaufruf gefunden.');
   }
-  if (/\b(?:async|defer)\b/i.test(cmpTag[0])) {
-    errors.push(`${relativePath}: CMP-Skript darf weder async noch defer sein.`);
+  if (firstScriptPosition !== guardScriptPosition) {
+    errors.push(relativePath + ': ConsentManager-Wächter ist nicht das erste Skript im Dokument.');
   }
-  if (scriptTags[0]?.index !== cmpTag.index) {
-    errors.push(`${relativePath}: CMP-Autoblocking ist nicht das erste Skript im Dokument.`);
-  }
-  if (count(source, `${cmpCodeId}.js`) !== 1) {
-    errors.push(`${relativePath}: CMP-Code-ID kommt nicht genau einmal vor.`);
+  if (count(source, cmpCodeId + '.js') !== 1) {
+    errors.push(relativePath + ': CMP-Code-ID kommt nicht genau einmal vor.');
   }
   if (count(source, "gtag('consent', 'default'") !== 1) {
-    errors.push(`${relativePath}: Consent-Mode-Default kommt nicht genau einmal vor.`);
+    errors.push(relativePath + ': Consent-Mode-Default kommt nicht genau einmal vor.');
   }
   if (count(source, 'js/consent.js?v=') !== 1) {
-    errors.push(`${relativePath}: lokaler Opt-in-Loader kommt nicht genau einmal vor.`);
+    errors.push(relativePath + ': lokaler Opt-in-Loader kommt nicht genau einmal vor.');
   }
-  if (!(cmpTag.index < defaultPosition && defaultPosition < loaderPosition)) {
-    errors.push(`${relativePath}: Soll-Reihenfolge CMP → Consent-Mode-Default → Loader verletzt.`);
+  if (!(guardScriptPosition < defaultPosition && defaultPosition < loaderPosition)) {
+    errors.push(
+      relativePath + ': Soll-Reihenfolge Wächter → Consent-Mode-Default → Loader verletzt.'
+    );
   }
 }
 
@@ -89,27 +99,21 @@ function checkCsp(label, policy) {
   const styleTokens = styleDirective?.split(/\s+/).slice(1) || [];
 
   if (!scriptTokens.includes(cmpDeliveryHost)) {
-    errors.push(`${label}: ${cmpDeliveryHost} fehlt als exakter Host in script-src.`);
+    errors.push(label + ': ' + cmpDeliveryHost + ' fehlt als exakter Host in script-src.');
   }
   if (!styleTokens.includes(cmpCdnHost)) {
-    errors.push(`${label}: ${cmpCdnHost} fehlt als exakter Host in style-src.`);
+    errors.push(label + ': ' + cmpCdnHost + ' fehlt als exakter Host in style-src.');
   }
 }
 
-const htmlFiles = listHtml().sort();
-const topLevelHtmlFiles = htmlFiles.filter((relativePath) => !relativePath.includes(path.sep));
-const cmpPages = [];
+const topLevelHtmlFiles = listTopLevelHtml();
+console.log('Consent-Zählprobe: ' + topLevelHtmlFiles.length + ' öffentliche Stammseiten.');
 
-for (const relativePath of htmlFiles) {
-  const source = read(relativePath);
-  const containsCmp = source.includes(`${cmpCodeId}.js`);
-  if (!relativePath.includes(path.sep) && !containsCmp) {
-    errors.push(`${relativePath}: produktive Top-Level-Seite enthält keine CMP-Einbindung.`);
-  }
-  if (containsCmp) {
-    cmpPages.push(relativePath);
-    checkCmpPage(relativePath, source);
-  }
+if (topLevelHtmlFiles.length === 0) {
+  errors.push('Keine öffentliche HTML-Seite im Projektstamm gefunden.');
+}
+for (const relativePath of topLevelHtmlFiles) {
+  checkCmpPage(relativePath, read(relativePath));
 }
 
 const htaccess = read('.htaccess');
@@ -131,12 +135,13 @@ if (!vercelPolicy) {
 }
 
 if (errors.length > 0) {
-  console.error(`Consent-Integration FEHLER: ${errors.length}`);
-  for (const error of errors) console.error(`- ${error}`);
+  console.error('Consent-Integration FEHLER: ' + errors.length);
+  for (const error of errors) console.error('- ' + error);
   process.exit(1);
 }
 
 console.log(
-  `Consent-Integration OK: ${topLevelHtmlFiles.length} Top-Level-Seiten, ` +
-    `${cmpPages.length} CMP-Seiten, 2 CSP-Quellen.`
+  'Consent-Integration OK: ' +
+    topLevelHtmlFiles.length +
+    ' öffentliche Stammseiten mit Wächter, keine ungeschützte Einbindung, 2 CSP-Quellen.'
 );
