@@ -163,9 +163,50 @@ let wizStep = 1;
 // Besucher-IP geht an unseren Server statt an Google. Same-Origin -> kein CORS. Alle Aufruf-
 // stellen haengen wie bisher '?...' an, daher bleibt die Rechner-Logik unveraendert.
 const RECHNER_API = '/api/rechner';
+const RECHNER_RETRY_DELAYS_MS = [0, 1000, 3000];
+
+function rechnerAbortableDelay(ms, signal) {
+  if (!ms) return Promise.resolve();
+  return new Promise((resolve, reject) => {
+    const timer = window.setTimeout(resolve, ms);
+    if (!signal) return;
+    const abort = () => {
+      window.clearTimeout(timer);
+      reject(new DOMException('Abgebrochen', 'AbortError'));
+    };
+    if (signal.aborted) abort();
+    else signal.addEventListener('abort', abort, { once: true });
+  });
+}
+
+async function rechnerFetch(url, options = {}) {
+  let lastError;
+  for (let attempt = 0; attempt < RECHNER_RETRY_DELAYS_MS.length; attempt += 1) {
+    await rechnerAbortableDelay(RECHNER_RETRY_DELAYS_MS[attempt], options.signal);
+    const timeoutController = new AbortController();
+    const externalAbort = () => timeoutController.abort();
+    if (options.signal?.aborted) externalAbort();
+    else options.signal?.addEventListener('abort', externalAbort, { once: true });
+    const timeout = window.setTimeout(() => timeoutController.abort(), 15000);
+    try {
+      const response = await fetch(url, { ...options, signal: timeoutController.signal });
+      if (response.ok) return response;
+      lastError = new Error('HTTP ' + response.status);
+    } catch (error) {
+      if (options.signal?.aborted) throw error;
+      lastError = error;
+    } finally {
+      window.clearTimeout(timeout);
+      options.signal?.removeEventListener('abort', externalAbort);
+    }
+  }
+  throw lastError || new Error('Rechner nicht erreichbar');
+}
+
 let wizServerResult = null;
 let wizSelectedMarke = 'wolf';
 let foerderMarke = 'wolf';
+let foerderRequestSeq = 0;
 
 // PLZ → Gemeinde Mapping (Region Hannover)
 const plzMap = {
@@ -717,7 +758,7 @@ async function wizCalculate() {
   });
 
   try {
-    const response = await fetch(RECHNER_API + '?' + params.toString());
+    const response = await rechnerFetch(RECHNER_API + '?' + params.toString());
     if (!response.ok) throw new Error('HTTP ' + response.status);
     const data = await response.json();
     if (data.error) throw new Error(data.message || 'server_error');
@@ -1140,7 +1181,7 @@ async function paLoadData() {
   paApplyBrand('wolf');
   foerderRefreshPackageOptions();
   try {
-    const response = await fetch(RECHNER_API + '?action=preise&origin=https://herowerk.de');
+    const response = await rechnerFetch(RECHNER_API + '?action=preise&origin=https://herowerk.de');
     if (!response.ok) throw new Error(response.status);
     const data = await response.json();
     paPrices = {
@@ -1980,6 +2021,7 @@ function hwTreppeAufbauen(treppe, aktivePeriode) {
 async function calculateFoerder() {
   const weEl = document.getElementById('wohneinheiten');
   if (!weEl) return;
+  const requestSeq = ++foerderRequestSeq;
   ensureFoerderHeizungsoptionen();
   const we = parseInt(weEl.value);
   const selbstWE = parseInt(document.getElementById('selbstnutzung').value);
@@ -2002,6 +2044,11 @@ async function calculateFoerder() {
   document.getElementById('frPreis').textContent = 'wird berechnet';
   document.getElementById('frZuschuss').innerHTML = calcDots;
   document.getElementById('frEigen').textContent = 'wird berechnet';
+  const langsamHinweis = document.getElementById('foerderLangsamHinweis');
+  if (langsamHinweis) langsamHinweis.hidden = true;
+  const langsamTimer = window.setTimeout(() => {
+    if (requestSeq === foerderRequestSeq && langsamHinweis) langsamHinweis.hidden = false;
+  }, 2000);
 
   const params = new URLSearchParams({
     action: 'foerderung',
@@ -2023,11 +2070,14 @@ async function calculateFoerder() {
 
   let data;
   try {
-    const response = await fetch(RECHNER_API + '?' + params.toString());
+    const response = await rechnerFetch(RECHNER_API + '?' + params.toString());
     if (!response.ok) throw new Error('HTTP ' + response.status);
     data = await response.json();
     if (data.error) throw new Error(data.message || 'server_error');
   } catch (err) {
+    window.clearTimeout(langsamTimer);
+    if (requestSeq !== foerderRequestSeq) return;
+    if (langsamHinweis) langsamHinweis.hidden = true;
     console.error('Förderberechnung nicht verfügbar', err);
     document.getElementById('foerderBreakdown').innerHTML =
       '<div style="border:1px solid rgba(232,168,56,0.35);border-radius:12px;padding:14px;color:var(--g300);">Berechnung gerade nicht verfügbar. Bitte Beratung anfragen.</div>';
@@ -2035,6 +2085,9 @@ async function calculateFoerder() {
     hwTreppeAufbauen(null, null);
     return;
   }
+  window.clearTimeout(langsamTimer);
+  if (requestSeq !== foerderRequestSeq) return;
+  if (langsamHinweis) langsamHinweis.hidden = true;
 
   const preis = Number(data.preis) || 0;
   const gesamtZuschuss = Number(data.zuschussGesamt || 0);
@@ -2504,7 +2557,9 @@ async function fvPlaetzeLoad() {
   const box = document.getElementById('fvHomeKontingent');
   if (!el && !box) return;
   try {
-    const response = await fetch(RECHNER_API + '?action=fv_plaetze&origin=https://herowerk.de');
+    const response = await rechnerFetch(
+      RECHNER_API + '?action=fv_plaetze&origin=https://herowerk.de'
+    );
     if (!response.ok) throw new Error(response.status);
     const data = await response.json();
     const frei =

@@ -16,6 +16,20 @@ const SHEET_ID = '176a2khhd3eIJJwe23JXfuEaTTjY-qrkccxb-F52yoVA';
 const SERVICE_NAME = 'HeroWerk Rechner Backend';
 const CACHE_TTL_SECONDS = 300;
 const ALLOWED_ORIGIN_RE = /(^|\.)herowerk\.de$/i;
+// Nur der Controller ersetzt diesen Platzhalter beim chirurgischen Live-Deploy.
+// Der echte Wert steht niemals im Repo und wird ausschließlich serverseitig verwendet.
+const WERTE_SNAPSHOT_KEY = 'CONTROLLER_SETZT_WERTE_SNAPSHOT_KEY';
+const WERTE_SNAPSHOT_SHEETS = [
+  'KV_Parameter',
+  'KV_FoerderPerioden',
+  'Förder_Parameter',
+  'Dimensionierung',
+  'Preise_Wolf',
+  'Preise_Vaillant',
+  'Geräte_Katalog',
+  'Klima_PLZ',
+  'Fördervorschuss'
+];
 
 function doGet(e) {
   const params = (e && e.parameter) || {};
@@ -28,6 +42,7 @@ function doGet(e) {
     if (action === 'kostenvergleich') return json_(kostenvergleich_(params));
     if (action === 'kv_bootstrap') return json_(kvBootstrap_(params));
     if (action === 'fv_plaetze') return json_(fvPlaetze_());
+    if (action === 'werte_snapshot' && werteSnapshotKeyValid_(params.key)) return json_(werteSnapshot_());
     return json_(health_());
   } catch (err) {
     return json_({ error: true, message: err && err.message ? err.message : String(err), service: SERVICE_NAME, ready: false });
@@ -982,6 +997,62 @@ function getPriceTableCached_(marke) {
 function preise_(p) {
   return { wolf: readPriceTable_('Preise_Wolf'), vaillant: readPriceTable_('Preise_Vaillant') };
 }
+
+// Geschützte Rohdaten-Sammelroute für den PHP-Rechenkern. Sie liest ausschließlich
+// die neun freigegebenen Tabellen und verändert weder Werte noch Formate.
+// Der vollständige JSON-Stand wird in ausreichend kleine CacheService-Blöcke geteilt,
+// damit auch größere Klima_PLZ-Stände innerhalb der 300-Sekunden-Vorhaltung bleiben.
+function werteSnapshot_() {
+  const cached = werteSnapshotCacheRead_();
+  if (cached) return cached;
+
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const sheets = {};
+  WERTE_SNAPSHOT_SHEETS.forEach(function (name) {
+    const sh = ss.getSheetByName(name);
+    if (!sh) throw new Error('missing_tab_' + name);
+    sheets[name] = sh.getDataRange().getValues();
+  });
+
+  const serialized = JSON.stringify({ service: 'werte_snapshot', schemaVersion: 1, sheets: sheets });
+  werteSnapshotCacheWrite_(serialized);
+  return JSON.parse(serialized);
+}
+
+function werteSnapshotKeyValid_(provided) {
+  const expected = String(WERTE_SNAPSHOT_KEY || '');
+  return expected !== '' &&
+    expected !== 'CONTROLLER_SETZT_WERTE_SNAPSHOT_KEY' &&
+    String(provided || '') === expected;
+}
+
+function werteSnapshotCacheRead_() {
+  const cache = CacheService.getScriptCache();
+  const count = parseInt(cache.get('werte_snapshot:v1:parts') || '0', 10);
+  if (!count || count < 1) return null;
+  let serialized = '';
+  for (let i = 0; i < count; i++) {
+    const part = cache.get('werte_snapshot:v1:' + i);
+    if (part === null) return null;
+    serialized += part;
+  }
+  return JSON.parse(serialized);
+}
+
+function werteSnapshotCacheWrite_(serialized) {
+  const cache = CacheService.getScriptCache();
+  const chunkChars = 30000;
+  const count = Math.ceil(serialized.length / chunkChars);
+  for (let i = 0; i < count; i++) {
+    cache.put(
+      'werte_snapshot:v1:' + i,
+      serialized.slice(i * chunkChars, (i + 1) * chunkChars),
+      CACHE_TTL_SECONDS
+    );
+  }
+  cache.put('werte_snapshot:v1:parts', String(count), CACHE_TTL_SECONDS);
+}
+
 function isAllowedOrigin_(p) {
   const origin = String(p.origin || p.originToken || 'https://herowerk.de');
   const host = origin.replace(/^https?:\/\//i, '').split('/')[0].split(':')[0];

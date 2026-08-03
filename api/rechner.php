@@ -1,126 +1,164 @@
 <?php
 /**
- * HeroWerk — Server-seitiger Proxy fuer den Rechner (Dimensionierung / Foerderung / Preise).
- * ============================================================================================
- *
- * Zweck:
- *   Der Browser ruft NUR noch /api/rechner auf unserer eigenen Domain auf. Dieser Proxy holt
- *   die Zahlen server-seitig vom Google-Apps-Script-Endpunkt und gibt sie unveraendert zurueck.
- *
- * Wirkung:
- *   - Der Apps-Script-Endpunkt ist nicht mehr im Browser-Quelltext sichtbar/direkt aufrufbar
- *     (er steht nur noch hier als server-seitige Konstante).
- *   - Die Besucher-IP geht an UNSEREN Server, nicht mehr an Google.
- *   - Same-Origin: der Aufruf bleibt auf herowerk.de, daher KEIN CORS noetig.
- *
- * Live-aus-Sheet bleibt erhalten:
- *   Es wird NICHT gecached. Jeder eingehende Request loest pro Aufruf einen frischen
- *   server-seitigen Aufruf des Apps-Scripts aus -> jede Sheet-Aenderung ist sofort wirksam,
- *   genau wie beim bisherigen Direkt-Aufruf aus dem Browser. (Optionaler Kurz-Cache ist unten
- *   nur AUSKOMMENTIERT vorbereitet und absichtlich NICHT aktiv.)
- *
- * Sicherer Weg / Funktion bleibt erhalten:
- *   Der komplette eingehende Query-String wird VERBATIM (1:1, unveraendert) weitergereicht.
- *   Dadurch funktionieren alle bestehenden Aufrufmuster aus js/site.js ohne Logik-Aenderung:
- *     - ?action=dimensionierung&flaeche=...&...&origin=https://herowerk.de
- *     - ?action=foerderung&we=...&...&origin=https://herowerk.de
- *     - ?action=preise&origin=https://herowerk.de
- *
- * Nur GET wird zugelassen (der Rechner nutzt ausschliesslich GET).
+ * HeroWerk-Rechner: Herkunft, Ratenbegrenzung, PHP-Rechenkern und Google-Rückfall.
  */
 
 declare(strict_types=1);
 
-// --- Server-seitige Konstante: Apps-Script-Endpunkt (NICHT im Browser sichtbar) ---
-// Exakt uebernommen aus js/site.js (Konstante RECHNER_API). Nicht erfinden/aendern.
+date_default_timezone_set('Europe/Berlin');
+
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwsvoC0ZBtpZq8WY_hNS-BPN1gcTK5G1JAMfxSc5FpjWxQ2SbRLI9VqCnX8SRLO4meF/exec';
 
-// Antwort ist immer JSON.
+// Einzige Umschaltung zwischen PHP und dem bisherigen Google-Durchreichepfad.
+const RECHNER_PHP_ENGINE_ENABLED = true;
+
+// Die ersten zwei Wochen nur protokollieren. true aktiviert HTTP 429 ab Aufruf 61.
+const RECHNER_RATE_LIMIT_ENFORCED = false;
+
+const RECHNER_RATE_LIMIT_PER_MINUTE = 60;
+const RECHNER_SNAPSHOT_TTL_SECONDS = 300;
+const RECHNER_SNAPSHOT_MAX_QUIET_AGE_SECONDS = 86400;
+const RECHNER_SNAPSHOT_FETCH_TIMEOUT_SECONDS = 12;
+const RECHNER_GOOGLE_FORWARD_TIMEOUT_SECONDS = 15;
+
+// /website/api/rechner.php -> privater Geschwisterordner /rechner-runtime.
+const RECHNER_RUNTIME_DIR = __DIR__ . '/../../rechner-runtime';
+const RECHNER_SNAPSHOT_FILE = RECHNER_RUNTIME_DIR . '/werte_snapshot.json';
+const RECHNER_SNAPSHOT_KEY_FILE = RECHNER_RUNTIME_DIR . '/werte_snapshot_key.txt';
+
+require_once __DIR__ . '/rechner-values.php';
+require_once __DIR__ . '/rechner-engine.php';
+
 header('Content-Type: application/json; charset=utf-8');
-// Same-Origin-Endpunkt: niemals von Dritt-Seiten einbettbar/cachebar machen.
 header('X-Content-Type-Options: nosniff');
 header('Cache-Control: no-store');
 
-/**
- * Saubere JSON-Fehlerausgabe (gleiches Schema wie das Apps-Script: { error, message }).
- */
-function rechner_fail(int $status, string $message): void
+function rechner_fail(int $status, string $message): never
 {
     http_response_code($status);
-    echo json_encode(['error' => true, 'message' => $message], JSON_UNESCAPED_UNICODE);
+    echo json_encode(['error' => true, 'message' => $message], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     exit;
 }
 
-// --- Nur GET zulassen ---
+function rechner_origin_header_allowed(string $value): bool
+{
+    $parts = parse_url(trim($value));
+    if (!is_array($parts)
+        || strtolower((string) ($parts['scheme'] ?? '')) !== 'https'
+        || isset($parts['port'])
+        || isset($parts['user'])
+        || isset($parts['pass'])) {
+        return false;
+    }
+    $host = strtolower((string) ($parts['host'] ?? ''));
+    return $host === 'herowerk.de' || $host === 'www.herowerk.de';
+}
+
+function rechner_request_origin_allowed(array $server): bool
+{
+    $origin = trim((string) ($server['HTTP_ORIGIN'] ?? ''));
+    if ($origin !== '' && rechner_origin_header_allowed($origin)) {
+        return true;
+    }
+    $referer = trim((string) ($server['HTTP_REFERER'] ?? ''));
+    if ($referer !== '' && rechner_origin_header_allowed($referer)) {
+        return true;
+    }
+    return strtolower(trim((string) ($server['HTTP_SEC_FETCH_SITE'] ?? ''))) === 'same-origin';
+}
+
+/** @return array{count:int,limited:bool} */
+function rechner_rate_limit(string $remoteAddress): array
+{
+    $directory = RECHNER_RUNTIME_DIR . '/rate-limit';
+    if (!is_dir($directory) && !mkdir($directory, 0700, true) && !is_dir($directory)) {
+        throw new RuntimeException('rate_limit_directory_unavailable');
+    }
+    $file = $directory . '/' . hash('sha256', $remoteAddress !== '' ? $remoteAddress : 'unknown') . '.json';
+    $handle = fopen($file, 'c+');
+    if ($handle === false || !flock($handle, LOCK_EX)) {
+        if (is_resource($handle)) {
+            fclose($handle);
+        }
+        throw new RuntimeException('rate_limit_storage_unavailable');
+    }
+    $raw = stream_get_contents($handle);
+    $state = is_string($raw) && $raw !== '' ? json_decode($raw, true) : null;
+    $bucket = intdiv(time(), 60);
+    $count = is_array($state) && ($state['bucket'] ?? null) === $bucket
+        ? (int) ($state['count'] ?? 0) + 1
+        : 1;
+    rewind($handle);
+    ftruncate($handle, 0);
+    fwrite($handle, json_encode(['bucket' => $bucket, 'count' => $count], JSON_THROW_ON_ERROR));
+    fflush($handle);
+    flock($handle, LOCK_UN);
+    fclose($handle);
+    chmod($file, 0600);
+
+    $limited = $count > RECHNER_RATE_LIMIT_PER_MINUTE;
+    if ($limited) {
+        error_log(sprintf(
+            'HeroWerk Rechner: rate_limit_exceeded remote_hash=%s count=%d mode=%s',
+            substr(hash('sha256', $remoteAddress), 0, 16),
+            $count,
+            RECHNER_RATE_LIMIT_ENFORCED ? 'enforce' : 'log'
+        ));
+    }
+    return ['count' => $count, 'limited' => $limited];
+}
+
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 if ($method !== 'GET') {
     header('Allow: GET');
     rechner_fail(405, 'method_not_allowed');
 }
 
-// --- Eingehenden Query-String VERBATIM weiterreichen ---
-// $_SERVER['QUERY_STRING'] enthaelt den Roh-Query-String genau so, wie der Browser ihn
-// gesendet hat (bereits URL-encodet). Wir haengen ihn unveraendert an den Apps-Script-URL an,
-// damit jedes bestehende Aufrufmuster 1:1 erhalten bleibt und nichts bricht.
-$query = $_SERVER['QUERY_STRING'] ?? '';
-$target = APPS_SCRIPT_URL . ($query !== '' ? '?' . $query : '');
-
-if (!function_exists('curl_init')) {
-    rechner_fail(500, 'curl_unavailable');
+if (!rechner_request_origin_allowed($_SERVER)) {
+    rechner_fail(403, 'origin_not_allowed');
 }
 
-$ch = curl_init();
-curl_setopt_array($ch, [
-    CURLOPT_URL            => $target,
-    CURLOPT_HTTPGET        => true,
-    CURLOPT_RETURNTRANSFER => true,
-    // Apps-Script /exec antwortet mit 302 auf script.googleusercontent.com -> Redirects folgen.
-    CURLOPT_FOLLOWLOCATION => true,
-    CURLOPT_MAXREDIRS      => 5,
-    CURLOPT_CONNECTTIMEOUT => 10,
-    CURLOPT_TIMEOUT        => 25,
-    CURLOPT_SSL_VERIFYPEER => true,
-    CURLOPT_SSL_VERIFYHOST => 2,
-    CURLOPT_USERAGENT      => 'HeroWerk-Rechner-Proxy/1.0',
-    // Wir wollen nur den Body; der Content-Type setzen wir selbst (immer JSON).
-    CURLOPT_HEADER         => false,
-]);
-
-$body     = curl_exec($ch);
-$errno    = curl_errno($ch);
-$httpCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
-
-// --- Transport-Fehler (DNS, TLS, Timeout) ---
-if ($errno !== 0 || $body === false) {
-    rechner_fail(502, 'upstream_unreachable');
+try {
+    $rate = rechner_rate_limit((string) ($_SERVER['REMOTE_ADDR'] ?? ''));
+} catch (Throwable $error) {
+    error_log('HeroWerk Rechner: ' . $error->getMessage());
+    rechner_fail(500, 'rate_limit_unavailable');
+}
+if ($rate['limited'] && RECHNER_RATE_LIMIT_ENFORCED) {
+    rechner_fail(429, 'rate_limit_exceeded');
 }
 
-// --- Upstream-HTTP-Fehler ---
-if ($httpCode < 200 || $httpCode >= 400) {
-    // Status durchreichen, Body (sofern vorhanden) ebenfalls — er ist i.d.R. schon JSON.
-    http_response_code($httpCode >= 400 ? $httpCode : 502);
-    echo ($body !== '' ? $body : json_encode(['error' => true, 'message' => 'upstream_error'], JSON_UNESCAPED_UNICODE));
-    exit;
+$rawQuery = (string) ($_SERVER['QUERY_STRING'] ?? '');
+if (!RECHNER_PHP_ENGINE_ENABLED) {
+    try {
+        echo rechner_forward_google($rawQuery)['body'];
+        exit;
+    } catch (RechnerValuesException $error) {
+        rechner_fail(502, $error->publicCode);
+    }
 }
 
-// --- Erfolg: Body 1:1 zurueckgeben (ist bereits JSON vom Apps-Script) ---
-echo $body;
+try {
+    $snapshot = rechner_load_snapshot();
+} catch (RechnerValuesException $error) {
+    if ($error->publicCode !== 'snapshot_cold_start_failed') {
+        rechner_fail(500, $error->publicCode);
+    }
 
-/*
- * ----------------------------------------------------------------------------------------------
- * OPTIONALER KURZ-CACHE (bewusst DEAKTIVIERT lassen, damit Live-aus-Sheet erhalten bleibt).
- * Nur aktivieren, falls spaeter Last/Quota ein Problem wird. Cache-Dauer bewusst kurz halten,
- * sonst sind Sheet-Aenderungen erst verzoegert sichtbar.
- * ----------------------------------------------------------------------------------------------
- *
- * $cacheKey  = sha1($query);
- * $cacheFile = sys_get_temp_dir() . '/hw_rechner_' . $cacheKey . '.json';
- * $cacheTtl  = 60; // Sekunden — kurz halten!
- * if (is_file($cacheFile) && (time() - filemtime($cacheFile) < $cacheTtl)) {
- *     echo file_get_contents($cacheFile);
- *     exit;
- * }
- * // ... nach erfolgreichem curl_exec:
- * // file_put_contents($cacheFile, $body, LOCK_EX);
- */
+    // Einziger Kaltstart-Sonderfall: ohne Snapshot einmal die konkrete Bestandsroute nutzen.
+    try {
+        echo rechner_forward_google($rawQuery)['body'];
+        exit;
+    } catch (RechnerValuesException $fallbackError) {
+        rechner_fail(502, 'calculator_temporarily_unavailable');
+    }
+}
+
+$action = strtolower((string) ($_GET['action'] ?? 'health'));
+try {
+    $result = hw_rechner_route($action, $_GET, $snapshot['sheets']);
+    echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
+} catch (Throwable $error) {
+    error_log('HeroWerk Rechner: calculation_failed action=' . $action . ' message=' . $error->getMessage());
+    rechner_fail(500, $error->getMessage());
+}
