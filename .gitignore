@@ -4,3 +4,4 @@ playwright-report/
 test-results/
 .claude/
 dist-ionos/
+rechner-runtime/

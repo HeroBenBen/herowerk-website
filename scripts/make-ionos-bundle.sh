@@ -40,6 +40,7 @@ rsync -a \
   --exclude 'apps-script/' \
   --exclude 'archive/' \
   --exclude 'dist-ionos/' \
+  --exclude 'rechner-runtime/' \
   --exclude '_mock_*' \
   --exclude 'vercel.json' \
   --exclude 'package.json' \

@@ -1,0 +1,45 @@
+{
+  "generatedAt": "2026-08-03T19:50:37.908Z",
+  "localFrontend": "http://127.0.0.1:8088",
+  "apiUnderTest": "https://www.herowerk.de/api/rechner-test.php",
+  "validReferer": "https://www.herowerk.de/foerderung",
+  "frozenResponses": {
+    "action=foerderung&we=1&selbstWE=1&heizung=gas&einkommen=bis30&gemeinde=&marke=wolf&wpTyp=m&preisManuell=&heizungsalter=20&kind=nein&origin=https%3A%2F%2Fherowerk.de": "f26cdf5b5dcb386a7b28835c093979a5f7a2d7c4719b0789e65e40ae4566462a",
+    "action=kv_bootstrap&origin=https%3A%2F%2Fherowerk.de": "11feb39852b65766d9047eecb9adbb073d38a3c5c3e71c7a48e71366d84330da",
+    "action=kostenvergleich&origin=https%3A%2F%2Fherowerk.de&modus=kunde&heizart=gas&bedarf=20000&eta=85&invWP=30000&jaz=3.8&laufzeit=20&neuFossilTog=1&vglBrennstoff=gas&gasInvest=12000&oelInvest=17500&gaspreis=12&gasStg=2.5&oelpreis=11&oelStg=2.5&strompreis=32&stromEntw=1.5&co2preis=55&co2Pfad=250&bioTog=1&bioAufpreis=2.5&fHalbjahr=h2-2026&fGrund=1&fEU=1&fKlima=1&fAlt20=1&fEinkSlider=60000&fKind=0&finanzTog=0&kredLZ=10&kredZins=0.98&immoTog=0&hausW=350000&immoP=7&dynTarifTog=0&dynAnteil=40&dynSpread=10": "0780ea14b7453964b274c531c0edd70d7ca95d4e7cb0f1044fb5bee33ec7270f"
+  },
+  "images": [
+    {
+      "file": "foerderung-breit-dark.png",
+      "sha256": "2fade62ff7182e8ccfcf16f7e88d313f1e856ae29780e2b828614d9dc8f136c2"
+    },
+    {
+      "file": "foerderung-breit-light.png",
+      "sha256": "f080c3df5050c6e78fe0fed0c8b56a9f8c8adac753cdb9a4462be17c19cfe919"
+    },
+    {
+      "file": "foerderung-schmal-dark.png",
+      "sha256": "9786fb79c19507a98465661afef6e4243e778a71dc96d2a54a12759853eaf1e7"
+    },
+    {
+      "file": "foerderung-schmal-light.png",
+      "sha256": "d250c3b14a8f35e1a0b414d6ad161bbfb9246f41f575cbfac48ba41edcdc9b4d"
+    },
+    {
+      "file": "kostenvergleich-breit-dark.png",
+      "sha256": "803b30c56a16b61ff3ae74f342c3826743d84615bd8f740cb4000553737aa526"
+    },
+    {
+      "file": "kostenvergleich-breit-light.png",
+      "sha256": "77a8d57e341009758144dbc35509caaf9f040a5d2b6c950f3f0cd6ec8e0a42fe"
+    },
+    {
+      "file": "kostenvergleich-schmal-dark.png",
+      "sha256": "f00e59722dc67a2ef493215d2b94dc15f5657b91a2504fdaa876fff510e342d4"
+    },
+    {
+      "file": "kostenvergleich-schmal-light.png",
+      "sha256": "8e919cb31248b53b92af0adc100c893421f601862e3cffdfe58f94df8fa59fd1"
+    }
+  ]
+}

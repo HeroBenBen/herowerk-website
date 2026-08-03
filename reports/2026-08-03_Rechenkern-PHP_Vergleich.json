@@ -1,0 +1,19 @@
+{
+  "startedAt": "2026-08-03T17:10:30.749Z",
+  "finishedAt": "2026-08-03T17:17:21.129Z",
+  "berlinDay": "2026-08-03",
+  "sameBerlinDay": true,
+  "requestedCases": 506,
+  "exactMatches": 506,
+  "googleFailuresRepeated": 15,
+  "validReferer": "https://www.herowerk.de/foerderrechner-waermepumpe.html",
+  "fvStart": {
+    "gesamt": 12,
+    "frei": 3
+  },
+  "fvEnd": {
+    "gesamt": 12,
+    "frei": 3
+  },
+  "firstError": null
+}

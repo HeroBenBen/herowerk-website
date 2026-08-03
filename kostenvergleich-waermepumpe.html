@@ -1030,8 +1030,8 @@ function kvStatusHost(){
 function kvSetStatus(kind,message){
   const host=kvStatusHost();
   if(kind==='idle'){host.innerHTML='';return;}
-  if(kind==='loading'){host.innerHTML='<div class="ib"><strong>Ihre Berechnung wird aktualisiert.</strong> <span class="d">Einen Moment bitte.</span></div>';return;}
-  host.innerHTML='<div class="ib" style="border-color:var(--hero-red)"><strong>Die Berechnung ist gerade nicht erreichbar.</strong><br><span class="d">Ihre Eingaben bleiben erhalten. Versuchen Sie es erneut oder lassen Sie sich persönlich beraten.</span><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button type="button" class="wz-link-btn" id="kvRetry">Erneut versuchen</button><a class="wz-link-btn" href="https://www.herowerk.de/anfrage.html">Beratung anfragen</a></div></div>';
+  if(kind==='loading'){host.innerHTML='<div class="ib"><strong>Deine Berechnung wird aktualisiert.</strong> <span class="d">Einen Moment bitte.</span></div>';return;}
+  host.innerHTML='<div class="ib" style="border-color:var(--hero-red)"><strong>Die Berechnung ist gerade nicht erreichbar.</strong><br><span class="d">Deine Eingaben bleiben erhalten. Versuche es erneut oder lass dich persönlich beraten.</span><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button type="button" class="wz-link-btn" id="kvRetry">Erneut versuchen</button><a class="wz-link-btn" href="https://www.herowerk.de/anfrage.html">Beratung anfragen</a></div></div>';
   document.getElementById('kvRetry').addEventListener('click',()=>calculate({showResults:true,scroll:true}));
 }
 function kvReadInputs(extra){
@@ -1044,11 +1044,22 @@ function kvReadInputs(extra){
   return q;
 }
 async function kvFetch(params,signal){
-  const response=await fetch(KV_API+'?'+params.toString(),{signal,headers:{Accept:'application/json'}});
-  if(!response.ok)throw new Error('HTTP '+response.status);
-  const data=await response.json();
-  if(data.error||data.ready===false)throw new Error(data.message||'Rechner nicht bereit');
-  return data;
+  const delays=[0,1000,3000];let lastError;
+  for(let attempt=0;attempt<delays.length;attempt++){
+    if(delays[attempt])await new Promise((resolve,reject)=>{const timer=setTimeout(resolve,delays[attempt]);if(!signal)return;const abort=()=>{clearTimeout(timer);reject(new DOMException('Abgebrochen','AbortError'));};if(signal.aborted)abort();else signal.addEventListener('abort',abort,{once:true});});
+    const timeoutController=new AbortController();const externalAbort=()=>timeoutController.abort();
+    if(signal&&signal.aborted)externalAbort();else if(signal)signal.addEventListener('abort',externalAbort,{once:true});
+    const timeout=setTimeout(()=>timeoutController.abort(),15000);
+    try{
+      const response=await fetch(KV_API+'?'+params.toString(),{signal:timeoutController.signal,headers:{Accept:'application/json'}});
+      if(!response.ok){lastError=new Error('HTTP '+response.status);continue;}
+      const data=await response.json();
+      if(data.error||data.ready===false){lastError=new Error(data.message||'Rechner nicht bereit');continue;}
+      return data;
+    }catch(error){if(signal&&signal.aborted)throw error;lastError=error;}
+    finally{clearTimeout(timeout);if(signal)signal.removeEventListener('abort',externalAbort);}
+  }
+  throw lastError||new Error('Rechner nicht erreichbar');
 }
 function kvApplyBootstrap(data){
   KV_STATE.bootstrap=data;
@@ -1886,6 +1897,6 @@ if(window.Chart&&Chart.register){Chart.register({id:'wzAmortMark',afterDraw(char
   ctx.restore();
 }});}
 </script>
-<script src="js/site.js?v=d41df299aa" defer></script>
+<script src="js/site.js?v=9ca094b78c" defer></script>
 </body>
 </html>
