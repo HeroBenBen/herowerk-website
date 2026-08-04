@@ -250,9 +250,9 @@ for (const viewport of [
         page.getByRole('heading', { name: 'Was dieser Rechner für dich macht' })
       ).toBeVisible();
       await expect(page.locator('.page-head .lead')).toContainText(
-        'über einen Zeitraum, den du selbst wählst, bis zu 25 Jahre'
+        'über 20 Jahre, den Zeitraum kannst du selbst anpassen'
       );
-      await expect(page.locator('.page-head .lead')).not.toContainText('über 20 Jahre');
+      await expect(page.locator('.page-head .lead')).not.toContainText('bis zu 25 Jahre');
       const deliveredScripts = (await page.locator('script').allTextContents()).join('\n');
       expect(deliveredScripts).toContain(
         "WZ_MARKET_LABELS.kredZins='Rechenannahme '+kredit.quelle"
