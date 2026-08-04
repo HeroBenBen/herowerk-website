@@ -533,26 +533,38 @@ test('O3 Kunde Light 375: lokaler Consent, Alt-/EU-Text, fünf Förderanker und 
   await page.waitForFunction(() => typeof KV_STATE !== 'undefined' && KV_STATE.last);
   await expectOneMobileYearDeck(page);
   await expectNoMobileChartOverflow(page);
-  await page.evaluate(() => document.body.classList.add('kv-busy'));
+  await page.evaluate(() => {
+    document.body.classList.add('kv-busy', 'kv-busy-visible');
+    const announcement = document.querySelector('#g9-kopfbalken-ansage');
+    if (announcement) announcement.textContent = 'Wir rechnen deine Zahlen neu';
+  });
   const busyProof = await page.evaluate(() => {
     const answer = document.querySelector('#cMainDaten .mobile-year-answer');
     const row = document.querySelector('#cMainDaten .year-bar-row');
     const answerStrong = answer && answer.querySelector('strong');
     const rowValue = row && row.querySelector('.year-value');
+    const announcement = document.querySelector('#g9-kopfbalken-ansage');
+    const announcementStyle = announcement && window.getComputedStyle(announcement);
     return {
       answerOpacity: answer ? window.getComputedStyle(answer).opacity : null,
       rowOpacity: row ? window.getComputedStyle(row).opacity : null,
       answerValueColor: answerStrong ? window.getComputedStyle(answerStrong).color : null,
       rowValueColor: rowValue ? window.getComputedStyle(rowValue).color : null,
+      announcementText: announcement ? announcement.textContent : null,
+      announcementDisplay: announcementStyle ? announcementStyle.display : null,
+      announcementVisibility: announcementStyle ? announcementStyle.visibility : null,
     };
   });
   expect(busyProof).toEqual({
-    answerOpacity: '0.45',
-    rowOpacity: '0.45',
+    answerOpacity: '1',
+    rowOpacity: '1',
     answerValueColor: 'rgba(0, 0, 0, 0)',
     rowValueColor: 'rgba(0, 0, 0, 0)',
+    announcementText: 'Wir rechnen deine Zahlen neu',
+    announcementDisplay: 'block',
+    announcementVisibility: 'visible',
   });
-  await page.evaluate(() => document.body.classList.remove('kv-busy'));
+  await page.evaluate(() => document.body.classList.remove('kv-busy', 'kv-busy-visible'));
   expect(await page.evaluate(() => sessionStorage.getItem('hero_kv_sitzung'))).toMatch(
     /^[a-z0-9]+-[a-z0-9]+$/
   );

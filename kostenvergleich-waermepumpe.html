@@ -559,31 +559,90 @@
     body.wz-customer #tab-foerderung #wzTreppeVerlust{margin:6px 0 0;font-size:.74rem;line-height:1.25;}
     body.wz-customer #tab-foerderung #wzTreppeHint{margin:4px 0 0;font-size:.72rem;line-height:1.2;}
   }
-  /* M6 (Entscheid 29.07.): Ladezustand statt alter Werte. calculate() setzt
-     body.kv-busy fuer die Dauer der Server-Antwort; berechnete WERTE werden als
-     schimmernde Platzhalter gefuehrt, Beschriftungen bleiben lesbar, Diagramme
-     und Tabellen dimmen. Kein alter Wert steht waehrend der Neuberechnung als
-     aktuell da. */
-  @keyframes kvShimmer{to{background-position:-200% 0;}}
-  .kv-busy #results .mv,.kv-busy #results .vv,.kv-busy #results .ms,
-  .kv-busy #results .mobile-year-answer strong,.kv-busy #results .mobile-year-answer span,
-  .kv-busy #results .year-bar-row .year-value,
-  .kv-busy #wzHero .wz-big,
-  .kv-busy #vFEink,.kv-busy #fEinkAnr,.kv-busy #fEinkBonusLbl,.kv-busy #fGrundPct,
-  .kv-busy #fKlimaPct,.kv-busy #fQuote,.kv-busy #fGrenzeLbl,.kv-busy #fBasis,
-  .kv-busy #fBetrag,.kv-busy #fNetto{
-    color:transparent!important;text-shadow:none!important;
-    background:linear-gradient(90deg,var(--hero-separator) 25%,rgba(127,127,127,.28) 50%,var(--hero-separator) 75%);
-    background-size:200% 100%;animation:kvShimmer 1.1s linear infinite;border-radius:6px;}
-  .kv-busy #results .mv *,.kv-busy #results .vv *,.kv-busy #results .ms *{color:transparent!important;}
-  .kv-busy #results canvas,.kv-busy #results table,.kv-busy #results .mobile-year-answer,
-  .kv-busy #results .year-bar-row,.kv-busy #fBadges,
-  .kv-busy #wzFoerderTreppe,.kv-busy #wzTreppeVerlust,.kv-busy #wzTreppeHint,.kv-busy #wzFoerderAufbau,
-  .kv-busy #wzHero p,.kv-busy #wzLiveFoerder,.kv-busy #co2Box,
-  .kv-busy #dreiWegeBox .ib,.kv-busy #cashflowBox .ib,.kv-busy #assBox,
-  .kv-busy #bedarfLive,.kv-busy #etaLive,.kv-busy #wzVerbLive,.kv-busy #wzEstBox{opacity:.45;transition:opacity .2s;}
-  .kv-busy #results .mobile-year-answer,.kv-busy #results .year-bar-row{opacity:.45!important;}
-  @media (prefers-reduced-motion:reduce){.kv-busy #results .mv,.kv-busy #results .vv,.kv-busy #results .ms,.kv-busy #results .mobile-year-answer strong,.kv-busy #results .mobile-year-answer span,.kv-busy #results .year-bar-row .year-value,.kv-busy #wzHero .wz-big,.kv-busy #vFEink,.kv-busy #fEinkAnr,.kv-busy #fEinkBonusLbl,.kv-busy #fGrundPct,.kv-busy #fKlimaPct,.kv-busy #fQuote,.kv-busy #fGrenzeLbl,.kv-busy #fBasis,.kv-busy #fBetrag,.kv-busy #fNetto{animation:none;}}
+  /* G9: Ladezustand sichtbar machen, ohne kurze Antworten aufblitzen zu lassen.
+     body.kv-busy ist der technische Zustand; kv-busy-visible erscheint erst nach
+     der Entflackerung und trägt Balken, Ansage und Platzhalter. */
+  #g9-kopfbalken,#g9-kopftext{display:none;}
+  body.kv-busy.kv-busy-visible #g9-kopfbalken{display:block;position:fixed;left:0;right:0;z-index:999;height:6px;overflow:hidden;pointer-events:none;background:#2d3a47;border-bottom:1px solid #5a6470;}
+  body.kv-busy.kv-busy-visible #g9-kopfbalken::after{content:'';position:absolute;top:0;bottom:0;left:-34%;width:34%;background:#b7d900;animation:g9Lauf 1.3s ease-in-out infinite;}
+  body.kv-busy.kv-busy-visible #g9-kopftext{display:block;position:fixed;left:0;right:0;z-index:999;text-align:center;pointer-events:none;font:700 .78rem/1 system-ui,sans-serif;letter-spacing:.02em;padding:5px 0 6px;color:#b7d900;background:rgba(28,43,54,.94);}
+  @keyframes g9Lauf{0%{left:-34%;}100%{left:100%;}}
+  @keyframes g9Platzhalter{to{background-position:-200% 0;}}
+  body.kv-busy.kv-busy-visible #results [data-kv-loading-value],
+  body.kv-busy.kv-busy-visible #wzLiveFoerder [data-kv-loading-value],
+  body.kv-busy.kv-busy-visible #wzFoerderTreppe [data-kv-loading-value],
+  body.kv-busy.kv-busy-visible #wzTreppeHint[data-kv-loading-value],
+  body.kv-busy.kv-busy-visible #wzTreppeVerlust [data-kv-loading-value],
+  body.kv-busy.kv-busy-visible #wzFoerderAufbau [data-kv-loading-value],
+  body.kv-busy.kv-busy-visible #fBadges [data-kv-loading-value],
+  body.kv-busy.kv-busy-visible #vFEink,body.kv-busy.kv-busy-visible #fEinkAnr,
+  body.kv-busy.kv-busy-visible #fEinkBonusLbl,body.kv-busy.kv-busy-visible #fGrundPct,
+  body.kv-busy.kv-busy-visible #fKlimaPct,body.kv-busy.kv-busy-visible #fQuote,
+  body.kv-busy.kv-busy-visible #fGrenzeLbl,body.kv-busy.kv-busy-visible #fBasis,
+  body.kv-busy.kv-busy-visible #fBetrag,body.kv-busy.kv-busy-visible #fNetto{
+    color:transparent!important;text-shadow:none!important;box-shadow:none!important;
+    background:linear-gradient(90deg,#6b8095 25%,#9fb4c6 50%,#6b8095 75%)!important;
+    background-size:200% 100%!important;animation:g9Platzhalter 1.1s linear infinite!important;
+    border:1px solid #5a6470!important;border-radius:6px!important;}
+  body.kv-busy.kv-busy-visible #results [data-kv-loading-value] *,
+  body.kv-busy.kv-busy-visible #wzLiveFoerder [data-kv-loading-value] *{color:transparent!important;}
+  body.kv-busy.kv-busy-visible #results .mobile-year-answer,
+  body.kv-busy.kv-busy-visible #results .year-bar-row{opacity:1!important;}
+  body.kv-busy.kv-busy-visible #results .cw{position:relative;}
+  body.kv-busy.kv-busy-visible #results .cw canvas{opacity:0!important;}
+  body.kv-busy.kv-busy-visible #results .cw::after{content:'';position:absolute;inset:0;border:1px solid #5a6470;border-radius:8px;background:linear-gradient(90deg,#6b8095 25%,#9fb4c6 50%,#6b8095 75%);background-size:200% 100%;animation:g9Platzhalter 1.1s linear infinite;pointer-events:none;}
+  body.kv-busy.kv-busy-visible #wzFoerderTreppe .tr-bar{background:#6b8095!important;border:1px solid #5a6470!important;box-shadow:none!important;}
+  html[data-theme='light'] body.kv-busy.kv-busy-visible #g9-kopfbalken{background:#d7d2c4;}
+  html[data-theme='light'] body.kv-busy.kv-busy-visible #g9-kopfbalken::after{background:#4f6000;}
+  html[data-theme='light'] body.kv-busy.kv-busy-visible #g9-kopftext{color:#4f6000;background:rgba(244,241,234,.94);}
+  html[data-theme='light'] body.kv-busy.kv-busy-visible #results [data-kv-loading-value],
+  html[data-theme='light'] body.kv-busy.kv-busy-visible #wzLiveFoerder [data-kv-loading-value],
+  html[data-theme='light'] body.kv-busy.kv-busy-visible #wzFoerderTreppe [data-kv-loading-value],
+  html[data-theme='light'] body.kv-busy.kv-busy-visible #wzTreppeHint[data-kv-loading-value],
+  html[data-theme='light'] body.kv-busy.kv-busy-visible #wzTreppeVerlust [data-kv-loading-value],
+  html[data-theme='light'] body.kv-busy.kv-busy-visible #wzFoerderAufbau [data-kv-loading-value],
+  html[data-theme='light'] body.kv-busy.kv-busy-visible #fBadges [data-kv-loading-value],
+  html[data-theme='light'] body.kv-busy.kv-busy-visible #vFEink,html[data-theme='light'] body.kv-busy.kv-busy-visible #fEinkAnr,
+  html[data-theme='light'] body.kv-busy.kv-busy-visible #fEinkBonusLbl,html[data-theme='light'] body.kv-busy.kv-busy-visible #fGrundPct,
+  html[data-theme='light'] body.kv-busy.kv-busy-visible #fKlimaPct,html[data-theme='light'] body.kv-busy.kv-busy-visible #fQuote,
+  html[data-theme='light'] body.kv-busy.kv-busy-visible #fGrenzeLbl,html[data-theme='light'] body.kv-busy.kv-busy-visible #fBasis,
+  html[data-theme='light'] body.kv-busy.kv-busy-visible #fBetrag,html[data-theme='light'] body.kv-busy.kv-busy-visible #fNetto{
+    background:linear-gradient(90deg,#8d8779 25%,#6f6a5c 50%,#8d8779 75%)!important;}
+  html[data-theme='light'] body.kv-busy.kv-busy-visible #results .cw::after{background:linear-gradient(90deg,#8d8779 25%,#6f6a5c 50%,#8d8779 75%);background-size:200% 100%;}
+  html[data-theme='light'] body.kv-busy.kv-busy-visible #wzFoerderTreppe .tr-bar{background:#8d8779!important;}
+  @media (prefers-reduced-motion:reduce){
+    body.kv-busy.kv-busy-visible #g9-kopfbalken::after{animation:none;left:0;width:100%;}
+    body.kv-busy.kv-busy-visible #results [data-kv-loading-value],
+    body.kv-busy.kv-busy-visible #wzLiveFoerder [data-kv-loading-value],
+    body.kv-busy.kv-busy-visible #wzFoerderTreppe [data-kv-loading-value],
+    body.kv-busy.kv-busy-visible #wzTreppeHint[data-kv-loading-value],
+    body.kv-busy.kv-busy-visible #wzTreppeVerlust [data-kv-loading-value],
+    body.kv-busy.kv-busy-visible #wzFoerderAufbau [data-kv-loading-value],
+    body.kv-busy.kv-busy-visible #fBadges [data-kv-loading-value],
+    body.kv-busy.kv-busy-visible #vFEink,body.kv-busy.kv-busy-visible #fEinkAnr,
+    body.kv-busy.kv-busy-visible #fEinkBonusLbl,body.kv-busy.kv-busy-visible #fGrundPct,
+    body.kv-busy.kv-busy-visible #fKlimaPct,body.kv-busy.kv-busy-visible #fQuote,
+    body.kv-busy.kv-busy-visible #fGrenzeLbl,body.kv-busy.kv-busy-visible #fBasis,
+    body.kv-busy.kv-busy-visible #fBetrag,body.kv-busy.kv-busy-visible #fNetto,
+    body.kv-busy.kv-busy-visible #results .cw::after{animation:none!important;background:#6b8095!important;}
+    html[data-theme='light'] body.kv-busy.kv-busy-visible #results [data-kv-loading-value],
+    html[data-theme='light'] body.kv-busy.kv-busy-visible #wzLiveFoerder [data-kv-loading-value],
+    html[data-theme='light'] body.kv-busy.kv-busy-visible #wzFoerderTreppe [data-kv-loading-value],
+    html[data-theme='light'] body.kv-busy.kv-busy-visible #wzTreppeHint[data-kv-loading-value],
+    html[data-theme='light'] body.kv-busy.kv-busy-visible #wzTreppeVerlust [data-kv-loading-value],
+    html[data-theme='light'] body.kv-busy.kv-busy-visible #wzFoerderAufbau [data-kv-loading-value],
+    html[data-theme='light'] body.kv-busy.kv-busy-visible #fBadges [data-kv-loading-value],
+    html[data-theme='light'] body.kv-busy.kv-busy-visible #vFEink,html[data-theme='light'] body.kv-busy.kv-busy-visible #fEinkAnr,
+    html[data-theme='light'] body.kv-busy.kv-busy-visible #fEinkBonusLbl,html[data-theme='light'] body.kv-busy.kv-busy-visible #fGrundPct,
+    html[data-theme='light'] body.kv-busy.kv-busy-visible #fKlimaPct,html[data-theme='light'] body.kv-busy.kv-busy-visible #fQuote,
+    html[data-theme='light'] body.kv-busy.kv-busy-visible #fGrenzeLbl,html[data-theme='light'] body.kv-busy.kv-busy-visible #fBasis,
+    html[data-theme='light'] body.kv-busy.kv-busy-visible #fBetrag,html[data-theme='light'] body.kv-busy.kv-busy-visible #fNetto,
+    html[data-theme='light'] body.kv-busy.kv-busy-visible #results .cw::after{background:#8d8779!important;}
+  }
+  @media(max-width:760px){
+    html.menue-offen body.kv-busy.kv-busy-visible #g9-kopfbalken,
+    html.menue-offen body.kv-busy.kv-busy-visible #g9-kopftext{display:none;}
+  }
 </style>
 </head>
 <body>
@@ -992,7 +1051,7 @@ document.getElementById('heizart').addEventListener('change',()=>{if(!vglTouched
 syncVglUI();
 // ===== THIN CLIENT: API-ZUSTAND, LIVE-BERECHNUNG, RENDERING =====
 const KV_API='/api/rechner';
-const KV_STATE={bootstrap:null,last:null,seq:0,controller:null,timer:null,lastParams:null,applyingBootstrap:false};
+const KV_STATE={bootstrap:null,last:null,seq:0,controller:null,timer:null,loadingTimer:null,lastParams:null,applyingBootstrap:false};
 const KV_INPUT_IDS=['heizart','bedarf','eta','invWP','jaz','laufzeit','neuFossilTog','vglBrennstoff','gasInvest','oelInvest','gaspreis','gasStg','oelpreis','oelStg','strompreis','stromEntw','co2preis','co2Pfad','bioTog','bioAufpreis','fHalbjahr','fGrund','fEU','fKlima','fAlt20','fEinkSlider','fKind','finanzTog','kredLZ','kredZins','immoTog','hausW','immoP','dynTarifTog','dynAnteil','dynSpread'];
 function eur(v){return Math.round(Number(v)||0).toLocaleString('de-DE')+' €';}
 function eurSigned(v){const n=Number(v)||0;return n>0?eur(n):'−'+eur(Math.abs(n));}
@@ -1022,15 +1081,81 @@ function kvMobileYearDetails(titel,labels,datasets){
   if(!content)return '';
   return `<details class="mobile-year-details klapp" aria-label="${titel}"><summary>Alle ${labels.length} Jahre im Detail</summary><div class="inhalt">${content}</div></details>`;
 }
+const G9_LOADING_TEXT='Wir rechnen deine Zahlen neu';
+const G9_LOADING_VALUE_SELECTORS=[
+  '#results .mv','#results .vv','#results .ms','#results table.bt td.r',
+  '#results .mobile-year-answer strong','#results .mobile-year-answer span',
+  '#results .year-bar-row .year-value','#results .mobile-year-card .vv',
+  '#wzHero .wz-big','#wzHero .wz-herocalc .vv','#wzHero p',
+  '#wzLiveFoerder .vv','#wzLiveFoerder div[style*="2.6rem"]','#wzLiveFoerder div[style*="0.68rem"]',
+  '#wzFoerderTreppe .tr-eur','#wzFoerderTreppe .tr-pct','#wzTreppeHint','#wzTreppeVerlust strong',
+  '#wzFoerderAufbau .vv','#fBadges .fb','#co2Box div[style*="2.5rem"]','#co2Box .d','#co2Box .ib strong',
+  '#cashflowBox .ib','#assBox','#sensiBox table.bt td.r','#sensiBox .kv-mobile-card .mv',
+  '#dreiWegeBox .ib strong'
+];
+function g9Elements(){
+  return {
+    bar:document.getElementById('g9-kopfbalken'),
+    text:document.getElementById('g9-kopftext'),
+    announcement:document.getElementById('g9-kopfbalken-ansage')
+  };
+}
+function g9PositionLoading(){
+  const nav=document.querySelector('nav'),{bar,text}=g9Elements();
+  if(!nav||!bar||!text)return;
+  const top=Math.round(nav.getBoundingClientRect().height);
+  bar.style.top=top+'px';
+  text.style.top=(top+6)+'px';
+}
+function g9ClearLoadingValues(){
+  document.querySelectorAll('[data-kv-loading-value]').forEach(el=>el.removeAttribute('data-kv-loading-value'));
+}
+function g9MarkLoadingValues(){
+  g9ClearLoadingValues();
+  document.querySelectorAll(G9_LOADING_VALUE_SELECTORS.join(',')).forEach(el=>{
+    if(el.closest('button,a,summary,label,th,h1,h2,h3,h4'))return;
+    if(!el.textContent||!/[0-9€%]|CO₂|kWh|Mo\.|Jahr/.test(el.textContent))return;
+    el.setAttribute('data-kv-loading-value','true');
+  });
+}
+function g9StartLoading(){
+  clearTimeout(KV_STATE.loadingTimer);
+  document.body.classList.add('kv-busy');
+  g9PositionLoading();
+  KV_STATE.loadingTimer=setTimeout(()=>{
+    if(!document.body.classList.contains('kv-busy'))return;
+    g9PositionLoading();
+    g9MarkLoadingValues();
+    document.body.classList.add('kv-busy-visible');
+    window.requestAnimationFrame(()=>{
+      if(!document.body.classList.contains('kv-busy-visible'))return;
+      const {text,announcement}=g9Elements();
+      if(text)text.textContent=G9_LOADING_TEXT;
+      if(announcement)announcement.textContent=G9_LOADING_TEXT;
+    });
+  },250);
+}
+function g9StopLoading(){
+  clearTimeout(KV_STATE.loadingTimer);
+  KV_STATE.loadingTimer=null;
+  document.body.classList.remove('kv-busy-visible','kv-busy');
+  const {text,announcement}=g9Elements();
+  if(text)text.textContent='';
+  if(announcement)announcement.textContent='';
+  g9ClearLoadingValues();
+}
+window.addEventListener('resize',g9PositionLoading);
+window.addEventListener('orientationchange',g9PositionLoading);
 function kvStatusHost(){
   let host=document.getElementById('kvStatus');
-  if(!host){host=document.createElement('div');host.id='kvStatus';host.setAttribute('role','status');host.setAttribute('aria-live','polite');host.style.cssText='max-width:1200px;margin:12px auto;padding:0 20px;';const results=document.getElementById('results');results.parentNode.insertBefore(host,results);}
+  if(!host){host=document.createElement('div');host.id='kvStatus';host.style.cssText='max-width:1200px;margin:12px auto;padding:0 20px;';const results=document.getElementById('results');results.parentNode.insertBefore(host,results);}
   return host;
 }
 function kvSetStatus(kind,message){
   const host=kvStatusHost();
-  if(kind==='idle'){host.innerHTML='';return;}
-  if(kind==='loading'){host.innerHTML='<div class="ib"><strong>Deine Berechnung wird aktualisiert.</strong> <span class="d">Einen Moment bitte.</span></div>';return;}
+  host.removeAttribute('role');host.removeAttribute('aria-live');
+  if(kind==='idle'||kind==='loading'){host.innerHTML='';return;}
+  host.setAttribute('role','status');host.setAttribute('aria-live','polite');
   host.innerHTML='<div class="ib" style="border-color:var(--hero-red)"><strong>Die Berechnung ist gerade nicht erreichbar.</strong><br><span class="d">Deine Eingaben bleiben erhalten. Versuche es erneut oder lass dich persönlich beraten.</span><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button type="button" class="wz-link-btn" id="kvRetry">Erneut versuchen</button><a class="wz-link-btn" href="https://www.herowerk.de/anfrage.html">Beratung anfragen</a></div></div>';
   document.getElementById('kvRetry').addEventListener('click',()=>calculate({showResults:true,scroll:true}));
 }
@@ -1201,10 +1326,10 @@ function kvRender(data,showResults){
   if(typeof window.WZ_AFTER_KV_RENDER==='function')window.WZ_AFTER_KV_RENDER(data);
 }
 async function calculate(options){
-  const opts=options||{};const seq=++KV_STATE.seq;if(KV_STATE.controller)KV_STATE.controller.abort();const controller=new AbortController();KV_STATE.controller=controller;const extra={};if(window.WZ_BRIDGE&&window.WZ_BRIDGE.bedarfModus==='schaetzung')Object.assign(extra,window.WZ_BRIDGE);const params=kvReadInputs(extra);KV_STATE.lastParams=params.toString();kvSetStatus('loading');document.getElementById('results').setAttribute('aria-busy','true');document.body.classList.add('kv-busy');
+  const opts=options||{};const seq=++KV_STATE.seq;if(KV_STATE.controller)KV_STATE.controller.abort();const controller=new AbortController();KV_STATE.controller=controller;const extra={};if(window.WZ_BRIDGE&&window.WZ_BRIDGE.bedarfModus==='schaetzung')Object.assign(extra,window.WZ_BRIDGE);const params=kvReadInputs(extra);KV_STATE.lastParams=params.toString();kvSetStatus('loading');document.getElementById('results').setAttribute('aria-busy','true');g9StartLoading();
   try{const data=await kvFetch(params,controller.signal);if(seq!==KV_STATE.seq)return;if(data.service!=='kostenvergleich')throw new Error('Ungültige Rechner-Antwort');kvRender(data,!!opts.showResults);kvSetStatus('idle');if(opts.scroll)document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});}
   catch(err){if(err.name!=='AbortError'&&seq===KV_STATE.seq)kvSetStatus('error',err.message);}
-  finally{if(seq===KV_STATE.seq){document.getElementById('results').removeAttribute('aria-busy');document.body.classList.remove('kv-busy');}}
+  finally{if(seq===KV_STATE.seq){document.getElementById('results').removeAttribute('aria-busy');g9StopLoading();}}
 }
 document.addEventListener('input',e=>{if(e.target&&KV_INPUT_IDS.includes(e.target.id))scheduleKvCalculation(350);});
 document.addEventListener('change',e=>{if(e.target&&KV_INPUT_IDS.includes(e.target.id))scheduleKvCalculation(0);});
@@ -1897,6 +2022,8 @@ if(window.Chart&&Chart.register){Chart.register({id:'wzAmortMark',afterDraw(char
   ctx.restore();
 }});}
 </script>
+<div id="g9-kopfbalken" role="status"><span id="g9-kopfbalken-ansage" class="visually-hidden"></span></div>
+<div id="g9-kopftext" aria-hidden="true"></div>
 <script src="js/site.js?v=9ca094b78c" defer></script>
 </body>
 </html>
