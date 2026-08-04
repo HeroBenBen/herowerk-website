@@ -170,8 +170,8 @@
   .pb.pa{border-color:rgba(183,217,0,0.45);} .pb.pbb{border-color:var(--bernstein);}
   .pb h4{font-family:'Barlow',sans-serif;font-weight:800;font-size:0.95rem;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;}
   .pb.pa h4{color:var(--green);} .pb.pbb h4{color:var(--bernstein);}
-  .pb .ln{display:flex;justify-content:space-between;font-size:0.88rem;padding:3px 0;}
-  .pb .ln .lbl{color:var(--hero-muted);} .pb .ln .vv{font-weight:bold;}
+  .pb .ln,#pathSummary .ln{display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-size:0.88rem;padding:3px 0;}
+  .pb .ln .lbl,#pathSummary .ln .lbl{color:var(--hero-muted);min-width:0;} .pb .ln .vv,#pathSummary .ln .vv{font-weight:bold;white-space:nowrap;margin-left:auto;}
   .pb .dv{border-top:1px solid rgba(255,255,255,0.10);margin:10px 0;}
   .cg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px;}
   .cg2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
@@ -1057,10 +1057,10 @@ function eur(v){return Math.round(Number(v)||0).toLocaleString('de-DE')+' €';}
 function eurSigned(v){const n=Number(v)||0;return n>0?eur(n):'−'+eur(Math.abs(n));}
 function fix(v,n){return Number(v||0).toFixed(n).replace('.',',');}
 function pct(v){return Number(v||0).toLocaleString('de-DE',{maximumFractionDigits:1})+' %';}
-function kvLine(label,value,extra){return `<div class="ln${extra?' '+extra:''}"><span class="lbl">${label}</span><span class="vv">${value}</span></div>`;}
-function kvCard(label,value,sub,extra){return `<div class="rc${extra?' '+extra:''}"><div class="ml">${label}</div><div class="mv">${value}</div>${sub?`<div class="ms">${sub}</div>`:''}</div>`;}
+function kvLine(label,value,extra){return `<div class="ln${extra?' '+extra:''}"><span class="lbl">${label}</span> <span class="vv">${value}</span></div>`;}
+function kvCard(label,value,sub,extra){return `<div class="rc${extra?' '+extra:''}"><div class="ml">${label}</div> <div class="mv">${value}</div>${sub?` <div class="ms">${sub}</div>`:''}</div>`;}
 function kvMobileCard(label,value,lines,extra){
-  return `<div class="rc kv-mobile-card${extra?' '+extra:''}"><div class="kv-mobile-card-head"><div class="ml">${label}</div><div class="mv">${value}</div></div>${(lines||[]).map(line=>kvLine(line[0],line[1],line[2])).join('')}</div>`;
+  return `<div class="rc kv-mobile-card${extra?' '+extra:''}"><div class="kv-mobile-card-head"><div class="ml">${label}</div> <div class="mv">${value}</div></div>${(lines||[]).map(line=>kvLine(line[0],line[1],line[2])).join('')}</div>`;
 }
 function kvMobileYearAnswer(ergebnis,system){
   const breakEven=ergebnis.breakEvenSofort?'Ab sofort im Plus':(ergebnis.breakEven?'Ab Jahr '+ergebnis.breakEven+' im Plus':'Innerhalb von '+system.laufzeit+' Jahren noch nicht im Plus');

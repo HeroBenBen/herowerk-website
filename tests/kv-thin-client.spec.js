@@ -629,6 +629,18 @@ test('O3 Kunde Light 375: lokaler Consent, Alt-/EU-Text, fünf Förderanker und 
   await nextWizardStep(page);
   await expect(page.locator('#wzHero')).toBeVisible();
   await expect(page.locator('#results')).toHaveClass(/visible/);
+  const stickyAmountRows = await page.evaluate(() => {
+    const sticky = /[A-Za-zÄÖÜäöüß)]\d/;
+    const amount = /(?:[+−-]?\d[\d.]*\s?(?:€|Euro)|\d+(?:[,.]\d+)?\s?%)/;
+    return [
+      ...document.querySelectorAll(
+        '#results .ln,#results .kv-mobile-card-head,#results .rc:not(.kv-mobile-card)'
+      ),
+    ]
+      .map((element) => element.textContent.replace(/\s+/g, ' ').trim())
+      .filter((text) => sticky.test(text) && amount.test(text));
+  });
+  expect(stickyAmountRows).toEqual([]);
   const directEvents = await page.evaluate(() =>
     dataLayer
       .filter((entry) => entry && entry[0] === 'event')
