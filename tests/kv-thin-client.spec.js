@@ -12,6 +12,7 @@ test.describe.configure({ mode: 'serial' });
 let server;
 let baseURL;
 let failCalculations = false;
+let calculationDelayMs = 0;
 const LANE_A_ROOT = process.env.LANE_A_ROOT || path.resolve(__dirname, '..', '..', 'wp-lane-a');
 
 function bool(value, fallback) {
@@ -51,7 +52,7 @@ function sendJson(response, value, status = 200) {
 }
 
 test.beforeAll(async () => {
-  server = http.createServer((request, response) => {
+  server = http.createServer(async (request, response) => {
     const url = new URL(request.url, 'http://127.0.0.1');
     if (url.pathname === '/__fail-on') {
       failCalculations = true;
@@ -60,6 +61,14 @@ test.beforeAll(async () => {
     if (url.pathname === '/__fail-off') {
       failCalculations = false;
       return sendJson(response, { ok: true });
+    }
+    if (url.pathname === '/__delay-on') {
+      calculationDelayMs = 600;
+      return sendJson(response, { ok: true, delayMs: calculationDelayMs });
+    }
+    if (url.pathname === '/__delay-off') {
+      calculationDelayMs = 0;
+      return sendJson(response, { ok: true, delayMs: calculationDelayMs });
     }
     if (url.pathname === '/api/rechner') {
       const action = url.searchParams.get('action');
@@ -71,6 +80,9 @@ test.beforeAll(async () => {
       if (action === 'kostenvergleich') {
         if (failCalculations) {
           return sendJson(response, { error: true, message: 'test_failure' }, 503);
+        }
+        if (calculationDelayMs) {
+          await new Promise((resolve) => setTimeout(resolve, calculationDelayMs));
         }
         const result = engine.kvCalculate(mapInputs(url.searchParams), engine.KV_PARAMS_SEED);
         result.periodeAutomatik = !url.searchParams.has('fHalbjahr');
@@ -328,52 +340,6 @@ test('O3 Contract: Source, Bootstrap und serverseitige Periodeneigenschaft', asy
   expect(estimatedJson.inputsEcho.bedarf).toBe(
     engine.kvSchaetzeBedarf('efh', '1978-1994', 'teilweise', 140, engine.KV_PARAMS_SEED)
   );
-});
-
-test('G16 Wohnflächen-Regler schreibt den Schätzwert der letzten Antwort', async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?theme=light`, {
-    waitUntil: 'domcontentloaded',
-  });
-  await page.waitForFunction(() => typeof KV_STATE !== 'undefined' && KV_STATE.last);
-  await page.locator('[data-wz-heizart="gas"]').click();
-  await page.locator('[data-wz-grp="vmode"][data-wz-val="unknown"]').click();
-  await page.locator('[data-wz-grp="geb"][data-wz-val="efh"]').click();
-  await page.locator('[data-wz-grp="bj"][data-wz-val="1978-1994"]').click();
-  await page.locator('[data-wz-grp="san"][data-wz-val="teilweise"]').click();
-  await page
-    .locator('#wzEstBox')
-    .locator('xpath=ancestor::details[1]')
-    .evaluate((details) => {
-      /** @type {HTMLDetailsElement} */ (details).open = true;
-    });
-  await expect(page.locator('#wzEstBox')).toBeVisible();
-
-  const slider = page.locator('#wzFlSlider');
-  await slider.scrollIntoViewIfNeeded();
-  const box = await slider.boundingBox();
-  expect(box).not.toBeNull();
-  if (!box) throw new Error('Wohnflächen-Regler hat keine messbare Fläche');
-  const thumbWidth = 22;
-  const xForValue = (value) =>
-    box.x + thumbWidth / 2 + ((value - 60) / (800 - 60)) * (box.width - thumbWidth);
-  const y = box.y + box.height / 2;
-  await page.mouse.move(xForValue(140), y);
-  await page.mouse.down();
-  await page.mouse.move(xForValue(640), y, { steps: 20 });
-  await page.mouse.up();
-
-  await expect(slider).toHaveValue('640');
-  await expect
-    .poll(() =>
-      page.evaluate(() => {
-        const response = KV_STATE.last;
-        const text = document.getElementById('wzEstVal').textContent;
-        if (!response || !response.inputsEcho || !text) return false;
-        return text === `${Number(response.inputsEcho.bedarf).toLocaleString('de-DE')} kWh`;
-      })
-    )
-    .toBe(true);
 });
 
 test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry', async ({
@@ -991,4 +957,80 @@ test('O4 Cross-Worktree E2E: echter CTA-Klick mit Key und direkter Aufruf ohne K
   await page.goto(`${baseURL}/anfrage.html`, { waitUntil: 'domcontentloaded' });
   await expect(page.locator('#leadHandoffBanner')).toHaveCount(0);
   await expect(page.locator('.step.active')).toHaveAttribute('data-step', '0');
+});
+
+test('G16 Wohnflächen-Regler schreibt den Schätzwert der letzten Antwort', async ({ page }) => {
+  await installLocalConsent(page);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?theme=light`, {
+    waitUntil: 'domcontentloaded',
+  });
+  if (await page.locator('#cmpbox').count()) await acceptConsent(page);
+  await page.waitForFunction(() => typeof KV_STATE !== 'undefined' && KV_STATE.last);
+  await page.locator('[data-wz-heizart="gas"]').click();
+  await page.locator('[data-wz-heizart="oel"]').click();
+  await page.locator('[data-wz-heizart="gas"]').click();
+  await page.locator('[data-wz-grp="vmode"][data-wz-val="unknown"]').click();
+  await page.locator('[data-wz-grp="geb"][data-wz-val="efh"]').click();
+  await page.locator('[data-wz-grp="bj"][data-wz-val="1978-1994"]').click();
+  await page.locator('[data-wz-grp="san"][data-wz-val="teilweise"]').click();
+  await page
+    .locator('#wzEstBox')
+    .locator('xpath=ancestor::details[1]')
+    .evaluate((details) => {
+      /** @type {HTMLDetailsElement} */ (details).open = true;
+    });
+  await expect(page.locator('#wzEstBox')).toBeVisible();
+
+  const slider = page.locator('#wzFlSlider');
+  await slider.scrollIntoViewIfNeeded();
+  const box = await slider.boundingBox();
+  expect(box).not.toBeNull();
+  if (!box) throw new Error('Wohnflächen-Regler hat keine messbare Fläche');
+  const thumbWidth = 22;
+  const xForValue = (value) =>
+    box.x + thumbWidth / 2 + ((value - 60) / (800 - 60)) * (box.width - thumbWidth);
+  const y = box.y + box.height / 2;
+  const expectedText = (value) =>
+    `${engine
+      .kvSchaetzeBedarf('efh', '1978-1994', 'teilweise', value, engine.KV_PARAMS_SEED)
+      .toLocaleString('de-DE')} kWh`;
+  const calculationRequests = [];
+  page.on('request', (request) => {
+    const url = new URL(request.url());
+    if (url.pathname === '/api/rechner' && url.searchParams.get('action') === 'kostenvergleich') {
+      calculationRequests.push(url);
+    }
+  });
+
+  await fetch(`${baseURL}/__delay-on`);
+  try {
+    await page.mouse.move(xForValue(140), y);
+    await page.mouse.down();
+    await page.mouse.move(xForValue(640), y, { steps: 20 });
+    await page.mouse.up();
+
+    await expect(slider).toHaveValue('640');
+    await expect(page.locator('#wzEstVal')).toHaveText(expectedText(640));
+    await expect
+      .poll(() => page.evaluate(() => KV_STATE.last && KV_STATE.last.inputsEcho.bedarf))
+      .toBe(engine.kvSchaetzeBedarf('efh', '1978-1994', 'teilweise', 640, engine.KV_PARAMS_SEED));
+    expect(calculationRequests).toHaveLength(1);
+
+    calculationRequests.length = 0;
+    await page.mouse.move(xForValue(640), y);
+    await page.mouse.down();
+    await page.mouse.move(xForValue(300), y, { steps: 20 });
+    await page.waitForTimeout(8200);
+    await page.mouse.up();
+
+    await expect(slider).toHaveValue('300');
+    await expect(page.locator('#wzEstVal')).toHaveText(expectedText(300));
+    await expect
+      .poll(() => page.evaluate(() => KV_STATE.last && KV_STATE.last.inputsEcho.bedarf))
+      .toBe(engine.kvSchaetzeBedarf('efh', '1978-1994', 'teilweise', 300, engine.KV_PARAMS_SEED));
+    expect(calculationRequests).toHaveLength(1);
+  } finally {
+    await fetch(`${baseURL}/__delay-off`);
+  }
 });

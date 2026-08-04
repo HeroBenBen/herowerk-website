@@ -1716,7 +1716,6 @@ kvLoadBootstrap();
     WZ.estNotaus=setTimeout(()=>{
       clearTimeout(WZ.estNotaus);WZ.estNotaus=null;
       document.body.classList.remove('wz-est-warten');
-      WZ.estDirty=false;
       clearTimeout(WZ.estNachlaufTimer);WZ.estNachlaufTimer=null;
     },8000);
   }
