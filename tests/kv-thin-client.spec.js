@@ -330,6 +330,52 @@ test('O3 Contract: Source, Bootstrap und serverseitige Periodeneigenschaft', asy
   );
 });
 
+test('G16 Wohnflächen-Regler schreibt den Schätzwert der letzten Antwort', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?theme=light`, {
+    waitUntil: 'domcontentloaded',
+  });
+  await page.waitForFunction(() => typeof KV_STATE !== 'undefined' && KV_STATE.last);
+  await page.locator('[data-wz-heizart="gas"]').click();
+  await page.locator('[data-wz-grp="vmode"][data-wz-val="unknown"]').click();
+  await page.locator('[data-wz-grp="geb"][data-wz-val="efh"]').click();
+  await page.locator('[data-wz-grp="bj"][data-wz-val="1978-1994"]').click();
+  await page.locator('[data-wz-grp="san"][data-wz-val="teilweise"]').click();
+  await page
+    .locator('#wzEstBox')
+    .locator('xpath=ancestor::details[1]')
+    .evaluate((details) => {
+      /** @type {HTMLDetailsElement} */ (details).open = true;
+    });
+  await expect(page.locator('#wzEstBox')).toBeVisible();
+
+  const slider = page.locator('#wzFlSlider');
+  await slider.scrollIntoViewIfNeeded();
+  const box = await slider.boundingBox();
+  expect(box).not.toBeNull();
+  if (!box) throw new Error('Wohnflächen-Regler hat keine messbare Fläche');
+  const thumbWidth = 22;
+  const xForValue = (value) =>
+    box.x + thumbWidth / 2 + ((value - 60) / (800 - 60)) * (box.width - thumbWidth);
+  const y = box.y + box.height / 2;
+  await page.mouse.move(xForValue(140), y);
+  await page.mouse.down();
+  await page.mouse.move(xForValue(640), y, { steps: 20 });
+  await page.mouse.up();
+
+  await expect(slider).toHaveValue('640');
+  await expect
+    .poll(() =>
+      page.evaluate(() => {
+        const response = KV_STATE.last;
+        const text = document.getElementById('wzEstVal').textContent;
+        if (!response || !response.inputsEcho || !text) return false;
+        return text === `${Number(response.inputsEcho.bedarf).toLocaleString('de-DE')} kWh`;
+      })
+    )
+    .toBe(true);
+});
+
 test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry', async ({
   page,
 }) => {
