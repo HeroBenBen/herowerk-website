@@ -1519,7 +1519,7 @@ kvLoadBootstrap();
     const body=$('wzStepBody');
     if(!body)return;
     qa(body,'.ib,.wz-opt-sub,.wz-herocalc,.tl small,p').forEach(el=>{
-      if(el.closest('details')||el.closest('button')||el.classList.contains('wz-mobile-step-lead')||el.classList.contains('wz-step-desktop-intro'))return;
+      if(el.closest('details')||el.closest('button')||el.classList.contains('wz-mobile-step-lead')||el.classList.contains('wz-step-desktop-intro')||el.id==='wzEstBox')return;
       const cs=getComputedStyle(el);
       if(cs.display==='none'||cs.visibility==='hidden')return;
       const lineHeight=parseFloat(cs.lineHeight)||parseFloat(cs.fontSize)*1.4;
