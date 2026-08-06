@@ -553,6 +553,8 @@
   body.kv-busy.kv-busy-visible #g9-kopftext{display:block;position:fixed;left:0;right:0;z-index:999;text-align:center;pointer-events:none;font:700 .78rem/1 system-ui,sans-serif;letter-spacing:.02em;padding:5px 0 6px;color:#b7d900;background:rgba(28,43,54,.94);}
   @keyframes g9Lauf{0%{left:-34%;}100%{left:100%;}}
   @keyframes g9Platzhalter{to{background-position:-200% 0;}}
+  body.wz-est-warten #wzEstVal,
+  body.kv-busy.kv-busy-visible #wzEstVal[data-kv-loading-value],
   body.kv-busy.kv-busy-visible #results [data-kv-loading-value],
   body.kv-busy.kv-busy-visible #wzLiveFoerder [data-kv-loading-value],
   body.kv-busy.kv-busy-visible #wzFoerderTreppe [data-kv-loading-value],
@@ -580,6 +582,8 @@
   html[data-theme='light'] body.kv-busy.kv-busy-visible #g9-kopfbalken{background:#d7d2c4;}
   html[data-theme='light'] body.kv-busy.kv-busy-visible #g9-kopfbalken::after{background:#4f6000;}
   html[data-theme='light'] body.kv-busy.kv-busy-visible #g9-kopftext{color:#4f6000;background:rgba(244,241,234,.94);}
+  html[data-theme='light'] body.wz-est-warten #wzEstVal,
+  html[data-theme='light'] body.kv-busy.kv-busy-visible #wzEstVal[data-kv-loading-value],
   html[data-theme='light'] body.kv-busy.kv-busy-visible #results [data-kv-loading-value],
   html[data-theme='light'] body.kv-busy.kv-busy-visible #wzLiveFoerder [data-kv-loading-value],
   html[data-theme='light'] body.kv-busy.kv-busy-visible #wzFoerderTreppe [data-kv-loading-value],
@@ -597,6 +601,8 @@
   html[data-theme='light'] body.kv-busy.kv-busy-visible #wzFoerderTreppe .tr-bar{background:#8d8779!important;}
   @media (prefers-reduced-motion:reduce){
     body.kv-busy.kv-busy-visible #g9-kopfbalken::after{animation:none;left:0;width:100%;}
+    body.wz-est-warten #wzEstVal,
+    body.kv-busy.kv-busy-visible #wzEstVal[data-kv-loading-value],
     body.kv-busy.kv-busy-visible #results [data-kv-loading-value],
     body.kv-busy.kv-busy-visible #wzLiveFoerder [data-kv-loading-value],
     body.kv-busy.kv-busy-visible #wzFoerderTreppe [data-kv-loading-value],
@@ -610,6 +616,8 @@
     body.kv-busy.kv-busy-visible #fGrenzeLbl,body.kv-busy.kv-busy-visible #fBasis,
     body.kv-busy.kv-busy-visible #fBetrag,body.kv-busy.kv-busy-visible #fNetto,
     body.kv-busy.kv-busy-visible #results .cw::after{animation:none!important;background:#6b8095!important;}
+    html[data-theme='light'] body.wz-est-warten #wzEstVal,
+    html[data-theme='light'] body.kv-busy.kv-busy-visible #wzEstVal[data-kv-loading-value],
     html[data-theme='light'] body.kv-busy.kv-busy-visible #results [data-kv-loading-value],
     html[data-theme='light'] body.kv-busy.kv-busy-visible #wzLiveFoerder [data-kv-loading-value],
     html[data-theme='light'] body.kv-busy.kv-busy-visible #wzFoerderTreppe [data-kv-loading-value],
@@ -1068,6 +1076,7 @@ function kvMobileYearDetails(titel,labels,datasets){
 }
 const G9_LOADING_TEXT='Wir rechnen deine Zahlen neu';
 const G9_LOADING_VALUE_SELECTORS=[
+  '#wzEstVal',
   '#results .mv','#results .vv','#results .ms','#results table.bt td.r',
   '#results .mobile-year-answer strong','#results .mobile-year-answer span',
   '#results .year-bar-row .year-value','#results .mobile-year-card .vv',
@@ -1180,7 +1189,7 @@ async function kvLoadBootstrap(){
   try{const data=await kvFetch(q);if(data.service!=='kv_bootstrap')throw new Error('Ungültiger Bootstrap');kvApplyBootstrap(data);await calculate({showResults:false});}
   catch(err){kvSetStatus('error',err.message);}
 }
-function scheduleKvCalculation(delay){clearTimeout(KV_STATE.timer);KV_STATE.timer=setTimeout(()=>calculate({showResults:false}),delay==null?350:delay);}
+function scheduleKvCalculation(delay){clearTimeout(KV_STATE.timer);KV_STATE.timer=setTimeout(()=>{KV_STATE.timer=null;calculate({showResults:false});},delay==null?350:delay);}
 function updateFoerderung(){scheduleKvCalculation(350);}
 function renderFoerderTreppe(){
   const host=document.getElementById('wzFoerderTreppe'),hint=document.getElementById('wzTreppeHint'),verlust=document.getElementById('wzTreppeVerlust');
@@ -1299,8 +1308,8 @@ function kvRender(data,showResults){
 }
 async function calculate(options){
   const opts=options||{};const seq=++KV_STATE.seq;if(KV_STATE.controller)KV_STATE.controller.abort();const controller=new AbortController();KV_STATE.controller=controller;const extra={};if(window.WZ_BRIDGE&&window.WZ_BRIDGE.bedarfModus==='schaetzung')Object.assign(extra,window.WZ_BRIDGE);const params=kvReadInputs(extra);KV_STATE.lastParams=params.toString();kvSetStatus('loading');document.getElementById('results').setAttribute('aria-busy','true');g9StartLoading();
-  try{const data=await kvFetch(params,controller.signal);if(seq!==KV_STATE.seq)return;if(data.service!=='kostenvergleich')throw new Error('Ungültige Rechner-Antwort');kvRender(data,!!opts.showResults);kvSetStatus('idle');if(opts.scroll)document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});}
-  catch(err){if(err.name!=='AbortError'&&seq===KV_STATE.seq)kvSetStatus('error',err.message);}
+  try{const data=await kvFetch(params,controller.signal);if(seq!==KV_STATE.seq)return null;if(data.service!=='kostenvergleich')throw new Error('Ungültige Rechner-Antwort');kvRender(data,!!opts.showResults);kvSetStatus('idle');if(opts.scroll)document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});return data;}
+  catch(err){if(err.name!=='AbortError'&&seq===KV_STATE.seq)kvSetStatus('error',err.message);return null;}
   finally{if(seq===KV_STATE.seq){document.getElementById('results').removeAttribute('aria-busy');g9StopLoading();}}
 }
 document.addEventListener('input',e=>{if(e.target&&KV_INPUT_IDS.includes(e.target.id))scheduleKvCalculation(350);});
@@ -1314,7 +1323,7 @@ kvLoadBootstrap();
   const KV_SESSION_KEY='hero_kv_sitzung';
   const WZ_LABELS=['1 Ihre Heizung','2 Ihr Vergleich','3 Ihre Förderung','4 Finanzierung','5 Ihr Ergebnis'];
   const WZ_TRACK_IDS=['heizart','bedarf','eta','invWP','jaz','laufzeit','neuFossilTog','gasInvest','oelInvest','vglBrennstoff','fHalbjahr','fGrund','fEU','fKlima','fAlt20','fEinkSlider','fKind','finanzTog','kredLZ','kredZins'];
-  const WZ={current:0,maxVisited:0,touched:new Set(),programmatic:false,incomeOpted:false,resultsBuilt:false,resultTracked:false,sitzung:null,step1:{heizart:null,bedarf:null,bedarfSource:null,altgas:null,vmode:null,unit:'kwh',unitTouched:false,geb:null,bj:null,san:null,flaeche:140,rohr:null,kbj:null}};
+  const WZ={current:0,maxVisited:0,touched:new Set(),programmatic:false,incomeOpted:false,resultsBuilt:false,resultTracked:false,sitzung:null,estSeq:0,estNachlaufTimer:null,estNachlauf:0,estWartenGesamt:0,estDirty:false,estEntprellTimer:null,estNotaus:null,step1:{heizart:null,bedarf:null,bedarfSource:null,altgas:null,vmode:null,unit:'kwh',unitTouched:false,geb:null,bj:null,san:null,flaeche:140,rohr:null,kbj:null}};
   const $=id=>document.getElementById(id);
   const q=(root,sel)=>root?root.querySelector(sel):null;
   const qa=(root,sel)=>root?Array.from(root.querySelectorAll(sel)):[];
@@ -1510,7 +1519,7 @@ kvLoadBootstrap();
     const body=$('wzStepBody');
     if(!body)return;
     qa(body,'.ib,.wz-opt-sub,.wz-herocalc,.tl small,p').forEach(el=>{
-      if(el.closest('details')||el.closest('button')||el.classList.contains('wz-mobile-step-lead')||el.classList.contains('wz-step-desktop-intro'))return;
+      if(el.closest('details')||el.closest('button')||el.classList.contains('wz-mobile-step-lead')||el.classList.contains('wz-step-desktop-intro')||el.id==='wzEstBox')return;
       const cs=getComputedStyle(el);
       if(cs.display==='none'||cs.visibility==='hidden')return;
       const lineHeight=parseFloat(cs.lineHeight)||parseFloat(cs.fontSize)*1.4;
@@ -1675,18 +1684,49 @@ kvLoadBootstrap();
     WZ.step1.bedarf=c;WZ.step1.bedarfSource='own';
     setControl('bedarf',c,['input','change']);touch('bedarf');updateNavState();updateStep1Reveal();
   }
-  async function wzUpdateEstimate(){
+  function wzEstimateWartenStart(){
+    clearTimeout(WZ.estNotaus);
+    document.body.classList.add('wz-est-warten');
+    WZ.estNotaus=setTimeout(()=>{
+      clearTimeout(WZ.estNotaus);WZ.estNotaus=null;
+      document.body.classList.remove('wz-est-warten');
+      clearTimeout(WZ.estNachlaufTimer);WZ.estNachlaufTimer=null;
+    },8000);
+  }
+  function wzEstimateWartenStop(){
+    if(WZ.estDirty)return;
+    clearTimeout(WZ.estNotaus);WZ.estNotaus=null;
+    document.body.classList.remove('wz-est-warten');
+  }
+  function wzEstimateFremdlaufAktiv(){
+    return !!KV_STATE.timer||document.getElementById('results').getAttribute('aria-busy')==='true';
+  }
+  function wzEstimateNachlaufWarten(){
+    WZ.estWartenGesamt+=400;
+    WZ.estNachlaufTimer=setTimeout(()=>wzUpdateEstimate(true),400);
+  }
+  async function wzUpdateEstimate(ausNachlauf){
     const s=WZ.step1;
-    if(!(s.geb&&s.bj&&s.san)){$('wzEstBox').style.display='none';return;}
+    if(!(s.geb&&s.bj&&s.san)){$('wzEstBox').style.display='none';wzEstimateWartenStop();return;}
+    if(!ausNachlauf){clearTimeout(WZ.estNachlaufTimer);WZ.estNachlaufTimer=null;WZ.estNachlauf=0;WZ.estWartenGesamt=0;}
+    if(ausNachlauf&&wzEstimateFremdlaufAktiv()&&WZ.estWartenGesamt<2000){wzEstimateNachlaufWarten();return;}
+    const estSeq=++WZ.estSeq;
     window.WZ_BRIDGE={bedarfModus:'schaetzung',geb:s.geb,bj:s.bj,san:s.san,flaeche:s.flaeche};
-    await calculate({showResults:false});
-    const response=KV_STATE.last;if(!response||!response.inputsEcho)return;
-    const kwh=clampBedarf(response.inputsEcho.bedarf);
+    const antwort=await calculate({showResults:false});
+    if(estSeq!==WZ.estSeq)return;
+    if(!antwort||!antwort.inputsEcho){
+      if(wzEstimateFremdlaufAktiv()&&WZ.estWartenGesamt<2000){wzEstimateNachlaufWarten();return;}
+      if(WZ.estNachlauf<2){WZ.estNachlauf++;WZ.estNachlaufTimer=setTimeout(()=>wzUpdateEstimate(true),0);return;}
+      wzEstimateWartenStop();return;
+    }
+    const kwh=clampBedarf(antwort.inputsEcho.bedarf);
     s.bedarf=kwh;s.bedarfSource='market';
     WZ.touched.delete('bedarf');
-    setControl('bedarf',kwh,['input','change']);
+    setControl('bedarf',kwh,[]);
+    $('vBedarf').textContent=kwh.toLocaleString('de-DE')+' kWh';updateEtaLive();
     $('wzEstVal').textContent=kwh.toLocaleString('de-DE')+' kWh';
     $('wzEstBox').style.display='block';
+    wzEstimateWartenStop();
     updateChips();updateNavState();updateStep1Reveal();
   }
   function wzAutoUnit(){
@@ -1772,7 +1812,18 @@ kvLoadBootstrap();
       });
     });
     const fl=$('wzFlSlider');
-    if(fl){fl.value=WZ.step1.flaeche;$('wzFlVal').textContent=WZ.step1.flaeche+' m²';fl.addEventListener('input',()=>{WZ.step1.flaeche=Number(fl.value);$('wzFlVal').textContent=WZ.step1.flaeche+' m²';wzUpdateEstimate();});}
+    if(fl){
+      fl.value=WZ.step1.flaeche;$('wzFlVal').textContent=WZ.step1.flaeche+' m²';
+      fl.addEventListener('input',()=>{
+        const flaeche=Number(fl.value);if(flaeche===WZ.step1.flaeche)return;
+        WZ.step1.flaeche=flaeche;$('wzFlVal').textContent=flaeche+' m²';WZ.estDirty=true;wzEstimateWartenStart();
+      });
+      const schaetzungNachziehen=()=>{
+        clearTimeout(WZ.estEntprellTimer);
+        WZ.estEntprellTimer=setTimeout(()=>{WZ.estEntprellTimer=null;if(!WZ.estDirty)return;WZ.estDirty=false;wzUpdateEstimate();},250);
+      };
+      ['change','pointerup','touchend','pointercancel','touchcancel'].forEach(ereignis=>fl.addEventListener(ereignis,schaetzungNachziehen));
+    }
     if(WZ.step1.vmode==='unknown')wzUpdateEstimate();
     // S4: Klimabonus kontextabhaengig (KfW 458: Oel funktionsfaehig = immer, Gas nur ab 20 Jahren)
     const hz=WZ.step1.heizart;
