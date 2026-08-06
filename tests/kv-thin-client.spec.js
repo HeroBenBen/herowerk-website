@@ -974,13 +974,9 @@ test('G16 Wohnflächen-Regler schreibt den Schätzwert der letzten Antwort', asy
   await page.locator('[data-wz-grp="geb"][data-wz-val="efh"]').click();
   await page.locator('[data-wz-grp="bj"][data-wz-val="1978-1994"]').click();
   await page.locator('[data-wz-grp="san"][data-wz-val="teilweise"]').click();
-  await page
-    .locator('#wzEstBox')
-    .locator('xpath=ancestor::details[1]')
-    .evaluate((details) => {
-      /** @type {HTMLDetailsElement} */ (details).open = true;
-    });
-  await expect(page.locator('#wzEstBox')).toBeVisible();
+  const estimateBox = page.locator('#wzEstBox');
+  await expect(estimateBox.locator('xpath=ancestor::details[1]')).toHaveCount(0);
+  await expect(estimateBox).toBeVisible();
 
   const slider = page.locator('#wzFlSlider');
   await slider.scrollIntoViewIfNeeded();
@@ -991,10 +987,6 @@ test('G16 Wohnflächen-Regler schreibt den Schätzwert der letzten Antwort', asy
   const xForValue = (value) =>
     box.x + thumbWidth / 2 + ((value - 60) / (800 - 60)) * (box.width - thumbWidth);
   const y = box.y + box.height / 2;
-  const expectedText = (value) =>
-    `${engine
-      .kvSchaetzeBedarf('efh', '1978-1994', 'teilweise', value, engine.KV_PARAMS_SEED)
-      .toLocaleString('de-DE')} kWh`;
   const calculationRequests = [];
   page.on('request', (request) => {
     const url = new URL(request.url());
@@ -1011,10 +1003,11 @@ test('G16 Wohnflächen-Regler schreibt den Schätzwert der letzten Antwort', asy
     await page.mouse.up();
 
     await expect(slider).toHaveValue('640');
-    await expect(page.locator('#wzEstVal')).toHaveText(expectedText(640));
     await expect
       .poll(() => page.evaluate(() => KV_STATE.last && KV_STATE.last.inputsEcho.bedarf))
       .toBe(engine.kvSchaetzeBedarf('efh', '1978-1994', 'teilweise', 640, engine.KV_PARAMS_SEED));
+    const lastBedarf640 = await page.evaluate(() => KV_STATE.last.inputsEcho.bedarf);
+    expect(await estimateBox.innerText()).toContain(`${lastBedarf640.toLocaleString('de-DE')} kWh`);
     expect(calculationRequests).toHaveLength(1);
 
     calculationRequests.length = 0;
@@ -1025,10 +1018,11 @@ test('G16 Wohnflächen-Regler schreibt den Schätzwert der letzten Antwort', asy
     await page.mouse.up();
 
     await expect(slider).toHaveValue('300');
-    await expect(page.locator('#wzEstVal')).toHaveText(expectedText(300));
     await expect
       .poll(() => page.evaluate(() => KV_STATE.last && KV_STATE.last.inputsEcho.bedarf))
       .toBe(engine.kvSchaetzeBedarf('efh', '1978-1994', 'teilweise', 300, engine.KV_PARAMS_SEED));
+    const lastBedarf300 = await page.evaluate(() => KV_STATE.last.inputsEcho.bedarf);
+    expect(await estimateBox.innerText()).toContain(`${lastBedarf300.toLocaleString('de-DE')} kWh`);
     expect(calculationRequests).toHaveLength(1);
   } finally {
     await fetch(`${baseURL}/__delay-off`);
