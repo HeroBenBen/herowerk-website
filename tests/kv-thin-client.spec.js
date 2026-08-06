@@ -975,7 +975,10 @@ test('G16 Wohnflächen-Regler schreibt den Schätzwert der letzten Antwort', asy
   await page.locator('[data-wz-grp="bj"][data-wz-val="1978-1994"]').click();
   await page.locator('[data-wz-grp="san"][data-wz-val="teilweise"]').click();
   const estimateBox = page.locator('#wzEstBox');
-  await expect(estimateBox.locator('xpath=ancestor::details[1]')).toHaveCount(0);
+  await expect(
+    estimateBox.locator('xpath=ancestor::details[1]'),
+    'Schätzkasten darf keinen details-Vorfahr haben'
+  ).toHaveCount(0);
   await expect(estimateBox).toBeVisible();
 
   const slider = page.locator('#wzFlSlider');
