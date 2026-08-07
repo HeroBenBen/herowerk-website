@@ -74,12 +74,12 @@ test('@smoke Navigation von Startseite auf Unterseiten und zurück', async ({ pa
   }
 });
 
-test('@smoke Funnel Redirect nur auf Vercel Preview', async ({ page }) => {
-  const previewUrl = process.env.PREVIEW_URL || '';
-  test.skip(
-    !/^https:\/\/.*\.vercel\.app\/?$/.test(previewUrl),
-    'vercel.json redirects run only on Vercel preview URLs'
-  );
+// 07.08.2026: Dieser Test hat sich bis zum Vercel-Ausstieg SELBST UEBERSPRUNGEN,
+// solange die Adresse keine vercel.app-Adresse war, also in jedem lokalen Lauf.
+// Die Weiterleitung steht in der .htaccess, und der Pruefserver liefert sie aus,
+// deshalb laeuft der Test jetzt echt. Eine Pruefung, die sich selbst ueberspringt,
+// ist keine Pruefung (Lehre feedback_leerer_aber_wahrer_wert_macht_pruefbedingung_tot).
+test('@smoke Funnel Redirect auf /anfrage', async ({ page }) => {
   const resp = await gotoWithConsentRejected(page, '/funnel');
   expect(resp.status()).toBeLessThan(400);
   await expect(page).toHaveURL(/\/anfrage\/?$/);

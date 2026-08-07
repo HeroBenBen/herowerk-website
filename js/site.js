@@ -889,7 +889,9 @@ function formatKw(value) {
 }
 
 // Optik-Vorschau ohne Backend: rendert das Ergebnis mit Beispielwerten.
-// Aktiv NUR auf Vercel-Preview-Hosts via ?demo - niemals auf herowerk.de.
+// Aktiv NUR auf dem lokalen Pruefserver via ?demo - niemals auf herowerk.de.
+// 07.08.2026: Bedingung von den Vercel-Vorschau-Adressen auf den lokalen
+// Pruefserver umgestellt, weil es keine Vercel-Vorschau mehr gibt.
 function wizDemo() {
   if (!document.getElementById('wizResult')) return;
   const demoData = {
@@ -922,7 +924,7 @@ function wizDemo() {
 if (
   typeof location !== 'undefined' &&
   location.search.indexOf('demo') !== -1 &&
-  /\.vercel\.app$/.test(location.hostname)
+  /^(127\.0\.0\.1|localhost)$/.test(location.hostname)
 ) {
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wizDemo);
   else wizDemo();
