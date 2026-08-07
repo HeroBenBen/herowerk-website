@@ -91,7 +91,7 @@ async function main() {
     }
     if (geliefert.trim() !== zusage.trim()) {
       fehler.push(
-        `${name}: Auslieferung weicht von der Zusage ab\n    zugesagt : ${zusage}\n    geliefert: ${geliefert}`,
+        `${name}: Auslieferung weicht von der Zusage ab\n    zugesagt : ${zusage}\n    geliefert: ${geliefert}`
       );
       continue;
     }
@@ -102,7 +102,9 @@ async function main() {
     fehler.forEach((e) => console.error(`FAIL: ${e}`));
     process.exit(1);
   }
-  console.log(`Kopfzeilen-Gate OK (${zusagen.size} Zusagen aus .htaccess, alle wortgleich geliefert).`);
+  console.log(
+    `Kopfzeilen-Gate OK (${zusagen.size} Zusagen aus .htaccess, alle wortgleich geliefert).`
+  );
 }
 
 main().catch((e) => {
