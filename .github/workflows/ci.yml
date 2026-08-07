@@ -18,7 +18,7 @@
 #     ausgefuehrt. Sie hingen per needs am lighthouse-Job, und weil der nie gruen
 #     wurde, wurden sie immer uebersprungen. Beide bestehen inhaltlich, gemessen am
 #     29.07. gegen die Vorschau: "SEO-Basics-Check OK" und "Rich-Results-Check OK".
-#     Ihre needs zeigen jetzt auf lint und resolve-preview, nicht mehr auf lighthouse.
+#     Ihre needs zeigen jetzt auf lint, nicht mehr auf lighthouse.
 #   - visual-regression war 20 von 20 Laeufen GRUEN und hat dabei nichts gemessen:
 #     baseline/visual/ enthaelt ausser .gitkeep keine einzige PNG, deshalb ruft jeder
 #     Testfall test.skip() auf. Eine Pruefung, die immer gruen ist, ist genauso
@@ -28,6 +28,18 @@
 # Grundsatz ab hier: jeder Job ist entweder ein hartes Gate, das gruen ist und etwas
 # misst, ODER er traegt "Bericht" im Namen und continue-on-error, mit dem GEMESSENEN
 # Grund und dem Rueckweg direkt darueber. Nichts dazwischen.
+#
+# UMSTELLUNG 07.08.2026: PRUEFZIEL IST NICHT MEHR VERCEL
+# GF-Entscheid vom 07.08.2026 (_Entscheidungen/2026-08-07_Vercel-abschaffen-
+# Pausieren-Umzug-Loeschen_HERO.md): Vercel wird abgeschafft. Sieben Pruefungen
+# hingen ueber den Helfer-Job resolve-preview an einer Vercel-Vorschau. Der Helfer
+# ist ersatzlos entfallen; jede dieser Pruefungen startet sich statt dessen mit
+# scripts/start-pruefserver.sh einen echten Apache im Laufband, der das FERTIGE
+# IONOS-Buendel mit der PRODUKTIVEN .htaccess ausliefert.
+# Drei Gewinne, alle gemessen: die CI prueft erstmals genau das Paket, das
+# hochgeladen wird; die Sicherheitskopfzeilen kommen aus der produktiven Quelle
+# statt aus vercel.json; und es entsteht keine oeffentlich erreichbare
+# Zweitfassung der Website mehr (Anlass: Befund vom 07.08.2026).
 name: HeroWerk CI (Hard-Gates + ausgewiesene Berichte)
 on:
   pull_request:
@@ -35,46 +47,19 @@ on:
     # production: der Release-PR von main nach production (T4-2) durchlaeuft dieselbe Kette
 
 # Least-Privilege-Token (T1-6b-Followup O2): expliziter Block ersetzt die Defaults.
-# Jobs mit Sonderbedarf (resolve-preview, secret-scan) haben Job-Level-Blöcke.
+# Jobs mit Sonderbedarf (secret-scan) haben Job-Level-Blöcke.
 permissions:
   contents: read
 
-jobs:
-  # Job 0 (Helper): Vercel-Preview-URL einmal ermitteln, als Output exportieren
-  resolve-preview:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read     # checkout
-      deployments: read    # bash-Polling-Step liest Deployment-Status für die Preview-URL
-      pull-requests: read  # beibehalten für PR-Kontext/Head-SHA im resolve-preview-Job
-    outputs:
-      url: ${{ steps.vercel.outputs.url }}
-    steps:
-      - uses: actions/checkout@v5
-      - name: Wait for Vercel Preview
-        id: vercel
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
-        run: |
-          for i in $(seq 1 60); do
-            DEP=$(gh api "repos/${{ github.repository }}/deployments?sha=$HEAD_SHA&environment=Preview&per_page=5" --jq '.[0].id' 2>/dev/null || true)
-            if [ -n "$DEP" ] && [ "$DEP" != "null" ]; then
-              URL=$(gh api "repos/${{ github.repository }}/deployments/$DEP/statuses" --jq '[.[] | select(.state=="success" and .environment_url != null)][0].environment_url' 2>/dev/null || true)
-              if [ -n "$URL" ] && [ "$URL" != "null" ]; then
-                CODE=$(curl -s -o /dev/null -w "%{http_code}" "$URL" || true)
-                if [ "$CODE" = "200" ]; then
-                  echo "url=$URL" >> "$GITHUB_OUTPUT"
-                  echo "Preview bereit: $URL"
-                  exit 0
-                fi
-              fi
-            fi
-            sleep 10
-          done
-          echo "::error::Timeout (600 s): keine erreichbare Vercel-Preview-URL für $HEAD_SHA"
-          exit 1
+# Adresse des Pruefservers. Seit dem 07.08.2026 gibt es keinen Helfer-Job mehr, der
+# auf eine Vercel-Vorschau wartet: jeder Job startet sich seinen eigenen Apache im
+# Laufband (scripts/start-pruefserver.sh) und misst dagegen. Port 8080 ist derselbe
+# Standardwert wie in playwright.config.js, damit lokal und in der CI dieselbe
+# Adresse gilt.
+env:
+  PRUEFSERVER_URL: http://127.0.0.1:8080
 
+jobs:
   # Job 1: Lint + Type-Check
   lint:
     runs-on: ubuntu-latest
@@ -171,19 +156,21 @@ jobs:
   lighthouse-bericht:
     name: lighthouse-bericht (${{ matrix.theme }}, kein Hard-Gate)
     runs-on: ubuntu-latest
-    needs: [lint, resolve-preview]
+    needs: [lint]
     continue-on-error: true
     strategy:
       matrix: { theme: [dark, light] }
     steps:
       - uses: actions/checkout@v5
+      - name: Pruefserver starten
+        run: scripts/start-pruefserver.sh
       - name: Lighthouse CI ${{ matrix.theme }}
         uses: treosh/lighthouse-ci-action@v12
         with:
           urls: |
-            ${{ needs.resolve-preview.outputs.url }}?theme=${{ matrix.theme }}
-            ${{ needs.resolve-preview.outputs.url }}/preise.html?theme=${{ matrix.theme }}
-            ${{ needs.resolve-preview.outputs.url }}/anfrage.html?theme=${{ matrix.theme }}
+            ${{ env.PRUEFSERVER_URL }}?theme=${{ matrix.theme }}
+            ${{ env.PRUEFSERVER_URL }}/preise.html?theme=${{ matrix.theme }}
+            ${{ env.PRUEFSERVER_URL }}/anfrage.html?theme=${{ matrix.theme }}
           configPath: ./lighthouserc.json
           uploadArtifacts: true
           runs: 3
@@ -191,13 +178,15 @@ jobs:
   # Job 3: Playwright Smoke-Tests
   playwright-smoke:
     runs-on: ubuntu-latest
-    needs: [lint, resolve-preview]
+    needs: [lint]
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
       - run: npm ci
       - run: npx playwright install --with-deps
-      - env: { PREVIEW_URL: '${{ needs.resolve-preview.outputs.url }}' }
+      - name: Pruefserver starten
+        run: scripts/start-pruefserver.sh
+      - env: { PREVIEW_URL: '${{ env.PRUEFSERVER_URL }}' }
         run: npx playwright test --grep "@smoke"
 
   # Job 4: axe-core Accessibility, bleibt HARTES GATE
@@ -217,12 +206,14 @@ jobs:
   # nicht still veraltet. Begruendung im Detail: tests/helpers/axe.js.
   axe-accessibility:
     runs-on: ubuntu-latest
-    needs: [lint, resolve-preview]
+    needs: [lint]
     steps:
       - uses: actions/checkout@v5
       - run: npm ci
       - run: npx playwright install --with-deps
-      - env: { PREVIEW_URL: '${{ needs.resolve-preview.outputs.url }}' }
+      - name: Pruefserver starten
+        run: scripts/start-pruefserver.sh
+      - env: { PREVIEW_URL: '${{ env.PRUEFSERVER_URL }}' }
         run: npm run test:a11y
 
   # Job 3b: Einwilligungsdialog gegen die ECHTE Domain, BERICHT, kein Hard-Gate
@@ -282,17 +273,32 @@ jobs:
         # Section-Regel: <section id> primär, H2-Fallback, FAQ separat
         # Fail bei > 30% Abweichung pro Section (Stand-Schwelle, in T1-6b ratifiziert)
 
-  # Job 7: CSP/Headers-Test (Mozilla Observatory)
+  # Job 7: Sicherheitskopfzeilen, Zusage aus .htaccess gegen Auslieferung
+  #
+  # UMSTELLUNG 07.08.2026 (Vercel-Abschaffung). Bis hierher rief dieser Job den
+  # FREMDEN Mozilla-Observatory-Dienst mit der Vercel-Adresse auf und liess sich
+  # eine Schulnote geben. Das hatte drei Schwaechen, alle gemessen am 07.08.:
+  #   1. Vercel liest die .htaccess nicht, sondern nimmt seine Kopfzeilen aus
+  #      vercel.json. Geprueft wurde also der Stand, der beim Kunden NICHT
+  #      ankommt. Gegenprobe an der Vorschau: sie erlaubte in connect-src noch
+  #      script.googleusercontent.com, das produktiv bewusst entfernt wurde, und
+  #      lieferte eine andere HSTS-Dauer.
+  #   2. Ein fremder Scanner kann einen Pruefserver im Laufband nicht erreichen
+  #      und bewertet hinter einem Zugriffsschutz die Passwortseite.
+  #   3. Eine Schulnote B bleibt gruen, auch wenn eine einzelne Regel verschwindet.
+  # Die neue Pruefung vergleicht jede Zeile "Header always set" aus der
+  # produktiven .htaccess wortgleich gegen die Antwort des Pruefservers und
+  # verlangt zusaetzlich sechs Pflichtkopfzeilen. Schaerfe belegt am 07.08.:
+  # gegen die Live-Seite Rueckgabewert 0, gegen die abweichende Vercel-Vorschau
+  # Rueckgabewert 1.
   csp-headers:
     runs-on: ubuntu-latest
-    needs: [lint, resolve-preview]
+    needs: [lint]
     steps:
       - uses: actions/checkout@v5
-      - run: node scripts/observatory-check.js ${{ needs.resolve-preview.outputs.url }}
-        # Fail bei Mozilla-Observatory-Score < B
-        # HINWEIS (Iteration 3): "unsafe-inline" temporär dokumentiert wegen
-        # bestehender Inline-Scripts in dashboard.html und index.html.
-        # Separater CSP-Sprint nach Live für Nonce-Refactoring.
+      - name: Pruefserver starten
+        run: scripts/start-pruefserver.sh
+      - run: node scripts/header-check.js ${{ env.PRUEFSERVER_URL }}
 
   # Job 8: HubSpot-Property-Mapping-Test (Schema-Validierung)
   hubspot-mapping:
@@ -318,14 +324,16 @@ jobs:
   visual-regression-inaktiv:
     name: visual-regression (inaktiv, keine ratifizierte Baseline)
     runs-on: ubuntu-latest
-    needs: [lint, resolve-preview]
+    needs: [lint]
     strategy:
       matrix: { theme: [dark, light] }
     steps:
       - uses: actions/checkout@v5
       - run: npm ci
       - run: npx playwright install --with-deps
-      - env: { PREVIEW_URL: '${{ needs.resolve-preview.outputs.url }}' }
+      - name: Pruefserver starten
+        run: scripts/start-pruefserver.sh
+      - env: { PREVIEW_URL: '${{ env.PRUEFSERVER_URL }}' }
         run: npx playwright test --grep "@visual" -- --theme=${{ matrix.theme }}
         # Toleranz: 5% Pixel-Diff. Baseline-Update via /baseline-update-Label am PR
         # (Benjamin setzt Label, Github-Action akzeptiert dann den neuen Screenshot)
@@ -338,10 +346,12 @@ jobs:
   # die Abhaengigkeit, die Pruefung braucht nur eine erreichbare Vorschau.
   seo-basics:
     runs-on: ubuntu-latest
-    needs: [lint, resolve-preview]
+    needs: [lint]
     steps:
       - uses: actions/checkout@v5
-      - run: node scripts/seo-basics-check.js ${{ needs.resolve-preview.outputs.url }}
+      - name: Pruefserver starten
+        run: scripts/start-pruefserver.sh
+      - run: node scripts/seo-basics-check.js ${{ env.PRUEFSERVER_URL }}
         # Prüft: sitemap.xml erreichbar, robots.txt existiert, Canonical pro Seite,
         # Open Graph Tags, Twitter Cards, Schema.org JSON-LD, Theme-Color Meta
 
@@ -351,10 +361,12 @@ jobs:
   # "Rich-Results-Check OK (1 JSON-LD-Block/Bloecke)".
   schema-validation:
     runs-on: ubuntu-latest
-    needs: [lint, resolve-preview]
+    needs: [lint]
     steps:
       - uses: actions/checkout@v5
-      - run: node scripts/rich-results-check.js ${{ needs.resolve-preview.outputs.url }}
+      - name: Pruefserver starten
+        run: scripts/start-pruefserver.sh
+      - run: node scripts/rich-results-check.js ${{ env.PRUEFSERVER_URL }}
 
   # Job 12: Lead-only-Negativ-Gate (verhindert Vertragsabschluss-CTA)
   # Codex-Iteration-3-Finding 6 : Pattern erweitert
