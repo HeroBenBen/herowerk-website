@@ -124,15 +124,10 @@ if (!htaccessPolicy) {
   checkCsp('.htaccess', htaccessPolicy);
 }
 
-const vercel = JSON.parse(read('vercel.json'));
-const vercelPolicy = vercel.headers
-  ?.flatMap((entry) => entry.headers || [])
-  .find((header) => header.key?.toLowerCase() === 'content-security-policy')?.value;
-if (!vercelPolicy) {
-  errors.push('vercel.json: Content-Security-Policy nicht gefunden.');
-} else {
-  checkCsp('vercel.json', vercelPolicy);
-}
+// 07.08.2026: Die zweite CSP-Quelle vercel.json ist mit dem Vercel-Ausstieg entfallen.
+// Seither gibt es genau EINE Quelle fuer die Sicherheitskopfzeilen, die .htaccess, und
+// genau eine Stelle, die sie pflegen muss. Der Stand davor liegt unter der Marke
+// vercel-final. Die Auslieferung dieser Quelle prueft scripts/header-check.js.
 
 if (errors.length > 0) {
   console.error('Consent-Integration FEHLER: ' + errors.length);
@@ -143,5 +138,5 @@ if (errors.length > 0) {
 console.log(
   'Consent-Integration OK: ' +
     topLevelHtmlFiles.length +
-    ' öffentliche Stammseiten mit Wächter, keine ungeschützte Einbindung, 2 CSP-Quellen.'
+    ' öffentliche Stammseiten mit Wächter, keine ungeschützte Einbindung, 1 CSP-Quelle (.htaccess).'
 );

@@ -20,12 +20,10 @@ mkdir -p "$OUT"
 # Warum 2026-07-30: lokale Prüfläufe erzeugen HTML-Berichte, die kein Website-Inhalt sind.
 # Warum 2026-08-01: .git ist in einem Worktree eine Datei und darf nicht ins Bündel.
 # Warum 2026-08-01: .gitleaks.toml ist interne Secret-Scan-Konfiguration, keine Laufzeit-Datei.
-# Warum 2026-08-01: .vercelignore steuert Vercel und gehört nicht in den IONOS-Webroot.
 rsync -a \
   --exclude '.git/' \
   --exclude '.git' \
   --exclude '.gitleaks.toml' \
-  --exclude '.vercelignore' \
   --exclude '.github/' \
   --exclude '.claude/' \
   --exclude 'node_modules/' \
@@ -42,7 +40,6 @@ rsync -a \
   --exclude 'dist-ionos/' \
   --exclude 'rechner-runtime/' \
   --exclude '_mock_*' \
-  --exclude 'vercel.json' \
   --exclude 'package.json' \
   --exclude 'package-lock.json' \
   --exclude 'eslint.config.js' \
