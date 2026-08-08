@@ -67,9 +67,19 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
         with: { node-version: '20' }
+      # Der Snapshot-Nachlauf ist PHP-Code. Bis zu diesem Auftrag richtete der
+      # Lint-Auftrag ausschließlich Node ein. PHP 8.1 ist bewusst die älteste
+      # Fassung, deren Sprachmerkmale der produktive Rechenkern bereits nutzt.
+      # Die Übereinstimmung mit IONOS bleibt offen, bis der Geschäftsführer die
+      # dort eingestellte Fassung aus der Webhoster-Verwaltung nachträgt.
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          coverage: none
       - run: npm ci
       - run: npm run lint
       - run: npx tsc --noEmit  # JSDoc-Type-Check via tsconfig.json mit allowJs+checkJs
+      - run: npm run verify:rechner-snapshot-nachlauf
       # Cache-Busting-Gate (G3-N2, 25.07.2026): jede lokale CSS-/JS-Referenz muss
       # den aktuellen Inhalts-Fingerabdruck tragen. Ohne das liefert der 1-Jahres-
       # Cache aus .htaccess Bestandsbesuchern alte Dateien aus (zweimal real

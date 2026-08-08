@@ -205,6 +205,103 @@ function rechner_log_snapshot_age(int $modifiedAt): void
     }
 }
 
+function rechner_auffrischung_faellig(?bool $setzen = null): bool
+{
+    static $faellig = false;
+    if ($setzen !== null) {
+        $faellig = $setzen;
+    }
+    return $faellig;
+}
+
+function rechner_nachlauf_abschlussweg(?string $setzen = null): string
+{
+    static $abschlussweg = '';
+    if ($setzen !== null) {
+        $abschlussweg = $setzen;
+    }
+    return $abschlussweg;
+}
+
+/** @param resource $lockHandle */
+function rechner_log_nachlauf_abschlussweg_einmalig($lockHandle): void
+{
+    $status = @fstat($lockHandle);
+    if (!is_array($status)) {
+        error_log('HeroWerk Rechner: nachlauf_abschluss_marker_status_failed');
+        return;
+    }
+    if ((int) ($status['size'] ?? 0) > 0) {
+        return;
+    }
+
+    $abschlussweg = rechner_nachlauf_abschlussweg();
+    if ($abschlussweg !== 'fastcgi' && $abschlussweg !== 'puffer') {
+        $abschlussweg = 'unbekannt';
+    }
+    error_log('HeroWerk Rechner: nachlauf_abschluss weg=' . $abschlussweg);
+
+    $marker = 'abschlussweg=' . $abschlussweg . "\n";
+    $written = @fwrite($lockHandle, $marker);
+    if ($written !== strlen($marker) || !@fflush($lockHandle)) {
+        error_log('HeroWerk Rechner: nachlauf_abschluss_marker_write_failed');
+    }
+}
+
+function rechner_auffrischen_im_nachlauf(): void
+{
+    $lockHandle = null;
+    $locked = false;
+
+    try {
+        $lockHandle = @fopen(RECHNER_SNAPSHOT_LOCK_FILE, 'c');
+        if ($lockHandle === false) {
+            error_log('HeroWerk Rechner: snapshot_lock_open_failed');
+            return;
+        }
+        if (!@chmod(RECHNER_SNAPSHOT_LOCK_FILE, 0600)) {
+            error_log('HeroWerk Rechner: snapshot_lock_chmod_failed');
+        }
+        if (!@flock($lockHandle, LOCK_EX | LOCK_NB)) {
+            return;
+        }
+        $locked = true;
+        rechner_log_nachlauf_abschlussweg_einmalig($lockHandle);
+
+        clearstatcache(true, RECHNER_SNAPSHOT_FILE);
+        $modifiedAt = 0;
+        if (is_file(RECHNER_SNAPSHOT_FILE)) {
+            $rawModifiedAt = @filemtime(RECHNER_SNAPSHOT_FILE);
+            if ($rawModifiedAt === false) {
+                error_log('HeroWerk Rechner: snapshot_mtime_failed');
+            } else {
+                $modifiedAt = (int) $rawModifiedAt;
+            }
+        }
+        $ageSeconds = $modifiedAt > 0 ? max(0, time() - $modifiedAt) : PHP_INT_MAX;
+        if ($ageSeconds < RECHNER_SNAPSHOT_TTL_SECONDS) {
+            return;
+        }
+
+        $fresh = rechner_fetch_snapshot(rechner_snapshot_key());
+        rechner_write_snapshot_atomic($fresh);
+    } catch (Throwable $error) {
+        $code = $error instanceof RechnerValuesException
+            ? $error->publicCode
+            : 'unexpected_' . get_class($error);
+        error_log('HeroWerk Rechner: snapshot_background_refresh_failed code=' . $code);
+    } finally {
+        if (is_resource($lockHandle)) {
+            if ($locked && !@flock($lockHandle, LOCK_UN)) {
+                error_log('HeroWerk Rechner: snapshot_lock_release_failed');
+            }
+            if (!@fclose($lockHandle)) {
+                error_log('HeroWerk Rechner: snapshot_lock_close_failed');
+            }
+        }
+    }
+}
+
 /**
  * @return array{service:string,schemaVersion:int,sheets:array<string,array<int,array<int,mixed>>>}
  */
@@ -217,7 +314,10 @@ function rechner_load_snapshot(): array
     $modifiedAt = $cached !== null ? (int) (filemtime(RECHNER_SNAPSHOT_FILE) ?: 0) : 0;
     $ageSeconds = $modifiedAt > 0 ? max(0, time() - $modifiedAt) : PHP_INT_MAX;
 
-    if ($cached !== null && $ageSeconds < RECHNER_SNAPSHOT_TTL_SECONDS) {
+    if ($cached !== null) {
+        if ($ageSeconds >= RECHNER_SNAPSHOT_TTL_SECONDS) {
+            rechner_auffrischung_faellig(true);
+        }
         rechner_log_snapshot_age($modifiedAt);
         return $cached;
     }
@@ -228,10 +328,6 @@ function rechner_load_snapshot(): array
         return $fresh;
     } catch (RechnerValuesException $error) {
         error_log('HeroWerk Rechner: snapshot_refresh_failed code=' . $error->publicCode);
-        if ($cached !== null) {
-            rechner_log_snapshot_age($modifiedAt);
-            return $cached;
-        }
         throw new RechnerValuesException('snapshot_cold_start_failed', $error->publicCode);
     }
 }
