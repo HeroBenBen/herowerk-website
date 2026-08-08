@@ -5,6 +5,17 @@
 
 declare(strict_types=1);
 
+if (!ob_start()) {
+    http_response_code(500);
+    header('Content-Type: application/json; charset=utf-8');
+    echo '{"error":true,"message":"calculator_temporarily_unavailable"}';
+    exit;
+}
+ini_set('display_errors', '0');
+register_shutdown_function(static function (): void {
+    rechner_shutdown();
+});
+
 date_default_timezone_set('Europe/Berlin');
 
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwsvoC0ZBtpZq8WY_hNS-BPN1gcTK5G1JAMfxSc5FpjWxQ2SbRLI9VqCnX8SRLO4meF/exec';
@@ -25,6 +36,7 @@ const RECHNER_GOOGLE_FORWARD_TIMEOUT_SECONDS = 15;
 const RECHNER_RUNTIME_DIR = __DIR__ . '/../../rechner-runtime';
 const RECHNER_SNAPSHOT_FILE = RECHNER_RUNTIME_DIR . '/werte_snapshot.json';
 const RECHNER_SNAPSHOT_KEY_FILE = RECHNER_RUNTIME_DIR . '/werte_snapshot_key.txt';
+const RECHNER_SNAPSHOT_LOCK_FILE = RECHNER_RUNTIME_DIR . '/werte_snapshot.lock';
 
 require_once __DIR__ . '/rechner-values.php';
 require_once __DIR__ . '/rechner-engine.php';
@@ -32,6 +44,84 @@ require_once __DIR__ . '/rechner-engine.php';
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
 header('Cache-Control: no-store');
+
+function rechner_ausgabepuffer_leeren(): void
+{
+    while (ob_get_level() > 0) {
+        if (!ob_end_flush()) {
+            break;
+        }
+    }
+    flush();
+}
+
+function rechner_schwerwiegender_abbruch(): bool
+{
+    $error = error_get_last();
+    if (!is_array($error)) {
+        return false;
+    }
+
+    return in_array((int) ($error['type'] ?? 0), [
+        E_ERROR,
+        E_PARSE,
+        E_CORE_ERROR,
+        E_COMPILE_ERROR,
+        E_USER_ERROR,
+        E_RECOVERABLE_ERROR,
+    ], true);
+}
+
+function rechner_leere_fehlerantwort_absichern(): void
+{
+    if (!rechner_schwerwiegender_abbruch() || ob_get_length() !== 0) {
+        return;
+    }
+
+    http_response_code(500);
+    if (!headers_sent()) {
+        header('Content-Type: application/json; charset=utf-8');
+        header('X-Content-Type-Options: nosniff');
+        header('Cache-Control: no-store');
+    }
+    echo '{"error":true,"message":"calculator_temporarily_unavailable"}';
+}
+
+function rechner_antwort_abschliessen(): string
+{
+    if (function_exists('fastcgi_finish_request')) {
+        rechner_ausgabepuffer_leeren();
+        fastcgi_finish_request();
+        return 'fastcgi';
+    }
+
+    $bodyLength = ob_get_length();
+    if ($bodyLength !== false && !headers_sent()) {
+        header('Content-Length: ' . $bodyLength);
+    }
+    rechner_ausgabepuffer_leeren();
+    return 'puffer';
+}
+
+function rechner_shutdown(): void
+{
+    rechner_leere_fehlerantwort_absichern();
+    if (!function_exists('rechner_auffrischung_faellig') || !rechner_auffrischung_faellig()) {
+        rechner_ausgabepuffer_leeren();
+        return;
+    }
+
+    ignore_user_abort(true);
+    // Drei Sekunden Reserve halten Sperrverwaltung und atomisches Schreiben
+    // innerhalb einer festen Grenze, obwohl der Google-Abruf selbst zwölf Sekunden hat.
+    if (function_exists('set_time_limit') && !@set_time_limit(15)) {
+        error_log('HeroWerk Rechner: nachlauf_zeitgrenze_konnte_nicht_gesetzt_werden');
+    }
+
+    $abschlussweg = rechner_antwort_abschliessen();
+    rechner_nachlauf_abschlussweg($abschlussweg);
+    rechner_auffrischen_im_nachlauf();
+}
 
 function rechner_fail(int $status, string $message): never
 {
