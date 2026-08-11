@@ -18,8 +18,6 @@ register_shutdown_function(static function (): void {
 
 date_default_timezone_set('Europe/Berlin');
 
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwsvoC0ZBtpZq8WY_hNS-BPN1gcTK5G1JAMfxSc5FpjWxQ2SbRLI9VqCnX8SRLO4meF/exec';
-
 // Einzige Umschaltung zwischen PHP und dem bisherigen Google-Durchreichepfad.
 const RECHNER_PHP_ENGINE_ENABLED = true;
 
@@ -27,16 +25,7 @@ const RECHNER_PHP_ENGINE_ENABLED = true;
 const RECHNER_RATE_LIMIT_ENFORCED = false;
 
 const RECHNER_RATE_LIMIT_PER_MINUTE = 60;
-const RECHNER_SNAPSHOT_TTL_SECONDS = 300;
-const RECHNER_SNAPSHOT_MAX_QUIET_AGE_SECONDS = 86400;
-const RECHNER_SNAPSHOT_FETCH_TIMEOUT_SECONDS = 12;
 const RECHNER_GOOGLE_FORWARD_TIMEOUT_SECONDS = 15;
-
-// /website/api/rechner.php -> privater Geschwisterordner /rechner-runtime.
-const RECHNER_RUNTIME_DIR = __DIR__ . '/../../rechner-runtime';
-const RECHNER_SNAPSHOT_FILE = RECHNER_RUNTIME_DIR . '/werte_snapshot.json';
-const RECHNER_SNAPSHOT_KEY_FILE = RECHNER_RUNTIME_DIR . '/werte_snapshot_key.txt';
-const RECHNER_SNAPSHOT_LOCK_FILE = RECHNER_RUNTIME_DIR . '/werte_snapshot.lock';
 
 require_once __DIR__ . '/rechner-values.php';
 require_once __DIR__ . '/rechner-engine.php';

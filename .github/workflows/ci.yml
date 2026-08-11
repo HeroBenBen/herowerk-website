@@ -309,6 +309,7 @@ jobs:
       - name: Pruefserver starten
         run: scripts/start-pruefserver.sh
       - run: node scripts/header-check.js ${{ env.PRUEFSERVER_URL }}
+      - run: npm run verify:rechner-snapshot-apache
 
   # Job 8: HubSpot-Property-Mapping-Test (Schema-Validierung)
   hubspot-mapping:

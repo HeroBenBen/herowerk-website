@@ -106,17 +106,21 @@ async function buildFixture(root, upstreamUrl, fatalMode = '') {
   await fs.mkdir(apiDirectory, { recursive: true });
   await fs.mkdir(runtimeDirectory, { recursive: true });
 
-  for (const file of ['rechner-values.php', 'rechner-engine.php']) {
-    await fs.copyFile(path.join(sourceRoot, 'api', file), path.join(apiDirectory, file));
-  }
+  await fs.copyFile(
+    path.join(sourceRoot, 'api', 'rechner-engine.php'),
+    path.join(apiDirectory, 'rechner-engine.php')
+  );
 
-  let rechnerSource = await fs.readFile(path.join(sourceRoot, 'api', 'rechner.php'), 'utf8');
-  rechnerSource = replaceExactlyOnce(
-    rechnerSource,
+  let valuesSource = await fs.readFile(path.join(sourceRoot, 'api', 'rechner-values.php'), 'utf8');
+  valuesSource = replaceExactlyOnce(
+    valuesSource,
     /const APPS_SCRIPT_URL = '[^']+';/g,
     `const APPS_SCRIPT_URL = '${upstreamUrl}';`,
     'APPS_SCRIPT_URL'
   );
+  await fs.writeFile(path.join(apiDirectory, 'rechner-values.php'), valuesSource);
+
+  let rechnerSource = await fs.readFile(path.join(sourceRoot, 'api', 'rechner.php'), 'utf8');
 
   if (fatalMode !== '') {
     const injection =
@@ -192,7 +196,7 @@ async function requestCalculator(port) {
   });
 }
 
-async function writeSnapshot(runtimeDirectory, body, ageSeconds = 600) {
+async function writeSnapshot(runtimeDirectory, body, ageSeconds = 7200) {
   const snapshotFile = path.join(runtimeDirectory, 'werte_snapshot.json');
   await fs.writeFile(snapshotFile, body, { mode: 0o600 });
   const modifiedAt = new Date(Date.now() - ageSeconds * 1000);
