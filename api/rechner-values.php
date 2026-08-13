@@ -8,6 +8,21 @@
 
 declare(strict_types=1);
 
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwsvoC0ZBtpZq8WY_hNS-BPN1gcTK5G1JAMfxSc5FpjWxQ2SbRLI9VqCnX8SRLO4meF/exec';
+
+// Der Zeitplan hält den Snapshot frisch. Die Vorhaltedauer ist nur noch das
+// Sicherheitsnetz, falls der Zeitplan ausfällt. Ein knapperer Wert würde den
+// langsamen ersten Besucher nach Ablauf der Vorhaltedauer zurückbringen.
+const RECHNER_SNAPSHOT_TTL_SECONDS = 3600;
+const RECHNER_SNAPSHOT_MAX_QUIET_AGE_SECONDS = 86400;
+const RECHNER_SNAPSHOT_FETCH_TIMEOUT_SECONDS = 12;
+
+// /website/api/rechner-values.php -> privater Geschwisterordner /rechner-runtime.
+const RECHNER_RUNTIME_DIR = __DIR__ . '/../../rechner-runtime';
+const RECHNER_SNAPSHOT_FILE = RECHNER_RUNTIME_DIR . '/werte_snapshot.json';
+const RECHNER_SNAPSHOT_KEY_FILE = RECHNER_RUNTIME_DIR . '/werte_snapshot_key.txt';
+const RECHNER_SNAPSHOT_LOCK_FILE = RECHNER_RUNTIME_DIR . '/werte_snapshot.lock';
+
 final class RechnerValuesException extends RuntimeException
 {
     public function __construct(public readonly string $publicCode, string $detail = '')
@@ -248,56 +263,87 @@ function rechner_log_nachlauf_abschlussweg_einmalig($lockHandle): void
     }
 }
 
-function rechner_auffrischen_im_nachlauf(): void
+/**
+ * @param callable(resource):void $arbeit
+ * @return bool true bei ausgeführter Arbeit, false bei belegter Sperre nach Ablauf der Wartezeit
+ */
+function rechner_mit_snapshot_sperre(callable $arbeit, int $wartezeitMillisekunden): bool
 {
-    $lockHandle = null;
+    if ($wartezeitMillisekunden < 0) {
+        throw new RechnerValuesException('snapshot_lock_wait_invalid');
+    }
+
+    $lockHandle = @fopen(RECHNER_SNAPSHOT_LOCK_FILE, 'c');
+    if ($lockHandle === false) {
+        throw new RechnerValuesException('snapshot_lock_open_failed');
+    }
+    if (!@chmod(RECHNER_SNAPSHOT_LOCK_FILE, 0600)) {
+        error_log('HeroWerk Rechner: snapshot_lock_chmod_failed');
+    }
+
     $locked = false;
+    $deadlineNanoseconds = hrtime(true) + ($wartezeitMillisekunden * 1_000_000);
 
     try {
-        $lockHandle = @fopen(RECHNER_SNAPSHOT_LOCK_FILE, 'c');
-        if ($lockHandle === false) {
-            error_log('HeroWerk Rechner: snapshot_lock_open_failed');
-            return;
-        }
-        if (!@chmod(RECHNER_SNAPSHOT_LOCK_FILE, 0600)) {
-            error_log('HeroWerk Rechner: snapshot_lock_chmod_failed');
-        }
-        if (!@flock($lockHandle, LOCK_EX | LOCK_NB)) {
-            return;
-        }
-        $locked = true;
-        rechner_log_nachlauf_abschlussweg_einmalig($lockHandle);
-
-        clearstatcache(true, RECHNER_SNAPSHOT_FILE);
-        $modifiedAt = 0;
-        if (is_file(RECHNER_SNAPSHOT_FILE)) {
-            $rawModifiedAt = @filemtime(RECHNER_SNAPSHOT_FILE);
-            if ($rawModifiedAt === false) {
-                error_log('HeroWerk Rechner: snapshot_mtime_failed');
-            } else {
-                $modifiedAt = (int) $rawModifiedAt;
+        do {
+            $wouldBlock = 0;
+            if (@flock($lockHandle, LOCK_EX | LOCK_NB, $wouldBlock)) {
+                $locked = true;
+                break;
             }
-        }
-        $ageSeconds = $modifiedAt > 0 ? max(0, time() - $modifiedAt) : PHP_INT_MAX;
-        if ($ageSeconds < RECHNER_SNAPSHOT_TTL_SECONDS) {
-            return;
-        }
+            if ($wouldBlock !== 1) {
+                throw new RechnerValuesException('snapshot_lock_failed');
+            }
+            if ($wartezeitMillisekunden === 0 || hrtime(true) >= $deadlineNanoseconds) {
+                return false;
+            }
+            usleep(100_000);
+        } while (true);
 
-        $fresh = rechner_fetch_snapshot(rechner_snapshot_key());
-        rechner_write_snapshot_atomic($fresh);
+        $arbeit($lockHandle);
+        return true;
+    } finally {
+        if ($locked && !@flock($lockHandle, LOCK_UN)) {
+            error_log('HeroWerk Rechner: snapshot_lock_release_failed');
+        }
+        if (!@fclose($lockHandle)) {
+            error_log('HeroWerk Rechner: snapshot_lock_close_failed');
+        }
+    }
+}
+
+function rechner_auffrischen_im_nachlauf(): void
+{
+    try {
+        rechner_mit_snapshot_sperre(static function ($lockHandle): void {
+            rechner_log_nachlauf_abschlussweg_einmalig($lockHandle);
+
+            clearstatcache(true, RECHNER_SNAPSHOT_FILE);
+            $modifiedAt = 0;
+            if (is_file(RECHNER_SNAPSHOT_FILE)) {
+                $rawModifiedAt = @filemtime(RECHNER_SNAPSHOT_FILE);
+                if ($rawModifiedAt === false) {
+                    error_log('HeroWerk Rechner: snapshot_mtime_failed');
+                } else {
+                    $modifiedAt = (int) $rawModifiedAt;
+                }
+            }
+            $ageSeconds = $modifiedAt > 0 ? max(0, time() - $modifiedAt) : PHP_INT_MAX;
+            if ($ageSeconds < RECHNER_SNAPSHOT_TTL_SECONDS) {
+                return;
+            }
+
+            $fresh = rechner_fetch_snapshot(rechner_snapshot_key());
+            rechner_write_snapshot_atomic($fresh);
+        }, 0);
     } catch (Throwable $error) {
         $code = $error instanceof RechnerValuesException
             ? $error->publicCode
             : 'unexpected_' . get_class($error);
-        error_log('HeroWerk Rechner: snapshot_background_refresh_failed code=' . $code);
-    } finally {
-        if (is_resource($lockHandle)) {
-            if ($locked && !@flock($lockHandle, LOCK_UN)) {
-                error_log('HeroWerk Rechner: snapshot_lock_release_failed');
-            }
-            if (!@fclose($lockHandle)) {
-                error_log('HeroWerk Rechner: snapshot_lock_close_failed');
-            }
+        if ($code === 'snapshot_lock_open_failed') {
+            error_log('HeroWerk Rechner: snapshot_lock_open_failed');
+        } else {
+            error_log('HeroWerk Rechner: snapshot_background_refresh_failed code=' . $code);
         }
     }
 }

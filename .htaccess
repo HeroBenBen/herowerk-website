@@ -8,6 +8,12 @@
 Options -Indexes
 DirectoryIndex index.html
 
+# Privater Einstieg fuer den Server-Zeitplan. Die PHP-SAPI-Pruefung im Skript
+# bleibt als zweite, unabhaengige Sperre bestehen.
+<Files "werte-auffrischen.php">
+  Require all denied
+</Files>
+
 # ---------- 1. Host/Scheme-Kanonisierung (nur Produktions-Host; Staging unberuehrt) ----------
 <IfModule mod_rewrite.c>
   RewriteEngine On
