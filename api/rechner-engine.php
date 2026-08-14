@@ -104,6 +104,26 @@ function hw_key(string $value): string
     return str_replace('-', '_', $value);
 }
 
+/**
+ * Gebaeudefaktor je Bauform. Der Rueckfall ist typabhaengig, nicht 1.0 fuer alles:
+ * fehlt der Schluessel im Blatt, wuerde sonst jede Bauform wie das freistehende
+ * Einfamilienhaus gerechnet. Genau das ist am 14.08.2026 beim Reihenmittelhaus passiert,
+ * das ueberhaupt keinen Blatt-Eintrag hatte und dadurch rund 18 Prozent zu gross auslegte.
+ * Das Reihenmittelhaus traegt bewusst denselben Wert wie die uebrige Reihenhaus-Familie;
+ * ein eigener, kleinerer Wert waere eine neue Annahme und braucht eine Quelle.
+ *
+ * @param array<string,mixed> $d
+ */
+function hw_gebaeude_faktor(array $d, string $gebaeude): float|int
+{
+    $rueckfall = [
+        'efh' => 1.0, 'dhh' => 0.9, 'rh' => 0.85, 'rh_end' => 0.85,
+        'rh_mitte' => 0.85, 'zfh' => 0.95, 'mfh' => 0.85,
+    ];
+    $key = hw_key($gebaeude);
+    return hw_get_num($d, 'gebaeudef_' . $key, $rueckfall[$key] ?? 1.0);
+}
+
 function hw_baujahr_klasse(mixed $value): string
 {
     $raw = trim(hw_js_string($value));
@@ -528,7 +548,14 @@ function hw_catalog_result(array $item, array $priceRows): array
 function hw_dimensionierung(array $query, array $sheets): array
 {
     $d = hw_read_kv($sheets, 'Dimensionierung');
+    // Grenzen der Bedienoberflaeche serverseitig durchsetzen: der Schieberegler fuer die
+    // Wohnflaeche laesst 60 bis 800 Quadratmeter zu, der fuer den Verbrauch 500 bis 12.000
+    // der gewaehlten Einheit. Ohne diese Klemme nimmt der Kern jeden Aufrufwert an und
+    // liefert offensichtlich falsche Auslegungen (gemessen: 20.000 Liter Heizoel -> 93,7 kW).
     $flaeche = hw_num($query['flaeche'] ?? null, 0);
+    if ($flaeche > 0) {
+        $flaeche = min(hw_get_num($d, 'flaeche_max', 800), max(hw_get_num($d, 'flaeche_min', 60), $flaeche));
+    }
     $baujahr = hw_baujahr_klasse(hw_query_string($query, 'baujahr', '1978-1994'));
     $gebaeude = hw_query_string($query, 'gebaeude', 'efh');
     $sanierung = hw_query_string($query, 'sanierung', 'nein');
@@ -543,6 +570,12 @@ function hw_dimensionierung(array $query, array $sheets): array
     }
     if ($einheit === 'm3') {
         $verbrauch *= hw_get_num($d, 'gas_faktor', 10);
+    }
+    // Klemme in Kilowattstunden, NACH der Umrechnung: alle drei Einheiten der Bedienoberflaeche
+    // spannen denselben Bereich auf (5.000 bis 120.000 kWh, also 500 bis 12.000 Liter bzw. Kubikmeter).
+    // Ohne sie nimmt der Kern jeden Aufrufwert an; gemessen: 20.000 Liter Heizoel ergaben 93,7 kW.
+    if ($verbrauch > 0) {
+        $verbrauch = min(hw_get_num($d, 'verbrauch_max_kwh', 120000), max(hw_get_num($d, 'verbrauch_min_kwh', 5000), $verbrauch));
     }
 
     // ÜBERGANGSLÖSUNG: Die neun Baujahresklassen werden bis zum Bau von Teil A des zweiten
@@ -565,7 +598,7 @@ function hw_dimensionierung(array $query, array $sheets): array
     }
     $bedarfKwh = $verbrauchKnown
         ? $verbrauch
-        : hw_js_round($flaeche * hw_get_num($d, 'spez_bedarf_' . hw_key($effBaujahr), 140) * hw_get_num($d, 'gebaeudef_' . hw_key($gebaeude), 1.0));
+        : hw_js_round($flaeche * hw_get_num($d, 'spez_bedarf_' . hw_key($effBaujahr), 140) * hw_gebaeude_faktor($d, $gebaeude));
 
     $klima = hw_get_klima_plz($sheets);
     $plzKey = substr((string) preg_replace('/\D/', '', hw_query_string($query, 'plz')), 0, 5);

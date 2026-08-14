@@ -483,6 +483,61 @@ assert.match(gitignore, /^design-qa\.md$/m);
 assert.match(bundleScript, /--exclude 'artifacts\/'/);
 assert.match(bundleScript, /--exclude 'design-qa\.md'/);
 
+// --- Nachtrag 14.08.2026: Gebaeudefaktor Reihenmittelhaus und Grenzwerte des Verbrauchspfads ---
+
+const basis = {
+  action: 'dimensionierung',
+  plz: '30159',
+  baujahr: '1984-1994',
+  sanierung: 'nein',
+  warmwasser: 'ja',
+  heizsystem: 'heizkoerper',
+  einheit: 'kwh',
+  personen: '2',
+  heizung: 'gas',
+  andere_heizung: 'fernwaerme',
+  abgasrohr: 'unklar',
+  heizungsalter: 'unklar',
+  duschen: '1',
+  wannen: '1',
+  duschgroesse: '1',
+  wannengroesse: '1',
+  flaeche: '140',
+  gebaeude: 'efh',
+  verbrauchKnown: 'unknown',
+  verbrauch: '20000',
+};
+
+// Das Reihenmittelhaus hatte keinen eigenen Faktor und fiel still auf 1,0 zurueck, also auf den
+// Wert des freistehenden Einfamilienhauses. Es traegt jetzt den Wert der Reihenhaus-Familie.
+const efh = phpDimensionierung({ ...basis, gebaeude: 'efh' }).bedarf;
+const rhMitte = phpDimensionierung({ ...basis, gebaeude: 'rh-mitte' }).bedarf;
+const rhEnd = phpDimensionierung({ ...basis, gebaeude: 'rh-end' }).bedarf;
+assert.equal(rhMitte, rhEnd, 'Reihenmittelhaus rechnet wie das Reihenendhaus');
+assert.ok(rhMitte < efh, 'Reihenmittelhaus liegt unter dem freistehenden Einfamilienhaus');
+assert.equal(appsScript.gebaeudeFaktor_({}, 'rh-mitte'), 0.85);
+assert.match(codeGs, /'gebaeudef_rh_mitte',0\.85/);
+
+// Der Kern nimmt jeden Aufrufwert an; die Bedienoberflaeche laesst 5.000 bis 120.000 Kilowattstunden
+// zu (500 bis 12.000 Liter oder Kubikmeter). Realistische Eingaben duerfen sich NICHT aendern.
+const bekannt = (v, einheit) =>
+  phpDimensionierung({ ...basis, verbrauchKnown: 'known', verbrauch: String(v), einheit }).bedarf;
+assert.equal(bekannt(20000, 'kwh'), bekannt(2000, 'liter'), '20.000 kWh entsprechen 2.000 Litern');
+assert.equal(bekannt(200000, 'kwh'), bekannt(120000, 'kwh'), 'oberhalb 120.000 kWh wird geklemmt');
+assert.equal(
+  bekannt(20000, 'liter'),
+  bekannt(12000, 'liter'),
+  'oberhalb 12.000 Litern wird geklemmt'
+);
+assert.equal(bekannt(300, 'kwh'), bekannt(5000, 'kwh'), 'unterhalb 5.000 kWh wird angehoben');
+assert.ok(bekannt(20000, 'liter') < 60, 'kein absurder Auslegungswert mehr aus einer Fehleingabe');
+assert.equal(bekannt(20000, 'kwh'), 8.7, 'realistische Eingabe unveraendert');
+
+// Auch die Flaeche folgt den Grenzen des Schiebereglers (60 bis 800 Quadratmeter).
+const flaeche = (v) => phpDimensionierung({ ...basis, flaeche: String(v) }).bedarf;
+assert.equal(flaeche(20), flaeche(60), 'unterhalb 60 Quadratmetern wird angehoben');
+assert.equal(flaeche(2000), flaeche(800), 'oberhalb 800 Quadratmetern wird geklemmt');
+
 console.log(
-  'PASS Review-Blocker: A1-A6, N1-N3, 0-Werte, 2,61/3,44 kW, 30 Parameter und Förderannahme'
+  'PASS Review-Blocker: A1-A6, N1-N3, 0-Werte, 2,61/3,44 kW, 30 Parameter, Förderannahme, Reihenmittelhaus und Grenzwerte'
 );

@@ -83,7 +83,11 @@ function paramString_(params, key, fallback) {
 function dimensionierung_(p) {
   const all = getAllParameters_();
   const d = all.dimensionierung;
-  const flaeche = num_(p.flaeche, 0);
+  // Grenzen der Bedienoberflaeche serverseitig durchsetzen (Flaeche 60 bis 800 Quadratmeter,
+  // Verbrauch 500 bis 12.000 der gewaehlten Einheit). Ohne die Klemme nimmt der Kern jeden
+  // Aufrufwert an; gemessen am 14.08.2026: 20.000 Liter Heizoel ergaben 93,7 Kilowatt.
+  let flaeche = num_(p.flaeche, 0);
+  if (flaeche > 0) flaeche = Math.min(getNum_(d, 'flaeche_max', 800), Math.max(getNum_(d, 'flaeche_min', 60), flaeche));
   const baujahr = baujahrKlasse_(paramString_(p, 'baujahr', '1978-1994'));
   const gebaeude = paramString_(p, 'gebaeude', 'efh');
   const sanierung = paramString_(p, 'sanierung', 'nein');
@@ -95,6 +99,9 @@ function dimensionierung_(p) {
   const einheit = paramString_(p, 'einheit', 'kwh').toLowerCase();
   if (einheit === 'liter') verbrauch *= getNum_(d, 'oel_faktor', 10);
   if (einheit === 'm3') verbrauch *= getNum_(d, 'gas_faktor', 10);
+  // Klemme in Kilowattstunden, NACH der Umrechnung: alle drei Einheiten der Bedienoberflaeche
+  // spannen denselben Bereich auf (5.000 bis 120.000 kWh, also 500 bis 12.000 Liter bzw. Kubikmeter).
+  if (verbrauch > 0) verbrauch = Math.min(getNum_(d, 'verbrauch_max_kwh', 120000), Math.max(getNum_(d, 'verbrauch_min_kwh', 5000), verbrauch));
 
   // ÜBERGANGSLÖSUNG: Die neun Baujahresklassen werden bis zum Bau von Teil A des zweiten
   // Bauauftrags auf die vier alten Klassen des weiterhin blockierten Flächenwegs abgebildet.
@@ -111,7 +118,7 @@ function dimensionierung_(p) {
   if (sanierung === 'teilweise' && idx >= 0) effBaujahr = bedarfStufen[Math.min(idx + 1, bedarfStufen.length - 1)];
   if (sanierung === 'umfassend' && idx >= 0) effBaujahr = bedarfStufen[Math.min(idx + 2, bedarfStufen.length - 1)];
 
-  const bedarfKwh = verbrauchKnown ? verbrauch : Math.round(flaeche * getNum_(d, 'spez_bedarf_' + key_(effBaujahr), 140) * getNum_(d, 'gebaeudef_' + key_(gebaeude), 1.0));
+  const bedarfKwh = verbrauchKnown ? verbrauch : Math.round(flaeche * getNum_(d, 'spez_bedarf_' + key_(effBaujahr), 140) * gebaeudeFaktor_(d, gebaeude));
 
   // NAT (Normaußentemperatur) PLZ-scharf aus Klima_PLZ; Fallback '*'/A-11 (Großraum-konservativ).
   const klima = getKlimaPlz_();
@@ -1143,6 +1150,15 @@ function num_(v, fallback) { if (typeof v === 'number') return v; const n = pars
 function int_(v, fallback) { const n = parseInt(String(v || '').replace(/\./g, ''), 10); return isNaN(n) ? fallback : n; }
 function getNum_(map, key, fallback) { return num_(map[key], fallback); }
 function round1_(v) { return Math.round(v * 10) / 10; }
+// Gebaeudefaktor je Bauform. Der Rueckfall ist typabhaengig, nicht 1.0 fuer alles: fehlt der
+// Schluessel im Blatt, wuerde sonst jede Bauform wie das freistehende Einfamilienhaus gerechnet.
+// Genau das ist am 14.08.2026 beim Reihenmittelhaus passiert, das keinen Blatt-Eintrag hatte.
+function gebaeudeFaktor_(d, gebaeude) {
+  const rueckfall = { efh: 1.0, dhh: 0.9, rh: 0.85, rh_end: 0.85, rh_mitte: 0.85, zfh: 0.95, mfh: 0.85 };
+  const k = key_(gebaeude);
+  return getNum_(d, 'gebaeudef_' + k, rueckfall[k] === undefined ? 1.0 : rueckfall[k]);
+}
+
 function key_(s) { return String(s).replace(/-/g, '_'); }
 
 function FOERDER_ROWS_() { return [
@@ -1152,11 +1168,11 @@ function FOERDER_ROWS_() { return [
   ['reform_grund_pct',30,'%', 'Grundförderung Reform (EU-Gerät)','Kanon 1.2 / Orakel Z.106'], ['reform_grund_pct_nicht_eu',15,'%', 'Grundförderung Reform ohne EU-Wertschöpfung (ab 01.02.2027)','Kanon 1.2 / Orakel Z.106, Z.114-115'], ['reform_deckel_pct',80,'%', 'Maximaler Satz Selbstnutzer Reform','Kanon 1.2 / Orakel Z.120'], ['reform_eink_pct_bis30',40,'%', 'Einkommensbonus bis 30.000 EUR anrechenbar','Kanon 1.2 / Orakel Z.113'], ['reform_eink_pct_bis40',30,'%', 'Einkommensbonus bis 40.000 EUR anrechenbar','Kanon 1.2 / Orakel Z.113'], ['reform_eink_pct_bis50',10,'%', 'Einkommensbonus bis 50.000 EUR anrechenbar','Kanon 1.2 / Orakel Z.113'], ['reform_eink_grenze_bis30',30000,'EUR', 'Staffelgrenze 1 anrechenbares zvE','Kanon 1.2 / Orakel Z.113'], ['reform_eink_grenze_bis40',40000,'EUR', 'Staffelgrenze 2 anrechenbares zvE','Kanon 1.2 / Orakel Z.113'], ['reform_eink_grenze_bis50',50000,'EUR', 'Staffelgrenze 3 anrechenbares zvE','Kanon 1.2 / Orakel Z.113'], ['reform_kind_abzug_eur',10000,'EUR', 'Einmaliger Abzug vom zvE bei mind. einem minderjährigen Kind','Kanon 1.2 / Orakel Z.109-112'], ['kumulierung_max_pct',60,'%', 'BEG-Kumulierungshöchstsatz aller öffentlichen Mittel','BEG-EM Nr. 8.6 (BAnz AT 29.12.2023 B1) + KfW-Merkblatt 458 12/2025; Kanon 1.3'], ['proklima_frist_ymd',20261031,'YYYYMMDD', 'Letztes Antragsdatum proKlima-Richtlinie','Kanon 1.3 / proKlima-Richtlinie 2026 v1.4'], ['proklima_basis','','Text', 'proKlima-Bemessungsbasis: preis | foerderfaehig (leer = periodenabhängiger Default: Alt foerderfaehig, Reform preis)','Kanon 1.3 / Orakel Z.218 / Kanon 5']
 ]; }
 function DIMENSION_ROWS_() { return [
-  ['spez_bedarf_vor1978',180,'kWh/m²a','spezifischer Bedarf vor 1978','js/site.js wizCalculate'], ['spez_bedarf_1978_1994',140,'kWh/m²a','spezifischer Bedarf 1978–1994','js/site.js wizCalculate'], ['spez_bedarf_1995_2010',100,'kWh/m²a','spezifischer Bedarf 1995–2010','js/site.js wizCalculate'], ['spez_bedarf_nach2010',60,'kWh/m²a','spezifischer Bedarf nach 2010','js/site.js wizCalculate'], ['gebaeudef_efh',1.0,'Faktor','Gebäudefaktor EFH','js/site.js wizCalculate'], ['gebaeudef_dhh',0.9,'Faktor','Gebäudefaktor DHH','js/site.js wizCalculate'], ['gebaeudef_rh',0.85,'Faktor','Gebäudefaktor RH','js/site.js wizCalculate'], ['gebaeudef_rh_end',0.85,'Faktor','Gebäudefaktor Reihenendhaus','js/site.js wizCalculate'], ['gebaeudef_zfh',0.95,'Faktor','Gebäudefaktor ZFH','js/site.js wizCalculate'], ['gebaeudef_mfh',0.85,'Faktor','Gebäudefaktor MFH','js/site.js wizCalculate'], ['jaz_vor1978',3.0,'JAZ','JAZ vor 1978','js/site.js wizCalculate'], ['jaz_1978_1994',3.3,'JAZ','JAZ 1978–1994','js/site.js wizCalculate'], ['jaz_1995_2010',3.8,'JAZ','JAZ 1995–2010','js/site.js wizCalculate'], ['jaz_nach2010',4.2,'JAZ','JAZ nach 2010','js/site.js wizCalculate'],
+  ['spez_bedarf_vor1978',180,'kWh/m²a','spezifischer Bedarf vor 1978','js/site.js wizCalculate'], ['spez_bedarf_1978_1994',140,'kWh/m²a','spezifischer Bedarf 1978–1994','js/site.js wizCalculate'], ['spez_bedarf_1995_2010',100,'kWh/m²a','spezifischer Bedarf 1995–2010','js/site.js wizCalculate'], ['spez_bedarf_nach2010',60,'kWh/m²a','spezifischer Bedarf nach 2010','js/site.js wizCalculate'], ['gebaeudef_efh',1.0,'Faktor','Gebäudefaktor EFH','js/site.js wizCalculate'], ['gebaeudef_dhh',0.9,'Faktor','Gebäudefaktor DHH','js/site.js wizCalculate'], ['gebaeudef_rh',0.85,'Faktor','Gebäudefaktor RH','js/site.js wizCalculate'], ['gebaeudef_rh_end',0.85,'Faktor','Gebäudefaktor Reihenendhaus','js/site.js wizCalculate'], ['gebaeudef_rh_mitte',0.85,'Faktor','Gebäudefaktor Reihenmittelhaus, bewusst gleich der übrigen Reihenhaus-Familie','Befund 14.08.2026, Auswahlkarte ohne Parameter'], ['gebaeudef_zfh',0.95,'Faktor','Gebäudefaktor ZFH','js/site.js wizCalculate'], ['gebaeudef_mfh',0.85,'Faktor','Gebäudefaktor MFH','js/site.js wizCalculate'], ['jaz_vor1978',3.0,'JAZ','JAZ vor 1978','js/site.js wizCalculate'], ['jaz_1978_1994',3.3,'JAZ','JAZ 1978–1994','js/site.js wizCalculate'], ['jaz_1995_2010',3.8,'JAZ','JAZ 1995–2010','js/site.js wizCalculate'], ['jaz_nach2010',4.2,'JAZ','JAZ nach 2010','js/site.js wizCalculate'],
   ['volllaststunden',1800,'h/a','Volllaststunden-Faktor','Bauauftrag 13.08.2026 / Dimensionierungsrechner'], ['ww_zuschlag_faktor',1.10,'Faktor','Warmwasser-Zuschlag Wärmepumpe, Altparameter','js/site.js wizCalculate'], ['oel_faktor',10,'kWh/L','Umrechnung Heizöl','Bauauftrag 13.08.2026 / Dimensionierungsrechner'], ['gas_faktor',10,'kWh/m³','Umrechnung Gas','Bauauftrag 13.08.2026 / Dimensionierungsrechner'],
   ['jaz_heizung',3.8,'JAZ','Jahresarbeitszahl Raumheizung','GF-Entscheid 14.08.2026 / Blattparameter'],
   ['jaz_warmwasser',2.7,'JAZ','Jahresarbeitszahl Warmwasser','GF-Entscheid 14.08.2026 / Blattparameter'],
-  ['ww_abzug_kwh_pro_person',700,'kWh/Person a','Warmwasser-Abzug vom bekannten Jahresverbrauch','Bauauftrag 13.08.2026 Abschnitt 7'],
+  ['flaeche_min',60,'m²','untere Grenze der Wohnflächen-Eingabe, spiegelt den Schieberegler','dimensionierung.html wzFlaeche'], ['flaeche_max',800,'m²','obere Grenze der Wohnflächen-Eingabe, spiegelt den Schieberegler','dimensionierung.html wzFlaeche'], ['verbrauch_min_kwh',5000,'kWh','untere Grenze des Jahresverbrauchs nach Umrechnung, spiegelt den Schieberegler','dimensionierung.html wzVerbrauchSlider'], ['verbrauch_max_kwh',120000,'kWh','obere Grenze des Jahresverbrauchs nach Umrechnung, spiegelt den Schieberegler','dimensionierung.html wzVerbrauchSlider'], ['ww_abzug_kwh_pro_person',700,'kWh/Person a','Warmwasser-Abzug vom bekannten Jahresverbrauch','Bauauftrag 13.08.2026 Abschnitt 7'],
   ['ww_temperatur_grad',55,'°C','angenommene Warmwasser-Speichertemperatur','Bauauftrag 13.08.2026 Abschnitt 7'],
   ['ww_sockel_kw',0.70,'kW','Sockel der Warmwasser-Leistung außerhalb der Faktoren','Bauauftrag 13.08.2026 Abschnitt 7'],
   ['ww_f_1_2',1.0,'Faktor','Personenfaktor für 1 bis 2 Personen','Bauauftrag 13.08.2026 Abschnitt 7'],
