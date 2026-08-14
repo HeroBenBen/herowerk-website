@@ -894,6 +894,7 @@ function formatKw(value) {
 // Pruefserver umgestellt, weil es keine Vercel-Vorschau mehr gibt.
 function wizDemo() {
   if (!document.getElementById('wizResult')) return;
+  // website-gate: rechenwerte-vorschau-naechster-block -- lokale Optik-Vorschau via ?demo, keine Produktivberechnung
   const demoData = {
     bedarf: 9.2,
     jaz: 3.8,
@@ -2196,63 +2197,6 @@ if (document.getElementById('wohneinheiten')) {
   updateSelbstnutzungOptionen();
   toggleHeizungsalter();
 }
-
-// ===== HEIZKOSTENVERGLEICH (Baujahr-abhängig) =====
-document.getElementById('wohnflaeche')?.addEventListener('input', (e) => {
-  document.getElementById('flaeVal').textContent = e.target.value;
-  calculateHeiz();
-});
-document.getElementById('heizHeizung')?.addEventListener('change', calculateHeiz);
-document.getElementById('heizBaujahr')?.addEventListener('change', calculateHeiz);
-
-function calculateHeiz() {
-  const flaeche = parseInt(document.getElementById('wohnflaeche').value);
-  const heizTyp = document.getElementById('heizHeizung').value;
-  const baujahr = document.getElementById('heizBaujahr').value;
-  const energiePreise = { gas: 0.12, oel: 0.11, nachtspeicher: 0.32 };
-  const heizLabels = { gas: 'Gas', oel: 'Öl', nachtspeicher: 'Nachtspeicher' };
-
-  // Spezifischer Energiebedarf nach Baujahr (kWh/m²) - konsistent mit Wizard
-  const spezBedarfMap = { vor1978: 180, '1978-1994': 140, '1995-2010': 100, nach2010: 60 };
-  const spezVerbrauch = spezBedarfMap[baujahr] || 140;
-  const verbrauch = flaeche * spezVerbrauch;
-  const kostenAlt = verbrauch * energiePreise[heizTyp];
-
-  // JAZ nach Baujahr (konservativ) - konsistent mit Wizard
-  const jazMap = { vor1978: 3.0, '1978-1994': 3.3, '1995-2010': 3.8, nach2010: 4.2 };
-  const jaz = jazMap[baujahr] || 3.5;
-
-  const wpStrompreis = 0.3;
-  const kostenWp = (verbrauch / jaz) * wpStrompreis;
-  const sparnis = kostenAlt - kostenWp;
-
-  document.getElementById('heizBarLabel').textContent = heizLabels[heizTyp];
-  document.getElementById('heizKostenAlt').textContent =
-    Math.round(kostenAlt).toLocaleString('de-DE') + ' €';
-  document.getElementById('heizKostenWp').textContent =
-    Math.round(kostenWp).toLocaleString('de-DE') + ' €';
-  document.getElementById('heizSparnis').textContent =
-    'ca. ' + Math.round(sparnis).toLocaleString('de-DE') + ' €';
-
-  // Methode-Hinweis dynamisch aktualisieren
-  document.getElementById('heizMethode').textContent =
-    'Verbrauch: ' +
-    flaeche +
-    ' m² × ' +
-    spezVerbrauch +
-    ' kWh/m² = ' +
-    verbrauch.toLocaleString('de-DE') +
-    ' kWh. Jahresarbeitszahl (JAZ) ' +
-    jaz.toFixed(1) +
-    '. Wärmepumpen-Strom 0,30 €/kWh.';
-
-  // Dynamic bars
-  const maxKosten = Math.max(kostenAlt, kostenWp);
-  document.getElementById('heizBarAlt').style.width =
-    Math.round((kostenAlt / maxKosten) * 100) + '%';
-  document.getElementById('heizBarWp').style.width = Math.round((kostenWp / maxKosten) * 100) + '%';
-}
-if (document.getElementById('wohnflaeche')) calculateHeiz();
 
 // ===== SELF-SERVICE FORM =====
 let qsStep = 0;

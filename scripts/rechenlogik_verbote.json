@@ -1,0 +1,6 @@
+{
+  "_zweck": "Begriffe und Muster, die im ausgelieferten Seitenquelltext nichts zu suchen haben. Die Rechenlogik unserer Rechner ist Betriebsgeheimnis und bleibt auf dem Server.",
+  "begriffe": ["jaz", "\\bcop\\b", "koeffizient", "kennlinie", "heizlast_?faktor", "marge", "aufschlag", "ek_?preis", "einkaufspreis", "kalkulationsfaktor", "deckungsbeitrag"],
+  "kommastellen_ab": 3,
+  "ausnahmen": ["package-lock.json", "node_modules/", "tests/", "scripts/", ".min.js"]
+}
