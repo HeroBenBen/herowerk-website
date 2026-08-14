@@ -147,17 +147,27 @@ window.addEventListener('scroll', () => {
 const wizData = {
   gemeinde: '',
   gebaeude: '',
-  baujahr: '',
+  baujahr: '1960',
+  baujahrModus: 'jahr',
+  baujahrJahr: 1960,
   sanierung: 'nein',
   flaeche: 140,
-  heizung: '',
+  heizung: 'gas',
+  andereHeizung: 'fernwaerme',
+  abgasrohr: 'kunststoff',
+  heizungsalter: '1990-2010',
   heizsystem: 'heizkoerper',
   warmwasser: 'ja',
-  personen: 3,
-  verbrauchKnown: false,
-  verbrauch: 0,
+  personen: 2,
+  duschen: 1,
+  wannen: 1,
+  duschgroesse: '1',
+  wannengroesse: '1',
+  verbrauchKnown: true,
+  verbrauch: 1800,
 };
 let wizStep = 1;
+let foerderAlterAnnahme = false;
 // Server-seitiger Proxy auf UNSERER Domain (api/rechner.php). Der echte Apps-Script-Endpunkt
 // steht nur noch server-seitig im PHP - nicht mehr im Browser sichtbar/direkt aufrufbar; die
 // Besucher-IP geht an unseren Server statt an Google. Same-Origin -> kein CORS. Alle Aufruf-
@@ -405,9 +415,100 @@ function checkPlz(input) {
 
 // Option selection + Auto-Advance
 // Steps that auto-advance on click (no input fields needed):
-// Step 2 (Gebäude, except Reihenhaus), Step 3 (Baujahr), Step 4 (Sanierung), Step 6 (Heizung), Step 7 (Heizsystem), Step 8 (Warmwasser)
-// Step 9 (Verbrauch) bleibt manuell: "Ich kenne meinen Verbrauch" blendet ein Eingabefeld ein.
-const autoAdvanceSteps = [2, 3, 4, 6, 7, 8];
+// Die Verbrauchsfrage bleibt manuell, weil sie den Schieber ein- oder ausblendet.
+const autoAdvanceSteps = [2, 3, 6, 7, 8, 9, 10, 13, 14];
+
+const wzSanierungErklaerungen = {
+  wzDach: [
+    'Steildach mit 5 cm Dämmung',
+    'Dämmung im Sparren-Zwischenraum, insgesamt etwa 12 cm',
+    'Wie zuvor, plus zusätzliche Dämmlage, insgesamt etwa 30 cm',
+  ],
+  wzFenster: [
+    'Holzfenster mit Zweischeiben-Isolierverglasung',
+    'Fenster mit Zweischeiben-Wärmeschutzverglasung',
+    'Dreischeiben-Wärmeschutzverglasung mit gedämmtem Rahmen',
+  ],
+  wzWand: [
+    'Mauerwerk ohne Dämmung',
+    'Dämmung etwa 12 cm mit Verputz, alternativ hinterlüftete Fassade',
+    'Dämmung etwa 24 cm mit Verputz',
+  ],
+  wzBoden: [
+    'Betondecke mit etwa 1 cm Dämmung',
+    'Dämmung etwa 8 cm unter oder auf der Decke',
+    'Dämmung etwa 12 cm',
+  ],
+};
+
+Object.entries(wzSanierungErklaerungen).forEach(([selectId, texte]) => {
+  const select = document.getElementById(selectId);
+  const ausgabe = document.getElementById(selectId + 'Help');
+  if (!select || !ausgabe) return;
+  const aktualisieren = () => {
+    ausgabe.textContent = texte[Number(select.value)] || texte[0];
+  };
+  select.addEventListener('change', aktualisieren);
+  aktualisieren();
+});
+
+const wzBaujahrBezeichnungen = {
+  bis1918: 'Bis 1918',
+  '1919-1948': '1919 bis 1948',
+  '1949-1957': '1949 bis 1957',
+  '1958-1968': '1958 bis 1968',
+  '1969-1978': '1969 bis 1978',
+  '1979-1983': '1979 bis 1983',
+  '1984-1994': '1984 bis 1994',
+  '1995-2010': '1995 bis 2010',
+  nach2010: 'Nach 2010',
+};
+
+function wzBaujahrKlasse(jahr) {
+  if (jahr <= 1918) return 'bis1918';
+  if (jahr <= 1948) return '1919-1948';
+  if (jahr <= 1957) return '1949-1957';
+  if (jahr <= 1968) return '1958-1968';
+  if (jahr <= 1978) return '1969-1978';
+  if (jahr <= 1983) return '1979-1983';
+  if (jahr <= 1994) return '1984-1994';
+  if (jahr <= 2010) return '1995-2010';
+  return 'nach2010';
+}
+
+function wzUpdateBaujahrEcho() {
+  const input = document.getElementById('wzBaujahrEingabe');
+  const echo = document.getElementById('wzBaujahrEcho');
+  const jahr = Number(input?.value);
+  const gueltig = Number.isInteger(jahr) && jahr >= 1800 && jahr <= 2026;
+  if (echo) {
+    echo.textContent = gueltig
+      ? 'Eingeordnet als: ' + wzBaujahrBezeichnungen[wzBaujahrKlasse(jahr)]
+      : 'Bitte ein Baujahr zwischen 1800 und 2026 eingeben.';
+  }
+  if (gueltig) wizData.baujahrJahr = jahr;
+  return gueltig;
+}
+
+function wzSetBaujahrModus(modus) {
+  wizData.baujahrModus = modus === 'spanne' ? 'spanne' : 'jahr';
+  document.querySelectorAll('#wzBaujahrModus button').forEach((button) => {
+    const aktiv = button.dataset.mode === wizData.baujahrModus;
+    button.classList.toggle('active', aktiv);
+    button.setAttribute('aria-pressed', aktiv ? 'true' : 'false');
+  });
+  const jahr = document.getElementById('wzBaujahrJahr');
+  const spanne = document.getElementById('wzBaujahrSpanne');
+  if (jahr) jahr.hidden = wizData.baujahrModus !== 'jahr';
+  if (spanne) spanne.hidden = wizData.baujahrModus !== 'spanne';
+  wzUpdateBaujahrEcho();
+}
+
+document.querySelectorAll('#wzBaujahrModus button').forEach((button) => {
+  button.addEventListener('click', () => wzSetBaujahrModus(button.dataset.mode));
+});
+document.getElementById('wzBaujahrEingabe')?.addEventListener('input', wzUpdateBaujahrEcho);
+wzSetBaujahrModus('jahr');
 
 document.querySelectorAll('.wizard-options').forEach((group) => {
   group.querySelectorAll('.wizard-option').forEach((opt) => {
@@ -416,40 +517,17 @@ document.querySelectorAll('.wizard-options').forEach((group) => {
       opt.classList.add('selected');
       // Reihenhaus sub-question logic
       const rhSub = document.getElementById('wzRhSub');
-      const rhAbsage = document.getElementById('wzRhAbsage');
       const step2Next = document.getElementById('wzStep2Next');
       if (rhSub && group.id === 'wzGebaeude') {
         if (opt.dataset.value === 'rh') {
           rhSub.style.display = 'block';
-          rhAbsage.style.display = 'none';
           setWizardNextDisabled(step2Next, true);
           return; // Don't auto-advance - wait for sub-option
         } else {
           rhSub.style.display = 'none';
-          rhAbsage.style.display = 'none';
           setWizardNextDisabled(step2Next, false);
           document.getElementById('wzRhEnd')?.classList.remove('selected');
           document.getElementById('wzRhMitte')?.classList.remove('selected');
-        }
-      }
-
-      // Warmwasser = Ja: Personenzahl als Pflicht-Auswahl erfragen und Auto-Advance unterdruecken,
-      // bis der Kunde eine Personenzahl-Karte gewaehlt hat (Muster wie #wzRhEnd). Bei "Nein" Block aus.
-      const persBlock = document.getElementById('wzPersonen');
-      if (persBlock && group.id === 'wzWarmwasser') {
-        const wwNext = document.getElementById('wzWwNext');
-        if (opt.dataset.value === 'ja') {
-          persBlock.style.display = 'block';
-          // "Weiter" sperren, bis eine Personenzahl-Karte gewaehlt ist (kein Default 3).
-          const personGewaehlt = !!document.querySelector('#wzPersonenOpts .wz-person.selected');
-          if (wwNext) {
-            setWizardNextDisabled(wwNext, !personGewaehlt);
-          }
-          return; // nicht auto-advancen - Personenzahl-Auswahl + Weiter abwarten
-        }
-        persBlock.style.display = 'none';
-        if (wwNext) {
-          setWizardNextDisabled(wwNext, false);
         }
       }
 
@@ -474,16 +552,8 @@ document.querySelectorAll('.wizard-options').forEach((group) => {
     document.getElementById('wzRhMitte').classList.remove('selected');
     el.classList.add('selected');
     const step2Next = document.getElementById('wzStep2Next');
-    const absage = document.getElementById('wzRhAbsage');
-    if (id === 'wzRhMitte') {
-      absage.style.display = 'block';
-      setWizardNextDisabled(step2Next, true);
-    } else {
-      absage.style.display = 'none';
-      setWizardNextDisabled(step2Next, false);
-      // Auto-Advance after Endhaus selection
-      setTimeout(() => wizNext(), 250);
-    }
+    setWizardNextDisabled(step2Next, false);
+    setTimeout(() => wizNext(), 250);
   });
 });
 
@@ -492,23 +562,18 @@ document.getElementById('wzFlaeche')?.addEventListener('input', (e) => {
   document.getElementById('wzFlaeVal').textContent = e.target.value + ' m²';
 });
 
-// Personenzahl: Auswahl-Karten (ersetzt Slider, AE-D). Pflicht-Auswahl ohne Default;
-// erst nach Klick wird "Weiter" aktiv (Muster wie #wzRhEnd). Statischer Auswahl-Zustand
-// (kein Blinken, WCAG 2.3.1). scrollIntoView haelt Auswahl + "Weiter" sichtbar.
-document.querySelectorAll('#wzPersonenOpts .wz-person').forEach((card) => {
-  card.addEventListener('click', () => {
-    document
-      .querySelectorAll('#wzPersonenOpts .wz-person')
-      .forEach((c) => c.classList.remove('selected'));
-    card.classList.add('selected');
-    wizData.personen = parseInt(card.dataset.value, 10) || wizData.personen;
-    const wwNext = document.getElementById('wzWwNext');
-    if (wwNext) {
-      setWizardNextDisabled(wwNext, false);
-    }
-    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  });
-});
+function wzBindCounter(minusId, plusId, outputId, key, min, max) {
+  const update = (delta) => {
+    wizData[key] = Math.max(min, Math.min(max, wizData[key] + delta));
+    const output = document.getElementById(outputId);
+    if (output) output.textContent = String(wizData[key]);
+  };
+  document.getElementById(minusId)?.addEventListener('click', () => update(-1));
+  document.getElementById(plusId)?.addEventListener('click', () => update(1));
+}
+wzBindCounter('wzPersonMinus', 'wzPersonPlus', 'wzPersonCount', 'personen', 1, 8);
+wzBindCounter('wzDuschenMinus', 'wzDuschenPlus', 'wzDuschenCount', 'duschen', 0, 6);
+wzBindCounter('wzWannenMinus', 'wzWannenPlus', 'wzWannenCount', 'wannen', 0, 3);
 
 // Verbrauch toggle
 document
@@ -518,11 +583,13 @@ document
     opt.addEventListener('click', () => {
       document.getElementById('wzVerbrauchInput').style.display =
         opt.dataset.value === 'known' ? 'block' : 'none';
+      const hinweis = document.getElementById('wzSchaetzHinweis');
+      if (hinweis) hinweis.style.display = opt.dataset.value === 'known' ? 'none' : 'block';
     });
   });
 
 // Verbrauch: Einheiten-Umschalter (kWh / m³ Gas / Liter Öl)
-let wzUnit = 'kwh'; // 'kwh', 'm3' oder 'liter'
+let wzUnit = 'm3'; // 'kwh', 'm3' oder 'liter'
 const OEL_FAKTOR = 10; // 1 Liter Heizöl ≈ 10 kWh
 const GAS_FAKTOR = 10; // 1 m³ Erdgas ≈ 10 kWh
 
@@ -541,6 +608,24 @@ function wzSetActiveBtn(activeId) {
         btn.style[k.trim()] = v.trim();
       });
   });
+}
+
+function wzSyncUnits() {
+  const kwh = document.getElementById('wzUnitKwh');
+  const m3 = document.getElementById('wzUnitM3');
+  const liter = document.getElementById('wzUnitLiter');
+  if (!kwh || !m3 || !liter) return;
+  const istOel = wizData.heizung === 'oel';
+  const istGas = ['gas', 'gasetage'].includes(wizData.heizung);
+  const strom =
+    wizData.heizung === 'nacht' ||
+    (wizData.heizung === 'sonst' && wizData.andereHeizung === 'waermepumpe');
+  liter.style.display = istOel ? 'block' : 'none';
+  m3.style.display = istGas ? 'block' : 'none';
+  kwh.style.display = istOel ? 'none' : 'block';
+  kwh.textContent = strom ? 'Kilowattstunden Strom' : 'Kilowattstunden';
+  if (istOel) wzSwitchUnit('liter');
+  else if (!istGas || !['m3', 'kwh'].includes(wzUnit)) wzSwitchUnit('kwh');
 }
 
 function wzGetKwh() {
@@ -619,6 +704,11 @@ function wizNext() {
   // Validate: Step 1 = PLZ, rest = option selection
   if (stepNum === 1) {
     if (!wizData.gemeinde) return;
+  } else if (stepNum === 3 && wizData.baujahrModus === 'jahr') {
+    if (!wzUpdateBaujahrEcho()) {
+      document.getElementById('wzBaujahrEingabe')?.focus();
+      return;
+    }
   } else {
     const group = currentStep.querySelector('.wizard-options');
     if (group && !group.querySelector('.selected')) {
@@ -633,35 +723,60 @@ function wizNext() {
   if (stepNum === 2) {
     const mainSel = currentStep.querySelector('#wzGebaeude .selected')?.dataset.value || '';
     if (mainSel === 'rh') {
-      // Reihenhaus: use sub-selection (rh-end)
-      const rhSel = document.getElementById('wzRhEnd')?.classList.contains('selected')
-        ? 'rh-end'
-        : '';
-      wizData.gebaeude = rhSel || 'rh';
+      // Das Endhaus behält seinen eigenen Rechenwert. Das Mittelhaus läuft als Reihenhaus
+      // vollständig durch; mögliche Geräteeinschränkungen gehören in den Katalog.
+      const rhSel = currentStep.querySelector('#wzRhSub .selected')?.dataset.value || '';
+      wizData.gebaeude = rhSel === 'rh-end' ? 'rh-end' : 'rh';
     } else {
       wizData.gebaeude = mainSel;
     }
   }
-  if (stepNum === 3) wizData.baujahr = currentStep.querySelector('.selected')?.dataset.value || '';
-  if (stepNum === 4)
-    wizData.sanierung = currentStep.querySelector('.selected')?.dataset.value || 'nein';
+  if (stepNum === 3) {
+    wizData.baujahr =
+      wizData.baujahrModus === 'jahr'
+        ? String(wizData.baujahrJahr)
+        : currentStep.querySelector('#wzBaujahr .selected')?.dataset.value || '';
+  }
+  if (stepNum === 4) {
+    // Teil A ist blockiert. Bis dahin verdichten wir die vier sichtbaren Bauteilangaben nur für
+    // den alten Flächenpfad zu dessen bestehender Sanierungsstufe; keine bauteilweise Rechnung.
+    const stufen = ['wzDach', 'wzFenster', 'wzWand', 'wzBoden'].map((id) =>
+      parseInt(document.getElementById(id)?.value || '0', 10)
+    );
+    const summe = stufen.reduce((sum, wert) => sum + wert, 0);
+    wizData.sanierung = summe === 0 ? 'nein' : summe >= 6 ? 'umfassend' : 'teilweise';
+  }
   if (stepNum === 5) wizData.flaeche = parseInt(document.getElementById('wzFlaeche').value);
-  if (stepNum === 6) wizData.heizung = currentStep.querySelector('.selected')?.dataset.value || '';
-  if (stepNum === 7)
+  if (stepNum === 6) {
+    wizData.heizung = currentStep.querySelector('.selected')?.dataset.value || 'gas';
+    wzSyncUnits();
+  }
+  if (stepNum === 7) {
+    wizData.andereHeizung = currentStep.querySelector('.selected')?.dataset.value || 'fernwaerme';
+    wzSyncUnits();
+  }
+  if (stepNum === 8)
+    wizData.abgasrohr = currentStep.querySelector('.selected')?.dataset.value || 'unklar';
+  if (stepNum === 9)
+    wizData.heizungsalter = currentStep.querySelector('.selected')?.dataset.value || 'unklar';
+  if (stepNum === 10)
     wizData.heizsystem = currentStep.querySelector('.selected')?.dataset.value || 'heizkoerper';
-  if (stepNum === 8) {
-    // Warmwasser nur aus der Ja/Nein-Gruppe lesen (Personenzahl-Karten sind eine zweite
-    // .selected-Gruppe im selben Schritt); personen wird beim Karten-Klick gesetzt.
+  if (stepNum === 11)
     wizData.warmwasser =
       currentStep.querySelector('#wzWarmwasser .selected')?.dataset.value || 'ja';
-  }
+  if (stepNum === 13)
+    wizData.duschgroesse = currentStep.querySelector('.selected')?.dataset.value || '1';
+  if (stepNum === 14)
+    wizData.wannengroesse = currentStep.querySelector('.selected')?.dataset.value || '1';
 
   // Next step
   currentStep.classList.remove('active');
-  const nextStep = document.querySelector(`.wizard-step[data-step="${stepNum + 1}"]`);
+  let nextStepNum = stepNum + 1;
+  while (nextStepNum <= 15 && wizStepIsSkipped(nextStepNum)) nextStepNum += 1;
+  const nextStep = document.querySelector(`.wizard-step[data-step="${nextStepNum}"]`);
   if (nextStep) {
     nextStep.classList.add('active');
-    wizStep = stepNum + 1;
+    wizStep = nextStepNum;
     updateWizProgress();
     wizScrollToTop();
   }
@@ -671,12 +786,22 @@ function wizBack() {
   const currentStep = document.querySelector('.wizard-step.active');
   const stepNum = parseInt(currentStep.dataset.step);
   if (stepNum > 1) {
+    let previousStepNum = stepNum - 1;
+    while (previousStepNum > 1 && wizStepIsSkipped(previousStepNum)) previousStepNum -= 1;
     currentStep.classList.remove('active');
-    document.querySelector(`.wizard-step[data-step="${stepNum - 1}"]`).classList.add('active');
-    wizStep = stepNum - 1;
+    document.querySelector(`.wizard-step[data-step="${previousStepNum}"]`).classList.add('active');
+    wizStep = previousStepNum;
     updateWizProgress();
     wizScrollToTop();
   }
+}
+
+function wizStepIsSkipped(stepNum) {
+  if (stepNum === 7) return wizData.heizung !== 'sonst';
+  if ((stepNum === 8 || stepNum === 9) && ['nacht', 'sonst'].includes(wizData.heizung)) return true;
+  if ([12, 13, 14].includes(stepNum) && wizData.warmwasser !== 'ja') return true;
+  if (stepNum === 13 && wizData.duschen === 0) return true;
+  return stepNum === 14 && wizData.wannen === 0;
 }
 
 function updateWizProgress() {
@@ -697,11 +822,11 @@ function wizScrollToTop(id = 'wizCard') {
 }
 
 async function wizCalculate() {
-  const step9 = document.querySelector('.wizard-step[data-step="9"]');
-  const verbSel = step9.querySelector('.wizard-options .selected');
+  const step15 = document.querySelector('.wizard-step[data-step="15"]');
+  const verbSel = step15.querySelector('.wizard-options .selected');
   if (!verbSel) {
-    step9.querySelector('.wizard-options').style.outline = '2px solid #E53935';
-    setTimeout(() => (step9.querySelector('.wizard-options').style.outline = 'none'), 2000);
+    step15.querySelector('.wizard-options').style.outline = '2px solid #E53935';
+    setTimeout(() => (step15.querySelector('.wizard-options').style.outline = 'none'), 2000);
     return;
   }
 
@@ -722,6 +847,9 @@ async function wizCalculate() {
         flaeche: wizData.flaeche || null,
         heizsystem: wizData.heizsystem || null,
         plz: (document.getElementById('wzPlz')?.value || '').replace(/\D/g, '').slice(0, 5) || null,
+        jahresverbrauch_kwh: wizData.verbrauchKnown ? wzGetKwh() : null,
+        jahresverbrauch_menge: wizData.verbrauchKnown ? wizData.verbrauch : null,
+        jahresverbrauch_einheit: wizData.verbrauchKnown ? wzUnit : null,
       })
     );
   } catch (e) {}
@@ -753,7 +881,15 @@ async function wizCalculate() {
     verbrauch: String(wizData.verbrauch),
     einheit: wzUnit,
     plz: (document.getElementById('wzPlz')?.value || '').replace(/\D/g, '').slice(0, 5),
-    personen: String(wizData.warmwasser === 'ja' ? wizData.personen : 0),
+    personen: String(wizData.personen),
+    heizung: wizData.heizung,
+    andere_heizung: wizData.andereHeizung,
+    abgasrohr: wizData.abgasrohr,
+    heizungsalter: wizData.heizungsalter,
+    duschen: String(wizData.duschen),
+    wannen: String(wizData.wannen),
+    duschgroesse: wizData.duschgroesse,
+    wannengroesse: wizData.wannengroesse,
     origin: 'https://herowerk.de',
   });
 
@@ -767,7 +903,10 @@ async function wizCalculate() {
     // Lead-Prefill festhalten, damit es pfadunabhaengig bis /anfrage -> HubSpot ueberlebt.
     hwMergeLeadPrefill({
       heizlast_kw: data && data.bedarf != null ? Math.round(Number(data.bedarf) * 10) / 10 : null,
-      energiebedarf_kwh: wizData.verbrauchKnown ? Number(wizData.verbrauch) || null : null,
+      energiebedarf_kwh: wizData.verbrauchKnown ? wzGetKwh() || null : null,
+      jahresverbrauch_kwh: wizData.verbrauchKnown ? wzGetKwh() || null : null,
+      jahresverbrauch_menge: wizData.verbrauchKnown ? Number(wizData.verbrauch) || null : null,
+      jahresverbrauch_einheit: wizData.verbrauchKnown ? wzUnit : null,
     });
     wizSelectedMarke = data.marken?.wolf?.deckt
       ? 'wolf'
@@ -790,24 +929,21 @@ async function wizCalculate() {
 }
 
 function renderWizServerResult(data) {
-  const heizLabel = data.heizsystem === 'fussboden' ? 'Fußbodenheizung' : 'Heizkörper';
-  document.getElementById('wizResultTitle').textContent =
-    `Deine Wärmepumpe für ca. ${formatKw(data.bedarf)} kW Bedarf`;
+  document.getElementById('wizResultTitle').textContent = 'Das brauchst du';
   document.getElementById('wizResultSub').textContent =
-    `Überschlägige Berechnung. Die exakte Dimensionierung erfolgt über das Hüllflächenverfahren und DIN EN 12831. ${heizLabel} · ca. Jahresarbeitszahl ${formatKw(data.jaz)}.`;
-  // Transparenz: spezifische Heizlast (≈ W/m²) + welches Schätzverfahren griff (Verbrauch vs. Fläche).
-  // Felder kommen aus dem Backend (dimensionierung_); fehlen sie (alte /exec-Version), bleibt die Zeile leer.
-  const wm2 = data.spez_heizlast_wm2
-    ? `ca. <strong>${data.spez_heizlast_wm2} W/m²</strong> spezifische Heizlast`
-    : '';
-  const sep = wm2 && data.methode_hinweis ? ' · ' : '';
-  const methodLine =
-    wm2 || data.methode_hinweis
-      ? `<div class="wiz-result-method" style="font-size:13px;color:var(--g300);margin:0 0 16px;text-align:center;">${wm2}${sep}${data.methode_hinweis || ''}</div>`
-      : '';
+    'Überschlägig aus deinen Angaben. Die genaue Heizlastberechnung machen wir vor Ort.';
   document.getElementById('wizResultCards').innerHTML = `
     <div class="foerder-grid wiz-result-shell">
-      ${methodLine}
+      <div class="foerder-result" style="margin-bottom:16px;">
+        <div style="font-size:13px;color:var(--g300);">Voraussichtliche Heizlast</div>
+        <div style="font-size:32px;font-weight:800;color:var(--white);">${formatKw(data.bedarf)} kW</div>
+        <p style="color:var(--g300);margin:8px 0 0;">${data.fuehrung === 'warmwasser' ? 'Bei dir gibt das Warmwasser die Größe vor, nicht die Heizung.' : 'Bei dir gibt die Heizung die Größe vor, nicht das Warmwasser.'}</p>
+      </div>
+      <div class="foerder-result" style="margin-bottom:16px;">
+        <div style="font-size:13px;color:var(--g300);">Voraussichtlicher Stromverbrauch der Wärmepumpe</div>
+        <div style="font-size:32px;font-weight:800;color:var(--white);">${Number(data.stromverbrauch_kwh || 0).toLocaleString('de-DE')} kWh im Jahr</div>
+        <p style="color:var(--g300);margin:8px 0 0;">${data.strom_hinweis || 'Warmwasser braucht eine höhere Temperatur und kostet deshalb mehr Strom je Kilowattstunde Wärme. Die Annahmen werden vor Ort genauer bestimmt.'}</p>
+      </div>
       <div class="wiz-result-grid">
         ${renderBrandCard('wolf', 'Wolf', data.marken?.wolf, data.bedarf)}
         ${renderBrandCard('vaillant', 'Vaillant', data.marken?.vaillant, data.bedarf)}
@@ -896,8 +1032,8 @@ function wizDemo() {
   if (!document.getElementById('wizResult')) return;
   const demoData = {
     bedarf: 9.2,
-    jaz: 3.8,
-    heizsystem: 'heizkoerper',
+    fuehrung: 'heizung',
+    stromverbrauch_kwh: 3200,
     marken: {
       wolf: {
         deckt: true,
@@ -931,18 +1067,26 @@ if (
 }
 
 function wizReset() {
-  document.getElementById('wizResult').classList.remove('active');
-  document.querySelectorAll('.wizard-step').forEach((s) => s.classList.remove('active'));
-  document.querySelector('.wizard-step[data-step="1"]').classList.add('active');
-  document.querySelectorAll('.wizard-option').forEach((o) => o.classList.remove('selected'));
-  wizData.sanierung = 'nein';
-  wizStep = 1;
-  updateWizProgress();
-  // Zum Wizard-Anfang scrollen (Kachel-Oberkante)
-  wizScrollToTop();
+  window.location.reload();
 }
 
 // ===== WIZARD → FÖRDERRECHNER: Datenübernahme =====
+const WIZ_FOERDER_HEIZUNGSALTER = Object.freeze({
+  vor1990: '30',
+  '1990-2010': '20',
+  nach2010: '5',
+  unklar: '20',
+});
+
+function wizApplyHeizungsalterToFoerder() {
+  const alterSelect = document.getElementById('heizungAlterSelect');
+  if (!alterSelect) return;
+  const klasse = wizData.heizungsalter || 'unklar';
+  alterSelect.value = WIZ_FOERDER_HEIZUNGSALTER[klasse] || '20';
+  foerderAlterAnnahme = klasse === 'unklar';
+  setAlterModus('alter');
+}
+
 function wizToFoerder() {
   // Förderrechner liegt auf /foerderung (auf dieser Seite nicht eingebettet). Ist er hier
   // nicht vorhanden, direkt dorthin navigieren - sonst lief die Vorbefüllung ins Leere und
@@ -958,6 +1102,7 @@ function wizToFoerder() {
           brutto: sel?.brutto || null,
           gemeinde: wizData.gemeinde || null,
           heizung: wizData.heizung || null,
+          heizungsalter: wizData.heizungsalter || null,
           gebaeude: wizData.gebaeude || null,
         })
       );
@@ -984,28 +1129,21 @@ function wizToFoerder() {
   const heizungSelect = document.getElementById('heizung');
   if (heizungSelect && wizData.heizung) {
     const heizMap = {
-      'gas-old': 'gas',
-      'gas-new': 'gas',
+      gas: 'gas',
       'gas-etage': 'gas-etage',
+      gasetage: 'gas-etage',
       oel: 'oel',
       biomasse: 'biomasse',
       kohle: 'kohle',
       nachtspeicher: 'nachtspeicher',
+      nacht: 'nachtspeicher',
       sonstige: 'sonstige',
+      sonst: 'sonstige',
     };
     heizungSelect.value = heizMap[wizData.heizung] || 'gas';
     toggleHeizungsalter();
   }
-
-  if (wizData.heizung === 'gas-old') {
-    setAlterModus('alter');
-    const alterSelect = document.getElementById('heizungAlterSelect');
-    if (alterSelect) alterSelect.value = '20';
-  } else if (wizData.heizung === 'gas-new') {
-    setAlterModus('alter');
-    const alterSelect = document.getElementById('heizungAlterSelect');
-    if (alterSelect) alterSelect.value = '15';
-  }
+  wizApplyHeizungsalterToFoerder();
 
   const weSelect = document.getElementById('wohneinheiten');
   if (weSelect && wizData.gebaeude) {
@@ -1829,7 +1967,8 @@ function hwStageFoerderLead() {
   } catch (e) {}
 }
 
-function setAlterModus(modus) {
+function setAlterModus(modus, durchKunde = false) {
+  if (durchKunde) foerderAlterAnnahme = false;
   alterModus = modus;
   const alterDiv = document.getElementById('heizungsalterAlter');
   const baujahrDiv = document.getElementById('heizungsalterBaujahr');
@@ -1848,7 +1987,15 @@ function setAlterModus(modus) {
   updateFoerderrechner();
 }
 
-function toggleHeizungsalter() {
+function updateFoerderAlterAnnahmeHinweis() {
+  const hinweis = document.getElementById('foerderAlterAnnahme');
+  const heizung = document.getElementById('heizung')?.value;
+  if (!hinweis) return;
+  hinweis.hidden = !(foerderAlterAnnahme && ['gas', 'biomasse'].includes(heizung));
+}
+
+function toggleHeizungsalter(durchKunde = false) {
+  if (durchKunde) foerderAlterAnnahme = false;
   const heizungEl = document.getElementById('heizung');
   const gruppe = document.getElementById('heizungsalterGroup');
   const hinweis = document.getElementById('heizungsalterHinweis');
@@ -1884,10 +2031,12 @@ function toggleHeizungsalter() {
     showFoerderSlot(gruppe, false);
     hinweis.innerHTML = '';
   }
+  updateFoerderAlterAnnahmeHinweis();
   calculateFoerder();
 }
 
-function updateFoerderrechner() {
+function updateFoerderrechner(durchKunde = false) {
+  if (durchKunde) foerderAlterAnnahme = false;
   toggleHeizungsalter();
 }
 
@@ -2197,63 +2346,6 @@ if (document.getElementById('wohneinheiten')) {
   toggleHeizungsalter();
 }
 
-// ===== HEIZKOSTENVERGLEICH (Baujahr-abhängig) =====
-document.getElementById('wohnflaeche')?.addEventListener('input', (e) => {
-  document.getElementById('flaeVal').textContent = e.target.value;
-  calculateHeiz();
-});
-document.getElementById('heizHeizung')?.addEventListener('change', calculateHeiz);
-document.getElementById('heizBaujahr')?.addEventListener('change', calculateHeiz);
-
-function calculateHeiz() {
-  const flaeche = parseInt(document.getElementById('wohnflaeche').value);
-  const heizTyp = document.getElementById('heizHeizung').value;
-  const baujahr = document.getElementById('heizBaujahr').value;
-  const energiePreise = { gas: 0.12, oel: 0.11, nachtspeicher: 0.32 };
-  const heizLabels = { gas: 'Gas', oel: 'Öl', nachtspeicher: 'Nachtspeicher' };
-
-  // Spezifischer Energiebedarf nach Baujahr (kWh/m²) - konsistent mit Wizard
-  const spezBedarfMap = { vor1978: 180, '1978-1994': 140, '1995-2010': 100, nach2010: 60 };
-  const spezVerbrauch = spezBedarfMap[baujahr] || 140;
-  const verbrauch = flaeche * spezVerbrauch;
-  const kostenAlt = verbrauch * energiePreise[heizTyp];
-
-  // JAZ nach Baujahr (konservativ) - konsistent mit Wizard
-  const jazMap = { vor1978: 3.0, '1978-1994': 3.3, '1995-2010': 3.8, nach2010: 4.2 };
-  const jaz = jazMap[baujahr] || 3.5;
-
-  const wpStrompreis = 0.3;
-  const kostenWp = (verbrauch / jaz) * wpStrompreis;
-  const sparnis = kostenAlt - kostenWp;
-
-  document.getElementById('heizBarLabel').textContent = heizLabels[heizTyp];
-  document.getElementById('heizKostenAlt').textContent =
-    Math.round(kostenAlt).toLocaleString('de-DE') + ' €';
-  document.getElementById('heizKostenWp').textContent =
-    Math.round(kostenWp).toLocaleString('de-DE') + ' €';
-  document.getElementById('heizSparnis').textContent =
-    'ca. ' + Math.round(sparnis).toLocaleString('de-DE') + ' €';
-
-  // Methode-Hinweis dynamisch aktualisieren
-  document.getElementById('heizMethode').textContent =
-    'Verbrauch: ' +
-    flaeche +
-    ' m² × ' +
-    spezVerbrauch +
-    ' kWh/m² = ' +
-    verbrauch.toLocaleString('de-DE') +
-    ' kWh. Jahresarbeitszahl (JAZ) ' +
-    jaz.toFixed(1) +
-    '. Wärmepumpen-Strom 0,30 €/kWh.';
-
-  // Dynamic bars
-  const maxKosten = Math.max(kostenAlt, kostenWp);
-  document.getElementById('heizBarAlt').style.width =
-    Math.round((kostenAlt / maxKosten) * 100) + '%';
-  document.getElementById('heizBarWp').style.width = Math.round((kostenWp / maxKosten) * 100) + '%';
-}
-if (document.getElementById('wohnflaeche')) calculateHeiz();
-
 // ===== SELF-SERVICE FORM =====
 let qsStep = 0;
 const qsTotalSteps = 4;
@@ -2473,6 +2565,7 @@ function hwApplyFoerderHandoff() {
   wizSelectedMarke = d.marke || 'wolf';
   if (d.gemeinde) wizData.gemeinde = d.gemeinde;
   if (d.heizung) wizData.heizung = d.heizung;
+  if (d.heizungsalter) wizData.heizungsalter = d.heizungsalter;
   if (d.gebaeude) wizData.gebaeude = d.gebaeude;
   wizServerResult = { marken: { [wizSelectedMarke]: { brutto: d.brutto } } };
   wizToFoerder();

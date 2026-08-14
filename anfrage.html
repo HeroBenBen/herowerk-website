@@ -1225,10 +1225,10 @@
             </div>
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           </div>
-          <div class="answer-card" data-value="1995-2009" onclick="selectAndAdvance(this)">
+          <div class="answer-card" data-value="1995-2010" onclick="selectAndAdvance(this)">
             <div class="answer-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l18 0"/><path d="M9 8l1 0"/><path d="M9 12l1 0"/><path d="M9 16l1 0"/><path d="M14 8l1 0"/><path d="M14 12l1 0"/><path d="M14 16l1 0"/><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16"/></svg></div>
             <div class="answer-card-text">
-              <div class="answer-card-label">1995-2009</div>
+              <div class="answer-card-label">1995-2010</div>
               <div class="answer-card-sub">Wärmeschutz modernisiert</div>
             </div>
             <div class="answer-card-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
@@ -2046,11 +2046,15 @@
       // WP-Web (Rechner-Daten an HubSpot, 2026-07-03): errechnete Dimensionierungs-/Foerderwerte
       // aus der Rechner-Kette (pfadunabhaengig via hwLeadPrefill). Der Filter unten entfernt leere
       // Felder -> Standard-Leads ohne Rechner-Nutzung bleiben unveraendert. PFLICHT VOR DEPLOY:
-      // die Kontakt-Properties heizlast_kw / energiebedarf_kwh / foerderquote_pct /
+      // die Kontakt-Properties heizlast_kw / energiebedarf_kwh / jahresverbrauch_kwh /
+      // jahresverbrauch_menge / jahresverbrauch_einheit / foerderquote_pct /
       // foerderbetrag_eur / einkommen_unter_40k muessen in HubSpot existieren, sonst Forms-API-400
       // fuer Rechner-Leads.
       heizlast_kw: answers.heizlast_kw != null ? String(answers.heizlast_kw) : '',
       energiebedarf_kwh: answers.energiebedarf_kwh != null ? String(answers.energiebedarf_kwh) : '',
+      jahresverbrauch_kwh: answers.jahresverbrauch_kwh != null ? String(answers.jahresverbrauch_kwh) : '',
+      jahresverbrauch_menge: answers.jahresverbrauch_menge != null ? String(answers.jahresverbrauch_menge) : '',
+      jahresverbrauch_einheit: answers.jahresverbrauch_einheit || '',
       foerderquote_pct: answers.foerderquote_pct != null ? String(answers.foerderquote_pct) : '',
       foerderbetrag_eur: answers.foerderbetrag_eur != null ? String(answers.foerderbetrag_eur) : '',
       einkommen_unter_40k: answers.einkommen_unter_40k || ''
@@ -2182,6 +2186,7 @@
   const KV_SESSION_KEY = 'hero_kv_sitzung';
   const KV_LEAD_ANSWER_KEYS = [
     'step1', 'step2', 'step3', 'step4', 'step5', 'energiebedarf_kwh',
+    'jahresverbrauch_kwh', 'jahresverbrauch_menge', 'jahresverbrauch_einheit',
     'foerderquote_pct', 'foerderbetrag_eur', 'kv_eigenanteil_eur', 'kv_vorteil_eur',
     'kv_verbrauch_eingabe', 'kv_verbrauch_einheit', 'kv_verbrauch_herkunft',
     'kv_zeitraum', 'kv_kessel_rohr', 'kv_kessel_baujahr', 'kv_altgas'
@@ -2237,7 +2242,7 @@
   function applyKvLeadHandoff(d) {
     const gebMap = { efh: 'Einfamilienhaus', dhh: 'Doppelhaushälfte', rh: 'Reihenhaus', zfh: 'Mehrfamilienhaus', mfh: 'Mehrfamilienhaus' };
     const heizMap = { gas: 'Gasheizung', oel: 'Ölheizung' };
-    const bauMap = { vor1978: 'Vor 1978', '1978-1994': '1978-1994', '1995-2010': '1995-2009', nach2010: 'Ab 2010' };
+    const bauMap = { vor1978: 'Vor 1978', '1978-1994': '1978-1994', '1995-2010': '1995-2010', nach2010: 'Ab 2010' };
     const flaecheBucket = (n) => n < 100 ? 'Bis 100 m²' : n < 150 ? '100-150 m²' : n < 200 ? '150-200 m²' : n <= 280 ? '200-280 m²' : 'Über 280 m²';
     answers.interesse = ['Wärmepumpe'];
     answers.step2 = heizMap[d.heizungsart];
@@ -2317,19 +2322,30 @@
       mfh: 'Mehrfamilienhaus',
     };
     const heizMap = {
+      gas: 'Gasheizung',
       'gas-old': 'Gasheizung',
       'gas-new': 'Gasheizung',
       'gas-etage': 'Gasheizung',
+      gasetage: 'Gasheizung',
       oel: 'Ölheizung',
       nachtspeicher: 'Nachtspeicher',
+      nacht: 'Nachtspeicher',
       biomasse: 'Holz- oder Pelletheizung',
       kohle: 'Kohleheizung',
       sonstige: 'Sonstige Heizung',
+      sonst: 'Sonstige Heizung',
     };
     const bauMap = {
+      bis1918: 'Vor 1978',
+      '1919-1948': 'Vor 1978',
+      '1949-1957': 'Vor 1978',
+      '1958-1968': 'Vor 1978',
+      '1969-1978': 'Vor 1978',
+      '1979-1983': '1978-1994',
+      '1984-1994': '1978-1994',
       vor1978: 'Vor 1978',
       '1978-1994': '1978-1994',
-      '1995-2010': '1995-2009',
+      '1995-2010': '1995-2010',
       nach2010: 'Ab 2010',
     };
     const heizsysMap = { heizkoerper: 'Heizkörper', fussboden: 'Fußbodenheizung' };
@@ -2353,6 +2369,9 @@
     // WP-Web: errechnete Rechner-Werte aus der Kette (Dim/Foerder) in die Antworten uebernehmen.
     if (d.heizlast_kw != null) answers.heizlast_kw = d.heizlast_kw;
     if (d.energiebedarf_kwh != null) answers.energiebedarf_kwh = d.energiebedarf_kwh;
+    if (d.jahresverbrauch_kwh != null) answers.jahresverbrauch_kwh = d.jahresverbrauch_kwh;
+    if (d.jahresverbrauch_menge != null) answers.jahresverbrauch_menge = d.jahresverbrauch_menge;
+    if (d.jahresverbrauch_einheit) answers.jahresverbrauch_einheit = d.jahresverbrauch_einheit;
     if (d.foerderquote_pct != null) answers.foerderquote_pct = d.foerderquote_pct;
     if (d.foerderbetrag_eur != null) answers.foerderbetrag_eur = d.foerderbetrag_eur;
     if (d.einkommen_unter_40k) answers.einkommen_unter_40k = d.einkommen_unter_40k;
