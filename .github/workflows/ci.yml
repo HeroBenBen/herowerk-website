@@ -64,7 +64,11 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
+      # Vollständige Historie ist Pflicht: das Testlisten-Gate unterscheidet über
+      # origin/main zwischen neu angelegten Seiten und dem gemeldeten Altbestand.
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v5
         with: { node-version: '20' }
       # Der Snapshot-Nachlauf ist PHP-Code. Bis zu diesem Auftrag richtete der
@@ -79,6 +83,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npx tsc --noEmit  # JSDoc-Type-Check via tsconfig.json mit allowJs+checkJs
+      - run: npm run verify:website-gates
       - run: npm run verify:rechner-snapshot-nachlauf
       # Cache-Busting-Gate (G3-N2, 25.07.2026): jede lokale CSS-/JS-Referenz muss
       # den aktuellen Inhalts-Fingerabdruck tragen. Ohne das liefert der 1-Jahres-
