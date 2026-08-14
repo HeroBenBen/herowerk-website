@@ -1030,6 +1030,7 @@ function formatKw(value) {
 // Pruefserver umgestellt, weil es keine Vercel-Vorschau mehr gibt.
 function wizDemo() {
   if (!document.getElementById('wizResult')) return;
+  // website-gate: rechenwerte-vorschau-naechster-block -- lokale Optik-Vorschau via ?demo, keine Produktivberechnung
   const demoData = {
     bedarf: 9.2,
     fuehrung: 'heizung',
