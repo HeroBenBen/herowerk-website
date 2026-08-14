@@ -156,9 +156,22 @@ function dimensionierung_(p) {
   const stromHinweis = 'Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.';
 
   const marken = {};
+  const catalogParameters = getCatalogParameters_();
   ['wolf', 'vaillant'].forEach(function (marke) {
-    const match = matchCatalog_(marke, auslegung, heizsystem, zone.nat);
-    marken[marke] = match ? catalogResult_(match, getPriceTableCached_(marke)) : { deckt: false };
+    const heizstabKey = 'heizstab_' + marke;
+    const markenHeizstab = num_(catalogParameters[heizstabKey], NaN);
+    if (isNaN(markenHeizstab)) throw new Error('missing_parameter_' + heizstabKey);
+    const match = matchCatalog_(
+      marke,
+      auslegung,
+      heizsystem,
+      zone.nat,
+      markenHeizstab,
+      getNum_(d, 'kaskaden_toleranz_kw', 0.5)
+    );
+    marken[marke] = match
+      ? catalogResult_(match, getPriceTableCached_(marke), auslegung, getNum_(d, 'sollband_oben', 0.8))
+      : { deckt: false };
   });
 
   return { bedarf: auslegung, fuehrung: wwLeistung > heizlast ? 'warmwasser' : 'heizung', stromverbrauch_kwh: stromverbrauchKwh, strom_hinweis: stromHinweis, marken: marken };
@@ -201,10 +214,6 @@ function warmwasserLeistung_(d, personen, duschen, wannen, duschgroesse, wanneng
   return personenFaktor * zapflast * 50 / (temperatur - 10) + getNum_(d, 'ww_sockel_kw', 0.70);
 }
 
-// Geräte-Auswahl: kleinste Maschine, deren Grenze (an der exakten PLZ-NAT, am Emitter-Vorlauf) die
-// Auslegung deckt. Toleranz (KASKADEN_TOLERANZ_KW) greift NUR an der Single↔Kaskade-Schwelle (Kurven-
-// Ablesegenauigkeit ±0,3–0,5 kW; keine 5%-Aufweichung).
-var KASKADEN_TOLERANZ_KW = 0.5;
 // Geräte-Grenze an der exakten Normaußentemperatur: linear interpoliert zwischen dem A-11-Stützpunkt
 // (grenze…, NAT -11 °C) und dem A-10-Stützpunkt (grenze…a10, NAT -10 °C). VDI 4645: Auslegung an der
 // exakten NAT, Leistungskurve interpoliert (nicht auf einen Nachbarpunkt gerundet). Wärmer als -10 °C →
@@ -216,32 +225,53 @@ function grenzeInterp_(grenzeA11, grenzeA10, nat) {
   if (f > 1) f = 1;                         // Nur die obere Grenze bleibt bestehen.
   return grenzeA11 + (grenzeA10 - grenzeA11) * f;
 }
-function matchCatalog_(marke, auslegung, heizsystem, nat) {
+function leistungAmAuslegungspunkt_(item, heizsystem, nat) {
+  return heizsystem === 'heizkoerper'
+    ? grenzeInterp_(item.leistungW55, item.leistungW55a10, nat)
+    : grenzeInterp_(item.leistungW35, item.leistungW35a10, nat);
+}
+function matchCatalog_(marke, auslegung, heizsystem, nat, markenHeizstab, kaskadenToleranz) {
   const grenzeOf = function (item) {
     return heizsystem === 'heizkoerper'
       ? grenzeInterp_(item.grenzeW55, item.grenzeW55a10, nat)
       : grenzeInterp_(item.grenzeW35, item.grenzeW35a10, nat);
   };
   const items = getCatalog_()
-    .filter(function (item) { return item.marke === marke; })
-    .sort(function (a, b) { return grenzeOf(a) - grenzeOf(b); });
-  const strict = items.filter(function (item) { return grenzeOf(item) >= auslegung; });
-  const pick = strict[0] || null;
-  // Toleranz NUR an der Schwelle: wäre die kleinste deckende Lösung eine Kaskade, aber die größte
-  // Einzelmaschine deckt innerhalb ±Toleranz noch, dann Single bevorzugen (kein 89k-Kaskaden-Sprung).
-  if (pick && pick.kaskade) {
-    const single = items.filter(function (item) { return !item.kaskade && grenzeOf(item) + KASKADEN_TOLERANZ_KW >= auslegung; });
-    if (single.length) return single[single.length - 1];
-  }
+    .filter(function (item) { return item.marke === marke; });
+  const groessteEinzelgrenze = {};
+  items.forEach(function (item) {
+    if (item.kaskade) return;
+    const grenze = grenzeOf(item);
+    if (groessteEinzelgrenze[item.baureihe] === undefined || grenze > groessteEinzelgrenze[item.baureihe]) {
+      groessteEinzelgrenze[item.baureihe] = grenze;
+    }
+  });
+  let pick = null;
+  let pickLeistung = null;
+  items.forEach(function (item) {
+    const leistung = leistungAmAuslegungspunkt_(item, heizsystem, nat);
+    const heizstab = item.mindestAnteil >= 1 ? 0 : markenHeizstab;
+    if (leistung < item.mindestAnteil * auslegung || leistung + heizstab < auslegung) return;
+    if (item.kaskade) {
+      const einzelgrenze = groessteEinzelgrenze[item.baureihe];
+      if (einzelgrenze === undefined || auslegung <= einzelgrenze + kaskadenToleranz) return;
+    }
+    if (!pick || leistung < pickLeistung) {
+      pick = Object.assign({}, item, { leistungAuslegung: leistung });
+      pickLeistung = leistung;
+    }
+  });
   return pick;
 }
 
-function catalogResult_(item, priceRows) {
+function catalogResult_(item, priceRows, auslegung, sollbandOben) {
   // Eigenanteil = Single Source aus der Preis-Tafel (Preise_Wolf/Preise_Vaillant), gematcht per
   // Brutto -> Rechner zeigt EXAKT denselben Eigenanteil wie die Preistafel, fuer JEDES Segment
   // (auch XL/XXL mit gemischter WE-Foerderung). eigenanteil = ohne proKlima (Hauptwert,
   // standortunabhaengig); eigenanteilProklima = mit proKlima (nur als 'moeglich'-Hinweis, < eigen).
-  const pr = (priceRows || []).filter(function (r) { return r.brutto === item.brutto; })[0];
+  const pr = item.brutto > 0
+    ? (priceRows || []).filter(function (r) { return r.brutto === item.brutto; })[0]
+    : null;
   // FAIL-CLOSED (P-16, 23.07.2026): Ohne Preistafel-Treffer (Preisquellen-Divergenz) wird KEIN
   // Eigenanteil ausgewiesen (null); der Aufrufer (renderBrandCard) zeigt dann "auf Anfrage".
   // Die fruehere Notrechnung brutto - ROUND(MIN(brutto;30000)*0,70) war Vor-Reform-Regelwerk
@@ -255,7 +285,8 @@ function catalogResult_(item, priceRows) {
     brutto: item.brutto,
     eigenanteil: eigen,
     eigenanteilProklima: eigenProklima,
-    vorlaeufig: String(item.stand || '').toLowerCase() !== 'belegt'
+    vorlaeufig: String(item.stand || '').toLowerCase() !== 'belegt',
+    ueberSollband: item.leistungAuslegung > sollbandOben * auslegung
   };
 }
 
@@ -878,7 +909,8 @@ function setupSheets() {
   writeStatus_(ss);
   CacheService.getScriptCache().remove('params:v1');
   CacheService.getScriptCache().remove('params:v2');
-  CacheService.getScriptCache().remove('catalog:v1');
+  CacheService.getScriptCache().remove('catalog:v2');
+  CacheService.getScriptCache().remove('catalog-params:v2');
   CacheService.getScriptCache().remove('klimaplz:v1');
   CacheService.getScriptCache().remove('klimaplz:v2');
   CacheService.getScriptCache().remove('klimaplz:v3');
@@ -950,12 +982,13 @@ function writeStatus_(ss) {
 
 function getCatalog_() {
   const cache = CacheService.getScriptCache();
-  const cached = cache.get('catalog:v1');
+  const cached = cache.get('catalog:v2');
   if (cached) return JSON.parse(cached);
   const ss = SpreadsheetApp.openById(SHEET_ID);
   const sh = ss.getSheetByName('Geräte_Katalog');
   if (!sh) throw new Error('missing_tab_Geräte_Katalog');
-  const values = sh.getRange('A9:O18').getValues();
+  const rowCount = Math.max(0, sh.getLastRow() - 8);
+  const values = rowCount > 0 ? sh.getRange(9, 1, rowCount, 20).getValues() : [];
   const out = [];
   values.forEach(function (row) {
     if (!row[0] || !row[1]) return;
@@ -963,15 +996,38 @@ function getCatalog_() {
       marke: String(row[0]).toLowerCase(),
       modell: String(row[1]),
       kaskade: String(row[2]).toUpperCase() === 'J',
+      leistungW35: num_(row[3], 0),
+      leistungW55: num_(row[4], 0),
       grenzeW35: num_(row[7], 0),     // H = Grenze W35 @A-11 (Großraum-konservativ)
       grenzeW55: num_(row[8], 0),     // I = Grenze W55 @A-11
       grenzeW35a10: num_(row[13], 0), // N = Grenze W35 @A-10 (Hannover Stadt; 0 => Fallback A-11)
       grenzeW55a10: num_(row[14], 0), // O = Grenze W55 @A-10
+      leistungW35a10: num_(row[16], 0),
+      leistungW55a10: num_(row[17], 0),
+      baureihe: String(row[18] || ''),
+      mindestAnteil: num_(row[19], 0.7),
       brutto: num_(row[10], 0),
       stand: String(row[11] || '')
     });
   });
-  cache.put('catalog:v1', JSON.stringify(out), CACHE_TTL_SECONDS);
+  cache.put('catalog:v2', JSON.stringify(out), CACHE_TTL_SECONDS);
+  return out;
+}
+
+function getCatalogParameters_() {
+  const cache = CacheService.getScriptCache();
+  const cached = cache.get('catalog-params:v2');
+  if (cached) return JSON.parse(cached);
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const sh = ss.getSheetByName('Geräte_Katalog');
+  if (!sh) throw new Error('missing_tab_Geräte_Katalog');
+  const values = sh.getDataRange().getValues();
+  const out = {};
+  values.forEach(function (row) {
+    const key = String(row[0] || '');
+    if (key === 'heizstab_wolf' || key === 'heizstab_vaillant') out[key] = row[1];
+  });
+  cache.put('catalog-params:v2', JSON.stringify(out), CACHE_TTL_SECONDS);
   return out;
 }
 

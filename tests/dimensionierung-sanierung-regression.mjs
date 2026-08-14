@@ -25,10 +25,13 @@ vm.runInContext(
     spez_bedarf_vor1978: 180,
     spez_bedarf_1978_1994: 140,
     spez_bedarf_1995_2010: 100,
-    spez_bedarf_nach2010: 60
+    spez_bedarf_nach2010: 60,
+    sollband_oben: 0.8,
+    kaskaden_toleranz_kw: 0.5
   } }; };
   getKlimaPlz_ = function () { return { '30159': { nat: -10, volllast: 1800, jahresmittel: 10.9 } }; };
   getCatalog_ = function () { return []; };
+  getCatalogParameters_ = function () { return { heizstab_wolf: 9, heizstab_vaillant: 8.54 }; };
   getPriceTableCached_ = function () { return []; };
   `,
   appsScript
@@ -44,12 +47,17 @@ $sheets = [
         ['spez_bedarf_1978_1994', 140],
         ['spez_bedarf_1995_2010', 100],
         ['spez_bedarf_nach2010', 60],
+        ['sollband_oben', 0.8],
+        ['kaskaden_toleranz_kw', 0.5],
     ],
     'Klima_PLZ' => [
         ['plz', 'ort', 'nat', 'volllast', 'jahresmittel', 'quelle'],
         ['30159', 'Hannover', -10, 1800, 10.9, 'Regressionstest'],
     ],
-    'Geräte_Katalog' => [array_fill(0, 15, '')],
+    'Geräte_Katalog' => [
+        array_fill(0, 20, ''), array_fill(0, 20, ''), array_fill(0, 20, ''), array_fill(0, 20, ''),
+        ['heizstab_wolf', 9], ['heizstab_vaillant', 8.54], array_fill(0, 20, ''), array_fill(0, 20, ''),
+    ],
     'Preise_Wolf' => [[]],
     'Preise_Vaillant' => [[]],
 ];

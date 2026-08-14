@@ -216,7 +216,7 @@ function hw_get_prices(array $sheets, string $brand): array
 /** @return list<array<string,mixed>> */
 function hw_get_catalog(array $sheets): array
 {
-    $rows = array_slice(hw_sheet($sheets, 'Geräte_Katalog'), 8, 10);
+    $rows = array_slice(hw_sheet($sheets, 'Geräte_Katalog'), 8);
     $out = [];
     foreach ($rows as $row) {
         if (empty($row[0]) || empty($row[1])) {
@@ -226,10 +226,16 @@ function hw_get_catalog(array $sheets): array
             'marke' => strtolower(hw_js_string($row[0])),
             'modell' => hw_js_string($row[1]),
             'kaskade' => strtoupper(hw_js_string($row[2] ?? '')) === 'J',
+            'leistungW35' => hw_num($row[3] ?? null, 0),
+            'leistungW55' => hw_num($row[4] ?? null, 0),
             'grenzeW35' => hw_num($row[7] ?? null, 0),
             'grenzeW55' => hw_num($row[8] ?? null, 0),
             'grenzeW35a10' => hw_num($row[13] ?? null, 0),
             'grenzeW55a10' => hw_num($row[14] ?? null, 0),
+            'leistungW35a10' => hw_num($row[16] ?? null, 0),
+            'leistungW55a10' => hw_num($row[17] ?? null, 0),
+            'baureihe' => hw_js_string($row[18] ?? ''),
+            'mindestAnteil' => hw_num($row[19] ?? null, 0.7),
             'brutto' => hw_num($row[10] ?? null, 0),
             'stand' => hw_js_string($row[11] ?? ''),
         ];
@@ -435,6 +441,14 @@ function hw_grenze_interp(float|int $a11, float|int $a10, float|int $nat): float
     return $a11 + ($a10 - $a11) * $factor;
 }
 
+/** @param array<string,mixed> $item */
+function hw_leistung_am_auslegungspunkt(array $item, string $heizsystem, float|int $nat): float|int
+{
+    return $heizsystem === 'heizkoerper'
+        ? hw_grenze_interp($item['leistungW55'], $item['leistungW55a10'], $nat)
+        : hw_grenze_interp($item['leistungW35'], $item['leistungW35a10'], $nat);
+}
+
 /** @param array<string,float|int|string> $d */
 function hw_faktor_nutzwaerme(array $d, string $heizung, string $andereHeizung, string $abgasrohr, string $heizungsalter): float|int
 {
@@ -501,32 +515,70 @@ function hw_warmwasser_leistung(array $d, int $personen, int $duschen, int $wann
 }
 
 /** @return array<string,mixed>|null */
-function hw_match_catalog(array $sheets, string $brand, float|int $auslegung, string $heizsystem, float|int $nat): ?array
+function hw_match_catalog(
+    array $sheets,
+    string $brand,
+    float|int $auslegung,
+    string $heizsystem,
+    float|int $nat,
+    float|int $markenHeizstab,
+    float|int $kaskadenToleranz
+): ?array
 {
-    $limit = static fn (array $item): float|int => $heizsystem === 'heizkoerper'
+    $grenze = static fn (array $item): float|int => $heizsystem === 'heizkoerper'
         ? hw_grenze_interp($item['grenzeW55'], $item['grenzeW55a10'], $nat)
         : hw_grenze_interp($item['grenzeW35'], $item['grenzeW35a10'], $nat);
     $items = array_values(array_filter(hw_get_catalog($sheets), static fn (array $item): bool => $item['marke'] === $brand));
-    usort($items, static fn (array $a, array $b): int => $limit($a) <=> $limit($b));
-    $strict = array_values(array_filter($items, static fn (array $item): bool => $limit($item) >= $auslegung));
-    $pick = $strict[0] ?? null;
-    if ($pick !== null && $pick['kaskade']) {
-        $single = array_values(array_filter($items, static fn (array $item): bool => !$item['kaskade'] && $limit($item) + 0.5 >= $auslegung));
-        if ($single !== []) {
-            return $single[count($single) - 1];
+
+    $groessteEinzelgrenze = [];
+    foreach ($items as $item) {
+        if ($item['kaskade']) {
+            continue;
+        }
+        $baureihe = $item['baureihe'];
+        $itemGrenze = $grenze($item);
+        if (!array_key_exists($baureihe, $groessteEinzelgrenze) || $itemGrenze > $groessteEinzelgrenze[$baureihe]) {
+            $groessteEinzelgrenze[$baureihe] = $itemGrenze;
+        }
+    }
+
+    $pick = null;
+    $pickLeistung = null;
+    foreach ($items as $item) {
+        $leistung = hw_leistung_am_auslegungspunkt($item, $heizsystem, $nat);
+        $mindestAnteil = $item['mindestAnteil'];
+        $heizstab = $mindestAnteil >= 1 ? 0 : $markenHeizstab;
+        if ($leistung < $mindestAnteil * $auslegung || $leistung + $heizstab < $auslegung) {
+            continue;
+        }
+        if ($item['kaskade']) {
+            $baureihe = $item['baureihe'];
+            if (
+                !array_key_exists($baureihe, $groessteEinzelgrenze)
+                || $auslegung <= $groessteEinzelgrenze[$baureihe] + $kaskadenToleranz
+            ) {
+                continue;
+            }
+        }
+        if ($pick === null || $leistung < $pickLeistung) {
+            $pick = $item;
+            $pick['leistungAuslegung'] = $leistung;
+            $pickLeistung = $leistung;
         }
     }
     return $pick;
 }
 
 /** @return array<string,mixed> */
-function hw_catalog_result(array $item, array $priceRows): array
+function hw_catalog_result(array $item, array $priceRows, float|int $auslegung, float|int $sollbandOben): array
 {
     $price = null;
-    foreach ($priceRows as $row) {
-        if ($row['brutto'] === $item['brutto']) {
-            $price = $row;
-            break;
+    if ($item['brutto'] > 0) {
+        foreach ($priceRows as $row) {
+            if ($row['brutto'] === $item['brutto']) {
+                $price = $row;
+                break;
+            }
         }
     }
     $eigen = $price !== null ? $price['eigen'] : null;
@@ -541,6 +593,7 @@ function hw_catalog_result(array $item, array $priceRows): array
         'eigenanteil' => $eigen,
         'eigenanteilProklima' => $eigenProklima,
         'vorlaeufig' => strtolower(hw_js_string($item['stand'])) !== 'belegt',
+        'ueberSollband' => $item['leistungAuslegung'] > $sollbandOben * $auslegung,
     ];
 }
 
@@ -632,10 +685,29 @@ function hw_dimensionierung(array $query, array $sheets): array
         + ($warmwasser === 'ja' ? $warmwasserWaerme / hw_get_num($d, 'jaz_warmwasser', 2.7) : 0)
     );
     $marken = [];
+    $catalogParameters = hw_read_kv($sheets, 'Geräte_Katalog');
     foreach (['wolf', 'vaillant'] as $brand) {
-        $match = hw_match_catalog($sheets, $brand, $auslegung, $heizsystem, $zone['nat']);
+        $heizstabKey = 'heizstab_' . $brand;
+        $markenHeizstab = hw_kv_num($catalogParameters[$heizstabKey] ?? null, NAN);
+        if (is_nan($markenHeizstab)) {
+            throw new RuntimeException('missing_parameter_' . $heizstabKey);
+        }
+        $match = hw_match_catalog(
+            $sheets,
+            $brand,
+            $auslegung,
+            $heizsystem,
+            $zone['nat'],
+            $markenHeizstab,
+            hw_get_num($d, 'kaskaden_toleranz_kw', 0.5)
+        );
         $marken[$brand] = $match !== null
-            ? hw_catalog_result($match, hw_read_price_table($sheets, $brand === 'vaillant' ? 'Preise_Vaillant' : 'Preise_Wolf'))
+            ? hw_catalog_result(
+                $match,
+                hw_read_price_table($sheets, $brand === 'vaillant' ? 'Preise_Vaillant' : 'Preise_Wolf'),
+                $auslegung,
+                hw_get_num($d, 'sollband_oben', 0.8)
+            )
             : ['deckt' => false];
     }
     return [

@@ -15,7 +15,7 @@
     "verify:mobile": "node scripts/verify-mobile.mjs",
     "verify:rechner-snapshot-nachlauf": "node tests/rechner-snapshot-nachlauf.mjs && node tests/rechner-snapshot-zeitplan.mjs",
     "verify:rechner-snapshot-apache": "node scripts/verify-rechner-snapshot-apache.mjs",
-    "verify:dimensionierung": "node scripts/sync-dimensionierung-icons.mjs --check && node tests/dimensionierung-sanierung-regression.mjs && node tests/dimensionierung-fassung7-regression.mjs && node tests/rechner-review-blocker-regression.mjs",
+    "verify:dimensionierung": "node scripts/sync-dimensionierung-icons.mjs --check && node tests/dimensionierung-sanierung-regression.mjs && node tests/dimensionierung-fassung7-regression.mjs && node tests/rechner-review-blocker-regression.mjs && node tests/geraeteauswahl-regression.mjs && php tests/geraete-katalog-struktur.php",
     "verify:seo": "node scripts/build-structured-data.mjs --check",
     "build:seo": "node scripts/build-structured-data.mjs",
     "build:seo:jobs": "node scripts/build-structured-data.mjs --jobs",
