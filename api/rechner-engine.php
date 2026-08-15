@@ -261,6 +261,20 @@ function hw_get_klima_plz(array $sheets): array
     return $out;
 }
 
+/** @return array{gefunden:bool,nat?:float|int} */
+function hw_klima(array $query, array $sheets): array
+{
+    $plz = substr((string) preg_replace('/\D/', '', hw_query_string($query, 'plz')), 0, 5);
+    if (strlen($plz) !== 5) {
+        return ['gefunden' => false];
+    }
+    $klima = hw_get_klima_plz($sheets);
+    if (!array_key_exists($plz, $klima)) {
+        return ['gefunden' => false];
+    }
+    return ['gefunden' => true, 'nat' => $klima[$plz]['nat']];
+}
+
 /** @return array<string,mixed> */
 function hw_kv_defaults(): array
 {
@@ -1572,6 +1586,7 @@ function hw_rechner_route(string $action, array $query, array $sheets): array
 {
     return match ($action) {
         'dimensionierung' => hw_dimensionierung($query, $sheets),
+        'klima' => hw_klima($query, $sheets),
         'foerderung' => hw_foerderung($query, $sheets),
         'preise' => hw_preise($sheets),
         'kostenvergleich' => hw_kostenvergleich($query, $sheets),

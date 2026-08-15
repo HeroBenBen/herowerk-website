@@ -37,6 +37,7 @@ function doGet(e) {
   try {
     if (!isAllowedOrigin_(params)) return json_({ error: true, message: 'origin_not_allowed' });
     if (action === 'dimensionierung') return json_(dimensionierung_(params));
+    if (action === 'klima') return json_(klima_(params));
     if (action === 'foerderung') return json_(foerderung_(params));
     if (action === 'preise') return json_(preise_(params));
     if (action === 'kostenvergleich') return json_(kostenvergleich_(params));
@@ -1050,6 +1051,14 @@ function getKlimaPlz_() {
   }
   cache.put('klimaplz:v3', JSON.stringify(out), CACHE_TTL_SECONDS);
   return out;
+}
+
+function klima_(p) {
+  const plz = String((p && p.plz) || '').replace(/\D/g, '').slice(0, 5);
+  if (plz.length !== 5) return { gefunden: false };
+  const klima = getKlimaPlz_();
+  if (!Object.prototype.hasOwnProperty.call(klima, plz)) return { gefunden: false };
+  return { gefunden: true, nat: klima[plz].nat };
 }
 
 function getAllParameters_() {

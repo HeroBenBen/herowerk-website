@@ -39,7 +39,13 @@ vm.runInContext(
     sollband_oben: 0.8,
     kaskaden_toleranz_kw: 0.5
   } }; };
-  getKlimaPlz_ = function () { return { '30159': { nat: -10, volllast: 1800 } }; };
+  getKlimaPlz_ = function () { return {
+    '30159': { nat: -10, volllast: 1800 },
+    '30900': { nat: -11.1, volllast: 1800 },
+    '30539': { nat: -11.3, volllast: 1800 },
+    '31099': { nat: -12.3, volllast: 1800 },
+    '*': { nat: -11, volllast: 1800 }
+  }; };
   getCatalog_ = function () { return []; };
   getCatalogParameters_ = function () { return { heizstab_wolf: 9, heizstab_vaillant: 8.54 }; };
   getPriceTableCached_ = function () { return []; };
@@ -63,6 +69,10 @@ $sheets = [
     'Klima_PLZ' => [
         ['plz', 'ort', 'nat', 'volllast', 'jahresmittel', 'quelle'],
         ['30159', 'Hannover', -10, 1800, 10.9, 'Regressionstest'],
+        ['30900', 'Wedemark', -11.1, 1800, 10.1, 'Regressionstest'],
+        ['30539', 'Hannover', -11.3, 1800, 9.9, 'Regressionstest'],
+        ['31099', 'Woltershausen', -12.3, 1800, 9.2, 'Regressionstest'],
+        ['*', 'Rückfall', -11, 1800, 10.4, 'Regressionstest'],
     ],
     'Geräte_Katalog' => [
         array_fill(0, 20, ''), array_fill(0, 20, ''), array_fill(0, 20, ''), array_fill(0, 20, ''),
@@ -71,7 +81,9 @@ $sheets = [
     'Preise_Wolf' => [[]],
     'Preise_Vaillant' => [[]],
 ];
-echo json_encode(hw_dimensionierung($query, $sheets), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+$action = $query['_action'] ?? 'dimensionierung';
+unset($query['_action']);
+echo json_encode(hw_rechner_route($action, $query, $sheets), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 `;
 
 function phpDimensionierung(query) {
@@ -82,6 +94,35 @@ function phpDimensionierung(query) {
   assert.equal(result.status, 0, result.stderr);
   return JSON.parse(result.stdout);
 }
+
+function phpKlima(plz) {
+  return phpDimensionierung({ _action: 'klima', plz });
+}
+
+const klimaSollfaelle = [
+  ['30159', { gefunden: true, nat: -10 }],
+  ['30900', { gefunden: true, nat: -11.1 }],
+  ['30539', { gefunden: true, nat: -11.3 }],
+  ['31099', { gefunden: true, nat: -12.3 }],
+  ['99999', { gefunden: false }],
+];
+for (const [plz, erwartet] of klimaSollfaelle) {
+  assert.deepEqual(
+    JSON.parse(JSON.stringify(appsScript.klima_({ plz }))),
+    erwartet,
+    `Apps Script: Klima ${plz}`
+  );
+  assert.deepEqual(phpKlima(plz), erwartet, `PHP: Klima ${plz}`);
+}
+assert.notEqual(phpKlima('30159').nat, phpKlima('30539').nat, 'Hannover wird PLZ-scharf gelesen');
+assert.match(siteJs, /Number\(brand\.brutto\) > 0/);
+assert.match(siteJs, /kälteste Auslegungstemperatur an deinem Ort/);
+assert.match(siteJs, /minimumFractionDigits: 1, maximumFractionDigits: 1/);
+assert.match(dimensionierungHtml, /<span style="color:var\(--green\);">gleichzeitig<\/span>/);
+assert.match(
+  dimensionierungHtml,
+  /nicht wie viele Bäder ihr habt, sondern wie viele Zapfstellen im selben Moment laufen sollen\./
+);
 
 const zeroSafeFields = [
   'baujahr',

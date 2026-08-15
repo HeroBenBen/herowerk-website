@@ -217,6 +217,8 @@ let wizServerResult = null;
 let wizSelectedMarke = 'wolf';
 let foerderMarke = 'wolf';
 let foerderRequestSeq = 0;
+let klimaRequestSeq = 0;
+let klimaAbortController = null;
 
 // PLZ → Gemeinde Mapping (Region Hannover)
 const plzMap = {
@@ -373,11 +375,59 @@ function showFoerderSlot(element, visible) {
   element.setAttribute('aria-hidden', visible ? 'false' : 'true');
 }
 
+function formatNormaussentemperatur(value) {
+  const nat = Number(value);
+  if (!Number.isFinite(nat)) return '';
+  return (
+    nat
+      .toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 })
+      .replace('-', '−') + '\u00a0°C'
+  );
+}
+
+async function ladeNormaussentemperatur(plz, input, resultEl, requestSeq) {
+  const controller = new AbortController();
+  klimaAbortController = controller;
+  const params = new URLSearchParams({
+    action: 'klima',
+    plz,
+    origin: 'https://herowerk.de',
+  });
+  try {
+    const response = await rechnerFetch(RECHNER_API + '?' + params.toString(), {
+      signal: controller.signal,
+    });
+    const data = await response.json();
+    if (
+      requestSeq !== klimaRequestSeq ||
+      input.value !== plz ||
+      data.error ||
+      data.gefunden !== true
+    )
+      return;
+    const temperatur = formatNormaussentemperatur(data.nat);
+    if (!temperatur) return;
+    const zusatz = document.createElement('span');
+    zusatz.style.color = 'var(--g300)';
+    zusatz.textContent = ' · kälteste Auslegungstemperatur an deinem Ort: ' + temperatur;
+    resultEl.appendChild(zusatz);
+  } catch (error) {
+    if (!controller.signal.aborted) console.warn('Normaußentemperatur nicht verfügbar', error);
+  } finally {
+    if (klimaAbortController === controller) klimaAbortController = null;
+  }
+}
+
 function checkPlz(input) {
   const val = input.value.replace(/\D/g, '').slice(0, 5);
   input.value = val;
   const resultEl = document.getElementById('wzPlzResult');
   const nextBtn = document.getElementById('wzPlzNext');
+  const requestSeq = ++klimaRequestSeq;
+  if (klimaAbortController) {
+    klimaAbortController.abort();
+    klimaAbortController = null;
+  }
 
   if (val.length < 5) {
     resultEl.innerHTML = '';
@@ -411,6 +461,7 @@ function checkPlz(input) {
     wizData.gemeinde = '';
     setWizardNextDisabled(nextBtn, true);
   }
+  void ladeNormaussentemperatur(val, input, resultEl, requestSeq);
 }
 
 // Option selection + Auto-Advance
@@ -981,18 +1032,22 @@ function renderBrandCard(key, label, brand, bedarf) {
       <div class="fr-row"><span>Auslegung</span><span class="fr-val">im Vor-Ort-Termin</span></div>
     </button>`;
   }
-  // FAIL-CLOSED (P-16): Ohne Preistafel-Treffer liefert das Backend eigenanteil = null -> "auf
-  // Anfrage" statt einer stillen Notrechnung oder "ab 0 EUR".
+  // Ohne Eigenanteil bleibt es bei "Preis auf Anfrage". Ohne positiven Bruttopreis entfällt
+  // die Bruttopreiszeile vollständig, damit die Karte keine Preiszusage über null Euro zeigt.
   const eigenSatz =
     brand.eigenanteil == null
       ? '<div class="fr-satz" style="font-size:24px;line-height:1.2;">Preis auf Anfrage</div><div class="fr-label" style="margin-bottom:0;">Eigenanteil im Vor-Ort-Termin</div>'
       : `<div class="fr-satz" style="font-size:40px;">ab ${formatEuro(brand.eigenanteil)}</div><div class="fr-label" style="margin-bottom:0;">geschätzter Eigenanteil nach max. Förderung (80 %)*</div>`;
+  const bruttoZeile =
+    Number(brand.brutto) > 0
+      ? `<div class="fr-row"><span>Brutto-Richtpreis vor Förderung</span><span class="fr-val">ab ${formatEuro(brand.brutto)}</span></div>`
+      : '';
   return `<button type="button" class="${cls}" onclick="wizSelectMarke('${key}')" style="text-align:left;font:inherit;">
     ${head}
     <div class="wiz-brand-satz">${eigenSatz}</div>
     <div class="fr-row"><span>Empfohlenes Modell</span><span class="fr-val">${modellZweizeilig(brand.modell)}</span></div>
     <div class="fr-row"><span>Deckt deinen Bedarf</span><span class="fr-val">${formatKw(bedarf)} kW${brand.kaskade ? ' · Kaskade' : ''} ✓</span></div>
-    <div class="fr-row"><span>Brutto-Richtpreis vor Förderung</span><span class="fr-val">ab ${formatEuro(brand.brutto)}</span></div>
+    ${bruttoZeile}
   </button>`;
 }
 
