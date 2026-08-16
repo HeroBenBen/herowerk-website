@@ -26,6 +26,15 @@ function hw_js_string(mixed $value): string
     return (string) $value;
 }
 
+function hw_query_string(array $query, string $key, string $fallback = ''): string
+{
+    if (!array_key_exists($key, $query)) {
+        return $fallback;
+    }
+    $value = hw_js_string($query[$key]);
+    return trim($value) === '' ? $fallback : $value;
+}
+
 function hw_parse_float_prefix(string $value): ?float
 {
     if (!preg_match('/^[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?/', ltrim($value), $match)) {
@@ -95,6 +104,52 @@ function hw_key(string $value): string
     return str_replace('-', '_', $value);
 }
 
+/**
+ * Gebaeudefaktor je Bauform. Der Rueckfall ist typabhaengig, nicht 1.0 fuer alles:
+ * fehlt der Schluessel im Blatt, wuerde sonst jede Bauform wie das freistehende
+ * Einfamilienhaus gerechnet. Genau das ist am 14.08.2026 beim Reihenmittelhaus passiert,
+ * das ueberhaupt keinen Blatt-Eintrag hatte und dadurch rund 18 Prozent zu gross auslegte.
+ * Das Reihenmittelhaus traegt bewusst denselben Wert wie die uebrige Reihenhaus-Familie;
+ * ein eigener, kleinerer Wert waere eine neue Annahme und braucht eine Quelle.
+ *
+ * @param array<string,mixed> $d
+ */
+function hw_gebaeude_faktor(array $d, string $gebaeude): float|int
+{
+    $rueckfall = [
+        'efh' => 1.0, 'dhh' => 0.9, 'rh' => 0.85, 'rh_end' => 0.85,
+        'rh_mitte' => 0.85, 'zfh' => 0.95, 'mfh' => 0.85,
+    ];
+    $key = hw_key($gebaeude);
+    return hw_get_num($d, 'gebaeudef_' . $key, $rueckfall[$key] ?? 1.0);
+}
+
+function hw_baujahr_klasse(mixed $value): string
+{
+    $raw = trim(hw_js_string($value));
+    if (preg_match('/^\d{4}$/', $raw)) {
+        $year = (int) $raw;
+        if ($year >= 1800 && $year <= 2026) {
+            return match (true) {
+                $year <= 1918 => 'bis1918',
+                $year <= 1948 => '1919-1948',
+                $year <= 1957 => '1949-1957',
+                $year <= 1968 => '1958-1968',
+                $year <= 1978 => '1969-1978',
+                $year <= 1983 => '1979-1983',
+                $year <= 1994 => '1984-1994',
+                $year <= 2010 => '1995-2010',
+                default => 'nach2010',
+            };
+        }
+    }
+    $classes = [
+        'bis1918', '1919-1948', '1949-1957', '1958-1968', '1969-1978',
+        '1979-1983', '1984-1994', '1995-2010', 'nach2010',
+    ];
+    return in_array($raw, $classes, true) ? $raw : '1978-1994';
+}
+
 /** @return array<int,array<int,mixed>> */
 function hw_sheet(array $sheets, string $name): array
 {
@@ -161,7 +216,7 @@ function hw_get_prices(array $sheets, string $brand): array
 /** @return list<array<string,mixed>> */
 function hw_get_catalog(array $sheets): array
 {
-    $rows = array_slice(hw_sheet($sheets, 'Geräte_Katalog'), 8, 10);
+    $rows = array_slice(hw_sheet($sheets, 'Geräte_Katalog'), 8);
     $out = [];
     foreach ($rows as $row) {
         if (empty($row[0]) || empty($row[1])) {
@@ -171,10 +226,16 @@ function hw_get_catalog(array $sheets): array
             'marke' => strtolower(hw_js_string($row[0])),
             'modell' => hw_js_string($row[1]),
             'kaskade' => strtoupper(hw_js_string($row[2] ?? '')) === 'J',
+            'leistungW35' => hw_num($row[3] ?? null, 0),
+            'leistungW55' => hw_num($row[4] ?? null, 0),
             'grenzeW35' => hw_num($row[7] ?? null, 0),
             'grenzeW55' => hw_num($row[8] ?? null, 0),
             'grenzeW35a10' => hw_num($row[13] ?? null, 0),
             'grenzeW55a10' => hw_num($row[14] ?? null, 0),
+            'leistungW35a10' => hw_num($row[16] ?? null, 0),
+            'leistungW55a10' => hw_num($row[17] ?? null, 0),
+            'baureihe' => hw_js_string($row[18] ?? ''),
+            'mindestAnteil' => hw_num($row[19] ?? null, 0.7),
             'brutto' => hw_num($row[10] ?? null, 0),
             'stand' => hw_js_string($row[11] ?? ''),
         ];
@@ -198,6 +259,20 @@ function hw_get_klima_plz(array $sheets): array
         ];
     }
     return $out;
+}
+
+/** @return array{gefunden:bool,nat?:float|int} */
+function hw_klima(array $query, array $sheets): array
+{
+    $plz = substr((string) preg_replace('/\D/', '', hw_query_string($query, 'plz')), 0, 5);
+    if (strlen($plz) !== 5) {
+        return ['gefunden' => false];
+    }
+    $klima = hw_get_klima_plz($sheets);
+    if (!array_key_exists($plz, $klima)) {
+        return ['gefunden' => false];
+    }
+    return ['gefunden' => true, 'nat' => $klima[$plz]['nat']];
 }
 
 /** @return array<string,mixed> */
@@ -375,37 +450,149 @@ function hw_grenze_interp(float|int $a11, float|int $a10, float|int $nat): float
         return $a11;
     }
     $factor = hw_num($nat, -11) + 11;
-    $factor = max(0, min(1, $factor));
+    // Nur die obere Grenze bleibt bestehen. Unterhalb von A-11 wird die Kennlinie extrapoliert.
+    $factor = min(1, $factor);
     return $a11 + ($a10 - $a11) * $factor;
 }
 
-/** @return array<string,mixed>|null */
-function hw_match_catalog(array $sheets, string $brand, float|int $auslegung, string $heizsystem, float|int $nat): ?array
+/** @param array<string,mixed> $item */
+function hw_leistung_am_auslegungspunkt(array $item, string $heizsystem, float|int $nat): float|int
 {
-    $limit = static fn (array $item): float|int => $heizsystem === 'heizkoerper'
+    return $heizsystem === 'heizkoerper'
+        ? hw_grenze_interp($item['leistungW55'], $item['leistungW55a10'], $nat)
+        : hw_grenze_interp($item['leistungW35'], $item['leistungW35a10'], $nat);
+}
+
+/** @param array<string,float|int|string> $d */
+function hw_faktor_nutzwaerme(array $d, string $heizung, string $andereHeizung, string $abgasrohr, string $heizungsalter): float|int
+{
+    if (in_array($heizung, ['nachtspeicher', 'nacht'], true)) {
+        return hw_get_num($d, 'eta_nachtspeicher', 0.97);
+    }
+    if (in_array($heizung, ['sonstige', 'sonst'], true)) {
+        return match ($andereHeizung) {
+            'fernwaerme' => hw_get_num($d, 'eta_fernwaerme', 0.98),
+            'pellet' => hw_get_num($d, 'eta_pellet', 0.80),
+            'waermepumpe' => hw_get_num($d, 'jaz_bestand_waermepumpe', 3.5),
+            default => hw_get_num($d, 'eta_andere_unklar', 0.85),
+        };
+    }
+    if ($abgasrohr === 'unklar') {
+        return hw_get_num($d, 'eta_unklar', 0.85);
+    }
+    if ($abgasrohr === 'metall') {
+        return $heizungsalter === 'vor1990'
+            ? hw_get_num($d, 'eta_metall_vor1990', 0.70)
+            : hw_get_num($d, 'eta_metall_sonst', 0.80);
+    }
+    if ($abgasrohr === 'kunststoff') {
+        if ($heizungsalter === 'nach2010') {
+            return hw_get_num($d, 'eta_kunststoff_nach2010', 0.93);
+        }
+        return in_array($heizung, ['oel', 'öl'], true)
+            ? hw_get_num($d, 'eta_kunststoff_oel', 0.90)
+            : hw_get_num($d, 'eta_kunststoff_gas', 0.86);
+    }
+    return hw_get_num($d, 'eta_unklar', 0.85);
+}
+
+/** @param array<string,float|int|string> $d */
+function hw_warmwasser_leistung(array $d, int $personen, int $duschen, int $wannen, string $duschgroesse, string $wannengroesse): float|int
+{
+    $personenFaktor = $personen <= 2
+        ? hw_get_num($d, 'ww_f_1_2', 1.0)
+        : ($personen <= 5 ? hw_get_num($d, 'ww_f_3_5', 1.5) : hw_get_num($d, 'ww_f_6plus', 2.0));
+    $duschenwerte = [
+        '0' => hw_get_num($d, 'ww_dusche_sparsam', 0.6250),
+        'sparsam' => hw_get_num($d, 'ww_dusche_sparsam', 0.6250),
+        '1' => hw_get_num($d, 'ww_dusche_normal', 0.9375),
+        'normal' => hw_get_num($d, 'ww_dusche_normal', 0.9375),
+        '2' => hw_get_num($d, 'ww_dusche_massage', 1.4075),
+        'massage' => hw_get_num($d, 'ww_dusche_massage', 1.4075),
+        '3' => hw_get_num($d, 'ww_dusche_regen', 1.9550),
+        'regen' => hw_get_num($d, 'ww_dusche_regen', 1.9550),
+    ];
+    $wannenwerte = [
+        '0' => hw_get_num($d, 'ww_wanne_klein', 1.7200),
+        'klein' => hw_get_num($d, 'ww_wanne_klein', 1.7200),
+        '1' => hw_get_num($d, 'ww_wanne_normal', 2.4700),
+        'normal' => hw_get_num($d, 'ww_wanne_normal', 2.4700),
+        '2' => hw_get_num($d, 'ww_wanne_gross', 3.1250),
+        'gross' => hw_get_num($d, 'ww_wanne_gross', 3.1250),
+        '3' => hw_get_num($d, 'ww_wanne_sehrgross', 5.4700),
+        'sehrgross' => hw_get_num($d, 'ww_wanne_sehrgross', 5.4700),
+    ];
+    $zapflast = ($wannenwerte[$wannengroesse] ?? $wannenwerte['1']) * $wannen
+        + ($duschenwerte[$duschgroesse] ?? $duschenwerte['1']) * max(0, $duschen - $wannen);
+    $temperatur = hw_get_num($d, 'ww_temperatur_grad', 55);
+    return $personenFaktor * $zapflast * 50 / ($temperatur - 10) + hw_get_num($d, 'ww_sockel_kw', 0.70);
+}
+
+/** @return array<string,mixed>|null */
+function hw_match_catalog(
+    array $sheets,
+    string $brand,
+    float|int $auslegung,
+    string $heizsystem,
+    float|int $nat,
+    float|int $markenHeizstab,
+    float|int $kaskadenToleranz
+): ?array
+{
+    $grenze = static fn (array $item): float|int => $heizsystem === 'heizkoerper'
         ? hw_grenze_interp($item['grenzeW55'], $item['grenzeW55a10'], $nat)
         : hw_grenze_interp($item['grenzeW35'], $item['grenzeW35a10'], $nat);
     $items = array_values(array_filter(hw_get_catalog($sheets), static fn (array $item): bool => $item['marke'] === $brand));
-    usort($items, static fn (array $a, array $b): int => $limit($a) <=> $limit($b));
-    $strict = array_values(array_filter($items, static fn (array $item): bool => $limit($item) >= $auslegung));
-    $pick = $strict[0] ?? null;
-    if ($pick !== null && $pick['kaskade']) {
-        $single = array_values(array_filter($items, static fn (array $item): bool => !$item['kaskade'] && $limit($item) + 0.5 >= $auslegung));
-        if ($single !== []) {
-            return $single[count($single) - 1];
+
+    $groessteEinzelgrenze = [];
+    foreach ($items as $item) {
+        if ($item['kaskade']) {
+            continue;
+        }
+        $baureihe = $item['baureihe'];
+        $itemGrenze = $grenze($item);
+        if (!array_key_exists($baureihe, $groessteEinzelgrenze) || $itemGrenze > $groessteEinzelgrenze[$baureihe]) {
+            $groessteEinzelgrenze[$baureihe] = $itemGrenze;
+        }
+    }
+
+    $pick = null;
+    $pickLeistung = null;
+    foreach ($items as $item) {
+        $leistung = hw_leistung_am_auslegungspunkt($item, $heizsystem, $nat);
+        $mindestAnteil = $item['mindestAnteil'];
+        $heizstab = $mindestAnteil >= 1 ? 0 : $markenHeizstab;
+        if ($leistung < $mindestAnteil * $auslegung || $leistung + $heizstab < $auslegung) {
+            continue;
+        }
+        if ($item['kaskade']) {
+            $baureihe = $item['baureihe'];
+            if (
+                !array_key_exists($baureihe, $groessteEinzelgrenze)
+                || $auslegung <= $groessteEinzelgrenze[$baureihe] + $kaskadenToleranz
+            ) {
+                continue;
+            }
+        }
+        if ($pick === null || $leistung < $pickLeistung) {
+            $pick = $item;
+            $pick['leistungAuslegung'] = $leistung;
+            $pickLeistung = $leistung;
         }
     }
     return $pick;
 }
 
 /** @return array<string,mixed> */
-function hw_catalog_result(array $item, array $priceRows): array
+function hw_catalog_result(array $item, array $priceRows, float|int $auslegung, float|int $sollbandOben): array
 {
     $price = null;
-    foreach ($priceRows as $row) {
-        if ($row['brutto'] === $item['brutto']) {
-            $price = $row;
-            break;
+    if ($item['brutto'] > 0) {
+        foreach ($priceRows as $row) {
+            if ($row['brutto'] === $item['brutto']) {
+                $price = $row;
+                break;
+            }
         }
     }
     $eigen = $price !== null ? $price['eigen'] : null;
@@ -420,6 +607,7 @@ function hw_catalog_result(array $item, array $priceRows): array
         'eigenanteil' => $eigen,
         'eigenanteilProklima' => $eigenProklima,
         'vorlaeufig' => strtolower(hw_js_string($item['stand'])) !== 'belegt',
+        'ueberSollband' => $item['leistungAuslegung'] > $sollbandOben * $auslegung,
     ];
 }
 
@@ -427,26 +615,48 @@ function hw_catalog_result(array $item, array $priceRows): array
 function hw_dimensionierung(array $query, array $sheets): array
 {
     $d = hw_read_kv($sheets, 'Dimensionierung');
+    // Grenzen der Bedienoberflaeche serverseitig durchsetzen: der Schieberegler fuer die
+    // Wohnflaeche laesst 60 bis 800 Quadratmeter zu, der fuer den Verbrauch 500 bis 12.000
+    // der gewaehlten Einheit. Ohne diese Klemme nimmt der Kern jeden Aufrufwert an und
+    // liefert offensichtlich falsche Auslegungen (gemessen: 20.000 Liter Heizoel -> 93,7 kW).
     $flaeche = hw_num($query['flaeche'] ?? null, 0);
-    $baujahr = hw_js_string(($query['baujahr'] ?? '') ?: '1978-1994');
-    $gebaeude = hw_js_string(($query['gebaeude'] ?? '') ?: 'efh');
-    $sanierung = hw_js_string(($query['sanierung'] ?? '') ?: 'nein');
-    $warmwasser = strtolower(hw_js_string(($query['warmwasser'] ?? '') ?: 'ja'));
-    $heizsystem = strtolower(hw_js_string(($query['heizsystem'] ?? '') ?: 'heizkoerper'));
-    $knownValue = strtolower(hw_js_string(($query['verbrauchKnown'] ?? '') ?: ''));
+    if ($flaeche > 0) {
+        $flaeche = min(hw_get_num($d, 'flaeche_max', 800), max(hw_get_num($d, 'flaeche_min', 60), $flaeche));
+    }
+    $baujahr = hw_baujahr_klasse(hw_query_string($query, 'baujahr', '1978-1994'));
+    $gebaeude = hw_query_string($query, 'gebaeude', 'efh');
+    $sanierung = hw_query_string($query, 'sanierung', 'nein');
+    $warmwasser = strtolower(hw_query_string($query, 'warmwasser', 'ja'));
+    $heizsystem = strtolower(hw_query_string($query, 'heizsystem', 'heizkoerper'));
+    $knownValue = strtolower(hw_query_string($query, 'verbrauchKnown'));
     $verbrauchKnown = in_array($knownValue, ['known', 'true', 'ja'], true);
     $verbrauch = hw_num($query['verbrauch'] ?? null, 0);
-    $einheit = strtolower(hw_js_string(($query['einheit'] ?? '') ?: 'kwh'));
+    $einheit = strtolower(hw_query_string($query, 'einheit', 'kwh'));
     if ($einheit === 'liter') {
         $verbrauch *= hw_get_num($d, 'oel_faktor', 10);
     }
     if ($einheit === 'm3') {
         $verbrauch *= hw_get_num($d, 'gas_faktor', 10);
     }
+    // Klemme in Kilowattstunden, NACH der Umrechnung: alle drei Einheiten der Bedienoberflaeche
+    // spannen denselben Bereich auf (5.000 bis 120.000 kWh, also 500 bis 12.000 Liter bzw. Kubikmeter).
+    // Ohne sie nimmt der Kern jeden Aufrufwert an; gemessen: 20.000 Liter Heizoel ergaben 93,7 kW.
+    if ($verbrauch > 0) {
+        $verbrauch = min(hw_get_num($d, 'verbrauch_max_kwh', 120000), max(hw_get_num($d, 'verbrauch_min_kwh', 5000), $verbrauch));
+    }
 
+    // ÜBERGANGSLÖSUNG: Die neun Baujahresklassen werden bis zum Bau von Teil A des zweiten
+    // Bauauftrags auf die vier alten Klassen des weiterhin blockierten Flächenwegs abgebildet.
+    // Mit Teil A entfällt dieses Mapping vollständig.
+    $baujahrMapping = [
+        'bis1918' => 'vor1978', '1919-1948' => 'vor1978', '1949-1957' => 'vor1978',
+        '1958-1968' => 'vor1978', '1969-1978' => 'vor1978',
+        '1979-1983' => '1978-1994', '1984-1994' => '1978-1994',
+        '1995-2010' => '1995-2010', 'nach2010' => 'nach2010',
+    ];
     $bedarfStufen = ['vor1978', '1978-1994', '1995-2010', 'nach2010'];
-    $effBaujahr = $baujahr;
-    $index = array_search($baujahr, $bedarfStufen, true);
+    $effBaujahr = $baujahrMapping[$baujahr] ?? $baujahr;
+    $index = array_search($effBaujahr, $bedarfStufen, true);
     if ($sanierung === 'teilweise' && $index !== false) {
         $effBaujahr = $bedarfStufen[min($index + 1, count($bedarfStufen) - 1)];
     }
@@ -455,40 +665,70 @@ function hw_dimensionierung(array $query, array $sheets): array
     }
     $bedarfKwh = $verbrauchKnown
         ? $verbrauch
-        : hw_js_round($flaeche * hw_get_num($d, 'spez_bedarf_' . hw_key($effBaujahr), 140) * hw_get_num($d, 'gebaeudef_' . hw_key($gebaeude), 1.0));
+        : hw_js_round($flaeche * hw_get_num($d, 'spez_bedarf_' . hw_key($effBaujahr), 140) * hw_gebaeude_faktor($d, $gebaeude));
 
     $klima = hw_get_klima_plz($sheets);
-    $plzKey = substr((string) preg_replace('/\D/', '', hw_js_string(($query['plz'] ?? '') ?: '')), 0, 5);
+    $plzKey = substr((string) preg_replace('/\D/', '', hw_query_string($query, 'plz')), 0, 5);
     $zone = $klima[$plzKey] ?? $klima['*'] ?? ['nat' => -11, 'volllast' => 1800];
-    $heizlast = $bedarfKwh / hw_get_num($d, 'volllaststunden', 1800);
-    $personen = hw_int($query['personen'] ?? null, 0);
-    $wwZuschlag = 0;
-    if ($warmwasser === 'ja' && $heizlast <= hw_get_num($d, 'ww_max_heizlast_kw', 19.5)) {
-        $wwZuschlag = $personen * hw_get_num($d, 'ww_zuschlag_kw_pro_person', 0.25);
-    }
-    $auslegung = hw_round1($heizlast + $wwZuschlag);
-    $jaz = hw_get_num($d, 'jaz_' . hw_key($effBaujahr), 3.5);
+    $personen = max(1, min(8, hw_int($query['personen'] ?? null, 2)));
+    $heizung = strtolower(hw_query_string($query, 'heizung', 'gas'));
+    $andereHeizung = strtolower(hw_query_string($query, 'andere_heizung', 'fernwaerme'));
+    $abgasrohr = strtolower(hw_query_string($query, 'abgasrohr', 'unklar'));
+    $heizungsalter = strtolower(hw_query_string($query, 'heizungsalter', 'unklar'));
+    $faktorNutzwaerme = hw_faktor_nutzwaerme($d, $heizung, $andereHeizung, $abgasrohr, $heizungsalter);
+    $bestandMitWarmwasser = in_array($heizung, ['gas', 'gas-old', 'gas-new', 'gas-etage', 'gasetage', 'oel', 'öl'], true)
+        || (in_array($heizung, ['sonstige', 'sonst'], true) && in_array($andereHeizung, ['fernwaerme', 'pellet', 'waermepumpe', 'unklar'], true));
+    $nutzwaerme = $verbrauchKnown ? $bedarfKwh * $faktorNutzwaerme : $bedarfKwh;
+    $warmwasserWaerme = $personen * hw_get_num($d, 'ww_abzug_kwh_pro_person', 700);
+    $raumwaerme = max(0, $nutzwaerme - ($verbrauchKnown && $bestandMitWarmwasser ? $warmwasserWaerme : 0));
+    $heizlast = $raumwaerme / hw_get_num($d, 'volllaststunden', 1800);
+    $wwLeistung = $warmwasser === 'ja'
+        ? hw_warmwasser_leistung(
+            $d,
+            $personen,
+            max(0, min(6, hw_int($query['duschen'] ?? null, 1))),
+            max(0, min(3, hw_int($query['wannen'] ?? null, 1))),
+            strtolower(hw_query_string($query, 'duschgroesse', '1')),
+            strtolower(hw_query_string($query, 'wannengroesse', '1'))
+        )
+        : 0;
+    $auslegungRoh = max($heizlast, $wwLeistung);
+    $auslegung = hw_round1($auslegungRoh);
+    $stromverbrauch = hw_js_round(
+        $raumwaerme / hw_get_num($d, 'jaz_heizung', 3.8)
+        + ($warmwasser === 'ja' ? $warmwasserWaerme / hw_get_num($d, 'jaz_warmwasser', 2.7) : 0)
+    );
     $marken = [];
+    $catalogParameters = hw_read_kv($sheets, 'Geräte_Katalog');
     foreach (['wolf', 'vaillant'] as $brand) {
-        $match = hw_match_catalog($sheets, $brand, $auslegung, $heizsystem, $zone['nat']);
+        $heizstabKey = 'heizstab_' . $brand;
+        $markenHeizstab = hw_kv_num($catalogParameters[$heizstabKey] ?? null, NAN);
+        if (is_nan($markenHeizstab)) {
+            throw new RuntimeException('missing_parameter_' . $heizstabKey);
+        }
+        $match = hw_match_catalog(
+            $sheets,
+            $brand,
+            $auslegung,
+            $heizsystem,
+            $zone['nat'],
+            $markenHeizstab,
+            hw_get_num($d, 'kaskaden_toleranz_kw', 0.5)
+        );
         $marken[$brand] = $match !== null
-            ? hw_catalog_result($match, hw_read_price_table($sheets, $brand === 'vaillant' ? 'Preise_Vaillant' : 'Preise_Wolf'))
+            ? hw_catalog_result(
+                $match,
+                hw_read_price_table($sheets, $brand === 'vaillant' ? 'Preise_Vaillant' : 'Preise_Wolf'),
+                $auslegung,
+                hw_get_num($d, 'sollband_oben', 0.8)
+            )
             : ['deckt' => false];
     }
-    $spezHeizlast = $flaeche > 0 ? hw_js_round($heizlast / $flaeche * 1000) : null;
-    $methode = $verbrauchKnown ? 'verbrauch' : 'flaeche';
-    $methodeHinweis = $verbrauchKnown
-        ? 'aus deinem Jahresverbrauch'
-        : 'Flächen-Schätzung (Baujahr ' . $baujahr . ($sanierung !== 'nein' ? ', Sanierung berücksichtigt' : '') . ')';
     return [
         'bedarf' => $auslegung,
-        'heizlast' => hw_round1($heizlast),
-        'spez_heizlast_wm2' => $spezHeizlast,
-        'methode' => $methode,
-        'methode_hinweis' => $methodeHinweis,
-        'jaz' => $jaz,
-        'heizsystem' => $heizsystem,
-        'warmwasser' => $warmwasser,
+        'fuehrung' => $wwLeistung > $heizlast ? 'warmwasser' : 'heizung',
+        'stromverbrauch_kwh' => $stromverbrauch,
+        'strom_hinweis' => 'Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.',
         'marken' => $marken,
     ];
 }
@@ -583,12 +823,12 @@ function hw_foerder_calc(array $query, array $f, string $date, array $perioden):
     $period = hw_periode_fuer($date, $perioden);
     $we = hw_int($query['we'] ?? null, 1);
     $selbstWe = hw_int($query['selbstWE'] ?? null, 1);
-    $heizung = hw_js_string(($query['heizung'] ?? '') ?: 'gas');
+    $heizung = hw_query_string($query, 'heizung', 'gas');
     $einkommen = hw_einkommen_norm(array_key_exists('einkommen', $query) ? $query['einkommen'] : 'ueber40');
-    $kindValue = strtolower(hw_js_string(($query['kind'] ?? '') ?: ''));
+    $kindValue = strtolower(hw_query_string($query, 'kind'));
     $kind = $kindValue === 'ja' || $kindValue === 'true';
-    $euOk = strtolower(hw_js_string(($query['eu'] ?? '') ?: 'ja')) !== 'nein';
-    $gemeinde = strtolower(hw_js_string(($query['gemeinde'] ?? '') ?: ''));
+    $euOk = strtolower(hw_query_string($query, 'eu', 'ja')) !== 'nein';
+    $gemeinde = strtolower(hw_query_string($query, 'gemeinde'));
     $preis = hw_int($query['preis'] ?? null, 34510);
     $hinweise = [];
 
@@ -755,9 +995,9 @@ function hw_foerderung(array $query, array $sheets): array
 {
     $f = hw_read_kv($sheets, 'Förder_Parameter');
     $params = hw_kv_get_params($sheets);
-    $brand = strtolower(hw_js_string(($query['marke'] ?? '') ?: 'wolf'));
+    $brand = strtolower(hw_query_string($query, 'marke', 'wolf'));
     $prices = hw_get_prices($sheets, $brand);
-    $wpTyp = strtolower(hw_js_string(($query['wpTyp'] ?? '') ?: 'm'));
+    $wpTyp = strtolower(hw_query_string($query, 'wpTyp', 'm'));
     $manual = array_key_exists('preisManuell', $query) && $query['preisManuell'] !== '';
     $preis = $manual ? hw_int($query['preisManuell'], 34510) : (($prices[$wpTyp] ?? 0) ?: 34510);
     $args = $query;
@@ -809,7 +1049,7 @@ function hw_kv_map_request(array $query, array $params): array
     $defaults = hw_kv_defaults();
     $periodeServer = hw_kv_periode_heute($params);
     $periodenKeys = array_keys($params['perioden']);
-    $periodeReq = trim(hw_js_string(($query['fHalbjahr'] ?? '') ?: ''));
+    $periodeReq = trim(hw_query_string($query, 'fHalbjahr'));
     $periodeValid = in_array($periodeReq, $periodenKeys, true);
     return [
         '_periodeAutomatik' => !$periodeValid,
@@ -1316,7 +1556,7 @@ function hw_kostenvergleich(array $query, array $sheets): array
 {
     $params = hw_kv_get_params($sheets);
     $inputs = hw_kv_map_request($query, $params);
-    if (hw_js_string(($query['bedarfModus'] ?? '') ?: '') === 'schaetzung') {
+    if (hw_query_string($query, 'bedarfModus') === 'schaetzung') {
         $geb = hw_kv_enum($query['geb'] ?? null, ['efh', 'dhh', 'rh', 'zfh', 'mfh'], '');
         $bj = hw_kv_enum($query['bj'] ?? null, ['vor1978', '1978-1994', '1995-2010', 'nach2010'], '');
         $san = hw_kv_enum($query['san'] ?? null, ['nein', 'teilweise', 'umfassend'], '');
@@ -1346,6 +1586,7 @@ function hw_rechner_route(string $action, array $query, array $sheets): array
 {
     return match ($action) {
         'dimensionierung' => hw_dimensionierung($query, $sheets),
+        'klima' => hw_klima($query, $sheets),
         'foerderung' => hw_foerderung($query, $sheets),
         'preise' => hw_preise($sheets),
         'kostenvergleich' => hw_kostenvergleich($query, $sheets),

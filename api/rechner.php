@@ -239,5 +239,5 @@ try {
     echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
 } catch (Throwable $error) {
     error_log('HeroWerk Rechner: calculation_failed action=' . $action . ' message=' . $error->getMessage());
-    rechner_fail(500, $error->getMessage());
+    rechner_fail(500, 'calculator_temporarily_unavailable');
 }

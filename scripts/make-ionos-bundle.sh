@@ -31,6 +31,8 @@ rsync -a \
   --exclude 'baseline/' \
   --exclude 'docs/' \
   --exclude 'reports/' \
+  --exclude 'artifacts/' \
+  --exclude 'design-qa.md' \
   --exclude 'test-results/' \
   --exclude 'playwright-report/' \
   --exclude 'scripts/' \

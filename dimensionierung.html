@@ -62,7 +62,7 @@
   <meta name="twitter:description" content="Wärmepumpen-Rechner für Größe, Verbrauch und Ersparnis in der Region Hannover.">
   <meta name="twitter:image" content="https://www.herowerk.de/hero-paar-terrasse.png">
   <script src="js/theme.js?v=9b163705e9"></script>
-  <link rel="stylesheet" href="css/site.css?v=69062d018f">
+  <link rel="stylesheet" href="css/site.css?v=92e836645a">
   <link rel="preload" href="tokens.css?v=bb2619605a" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="tokens.css?v=bb2619605a"></noscript>
 </head>
@@ -114,11 +114,33 @@
     <div class="section-inner">
       <div class="section-tag">In 60 Sekunden zur Empfehlung</div>
       <h1 class="section-title" style="color: var(--white);">Welche Wärmepumpe passt zu deinem Haus?</h1>
-      <p class="section-lead">8 kurze Fragen. Keine Anmeldung. Sofort Ergebnis mit Richtpreis und geschätzter Förderung.</p>
+      <p class="section-lead">15 kurze Fragen. Keine Anmeldung. Sofort Ergebnis mit Richtpreis und geschätzter Förderung.</p>
 
       <div class="wizard-container" id="wizCard">
+        <!-- Symbolbestand aus der freigegebenen Vorschau Fassung 7 sowie dem HeroWerk-Cockpit. -->
+        <svg class="wz-symbol-sprite" aria-hidden="true" focusable="false">
+          <symbol id="wz-i-dach" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 13L12 4l10 9"/><path d="M5 12.5V20h14v-7.5"/></symbol>
+          <symbol id="wz-i-fenster" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M12 4v16M4 12h16"/></symbol>
+          <symbol id="wz-i-wand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18M8 6v6M16 6v6M12 12v6"/></symbol>
+          <symbol id="wz-i-boden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16h18M3 20h18"/><path d="M6 16V8M12 16V8M18 16V8"/></symbol>
+          <symbol id="wz-i-flamme" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s5 4.4 5 9a5 5 0 0 1-10 0c0-2 1-3.4 2-4.5 0 1.6 1 2.5 2 2.5s1.5-1 1-3c-.3-1.4-1-3-2-4z"/></symbol>
+          <symbol id="wz-i-rohr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21V7a3 3 0 0 1 3-3h2a3 3 0 0 1 3 3v14"/><path d="M6 21h12M9 8h6"/></symbol>
+          <symbol id="wz-i-heizk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="12" rx="1"/><path d="M8 6v12M12 6v12M16 6v12"/></symbol>
+          <symbol id="wz-i-dusche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V7a3 3 0 0 1 6 0"/><circle cx="17" cy="7" r="3"/><path d="M15 13v1M17 15v1M19 13v1M16 18v1M18 18v1"/></symbol>
+          <symbol id="wz-i-wanne" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18v3a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"/><path d="M6 12V6a2 2 0 0 1 4 0"/><path d="M6 21l-1 1M18 21l1 1"/></symbol>
+          <symbol id="wz-i-frage" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.4 2.3c-.6.3-.9.8-.9 1.4v.3"/><path d="M12 17h.01"/></symbol>
+          <symbol id="wz-i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+          <symbol id="wz-i-personen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.4 2.7-5.4 6-5.4s6 2 6 5.4"/><path d="M16.5 8.5a3 3 0 100-5M18 20c0-2.6-1-4.3-2.6-5.2"/></symbol>
+          <symbol id="wz-i-waermepumpe" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="30" height="30" rx="2" stroke-width="2.2"/><circle cx="24" cy="21" r="8" stroke-width="1.8"/><path d="M24 14 C28 15 29 20 24 21" stroke-width="1.5"/><path d="M31.2 25.5 C28 29 23 25 24 21" stroke-width="1.5"/><path d="M16.8 25.5 C18 19 21 20 24 21" stroke-width="1.5"/><line x1="12" y1="34" x2="36" y2="34" stroke-width="1.5"/><line x1="12" y1="37" x2="36" y2="37" stroke-width="1.5"/><line x1="5" y1="41" x2="43" y2="41" stroke-width="1.5"/></symbol>
+        </svg>
         <div class="wizard-progress" id="wizProgress">
           <div class="wizard-progress-bar active"></div>
+          <div class="wizard-progress-bar"></div>
+          <div class="wizard-progress-bar"></div>
+          <div class="wizard-progress-bar"></div>
+          <div class="wizard-progress-bar"></div>
+          <div class="wizard-progress-bar"></div>
+          <div class="wizard-progress-bar"></div>
           <div class="wizard-progress-bar"></div>
           <div class="wizard-progress-bar"></div>
           <div class="wizard-progress-bar"></div>
@@ -147,72 +169,77 @@
           <div class="wizard-question">Was für ein Gebäude hast du?</div>
           <div class="wizard-hint">Der Gebäudetyp bestimmt den Heizleistungsbedarf.</div>
           <div class="wizard-options" id="wzGebaeude">
-            <div class="wizard-option" data-value="efh"><div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M6 24L24 8l18 16"/><path d="M10 22v18h28V22"/><rect x="19" y="30" width="10" height="10"/></svg></div><span class="opt-body"><div class="opt-title">Einfamilienhaus</div><div class="opt-sub">Freistehend</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-            <div class="wizard-option" data-value="dhh"><div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M4 24L15 14l9 8 9-8 11 10"/><path d="M8 22v18h16V22"/><path d="M24 22v18h16V22"/><path d="M24 22v18" stroke-dasharray="3 2"/><rect x="13" y="30" width="6" height="10"/><rect x="29" y="30" width="6" height="10"/></svg></div><span class="opt-body"><div class="opt-title">Doppelhaushälfte</div><div class="opt-sub">Geteilte Wand</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-            <div class="wizard-option" data-value="rh" id="wzRhOption"><div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M2 24L10 17l7 5 7-5 7 5 7-5 8 7"/><path d="M5 22v18h10V22"/><path d="M15 22v18h8V22"/><path d="M23 22v18h10V22"/><path d="M33 22v18h10V22"/><rect x="8" y="30" width="4" height="10"/><rect x="17" y="30" width="4" height="10"/><rect x="26" y="30" width="4" height="10"/><rect x="36" y="30" width="4" height="10"/></svg></div><span class="opt-body"><div class="opt-title">Reihenhaus</div><div class="opt-sub">Mittel-/Endhaus</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-            <div class="wizard-option" data-value="zfh"><div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M6 22L24 8l18 14"/><path d="M10 20v22h28V20"/><path d="M10 31h28"/><rect x="18" y="34" width="12" height="8"/><rect x="18" y="22" width="12" height="7"/></svg></div><span class="opt-body"><div class="opt-title">Zweifamilienhaus</div><div class="opt-sub">2 Wohneinheiten</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-            <div class="wizard-option" data-value="mfh"><div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M8 42V10h32v32"/><path d="M8 10L24 4l16 6"/><rect x="13" y="15" width="5" height="5"/><rect x="22" y="15" width="5" height="5"/><rect x="31" y="15" width="5" height="5"/><rect x="13" y="24" width="5" height="5"/><rect x="22" y="24" width="5" height="5"/><rect x="31" y="24" width="5" height="5"/><rect x="13" y="33" width="5" height="5"/><rect x="22" y="33" width="5" height="5"/><rect x="31" y="33" width="5" height="5"/></svg></div><span class="opt-body"><div class="opt-title">Mehrfamilienhaus</div><div class="opt-sub">3+ Wohneinheiten</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="efh"><span class="opt-icon"><svg viewBox="0 0 48 48"><path d="M6 24L24 8l18 16"/><path d="M10 22v18h28V22"/><rect x="19" y="30" width="10" height="10"/></svg></span><span class="opt-body"><div class="opt-title">Einfamilienhaus</div><div class="opt-sub">Freistehend</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="dhh"><span class="opt-icon"><svg viewBox="0 0 48 48"><path d="M4 24L15 14l9 8 9-8 11 10"/><path d="M8 22v18h16V22"/><path d="M24 22v18h16V22"/><path d="M24 22v18" stroke-dasharray="3 2"/><rect x="13" y="30" width="6" height="10"/><rect x="29" y="30" width="6" height="10"/></svg></span><span class="opt-body"><div class="opt-title">Doppelhaushälfte</div><div class="opt-sub">Geteilte Wand</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="rh" id="wzRhOption"><span class="opt-icon"><svg viewBox="0 0 48 48"><path d="M2 24L10 17l7 5 7-5 7 5 7-5 8 7"/><path d="M5 22v18h10V22"/><path d="M15 22v18h8V22"/><path d="M23 22v18h10V22"/><path d="M33 22v18h10V22"/><rect x="8" y="30" width="4" height="10"/><rect x="17" y="30" width="4" height="10"/><rect x="26" y="30" width="4" height="10"/><rect x="36" y="30" width="4" height="10"/></svg></span><span class="opt-body"><div class="opt-title">Reihenhaus</div><div class="opt-sub">Mittel-/Endhaus</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="zfh"><span class="opt-icon"><svg viewBox="0 0 48 48"><path d="M6 22L24 8l18 14"/><path d="M10 20v22h28V20"/><path d="M10 31h28"/><rect x="18" y="34" width="12" height="8"/><rect x="18" y="22" width="12" height="7"/></svg></span><span class="opt-body"><div class="opt-title">Zweifamilienhaus</div><div class="opt-sub">2 Wohneinheiten</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="mfh"><span class="opt-icon"><svg viewBox="0 0 48 48"><path d="M8 42V10h32v32"/><path d="M8 10L24 4l16 6"/><rect x="13" y="15" width="5" height="5"/><rect x="22" y="15" width="5" height="5"/><rect x="31" y="15" width="5" height="5"/><rect x="13" y="24" width="5" height="5"/><rect x="22" y="24" width="5" height="5"/><rect x="31" y="24" width="5" height="5"/><rect x="13" y="33" width="5" height="5"/><rect x="22" y="33" width="5" height="5"/><rect x="31" y="33" width="5" height="5"/></svg></span><span class="opt-body"><div class="opt-title">Mehrfamilienhaus</div><div class="opt-sub">3+ Wohneinheiten</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
           </div>
           <!-- Reihenhaus Unterfrage -->
           <div id="wzRhSub" style="display:none;margin-top:16px;">
             <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:10px;">Um welchen Reihenhaus-Typ handelt es sich?</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
               <div class="wizard-option" data-value="rh-end" id="wzRhEnd" style="margin:0;">
-                <div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M6 24L16 15l8 6 8-6 10 9"/><path d="M10 22v18h12V22"/><path d="M22 22v18h10V22"/><path d="M32 22v18h6V22"/><rect x="14" y="30" width="5" height="10"/></svg></div>
+
                 <div class="opt-title">Endhaus</div>
                 <div class="opt-sub">Mindestens eine freie Seite</div>
               </div>
               <div class="wizard-option" data-value="rh-mitte" id="wzRhMitte" style="margin:0;">
-                <div class="opt-icon"><svg viewBox="0 0 48 48"><path d="M2 24L10 17l7 5 7-5 7 5 7-5 8 7"/><path d="M5 22v18h10V22"/><path d="M15 22v18h8V22"/><path d="M23 22v18h10V22"/><path d="M33 22v18h10V22"/><rect x="17" y="30" width="4" height="10" fill="none" stroke-width="2"/></svg></div>
+
                 <div class="opt-title">Mittelhaus</div>
                 <div class="opt-sub">Beidseitig angebaut</div>
               </div>
             </div>
           </div>
-          <!-- Reihen-Mittelhaus Absage -->
-          <div id="wzRhAbsage" style="display:none;margin-top:16px;background:rgba(232,168,56,0.08);border:2px solid var(--bernstein);border-radius:12px;padding:24px;">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--bernstein)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              <span style="color:var(--bernstein);font-weight:700;font-size:16px;">Aktuell leider nicht umsetzbar</span>
-            </div>
-            <p style="color:var(--white);font-size:14px;line-height:1.7;margin:0 0 12px 0;">Bei einem <strong>Reihen-Mittelhaus</strong> können wir derzeit leider keine Wärmepumpe installieren. Der Grund: Unsere Wärmepumpen (Wolf CHA, R290) benötigen bestimmte Mindestabstände zur Grundstücksgrenze. Sowohl wegen der Abstandsflächenverordnung als auch wegen der Schallschutzanforderungen. Bei einem beidseitig angebauten Mittelhaus lassen sich diese Abstände in der Regel nicht einhalten.</p>
-            <p style="color:var(--g300);font-size:13px;line-height:1.6;margin:0 0 16px 0;">Sobald leisere Geräte oder Split-Varianten mit R290 verfügbar werden, erweitern wir unser Portfolio. Wir informieren dich gern, wenn sich hier etwas ändert.</p>
-            <p style="color:var(--white);font-size:14px;line-height:1.7;margin:0 0 16px 0;">Du interessierst dich für eine <strong>Klimaanlage</strong> oder <strong>Photovoltaikanlage</strong>? Dann melde dich trotzdem. Wir beraten dich gern.</p>
-            <a href="/kontakt" class="btn-primary" onclick="if(typeof hbspt!=='undefined'){/* HubSpot: Mittelhaus + PV/Klima-Interesse */}" style="display:inline-flex;font-size:14px;padding:10px 24px;">Trotzdem Kontakt aufnehmen</a>
-            <span style="color:var(--g400);font-size:12px;margin-left:12px;">Klimaanlage, Photovoltaik oder Rückfragen</span>
-          </div>
           <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()" id="wzStep2Next">Weiter</button></div>
         </div>
 
-        <!-- Step 3: Baujahr -->
+        <!-- Step 3: Baujahr, Fassung 7 -->
         <div class="wizard-step" data-step="3">
           <div class="wizard-question">Wann wurde dein Haus gebaut?</div>
-          <div class="wizard-hint">Das Baujahr beeinflusst den Dämmstandard und damit den Energiebedarf.</div>
-          <div class="wizard-options" id="wzBaujahr">
-            <div class="wizard-option" data-value="vor1978"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path vector-effect="non-scaling-stroke" d="M3 21l18 0"/><path vector-effect="non-scaling-stroke" d="M4 21v-11l2.5 -4.5l5.5 -2.5l5.5 2.5l2.5 4.5v11"/><path vector-effect="non-scaling-stroke" d="M10 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path vector-effect="non-scaling-stroke" d="M9 21v-5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v5"/></svg></div><span class="opt-body"><div class="opt-title">Vor 1978</div><div class="opt-sub">Meist ungedämmt, hoher Energiebedarf</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-            <div class="wizard-option" data-value="1978-1994"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path vector-effect="non-scaling-stroke" d="M5 12l-2 0l9 -9l9 9l-2 0"/><path vector-effect="non-scaling-stroke" d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path vector-effect="non-scaling-stroke" d="M10 12h4v4h-4l0 -4"/></svg></div><span class="opt-body"><div class="opt-title">1978 bis 1994</div><div class="opt-sub">Erste Dämmvorschriften, mittlerer Bedarf</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-            <div class="wizard-option" data-value="1995-2010"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path vector-effect="non-scaling-stroke" d="M3 21l18 0"/><path vector-effect="non-scaling-stroke" d="M9 8l1 0"/><path vector-effect="non-scaling-stroke" d="M9 12l1 0"/><path vector-effect="non-scaling-stroke" d="M9 16l1 0"/><path vector-effect="non-scaling-stroke" d="M14 8l1 0"/><path vector-effect="non-scaling-stroke" d="M14 12l1 0"/><path vector-effect="non-scaling-stroke" d="M14 16l1 0"/><path vector-effect="non-scaling-stroke" d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16"/></svg></div><span class="opt-body"><div class="opt-title">1995 bis 2010</div><div class="opt-sub">Gute Dämmung, niedriger Bedarf</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-            <div class="wizard-option" data-value="nach2010"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path vector-effect="non-scaling-stroke" d="M3 21l18 0"/><path vector-effect="non-scaling-stroke" d="M5 21v-14l8 -4v18"/><path vector-effect="non-scaling-stroke" d="M19 21v-10l-6 -4"/><path vector-effect="non-scaling-stroke" d="M9 9l0 .01"/><path vector-effect="non-scaling-stroke" d="M9 12l0 .01"/><path vector-effect="non-scaling-stroke" d="M9 15l0 .01"/><path vector-effect="non-scaling-stroke" d="M9 18l0 .01"/></svg></div><span class="opt-body"><div class="opt-title">Nach 2010</div><div class="opt-sub">Sehr gute Dämmung, geringster Bedarf</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+          <div class="wizard-hint">Das Baujahr bestimmt den Ausgangszustand von Wänden, Dach und Fenstern. Wähle die Zeitspanne, in der dein Haus errichtet wurde, nicht die einer späteren Sanierung.</div>
+          <div class="seg-toggle wz-baujahr-toggle" id="wzBaujahrModus" role="group" aria-label="Art der Baujahresangabe">
+            <button type="button" class="active" data-mode="jahr" aria-pressed="true">Baujahr angeben</button>
+            <button type="button" data-mode="spanne" aria-pressed="false">Zeitspanne wählen</button>
+          </div>
+          <div class="wz-year-field" id="wzBaujahrJahr">
+            <label for="wzBaujahrEingabe">Baujahr</label>
+            <input class="wz-year-input" type="number" id="wzBaujahrEingabe" value="1960" min="1800" max="2026" inputmode="numeric">
+            <div class="wz-baujahr-echo" id="wzBaujahrEcho" aria-live="polite">Eingeordnet als: 1958 bis 1968</div>
+          </div>
+          <div id="wzBaujahrSpanne" hidden>
+            <div class="wizard-options" id="wzBaujahr">
+            <div class="wizard-option" data-value="bis1918"><span class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path vector-effect="non-scaling-stroke" d="M3 21l18 0"/><path vector-effect="non-scaling-stroke" d="M4 21v-11l2.5 -4.5l5.5 -2.5l5.5 2.5l2.5 4.5v11"/><path vector-effect="non-scaling-stroke" d="M10 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path vector-effect="non-scaling-stroke" d="M9 21v-5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v5"/></svg></span><span class="opt-body"><div class="opt-title">Bis 1918</div><div class="opt-sub">Massives Mauerwerk, meist Vollziegel</div></span></div>
+            <div class="wizard-option" data-value="1919-1948"><span class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path vector-effect="non-scaling-stroke" d="M3 21l18 0"/><path vector-effect="non-scaling-stroke" d="M4 21v-11l2.5 -4.5l5.5 -2.5l5.5 2.5l2.5 4.5v11"/><path vector-effect="non-scaling-stroke" d="M10 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path vector-effect="non-scaling-stroke" d="M9 21v-5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v5"/></svg></span><span class="opt-body"><div class="opt-title">1919 bis 1948</div><div class="opt-sub">Vollziegel, oft schon schlanker gemauert</div></span></div>
+            <div class="wizard-option" data-value="1949-1957"><span class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path vector-effect="non-scaling-stroke" d="M3 21l18 0"/><path vector-effect="non-scaling-stroke" d="M4 21v-11l2.5 -4.5l5.5 -2.5l5.5 2.5l2.5 4.5v11"/><path vector-effect="non-scaling-stroke" d="M10 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path vector-effect="non-scaling-stroke" d="M9 21v-5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v5"/></svg></span><span class="opt-body"><div class="opt-title">1949 bis 1957</div><div class="opt-sub">Sparsame Bauweise, dünnere Außenwände</div></span></div>
+            <div class="wizard-option selected" data-value="1958-1968"><span class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path vector-effect="non-scaling-stroke" d="M5 12l-2 0l9 -9l9 9l-2 0"/><path vector-effect="non-scaling-stroke" d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path vector-effect="non-scaling-stroke" d="M10 12h4v4h-4l0 -4"/></svg></span><span class="opt-body"><div class="opt-title">1958 bis 1968</div><div class="opt-sub">Hohlblock- und Hochlochziegel, meist ungedämmt</div></span></div>
+            <div class="wizard-option" data-value="1969-1978"><span class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path vector-effect="non-scaling-stroke" d="M5 12l-2 0l9 -9l9 9l-2 0"/><path vector-effect="non-scaling-stroke" d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path vector-effect="non-scaling-stroke" d="M10 12h4v4h-4l0 -4"/></svg></span><span class="opt-body"><div class="opt-title">1969 bis 1978</div><div class="opt-sub">Erste Dämmungen, noch ohne Vorschrift</div></span></div>
+            <div class="wizard-option" data-value="1979-1983"><span class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path vector-effect="non-scaling-stroke" d="M5 12l-2 0l9 -9l9 9l-2 0"/><path vector-effect="non-scaling-stroke" d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path vector-effect="non-scaling-stroke" d="M10 12h4v4h-4l0 -4"/></svg></span><span class="opt-body"><div class="opt-title">1979 bis 1983</div><div class="opt-sub">Erste Dämmvorschrift</div></span></div>
+            <div class="wizard-option" data-value="1984-1994"><span class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path vector-effect="non-scaling-stroke" d="M3 21l18 0"/><path vector-effect="non-scaling-stroke" d="M9 8l1 0"/><path vector-effect="non-scaling-stroke" d="M9 12l1 0"/><path vector-effect="non-scaling-stroke" d="M9 16l1 0"/><path vector-effect="non-scaling-stroke" d="M14 8l1 0"/><path vector-effect="non-scaling-stroke" d="M14 12l1 0"/><path vector-effect="non-scaling-stroke" d="M14 16l1 0"/><path vector-effect="non-scaling-stroke" d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16"/></svg></span><span class="opt-body"><div class="opt-title">1984 bis 1994</div><div class="opt-sub">Dämmvorschrift nachgeschärft</div></span></div>
+            <div class="wizard-option" data-value="1995-2010"><span class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path vector-effect="non-scaling-stroke" d="M3 21l18 0"/><path vector-effect="non-scaling-stroke" d="M9 8l1 0"/><path vector-effect="non-scaling-stroke" d="M9 12l1 0"/><path vector-effect="non-scaling-stroke" d="M9 16l1 0"/><path vector-effect="non-scaling-stroke" d="M14 8l1 0"/><path vector-effect="non-scaling-stroke" d="M14 12l1 0"/><path vector-effect="non-scaling-stroke" d="M14 16l1 0"/><path vector-effect="non-scaling-stroke" d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16"/></svg></span><span class="opt-body"><div class="opt-title">1995 bis 2010</div><div class="opt-sub">Wärmeschutz deutlich verschärft</div></span></div>
+            <div class="wizard-option" data-value="nach2010"><span class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path vector-effect="non-scaling-stroke" d="M3 21l18 0"/><path vector-effect="non-scaling-stroke" d="M5 21v-14l8 -4v18"/><path vector-effect="non-scaling-stroke" d="M19 21v-10l-6 -4"/><path vector-effect="non-scaling-stroke" d="M9 9l0 .01"/><path vector-effect="non-scaling-stroke" d="M9 12l0 .01"/><path vector-effect="non-scaling-stroke" d="M9 15l0 .01"/><path vector-effect="non-scaling-stroke" d="M9 18l0 .01"/></svg></span><span class="opt-body"><div class="opt-title">Nach 2010</div><div class="opt-sub">Heutiger Dämmstandard</div></span></div>
+            </div>
           </div>
           <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
         </div>
 
-        <!-- Step 4: Sanierung -->
+        <!-- Step 4: Bauteile. Die genaue bauteilweise Rechnung bleibt Teil A und ist nicht gebaut. -->
         <div class="wizard-step" data-step="4">
-          <div class="wizard-question">Wurde dein Haus nachträglich saniert?</div>
-          <div class="wizard-hint">Sanierte Altbauten brauchen deutlich weniger Heizleistung als unsanierte.</div>
-          <div class="wizard-options" id="wzSanierung">
-            <div class="wizard-option" data-value="nein"><span class="opt-body"><div class="opt-title">Nein / Weiß ich nicht</div><div class="opt-sub">Originalzustand, keine wesentlichen Änderungen</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-            <div class="wizard-option" data-value="teilweise"><span class="opt-body"><div class="opt-title">Teilweise saniert</div><div class="opt-sub">Z. B. neue Fenster oder Dach gedämmt</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-            <div class="wizard-option" data-value="umfassend"><span class="opt-body"><div class="opt-title">Umfassend saniert</div><div class="opt-sub">Dach, Fassade und Fenster erneuert</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+          <div class="wizard-question">Was wurde an deinem Haus schon erneuert?</div>
+          <div class="wizard-hint">Vier kurze Auswahlen. Unter jeder Auswahl steht, was wir darunter verstehen.</div>
+          <div id="wzBauteile" class="wz-renovation-list">
+            <div class="wz-renovation-item"><div class="wz-renovation-label"><svg aria-hidden="true"><use href="#wz-i-dach"/></svg><label for="wzDach">Dach</label></div><select class="wz-renovation-select" id="wzDach"><option value="0">Keine Sanierung</option><option value="1">Übliche Sanierung</option><option value="2">Tiefgreifende Sanierung</option></select><div class="wz-renovation-help" id="wzDachHelp" aria-live="polite">Steildach mit 5 cm Dämmung</div></div>
+            <div class="wz-renovation-item"><div class="wz-renovation-label"><svg aria-hidden="true"><use href="#wz-i-fenster"/></svg><label for="wzFenster">Fenster</label></div><select class="wz-renovation-select" id="wzFenster"><option value="0">Keine Sanierung</option><option value="1">Übliche Sanierung</option><option value="2">Tiefgreifende Sanierung</option></select><div class="wz-renovation-help" id="wzFensterHelp" aria-live="polite">Holzfenster mit Zweischeiben-Isolierverglasung</div></div>
+            <div class="wz-renovation-item"><div class="wz-renovation-label"><svg aria-hidden="true"><use href="#wz-i-wand"/></svg><label for="wzWand">Wände</label></div><select class="wz-renovation-select" id="wzWand"><option value="0">Keine Sanierung</option><option value="1">Übliche Sanierung</option><option value="2">Tiefgreifende Sanierung</option></select><div class="wz-renovation-help" id="wzWandHelp" aria-live="polite">Mauerwerk ohne Dämmung</div></div>
+            <div class="wz-renovation-item"><div class="wz-renovation-label"><svg aria-hidden="true"><use href="#wz-i-boden"/></svg><label for="wzBoden">Boden an Erdreich angrenzend</label></div><select class="wz-renovation-select" id="wzBoden"><option value="0">Keine Sanierung</option><option value="1">Übliche Sanierung</option><option value="2">Tiefgreifende Sanierung</option></select><div class="wz-renovation-help" id="wzBodenHelp" aria-live="polite">Betondecke mit etwa 1 cm Dämmung</div></div>
           </div>
           <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
         </div>
 
         <!-- Step 5: Wohnfläche -->
         <div class="wizard-step" data-step="5">
-          <div class="wizard-question">Wie groß ist deine Wohnfläche?</div>
-          <div class="wizard-hint">Die beheizte Fläche bestimmt zusammen mit dem Dämmstandard die nötige Heizleistung.</div>
+          <div class="wizard-question">Wie groß ist deine beheizte Wohnfläche?</div>
+          <div class="wizard-hint">Ohne Keller und Garage, sofern sie nicht beheizt werden.</div>
           <div class="wizard-slider-group">
             <label>Wohnfläche <span class="ws-val" id="wzFlaeVal">140 m²</span></label>
             <input type="range" id="wzFlaeche" min="60" max="800" step="10" value="140">
@@ -220,33 +247,64 @@
           <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
         </div>
 
-        <!-- Step 6: Aktuelle Heizung -->
+        <!-- Step 6: Aktuelle Heizung, Fassung 7 -->
         <div class="wizard-step" data-step="6">
           <div class="wizard-question">Was heizt du aktuell?</div>
-          <div class="wizard-hint">Bestimmt den Klimabonus (aktuell +16%) bei der Förderung.</div>
-          <div style="background:rgba(232,168,56,0.12);border-radius:10px;padding:14px 18px;margin-bottom:16px;">
-            <p style="font-size:13px;color:var(--white);margin:0 0 6px 0;"><strong style="color:var(--bernstein);">Was ist der Klimabonus?</strong></p>
-            <p style="font-size:12px;color:var(--g300);margin:0 0 6px 0;">Ein Extra-Zuschuss der KfW für den Umstieg von fossilen Heizungen, aktuell <strong>+16%</strong> für Anträge vom 21.07.2026 bis 31.01.2027. Bei <strong>Gasheizungen</strong> gilt: nur wenn die Heizung <strong>mindestens 20 Jahre alt</strong> ist (tagesgenau). Öl, Nachtspeicher und Gas-Etagenheizungen bekommen den Bonus <em>unabhängig vom Alter</em>, müssen aber funktionsfähig sein.</p>
-            <p style="font-size:12px;color:var(--g300);margin:0 0 6px 0;">Der Bonus wird über die Zeit weniger: Er sinkt zu jedem Halbjahres-Stichtag um 4 Punkte (12% ab 01.02.2027, 8% ab 01.08.2027, 4% ab 01.02.2028) und entfällt für Anträge ab dem 01.08.2028. Entscheidend ist, wann dein Antrag gestellt wird.</p>
-            <p style="font-size:12px;color:var(--g400);margin:0;"><strong>Tipp:</strong> Das Alter findest du auf dem Typenschild oder im letzten Wartungsprotokoll.</p>
-          </div>
+          <div class="wizard-hint">Die Antwort bestimmt die Einheit deiner Verbrauchsangabe und die Technik, nach der wir rechnen.</div>
           <div class="wizard-options" id="wzHeizung">
-            <div class="wizard-option" data-value="gas-old"><div class="opt-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><!-- Therme Gehäuse --><rect x="9" y="7" width="30" height="32" rx="3"/><rect x="13" y="11" width="13" height="9" rx="2"/><!-- Flamme --><path d="M18 20c0-2 1.5-3 1.5-5 .8 1.5 2.5 3 2.5 5"/><!-- Regler --><circle cx="33" cy="14" r="2.5"/><circle cx="33" cy="22" r="2.5"/><!-- Verbindungsrohre unten --><line x1="17" y1="39" x2="17" y2="43"/><line x1="31" y1="39" x2="31" y2="43"/><line x1="9" y1="39" x2="39" y2="39"/></svg></div><div class="opt-body"><div class="opt-title">Gasheizung</div><div class="opt-sub" style="font-size:12px;">20 Jahre oder älter</div><div class="opt-sub opt-bonus" style="color:var(--green);">+16% Klimabonus</div></div><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-            <div class="wizard-option" data-value="gas-new"><div class="opt-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><!-- Therme Gehäuse --><rect x="9" y="7" width="30" height="32" rx="3"/><rect x="13" y="11" width="13" height="9" rx="2"/><!-- Flamme --><path d="M18 20c0-2 1.5-3 1.5-5 .8 1.5 2.5 3 2.5 5"/><!-- Regler --><circle cx="33" cy="14" r="2.5"/><circle cx="33" cy="22" r="2.5"/><!-- Verbindungsrohre unten --><line x1="17" y1="39" x2="17" y2="43"/><line x1="31" y1="39" x2="31" y2="43"/><line x1="9" y1="39" x2="39" y2="39"/></svg></div><div class="opt-body"><div class="opt-title">Gasheizung</div><div class="opt-sub" style="font-size:12px;">Jünger als 20 Jahre</div><div class="opt-sub opt-bonus" style="color:var(--g400);">Kein Klimabonus</div></div><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-            <div class="wizard-option" data-value="oel"><div class="opt-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><!-- Öltank liegend --><rect x="5" y="16" width="38" height="22" rx="11"/><line x1="43" y1="27" x2="48" y2="27"/><!-- Füllstutzen oben --><rect x="19" y="10" width="6" height="7" rx="1"/><line x1="22" y1="10" x2="22" y2="7"/><!-- Öl-Tropfen Füllstand --><path d="M18 31c0-3 2-5 2-7 1 2 2 4 2 7a2 2 0 01-4 0z"/></svg></div><div class="opt-body"><div class="opt-title">Ölheizung</div><div class="opt-sub" style="font-size:12px;color:var(--g400);">Egal wie alt</div><div class="opt-sub opt-bonus" style="color:var(--green);">+16% Klimabonus</div></div><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-            <div class="wizard-option" data-value="nachtspeicher"><div class="opt-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><polyline points="26 6 18 26 26 26 22 42 30 22 22 22 26 6"/></svg></div><div class="opt-body"><div class="opt-title">Nachtspeicher</div><div class="opt-sub" style="font-size:12px;color:var(--g400);">Egal wie alt</div><div class="opt-sub opt-bonus" style="color:var(--green);">+16% Klimabonus</div></div><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-            <div class="wizard-option" data-value="gas-etage"><div class="opt-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><!-- Therme Gehäuse --><rect x="9" y="7" width="30" height="32" rx="3"/><rect x="13" y="11" width="13" height="9" rx="2"/><!-- Flamme --><path d="M18 20c0-2 1.5-3 1.5-5 .8 1.5 2.5 3 2.5 5"/><!-- Regler --><circle cx="33" cy="14" r="2.5"/><circle cx="33" cy="22" r="2.5"/><!-- Verbindungsrohre unten --><line x1="17" y1="39" x2="17" y2="43"/><line x1="31" y1="39" x2="31" y2="43"/><line x1="9" y1="39" x2="39" y2="39"/></svg></div><div class="opt-body"><div class="opt-title">Gas-Etagenheizung</div><div class="opt-sub" style="font-size:12px;">Einzelne Gasthermen je Wohnung</div><div class="opt-sub opt-bonus" style="color:var(--green);">+16% Klimabonus</div></div><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-            <div class="wizard-option" data-value="sonstige"><div class="opt-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="18"/><path d="M18 19a6 6 0 1 1 9 5.2c-2 1.2-3 2.5-3 4.8"/><line x1="24" y1="35" x2="24" y2="35.5"/></svg></div><div class="opt-body"><div class="opt-title">Sonstige / Weiß nicht</div><div class="opt-sub opt-bonus" style="color:var(--g400);">Kein Klimabonus</div></div><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option selected" data-value="gas"><span class="opt-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><!-- Therme Gehäuse --><rect x="9" y="7" width="30" height="32" rx="3"/><rect x="13" y="11" width="13" height="9" rx="2"/><!-- Flamme --><path d="M18 20c0-2 1.5-3 1.5-5 .8 1.5 2.5 3 2.5 5"/><!-- Regler --><circle cx="33" cy="14" r="2.5"/><circle cx="33" cy="22" r="2.5"/><!-- Verbindungsrohre unten --><line x1="17" y1="39" x2="17" y2="43"/><line x1="31" y1="39" x2="31" y2="43"/><line x1="9" y1="39" x2="39" y2="39"/></svg></span><span class="opt-body"><div class="opt-title">Gasheizung</div></span></div>
+            <div class="wizard-option" data-value="oel"><span class="opt-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><!-- Öltank liegend --><rect x="5" y="16" width="38" height="22" rx="11"/><line x1="43" y1="27" x2="48" y2="27"/><!-- Füllstutzen oben --><rect x="19" y="10" width="6" height="7" rx="1"/><line x1="22" y1="10" x2="22" y2="7"/><!-- Öl-Tropfen Füllstand --><path d="M18 31c0-3 2-5 2-7 1 2 2 4 2 7a2 2 0 01-4 0z"/></svg></span><span class="opt-body"><div class="opt-title">Ölheizung</div></span></div>
+            <div class="wizard-option" data-value="gasetage"><span class="opt-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><!-- Therme Gehäuse --><rect x="9" y="7" width="30" height="32" rx="3"/><rect x="13" y="11" width="13" height="9" rx="2"/><!-- Flamme --><path d="M18 20c0-2 1.5-3 1.5-5 .8 1.5 2.5 3 2.5 5"/><!-- Regler --><circle cx="33" cy="14" r="2.5"/><circle cx="33" cy="22" r="2.5"/><!-- Verbindungsrohre unten --><line x1="17" y1="39" x2="17" y2="43"/><line x1="31" y1="39" x2="31" y2="43"/><line x1="9" y1="39" x2="39" y2="39"/></svg></span><span class="opt-body"><div class="opt-title">Gas-Etagenheizung</div></span></div>
+            <div class="wizard-option" data-value="nacht"><span class="opt-icon"><svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><polyline points="26 6 18 26 26 26 22 42 30 22 22 22 26 6"/></svg></span><span class="opt-body"><div class="opt-title">Nachtspeicherheizung</div><div class="opt-sub">Strom</div></span></div>
+            <div class="wizard-option" data-value="sonst"><span class="opt-icon"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="18"/><path d="M18 19a6 6 0 1 1 9 5.2c-2 1.2-3 2.5-3 4.8"/><line x1="24" y1="35" x2="24" y2="35.5"/></svg></span><span class="opt-body"><div class="opt-title">Etwas anderes</div><div class="opt-sub">Fernwärme, Pellet, Wärmepumpe</div></span></div>
           </div>
           <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
         </div>
 
-        <!-- Step 7: Heizsystem -->
+        <!-- Step 7: Andere Bestandsheizung -->
         <div class="wizard-step" data-step="7">
-          <div class="wizard-question">Wie wird heute geheizt?</div>
-          <div class="wizard-hint">Das beeinflusst die passende Vorlauftemperatur und damit die Geräteauswahl.</div>
+          <div class="wizard-question">Was genau heizt bei dir?</div>
+          <div class="wizard-hint">Diese Möglichkeiten arbeiten völlig verschieden. Nur mit deiner Antwort können wir aus deinem Verbrauch die richtige Wärmemenge errechnen.</div>
+          <div class="wizard-options" id="wzAndereHeizung">
+            <div class="wizard-option selected" data-value="fernwaerme"><span class="opt-body"><div class="opt-title">Fernwärme</div><div class="opt-sub">Die Wärme kommt fertig ins Haus, im Keller steht nur eine Übergabestation.</div></span></div>
+            <div class="wizard-option" data-value="pellet"><span class="opt-body"><div class="opt-title">Pellet- oder Holzheizung</div><div class="opt-sub">Ein Kessel, der Holzpellets oder Scheitholz verbrennt.</div></span></div>
+            <div class="wizard-option" data-value="waermepumpe"><span class="opt-body"><div class="opt-title">Wärmepumpe</div><div class="opt-sub">Du hast schon eine und möchtest sie ersetzen oder ergänzen.</div></span></div>
+            <div class="wizard-option" data-value="unklar"><span class="opt-body"><div class="opt-title">Weiß ich nicht</div><div class="opt-sub">Wir rechnen vorsichtig und klären es beim Termin vor Ort.</div></span></div>
+          </div>
+          <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
+        </div>
+
+        <!-- Step 8: Abgasrohr -->
+        <div class="wizard-step" data-step="8">
+          <div class="wizard-question">Schau auf das Abgasrohr deiner Heizung: Ist es aus Metall oder aus Kunststoff?</div>
+          <div class="wizard-hint">Das Rohr verrät die Technik, und die entscheidet, wie viel von deinem Brennstoff wirklich als Wärme im Haus ankommt.</div>
+          <div class="wizard-options" id="wzAbgasrohr">
+            <div class="wizard-option" data-value="metall"><span class="opt-body"><div class="opt-title">Metall-Abgasrohr</div><div class="opt-sub">Heizwert-Technik. Das Abgas bleibt heiß und geht mit seiner Feuchte durch den Schornstein.</div></span></div>
+            <div class="wizard-option selected" data-value="kunststoff"><span class="opt-body"><div class="opt-title">Kunststoff-Abgasrohr</div><div class="opt-sub">Brennwert-Technik. Das Abgas wird so weit abgekühlt, dass es kondensiert, dadurch bleibt mehr Wärme im Haus.</div></span></div>
+            <div class="wizard-option" data-value="unklar"><span class="opt-body"><div class="opt-title">Weiß ich nicht</div><div class="opt-sub">Wir rechnen mit einem marktüblichen Mittelwert.</div></span></div>
+          </div>
+          <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
+        </div>
+
+        <!-- Step 9: Heizungsalter -->
+        <div class="wizard-step" data-step="9">
+          <div class="wizard-question">Wie alt ist deine Heizung?</div>
+          <div class="wizard-hint">Wähle, was du gerade weißt.</div>
+          <div class="wizard-options" id="wzHeizungsalter">
+            <div class="wizard-option" data-value="vor1990"><span class="opt-body"><div class="opt-title">Vor 1990</div><div class="opt-sub">Alte Heizungs-Generation</div></span></div>
+            <div class="wizard-option selected" data-value="1990-2010"><span class="opt-body"><div class="opt-title">1990 bis 2010</div><div class="opt-sub">Mittlere Generation</div></span></div>
+            <div class="wizard-option" data-value="nach2010"><span class="opt-body"><div class="opt-title">Nach 2010</div><div class="opt-sub">Junge Generation</div></span></div>
+            <div class="wizard-option" data-value="unklar"><span class="opt-body"><div class="opt-title">Weiß ich nicht</div><div class="opt-sub">Das Abgasrohr genügt uns</div></span></div>
+          </div>
+          <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
+        </div>
+
+        <!-- Step 10: Heizsystem -->
+        <div class="wizard-step" data-step="10">
+          <div class="wizard-question">Wie wird die Wärme im Haus verteilt?</div>
+          <div class="wizard-hint">Das bestimmt die nötige Vorlauftemperatur und damit die Geräteauswahl.</div>
           <div class="wizard-options" id="wzHeizsystem">
-            <div class="wizard-option" data-value="heizkoerper"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <div class="wizard-option" data-value="heizkoerper"><span class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <g transform="matrix(0.018704,0.000000,0.000000,-0.018704,-12.313582,105.007964)">
     <path vector-effect="non-scaling-stroke" d="M 1669.179688 4649.492188 L 930.664062 4649.492188 C 903.046875 4649.492188 880.664062 4671.914062 880.664062 4699.492188 L 880.664062 5122.5 C 880.664062 5150.117188 903.046875 5172.5 930.664062 5172.5 L 1669.179688 5172.5 C 1696.796875 5172.5 1719.179688 5150.117188 1719.179688 5122.5 L 1719.179688 4699.492188 C 1719.179688 4671.914062 1696.796875 4649.492188 1669.179688 4649.492188 Z M 1669.179688 4649.492188 "/>
     <path vector-effect="non-scaling-stroke" d="M 1000.46875 5090.859375 L 1000.46875 4766.875 C 1000.46875 4747.539062 1016.132812 4731.875 1035.46875 4731.875 "/>
@@ -266,8 +324,8 @@
     <path vector-effect="non-scaling-stroke" d="M 1299.921875 5367.773438 C 1299.921875 5367.773438 1325.507812 5347.96875 1299.921875 5308.28125 C 1274.335938 5268.59375 1299.921875 5248.789062 1299.921875 5248.789062 "/>
     <path vector-effect="non-scaling-stroke" d="M 1215.507812 5367.773438 C 1215.507812 5367.773438 1241.09375 5347.96875 1215.507812 5308.28125 C 1189.882812 5268.59375 1215.507812 5248.789062 1215.507812 5248.789062 "/>
   </g>
-</svg></div><span class="opt-body"><div class="opt-title">Heizkörper</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-            <div class="wizard-option" data-value="fussboden"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+</svg></span><span class="opt-body"><div class="opt-title">Heizkörper</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="fussboden"><span class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <g transform="matrix(0.019309,0.000000,0.000000,-0.019309,-13.100317,81.688490)">
     <path vector-effect="non-scaling-stroke" d="M 1338.476562 3591.640625 L 1540.039062 3475.273438 C 1562.109375 3462.539062 1562.109375 3441.835938 1540.039062 3429.0625 C 1517.890625 3416.328125 1482.070312 3416.328125 1459.960938 3429.0625 L 1139.84375 3613.90625 C 1117.773438 3626.640625 1081.914062 3626.640625 1059.84375 3613.90625 C 1037.734375 3601.132812 1037.734375 3580.46875 1059.84375 3567.695312 L 1379.960938 3382.851562 C 1402.03125 3370.117188 1402.03125 3349.414062 1379.960938 3336.640625 C 1357.851562 3323.90625 1322.03125 3323.90625 1299.921875 3336.640625 L 979.804688 3521.484375 C 957.695312 3534.257812 921.875 3534.257812 899.765625 3521.484375 "/>
     <path vector-effect="non-scaling-stroke" d="M 1319.335938 3652.1875 L 996.367188 3465.703125 "/>
@@ -280,8 +338,8 @@
     <path vector-effect="non-scaling-stroke" d="M 1180.15625 3765.820312 C 1193.007812 3763.789062 1206.210938 3761.484375 1219.765625 3758.945312 "/>
     <path vector-effect="non-scaling-stroke" d="M 1817.8125 3696.757812 L 1817.8125 3612.695312 "/>
   </g>
-</svg></div><span class="opt-body"><div class="opt-title">Fußbodenheizung</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-            <div class="wizard-option" data-value="heizkoerper"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round">
+</svg></span><span class="opt-body"><div class="opt-title">Fußbodenheizung</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option" data-value="heizkoerper"><span class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round">
   <g transform="translate(12,6.2) scale(0.56) translate(-12.0002,-13.8256)">
     <g transform="matrix(0.018704,0,0,-0.018704,-12.313582,105.007964)">
       <path vector-effect="non-scaling-stroke" d="M 1669.179688 4649.492188 L 930.664062 4649.492188 C 903.046875 4649.492188 880.664062 4671.914062 880.664062 4699.492188 L 880.664062 5122.5 C 880.664062 5150.117188 903.046875 5172.5 930.664062 5172.5 L 1669.179688 5172.5 C 1696.796875 5172.5 1719.179688 5150.117188 1719.179688 5122.5 L 1719.179688 4699.492188 C 1719.179688 4671.914062 1696.796875 4649.492188 1669.179688 4649.492188 Z M 1669.179688 4649.492188 "/>
@@ -314,59 +372,164 @@
       <path vector-effect="non-scaling-stroke" d="M 1817.8125 3696.757812 L 1817.8125 3612.695312 "/>
     </g>
   </g>
-</svg></div><span class="opt-body"><div class="opt-title">Heizkörper und Fußbodenheizung</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+</svg></span><span class="opt-body"><div class="opt-title">Heizkörper und Fußbodenheizung</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
           </div>
           <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
         </div>
 
-        <!-- Step 8: Warmwasser -->
-        <div class="wizard-step" data-step="8">
+        <!-- Step 11: Warmwasser und Personen -->
+        <div class="wizard-step" data-step="11">
           <div class="wizard-question">Soll die Wärmepumpe auch das Warmwasser machen?</div>
-          <div class="wizard-hint">Bei Ja rechnen wir serverseitig mit einem Warmwasser-Zuschlag.</div>
+          <div class="wizard-hint">Bei Ja prüfen wir, ob das Warmwasser oder die Heizung die größere Leistung verlangt.</div>
           <div class="wizard-options" id="wzWarmwasser">
-            <div class="wizard-option" data-value="ja"><div class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><g transform="matrix(0.027484,0,0,-0.027484,-110.121960,73.168608)"><path vector-effect="non-scaling-stroke" d="M 4481.054688 2388.046875 L 4481.054688 2453.515625 C 4481.054688 2471.71875 4466.210938 2486.523438 4448.046875 2486.523438 L 4185.585938 2486.523438 "/><path vector-effect="non-scaling-stroke" d="M 4194.453125 2556.523438 L 4448.046875 2556.523438 C 4504.84375 2556.523438 4551.054688 2510.3125 4551.054688 2453.515625 L 4551.054688 2388.046875 "/><path vector-effect="non-scaling-stroke" d="M 4575.585938 2328.085938 L 4575.585938 2388.046875 L 4452.695312 2388.046875 L 4452.695312 2328.085938 "/><path vector-effect="non-scaling-stroke" d="M 4697.34375 2189.335938 L 4681.367188 2300.273438 C 4679.0625 2316.25 4665.390625 2328.085938 4649.257812 2328.085938 L 4379.0625 2328.085938 C 4362.929688 2328.085938 4349.21875 2316.25 4346.914062 2300.273438 L 4330.9375 2189.335938 "/><path vector-effect="non-scaling-stroke" d="M 4140.976562 2466.601562 C 4174.0625 2466.601562 4200.9375 2493.4375 4200.9375 2526.523438 L 4200.9375 2529.53125 C 4200.9375 2562.617188 4174.0625 2589.453125 4140.976562 2589.453125 Z M 4140.976562 2466.601562 "/><path vector-effect="non-scaling-stroke" d="M 4374.765625 2129.101562 L 4374.765625 2099.882812 "/><path vector-effect="non-scaling-stroke" d="M 4374.765625 2010.039062 L 4374.765625 1980.820312 "/><path vector-effect="non-scaling-stroke" d="M 4374.765625 1891.015625 L 4374.765625 1861.757812 "/><path vector-effect="non-scaling-stroke" d="M 4467.695312 2129.101562 L 4467.695312 2099.882812 "/><path vector-effect="non-scaling-stroke" d="M 4467.695312 2010.039062 L 4467.695312 1980.820312 "/><path vector-effect="non-scaling-stroke" d="M 4467.695312 1891.015625 L 4467.695312 1861.757812 "/><path vector-effect="non-scaling-stroke" d="M 4560.625 2129.101562 L 4560.625 2099.882812 "/><path vector-effect="non-scaling-stroke" d="M 4560.625 2010.039062 L 4560.625 1980.820312 "/><path vector-effect="non-scaling-stroke" d="M 4560.625 1891.015625 L 4560.625 1861.757812 "/><path vector-effect="non-scaling-stroke" d="M 4653.554688 2129.101562 L 4653.554688 2099.882812 "/><path vector-effect="non-scaling-stroke" d="M 4653.554688 2010.039062 L 4653.554688 1980.820312 "/><path vector-effect="non-scaling-stroke" d="M 4653.554688 1891.015625 L 4653.554688 1861.757812 "/><path vector-effect="non-scaling-stroke" d="M 4278.710938 2189.335938 L 4745.78125 2189.335938 "/><path vector-effect="non-scaling-stroke" d="M 4467.695312 2258.710938 L 4687.34375 2258.710938 "/></g></svg></div><span class="opt-body"><div class="opt-title">Ja</div><div class="opt-sub">Heizung und Warmwasser über Wärmepumpe</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-            <div class="wizard-option" data-value="nein"><div class="opt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect vector-effect="non-scaling-stroke" x="4" y="18" width="16" height="3" rx="1"/><path vector-effect="non-scaling-stroke" d="M8 15c-1.2 -1 -1.2 -2.5 0 -3.5s1.2 -2.5 0 -3.5"/><path vector-effect="non-scaling-stroke" d="M12 15c-1.2 -1 -1.2 -2.5 0 -3.5s1.2 -2.5 0 -3.5"/><path vector-effect="non-scaling-stroke" d="M16 15c-1.2 -1 -1.2 -2.5 0 -3.5s1.2 -2.5 0 -3.5"/></svg></div><span class="opt-body"><div class="opt-title">Nein</div><div class="opt-sub">Nur Raumheizung</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+            <div class="wizard-option selected" data-value="ja"><span class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(0.027484,0.000000,0.000000,-0.027484,-110.121960,73.168608)">
+    <path vector-effect="non-scaling-stroke" d="M 4481.054688 2388.046875 L 4481.054688 2453.515625 C 4481.054688 2471.71875 4466.210938 2486.523438 4448.046875 2486.523438 L 4185.585938 2486.523438 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4194.453125 2556.523438 L 4448.046875 2556.523438 C 4504.84375 2556.523438 4551.054688 2510.3125 4551.054688 2453.515625 L 4551.054688 2388.046875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4575.585938 2328.085938 L 4575.585938 2388.046875 L 4452.695312 2388.046875 L 4452.695312 2328.085938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4697.34375 2189.335938 L 4681.367188 2300.273438 C 4679.0625 2316.25 4665.390625 2328.085938 4649.257812 2328.085938 L 4379.0625 2328.085938 C 4362.929688 2328.085938 4349.21875 2316.25 4346.914062 2300.273438 L 4330.9375 2189.335938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4140.976562 2466.601562 C 4174.0625 2466.601562 4200.9375 2493.4375 4200.9375 2526.523438 L 4200.9375 2529.53125 C 4200.9375 2562.617188 4174.0625 2589.453125 4140.976562 2589.453125 Z M 4140.976562 2466.601562 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4374.765625 2129.101562 L 4374.765625 2099.882812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4374.765625 2010.039062 L 4374.765625 1980.820312 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4374.765625 1891.015625 L 4374.765625 1861.757812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4467.695312 2129.101562 L 4467.695312 2099.882812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4467.695312 2010.039062 L 4467.695312 1980.820312 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4467.695312 1891.015625 L 4467.695312 1861.757812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4560.625 2129.101562 L 4560.625 2099.882812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4560.625 2010.039062 L 4560.625 1980.820312 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4560.625 1891.015625 L 4560.625 1861.757812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4653.554688 2129.101562 L 4653.554688 2099.882812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4653.554688 2010.039062 L 4653.554688 1980.820312 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4653.554688 1891.015625 L 4653.554688 1861.757812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4278.710938 2189.335938 L 4745.78125 2189.335938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4467.695312 2258.710938 L 4687.34375 2258.710938 "/>
+  </g>
+</svg></span><span class="opt-body"><div class="opt-title">Ja</div><div class="opt-sub">Heizung und Warmwasser</div></span></div>
+            <div class="wizard-option" data-value="nein"><span class="opt-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(0.023633,0.000000,0.000000,-0.023633,-128.821602,97.704593)">
+    <path vector-effect="non-scaling-stroke" d="M 5639.492188 3322.773438 L 5709.453125 3322.773438 "/>
+    <path vector-effect="non-scaling-stroke" d="M 6215.234375 3322.773438 L 6215.234375 3815.859375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 5709.453125 3815.859375 L 5709.453125 3322.773438 "/>
+    <path vector-effect="non-scaling-stroke" d="M 6278.085938 3757.773438 L 5962.34375 4049.6875 L 5646.601562 3757.773438 "/>
+    <path vector-effect="non-scaling-stroke" d="M 6215.234375 3815.859375 L 6215.234375 3995.976562 L 6116.367188 3995.976562 L 6116.367188 3907.304688 "/>
+    <path vector-effect="non-scaling-stroke" d="M 6215.234375 3322.773438 L 6270.976562 3322.773438 "/>
+    <path vector-effect="non-scaling-stroke" d="M 5803.242188 3559.101562 L 5866.601562 3622.539062 L 5929.882812 3559.296875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 5866.601562 3622.539062 L 5866.601562 3497.65625 C 5886.601562 3490.546875 5906.601562 3483.4375 5906.601562 3469.179688 C 5906.601562 3440.703125 5826.601562 3440.703125 5826.601562 3412.226562 C 5826.601562 3383.75 5906.601562 3383.75 5906.601562 3355.273438 C 5906.601562 3326.835938 5826.601562 3326.835938 5826.601562 3298.398438 C 5826.601562 3284.570312 5845.46875 3277.460938 5864.921875 3270.546875 L 5864.921875 3203.398438 "/>
+    <path vector-effect="non-scaling-stroke" d="M 6121.484375 3559.101562 L 6058.125 3622.539062 L 5994.84375 3559.296875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 6058.125 3622.539062 L 6058.125 3497.65625 C 6038.125 3490.546875 6018.125 3483.4375 6018.125 3469.179688 C 6018.125 3440.703125 6098.125 3440.703125 6098.125 3412.226562 C 6098.125 3383.75 6018.125 3383.75 6018.125 3355.273438 C 6018.125 3326.835938 6098.125 3326.835938 6098.125 3298.398438 C 6098.125 3284.570312 6079.21875 3277.460938 6059.804688 3270.546875 L 6059.804688 3203.398438 "/>
+  </g>
+</svg></span><span class="opt-body"><div class="opt-title">Nein</div><div class="opt-sub">Nur Raumheizung</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
           </div>
-          <!-- Warmwasser = Ja: Personenzahl als Auswahl-Karten (VDI 4645 - WW-Bedarf skaliert mit Personen, +0,25 kW/Person) -->
-          <div id="wzPersonen" style="display:none;margin-top:16px;">
-            <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:10px;">Wie viele Personen leben im Haushalt?</div>
-            <div class="wz-person-grid" id="wzPersonenOpts" role="group" aria-label="Personen im Haushalt">
-              <div class="wizard-option wz-person" data-value="1"><span class="opt-title">1</span><span class="opt-sub">Person</span></div>
-              <div class="wizard-option wz-person" data-value="2"><span class="opt-title">2</span><span class="opt-sub">Personen</span></div>
-              <div class="wizard-option wz-person" data-value="3"><span class="opt-title">3</span><span class="opt-sub">Personen</span></div>
-              <div class="wizard-option wz-person" data-value="4"><span class="opt-title">4</span><span class="opt-sub">Personen</span></div>
-              <div class="wizard-option wz-person" data-value="5"><span class="opt-title">5</span><span class="opt-sub">Personen</span></div>
-              <div class="wizard-option wz-person" data-value="6"><span class="opt-title">6+</span><span class="opt-sub">Personen</span></div>
-            </div>
-            <div style="font-size:12px;color:var(--g400);margin-top:8px;">Der Warmwasser-Bedarf richtet sich nach der Personenzahl, nicht nach der Wohnfläche.</div>
+          <div id="wzPersonen" class="wz-counter-card wz-counter-card-personen">
+            <span class="wz-counter-label"><span class="wz-counter-icon"><svg aria-hidden="true"><use href="#wz-i-personen"/></svg></span><span>Personen</span></span>
+            <span class="wz-counter-controls"><button type="button" class="wz-counter-button" id="wzPersonMinus" aria-label="Eine Person weniger">−</button><strong class="wz-counter-value" id="wzPersonCount">2</strong><button type="button" class="wz-counter-button" id="wzPersonPlus" aria-label="Eine Person mehr">+</button></span>
           </div>
-          <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()" id="wzWwNext">Weiter</button></div>
+          <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
         </div>
 
-        <!-- Step 9: Verbrauch -->
-        <div class="wizard-step" data-step="9">
-          <div class="wizard-question">Kennst du deinen Jahresverbrauch?</div>
-          <div class="wizard-hint">Steht auf der letzten Jahresabrechnung. Wenn nicht, schätzen wir anhand deiner Angaben.</div>
-          <div class="wizard-options" id="wzVerbrauch">
-            <div class="wizard-option" data-value="known"><span class="opt-body"><div class="opt-title">Ich kenne meinen Jahresverbrauch</div><div class="opt-sub">Eingabe in kWh, m³ oder Liter</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
-            <div class="wizard-option" data-value="unknown"><span class="opt-body"><div class="opt-title">Weiß ich nicht</div><div class="opt-sub">Wir schätzen anhand deiner Angaben</div></span><span class="opt-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+        <!-- Step 12: Gleichzeitige Zapfstellen -->
+        <div class="wizard-step" data-step="12">
+          <div class="wizard-question">Wie viele Duschen und Badewannen sollen bei euch <span style="color:var(--green);">gleichzeitig</span> laufen können?</div>
+          <div class="wizard-hint">Wir wollen wissen, wie viel Warmwasser bei euch zur selben Zeit verfügbar sein muss. Denk an den Morgen vor der Arbeit: nicht wie viele Bäder ihr habt, sondern wie viele Zapfstellen im selben Moment laufen sollen.</div>
+          <div class="wz-counter-list">
+            <div class="wz-counter-card"><span class="wz-counter-label"><span class="wz-counter-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(0.027484,0.000000,0.000000,-0.027484,-110.121960,73.168608)">
+    <path vector-effect="non-scaling-stroke" d="M 4481.054688 2388.046875 L 4481.054688 2453.515625 C 4481.054688 2471.71875 4466.210938 2486.523438 4448.046875 2486.523438 L 4185.585938 2486.523438 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4194.453125 2556.523438 L 4448.046875 2556.523438 C 4504.84375 2556.523438 4551.054688 2510.3125 4551.054688 2453.515625 L 4551.054688 2388.046875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4575.585938 2328.085938 L 4575.585938 2388.046875 L 4452.695312 2388.046875 L 4452.695312 2328.085938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4697.34375 2189.335938 L 4681.367188 2300.273438 C 4679.0625 2316.25 4665.390625 2328.085938 4649.257812 2328.085938 L 4379.0625 2328.085938 C 4362.929688 2328.085938 4349.21875 2316.25 4346.914062 2300.273438 L 4330.9375 2189.335938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4140.976562 2466.601562 C 4174.0625 2466.601562 4200.9375 2493.4375 4200.9375 2526.523438 L 4200.9375 2529.53125 C 4200.9375 2562.617188 4174.0625 2589.453125 4140.976562 2589.453125 Z M 4140.976562 2466.601562 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4374.765625 2129.101562 L 4374.765625 2099.882812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4374.765625 2010.039062 L 4374.765625 1980.820312 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4374.765625 1891.015625 L 4374.765625 1861.757812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4467.695312 2129.101562 L 4467.695312 2099.882812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4467.695312 2010.039062 L 4467.695312 1980.820312 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4467.695312 1891.015625 L 4467.695312 1861.757812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4560.625 2129.101562 L 4560.625 2099.882812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4560.625 2010.039062 L 4560.625 1980.820312 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4560.625 1891.015625 L 4560.625 1861.757812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4653.554688 2129.101562 L 4653.554688 2099.882812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4653.554688 2010.039062 L 4653.554688 1980.820312 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4653.554688 1891.015625 L 4653.554688 1861.757812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4278.710938 2189.335938 L 4745.78125 2189.335938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 4467.695312 2258.710938 L 4687.34375 2258.710938 "/>
+  </g>
+</svg></span><span>Duschen</span></span><span class="wz-counter-controls"><button type="button" class="wz-counter-button" id="wzDuschenMinus" aria-label="Eine Dusche weniger">−</button><strong class="wz-counter-value" id="wzDuschenCount">1</strong><button type="button" class="wz-counter-button" id="wzDuschenPlus" aria-label="Eine Dusche mehr">+</button></span></div>
+            <div class="wz-counter-card"><span class="wz-counter-label"><span class="wz-counter-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="matrix(0.021218,0.000000,0.000000,-0.021218,-9.786158,118.429755)">
+    <path vector-effect="non-scaling-stroke" d="M 584.140625 4556.5625 L 1491.015625 4556.5625 "/>
+    <path vector-effect="non-scaling-stroke" d="M 585.3125 4928.359375 C 585.3125 4928.359375 561.328125 4697.578125 729.257812 4556.5625 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1463.242188 4928.359375 C 1463.242188 4928.359375 1487.226562 4697.578125 1319.296875 4556.5625 "/>
+    <path vector-effect="non-scaling-stroke" d="M 841.679688 4928.359375 L 1127.890625 4928.359375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1127.890625 4998.359375 L 590.46875 4998.359375 C 571.171875 4998.359375 555.46875 4982.695312 555.46875 4963.359375 C 555.46875 4944.023438 571.171875 4928.359375 590.46875 4928.359375 L 729.257812 4928.359375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1353.203125 4928.359375 L 1463.046875 4928.359375 C 1482.382812 4928.359375 1498.046875 4944.023438 1498.046875 4963.359375 C 1498.046875 4982.695312 1482.382812 4998.359375 1463.046875 4998.359375 L 1353.203125 4998.359375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1127.890625 4826.132812 L 1353.203125 4826.132812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 641.757812 4998.359375 L 641.757812 5381.679688 C 641.757812 5433.398438 683.632812 5475.273438 735.3125 5475.273438 C 786.992188 5475.273438 828.90625 5433.398438 828.90625 5381.679688 L 828.90625 5363.828125 "/>
+    <path vector-effect="non-scaling-stroke" d="M 924.6875 5312.773438 C 903.945312 5344.453125 868.632812 5363.515625 830.78125 5363.515625 L 817.03125 5363.515625 C 779.140625 5363.515625 743.867188 5344.453125 723.125 5312.773438 L 713.710938 5298.476562 L 934.0625 5298.476562 Z M 924.6875 5312.773438 "/>
+    <path vector-effect="non-scaling-stroke" d="M 766.679688 5207.851562 L 766.679688 5157.695312 "/>
+    <path vector-effect="non-scaling-stroke" d="M 828.90625 5257.851562 L 828.90625 5207.695312 "/>
+    <path vector-effect="non-scaling-stroke" d="M 891.09375 5207.851562 L 891.09375 5157.695312 "/>
+    <path vector-effect="non-scaling-stroke" d="M 766.679688 5100.78125 L 766.679688 5050.585938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 828.90625 5150.78125 L 828.90625 5100.585938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 891.09375 5100.78125 L 891.09375 5050.585938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1353.203125 4754.21875 L 1127.890625 4754.21875 L 1127.890625 5040.585938 L 1353.203125 5040.585938 Z M 1353.203125 4754.21875 "/>
+  </g>
+</svg></span><span>Badewannen</span></span><span class="wz-counter-controls"><button type="button" class="wz-counter-button" id="wzWannenMinus" aria-label="Eine Badewanne weniger">−</button><strong class="wz-counter-value" id="wzWannenCount">1</strong><button type="button" class="wz-counter-button" id="wzWannenPlus" aria-label="Eine Badewanne mehr">+</button></span></div>
           </div>
-          <div id="wzVerbrauchInput" style="display:none; margin-top: 20px;">
+          <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
+        </div>
+
+        <!-- Step 13: Duschgröße -->
+        <div class="wizard-step" data-step="13">
+          <div class="wizard-question">Was für Duschen sind das?</div>
+          <div class="wizard-hint">Die Literangabe steht nur zur Einordnung dabei.</div>
+          <div class="wizard-options" id="wzDuschgroesse">
+            <div class="wizard-option" data-value="0"><span class="opt-body"><div class="opt-title">Sparsame Dusche</div><div class="opt-sub">Sparbrause, etwa 8 Liter je Minute</div></span></div>
+            <div class="wizard-option selected" data-value="1"><span class="opt-body"><div class="opt-title">Normale Dusche</div><div class="opt-sub">Übliche Handbrause, etwa 12 Liter je Minute</div></span></div>
+            <div class="wizard-option" data-value="2"><span class="opt-body"><div class="opt-title">Massagedusche</div><div class="opt-sub">Große Kopfbrause oder Seitendüsen, etwa 18 Liter je Minute</div></span></div>
+            <div class="wizard-option" data-value="3"><span class="opt-body"><div class="opt-title">Regendusche</div><div class="opt-sub">Breiter Regenduschkopf, etwa 25 Liter je Minute</div></span></div>
+          </div>
+          <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
+        </div>
+
+        <!-- Step 14: Wannengröße -->
+        <div class="wizard-step" data-step="14">
+          <div class="wizard-question">Wie groß ist die Badewanne?</div>
+          <div class="wizard-hint">Eine Größe gilt für alle Wannen, die bei euch gleichzeitig laufen könnten.</div>
+          <div class="wizard-options" id="wzWannengroesse">
+            <div class="wizard-option" data-value="0"><span class="opt-body"><div class="opt-title">Kleine Wanne</div><div class="opt-sub">Etwa 1,70 Meter, rund 110 Liter</div></span></div>
+            <div class="wizard-option selected" data-value="1"><span class="opt-body"><div class="opt-title">Normale Wanne</div><div class="opt-sub">Etwa 1,80 Meter, rund 160 Liter</div></span></div>
+            <div class="wizard-option" data-value="2"><span class="opt-body"><div class="opt-title">Große Wanne</div><div class="opt-sub">Etwa 1,90 Meter, rund 200 Liter</div></span></div>
+            <div class="wizard-option" data-value="3"><span class="opt-body"><div class="opt-title">Sehr große Wanne oder Eckwanne</div><div class="opt-sub">Rund 350 Liter</div></span></div>
+          </div>
+          <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizNext()">Weiter</button></div>
+        </div>
+
+        <!-- Step 15: Verbrauch -->
+        <div class="wizard-step" data-step="15">
+          <div class="wizard-question">Kennst du deinen Jahresverbrauch?</div>
+          <div class="wizard-hint">Steht auf deiner letzten Jahresabrechnung.</div>
+          <div class="wizard-options" id="wzVerbrauch">
+            <div class="wizard-option selected" data-value="known"><span class="opt-icon"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></span><span class="opt-body"><div class="opt-title">Ich kenne ihn</div></span></div>
+            <div class="wizard-option" data-value="unknown"><span class="opt-icon"><svg viewBox="0 0 24 24"><use href="#i-frage"/></svg></span><span class="opt-body"><div class="opt-title">Weiß ich nicht</div><div class="opt-sub">Dann schätzen wir</div></span></div>
+          </div>
+          <div id="wzVerbrauchInput" style="display:block; margin-top: 20px;">
             <div style="display:flex;gap:8px;margin-bottom:16px;">
-              <button id="wzUnitKwh" onclick="wzSwitchUnit('kwh')" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--green);background:rgba(183,217,0,0.15);color:var(--green);font-weight:700;font-size:14px;cursor:pointer;">kWh</button>
-              <button id="wzUnitM3" onclick="wzSwitchUnit('m3')" style="flex:1;padding:12px;border-radius:8px;border:2px solid rgba(255,255,255,0.5);background:rgba(255,255,255,0.1);color:#fff;font-weight:600;font-size:14px;cursor:pointer;">m³ Gas</button>
+              <button id="wzUnitKwh" onclick="wzSwitchUnit('kwh')" style="flex:1;padding:10px;border-radius:8px;border:2px solid rgba(255,255,255,0.5);background:rgba(255,255,255,0.1);color:#fff;font-weight:600;font-size:14px;cursor:pointer;">Kilowattstunden</button>
+              <button id="wzUnitM3" onclick="wzSwitchUnit('m3')" style="flex:1;padding:12px;border-radius:8px;border:1px solid var(--green);background:rgba(183,217,0,0.15);color:var(--green);font-weight:700;font-size:14px;cursor:pointer;">Kubikmeter Gas</button>
               <button id="wzUnitLiter" onclick="wzSwitchUnit('liter')" style="flex:1;padding:12px;border-radius:8px;border:2px solid rgba(255,255,255,0.5);background:rgba(255,255,255,0.1);color:#fff;font-weight:600;font-size:14px;cursor:pointer;">Liter Heizöl</button>
             </div>
             <div class="wizard-slider-group">
-              <label>Jahresverbrauch <span class="ws-val" id="wzVerbVal">18.000 kWh</span></label>
-              <input type="range" id="wzVerbrauchSlider" min="5000" max="120000" step="500" value="18000">
+              <label>Jahresverbrauch <span class="ws-val" id="wzVerbVal">2.000 m³</span></label>
+              <input type="range" id="wzVerbrauchSlider" min="500" max="12000" step="50" value="2000">
               <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--g500);margin-top:4px;">
-                <span id="wzSliderMin">5.000 kWh</span>
-                <span id="wzSliderMax">120.000 kWh</span>
+                <span id="wzSliderMin">500 m³</span>
+                <span id="wzSliderMax">12.000 m³</span>
               </div>
             </div>
             <div id="wzVerbrauchHinweis" style="font-size:12px;color:var(--g400);margin-top:8px;"></div>
           </div>
+          <div id="wzSchaetzHinweis" style="display:none;font-size:14px;color:var(--g300);margin-top:20px;">Wir schätzen deinen Bedarf aus Gebäudetyp, Baujahr, Wohnfläche und dem, was schon erneuert wurde. Deine Angaben dazu haben wir bereits.</div>
           <div class="wizard-nav"><button class="wizard-btn-back" onclick="wizBack()">Zurück</button><button class="wizard-btn-next" onclick="wizCalculate()">Ergebnis berechnen</button></div>
         </div>
 
@@ -439,7 +602,7 @@
     </div>
   </footer>
 
-  <script src="js/site.js?v=1bd498f0b6" defer></script>
+  <script src="js/site.js?v=07528a1902" defer></script>
 
   <!-- MOBILE BOTTOM BAR -->
   <div class="mobile-bottom-bar" role="navigation" aria-label="Mobile Schnellnavigation">

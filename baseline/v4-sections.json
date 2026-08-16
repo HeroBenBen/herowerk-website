@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-29",
+  "generated": "2026-08-16",
   "rule": "section-id primär, H2-Fallback, FAQ separat; Fail bei >30% Wort-Abweichung",
   "threshold": 0.3,
   "pages": [
@@ -66,7 +66,7 @@
       "sections": [
         {
           "id": "wizard",
-          "words": 579
+          "words": 764
         },
         {
           "id": "class:detail-final-cta",
@@ -79,7 +79,7 @@
       "sections": [
         {
           "id": "foerder",
-          "words": 436
+          "words": 467
         },
         {
           "id": "class:section",
@@ -282,7 +282,7 @@
         },
         {
           "id": "h2-block[13]",
-          "words": 59
+          "words": 60
         }
       ]
     }

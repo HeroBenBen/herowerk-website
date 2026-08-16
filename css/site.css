@@ -1950,6 +1950,186 @@ section {
 .wizard-option.selected .opt-icon svg {
   stroke: var(--color-text-primary);
 }
+.wz-symbol-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+.wz-renovation-list,
+.wz-counter-list {
+  display: grid;
+  gap: 14px;
+}
+.wz-baujahr-toggle {
+  display: flex;
+  width: 100%;
+  margin-bottom: 16px;
+}
+.wz-year-field {
+  display: grid;
+  gap: 8px;
+}
+.wz-year-field[hidden],
+#wzBaujahrSpanne[hidden] {
+  display: none;
+}
+.wz-year-field label {
+  color: var(--color-text-primary);
+  font-weight: 700;
+}
+.wz-year-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid var(--color-border-subtle);
+  border-radius: 12px;
+  background: var(--color-surface-secondary);
+  color: var(--color-text-primary);
+  font: inherit;
+  font-size: 18px;
+}
+.wz-year-input:focus-visible {
+  border-color: var(--green);
+  outline: 3px solid rgba(183, 217, 0, 0.28);
+  outline-offset: 2px;
+}
+.wz-baujahr-echo {
+  min-height: 21px;
+  color: var(--green);
+  font-size: 14px;
+  font-weight: 700;
+}
+.wz-renovation-item {
+  min-width: 0;
+}
+.wz-renovation-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  color: var(--color-text-primary);
+  font-weight: 700;
+}
+.wz-renovation-label svg {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+}
+.wz-renovation-select {
+  width: 100%;
+  padding: 13px 14px;
+  border: 2px solid var(--color-border-subtle);
+  border-radius: 12px;
+  background: var(--color-surface-secondary);
+  color: var(--color-text-primary);
+  font: inherit;
+}
+.wz-renovation-select:focus-visible {
+  border-color: var(--green);
+  outline: 3px solid rgba(183, 217, 0, 0.28);
+  outline-offset: 2px;
+}
+.wz-renovation-help {
+  min-height: 19px;
+  margin-top: 6px;
+  color: var(--color-text-secondary);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+.wz-counter-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  padding: 16px 20px;
+  border: 2px solid var(--color-border-subtle);
+  border-radius: 14px;
+  background: var(--color-surface-secondary);
+}
+.wz-counter-card-personen {
+  margin-top: 16px;
+}
+.wz-counter-label,
+.wz-counter-controls {
+  display: flex;
+  align-items: center;
+}
+.wz-counter-label {
+  gap: 10px;
+  min-width: 0;
+  color: var(--color-text-primary);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.wz-counter-icon {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  color: var(--color-text-secondary);
+}
+.wz-counter-icon svg {
+  width: 100%;
+  height: 100%;
+}
+.wz-counter-controls {
+  gap: 14px;
+  flex-wrap: nowrap;
+}
+.wz-counter-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  padding: 0;
+  border: 2px solid var(--color-border-subtle);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--color-text-primary);
+  font:
+    700 19px/1 'Barlow',
+    sans-serif;
+  cursor: pointer;
+}
+.wz-counter-button:hover,
+.wz-counter-button:focus-visible {
+  border-color: var(--green);
+  color: var(--green);
+}
+.wz-counter-button:focus-visible {
+  outline: 3px solid rgba(183, 217, 0, 0.28);
+  outline-offset: 2px;
+}
+.wz-counter-value {
+  min-width: 26px;
+  color: var(--green);
+  font-size: 21px;
+  font-weight: 800;
+  text-align: center;
+}
+@media (max-width: 400px) {
+  .wz-counter-card {
+    gap: 6px;
+    padding: 14px 10px;
+  }
+  .wz-counter-label {
+    gap: 6px;
+  }
+  .wz-counter-icon {
+    width: 26px;
+    height: 26px;
+    flex-basis: 26px;
+  }
+  .wz-counter-controls {
+    gap: 6px;
+  }
+  .wz-counter-value {
+    min-width: 22px;
+  }
+}
 .wizard-option .opt-title {
   color: var(--color-text-primary);
   font-family: 'Barlow', sans-serif;
