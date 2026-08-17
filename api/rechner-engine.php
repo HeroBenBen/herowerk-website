@@ -792,7 +792,7 @@ function hw_kennlinien_schnittpunkt(
     return null;
 }
 
-function hw_kaskaden_mindestleistung(array $item, array $punkte): null
+function hw_kaskaden_mindestleistung(array $item, array $punkte): ?float
 {
     // T505: Kaskaden-Mindestleistung gegen die Vaillant-Taktpunkte kalibrieren.
     // Messgrundlage: Vaillant, Median 11 °C bei Zweier-Kaskaden (n=174) gegen 8 °C bei Einzelgeräten (n=163).
