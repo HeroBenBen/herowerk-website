@@ -5487,6 +5487,59 @@ html[data-theme='light'] .section-tag {
   text-align: center;
   margin-bottom: 14px;
 }
+.wiz-variant-list {
+  display: grid;
+  gap: 12px;
+}
+.wiz-variant {
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--color-surface-secondary) 74%, transparent);
+}
+.wiz-variant-series {
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  line-height: 1.35;
+}
+.wiz-variant-device {
+  margin-top: 2px;
+  color: var(--color-text-primary);
+  font-family: 'Barlow', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.wiz-variant-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  line-height: 1.4;
+}
+.wiz-variant-price {
+  color: var(--color-text-primary);
+  font-weight: 700;
+  text-align: right;
+}
+.wiz-variant-empty {
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+@media (max-width: 390px) {
+  .wiz-variant-meta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .wiz-variant-price {
+    text-align: left;
+  }
+}
 .wiz-result-shell {
   display: block;
   padding: 24px;

@@ -61,6 +61,10 @@ const snapshotRows = {
     ['Marke', 'Modell'],
     ['wolf', 'Wolf CHA-10'],
   ],
+  Geraete_Kennlinien: [
+    ['geraete_kennung', 'vorlauf_C', 'aussentemperatur_C', 'heizleistung_volllast_kW'],
+    ['CHA-10', 35, -10, 10.4],
+  ],
   Klima_PLZ: [
     ['PLZ', 'Ort', 'NAT_C'],
     ...Array.from({ length: 1800 }, (_, index) => [
@@ -156,10 +160,10 @@ spreadsheetOpens = 0;
 
 const snapshot = call({ action: 'werte_snapshot', key: 'snapshot-test-secret' });
 assert(snapshot.service === 'werte_snapshot', 'Gültiger Schlüssel liefert die Sammelroute');
-assert(snapshot.schemaVersion === 1, 'Sammelroute trägt Schema-Version 1');
+assert(snapshot.schemaVersion === 2, 'Sammelroute trägt Schema-Version 2');
 assert(
   JSON.stringify(Object.keys(snapshot.sheets)) === JSON.stringify(Object.keys(snapshotRows)),
-  'Sammelroute enthält genau die neun freigegebenen Tabellen'
+  'Sammelroute enthält genau die zehn freigegebenen Tabellen'
 );
 assert(
   JSON.stringify(snapshot.sheets.Fördervorschuss) === JSON.stringify(snapshotRows.Fördervorschuss),
@@ -174,7 +178,7 @@ assert(
   'Alle Cache-Blöcke haben 300 Sekunden TTL'
 );
 assert(
-  Number(cacheValues.get('werte_snapshot:v1:parts')) > 1,
+  Number(cacheValues.get('werte_snapshot:v2:parts')) > 1,
   'Großer Rohdatenstand wird auf mehrere Cache-Blöcke verteilt'
 );
 

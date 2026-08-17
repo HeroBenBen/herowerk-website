@@ -27,6 +27,7 @@ const WERTE_SNAPSHOT_SHEETS = [
   'Preise_Wolf',
   'Preise_Vaillant',
   'Geräte_Katalog',
+  'Geraete_Kennlinien',
   'Klima_PLZ',
   'Fördervorschuss'
 ];
@@ -158,11 +159,13 @@ function dimensionierung_(p) {
 
   const marken = {};
   const catalogParameters = getCatalogParameters_();
+  const kennlinien = getKennlinien_();
+  const heizgrenze = getNum_(d, 'heizgrenze_c', 15);
   ['wolf', 'vaillant'].forEach(function (marke) {
     const heizstabKey = 'heizstab_' + marke;
     const markenHeizstab = num_(catalogParameters[heizstabKey], NaN);
     if (isNaN(markenHeizstab)) throw new Error('missing_parameter_' + heizstabKey);
-    const match = matchCatalog_(
+    const matches = matchCatalogVarianten_(
       marke,
       auslegung,
       heizsystem,
@@ -170,12 +173,36 @@ function dimensionierung_(p) {
       markenHeizstab,
       getNum_(d, 'kaskaden_toleranz_kw', 0.5)
     );
-    marken[marke] = match
-      ? catalogResult_(match, getPriceTableCached_(marke), auslegung, getNum_(d, 'sollband_oben', 0.8))
-      : { deckt: false };
+    const varianten = matches.map(function (match, index) {
+      const result = catalogResult_(
+        match,
+        getPriceTableCached_(marke),
+        auslegung,
+        getNum_(d, 'sollband_oben', 0.8),
+        {
+          kennlinien: kennlinien,
+          nat: zone.nat,
+          heizgrenze: heizgrenze,
+          heizsystem: heizsystem
+        }
+      );
+      result.empfohlen = index === 0;
+      return result;
+    });
+    marken[marke] = varianten.length
+      ? Object.assign({}, varianten[0], { varianten: varianten })
+      : { deckt: false, varianten: [] };
   });
 
-  return { bedarf: auslegung, fuehrung: wwLeistung > heizlast ? 'warmwasser' : 'heizung', stromverbrauch_kwh: stromverbrauchKwh, strom_hinweis: stromHinweis, marken: marken };
+  return {
+    bedarf: auslegung,
+    fuehrung: wwLeistung > heizlast ? 'warmwasser' : 'heizung',
+    stromverbrauch_kwh: stromverbrauchKwh,
+    strom_hinweis: stromHinweis,
+    taktpunkt_grenze_c: d.taktpunkt_grenze_c == null ? null : d.taktpunkt_grenze_c,
+    taktpunkt_grenze_wirksam: false,
+    marken: marken
+  };
 }
 
 function faktorNutzwaerme_(d, heizung, andereHeizung, abgasrohr, heizungsalter) {
@@ -231,7 +258,7 @@ function leistungAmAuslegungspunkt_(item, heizsystem, nat) {
     ? grenzeInterp_(item.leistungW55, item.leistungW55a10, nat)
     : grenzeInterp_(item.leistungW35, item.leistungW35a10, nat);
 }
-function matchCatalog_(marke, auslegung, heizsystem, nat, markenHeizstab, kaskadenToleranz) {
+function matchCatalogVarianten_(marke, auslegung, heizsystem, nat, markenHeizstab, kaskadenToleranz) {
   const grenzeOf = function (item) {
     return heizsystem === 'heizkoerper'
       ? grenzeInterp_(item.grenzeW55, item.grenzeW55a10, nat)
@@ -247,8 +274,7 @@ function matchCatalog_(marke, auslegung, heizsystem, nat, markenHeizstab, kaskad
       groessteEinzelgrenze[item.baureihe] = grenze;
     }
   });
-  let pick = null;
-  let pickLeistung = null;
+  const picks = {};
   items.forEach(function (item) {
     const leistung = leistungAmAuslegungspunkt_(item, heizsystem, nat);
     const heizstab = item.mindestAnteil >= 1 ? 0 : markenHeizstab;
@@ -257,15 +283,109 @@ function matchCatalog_(marke, auslegung, heizsystem, nat, markenHeizstab, kaskad
       const einzelgrenze = groessteEinzelgrenze[item.baureihe];
       if (einzelgrenze === undefined || auslegung <= einzelgrenze + kaskadenToleranz) return;
     }
-    if (!pick || leistung < pickLeistung) {
-      pick = Object.assign({}, item, { leistungAuslegung: leistung });
-      pickLeistung = leistung;
+    const current = picks[item.baureihe];
+    if (!current || leistung < current.leistungAuslegung) {
+      picks[item.baureihe] = Object.assign({}, item, { leistungAuslegung: leistung });
     }
   });
-  return pick;
+  return Object.keys(picks).map(function (baureihe) {
+    return picks[baureihe];
+  }).sort(function (a, b) {
+    if (a.leistungAuslegung !== b.leistungAuslegung) {
+      return a.leistungAuslegung - b.leistungAuslegung;
+    }
+    return a.reihenfolge - b.reihenfolge;
+  });
 }
 
-function catalogResult_(item, priceRows, auslegung, sollbandOben) {
+function matchCatalog_(marke, auslegung, heizsystem, nat, markenHeizstab, kaskadenToleranz) {
+  return matchCatalogVarianten_(
+    marke,
+    auslegung,
+    heizsystem,
+    nat,
+    markenHeizstab,
+    kaskadenToleranz
+  )[0] || null;
+}
+
+function geraeteAnzahl_(modell) {
+  const match = String(modell || '').match(/^\s*(\d+)\s*[×x]\s*/i);
+  return match ? Math.max(1, parseInt(match[1], 10)) : 1;
+}
+
+function kennlinienKey_(modell) {
+  return String(modell || '')
+    .replace(/^\s*\d+\s*[×x]\s*/i, '')
+    .replace(/\s*\(Kaskade\)\s*$/i, '')
+    .replace(/^\s*(?:Vaillant|Wolf)\s+/i, '')
+    .trim()
+    .toLowerCase();
+}
+
+function gebaeudeLeistung_(auslegung, nat, heizgrenze, temperatur) {
+  const spanne = heizgrenze - nat;
+  if (!isFinite(spanne) || spanne <= 0) return null;
+  return auslegung * (heizgrenze - temperatur) / spanne;
+}
+
+function kennlinienSchnittpunkt_(punkte, feld, faktor, auslegung, nat, heizgrenze) {
+  const werte = (punkte || []).filter(function (punkt) {
+    return typeof punkt.temperatur === 'number'
+      && isFinite(punkt.temperatur)
+      && typeof punkt[feld] === 'number'
+      && isFinite(punkt[feld])
+      && punkt.temperatur <= heizgrenze;
+  }).sort(function (a, b) { return a.temperatur - b.temperatur; }).map(function (punkt) {
+    const gebaeude = gebaeudeLeistung_(auslegung, nat, heizgrenze, punkt.temperatur);
+    return { temperatur: punkt.temperatur, differenz: punkt[feld] * faktor - gebaeude };
+  });
+  for (let i = 0; i < werte.length - 1; i++) {
+    const links = werte[i];
+    const rechts = werte[i + 1];
+    if (links.differenz === 0) return round1_(links.temperatur);
+    if (links.differenz * rechts.differenz > 0) continue;
+    const temperatur = links.temperatur
+      + (0 - links.differenz) * (rechts.temperatur - links.temperatur)
+      / (rechts.differenz - links.differenz);
+    return round1_(temperatur);
+  }
+  if (werte.length && werte[werte.length - 1].differenz === 0) {
+    return round1_(werte[werte.length - 1].temperatur);
+  }
+  return null;
+}
+
+function kaskadenMindestleistung_(item, punkte) {
+  // T505: Kaskaden-Mindestleistung gegen die Vaillant-Taktpunkte kalibrieren.
+  // Messgrundlage: Vaillant, Median 11 °C bei Zweier-Kaskaden (n=174) gegen 8 °C bei Einzelgeräten (n=163).
+  // Bis zur Fachentscheidung wird weder n-fach skaliert noch ein aktives Einzelgerät unterstellt.
+  return null;
+}
+
+function bivalenzpunkt_(item, context, auslegung) {
+  const key = kennlinienKey_(item.modell);
+  const vorlauf = context.heizsystem === 'heizkoerper' ? '55' : '35';
+  const punkte = context.kennlinien[key] && context.kennlinien[key][vorlauf];
+  return kennlinienSchnittpunkt_(
+    punkte,
+    'volllast',
+    geraeteAnzahl_(item.modell),
+    auslegung,
+    context.nat,
+    context.heizgrenze
+  );
+}
+
+function taktpunkt_(item, context, auslegung) {
+  const key = kennlinienKey_(item.modell);
+  const vorlauf = context.heizsystem === 'heizkoerper' ? '55' : '35';
+  const punkte = context.kennlinien[key] && context.kennlinien[key][vorlauf];
+  if (item.kaskade) return kaskadenMindestleistung_(item, punkte);
+  return kennlinienSchnittpunkt_(punkte, 'mindest', 1, auslegung, context.nat, context.heizgrenze);
+}
+
+function catalogResult_(item, priceRows, auslegung, sollbandOben, context) {
   // Eigenanteil = Single Source aus der Preis-Tafel (Preise_Wolf/Preise_Vaillant), gematcht per
   // Brutto -> Rechner zeigt EXAKT denselben Eigenanteil wie die Preistafel, fuer JEDES Segment
   // (auch XL/XXL mit gemischter WE-Foerderung). eigenanteil = ohne proKlima (Hauptwert,
@@ -281,9 +401,25 @@ function catalogResult_(item, priceRows, auslegung, sollbandOben) {
   const eigenProklima = pr && pr.proklima > 0 && pr.proklima < pr.eigen ? pr.proklima : null;
   return {
     deckt: true,
+    baureihe: item.baureihe || null,
     modell: item.modell,
+    anzahl: geraeteAnzahl_(item.modell),
     kaskade: item.kaskade,
-    brutto: item.brutto,
+    leistung_kw: round1_(item.leistungAuslegung),
+    leistungsanteil_prozent: round1_(item.leistungAuslegung / auslegung * 100),
+    taktpunkt_c: context ? taktpunkt_(item, context, auslegung) : null,
+    bivalenzpunkt_c: context ? bivalenzpunkt_(item, context, auslegung) : null,
+    puffer: item.puffer
+      ? {
+          bezeichnung: item.puffer,
+          liter: item.pufferLiter == null ? null : item.pufferLiter,
+          groessere_variante: item.pufferGroesser || null,
+          ohne_puffer_moeglich: item.pufferOhne
+        }
+      : null,
+    brutto: item.brutto > 0 ? item.brutto : null,
+    preis_hinterlegt: item.brutto > 0,
+    empfohlen: false,
     eigenanteil: eigen,
     eigenanteilProklima: eigenProklima,
     vorlaeufig: String(item.stand || '').toLowerCase() !== 'belegt',
@@ -981,37 +1117,134 @@ function writeStatus_(ss) {
 }
 
 
+function normalisiereKopf_(value) {
+  return String(value == null ? '' : value).trim().toLowerCase();
+}
+
+function findeTabelle_(values, requiredHeaders) {
+  for (let rowIndex = 0; rowIndex < values.length; rowIndex++) {
+    const header = values[rowIndex].map(normalisiereKopf_);
+    const found = requiredHeaders.every(function (name) {
+      return header.indexOf(normalisiereKopf_(name)) >= 0;
+    });
+    if (found) return { header: header, rows: values.slice(rowIndex + 1) };
+  }
+  throw new Error('missing_table_headers_' + requiredHeaders.join('_'));
+}
+
+function kopfIndex_(table, name, optional) {
+  const needle = normalisiereKopf_(name);
+  const index = table.header.findIndex(function (header) {
+    return header === needle || header.indexOf(needle) === 0;
+  });
+  if (index < 0 && !optional) throw new Error('missing_header_' + name);
+  return index;
+}
+
+function tabellenWert_(row, index) {
+  return index < 0 || index >= row.length ? '' : row[index];
+}
+
 function getCatalog_() {
   const cache = CacheService.getScriptCache();
-  const cached = cache.get('catalog:v2');
+  const cached = cache.get('catalog:v3');
   if (cached) return JSON.parse(cached);
   const ss = SpreadsheetApp.openById(SHEET_ID);
   const sh = ss.getSheetByName('Geräte_Katalog');
   if (!sh) throw new Error('missing_tab_Geräte_Katalog');
-  const rowCount = Math.max(0, sh.getLastRow() - 8);
-  const values = rowCount > 0 ? sh.getRange(9, 1, rowCount, 20).getValues() : [];
+  const table = findeTabelle_(sh.getDataRange().getValues(), ['Marke', 'Modell', 'Kaskade']);
+  const columns = {
+    marke: kopfIndex_(table, 'Marke'),
+    modell: kopfIndex_(table, 'Modell'),
+    kaskade: kopfIndex_(table, 'Kaskade'),
+    leistungW35: kopfIndex_(table, 'WP NAT W35'),
+    leistungW55: kopfIndex_(table, 'WP NAT W55'),
+    grenzeW35: kopfIndex_(table, 'Auslegungsgrenze W35 (WP÷0,80)'),
+    grenzeW55: kopfIndex_(table, 'Auslegungsgrenze W55 (WP÷0,80)'),
+    grenzeW35a10: kopfIndex_(table, 'Auslegungsgrenze W35 @A-10'),
+    grenzeW55a10: kopfIndex_(table, 'Auslegungsgrenze W55 @A-10'),
+    leistungW35a10: kopfIndex_(table, 'WP NAT W35 @A-10'),
+    leistungW55a10: kopfIndex_(table, 'WP NAT W55 @A-10'),
+    baureihe: kopfIndex_(table, 'Baureihe'),
+    mindestAnteil: kopfIndex_(table, 'Mindest-Leistungsanteil'),
+    brutto: kopfIndex_(table, 'Brutto €'),
+    stand: kopfIndex_(table, 'Stand'),
+    puffer: kopfIndex_(table, 'Puffer (', true),
+    pufferLiter: kopfIndex_(table, 'Puffer Liter', true),
+    pufferGroesser: kopfIndex_(table, 'Puffer, groessere Variante', true),
+    pufferOhne: kopfIndex_(table, 'ohne Puffer moeglich', true)
+  };
   const out = [];
-  values.forEach(function (row) {
-    if (!row[0] || !row[1]) return;
+  table.rows.forEach(function (row, rowIndex) {
+    if (!tabellenWert_(row, columns.marke) || !tabellenWert_(row, columns.modell)) return;
     out.push({
-      marke: String(row[0]).toLowerCase(),
-      modell: String(row[1]),
-      kaskade: String(row[2]).toUpperCase() === 'J',
-      leistungW35: num_(row[3], 0),
-      leistungW55: num_(row[4], 0),
-      grenzeW35: num_(row[7], 0),     // H = Grenze W35 @A-11 (Großraum-konservativ)
-      grenzeW55: num_(row[8], 0),     // I = Grenze W55 @A-11
-      grenzeW35a10: num_(row[13], 0), // N = Grenze W35 @A-10 (Hannover Stadt; 0 => Fallback A-11)
-      grenzeW55a10: num_(row[14], 0), // O = Grenze W55 @A-10
-      leistungW35a10: num_(row[16], 0),
-      leistungW55a10: num_(row[17], 0),
-      baureihe: String(row[18] || ''),
-      mindestAnteil: num_(row[19], 0.7),
-      brutto: num_(row[10], 0),
-      stand: String(row[11] || '')
+      marke: String(tabellenWert_(row, columns.marke)).toLowerCase(),
+      modell: String(tabellenWert_(row, columns.modell)),
+      kaskade: String(tabellenWert_(row, columns.kaskade)).toUpperCase() === 'J',
+      leistungW35: num_(tabellenWert_(row, columns.leistungW35), 0),
+      leistungW55: num_(tabellenWert_(row, columns.leistungW55), 0),
+      grenzeW35: num_(tabellenWert_(row, columns.grenzeW35), 0),
+      grenzeW55: num_(tabellenWert_(row, columns.grenzeW55), 0),
+      grenzeW35a10: num_(tabellenWert_(row, columns.grenzeW35a10), 0),
+      grenzeW55a10: num_(tabellenWert_(row, columns.grenzeW55a10), 0),
+      leistungW35a10: num_(tabellenWert_(row, columns.leistungW35a10), 0),
+      leistungW55a10: num_(tabellenWert_(row, columns.leistungW55a10), 0),
+      baureihe: String(tabellenWert_(row, columns.baureihe)),
+      mindestAnteil: num_(tabellenWert_(row, columns.mindestAnteil), 0.7),
+      brutto: num_(tabellenWert_(row, columns.brutto), 0),
+      stand: String(tabellenWert_(row, columns.stand)),
+      puffer: String(tabellenWert_(row, columns.puffer)),
+      pufferLiter: columns.pufferLiter < 0 || tabellenWert_(row, columns.pufferLiter) === ''
+        ? null
+        : num_(tabellenWert_(row, columns.pufferLiter), null),
+      pufferGroesser: String(tabellenWert_(row, columns.pufferGroesser)),
+      pufferOhne: tabellenWert_(row, columns.pufferOhne) === ''
+        ? null
+        : String(tabellenWert_(row, columns.pufferOhne)).toLowerCase() === 'ja',
+      reihenfolge: rowIndex
     });
   });
-  cache.put('catalog:v2', JSON.stringify(out), CACHE_TTL_SECONDS);
+  cache.put('catalog:v3', JSON.stringify(out), CACHE_TTL_SECONDS);
+  return out;
+}
+
+function getKennlinien_() {
+  const cache = CacheService.getScriptCache();
+  const cached = cache.get('kennlinien:v1');
+  if (cached) return JSON.parse(cached);
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const sh = ss.getSheetByName('Geraete_Kennlinien');
+  if (!sh) return {};
+  const table = findeTabelle_(sh.getDataRange().getValues(), [
+    'geraete_kennung',
+    'vorlauf_C',
+    'aussentemperatur_C',
+    'heizleistung_volllast_kW'
+  ]);
+  const columns = {
+    geraet: kopfIndex_(table, 'geraete_kennung'),
+    vorlauf: kopfIndex_(table, 'vorlauf_C'),
+    temperatur: kopfIndex_(table, 'aussentemperatur_C'),
+    volllast: kopfIndex_(table, 'heizleistung_volllast_kW'),
+    mindest: kopfIndex_(table, 'heizleistung_mindest_kW', true)
+  };
+  const out = {};
+  table.rows.forEach(function (row) {
+    const key = kennlinienKey_(tabellenWert_(row, columns.geraet));
+    const vorlauf = String(num_(tabellenWert_(row, columns.vorlauf), ''));
+    const temperatur = num_(tabellenWert_(row, columns.temperatur), NaN);
+    const volllast = num_(tabellenWert_(row, columns.volllast), NaN);
+    if (!key || !vorlauf || !isFinite(temperatur) || !isFinite(volllast)) return;
+    if (!out[key]) out[key] = {};
+    if (!out[key][vorlauf]) out[key][vorlauf] = [];
+    const mindestRaw = tabellenWert_(row, columns.mindest);
+    out[key][vorlauf].push({
+      temperatur: temperatur,
+      volllast: volllast,
+      mindest: mindestRaw === '' ? null : num_(mindestRaw, null)
+    });
+  });
+  cache.put('kennlinien:v1', JSON.stringify(out), CACHE_TTL_SECONDS);
   return out;
 }
 
@@ -1104,9 +1337,15 @@ function getPrices_(marke) {
   const ss = SpreadsheetApp.openById(SHEET_ID);
   const sh = ss.getSheetByName(marke === 'vaillant' ? 'Preise_Vaillant' : 'Preise_Wolf');
   if (!sh) throw new Error('missing_tab_preise_' + marke);
-  const values = sh.getDataRange().getValues();
+  const table = findeTabelle_(sh.getDataRange().getValues(), ['Klasse', 'Endpreis_brutto']);
+  const klasse = kopfIndex_(table, 'Klasse');
+  const brutto = kopfIndex_(table, 'Endpreis_brutto');
   const out = {};
-  for (let i = 1; i < values.length; i++) if (values[i][0]) out[String(values[i][0]).toLowerCase()] = num_(values[i][4], 0);
+  table.rows.forEach(function (row) {
+    if (tabellenWert_(row, klasse)) {
+      out[String(tabellenWert_(row, klasse)).toLowerCase()] = num_(tabellenWert_(row, brutto), 0);
+    }
+  });
   return out;
 }
 
@@ -1118,23 +1357,31 @@ function readPriceTable_(name) {
   const ss = SpreadsheetApp.openById(SHEET_ID);
   const sh = ss.getSheetByName(name);
   if (!sh) return [];
-  const values = sh.getDataRange().getValues();
+  const table = findeTabelle_(sh.getDataRange().getValues(), ['Klasse', 'Modell', 'Endpreis_brutto']);
+  const columns = {
+    klasse: kopfIndex_(table, 'Klasse'),
+    modell: kopfIndex_(table, 'Modell'),
+    hausgroesse: kopfIndex_(table, 'Hausgroesse', true),
+    kw: kopfIndex_(table, 'kW', true),
+    brutto: kopfIndex_(table, 'Endpreis_brutto'),
+    eigen: kopfIndex_(table, 'Eigenanteil', true),
+    proklima: kopfIndex_(table, 'proKlima_Eigenanteil', true)
+  };
   const out = [];
-  for (let i = 1; i < values.length; i++) {
-    const r = values[i];
-    if (!r[0]) continue;
-    const brutto = num_(r[4], 0);
-    if (brutto <= 0) continue;
+  table.rows.forEach(function (row) {
+    if (!tabellenWert_(row, columns.klasse)) return;
+    const brutto = num_(tabellenWert_(row, columns.brutto), 0);
+    if (brutto <= 0) return;
     out.push({
-      klasse: String(r[0]).toLowerCase(),
-      modell: String(r[1] || ''),
-      hausgroesse: String(r[2] || ''),
-      kw: String(r[3] || ''),
+      klasse: String(tabellenWert_(row, columns.klasse)).toLowerCase(),
+      modell: String(tabellenWert_(row, columns.modell)),
+      hausgroesse: String(tabellenWert_(row, columns.hausgroesse)),
+      kw: String(tabellenWert_(row, columns.kw)),
       brutto: brutto,
-      eigen: num_(r[5], 0),
-      proklima: num_(r[6], 0)
+      eigen: num_(tabellenWert_(row, columns.eigen), 0),
+      proklima: num_(tabellenWert_(row, columns.proklima), 0)
     });
-  }
+  });
   return out;
 }
 function getPriceTableCached_(marke) {
@@ -1151,7 +1398,7 @@ function preise_(p) {
 }
 
 // Geschützte Rohdaten-Sammelroute für den PHP-Rechenkern. Sie liest ausschließlich
-// die neun freigegebenen Tabellen und verändert weder Werte noch Formate.
+// die zehn freigegebenen Tabellen und verändert weder Werte noch Formate.
 // Der vollständige JSON-Stand wird in ausreichend kleine CacheService-Blöcke geteilt,
 // damit auch größere Klima_PLZ-Stände innerhalb der 300-Sekunden-Vorhaltung bleiben.
 function werteSnapshot_() {
@@ -1166,7 +1413,7 @@ function werteSnapshot_() {
     sheets[name] = sh.getDataRange().getValues();
   });
 
-  const serialized = JSON.stringify({ service: 'werte_snapshot', schemaVersion: 1, sheets: sheets });
+  const serialized = JSON.stringify({ service: 'werte_snapshot', schemaVersion: 2, sheets: sheets });
   werteSnapshotCacheWrite_(serialized);
   return JSON.parse(serialized);
 }
@@ -1180,11 +1427,11 @@ function werteSnapshotKeyValid_(provided) {
 
 function werteSnapshotCacheRead_() {
   const cache = CacheService.getScriptCache();
-  const count = parseInt(cache.get('werte_snapshot:v1:parts') || '0', 10);
+  const count = parseInt(cache.get('werte_snapshot:v2:parts') || '0', 10);
   if (!count || count < 1) return null;
   let serialized = '';
   for (let i = 0; i < count; i++) {
-    const part = cache.get('werte_snapshot:v1:' + i);
+    const part = cache.get('werte_snapshot:v2:' + i);
     if (part === null) return null;
     serialized += part;
   }
@@ -1197,12 +1444,12 @@ function werteSnapshotCacheWrite_(serialized) {
   const count = Math.ceil(serialized.length / chunkChars);
   for (let i = 0; i < count; i++) {
     cache.put(
-      'werte_snapshot:v1:' + i,
+      'werte_snapshot:v2:' + i,
       serialized.slice(i * chunkChars, (i + 1) * chunkChars),
       CACHE_TTL_SECONDS
     );
   }
-  cache.put('werte_snapshot:v1:parts', String(count), CACHE_TTL_SECONDS);
+  cache.put('werte_snapshot:v2:parts', String(count), CACHE_TTL_SECONDS);
 }
 
 function isAllowedOrigin_(p) {

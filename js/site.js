@@ -1022,32 +1022,36 @@ function brandLogo(key, label) {
 function renderBrandCard(key, label, brand, bedarf) {
   const selected = wizSelectedMarke === key;
   const cls = 'foerder-result wiz-brand-panel' + (selected ? ' wiz-selected' : '');
-  const badge = selected ? '<span class="wiz-brand-badge">✓ Ausgewählt</span>' : '';
-  const head = `<div class="wiz-brand-head">${brandLogo(key, label)}${badge}</div>`;
+  const head = `<div class="wiz-brand-head">${brandLogo(key, label)}</div>`;
   if (!brand || !brand.deckt) {
     return `<button type="button" class="${cls}" onclick="wizSelectMarke('${key}')" style="text-align:left;font:inherit;">
       ${head}
-      <div class="wiz-brand-satz"><div class="fr-satz" style="font-size:24px;line-height:1.2;">Individuelle Planung</div></div>
-      <div class="fr-row"><span>Dein Bedarf</span><span class="fr-val">${formatKw(bedarf)} kW</span></div>
-      <div class="fr-row"><span>Auslegung</span><span class="fr-val">im Vor-Ort-Termin</span></div>
+      <div class="wiz-variant-empty">Kein Gerät in dieser Vorauswahl.</div>
     </button>`;
   }
-  // Ohne Eigenanteil bleibt es bei "Preis auf Anfrage". Ohne positiven Bruttopreis entfällt
-  // die Bruttopreiszeile vollständig, damit die Karte keine Preiszusage über null Euro zeigt.
-  const eigenSatz =
-    brand.eigenanteil == null
-      ? '<div class="fr-satz" style="font-size:24px;line-height:1.2;">Preis auf Anfrage</div><div class="fr-label" style="margin-bottom:0;">Eigenanteil im Vor-Ort-Termin</div>'
-      : `<div class="fr-satz" style="font-size:40px;">ab ${formatEuro(brand.eigenanteil)}</div><div class="fr-label" style="margin-bottom:0;">geschätzter Eigenanteil nach max. Förderung (80 %)*</div>`;
-  const bruttoZeile =
-    Number(brand.brutto) > 0
-      ? `<div class="fr-row"><span>Brutto-Richtpreis vor Förderung</span><span class="fr-val">ab ${formatEuro(brand.brutto)}</span></div>`
-      : '';
+  const varianten =
+    Array.isArray(brand.varianten) && brand.varianten.length ? brand.varianten : [brand];
+  const variantenHtml = varianten
+    .map((variante) => {
+      const geraet = String(variante.modell || '')
+        .replace(/^\s*\d+\s*[×x]\s*/i, '')
+        .replace(/^\s*(Wolf|Vaillant)\s+/i, '')
+        .replace(/\s*\(Kaskade\)\s*$/i, '')
+        .trim();
+      const preis =
+        Number(variante.brutto) > 0
+          ? `<div class="wiz-variant-price">ab ca. ${formatEuro(variante.brutto)}</div>`
+          : '<div class="wiz-variant-price">Preis auf Anfrage</div>';
+      return `<div class="wiz-variant">
+      <div class="wiz-variant-series">${String(variante.baureihe || '')}</div>
+      <div class="wiz-variant-device">${geraet}</div>
+      <div class="wiz-variant-meta"><span>Anzahl: ${Number(variante.anzahl) || 1}</span>${preis}</div>
+    </div>`;
+    })
+    .join('');
   return `<button type="button" class="${cls}" onclick="wizSelectMarke('${key}')" style="text-align:left;font:inherit;">
     ${head}
-    <div class="wiz-brand-satz">${eigenSatz}</div>
-    <div class="fr-row"><span>Empfohlenes Modell</span><span class="fr-val">${modellZweizeilig(brand.modell)}</span></div>
-    <div class="fr-row"><span>Deckt deinen Bedarf</span><span class="fr-val">${formatKw(bedarf)} kW${brand.kaskade ? ' · Kaskade' : ''} ✓</span></div>
-    ${bruttoZeile}
+    <div class="wiz-variant-list">${variantenHtml}</div>
   </button>`;
 }
 
@@ -1093,17 +1097,24 @@ function wizDemo() {
     marken: {
       wolf: {
         deckt: true,
+        baureihe: 'CHA-Monoblock',
         modell: 'Wolf CHA-10',
+        anzahl: 1,
         brutto: 35349,
-        eigenanteil: 12949,
         kaskade: false,
+        varianten: [{ baureihe: 'CHA-Monoblock', modell: 'Wolf CHA-10', anzahl: 1, brutto: 35349 }],
       },
       vaillant: {
         deckt: true,
+        baureihe: 'aroTHERM plus',
         modell: 'Vaillant VWL 105/8.1 A',
+        anzahl: 1,
         brutto: 40276,
-        eigenanteil: 17876,
         kaskade: false,
+        varianten: [
+          { baureihe: 'aroTHERM plus', modell: 'Vaillant VWL 105/8.1 A', anzahl: 1, brutto: 40276 },
+          { baureihe: 'aroTHERM pro', modell: 'Vaillant VWL 115/7.1 A', anzahl: 1, brutto: 40276 },
+        ],
       },
     },
   };

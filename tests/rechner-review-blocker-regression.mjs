@@ -47,6 +47,7 @@ vm.runInContext(
     '*': { nat: -11, volllast: 1800 }
   }; };
   getCatalog_ = function () { return []; };
+  getKennlinien_ = function () { return {}; };
   getCatalogParameters_ = function () { return { heizstab_wolf: 9, heizstab_vaillant: 8.54 }; };
   getPriceTableCached_ = function () { return []; };
   `,
@@ -76,7 +77,8 @@ $sheets = [
     ],
     'Geräte_Katalog' => [
         array_fill(0, 20, ''), array_fill(0, 20, ''), array_fill(0, 20, ''), array_fill(0, 20, ''),
-        ['heizstab_wolf', 9], ['heizstab_vaillant', 8.54], array_fill(0, 20, ''), array_fill(0, 20, ''),
+        ['heizstab_wolf', 9], ['heizstab_vaillant', 8.54], array_fill(0, 20, ''),
+        ['Marke','Modell','Kaskade','WP NAT W35','WP NAT W55','','','Auslegungsgrenze W35 (WP÷0,80)','Auslegungsgrenze W55 (WP÷0,80)','','Brutto €','Stand','','Auslegungsgrenze W35 @A-10','Auslegungsgrenze W55 @A-10','','WP NAT W35 @A-10','WP NAT W55 @A-10','Baureihe','Mindest-Leistungsanteil'],
     ],
     'Preise_Wolf' => [[]],
     'Preise_Vaillant' => [[]],
@@ -115,7 +117,23 @@ for (const [plz, erwartet] of klimaSollfaelle) {
   assert.deepEqual(phpKlima(plz), erwartet, `PHP: Klima ${plz}`);
 }
 assert.notEqual(phpKlima('30159').nat, phpKlima('30539').nat, 'Hannover wird PLZ-scharf gelesen');
-assert.match(siteJs, /Number\(brand\.brutto\) > 0/);
+assert.match(siteJs, /Number\(variante\.brutto\) > 0/);
+const renderBrandSource = siteJs.slice(
+  siteJs.indexOf('function renderBrandCard'),
+  siteJs.indexOf('function wizSelectMarke')
+);
+assert.match(renderBrandSource, /variante\.baureihe/);
+assert.match(renderBrandSource, /variante\.anzahl/);
+assert.match(renderBrandSource, /ab ca\./);
+for (const vertriebsfeld of [
+  'leistungsanteil',
+  'taktpunkt',
+  'bivalenzpunkt',
+  'puffer',
+  'eigenanteil',
+]) {
+  assert.doesNotMatch(renderBrandSource.toLowerCase(), new RegExp(vertriebsfeld));
+}
 assert.match(siteJs, /kälteste Auslegungstemperatur an deinem Ort/);
 assert.match(siteJs, /minimumFractionDigits: 1, maximumFractionDigits: 1/);
 assert.match(dimensionierungHtml, /<span style="color:var\(--green\);">gleichzeitig<\/span>/);

@@ -31,6 +31,7 @@ vm.runInContext(
   } }; };
   getKlimaPlz_ = function () { return { '30159': { nat: -10, volllast: 1800, jahresmittel: 10.9 } }; };
   getCatalog_ = function () { return []; };
+  getKennlinien_ = function () { return {}; };
   getCatalogParameters_ = function () { return { heizstab_wolf: 9, heizstab_vaillant: 8.54 }; };
   getPriceTableCached_ = function () { return []; };
   `,
@@ -56,7 +57,8 @@ $sheets = [
     ],
     'Geräte_Katalog' => [
         array_fill(0, 20, ''), array_fill(0, 20, ''), array_fill(0, 20, ''), array_fill(0, 20, ''),
-        ['heizstab_wolf', 9], ['heizstab_vaillant', 8.54], array_fill(0, 20, ''), array_fill(0, 20, ''),
+        ['heizstab_wolf', 9], ['heizstab_vaillant', 8.54], array_fill(0, 20, ''),
+        ['Marke','Modell','Kaskade','WP NAT W35','WP NAT W55','','','Auslegungsgrenze W35 (WP÷0,80)','Auslegungsgrenze W55 (WP÷0,80)','','Brutto €','Stand','','Auslegungsgrenze W35 @A-10','Auslegungsgrenze W55 @A-10','','WP NAT W35 @A-10','WP NAT W55 @A-10','Baureihe','Mindest-Leistungsanteil'],
     ],
     'Preise_Wolf' => [[]],
     'Preise_Vaillant' => [[]],
