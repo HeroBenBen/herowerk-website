@@ -1031,6 +1031,7 @@ function renderBrandCard(key, label, brand, bedarf) {
   }
   const varianten =
     Array.isArray(brand.varianten) && brand.varianten.length ? brand.varianten : [brand];
+  let empfehlungGezeigt = false;
   const variantenHtml = varianten
     .map((variante) => {
       const geraet = String(variante.modell || '')
@@ -1038,11 +1039,19 @@ function renderBrandCard(key, label, brand, bedarf) {
         .replace(/^\s*(Wolf|Vaillant)\s+/i, '')
         .replace(/\s*\(Kaskade\)\s*$/i, '')
         .trim();
-      const preis =
-        Number(variante.brutto) > 0
-          ? `<div class="wiz-variant-price">ab ca. ${formatEuro(variante.brutto)}</div>`
-          : '<div class="wiz-variant-price">Preis auf Anfrage</div>';
+      const hatPreis = Number(variante.brutto) > 0;
+      const preis = hatPreis
+        ? '<div class="wiz-variant-price">ab ca. ' +
+          formatEuro(variante.brutto) +
+          '<div class="wiz-variant-price-note">Brutto-Richtpreis vor Förderung</div></div>'
+        : '<div class="wiz-variant-price">Preis auf Anfrage</div>';
+      const istEmpfehlung = variante.empfohlen === true && !empfehlungGezeigt;
+      if (istEmpfehlung) empfehlungGezeigt = true;
+      const empfehlungsAbzeichen = istEmpfehlung
+        ? '<div class="wiz-variant-recommendation-badge">Empfehlung</div>'
+        : '';
       return `<div class="wiz-variant">
+      ${empfehlungsAbzeichen}
       <div class="wiz-variant-series">${String(variante.baureihe || '')}</div>
       <div class="wiz-variant-device">${geraet}</div>
       <div class="wiz-variant-meta"><span>Anzahl: ${Number(variante.anzahl) || 1}</span>${preis}</div>

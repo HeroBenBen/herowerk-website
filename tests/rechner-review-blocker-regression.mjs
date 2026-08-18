@@ -125,6 +125,10 @@ const renderBrandSource = siteJs.slice(
 assert.match(renderBrandSource, /variante\.baureihe/);
 assert.match(renderBrandSource, /variante\.anzahl/);
 assert.match(renderBrandSource, /ab ca\./);
+assert.match(renderBrandSource, /Brutto-Richtpreis vor Förderung/);
+assert.match(renderBrandSource, /variante\.empfohlen === true/);
+assert.match(renderBrandSource, /wiz-variant-recommendation-badge/);
+assert.match(renderBrandSource, /empfehlungGezeigt/);
 for (const vertriebsfeld of [
   'leistungsanteil',
   'taktpunkt',
