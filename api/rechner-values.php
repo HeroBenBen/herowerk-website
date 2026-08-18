@@ -32,9 +32,9 @@ final class RechnerValuesException extends RuntimeException
 }
 
 /** @return list<string> */
-function rechner_snapshot_sheet_names(): array
+function rechner_snapshot_sheet_names(int $schemaVersion = 2): array
 {
-    return [
+    $sheets = [
         'KV_Parameter',
         'KV_FoerderPerioden',
         'Förder_Parameter',
@@ -42,9 +42,11 @@ function rechner_snapshot_sheet_names(): array
         'Preise_Wolf',
         'Preise_Vaillant',
         'Geräte_Katalog',
-        'Klima_PLZ',
-        'Fördervorschuss',
     ];
+    if ($schemaVersion >= 2) {
+        $sheets[] = 'Geraete_Kennlinien';
+    }
+    return array_merge($sheets, ['Klima_PLZ', 'Fördervorschuss']);
 }
 
 function rechner_snapshot_key(): string
@@ -76,11 +78,14 @@ function rechner_validate_snapshot(string $body): array
         throw new RechnerValuesException('snapshot_json_invalid', $error->getMessage());
     }
 
-    if (!is_array($snapshot)
-        || ($snapshot['service'] ?? null) !== 'werte_snapshot'
-        || ($snapshot['schemaVersion'] ?? null) !== 1
+    if (!is_array($snapshot)) {
+        throw new RechnerValuesException('snapshot_schema_invalid');
+    }
+    $schemaVersion = $snapshot['schemaVersion'] ?? null;
+    if (($snapshot['service'] ?? null) !== 'werte_snapshot'
+        || !in_array($schemaVersion, [1, 2], true)
         || !is_array($snapshot['sheets'] ?? null)
-        || array_keys($snapshot['sheets']) !== rechner_snapshot_sheet_names()) {
+        || array_keys($snapshot['sheets']) !== rechner_snapshot_sheet_names($schemaVersion)) {
         throw new RechnerValuesException('snapshot_schema_invalid');
     }
 

@@ -14,6 +14,28 @@ function buildAppsScript(rows, lastRow = rows.length + 8) {
   parameterRows[4][1] = 9;
   parameterRows[5][0] = 'heizstab_vaillant';
   parameterRows[5][1] = 8.54;
+  parameterRows[7] = [
+    'Marke',
+    'Modell',
+    'Kaskade',
+    'WP NAT W35',
+    'WP NAT W55',
+    '',
+    '',
+    'Auslegungsgrenze W35 (WP÷0,80)',
+    'Auslegungsgrenze W55 (WP÷0,80)',
+    '',
+    'Brutto €',
+    'Stand',
+    '',
+    'Auslegungsgrenze W35 @A-10',
+    'Auslegungsgrenze W55 @A-10',
+    '',
+    'WP NAT W35 @A-10',
+    'WP NAT W55 @A-10',
+    'Baureihe',
+    'Mindest-Leistungsanteil',
+  ];
   const sheet = {
     getLastRow() {
       return lastRow;
@@ -93,7 +115,7 @@ for (const [index, row] of geraeteKatalogZeilen.entries()) {
 const { sandbox: appsScript, cache } = buildAppsScript(geraeteKatalogZeilen);
 const appsCatalog = appsScript.getCatalog_();
 assert.equal(appsCatalog.length, 22, 'Apps Script verarbeitet alle 22 Katalogzeilen');
-assert(cache.has('catalog:v2'), 'Apps Script schreibt catalog:v2');
+assert(cache.has('catalog:v3'), 'Apps Script schreibt catalog:v3');
 assert.equal(cache.has('catalog:v1'), false, 'Apps Script verwendet catalog:v1 nicht mehr');
 assert.deepEqual(
   JSON.parse(JSON.stringify(appsScript.getCatalogParameters_())),
@@ -165,6 +187,7 @@ $blank = array_fill(0, 20, '');
 $sheets = ['Geräte_Katalog' => array_merge(array_fill(0, 8, $blank), $input['rows'])];
 $sheets['Geräte_Katalog'][4] = ['heizstab_wolf', 9];
 $sheets['Geräte_Katalog'][5] = ['heizstab_vaillant', 8.54];
+$sheets['Geräte_Katalog'][7] = ['Marke','Modell','Kaskade','WP NAT W35','WP NAT W55','','','Auslegungsgrenze W35 (WP÷0,80)','Auslegungsgrenze W55 (WP÷0,80)','','Brutto €','Stand','','Auslegungsgrenze W35 @A-10','Auslegungsgrenze W55 @A-10','','WP NAT W35 @A-10','WP NAT W55 @A-10','Baureihe','Mindest-Leistungsanteil'];
 $select = static function (array $case) use ($sheets, $input): array {
     $brand = $case['brand'];
     $load = $case['load'];
@@ -197,6 +220,25 @@ $picked['brutto'] = 0;
 $priceRows = [['brutto' => 0, 'eigen' => 12345, 'proklima' => 12000]];
 $bandFalse = hw_catalog_result($picked, $priceRows, 9, 0.8);
 $bandTrue = hw_catalog_result($picked, $priceRows, 9, 0.7);
+$varianten = hw_match_catalog_varianten($sheets, 'vaillant', 9, 'heizkoerper', -11, $input['heizstaebe']['vaillant'], $input['kaskadenToleranz']);
+$punkte = [
+    ['temperatur' => -10, 'volllast' => 6, 'mindest' => 3],
+    ['temperatur' => 0, 'volllast' => 6, 'mindest' => 3],
+    ['temperatur' => 10, 'volllast' => 6, 'mindest' => 3],
+];
+$context = ['kennlinien' => ['test' => ['55' => $punkte]], 'nat' => -10, 'heizgrenze' => 10, 'heizsystem' => 'heizkoerper'];
+$single = ['modell' => 'Vaillant Test', 'kaskade' => false];
+$cascade = ['modell' => '2× Vaillant Test (Kaskade)', 'kaskade' => true];
+$dimensionSheets = $sheets + [
+    'Dimensionierung' => [['schluessel','wert'],['volllaststunden',1800],['taktpunkt_grenze_c',2],['sollband_oben',0.8],['kaskaden_toleranz_kw',0.5]],
+    'Klima_PLZ' => [['PLZ','Ort','NAT_C','Volllaststunden'],['30159','Hannover',-11,1800]],
+    'Preise_Wolf' => [['Klasse','Modell','Endpreis_brutto']],
+    'Preise_Vaillant' => [['Klasse','Modell','Endpreis_brutto']],
+];
+$driverQuery = ['verbrauchKnown'=>'known','verbrauch'=>20000,'einheit'=>'kwh','warmwasser'=>'nein','heizsystem'=>'heizkoerper','plz'=>'30159','heizung'=>'gas','abgasrohr'=>'unklar'];
+$driver2 = hw_dimensionierung($driverQuery, $dimensionSheets);
+$dimensionSheets['Dimensionierung'][2][1] = 9;
+$driver9 = hw_dimensionierung($driverQuery, $dimensionSheets);
 $reorderedDimension = [
     ['schluessel', 'wert'],
     ['sollband_oben', 0.81],
@@ -213,6 +255,14 @@ echo json_encode([
     'fallbackTolerance' => hw_get_num([], 'kaskaden_toleranz_kw', 0.5),
     'fallbackUpperBand' => hw_get_num([], 'sollband_oben', 0.8),
     'catalogParameters' => hw_read_kv($sheets, 'Geräte_Katalog'),
+    'varianten' => array_map(static fn (array $item): array => ['baureihe' => $item['baureihe'], 'leistung' => round($item['leistungAuslegung'], 4)], $varianten),
+    'kennlinien' => [
+        'einzelTakt' => hw_taktpunkt($single, $context, 20),
+        'einzelBivalenz' => hw_bivalenzpunkt($single, $context, 20),
+        'kaskadeTakt' => hw_taktpunkt($cascade, $context, 20),
+        'kaskadeBivalenz' => hw_bivalenzpunkt($cascade, $context, 20),
+    ],
+    'driver' => ['zwei' => $driver2, 'neun' => $driver9],
 ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 `;
 
@@ -229,6 +279,149 @@ const php = spawnSync('php', ['-r', phpRunner], {
 });
 assert.equal(php.status, 0, php.stderr);
 const phpResults = JSON.parse(php.stdout);
+const appsVarianten = JSON.parse(
+  JSON.stringify(
+    appsScript
+      .matchCatalogVarianten_('vaillant', 9, 'heizkoerper', -11, 8.54, kaskadenToleranz)
+      .map((item) => ({
+        baureihe: item.baureihe,
+        leistung: Math.round(item.leistungAuslegung * 10000) / 10000,
+      }))
+  )
+);
+assert.deepEqual(
+  phpResults.varianten,
+  appsVarianten,
+  'Varianten je Baureihe sind in beiden Kernen gleich'
+);
+assert(
+  appsVarianten.length >= 2,
+  'Mehr als eine Vaillant-Baureihe wird ohne obere Filtergrenze geliefert'
+);
+assert.equal(
+  new Set(appsVarianten.map((item) => item.baureihe)).size,
+  appsVarianten.length,
+  'Jede Baureihe erscheint genau einmal'
+);
+for (let index = 1; index < appsVarianten.length; index += 1) {
+  assert(
+    appsVarianten[index - 1].leistung <= appsVarianten[index].leistung,
+    'Varianten sind nach Leistung sortiert'
+  );
+}
+function variante(load, baureihe, brand = 'vaillant') {
+  return appsScript
+    .matchCatalogVarianten_(brand, load, 'heizkoerper', -11, heizstaebe[brand], kaskadenToleranz)
+    .find((item) => item.baureihe === baureihe);
+}
+assert.equal(
+  variante(13, 'aroTHERM plus 8.1').modell,
+  'Vaillant VWL 105/8.1 A',
+  'P1: plus bei 13 kW'
+);
+assert.equal(
+  variante(13, 'aroTHERM pro 7.1').modell,
+  'Vaillant VWL 115/7.1 A',
+  'P1: pro bei 13 kW'
+);
+assert.equal(
+  variante(9, 'aroTHERM perform 8.1').modell,
+  'Vaillant VWL 205/8.1 A S2 Q',
+  'P2: perform bleibt bei 209,1 Prozent in der Liste'
+);
+assert.equal(
+  variante(17, 'aroTHERM plus 8.1').modell,
+  '2× Vaillant VWL 75/8.1 A (Kaskade)',
+  'P3: Kaskaden-Heizstab wirkt bei 17 kW'
+);
+assert.equal(
+  variante(25, 'aroTHERM plus 8.1').modell,
+  '2× Vaillant VWL 105/8.1 A (Kaskade)',
+  'P4: zwei Außengeräte bei 25 kW'
+);
+assert.equal(
+  variante(28, 'Wolf CHA', 'wolf').modell,
+  '2× Wolf CHA-16/20 (Kaskade)',
+  'P6: Wolf bleibt bei 28 kW monovalent'
+);
+const testPunkte = [
+  { temperatur: -10, volllast: 6, mindest: 3 },
+  { temperatur: 0, volllast: 6, mindest: 3 },
+  { temperatur: 10, volllast: 6, mindest: 3 },
+];
+const testContext = {
+  kennlinien: { test: { 55: testPunkte } },
+  nat: -10,
+  heizgrenze: 10,
+  heizsystem: 'heizkoerper',
+};
+const appsKennlinien = {
+  einzelTakt: appsScript.taktpunkt_({ modell: 'Vaillant Test', kaskade: false }, testContext, 20),
+  einzelBivalenz: appsScript.bivalenzpunkt_(
+    { modell: 'Vaillant Test', kaskade: false },
+    testContext,
+    20
+  ),
+  kaskadeTakt: appsScript.taktpunkt_(
+    { modell: '2× Vaillant Test (Kaskade)', kaskade: true },
+    testContext,
+    20
+  ),
+  kaskadeBivalenz: appsScript.bivalenzpunkt_(
+    { modell: '2× Vaillant Test (Kaskade)', kaskade: true },
+    testContext,
+    20
+  ),
+};
+assert.deepEqual(
+  phpResults.kennlinien,
+  appsKennlinien,
+  'Takt- und Bivalenzpunkte sind in beiden Kernen gleich'
+);
+assert.equal(
+  appsKennlinien.einzelTakt,
+  7,
+  'Einzelgerät nutzt ausschließlich die echte Mindestleistungskurve'
+);
+assert.equal(
+  appsScript.taktpunkt_(
+    { modell: 'Vaillant Test', kaskade: false },
+    {
+      ...testContext,
+      kennlinien: { test: { 55: testPunkte.map((punkt) => ({ ...punkt, mindest: null })) } },
+    },
+    20
+  ),
+  null,
+  'Einzelgerät ohne echte Mindestleistungsdaten erhält keinen Taktpunkt'
+);
+assert.equal(appsKennlinien.kaskadeTakt, null, 'Kaskaden-Taktpunkt bleibt bis T505 leer');
+assert.equal(appsKennlinien.einzelBivalenz, 4, 'Einzelgerät nutzt eine Volllastkurve');
+assert.equal(
+  appsKennlinien.kaskadeBivalenz,
+  -2,
+  'Kaskaden-Volllast wird mit der Gerätezahl skaliert'
+);
+assert.equal(
+  phpResults.driver.zwei.taktpunkt_grenze_c,
+  2,
+  'PHP liest den wirkungslosen Treiber mit 2 °C'
+);
+assert.equal(
+  phpResults.driver.neun.taktpunkt_grenze_c,
+  9,
+  'PHP liest den wirkungslosen Treiber mit 9 °C'
+);
+assert.equal(
+  phpResults.driver.zwei.taktpunkt_grenze_wirksam,
+  false,
+  'PHP kennzeichnet den Treiber als wirkungslos'
+);
+assert.deepEqual(
+  phpResults.driver.zwei.marken,
+  phpResults.driver.neun.marken,
+  'PHP-Auswahlliste bleibt bei 2 und 9 °C zeichengleich'
+);
 assert.equal(
   phpResults.catalogParameters.heizstab_wolf,
   9,
@@ -276,6 +469,12 @@ for (const [engine, bandFalse, bandTrue] of [
   ['PHP', phpResults.bandFalse, phpResults.bandTrue],
 ]) {
   assert.equal(bandFalse.eigenanteil, null, `${engine}: Nullpreis wird nicht gematcht`);
+  assert.equal(bandFalse.brutto, null, `${engine}: Fehlender Preis bleibt null`);
+  assert.equal(
+    bandFalse.preis_hinterlegt,
+    false,
+    `${engine}: Fehlender Preis ist ausdrücklich gekennzeichnet`
+  );
   assert.equal(
     bandFalse.ueberSollband,
     false,
@@ -404,6 +603,61 @@ assert.equal(
   'Apps Script: Fehlende Sollband-Obergrenze fällt auf 0,8 zurück'
 );
 assert.equal(phpResults.fallbackUpperBand, 0.8, 'PHP: Sollband-Obergrenze fällt auf 0,8 zurück');
+
+function appsDimensionierungMitTreiber(value) {
+  appsScript.getAllParameters_ = () => ({
+    dimensionierung: {
+      volllaststunden: 1800,
+      taktpunkt_grenze_c: value,
+      sollband_oben: 0.8,
+      kaskaden_toleranz_kw: 0.5,
+    },
+  });
+  appsScript.getKlimaPlz_ = () => ({ 30159: { nat: -11, volllast: 1800 } });
+  appsScript.getPriceTableCached_ = () => [];
+  appsScript.getKennlinien_ = () => ({});
+  return JSON.parse(
+    JSON.stringify(
+      appsScript.dimensionierung_({
+        verbrauchKnown: 'known',
+        verbrauch: 20000,
+        einheit: 'kwh',
+        warmwasser: 'nein',
+        heizsystem: 'heizkoerper',
+        plz: '30159',
+        heizung: 'gas',
+        abgasrohr: 'unklar',
+      })
+    )
+  );
+}
+const appsDriver2 = appsDimensionierungMitTreiber(2);
+const appsDriver9 = appsDimensionierungMitTreiber(9);
+assert.equal(
+  appsDriver2.taktpunkt_grenze_c,
+  2,
+  'Apps Script liest den wirkungslosen Treiber mit 2 °C'
+);
+assert.equal(
+  appsDriver9.taktpunkt_grenze_c,
+  9,
+  'Apps Script liest den wirkungslosen Treiber mit 9 °C'
+);
+assert.equal(
+  appsDriver2.taktpunkt_grenze_wirksam,
+  false,
+  'Apps Script kennzeichnet den Treiber als wirkungslos'
+);
+assert.deepEqual(
+  appsDriver2.marken,
+  appsDriver9.marken,
+  'Apps-Script-Auswahlliste bleibt bei 2 und 9 °C zeichengleich'
+);
+assert.deepEqual(
+  appsDriver2,
+  phpResults.driver.zwei,
+  'PHP- und Apps-Script-Rückgabe sind zeichengleich'
+);
 
 console.log(
   'PASS Geräteauswahl: 19 Sollfälle je Kern, 1.044 Paritätsvergleiche, Sollband und Nullpreis.'
