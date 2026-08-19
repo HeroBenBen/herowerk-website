@@ -480,28 +480,52 @@ function periodeFuer_(heute, periodenQuelle) {
   return out;
 }
 
-// Einkommens-Enum normalisieren. Neue Werte (Kanon 1.2 / E-05): bis30 | bis40 | bis50 | ueber50.
+// Einkommens-Enum normalisieren. Die Staffel ist nach oben GESCHLOSSEN (Stand 19.08.2026):
+//   bis30 | bis40 | bis50 | bis60 | bis90 | ueber90.
+// bis60 traegt die Bonusstufe fuer Haushalte mit Kind (60.000 minus 10.000 = 50.000 -> 10 %),
+// bis90 und ueber90 trennen an der Zinsgrenze des verbilligten Ergaenzungskredits
+// (Foerderrichtlinie BEG EM vom 17.07.2026, Nr. 8.1 und Nr. 8.5.2 Buchst. a: 90.000 Euro).
 // RÜCKWÄRTSKOMPATIBILITÄT (Auftrag C1.3): die alten Request-Werte bleiben gültig und werden gemappt:
 //   'unter40' -> 'bis40'   (Alt-Regel "zvE unter 40.000" -> Klasse bis 40.000)
-//   'ueber40' -> 'ueber50' (kein Bonus in beiden Regelwerken)
+//   'ueber40' -> 'ueber50' (Alt-Klasse, nach oben offen)
+//   'ueber50' bleibt lesbar, damit eine im Browser zwischengespeicherte Seite weiter rechnet.
 // 'keine' ("möchte ich nicht angeben") und alles Unbekannte -> 'unbekannt' = konservativ kein Bonus,
 // exakt wie die Ist-Logik (dort schlug jede Nicht-'unter40'-Eingabe in "kein Bonus" um).
+const EINKOMMEN_KLASSEN_ = ['bis30', 'bis40', 'bis50', 'bis60', 'bis90', 'ueber90', 'ueber50'];
+
 function einkommenNorm_(v) {
   const s = String(v || '').toLowerCase();
   if (s === 'unter40') return 'bis40';
   if (s === 'ueber40') return 'ueber50';
-  if (s === 'bis30' || s === 'bis40' || s === 'bis50' || s === 'ueber50') return s;
+  if (EINKOMMEN_KLASSEN_.indexOf(s) !== -1) return s;
   return 'unbekannt';
 }
 
-// Anrechenbares Einkommen -> Bonus-Prozentsatz (Orakel Z.109-113).
+// Obergrenze des zu versteuernden Haushaltsjahreseinkommens je Klasse.
+// Nach oben offene Klassen tragen AUSDRÜCKLICH Infinity und laufen dadurch durch dieselbe Staffel
+// wie jede andere Klasse. Genau das fehlte bis zum 19.08.2026: 'ueber50' fiel aus dem Grenzen-Feld
+// heraus und lieferte deshalb immer 0 %, auch mit Kind, obwohl 55.000 minus 10.000 Kinderabzug auf
+// der Zehn-Prozent-Stufe liegt.
+function einkommenGrenzen_(f) {
+  return {
+    bis30: getNum_(f, 'reform_eink_grenze_bis30', 30000),
+    bis40: getNum_(f, 'reform_eink_grenze_bis40', 40000),
+    bis50: getNum_(f, 'reform_eink_grenze_bis50', 50000),
+    bis60: getNum_(f, 'reform_eink_grenze_bis60', 60000),
+    bis90: getNum_(f, 'reform_eink_grenze_bis90', 90000),
+    ueber90: Infinity,
+    ueber50: Infinity,
+  };
+}
+
+// Anrechenbares Einkommen -> Bonus-Prozentsatz (Richtlinie Nr. 8.4.5 Abs. 3).
 // Die Enum-Klasse wird über ihre OBERGRENZE repräsentiert; weil Staffelgrenzen (30/40/50k) und Kinderabzug
 // (10k) auf demselben 10.000er-Raster liegen, bildet jede Klasse auf genau EINEN Bonuswert ab, auch mit Kind.
-// Das ist exakt, keine Näherung. 'ueber50' ist nach oben offen -> anr = Infinity -> 0 % (konservativ).
+// Das ist exakt, keine Näherung, und systematisch konservativ.
 function einkommensbonusPct_(einkommenNorm, kind, f) {
-  const grenzen = { bis30: getNum_(f, 'reform_eink_grenze_bis30', 30000), bis40: getNum_(f, 'reform_eink_grenze_bis40', 40000), bis50: getNum_(f, 'reform_eink_grenze_bis50', 50000) };
+  const grenzen = einkommenGrenzen_(f);
   const zvE = grenzen[einkommenNorm];
-  if (zvE === undefined) return 0; // ueber50 / unbekannt
+  if (zvE === undefined) return 0; // 'unbekannt' / 'keine'
   const anr = Math.max(0, zvE - (kind ? getNum_(f, 'reform_kind_abzug_eur', 10000) : 0));
   if (anr <= grenzen.bis30) return getNum_(f, 'reform_eink_pct_bis30', 40);
   if (anr <= grenzen.bis40) return getNum_(f, 'reform_eink_pct_bis40', 30);
@@ -1494,7 +1518,7 @@ function FOERDER_ROWS_() { return [
   ['grundfoerderung_pct',30,'%', 'KfW-Grundförderung','ADR-04 Anhang A / js/site.js calculateFoerder'], ['klimabonus_pct',20,'%', 'Klimageschwindigkeitsbonus','ADR-04 Anhang A'], ['einkommensbonus_pct',30,'%', 'Einkommensbonus bis Einkommensgrenze','ADR-04 Anhang A'], ['effizienzbonus_pct',5,'%', 'Effizienzbonus R290','ADR-04 Anhang A'], ['deckel_selbst_pct',70,'%', 'Maximaler Satz Selbstnutzer','ADR-04 Anhang A'], ['deckel_vermietet_pct',35,'%', 'Maximaler Satz vermietet','ADR-04 Anhang A'], ['gas_klimabonus_min_alter',20,'Jahre', 'Mindestalter Gas-Zentralheizung und Biomasse für Klimabonus','js/site.js getHeizungsalter/calculateFoerder'], ['einkommensgrenze_eur',40000,'EUR', 'Grenze Einkommensbonus','ADR-04 Anhang A'], ['foerderfaehig_we1',30000,'EUR', 'Förderfähige Kosten 1. WE','js/site.js foerderFaehigeKostenGesamt'], ['foerderfaehig_we2bis6',15000,'EUR/WE','Förderfähige Kosten 2. bis 6. WE','js/site.js foerderFaehigeKostenGesamt'], ['foerderfaehig_we7plus',8000,'EUR/WE','Förderfähige Kosten ab 7. WE','js/site.js foerderFaehigeKostenGesamt'], ['proklima_aktiv','N','J/N', 'proKlima global aktiv','GF-Entscheid 15.07.2026: Website aus, Engine bleibt'], ['proklima_pct',5,'%', 'proKlima-Satz','ADR-04 Anhang A'], ['proklima_max_eur',1500,'EUR', 'proKlima-Höchstbetrag','ADR-04 Anhang A'], ['proklima_gemeinden','hannover,seelze,langenhagen,laatzen,hemmingen,ronnenberg','CSV', 'proKlima-Fördergebiet','ADR-04 Anhang A'],
   // --- Reform ab 21.07.2026 (additiv). Defaults im Code = Kanon-Werte: die Engine rechnet auch dann
   // korrekt, wenn diese Zeilen im Sheet noch fehlen. Perioden-Tabelle (Klima/Grenze/EU) = FOERDER_PERIODEN_().
-  ['reform_grund_pct',30,'%', 'Grundförderung Reform (EU-Gerät)','Kanon 1.2 / Orakel Z.106'], ['reform_grund_pct_nicht_eu',15,'%', 'Grundförderung Reform ohne EU-Wertschöpfung (ab 01.02.2027)','Kanon 1.2 / Orakel Z.106, Z.114-115'], ['reform_deckel_pct',80,'%', 'Maximaler Satz Selbstnutzer Reform','Kanon 1.2 / Orakel Z.120'], ['reform_eink_pct_bis30',40,'%', 'Einkommensbonus bis 30.000 EUR anrechenbar','Kanon 1.2 / Orakel Z.113'], ['reform_eink_pct_bis40',30,'%', 'Einkommensbonus bis 40.000 EUR anrechenbar','Kanon 1.2 / Orakel Z.113'], ['reform_eink_pct_bis50',10,'%', 'Einkommensbonus bis 50.000 EUR anrechenbar','Kanon 1.2 / Orakel Z.113'], ['reform_eink_grenze_bis30',30000,'EUR', 'Staffelgrenze 1 anrechenbares zvE','Kanon 1.2 / Orakel Z.113'], ['reform_eink_grenze_bis40',40000,'EUR', 'Staffelgrenze 2 anrechenbares zvE','Kanon 1.2 / Orakel Z.113'], ['reform_eink_grenze_bis50',50000,'EUR', 'Staffelgrenze 3 anrechenbares zvE','Kanon 1.2 / Orakel Z.113'], ['reform_kind_abzug_eur',10000,'EUR', 'Einmaliger Abzug vom zvE bei mind. einem minderjährigen Kind','Kanon 1.2 / Orakel Z.109-112'], ['kumulierung_max_pct',60,'%', 'BEG-Kumulierungshöchstsatz aller öffentlichen Mittel','BEG-EM Nr. 8.6 (BAnz AT 29.12.2023 B1) + KfW-Merkblatt 458 12/2025; Kanon 1.3'], ['proklima_frist_ymd',20261031,'YYYYMMDD', 'Letztes Antragsdatum proKlima-Richtlinie','Kanon 1.3 / proKlima-Richtlinie 2026 v1.4'], ['proklima_basis','','Text', 'proKlima-Bemessungsbasis: preis | foerderfaehig (leer = periodenabhängiger Default: Alt foerderfaehig, Reform preis)','Kanon 1.3 / Orakel Z.218 / Kanon 5']
+  ['reform_grund_pct',30,'%', 'Grundförderung Reform (EU-Gerät)','Kanon 1.2 / Orakel Z.106'], ['reform_grund_pct_nicht_eu',15,'%', 'Grundförderung Reform ohne EU-Wertschöpfung (ab 01.02.2027)','Kanon 1.2 / Orakel Z.106, Z.114-115'], ['reform_deckel_pct',80,'%', 'Maximaler Satz Selbstnutzer Reform','Kanon 1.2 / Orakel Z.120'], ['reform_eink_pct_bis30',40,'%', 'Einkommensbonus bis 30.000 EUR anrechenbar','Kanon 1.2 / Orakel Z.113'], ['reform_eink_pct_bis40',30,'%', 'Einkommensbonus bis 40.000 EUR anrechenbar','Kanon 1.2 / Orakel Z.113'], ['reform_eink_pct_bis50',10,'%', 'Einkommensbonus bis 50.000 EUR anrechenbar','Kanon 1.2 / Orakel Z.113'], ['reform_eink_grenze_bis30',30000,'EUR', 'Staffelgrenze 1 anrechenbares zvE','Kanon 1.2 / Orakel Z.113'], ['reform_eink_grenze_bis40',40000,'EUR', 'Staffelgrenze 2 anrechenbares zvE','Kanon 1.2 / Orakel Z.113'], ['reform_eink_grenze_bis50',50000,'EUR', 'Staffelgrenze 3 anrechenbares zvE','Kanon 1.2 / Orakel Z.113'], ['reform_eink_grenze_bis60',60000,'EUR', 'Klassenobergrenze 4 zvE (mit Kind anrechenbar 50.000 -> 10 %)','BEG-EM-Richtlinie 17.07.2026 Nr. 8.4.5 Abs. 3'], ['reform_eink_grenze_bis90',90000,'EUR', 'Klassenobergrenze 5 zvE, zugleich Zinsgrenze Ergaenzungskredit','BEG-EM-Richtlinie 17.07.2026 Nr. 8.1 und Nr. 8.5.2 Buchst. a'], ['reform_kind_abzug_eur',10000,'EUR', 'Einmaliger Abzug vom zvE bei mind. einem minderjährigen Kind','Kanon 1.2 / Orakel Z.109-112'], ['kumulierung_max_pct',60,'%', 'BEG-Kumulierungshöchstsatz aller öffentlichen Mittel','BEG-EM Nr. 8.6 (BAnz AT 29.12.2023 B1) + KfW-Merkblatt 458 12/2025; Kanon 1.3'], ['proklima_frist_ymd',20261031,'YYYYMMDD', 'Letztes Antragsdatum proKlima-Richtlinie','Kanon 1.3 / proKlima-Richtlinie 2026 v1.4'], ['proklima_basis','','Text', 'proKlima-Bemessungsbasis: preis | foerderfaehig (leer = periodenabhängiger Default: Alt foerderfaehig, Reform preis)','Kanon 1.3 / Orakel Z.218 / Kanon 5']
 ]; }
 function DIMENSION_ROWS_() { return [
   ['spez_bedarf_vor1978',180,'kWh/m²a','spezifischer Bedarf vor 1978','js/site.js wizCalculate'], ['spez_bedarf_1978_1994',140,'kWh/m²a','spezifischer Bedarf 1978–1994','js/site.js wizCalculate'], ['spez_bedarf_1995_2010',100,'kWh/m²a','spezifischer Bedarf 1995–2010','js/site.js wizCalculate'], ['spez_bedarf_nach2010',60,'kWh/m²a','spezifischer Bedarf nach 2010','js/site.js wizCalculate'], ['gebaeudef_efh',1.0,'Faktor','Gebäudefaktor EFH','js/site.js wizCalculate'], ['gebaeudef_dhh',0.9,'Faktor','Gebäudefaktor DHH','js/site.js wizCalculate'], ['gebaeudef_rh',0.85,'Faktor','Gebäudefaktor RH','js/site.js wizCalculate'], ['gebaeudef_rh_end',0.85,'Faktor','Gebäudefaktor Reihenendhaus','js/site.js wizCalculate'], ['gebaeudef_rh_mitte',0.85,'Faktor','Gebäudefaktor Reihenmittelhaus, bewusst gleich der übrigen Reihenhaus-Familie','Befund 14.08.2026, Auswahlkarte ohne Parameter'], ['gebaeudef_zfh',0.95,'Faktor','Gebäudefaktor ZFH','js/site.js wizCalculate'], ['gebaeudef_mfh',0.85,'Faktor','Gebäudefaktor MFH','js/site.js wizCalculate'], ['jaz_vor1978',3.0,'JAZ','JAZ vor 1978','js/site.js wizCalculate'], ['jaz_1978_1994',3.3,'JAZ','JAZ 1978–1994','js/site.js wizCalculate'], ['jaz_1995_2010',3.8,'JAZ','JAZ 1995–2010','js/site.js wizCalculate'], ['jaz_nach2010',4.2,'JAZ','JAZ nach 2010','js/site.js wizCalculate'],

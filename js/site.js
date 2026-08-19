@@ -2377,11 +2377,12 @@ async function calculateFoerder() {
   // Sales-Agent prueft sie beim Vollstaendigkeits-Check. Nur fuer Selbstnutzer aussagekraeftig.
   // Die HubSpot-Property bleibt binaer; hier wird NUR gemappt, nicht gerechnet.
   // Beide Wertesaetze werden akzeptiert, damit die Merge-Reihenfolge der Branches egal ist:
-  // neu (Lane C, 4-stufig) bis30/bis40/bis50/ueber50 und alt (Bestand) unter40/ueber40.
+  // neu (nach oben geschlossen) bis30/bis40/bis50/bis60/bis90/ueber90 und alt (Bestand)
+  // unter40/ueber40/ueber50. Faellt eine Klasse aus dieser Liste, bekaeme der Lead still 'ka'.
   // Ohne die Alt-Werte bekaeme jeder Lead still 'ka', sobald eine Haelfte allein live geht.
   const einkommenFlag = ['bis30', 'bis40', 'unter40'].includes(einkommen)
     ? 'ja'
-    : ['bis50', 'ueber50', 'ueber40'].includes(einkommen)
+    : ['bis50', 'bis60', 'bis90', 'ueber90', 'ueber50', 'ueber40'].includes(einkommen)
       ? 'nein'
       : 'ka';
   hwMergeLeadPrefill({
