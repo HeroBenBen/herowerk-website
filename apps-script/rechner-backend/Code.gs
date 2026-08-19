@@ -141,7 +141,24 @@ function dimensionierung_(p) {
   const nutzwaerme = verbrauchKnown ? bedarfKwh * faktorNutzwaerme : bedarfKwh;
   const warmwasserWaerme = personen * getNum_(d, 'ww_abzug_kwh_pro_person', 700);
   const raumwaerme = Math.max(0, nutzwaerme - (verbrauchKnown && bestandMitWarmwasser ? warmwasserWaerme : 0));
-  const heizlast = raumwaerme / getNum_(d, 'volllaststunden', 1800);
+  // VERBRAUCHSPFAD AN VAILLANT ANGEGLICHEN, GF-Entscheid vom 19.08.2026, 11:54 Uhr
+  // (_Entscheidungen/2026-08-19_Heizlast-an-Vaillant-angleichen_HERO.md, Vorgang T555).
+  // Kennt der Kunde seinen Jahresverbrauch, wird die Heizlast aus dem ROHEN Verbrauch gerechnet,
+  // also OHNE Kesselwirkungsgrad und OHNE Warmwasser-Abzug, genau wie es die Vaillant-Auslegung
+  // tut. Vorher lagen wir dadurch 16,9 bis 24,4 Prozent unter Vaillant.
+  // Der FLAECHENPFAD bleibt unveraendert; er ist ausdruecklich NICHT mitentschieden (Vorgang T320).
+  // raumwaerme bleibt die Nutzwaerme und traegt weiterhin die Stromverbrauchs-Schaetzung; nur die
+  // Heizlast bekommt ihre eigene Bezugsgroesse.
+  // EINE AUSNAHME, abgeleitet und nicht erfunden: der Entscheid spricht vom rohen GASverbrauch,
+  // und die Messung der Abweichung lief ueber zwoelf Gas-Szenarien. Bei einer BESTEHENDEN
+  // WAERMEPUMPE ist der abgelesene Wert aber Strom und der Faktor keine Verlustzahl, sondern eine
+  // Jahresarbeitszahl ueber 1 (jaz_bestand_waermepumpe = 2,8). Wer ihn dort weglaesst, rechnet
+  // Strom als Waerme und legt das Haus um den Faktor 2,8 zu klein aus. Ein Faktor ueber 1 bleibt
+  // deshalb erhalten; der Warmwasser-Abzug entfaellt auch dort.
+  const heizlastWaerme = verbrauchKnown
+    ? (faktorNutzwaerme > 1 ? nutzwaerme : bedarfKwh)
+    : raumwaerme;
+  const heizlast = heizlastWaerme / getNum_(d, 'volllaststunden', 1800);
   const wwLeistung = warmwasser === 'ja'
     ? warmwasserLeistung_(d, personen,
       Math.max(0, Math.min(6, int_(p.duschen, 1))),
@@ -210,7 +227,7 @@ function faktorNutzwaerme_(d, heizung, andereHeizung, abgasrohr, heizungsalter) 
   if (heizung === 'sonstige' || heizung === 'sonst') {
     if (andereHeizung === 'fernwaerme') return getNum_(d, 'eta_fernwaerme', 0.98);
     if (andereHeizung === 'pellet') return getNum_(d, 'eta_pellet', 0.80);
-    if (andereHeizung === 'waermepumpe') return getNum_(d, 'jaz_bestand_waermepumpe', 3.5);
+    if (andereHeizung === 'waermepumpe') return getNum_(d, 'jaz_bestand_waermepumpe', 2.8);
     return getNum_(d, 'eta_andere_unklar', 0.85);
   }
   if (abgasrohr === 'unklar') return getNum_(d, 'eta_unklar', 0.85);
@@ -1508,7 +1525,7 @@ function DIMENSION_ROWS_() { return [
   ['eta_fernwaerme',0.98,'Faktor','Nutzwärmefaktor Fernwärme','Bauauftrag 13.08.2026 / IWU-Referenz'],
   ['eta_pellet',0.80,'Faktor','Nutzwärmefaktor Pelletheizung','GF-Entscheid 14.08.2026 / Blattparameter'],
   ['eta_andere_unklar',0.85,'Faktor','Nutzwärmefaktor bei sonstiger unbekannter Heizung','Bauauftrag 13.08.2026 Nachtrag N2'],
-  ['jaz_bestand_waermepumpe',3.5,'JAZ','Jahresarbeitszahl einer bestehenden Wärmepumpe','GF-Entscheid 14.08.2026 / Blattparameter']
+  ['jaz_bestand_waermepumpe',2.8,'JAZ','Jahresarbeitszahl einer bestehenden Wärmepumpe, die ersetzt wird','GF-Entscheid 19.08.2026 / Blattparameter']
 ]; }
 function WOLF_PRODUCTS_() { return [{klasse:'s',modell:'Wolf CHA-07',hausgroesse:'bis ca. 120 m²',kw:'5–7 kW'},{klasse:'m',modell:'Wolf CHA-10',hausgroesse:'ca. 120–180 m²',kw:'9–12 kW'},{klasse:'l',modell:'Wolf CHA-16/20',hausgroesse:'ca. 180–280 m²',kw:'14–16 kW'},{klasse:'xl',modell:'Wolf CHA-20/24',hausgroesse:'ab 250 m² / 2 WE',kw:'18–24 kW'},{klasse:'xxl',modell:'2× Wolf CHA-16',hausgroesse:'Ref. 6 WE MFH',kw:'2× 16 kW (32 kW)'}]; }
 function VAILLANT_PRODUCTS_() { return [{klasse:'s',modell:'',hausgroesse:'',kw:''},{klasse:'m',modell:'',hausgroesse:'',kw:''},{klasse:'l',modell:'',hausgroesse:'',kw:''},{klasse:'xl',modell:'',hausgroesse:'',kw:''},{klasse:'xxl',modell:'',hausgroesse:'',kw:''}]; }
