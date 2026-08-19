@@ -246,10 +246,18 @@ const knownBase = {
   heizsystem: 'heizkoerper',
   plz: '30159',
 };
+// SOLLWERTE AM 19.08.2026 NACHGEZOGEN, Vorgang T555: der Verbrauchspfad ist an Vaillant
+// angeglichen (GF-Entscheid 19.08.2026, 11:54 Uhr). Wo die Warmwasser-Zapflast fuehrt, aendert sich
+// nichts (A2 und A6). Wo die Heizung fuehrt, steigt die Zahl auf den rohen Verbrauch geteilt durch
+// die Volllaststunden: A1 8,6 auf 12,2 · A3 10,1 auf 16,7 · A4 6,8 auf 7,8 · A5 6,5 auf 6,7 ·
+// N2 9,3 auf 11,1. N1 steigt von 8,2 auf 9,7, weil dort eine bestehende Waermepumpe zaehlt und ihre
+// Jahresarbeitszahl als Umrechnung von Strom auf Waerme erhalten bleibt.
+// Jeder Wert ist unabhaengig nachgerechnet als Maximum aus roher Verbrauch geteilt durch 1800 und
+// der Warmwasser-Zapflast, nicht aus dem Kern uebernommen.
 const acceptanceCases = [
   [
     'A1',
-    8.6,
+    12.2,
     {
       ...knownBase,
       heizung: 'gas',
@@ -283,7 +291,7 @@ const acceptanceCases = [
   ],
   [
     'A3',
-    10.1,
+    16.7,
     {
       ...knownBase,
       heizung: 'oel',
@@ -300,7 +308,7 @@ const acceptanceCases = [
   ],
   [
     'A4',
-    6.8,
+    7.8,
     {
       ...knownBase,
       heizung: 'gas',
@@ -317,7 +325,7 @@ const acceptanceCases = [
   ],
   [
     'A5',
-    6.5,
+    6.7,
     {
       ...knownBase,
       heizung: 'nacht',
@@ -350,7 +358,7 @@ const acceptanceCases = [
   ],
   [
     'N1',
-    8.2,
+    9.7,
     {
       ...knownBase,
       heizung: 'sonst',
@@ -366,7 +374,7 @@ const acceptanceCases = [
   ],
   [
     'N2',
-    9.3,
+    11.1,
     {
       ...knownBase,
       heizung: 'sonst',
@@ -601,8 +609,13 @@ assert.equal(
   'oberhalb 12.000 Litern wird geklemmt'
 );
 assert.equal(bekannt(300, 'kwh'), bekannt(5000, 'kwh'), 'unterhalb 5.000 kWh wird angehoben');
-assert.ok(bekannt(20000, 'liter') < 60, 'kein absurder Auslegungswert mehr aus einer Fehleingabe');
-assert.equal(bekannt(20000, 'kwh'), 8.7, 'realistische Eingabe unveraendert');
+// Die beiden Grenzen sind am 19.08.2026 nachgezogen, Vorgang T555: seit der Angleichung an
+// Vaillant rechnet der Verbrauchspfad mit dem rohen Verbrauch. Die Klemme bei 12.000 Litern
+// entspricht 120.000 Kilowattstunden und damit 66,7 kW; der Schutz vor der Fehleingabe ist die
+// Klemme selbst, nicht die Zahl dahinter. Die realistische Eingabe von 20.000 Kilowattstunden
+// ergibt 20.000 geteilt durch 1.800 gleich 11,1 kW, unabhaengig nachgerechnet.
+assert.ok(bekannt(20000, 'liter') < 70, 'kein absurder Auslegungswert mehr aus einer Fehleingabe');
+assert.equal(bekannt(20000, 'kwh'), 11.1, 'realistische Eingabe folgt dem rohen Verbrauch');
 
 // Auch die Flaeche folgt den Grenzen des Schiebereglers (60 bis 800 Quadratmeter).
 const flaeche = (v) => phpDimensionierung({ ...basis, flaeche: String(v) }).bedarf;

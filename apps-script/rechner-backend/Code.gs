@@ -141,7 +141,24 @@ function dimensionierung_(p) {
   const nutzwaerme = verbrauchKnown ? bedarfKwh * faktorNutzwaerme : bedarfKwh;
   const warmwasserWaerme = personen * getNum_(d, 'ww_abzug_kwh_pro_person', 700);
   const raumwaerme = Math.max(0, nutzwaerme - (verbrauchKnown && bestandMitWarmwasser ? warmwasserWaerme : 0));
-  const heizlast = raumwaerme / getNum_(d, 'volllaststunden', 1800);
+  // VERBRAUCHSPFAD AN VAILLANT ANGEGLICHEN, GF-Entscheid vom 19.08.2026, 11:54 Uhr
+  // (_Entscheidungen/2026-08-19_Heizlast-an-Vaillant-angleichen_HERO.md, Vorgang T555).
+  // Kennt der Kunde seinen Jahresverbrauch, wird die Heizlast aus dem ROHEN Verbrauch gerechnet,
+  // also OHNE Kesselwirkungsgrad und OHNE Warmwasser-Abzug, genau wie es die Vaillant-Auslegung
+  // tut. Vorher lagen wir dadurch 16,9 bis 24,4 Prozent unter Vaillant.
+  // Der FLAECHENPFAD bleibt unveraendert; er ist ausdruecklich NICHT mitentschieden (Vorgang T320).
+  // raumwaerme bleibt die Nutzwaerme und traegt weiterhin die Stromverbrauchs-Schaetzung; nur die
+  // Heizlast bekommt ihre eigene Bezugsgroesse.
+  // EINE AUSNAHME, abgeleitet und nicht erfunden: der Entscheid spricht vom rohen GASverbrauch,
+  // und die Messung der Abweichung lief ueber zwoelf Gas-Szenarien. Bei einer BESTEHENDEN
+  // WAERMEPUMPE ist der abgelesene Wert aber Strom und der Faktor keine Verlustzahl, sondern eine
+  // Jahresarbeitszahl ueber 1 (jaz_bestand_waermepumpe = 3,5). Wer ihn dort weglaesst, rechnet
+  // Strom als Waerme und legt das Haus um den Faktor 3,5 zu klein aus. Ein Faktor ueber 1 bleibt
+  // deshalb erhalten; der Warmwasser-Abzug entfaellt auch dort.
+  const heizlastWaerme = verbrauchKnown
+    ? (faktorNutzwaerme > 1 ? nutzwaerme : bedarfKwh)
+    : raumwaerme;
+  const heizlast = heizlastWaerme / getNum_(d, 'volllaststunden', 1800);
   const wwLeistung = warmwasser === 'ja'
     ? warmwasserLeistung_(d, personen,
       Math.max(0, Math.min(6, int_(p.duschen, 1))),
