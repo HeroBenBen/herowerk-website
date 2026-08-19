@@ -479,7 +479,7 @@ pruefe('C-17', 'Horizont > h1-2029 | klemmt auf h1-2029 + Hinweis', foerderCalc_
   const nurGemeinden = { proklima_gemeinden: F.proklima_gemeinden };
   const abw = [];
   [d('2026-07-15'), d('2026-08-01'), d('2027-02-01'), d('2028-08-01')].forEach((tag) => {
-    ['bis30', 'bis40', 'bis50', 'ueber50'].forEach((einkommen) => {
+    ['bis30', 'bis40', 'bis50', 'bis60', 'bis90', 'ueber90', 'ueber50'].forEach((einkommen) => {
       const req = p({ einkommen, gemeinde: 'hannover', proklimaOptin: 'ja', preis: 34510 });
       const a = JSON.stringify(foerderCalc_(req, nurGemeinden, tag));
       const b = JSON.stringify(foerderCalc_(req, F, tag));
@@ -535,12 +535,47 @@ pruefe(
     bis30: einkommenNorm_('bis30'),
     bis40: einkommenNorm_('bis40'),
     bis50: einkommenNorm_('bis50'),
+    bis60: einkommenNorm_('bis60'),
+    bis90: einkommenNorm_('bis90'),
+    ueber90: einkommenNorm_('ueber90'),
     ueber50: einkommenNorm_('ueber50'),
     keine: einkommenNorm_('keine'),
     leer: einkommenNorm_(''),
   },
-  { unter40: 'bis40', ueber40: 'ueber50', bis30: 'bis30', bis40: 'bis40', bis50: 'bis50', ueber50: 'ueber50', keine: 'unbekannt', leer: 'unbekannt' }
+  {
+    unter40: 'bis40', ueber40: 'ueber50', bis30: 'bis30', bis40: 'bis40', bis50: 'bis50',
+    bis60: 'bis60', bis90: 'bis90', ueber90: 'ueber90', ueber50: 'ueber50',
+    keine: 'unbekannt', leer: 'unbekannt',
+  }
 );
+
+// C-29 | Reform h2-2026, Klasse bis 60.000 Euro MIT Kind -> 10 %. Das ist der Fall, der bis zum
+// 19.08.2026 als "ueber 50.000" durchlief und dort faelschlich 0 % ergab.
+// Rechenweg: anrechenbar = 60.000 - 10.000 = 50.000 -> 10 %. 30 + 16 + 10 = 56.
+// Zuschuss = round(28.000 x 0,56) = 15.680. Eigenanteil = 34.510 - 15.680 = 18.830.
+// effektiv = round(15.680/34.510x100) = round(45,44) = 45.
+pruefe('C-29', 'Reform h2-2026 | bis 60.000 mit Kind = 10 %', foerderCalc_(p({ einkommen: 'bis60', kind: 'ja', preis: 34510 }), F, d('2026-08-01')), {
+  kfwSatz: 56,
+  zuschussGesamt: 15680,
+  eigenanteil: 18830,
+  effektivSatz: 45,
+  einkommensbonusPct: 10,
+});
+
+// C-30 | Gegenprobe ohne Kind: dieselbe Klasse liegt anrechenbar bei 60.000 und bekommt 0 %.
+pruefe('C-30', 'Reform h2-2026 | bis 60.000 ohne Kind = kein Bonus', foerderCalc_(p({ einkommen: 'bis60', preis: 34510 }), F, d('2026-08-01')), {
+  kfwSatz: 46,
+  zuschussGesamt: 12880,
+  einkommensbonusPct: 0,
+});
+
+// C-31 | Die oberste Klasse ist nach oben offen und MUSS auch mit Kind 0 % liefern, weil
+// 90.000 minus 10.000 Kinderabzug bereits ueber der obersten Bonusstufe von 50.000 liegt.
+pruefe('C-31', 'Reform h2-2026 | ueber 90.000 mit Kind = kein Bonus', foerderCalc_(p({ einkommen: 'ueber90', kind: 'ja', preis: 34510 }), F, d('2026-08-01')), {
+  kfwSatz: 46,
+  zuschussGesamt: 12880,
+  einkommensbonusPct: 0,
+});
 
 // C-22 bis C-28 | A-BIO und globaler proKlima-Schalter (Kanon 10 / GF-Entscheid 15.07.2026).
 pruefe('C-22', 'A-BIO | Kohle funktionsfähig ohne Altersgrenze', foerderCalc_(p({ heizung: 'kohle', heizungsalter: '1', einkommen: 'bis30', preis: 34510 }), F, d('2026-08-01')), {

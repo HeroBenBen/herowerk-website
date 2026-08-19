@@ -1065,6 +1065,16 @@ function hw_periode_fuer(string $date, array $perioden): array
     return $last;
 }
 
+/**
+ * Einkommensklassen des Foerderrechners. Die Staffel ist nach oben GESCHLOSSEN:
+ * bis30 | bis40 | bis50 | bis60 | bis90 | ueber90.
+ * Alt-Werte bleiben lesbar, damit eine im Browser zwischengespeicherte Seite weiter rechnet:
+ *   'unter40' -> 'bis40', 'ueber40' -> 'ueber50', 'ueber50' -> bleibt (offen nach oben).
+ * Herkunft der Grenzen: Foerderrichtlinie BEG Einzelmassnahmen vom 17.07.2026, Nr. 8.4.5 Abs. 3
+ * (Bonusstaffel und einmaliger Kinderabzug) und Nr. 8.1 / 8.5.2 Buchst. a (Zinsgrenze 90.000 Euro).
+ */
+const HW_EINKOMMEN_KLASSEN = ['bis30', 'bis40', 'bis50', 'bis60', 'bis90', 'ueber90', 'ueber50'];
+
 function hw_einkommen_norm(mixed $value): string
 {
     $normalized = strtolower(hw_js_string($value ?: ''));
@@ -1074,19 +1084,39 @@ function hw_einkommen_norm(mixed $value): string
     if ($normalized === 'ueber40') {
         return 'ueber50';
     }
-    return in_array($normalized, ['bis30', 'bis40', 'bis50', 'ueber50'], true) ? $normalized : 'unbekannt';
+    return in_array($normalized, HW_EINKOMMEN_KLASSEN, true) ? $normalized : 'unbekannt';
+}
+
+/**
+ * Obergrenze des zu versteuernden Haushaltsjahreseinkommens je Klasse.
+ * Nach oben offene Klassen tragen ausdruecklich INF und laufen damit durch dieselbe Staffel wie
+ * jede andere Klasse. Genau das fehlte bis zum 19.08.2026: 'ueber50' fiel aus dem Grenzen-Feld
+ * heraus und lieferte deshalb IMMER null Prozent, auch mit Kind, obwohl 55.000 minus 10.000
+ * Kinderabzug auf der Zehn-Prozent-Stufe liegt.
+ *
+ * @return array<string,float|int>
+ */
+function hw_einkommen_grenzen(array $f): array
+{
+    return [
+        'bis30' => hw_get_num($f, 'reform_eink_grenze_bis30', 30000),
+        'bis40' => hw_get_num($f, 'reform_eink_grenze_bis40', 40000),
+        'bis50' => hw_get_num($f, 'reform_eink_grenze_bis50', 50000),
+        'bis60' => hw_get_num($f, 'reform_eink_grenze_bis60', 60000),
+        'bis90' => hw_get_num($f, 'reform_eink_grenze_bis90', 90000),
+        'ueber90' => INF,
+        'ueber50' => INF,
+    ];
 }
 
 function hw_einkommensbonus_pct(string $income, bool $kind, array $f): float|int
 {
-    $grenzen = [
-        'bis30' => hw_get_num($f, 'reform_eink_grenze_bis30', 30000),
-        'bis40' => hw_get_num($f, 'reform_eink_grenze_bis40', 40000),
-        'bis50' => hw_get_num($f, 'reform_eink_grenze_bis50', 50000),
-    ];
+    $grenzen = hw_einkommen_grenzen($f);
     if (!array_key_exists($income, $grenzen)) {
         return 0;
     }
+    // Gerechnet wird mit der KLASSENOBERGRENZE minus einmaligem Kinderabzug, also systematisch
+    // konservativ: wer in seiner Klasse unter der Obergrenze liegt, bekommt hoechstens mehr.
     $anrechenbar = max(0, $grenzen[$income] - ($kind ? hw_get_num($f, 'reform_kind_abzug_eur', 10000) : 0));
     if ($anrechenbar <= $grenzen['bis30']) {
         return hw_get_num($f, 'reform_eink_pct_bis30', 40);
