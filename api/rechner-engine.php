@@ -593,7 +593,7 @@ function hw_faktor_nutzwaerme(array $d, string $heizung, string $andereHeizung, 
         return match ($andereHeizung) {
             'fernwaerme' => hw_get_num($d, 'eta_fernwaerme', 0.98),
             'pellet' => hw_get_num($d, 'eta_pellet', 0.80),
-            'waermepumpe' => hw_get_num($d, 'jaz_bestand_waermepumpe', 3.5),
+            'waermepumpe' => hw_get_num($d, 'jaz_bestand_waermepumpe', 2.8),
             default => hw_get_num($d, 'eta_andere_unklar', 0.85),
         };
     }
@@ -952,8 +952,8 @@ function hw_dimensionierung(array $query, array $sheets): array
     // EINE AUSNAHME, abgeleitet und nicht erfunden: der Entscheid spricht vom rohen GASverbrauch,
     // und die Messung der Abweichung lief ueber zwoelf Gas-Szenarien. Bei einer BESTEHENDEN
     // WAERMEPUMPE ist der abgelesene Wert aber Strom und der Faktor keine Verlustzahl, sondern eine
-    // Jahresarbeitszahl ueber 1 (jaz_bestand_waermepumpe = 3,5). Wer ihn dort weglaesst, rechnet
-    // Strom als Waerme und legt das Haus um den Faktor 3,5 zu klein aus. Ein Faktor ueber 1 bleibt
+    // Jahresarbeitszahl ueber 1 (jaz_bestand_waermepumpe = 2,8). Wer ihn dort weglaesst, rechnet
+    // Strom als Waerme und legt das Haus um den Faktor 2,8 zu klein aus. Ein Faktor ueber 1 bleibt
     // deshalb erhalten; der Warmwasser-Abzug entfaellt auch dort.
     $heizlastWaerme = $verbrauchKnown
         ? ($faktorNutzwaerme > 1 ? $nutzwaerme : $bedarfKwh)

@@ -250,8 +250,10 @@ const knownBase = {
 // angeglichen (GF-Entscheid 19.08.2026, 11:54 Uhr). Wo die Warmwasser-Zapflast fuehrt, aendert sich
 // nichts (A2 und A6). Wo die Heizung fuehrt, steigt die Zahl auf den rohen Verbrauch geteilt durch
 // die Volllaststunden: A1 8,6 auf 12,2 · A3 10,1 auf 16,7 · A4 6,8 auf 7,8 · A5 6,5 auf 6,7 ·
-// N2 9,3 auf 11,1. N1 steigt von 8,2 auf 9,7, weil dort eine bestehende Waermepumpe zaehlt und ihre
-// Jahresarbeitszahl als Umrechnung von Strom auf Waerme erhalten bleibt.
+// N2 9,3 auf 11,1. N1 geht von 8,2 auf 7,8: dort zaehlt eine bestehende Waermepumpe, ihre
+// Jahresarbeitszahl bleibt als Umrechnung von Strom auf Waerme erhalten, und sie steht seit dem
+// GF-Entscheid vom 19.08.2026 auf 2,8 statt 3,5, weil eine Maschine, die zum Austausch ansteht,
+// das Effizienzniveau frueherer Geraetegenerationen hat. 5.000 mal 2,8 durch 1.800 gleich 7,8 kW.
 // Jeder Wert ist unabhaengig nachgerechnet als Maximum aus roher Verbrauch geteilt durch 1800 und
 // der Warmwasser-Zapflast, nicht aus dem Kern uebernommen.
 const acceptanceCases = [
@@ -358,7 +360,7 @@ const acceptanceCases = [
   ],
   [
     'N1',
-    9.7,
+    7.8,
     {
       ...knownBase,
       heizung: 'sonst',

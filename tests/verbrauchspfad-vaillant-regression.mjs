@@ -163,8 +163,8 @@ for (const abwandlung of [
 }
 
 // AUSNAHME BESTEHENDE WAERMEPUMPE: dort ist der abgelesene Wert Strom und der Faktor eine
-// Jahresarbeitszahl ueber 1 (jaz_bestand_waermepumpe = 3,5). Sie bleibt erhalten, sonst wuerde
-// Strom als Waerme gerechnet und das Haus um den Faktor 3,5 zu klein ausgelegt.
+// Jahresarbeitszahl ueber 1 (jaz_bestand_waermepumpe = 2,8, GF-Entscheid 19.08.2026). Sie bleibt erhalten, sonst wuerde
+// Strom als Waerme gerechnet und das Haus um den Faktor 2,8 zu klein ausgelegt.
 const bestandsWp = {
   ...basis,
   einheit: 'kwh',
@@ -175,10 +175,10 @@ const bestandsWp = {
 };
 assert.equal(
   php(bestandsWp).bedarf,
-  9.7,
-  'bestehende Waermepumpe: 5.000 kWh mal 3,5 durch 1.800 gleich 9,7 kW'
+  7.8,
+  'bestehende Waermepumpe: 5.000 kWh mal 2,8 durch 1.800 gleich 7,8 kW'
 );
-assert.equal(gs(bestandsWp).bedarf, 9.7, 'Apps Script: bestehende Waermepumpe');
+assert.equal(gs(bestandsWp).bedarf, 7.8, 'Apps Script: bestehende Waermepumpe');
 assert.notEqual(
   php(bestandsWp).bedarf,
   2.8,
