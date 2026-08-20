@@ -2191,6 +2191,39 @@ function updateSelbstnutzungOptionen() {
 
 // Balkenhoehe folgt dem EURO-Betrag, nicht der Quote: ohne Klimabonus steht die Quote flach
 // auf 30 Prozent, waehrend der Zuschuss ueber die sinkende Bemessungsgrenze faellt.
+/**
+ * Die Auswahl der Antragszeitraeume kommt aus der Server-Antwort, damit es keine zweite Liste der
+ * Zeitraeume im Markup gibt. Der Server liefert nur noch beantragbare Zeitraeume (Klemmung nach
+ * unten auf heute); die getroffene Wahl bleibt erhalten, solange sie in der Liste steht.
+ */
+function foerderAntragOptionen(data) {
+  const select = document.getElementById('foerderAntragZeitraum');
+  if (!select || !Array.isArray(data.perioden) || !data.perioden.length) return;
+  const soll = data.perioden.map((p) => p.key).join('|');
+  const ist = Array.from(select.options)
+    .map((o) => o.value)
+    .join('|');
+  if (soll !== ist) {
+    const gewaehlt = select.value;
+    select.innerHTML = data.perioden
+      .map((p) => '<option value="' + p.key + '">' + p.label + '</option>')
+      .join('');
+    select.value = data.perioden.some((p) => p.key === gewaehlt)
+      ? gewaehlt
+      : data.antragPeriode || data.aktivePeriode || data.perioden[0].key;
+  } else if (data.antragPeriode && select.value !== data.antragPeriode) {
+    // Der Server hat geklemmt (abgelaufener Zeitraum). Die Anzeige folgt dem, was gerechnet wurde.
+    select.value = data.antragPeriode;
+  }
+}
+
+function foerderHinweisSetzen(id, text) {
+  const box = document.getElementById(id);
+  if (!box) return;
+  box.textContent = text || '';
+  box.hidden = !text;
+}
+
 function hwTreppeAufbauen(treppe, aktivePeriode) {
   const host = document.getElementById('hwTreppe');
   if (!host || !Array.isArray(treppe) || treppe.length < 2) {
@@ -2309,6 +2342,11 @@ async function calculateFoerder() {
     // foerderung.html (Lane C, anderer Branch). Defensiv gelesen: fehlt die Checkbox, weil noch die
     // alte Seite ausgeliefert wird, bleibt es bei 'nein' (konservativ), nichts bricht.
     kind: document.getElementById('foerderKind')?.checked ? 'ja' : 'nein',
+    // Antrag und Installation sind zwei Termine (GF-Entscheid 19.08.2026): der Antragszeitraum
+    // steuert die Foerderhoehe, der Installationsbeginn wird nur gegen die Reihenfolge geprueft.
+    // Beide Felder defensiv gelesen: fehlt eines, rechnet der Server wie bisher auf heute.
+    fHalbjahr: document.getElementById('foerderAntragZeitraum')?.value || '',
+    installBeginn: document.getElementById('foerderInstallBeginn')?.value || '',
     origin: 'https://herowerk.de',
   });
 
@@ -2332,6 +2370,10 @@ async function calculateFoerder() {
   window.clearTimeout(langsamTimer);
   if (requestSeq !== foerderRequestSeq) return;
   if (langsamHinweis) langsamHinweis.hidden = true;
+
+  foerderAntragOptionen(data);
+  foerderHinweisSetzen('foerderAntragHinweis', data.antragHinweis);
+  foerderHinweisSetzen('foerderReihenfolgeHinweis', data.installHinweis);
 
   const preis = Number(data.preis) || 0;
   const gesamtZuschuss = Number(data.zuschussGesamt || 0);

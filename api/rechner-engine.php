@@ -1385,6 +1385,155 @@ function hw_heute_ab_stichtag_iso(array $params): string
     return $today < $stichtag ? $stichtag : $today;
 }
 
+/**
+ * ANTRAGSZEITPUNKT UND INSTALLATIONSBEGINN, die Fachregel an EINER Stelle.
+ *
+ * Der Geschaeftsfuehrer hat am 19.08.2026 zwei Dinge getrennt, die die Website bis dahin in einem
+ * Feld gefuehrt hat: der ANTRAGSZEITPUNKT bestimmt die Foerderhoehe, weil der Klimabonus
+ * halbjaehrlich sinkt und die Bemessungsgrenze mit ihm. Der INSTALLATIONSTERMIN bestimmt sie
+ * NICHT, er ist Kapazitaet und Terminzusage.
+ *
+ * Die Regel ist nicht neu erfunden, sondern woertlich uebernommen aus dem Konfigurator des
+ * Aussendienstes (Vorgang T578, gebaut 19.08.2026, eingespielt als Fassung 23): zwei Klemmungen
+ * des Antragsdatums und eine Reihenfolge-Warnung. So rechnen Website und Aussendienst dieselbe
+ * Sache gleich, statt zwei Fassungen derselben Regel zu fuehren.
+ */
+
+/**
+ * Ein Datum aus sechs Schreibweisen als 'JJJJ-MM-TT', sonst ''.
+ * Gelesen werden 'JJJJ-MM-TT', 'TT.MM.JJJJ', 'TT.MM.JJ', 'MM.JJJJ', 'MM/JJJJ' und 'JJJJ-MM'.
+ * Ein Datum ohne Tag ist der Normalfall, sowohl im Verkaufsgespraech ("irgendwann im Maerz") als
+ * auch im Monatsfeld des Browsers (<input type="month"> liefert 'JJJJ-MM'); es gilt der Monatserste.
+ */
+function hw_datum_iso(mixed $eingabe): string
+{
+    $text = trim(hw_js_string($eingabe ?? ''));
+    if ($text === '') {
+        return '';
+    }
+    $treffer = [];
+    if (preg_match('/^(\d{4})-(\d{1,2})-(\d{1,2})$/', $text, $treffer)) {
+        return hw_datum_bauen($treffer[1], $treffer[2], $treffer[3]);
+    }
+    if (preg_match('/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/', $text, $treffer)) {
+        return hw_datum_bauen($treffer[3], $treffer[2], $treffer[1]);
+    }
+    if (preg_match('/^(\d{1,2})\.(\d{1,2})\.(\d{2})$/', $text, $treffer)) {
+        return hw_datum_bauen('20' . $treffer[3], $treffer[2], $treffer[1]);
+    }
+    if (preg_match('/^(\d{1,2})[.\/](\d{4})$/', $text, $treffer)) {
+        return hw_datum_bauen($treffer[2], $treffer[1], 1);
+    }
+    if (preg_match('/^(\d{4})-(\d{1,2})$/', $text, $treffer)) {
+        return hw_datum_bauen($treffer[1], $treffer[2], 1);
+    }
+    return '';
+}
+
+function hw_datum_bauen(string|int $jahr, string|int $monat, string|int $tag): string
+{
+    $j = (int) $jahr;
+    $m = (int) $monat;
+    $t = (int) $tag;
+    // Untergrenze 2026 wie im Konfigurator: fruehere Jahreszahlen sind hier immer Tippfehler,
+    // ein Foerderantrag von 1999 existiert nicht.
+    if ($j < 2026 || $j > 2099 || $m < 1 || $m > 12 || $t < 1 || $t > 31) {
+        return '';
+    }
+    return sprintf('%04d-%02d-%02d', $j, $m, $t);
+}
+
+function hw_datum_deutsch(string $iso): string
+{
+    return preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $iso, $t) === 1
+        ? $t[3] . '.' . $t[2] . '.' . $t[1]
+        : $iso;
+}
+
+/**
+ * Die waehlbaren Antragszeitraeume: alle Reform-Perioden, deren Ende NICHT in der Vergangenheit
+ * liegt. Zwei Klemmungen, beide bewusst und beide aus der Konfigurator-Regel:
+ *   nach unten auf HEUTE            - rueckwirkend beantragt niemand. Ein abgelaufener Zeitraum
+ *                                     verspraeche eine Foerderung, die es nicht mehr gibt.
+ *   nach unten auf den Reform-Stichtag - Option B (GF-Entscheid 19.07.2026): 'alt' steht nicht
+ *                                     zur Wahl, weil danach niemand mehr beantragen kann.
+ * Das Feld 'ab' ist das FRUEHESTE Antragsdatum, das in diesem Zeitraum noch moeglich ist.
+ *
+ * @return list<array{key:string,label:string,ab:string,bis:string}>
+ */
+function hw_foerder_perioden_waehlbar(array $params): array
+{
+    $heute = hw_heute_ab_stichtag_iso($params);
+    $out = [];
+    foreach ($params['periodenReihenfolge'] ?? [] as $key) {
+        $period = $params['perioden'][$key] ?? null;
+        if (!is_array($period)) {
+            continue;
+        }
+        $bis = hw_js_string($period['gueltigBis'] ?? '');
+        if ($bis !== '' && $bis < $heute) {
+            continue;
+        }
+        $ab = hw_js_string($period['gueltigAb'] ?? '');
+        $out[] = [
+            'key' => $key,
+            'label' => hw_js_string(($period['label'] ?? '') ?: ''),
+            'ab' => ($ab === '' || $ab < $heute) ? $heute : $ab,
+            'bis' => $bis,
+        ];
+    }
+    return $out;
+}
+
+/**
+ * Der Antragszeitpunkt, auf den gerechnet wird.
+ * 'quelle' ist 'angabe' oder 'heute' und gehoert in die Anzeige, damit ein Leser sieht, worauf die
+ * Foerderzahl beruht. 'ab' ist das fruehestmoegliche Antragsdatum des gewaehlten Zeitraums.
+ *
+ * @return array{key:string,ab:string,quelle:string,hinweis:string}
+ */
+function hw_antragszeitraum(array $query, array $params): array
+{
+    $heute = hw_heute_ab_stichtag_iso($params);
+    $gewuenscht = trim(hw_query_string($query, 'fHalbjahr'));
+    foreach (hw_foerder_perioden_waehlbar($params) as $period) {
+        if ($period['key'] === $gewuenscht) {
+            return ['key' => $period['key'], 'ab' => $period['ab'], 'quelle' => 'angabe', 'hinweis' => ''];
+        }
+    }
+    $hinweis = '';
+    if ($gewuenscht !== '' && isset($params['perioden'][$gewuenscht])) {
+        $hinweis = 'Der gewählte Antragszeitraum ist vorbei. Gerechnet ist der heute geltende '
+            . 'Zeitraum, weil rückwirkend kein Förderantrag gestellt werden kann.';
+    }
+    return ['key' => hw_kv_periode_heute($params), 'ab' => $heute, 'quelle' => 'heute', 'hinweis' => $hinweis];
+}
+
+/**
+ * Reihenfolge-Pruefung Antrag vor Installation. Der Foerderantrag muss VOR dem Vorhabensbeginn
+ * stehen (BEG EM, Antrag vor Vorhabensbeginn). Liegt der Installationsbeginn davor, entfaellt die
+ * Foerderung GANZ, nicht nur ein paar Prozentpunkte. Deshalb ist das eine Warnung und keine
+ * Fussnote.
+ * Verglichen wird gegen das FRUEHESTE Antragsdatum des gewaehlten Zeitraums: nur dann ist die
+ * Reihenfolge sicher verletzt, egal wann innerhalb des Zeitraums der Antrag wirklich gestellt wird.
+ *
+ * @return array{iso:string,hinweis:string}
+ */
+function hw_installationsbeginn(mixed $eingabe, string $antragAbIso): array
+{
+    $iso = hw_datum_iso($eingabe);
+    if ($iso === '' || $antragAbIso === '' || $iso >= $antragAbIso) {
+        return ['iso' => $iso, 'hinweis' => ''];
+    }
+    return [
+        'iso' => $iso,
+        'hinweis' => 'Der geplante Installationsbeginn (' . hw_datum_deutsch($iso) . ') liegt vor dem '
+            . 'frühesten Förderantrag dieses Zeitraums (' . hw_datum_deutsch($antragAbIso) . '). Der Antrag '
+            . 'muss vor dem Vorhabensbeginn stehen, sonst entfällt die Förderung vollständig. '
+            . 'Bitte einen der beiden Termine anpassen.',
+    ];
+}
+
 function hw_foerder_rueckfall_logger(): Closure
 {
     $gesehen = [];
@@ -1435,10 +1584,23 @@ function hw_foerderung(array $query, array $sheets): array
     $args = $query;
     $args['preis'] = $preis;
     $perioden = hw_foerder_perioden_aus_kv($params);
-    $out = hw_foerder_calc($args, $f, hw_heute_ab_stichtag_iso($params) . 'T12:00:00', $perioden, $onFallback);
+    // Der Antragszeitpunkt kommt jetzt aus der Anfrage, nicht mehr fest von der Serveruhr. Bis zum
+    // 20.08.2026 rechnete diese Seite IMMER auf heute und versprach damit jedem, der spaeter
+    // beantragt, zu viel: der Kostenvergleich liess den Zeitraum schon waehlen, diese Seite nicht.
+    $antrag = hw_antragszeitraum($query, $params);
+    $install = hw_installationsbeginn($query['installBeginn'] ?? null, $antrag['ab']);
+    $out = hw_foerder_calc($args, $f, $antrag['ab'] . 'T12:00:00', $perioden, $onFallback);
     if ($brand === 'vaillant') {
         $out['vorlaeufig'] = true;
     }
+    $out['perioden'] = hw_foerder_perioden_waehlbar($params);
+    $out['aktivePeriode'] = hw_kv_periode_heute($params);
+    $out['antragPeriode'] = $antrag['key'];
+    $out['antragAb'] = $antrag['ab'];
+    $out['antragAutomatik'] = $antrag['quelle'] === 'heute';
+    $out['antragHinweis'] = $antrag['hinweis'];
+    $out['installBeginn'] = $install['iso'];
+    $out['installHinweis'] = $install['hinweis'];
     $treppe = [];
     foreach ($params['periodenReihenfolge'] ?? [] as $id) {
         $period = $params['perioden'][$id];
@@ -1599,9 +1761,11 @@ function hw_kv_foerder(array $inputs, array $params): array
 function hw_kv_bootstrap(array $sheets): array
 {
     $params = hw_kv_get_params($sheets);
+    // Nur Zeitraeume, die noch beantragbar sind: ein abgelaufener Zeitraum in der Auswahl waere
+    // ein Versprechen auf eine Foerderung, die es nicht mehr gibt (Klemmung nach unten auf heute).
     $perioden = [];
-    foreach ($params['periodenReihenfolge'] as $key) {
-        $perioden[] = ['key' => $key, 'label' => $params['perioden'][$key]['label']];
+    foreach (hw_foerder_perioden_waehlbar($params) as $period) {
+        $perioden[] = ['key' => $period['key'], 'label' => $period['label']];
     }
     $defaults = hw_kv_defaults();
     unset($defaults['proklimaTog'], $defaults['fEffizienz'], $defaults['modus']);
@@ -2005,6 +2169,19 @@ function hw_kostenvergleich(array $query, array $sheets): array
     }
     $out = hw_kv_calculate($inputs, $params);
     $out['periodeAutomatik'] = $inputs['_periodeAutomatik'];
+    // Antrag und Installation sind zwei verschiedene Termine (GF-Entscheid 19.08.2026). Der
+    // Installationsbeginn geht NICHT in die Foerderrechnung ein, er wird nur gegen die Reihenfolge
+    // geprueft: Antrag vor Vorhabensbeginn.
+    $periodeGewaehlt = $params['perioden'][$inputs['fHalbjahr']] ?? [];
+    $heute = hw_heute_ab_stichtag_iso($params);
+    $antragAb = hw_js_string($periodeGewaehlt['gueltigAb'] ?? '');
+    if ($antragAb === '' || $antragAb < $heute) {
+        $antragAb = $heute;
+    }
+    $install = hw_installationsbeginn($query['installBeginn'] ?? null, $antragAb);
+    $out['antragAb'] = $antragAb;
+    $out['installBeginn'] = $install['iso'];
+    $out['installHinweis'] = $install['hinweis'];
     return $out;
 }
 
