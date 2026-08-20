@@ -261,6 +261,24 @@
                 <div style="font-size:12px;color:var(--g400);margin-top:4px;">Gesamtkosten inkl. Installation und MwSt.</div>
               </div>
             </div>
+            <!-- ANTRAG UND INSTALLATION SIND ZWEI TERMINE (GF-Entscheid 19.08.2026).
+                 Der Antragszeitpunkt bestimmt die Foerderhoehe, der Installationstermin nicht.
+                 Die Auswahl wird zur Laufzeit aus der Server-Antwort befuellt (Feld perioden),
+                 damit hier keine zweite Liste der Zeitraeume entsteht. -->
+            <div class="fi-group">
+              <label for="foerderAntragZeitraum">Geplanter Förderantrag</label>
+              <select id="foerderAntragZeitraum" onchange="calculateFoerder()">
+                <option value="">wird geladen</option>
+              </select>
+              <div style="font-size:12px;color:var(--g400);margin-top:4px;">Nur der Antragszeitpunkt bestimmt die Förderhöhe. Der Klimabonus sinkt zum 01.02. und 01.08. um je 4 Prozentpunkte, die förderfähigen Kosten um je 750 €.</div>
+              <div id="foerderAntragHinweis" hidden role="note" style="margin-top:10px;padding:12px 14px;border:1px solid rgba(232,168,56,0.45);border-radius:10px;background:rgba(232,168,56,0.10);color:var(--amber);font-size:13px;line-height:1.45;"></div>
+            </div>
+            <div class="fi-group">
+              <label for="foerderInstallBeginn">Geplanter Installationsbeginn (optional)</label>
+              <input type="month" id="foerderInstallBeginn" style="width:100%;padding:12px 16px;background:var(--charcoal);border:1px solid var(--g600);border-radius:10px;color:var(--white);font-size:16px;" onchange="calculateFoerder()">
+              <div style="font-size:12px;color:var(--g400);margin-top:4px;">Der Installationstermin ändert die Förderhöhe nicht. Er muss aber nach dem Förderantrag liegen.</div>
+              <div id="foerderReihenfolgeHinweis" hidden role="note" style="margin-top:10px;padding:12px 14px;border:1px solid rgba(232,168,56,0.45);border-radius:10px;background:rgba(232,168,56,0.10);color:var(--amber);font-size:13px;line-height:1.45;"></div>
+            </div>
           </div>
           <div id="foerderBreakdown" class="foerder-breakdown-slot"></div>
           <div id="wegHinweis" class="foerder-reserved-note" aria-hidden="true"></div>
@@ -436,7 +454,7 @@
     </div>
   </footer>
 
-  <script src="js/site.js?v=48c6e06128" defer></script>
+  <script src="js/site.js?v=87f243a8a8" defer></script>
 
   <!-- MOBILE BOTTOM BAR -->
   <div class="mobile-bottom-bar" role="navigation" aria-label="Mobile Schnellnavigation">

@@ -133,6 +133,12 @@ jobs:
       # scripts/seiten-bausteine.json, GF-freigegeben 28.07.2026. Das Gate prueft
       # zusaetzlich, dass JEDE Zahl im Fakt-Satz auf derselben Seite sichtbar steht.
       - run: npm run verify:bausteine
+      # Antragsdatum-Gate (Vorgang T616, 20.08.2026): Foerderrechner und Kostenvergleich muessen
+      # fuer denselben Kundenfall zifferngleich sein, das gewaehlte Antragsdatum muss die
+      # Foerderung steuern, und der Installationstermin darf sie NICHT veraendern. Anlass: am
+      # 20.08.2026 versprach die Foerderseite bei Antrag im Maerz 2027 noch 12.880 statt
+      # 11.445 Euro, weil sie fest auf heute rechnete.
+      - run: npm run verify:antragsdatum
 
   # Job 2: Lighthouse-CI, ZURUECKGESTUFT AUF BERICHT (29.07.2026)
   #
