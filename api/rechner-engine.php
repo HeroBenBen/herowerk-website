@@ -484,9 +484,9 @@ function hw_kv_get_params(array $sheets): array
             'klima' => hw_kv_num($row[4] ?? null, 0),
             'grenze' => hw_kv_num($row[5] ?? null, 0),
             'eu' => strtoupper(hw_js_string($row[6] ?? '')) === 'J',
-            'cap' => hw_kv_num($row[7] ?? null, 80),
-            'effizienzPct' => hw_kv_num($row[8] ?? null, 0),
-            'kindFreibetrag' => hw_kv_num($row[9] ?? null, 0),
+            'cap' => array_key_exists(7, $row) && $row[7] !== '' ? hw_kv_num($row[7], 80) : null,
+            'effizienzPct' => array_key_exists(8, $row) && $row[8] !== '' ? hw_kv_num($row[8], 0) : null,
+            'kindFreibetrag' => array_key_exists(9, $row) && $row[9] !== '' ? hw_kv_num($row[9], 0) : null,
             'einkStufen' => $einkStufen,
             'proKlimaErlaubt' => strtoupper(hw_js_string($row[11] ?? '')) === 'J',
             'gueltigAb' => hw_js_string($row[1] ?? ''),
@@ -1045,6 +1045,10 @@ function hw_foerder_perioden_aus_kv(array $params): array
             'klima' => hw_kv_num($period['klima'] ?? null, 0),
             'grenze' => hw_kv_num($period['grenze'] ?? null, 0),
             'eu' => (bool) ($period['eu'] ?? false),
+            'cap' => $period['cap'] ?? null,
+            'effizienzPct' => $period['effizienzPct'] ?? null,
+            'kindFreibetrag' => $period['kindFreibetrag'] ?? null,
+            'einkStufen' => $period['einkStufen'] ?? [],
             'label' => $id === 'alt' ? 'Anträge bis 20.07.2026' : hw_js_string(($period['label'] ?? '') ?: ''),
         ];
     }
@@ -1109,7 +1113,70 @@ function hw_einkommen_grenzen(array $f): array
     ];
 }
 
-function hw_einkommensbonus_pct(string $income, bool $kind, array $f): float|int
+function hw_foerder_rueckfall(
+    array $period,
+    string $field,
+    string $fallbackKey,
+    mixed $fallbackValue,
+    ?callable $onFallback = null
+): mixed {
+    $value = $period[$field] ?? null;
+    $missing = $value === null || $value === ''
+        || ($field === 'einkStufen' && (!is_array($value) || $value === []));
+    if (!$missing) {
+        return $value;
+    }
+    if ($onFallback !== null) {
+        $onFallback(hw_js_string($period['id'] ?? 'unbekannt'), $field, $fallbackKey);
+    }
+    return $fallbackValue;
+}
+
+/** @return array{cap:float|int,effizienzPct:float|int,kindFreibetrag:float|int,einkStufen:list<array{maxAnr:float|int,pct:float|int}>} */
+function hw_foerder_periodenwerte(array $period, array $f, ?callable $onFallback = null): array
+{
+    $reform = (bool) ($period['reform'] ?? false);
+    $grenzen = hw_einkommen_grenzen($f);
+    $stufenFallback = $reform
+        ? [
+            ['maxAnr' => $grenzen['bis30'], 'pct' => hw_get_num($f, 'reform_eink_pct_bis30', 40)],
+            ['maxAnr' => $grenzen['bis40'], 'pct' => hw_get_num($f, 'reform_eink_pct_bis40', 30)],
+            ['maxAnr' => $grenzen['bis50'], 'pct' => hw_get_num($f, 'reform_eink_pct_bis50', 10)],
+        ]
+        : [['maxAnr' => $grenzen['bis40'], 'pct' => hw_get_num($f, 'einkommensbonus_pct', 30)]];
+    return [
+        'cap' => hw_foerder_rueckfall(
+            $period,
+            'cap',
+            $reform ? 'reform_deckel_pct' : 'deckel_selbst_pct',
+            hw_get_num($f, $reform ? 'reform_deckel_pct' : 'deckel_selbst_pct', $reform ? 80 : 70),
+            $onFallback
+        ),
+        'effizienzPct' => hw_foerder_rueckfall(
+            $period,
+            'effizienzPct',
+            $reform ? 'Reformregel:0' : 'effizienzbonus_pct',
+            $reform ? 0 : hw_get_num($f, 'effizienzbonus_pct', 5),
+            $onFallback
+        ),
+        'kindFreibetrag' => hw_foerder_rueckfall(
+            $period,
+            'kindFreibetrag',
+            $reform ? 'reform_kind_abzug_eur' : 'Altregel:0',
+            $reform ? hw_get_num($f, 'reform_kind_abzug_eur', 10000) : 0,
+            $onFallback
+        ),
+        'einkStufen' => hw_foerder_rueckfall(
+            $period,
+            'einkStufen',
+            $reform ? 'reform_eink_pct_bis30/40/50' : 'einkommensbonus_pct',
+            $stufenFallback,
+            $onFallback
+        ),
+    ];
+}
+
+function hw_einkommensbonus_pct(string $income, bool $kind, array $f, ?array $periodenWerte = null): float|int
 {
     $grenzen = hw_einkommen_grenzen($f);
     if (!array_key_exists($income, $grenzen)) {
@@ -1117,15 +1184,12 @@ function hw_einkommensbonus_pct(string $income, bool $kind, array $f): float|int
     }
     // Gerechnet wird mit der KLASSENOBERGRENZE minus einmaligem Kinderabzug, also systematisch
     // konservativ: wer in seiner Klasse unter der Obergrenze liegt, bekommt hoechstens mehr.
-    $anrechenbar = max(0, $grenzen[$income] - ($kind ? hw_get_num($f, 'reform_kind_abzug_eur', 10000) : 0));
-    if ($anrechenbar <= $grenzen['bis30']) {
-        return hw_get_num($f, 'reform_eink_pct_bis30', 40);
-    }
-    if ($anrechenbar <= $grenzen['bis40']) {
-        return hw_get_num($f, 'reform_eink_pct_bis40', 30);
-    }
-    if ($anrechenbar <= $grenzen['bis50']) {
-        return hw_get_num($f, 'reform_eink_pct_bis50', 10);
+    $werte = $periodenWerte ?? hw_foerder_periodenwerte(['id' => 'legacy', 'reform' => true], $f);
+    $anrechenbar = max(0, $grenzen[$income] - ($kind ? $werte['kindFreibetrag'] : 0));
+    foreach ($werte['einkStufen'] as $stufe) {
+        if ($anrechenbar <= $stufe['maxAnr']) {
+            return $stufe['pct'];
+        }
     }
     return 0;
 }
@@ -1144,9 +1208,10 @@ function hw_foerderfaehige_kosten(int $we, array $f, float|int|null $ersteWe = n
 }
 
 /** @return array<string,mixed> */
-function hw_foerder_calc(array $query, array $f, string $date, array $perioden): array
+function hw_foerder_calc(array $query, array $f, string $date, array $perioden, ?callable $onFallback = null): array
 {
     $period = hw_periode_fuer($date, $perioden);
+    $periodenWerte = hw_foerder_periodenwerte($period, $f, $onFallback);
     $we = hw_int($query['we'] ?? null, 1);
     $selbstWe = hw_int($query['selbstWE'] ?? null, 1);
     $heizung = hw_query_string($query, 'heizung', 'gas');
@@ -1175,14 +1240,14 @@ function hw_foerder_calc(array $query, array $f, string $date, array $perioden):
         if ($selbstWe > 0 && $altEinkOk) {
             $satzSelbst += $einkommensbonusPct;
         }
-        $satzSelbst += hw_get_num($f, 'effizienzbonus_pct', 5);
-        $satzSelbst = min($satzSelbst, hw_get_num($f, 'deckel_selbst_pct', 70));
-        $satzVermietet = min(hw_get_num($f, 'deckel_vermietet_pct', 35), $grundPct + hw_get_num($f, 'effizienzbonus_pct', 5));
+        $satzSelbst += $periodenWerte['effizienzPct'];
+        $satzSelbst = min($satzSelbst, $periodenWerte['cap']);
+        $satzVermietet = min(hw_get_num($f, 'deckel_vermietet_pct', 35), $grundPct + $periodenWerte['effizienzPct']);
         $foerderFaehigGesamt = hw_foerderfaehige_kosten($we, $f);
-        $bausteine = [
-            'Grundförderung ' . $grundPct . '%',
-            'Effizienzbonus (R290) +' . hw_get_num($f, 'effizienzbonus_pct', 5) . '%',
-        ];
+        $bausteine = ['Grundförderung ' . $grundPct . '%'];
+        if ($periodenWerte['effizienzPct'] > 0) {
+            $bausteine[] = 'Effizienzbonus (R290) +' . $periodenWerte['effizienzPct'] . '%';
+        }
         if ($selbstWe > 0 && $klimaBonus) {
             array_splice($bausteine, 1, 0, ['Klimageschwindigkeitsbonus +' . $klimaPct . '%']);
         }
@@ -1194,7 +1259,7 @@ function hw_foerder_calc(array $query, array $f, string $date, array $perioden):
             ? hw_get_num($f, 'reform_grund_pct_nicht_eu', 15)
             : hw_get_num($f, 'reform_grund_pct', 30);
         $klimaPct = $period['klima'];
-        $einkommensbonusPct = hw_einkommensbonus_pct($einkommen, $kind, $f);
+        $einkommensbonusPct = hw_einkommensbonus_pct($einkommen, $kind, $f, $periodenWerte);
         $satzSelbst = $grundPct;
         if ($selbstWe > 0 && $klimaBonus) {
             $satzSelbst += $klimaPct;
@@ -1202,8 +1267,9 @@ function hw_foerder_calc(array $query, array $f, string $date, array $perioden):
         if ($selbstWe > 0) {
             $satzSelbst += $einkommensbonusPct;
         }
-        $satzSelbst = min($satzSelbst, hw_get_num($f, 'reform_deckel_pct', 80));
-        $satzVermietet = $grundPct;
+        $satzSelbst += $periodenWerte['effizienzPct'];
+        $satzSelbst = min($satzSelbst, $periodenWerte['cap']);
+        $satzVermietet = $grundPct + $periodenWerte['effizienzPct'];
         $foerderFaehigGesamt = hw_foerderfaehige_kosten($we, $f, $period['grenze']);
         if ($we > 1) {
             $hinweise[] = 'Bei mehreren Wohneinheiten gelten gestaffelte Grenzen je Wohneinheit. Wir rechnen dein Projekt genau durch.';
@@ -1212,6 +1278,9 @@ function hw_foerder_calc(array $query, array $f, string $date, array $perioden):
             $hinweise[] = 'Für Anträge nach dem 31.07.2029 stehen die Fördersätze noch nicht fest. Wir rechnen dein Projekt genau durch.';
         }
         $bausteine = ['Grundförderung ' . $grundPct . '%'];
+        if ($periodenWerte['effizienzPct'] > 0) {
+            $bausteine[] = 'Effizienzbonus (R290) +' . $periodenWerte['effizienzPct'] . '%';
+        }
         if ($selbstWe > 0 && $klimaBonus && $klimaPct > 0) {
             array_splice($bausteine, 1, 0, ['Klimageschwindigkeitsbonus +' . $klimaPct . '%']);
         }
@@ -1316,11 +1385,48 @@ function hw_heute_ab_stichtag_iso(array $params): string
     return $today < $stichtag ? $stichtag : $today;
 }
 
+function hw_foerder_rueckfall_logger(): Closure
+{
+    $gesehen = [];
+    return static function (string $periode, string $feld, string $fallbackSchluessel) use (&$gesehen): void {
+        $key = $periode . ':' . $feld;
+        if (isset($gesehen[$key])) {
+            return;
+        }
+        $gesehen[$key] = true;
+        error_log(
+            'FOERDER_PERIODEN_RUECKFALL periode=' . $periode
+            . ' feld=' . $feld
+            . ' fallback=' . $fallbackSchluessel
+        );
+    };
+}
+
+/** @return array<string,mixed> */
+function hw_foerder_params_mit_rueckfall(array $params, array $f, ?callable $onFallback = null): array
+{
+    $out = $params;
+    $out['perioden'] = [];
+    foreach ($params['perioden'] as $id => $raw) {
+        $period = $raw;
+        $period['id'] = $id;
+        $period['reform'] = $id !== 'alt';
+        $werte = hw_foerder_periodenwerte($period, $f, $onFallback);
+        $period['cap'] = $werte['cap'];
+        $period['effizienzPct'] = $werte['effizienzPct'];
+        $period['kindFreibetrag'] = $werte['kindFreibetrag'];
+        $period['einkStufen'] = $werte['einkStufen'];
+        $out['perioden'][$id] = $period;
+    }
+    return $out;
+}
+
 /** @return array<string,mixed> */
 function hw_foerderung(array $query, array $sheets): array
 {
     $f = hw_read_kv($sheets, 'Förder_Parameter');
-    $params = hw_kv_get_params($sheets);
+    $onFallback = hw_foerder_rueckfall_logger();
+    $params = hw_foerder_params_mit_rueckfall(hw_kv_get_params($sheets), $f, $onFallback);
     $brand = strtolower(hw_query_string($query, 'marke', 'wolf'));
     $prices = hw_get_prices($sheets, $brand);
     $wpTyp = strtolower(hw_query_string($query, 'wpTyp', 'm'));
@@ -1329,14 +1435,14 @@ function hw_foerderung(array $query, array $sheets): array
     $args = $query;
     $args['preis'] = $preis;
     $perioden = hw_foerder_perioden_aus_kv($params);
-    $out = hw_foerder_calc($args, $f, hw_heute_ab_stichtag_iso($params) . 'T12:00:00', $perioden);
+    $out = hw_foerder_calc($args, $f, hw_heute_ab_stichtag_iso($params) . 'T12:00:00', $perioden, $onFallback);
     if ($brand === 'vaillant') {
         $out['vorlaeufig'] = true;
     }
     $treppe = [];
     foreach ($params['periodenReihenfolge'] ?? [] as $id) {
         $period = $params['perioden'][$id];
-        $stufe = hw_foerder_calc($args, $f, hw_js_string($period['gueltigAb']) . 'T12:00:00', $perioden);
+        $stufe = hw_foerder_calc($args, $f, hw_js_string($period['gueltigAb']) . 'T12:00:00', $perioden, $onFallback);
         $treppe[] = [
             'periode' => $id,
             'label' => $stufe['periodeLabel'],
@@ -1880,7 +1986,12 @@ function hw_kv_calculate(array $inputs, array $params): array
 /** @return array<string,mixed> */
 function hw_kostenvergleich(array $query, array $sheets): array
 {
-    $params = hw_kv_get_params($sheets);
+    $f = hw_read_kv($sheets, 'Förder_Parameter');
+    $params = hw_foerder_params_mit_rueckfall(
+        hw_kv_get_params($sheets),
+        $f,
+        hw_foerder_rueckfall_logger()
+    );
     $inputs = hw_kv_map_request($query, $params);
     if (hw_query_string($query, 'bedarfModus') === 'schaetzung') {
         $geb = hw_kv_enum($query['geb'] ?? null, ['efh', 'dhh', 'rh', 'zfh', 'mfh'], '');

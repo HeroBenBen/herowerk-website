@@ -8,7 +8,7 @@
  * oder 2.800 Euro auf die Bemessungsgrenze von 28.000 Euro der ersten Wohneinheit.
  * Der Kostenvergleichsrechner mit seinem stufenlosen Regler rechnete an derselben Stelle richtig.
  *
- * WAS DIESER TEST PRUEFT, in vier Stufen:
+ * WAS DIESER TEST PRUEFT, in fünf Stufen:
  *   1. GLEICHLAUF DER DREI FASSUNGEN. Fuer jede Klasse mal mit und ohne Kind muessen der PHP-Kern,
  *      der Apps-Script-Rueckfall und die Richtlinienrechnung dieses Tests exakt dieselbe Zahl
  *      liefern. Der Sollwert wird hier unabhaengig aus der Staffel der Foerderperiode gerechnet
@@ -22,6 +22,8 @@
  *      liegt. Das ist die verletzte Bedingung, die den Fehler ueberhaupt moeglich gemacht hat.
  *   4. KEINE KLASSE FAELLT AUS DER LEAD-ABBILDUNG. js/site.js bildet die Klasse auf das binaere
  *      HubSpot-Feld einkommen_unter_40k ab; eine dort fehlende Klasse wuerde still 'ka' liefern.
+ *   5. BEIDE ERKLAERSTELLEN nennen dieselben sechs Auswahlklassen und deren Wirkung. Damit können
+ *      Auswahl, Rechenkern und Kundentext nicht mehr getrennt voneinander geändert werden.
  *
  * ROT-NACHWEIS. Mit --rot-nachweis wird die Klassengrenze bis60 bewusst auf 70.000 Euro verstellt.
  * Der Lauf MUSS dann rot werden. Ein gruener Lauf allein belegt nichts.
@@ -134,6 +136,32 @@ foreach ($in['kvFaelle'] as $fall) {
     ], $params);
     $out['kv'][] = $r['e'];
 }
+$synthetisch = $params;
+$synthetisch['perioden'][$in['periode']]['cap'] = 63;
+$synthetisch['perioden'][$in['periode']]['effizienzPct'] = 7;
+$synthetisch['perioden'][$in['periode']]['kindFreibetrag'] = 0;
+$synthetisch['perioden'][$in['periode']]['einkStufen'] = [['maxAnr' => 60000, 'pct' => 13]];
+$r = hw_foerder_calc([
+    'we' => 1, 'selbstWE' => 1, 'heizung' => 'gas', 'heizungsalter' => 25,
+    'einkommen' => 'bis60', 'kind' => 'ja', 'preis' => 34510,
+], $f, '2026-08-01T12:00:00', hw_foerder_perioden_aus_kv($synthetisch));
+$out['periodenquelle'] = [
+    'satz' => $r['kfwSatz'], 'zuschuss' => $r['zuschussGesamt'],
+    'eigenanteil' => $r['eigenanteil'], 'einkommen' => $r['einkommensbonusPct'],
+];
+$fehlend = $params;
+foreach (['cap', 'effizienzPct', 'kindFreibetrag'] as $feld) {
+    $fehlend['perioden'][$in['periode']][$feld] = null;
+}
+$fehlend['perioden'][$in['periode']]['einkStufen'] = [];
+$logger = hw_foerder_rueckfall_logger();
+$einmal = hw_foerder_params_mit_rueckfall($fehlend, $f, $logger);
+hw_foerder_params_mit_rueckfall($fehlend, $f, $logger);
+$werte = $einmal['perioden'][$in['periode']];
+$out['rueckfall'] = [
+    'cap' => $werte['cap'], 'effizienzPct' => $werte['effizienzPct'],
+    'kindFreibetrag' => $werte['kindFreibetrag'], 'einkStufen' => $werte['einkStufen'],
+];
 echo json_encode($out);
 `;
 
@@ -177,6 +205,35 @@ const php = JSON.parse(roh.stdout);
 // =====================================================================================
 const zeilen = [];
 let fehler = 0;
+
+const periodenquellePhpOk =
+  JSON.stringify(php.periodenquelle) ===
+  JSON.stringify({
+    satz: 63,
+    zuschuss: 17640,
+    eigenanteil: 16870,
+    einkommen: 13,
+  });
+if (!periodenquellePhpOk) fehler++;
+zeilen.push(
+  `${periodenquellePhpOk ? 'PASS' : 'FAIL'} | PHP-Periodenquelle | ` +
+    `Deckel, Effizienz, Kinderabzug und Einkommensstufen gewinnen gegen Förder_Parameter`
+);
+
+const rueckfallProtokolle = roh.stderr
+  .split('\n')
+  .filter((zeile) => zeile.includes('FOERDER_PERIODEN_RUECKFALL periode=h2-2026'));
+const rueckfallPhpOk =
+  php.rueckfall.cap === 80 &&
+  php.rueckfall.effizienzPct === 0 &&
+  php.rueckfall.kindFreibetrag === 10000 &&
+  JSON.stringify(php.rueckfall.einkStufen) === JSON.stringify(STUFEN) &&
+  rueckfallProtokolle.length === 4;
+if (!rueckfallPhpOk) fehler++;
+zeilen.push(
+  `${rueckfallPhpOk ? 'PASS' : 'FAIL'} | PHP-Rückfall | 4 Werte korrekt, ` +
+    `${rueckfallProtokolle.length} deduplizierte Protokolle, erwartet 4`
+);
 faelle.forEach(([klasse, kind], index) => {
   const grenze = KLASSEN.find(([name]) => name === klasse)[1];
   // Gerechnet wird mit der Klassenobergrenze; eine offene Klasse hat keine, sie kann nur 0 sein.
@@ -264,6 +321,21 @@ if (!leadOk) fehler++;
 zeilen.push(
   `${leadOk ? 'PASS' : 'FAIL'} | Lead-Abbildung | Klassen ohne Zuordnung in js/site.js: ` +
     `${fehlend.length === 0 ? 'keine' : JSON.stringify(fehlend)}`
+);
+
+// =====================================================================================
+// 5. Beide Erklärstellen bilden dieselbe Staffel und dieselben Null-Prozent-Klassen ab
+// =====================================================================================
+const erklaerung =
+  'Maßgeblich ist das Einkommen nach einem einmaligen Kinderabzug von 10.000 €: ' +
+  '40 % bis 30.000 €, 30 % bis 40.000 € und 10 % bis 50.000 €. ' +
+  'Deshalb ergibt die Auswahlklasse bis 60.000 € mit Kind 10 %, ohne Kind 0 %. ' +
+  'Bis 90.000 € und über 90.000 € ergeben 0 %.';
+const erklaerstellen = html.split(erklaerung).length - 1;
+const textOk = erklaerstellen === 2;
+if (!textOk) fehler++;
+zeilen.push(
+  `${textOk ? 'PASS' : 'FAIL'} | Erklärtext | vollständige Förderstaffel steht ${erklaerstellen}-mal, erwartet 2-mal`
 );
 
 // --- Ausgabe
