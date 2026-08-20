@@ -741,8 +741,25 @@ function wzUpdateVerbrauchLabel() {
       'Steht auf deiner Gas-Jahresabrechnung (Verbrauch in Kubikmetern).';
   } else {
     document.getElementById('wzVerbVal').textContent = val.toLocaleString('de-DE') + ' kWh';
-    document.getElementById('wzVerbrauchHinweis').textContent =
-      val > 45000 ? 'Tipp: Bei diesem Verbrauch empfehlen wir eine individuelle Beratung.' : '';
+    // Bestehende Waermepumpe: der Kunde liest STROM ab, gerechnet wird mit WAERME. Der Hinweis
+    // ordnet die Jahresarbeitszahl 2,8 ausdruecklich seiner JETZIGEN Anlage zu und trennt die
+    // neue davon ab, damit niemand die 2,8 auf unser Angebot bezieht (GF-Entscheid 20.08.2026,
+    // Vorgang T575). Die 2,8 selbst steht als Treiber im Blatt Dimensionierung, nicht hier.
+    const hinweise = [];
+    if (wizData.heizung === 'sonst' && wizData.andereHeizung === 'waermepumpe') {
+      hinweise.push(
+        'Du liest Strom ab, wir brauchen Wärme. Deshalb rechnen wir deinen Stromverbrauch mit der ' +
+          'Jahresarbeitszahl deiner jetzigen Wärmepumpe zurück und setzen dafür 2,8 an, den ' +
+          'Erfahrungswert für ein Gerät, das nach vielen Betriebsjahren zum Austausch ansteht. ' +
+          'Deine neue Anlage rechnen wir davon getrennt, mit den Werten heutiger Geräte. Kennst du ' +
+          'die Jahresarbeitszahl deiner jetzigen Anlage, bring sie mit ins Beratungsgespräch, dann ' +
+          'rechnen wir mit deiner Zahl.'
+      );
+    }
+    if (val > 45000) {
+      hinweise.push('Tipp: Bei diesem Verbrauch empfehlen wir eine individuelle Beratung.');
+    }
+    document.getElementById('wzVerbrauchHinweis').textContent = hinweise.join(' ');
   }
 }
 
