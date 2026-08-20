@@ -557,14 +557,68 @@ function einkommenGrenzen_(f) {
 // Die Enum-Klasse wird über ihre OBERGRENZE repräsentiert; weil Staffelgrenzen (30/40/50k) und Kinderabzug
 // (10k) auf demselben 10.000er-Raster liegen, bildet jede Klasse auf genau EINEN Bonuswert ab, auch mit Kind.
 // Das ist exakt, keine Näherung, und systematisch konservativ.
-function einkommensbonusPct_(einkommenNorm, kind, f) {
+function foerderRueckfall_(per, feld, fallbackSchluessel, fallbackWert, onFallback) {
+  const wert = per ? per[feld] : undefined;
+  const fehlt = wert === undefined || wert === null || wert === ''
+    || (feld === 'einkStufen' && (!Array.isArray(wert) || wert.length === 0));
+  if (!fehlt) return wert;
+  if (onFallback) onFallback(per && per.id ? per.id : 'unbekannt', feld, fallbackSchluessel);
+  return fallbackWert;
+}
+
+// Die vier periodenabhängigen Werte kommen aus KV_FoerderPerioden. Förder_Parameter bleibt nur
+// Rückfall für unvollständige Periodenzeilen; die Klassenobergrenzen bleiben bewusst dort.
+function foerderPeriodenWerte_(per, f, onFallback) {
+  const reform = !!(per && per.reform);
+  const grenzen = einkommenGrenzen_(f);
+  const stufenFallback = reform
+    ? [
+        { maxAnr: grenzen.bis30, pct: getNum_(f, 'reform_eink_pct_bis30', 40) },
+        { maxAnr: grenzen.bis40, pct: getNum_(f, 'reform_eink_pct_bis40', 30) },
+        { maxAnr: grenzen.bis50, pct: getNum_(f, 'reform_eink_pct_bis50', 10) }
+      ]
+    : [{ maxAnr: grenzen.bis40, pct: getNum_(f, 'einkommensbonus_pct', 30) }];
+  return {
+    cap: foerderRueckfall_(
+      per,
+      'cap',
+      reform ? 'reform_deckel_pct' : 'deckel_selbst_pct',
+      getNum_(f, reform ? 'reform_deckel_pct' : 'deckel_selbst_pct', reform ? 80 : 70),
+      onFallback
+    ),
+    effizienzPct: foerderRueckfall_(
+      per,
+      'effizienzPct',
+      reform ? 'Reformregel:0' : 'effizienzbonus_pct',
+      reform ? 0 : getNum_(f, 'effizienzbonus_pct', 5),
+      onFallback
+    ),
+    kindFreibetrag: foerderRueckfall_(
+      per,
+      'kindFreibetrag',
+      reform ? 'reform_kind_abzug_eur' : 'Altregel:0',
+      reform ? getNum_(f, 'reform_kind_abzug_eur', 10000) : 0,
+      onFallback
+    ),
+    einkStufen: foerderRueckfall_(
+      per,
+      'einkStufen',
+      reform ? 'reform_eink_pct_bis30/40/50' : 'einkommensbonus_pct',
+      stufenFallback,
+      onFallback
+    )
+  };
+}
+
+function einkommensbonusPct_(einkommenNorm, kind, f, periodenWerte) {
   const grenzen = einkommenGrenzen_(f);
   const zvE = grenzen[einkommenNorm];
   if (zvE === undefined) return 0; // 'unbekannt' / 'keine'
-  const anr = Math.max(0, zvE - (kind ? getNum_(f, 'reform_kind_abzug_eur', 10000) : 0));
-  if (anr <= grenzen.bis30) return getNum_(f, 'reform_eink_pct_bis30', 40);
-  if (anr <= grenzen.bis40) return getNum_(f, 'reform_eink_pct_bis40', 30);
-  if (anr <= grenzen.bis50) return getNum_(f, 'reform_eink_pct_bis50', 10);
+  const werte = periodenWerte || foerderPeriodenWerte_({ id: 'legacy', reform: true }, f);
+  const anr = Math.max(0, zvE - (kind ? werte.kindFreibetrag : 0));
+  for (let i = 0; i < werte.einkStufen.length; i++) {
+    if (anr <= werte.einkStufen[i].maxAnr) return werte.einkStufen[i].pct;
+  }
   return 0;
 }
 
@@ -584,8 +638,9 @@ function foerderFaehigeKostenGesamt_(we, f, ersteWE) {
  * @param {Object} f      Förder-Parameter (Schlüssel/Wert aus Förder_Parameter).
  * @param {Date}   heute  Antragsdatum = Stichtag der Perioden-Automatik (Eingabe, nie intern gelesen).
  */
-function foerderCalc_(p, f, heute, periodenQuelle) {
+function foerderCalc_(p, f, heute, periodenQuelle, onFallback) {
   const per = periodeFuer_(heute, periodenQuelle);
+  const periodenWerte = foerderPeriodenWerte_(per, f, onFallback);
   const we = int_(p.we, 1);
   const selbstWE = int_(p.selbstWE, 1);
   const heizung = String(p.heizung || 'gas');
@@ -614,11 +669,12 @@ function foerderCalc_(p, f, heute, periodenQuelle) {
     satzSelbst = grundPct;
     if (selbstWE > 0 && klimaBonus) satzSelbst += klimaPct;
     if (selbstWE > 0 && altEinkOk) satzSelbst += einkommensbonusPct;
-    satzSelbst += getNum_(f, 'effizienzbonus_pct', 5);
-    satzSelbst = Math.min(satzSelbst, getNum_(f, 'deckel_selbst_pct', 70));
-    satzVermietet = Math.min(getNum_(f, 'deckel_vermietet_pct', 35), grundPct + getNum_(f, 'effizienzbonus_pct', 5));
+    satzSelbst += periodenWerte.effizienzPct;
+    satzSelbst = Math.min(satzSelbst, periodenWerte.cap);
+    satzVermietet = Math.min(getNum_(f, 'deckel_vermietet_pct', 35), grundPct + periodenWerte.effizienzPct);
     foerderFaehigGesamt = foerderFaehigeKostenGesamt_(we, f);
-    bausteine = ['Grundförderung ' + grundPct + '%', 'Effizienzbonus (R290) +' + getNum_(f, 'effizienzbonus_pct', 5) + '%'];
+    bausteine = ['Grundförderung ' + grundPct + '%'];
+    if (periodenWerte.effizienzPct > 0) bausteine.push('Effizienzbonus (R290) +' + periodenWerte.effizienzPct + '%');
     if (selbstWE > 0 && klimaBonus) bausteine.splice(1, 0, 'Klimageschwindigkeitsbonus +' + klimaPct + '%');
     if (selbstWE > 0 && altEinkOk) bausteine.splice(1, 0, 'Einkommensbonus +' + einkommensbonusPct + '%');
   } else {
@@ -628,14 +684,14 @@ function foerderCalc_(p, f, heute, periodenQuelle) {
     // abgebildet, KEIN Bonus obendrauf (Orakel Z.114-115).
     grundPct = (per.eu && !euOk) ? getNum_(f, 'reform_grund_pct_nicht_eu', 15) : getNum_(f, 'reform_grund_pct', 30);
     klimaPct = per.klima;
-    einkommensbonusPct = einkommensbonusPct_(einkommen, kind, f);
+    einkommensbonusPct = einkommensbonusPct_(einkommen, kind, f, periodenWerte);
     satzSelbst = grundPct;
     if (selbstWE > 0 && klimaBonus) satzSelbst += klimaPct;
     if (selbstWE > 0) satzSelbst += einkommensbonusPct;
-    // KEIN Effizienzbonus mehr (Kanon E-06, mit der Reform entfallen).
-    satzSelbst = Math.min(satzSelbst, getNum_(f, 'reform_deckel_pct', 80));
+    satzSelbst += periodenWerte.effizienzPct;
+    satzSelbst = Math.min(satzSelbst, periodenWerte.cap);
     // Vermietete WE: nur Grundförderung (Kanon A1 [abgeleitet], W-4-Vorbehalt).
-    satzVermietet = grundPct;
+    satzVermietet = grundPct + periodenWerte.effizienzPct;
     // Bemessungsgrenze nach WE-Staffel (Kanon 1.4 / K-1.1; GF-Entscheid E1=A, 23.07.2026): erste WE =
     // Perioden-Grenze (die Degression trifft NUR die erste WE), WE 2-6 je 15.000, ab WE 7 je 8.000,
     // reform-unveraendert. Ersetzt die fruehere konservative Ein-WE-Naeherung (Kanon-A2-Stand vor K-1).
@@ -643,6 +699,7 @@ function foerderCalc_(p, f, heute, periodenQuelle) {
     if (we > 1) hinweise.push('Bei mehreren Wohneinheiten gelten gestaffelte Grenzen je Wohneinheit. Wir rechnen dein Projekt genau durch.');
     if (per.ueberHorizont) hinweise.push('Für Anträge nach dem 31.07.2029 stehen die Fördersätze noch nicht fest. Wir rechnen dein Projekt genau durch.');
     bausteine = ['Grundförderung ' + grundPct + '%'];
+    if (periodenWerte.effizienzPct > 0) bausteine.push('Effizienzbonus (R290) +' + periodenWerte.effizienzPct + '%');
     if (selbstWE > 0 && klimaBonus && klimaPct > 0) bausteine.splice(1, 0, 'Klimageschwindigkeitsbonus +' + klimaPct + '%');
     if (selbstWE > 0 && einkommensbonusPct > 0) bausteine.splice(1, 0, 'Einkommensbonus +' + einkommensbonusPct + '%');
   }
@@ -760,10 +817,45 @@ function heuteAbStichtagIso_(params) {
   return heute < stichtag ? stichtag : heute;
 }
 
+function foerderRueckfallLogger_() {
+  const gesehen = {};
+  return function (periode, feld, fallbackSchluessel) {
+    const key = periode + ':' + feld;
+    if (gesehen[key]) return;
+    gesehen[key] = true;
+    console.warn(
+      'FOERDER_PERIODEN_RUECKFALL periode=' + periode
+      + ' feld=' + feld
+      + ' fallback=' + fallbackSchluessel
+    );
+  };
+}
+
+function foerderParamsMitRueckfall_(params, f, onFallback) {
+  const out = {};
+  for (const key in params) out[key] = params[key];
+  out.perioden = {};
+  for (const id in params.perioden) {
+    const roh = params.perioden[id];
+    const per = {};
+    for (const feld in roh) per[feld] = roh[feld];
+    per.id = id;
+    per.reform = id !== 'alt';
+    const werte = foerderPeriodenWerte_(per, f, onFallback);
+    per.cap = werte.cap;
+    per.effizienzPct = werte.effizienzPct;
+    per.kindFreibetrag = werte.kindFreibetrag;
+    per.einkStufen = werte.einkStufen;
+    out.perioden[id] = per;
+  }
+  return out;
+}
+
 // Wrapper: holt Sheet-Parameter + Preis + Server-Zeit (Stichtag-geklemmt, Option B) und ruft den reinen Kern.
 function foerderung_(p) {
   const f = getAllParameters_().foerder;
-  const kvParams = kvGetParams_();
+  const onFallback = foerderRueckfallLogger_();
+  const kvParams = foerderParamsMitRueckfall_(kvGetParams_(), f, onFallback);
   const marke = String(p.marke || 'wolf').toLowerCase();
   const prices = getPrices_(marke);
   const wpTyp = String(p.wpTyp || 'm').toLowerCase();
@@ -773,7 +865,7 @@ function foerderung_(p) {
   args.preis = preis;
   // Option B: nie vor dem Reform-Stichtag; ISO + Mittag, damit periodeFuer_ den Tag zeitzonenrobust nimmt.
   const heuteEff = heuteAbStichtagIso_(kvParams) + 'T12:00:00';
-  const out = foerderCalc_(args, f, heuteEff, foerderPeriodenAusKv_(kvParams));
+  const out = foerderCalc_(args, f, heuteEff, foerderPeriodenAusKv_(kvParams), onFallback);
   if (marke === 'vaillant') out.vorlaeufig = true;
   // Degressions-Treppe fuer die Anzeige (Maengelpunkte G4/M4, GF-Entscheid 02.08.2026).
   // Gerechnet wird mit DEMSELBEN reinen Kern, je Reform-Periode einmal, mit dem Stichtag
@@ -782,7 +874,7 @@ function foerderung_(p) {
   const perioden = foerderPeriodenAusKv_(kvParams);
   out.treppe = (kvParams.periodenReihenfolge || []).map(function (id) {
     const per = kvParams.perioden[id];
-    const stufe = foerderCalc_(args, f, String(per.gueltigAb) + 'T12:00:00', perioden);
+    const stufe = foerderCalc_(args, f, String(per.gueltigAb) + 'T12:00:00', perioden, onFallback);
     return {
       periode: id,
       label: stufe.periodeLabel,
@@ -816,13 +908,18 @@ function foerderPeriodenAusKv_(params) {
       klima: kvNum_(p.klima, 0),
       grenze: kvNum_(p.grenze, 0),
       eu: !!p.eu,
+      cap: p.cap,
+      effizienzPct: p.effizienzPct,
+      kindFreibetrag: p.kindFreibetrag,
+      einkStufen: p.einkStufen,
       label: id === 'alt' ? 'Anträge bis 20.07.2026' : String(p.label || '')
     };
   });
 }
 
 function kostenvergleich_(p) {
-  const params = kvGetParams_();
+  const f = getAllParameters_().foerder;
+  const params = foerderParamsMitRueckfall_(kvGetParams_(), f, foerderRueckfallLogger_());
   const inputs = kvMapRequest_(p, params);
   if (String(p.bedarfModus || '') === 'schaetzung') {
     const geb = kvEnum_(p.geb, ['efh', 'dhh', 'rh', 'zfh', 'mfh'], '');
@@ -944,10 +1041,10 @@ function kvGetParams_() {
         klima: kvNum_(r[4], 0),
         grenze: kvNum_(r[5], 0),
         eu: String(r[6]).toUpperCase() === 'J',
-        cap: kvNum_(r[7], 80),
-        effizienzPct: kvNum_(r[8], 0),
-        kindFreibetrag: kvNum_(r[9], 0),
-        einkStufen: String(r[10]).split(';').filter(String).map(function (s) {
+        cap: r[7] === '' || r[7] === null || r[7] === undefined ? null : kvNum_(r[7], 80),
+        effizienzPct: r[8] === '' || r[8] === null || r[8] === undefined ? null : kvNum_(r[8], 0),
+        kindFreibetrag: r[9] === '' || r[9] === null || r[9] === undefined ? null : kvNum_(r[9], 0),
+        einkStufen: String(r[10] === undefined || r[10] === null ? '' : r[10]).split(';').filter(String).map(function (s) {
           const teile = s.split(':');
           return { maxAnr: kvNum_(teile[0], 0), pct: kvNum_(teile[1], 0) };
         }),

@@ -29,8 +29,13 @@ const src = fs.readFileSync(CODE_PATH, 'utf8');
 const verboten = (was) => () => {
   throw new Error('PURITY-VERSTOSS: foerderCalc_ hat ' + was + ' angefasst');
 };
+const sandboxWarnungen = [];
 const sandbox = {
-  console,
+  console: {
+    log: console.log.bind(console),
+    error: console.error.bind(console),
+    warn: (meldung) => sandboxWarnungen.push(String(meldung)),
+  },
   SpreadsheetApp: { openById: verboten('SpreadsheetApp') },
   CacheService: { getScriptCache: verboten('CacheService') },
   ContentService: { createTextOutput: verboten('ContentService'), MimeType: { JSON: 'JSON' } },
@@ -40,7 +45,11 @@ vm.createContext(sandbox);
 vm.runInContext(engineSrc, sandbox, { filename: 'kv_engine.gs' });
 vm.runInContext(src, sandbox, { filename: 'Code.gs' });
 
-const { foerderCalc_, periodeFuer_, einkommenNorm_, foerderFaehigeKostenGesamt_, FOERDER_ROWS_, getNum_, int_ } = sandbox;
+const {
+  foerderCalc_, periodeFuer_, einkommenNorm_, foerderFaehigeKostenGesamt_, FOERDER_ROWS_,
+  getNum_, int_, foerderPeriodenAusKv_, foerderParamsMitRueckfall_, foerderRueckfallLogger_,
+  KV_PARAMS_SEED,
+} = sandbox;
 
 // --- Förder-Parameter exakt so, wie setupSheets sie ins Sheet schreibt (Schlüssel -> Wert).
 const F = {};
@@ -576,6 +585,75 @@ pruefe('C-31', 'Reform h2-2026 | ueber 90.000 mit Kind = kein Bonus', foerderCal
   zuschussGesamt: 12880,
   einkommensbonusPct: 0,
 });
+
+// C-32 | Alle vier doppelt geführten Werte müssen aus der gewählten Periode kommen. Die
+// synthetische Periode widerspricht Förder_Parameter absichtlich in jedem Feld.
+{
+  const params = JSON.parse(JSON.stringify(KV_PARAMS_SEED));
+  Object.assign(params.perioden['h2-2026'], {
+    cap: 63,
+    effizienzPct: 7,
+    kindFreibetrag: 0,
+    einkStufen: [{ maxAnr: 60000, pct: 13 }],
+  });
+  const perioden = foerderPeriodenAusKv_(params);
+  pruefe(
+    'C-32',
+    'Periodenquelle gewinnt bei Deckel, Effizienz, Kinderabzug und Einkommensstufen',
+    foerderCalc_(p({ einkommen: 'bis60', kind: 'ja', preis: 34510 }), F, d('2026-08-01'), perioden),
+    {
+      kfwSatz: 63,
+      zuschussGesamt: 17640,
+      eigenanteil: 16870,
+      einkommensbonusPct: 13,
+      bausteine: [
+        'Grundförderung 30%',
+        'Einkommensbonus +13%',
+        'Klimageschwindigkeitsbonus +16%',
+        'Effizienzbonus (R290) +7%',
+      ],
+    }
+  );
+}
+
+// C-33 | Fehlende Periodenfelder fallen auf die bisherige Regel zurück und werden mit demselben
+// Anfrage-Logger trotz zweier Aufbereitungen exakt einmal je Feld protokolliert.
+{
+  const params = JSON.parse(JSON.stringify(KV_PARAMS_SEED));
+  Object.assign(params.perioden['h2-2026'], {
+    cap: null,
+    effizienzPct: null,
+    kindFreibetrag: null,
+    einkStufen: [],
+  });
+  sandboxWarnungen.length = 0;
+  const logger = foerderRueckfallLogger_();
+  const einmal = foerderParamsMitRueckfall_(params, F, logger);
+  foerderParamsMitRueckfall_(params, F, logger);
+  const werte = einmal.perioden['h2-2026'];
+  pruefe(
+    'C-33',
+    'Fehlende Periodenfelder | Rückfall und Anfrage-Deduplizierung',
+    {
+      cap: werte.cap,
+      effizienzPct: werte.effizienzPct,
+      kindFreibetrag: werte.kindFreibetrag,
+      einkStufen: werte.einkStufen,
+      protokolle: sandboxWarnungen.length,
+    },
+    {
+      cap: 80,
+      effizienzPct: 0,
+      kindFreibetrag: 10000,
+      einkStufen: [
+        { maxAnr: 30000, pct: 40 },
+        { maxAnr: 40000, pct: 30 },
+        { maxAnr: 50000, pct: 10 },
+      ],
+      protokolle: 4,
+    }
+  );
+}
 
 // C-22 bis C-28 | A-BIO und globaler proKlima-Schalter (Kanon 10 / GF-Entscheid 15.07.2026).
 pruefe('C-22', 'A-BIO | Kohle funktionsfähig ohne Altersgrenze', foerderCalc_(p({ heizung: 'kohle', heizungsalter: '1', einkommen: 'bis30', preis: 34510 }), F, d('2026-08-01')), {
