@@ -1,3 +1,37 @@
+/* =============================================================================
+ * ACHTUNG: DIESE DATEI IST NUR DIE HAELFTE DES PROJEKTS. NICHT EINSPIELEN.
+ * Vermerkt am 20.08.2026, Vorgang T588.
+ *
+ * WAS SIE IST: der Website-Teil des Apps-Script-Projekts
+ * 1n4qidc_cFjcuE2-KS2pzH9m-z9w8jADkkXsM6LDbDhJkq-e-62ZSNQap, also Dimensionierung,
+ * KfW-Foerderung, Preise und Kostenvergleich. Fuer diese Bereiche ist sie gepflegt und richtig.
+ *
+ * WAS SIE NICHT IST: der ganze Projektstand. Dasselbe Projekt traegt zusaetzlich den
+ * Angebotskonfigurator, und davon steht hier NICHTS: keine Fragestrecke, keine Stueckliste,
+ * keine Preisbildung, keine Mengenregeln, keine Angebots-Rueckgabe.
+ * Gemessen am 20.08.2026: diese Datei 88 KB und 0 Vorkommen von konfWizardRechnen,
+ * der Live-Stand 141 KB. EIN EINSPIELEN DIESER DATEI WUERDE 49 FUNKTIONEN ERSATZLOS LOESCHEN,
+ * darunter konfWizardRechnen, konfStueckliste_, konfAddPos_ und die gesamte Fragestrecke.
+ * Der Aussendienst haette danach kein Werkzeug mehr.
+ *
+ * WARUM DAS FRUEHER ANDERS STAND: der urspruengliche Kopf dieser Datei nannte das Einspielen
+ * samt setupSheets() und Neu-Bereitstellung ausdruecklich als vorgesehenen Weg. Das stimmte 2026,
+ * als das Projekt nur den Rechner trug. Seit der Konfigurator im selben Projekt lebt, ist es eine
+ * Loeschanweisung. setupSheets() ist zusaetzlich gefaehrlich, weil es die Parameter-Blaetter mit
+ * sh.clear() leert und neu schreibt.
+ *
+ * WIE ES RICHTIG GEHT: Aenderungen am Live-Projekt ausschliesslich ueber die Schleuse im
+ * HeroPlan-Vault, python3 _tools/appsscript_schleuse.py ziehen|pruefen|hochladen. Sie zieht den
+ * vollstaendigen Stand, weist ein Hochladen auf einem veralteten Abzug ab und weist ebenso ab,
+ * wenn dabei eine vorhandene Funktion ersatzlos entfiele. Genau dieses Einspielen ist dort als
+ * Rot-Nachweis hinterlegt und wird abgewiesen.
+ *
+ * ANLASS: am 19. und 20.08.2026 ist dreimal ausgelieferte Arbeit im geteilten Projekt still
+ * verschwunden, weil zwei Straenge auf demselben Skript bauen und wer hochlaedt den ganzen Stand
+ * ersetzt. Zuletzt die fuenfte Einkommensstufe, 2.800 Euro Foerderung je betroffenem Kundenfall.
+ * =============================================================================
+ */
+
 /**
  * HeroWerk_Rechner_Backend — Code.gs (standalone Google Apps Script Web App)
  * Serverseitiger Spiegel der js/site.js-Rechnerlogik: Dimensionierung (wizCalculate),
@@ -5,7 +39,8 @@
  * Quelle/Port: HeroBenBen/herowerk-website js/site.js @ origin/main 0ea5151.
  * Tier-4 byte-genau bestaetigt 2026-06-17 (Testfaelle T1-T5 == heutige Seite, 2x unabhaengig nachgerechnet).
  * Parameter liegen in der privaten Google-Tabelle (setupSheets schreibt sie); Formeln im Code.
- * Einspielen ins Apps-Script-Projekt 1n4qidc... + setupSheets() + Re-Deploy = Cowork/Benjamin.
+ * NICHT einspielen, siehe Warnung oben: diese Datei enthaelt den Konfigurator nicht.
+ * Aenderungen am Live-Projekt laufen ueber _tools/appsscript_schleuse.py im HeroPlan-Vault.
  */
 
 /**
