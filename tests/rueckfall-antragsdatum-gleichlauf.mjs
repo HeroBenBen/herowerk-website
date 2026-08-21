@@ -9,7 +9,8 @@
  * seit dem 20.08.2026 richtig rechnete. Gemessen an der Live-Adresse AKfycbwsvoC0.
  *
  * WAS DIESER TEST PRUEFT. Beide Fassungen bekommen DIESELBEN Blattzeilen aus der Saat und
- * dieselben Anfragen. Verglichen wird die vollstaendige Antwort als JSON, also Werte UND
+ * dieselben Anfragen. Verglichen wird die vollstaendige Antwort, Zahlen mit einer Toleranz von
+ * einem Milliardstel (Begruendung an ZAHL_TOLERANZ weiter unten), also Werte UND
  * Feldreihenfolge, denn der Doppellauf (scripts/compare-rechner-php.mjs) vergleicht die
  * Feldreihenfolge hart und meldet sonst eine Abweichung, die keine ist.
  * Faelle: alle Reform-Zeitraeume auf der Foerderroute und auf dem Kostenvergleich, dazu ohne
@@ -257,8 +258,25 @@ const gs = ANFRAGEN.map(({ anfrage }) => {
 // 5. Vergleich. Der Bootstrap wird nur auf der Zeitraum-Auswahl verglichen: beide Fassungen
 //    fuehren dort bewusst verschieden viele Felder je Eintrag, das ist Bestand und nicht Gegenstand.
 // ---------------------------------------------------------------------------
+// Zahlen werden mit einer Toleranz von einem Milliardstel des Betrages verglichen, alles andere
+// zeichengenau, und die Feldreihenfolge immer hart.
+// WARUM DIE TOLERANZ, gemessen am 21.08.2026: im Laufband laeuft PHP 8.1, lokal PHP 8.5. Bei
+// dreiWege.oel.betrieb liefern beide Fassungen 87196.43890013435 gegen 87196.43890013434, also eine
+// Abweichung in der letzten von siebzehn Stellen aus der Summierung einer Zwanzig-Jahres-Reihe. Der
+// Wert wird vor jeder Anzeige auf volle Euro gerundet; ein Nachweis, der daran rot wird, misst die
+// Rechenart der Sprache und nicht die Foerderregel. Alles, was diesen Vorgang betrifft, sind
+// Ganzzahlen und Zeichenketten und wird von der Toleranz nicht beruehrt.
+// NEBENBEFUND, nicht Gegenstand dieses Vorgangs: derselbe Unterschied laesst den Doppellauf
+// scripts/compare-rechner-php.mjs unter PHP 8.1 an dieser Stelle anschlagen. Er ist aelter als
+// diese Aenderung und betrifft nur den Kostenvergleich.
+const ZAHL_TOLERANZ = 1e-9;
+
 /** Der erste Pfad, an dem beide Antworten auseinanderlaufen, im Klartext. */
 function ersteAbweichung(a, b, pfad = '$') {
+  if (typeof a === 'number' && typeof b === 'number') {
+    const grenze = Math.max(Math.abs(a), Math.abs(b)) * ZAHL_TOLERANZ;
+    return Math.abs(a - b) <= grenze ? '' : pfad + ': ' + a + ' != ' + b;
+  }
   if (a === null || b === null || typeof a !== typeof b) {
     return Object.is(a, b) ? '' : pfad + ': ' + JSON.stringify(a) + ' != ' + JSON.stringify(b);
   }
@@ -283,7 +301,8 @@ ANFRAGEN.forEach(({ name, anfrage }, i) => {
   const istBootstrap = anfrage.action === 'kv_bootstrap';
   const a = istBootstrap ? php[i].perioden.map((p) => p.key) : php[i];
   const b = istBootstrap ? gs[i].perioden.map((p) => p.key) : gs[i];
-  const gleich = JSON.stringify(a) === JSON.stringify(b);
+  const abweichung = ersteAbweichung(a, b);
+  const gleich = abweichung === '';
   if (!gleich) fehler += 1;
   const kern = istBootstrap
     ? 'Auswahl ' + JSON.stringify(a) + ' gegen ' + JSON.stringify(b)
@@ -305,8 +324,8 @@ ANFRAGEN.forEach(({ name, anfrage }, i) => {
         gs[i].foerder.anzeigeBetrag +
         ' EUR';
   zeilen.push((gleich ? '  OK   ' : '  ROT  ') + name + '  [' + kern + ']');
-  if (!gleich && !istBootstrap) {
-    zeilen.push('         ' + ersteAbweichung(a, b));
+  if (!gleich) {
+    zeilen.push('         ' + abweichung);
   }
 });
 
