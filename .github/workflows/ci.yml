@@ -139,6 +139,10 @@ jobs:
       # 20.08.2026 versprach die Foerderseite bei Antrag im Maerz 2027 noch 12.880 statt
       # 11.445 Euro, weil sie fest auf heute rechnete.
       - run: npm run verify:antragsdatum
+        # Zweiter Teil dieses Gates seit 21.08.2026 (T617): der Apps-Script-Rueckfall muss
+        # zeichengleich dasselbe liefern wie der PHP-Kern, Werte UND Feldreihenfolge. Die Website
+        # faellt in zwei Faellen auf ihn zurueck, und am 21.08. hat er dabei 12.880 statt
+        # 11.445 Euro versprochen.
 
   # Job 2: Lighthouse-CI, ZURUECKGESTUFT AUF BERICHT (29.07.2026)
   #
