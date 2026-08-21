@@ -2264,11 +2264,14 @@ function hwTreppeAufbauen(treppe, aktivePeriode) {
       // mit Rolle ist der axe-Befund nested-interactive, und axe-accessibility ist eine der
       // elf Pflicht-Pruefungen. Der Verweis auf die Fussnote steht einmal unter der Treppe.
       const stern = d.quote === 80 ? '*' : '';
-      // role="img" ist Pflicht: aria-label auf einem div OHNE Rolle ist nach
-      // aria-prohibited-attr ein Befund. Der Bestand im Amortisierungsrechner loest es
-      // ueber role="button", weil die Stufen dort anklickbar sind; hier sind sie es nicht.
+      // Die Stufen sind seit dem 21.08.2026 die zweite Bedienung neben dem Klappfeld
+      // (GF-Entscheid): ein Klick waehlt diesen Antragszeitraum, und der Kunde sieht seine
+      // Foerderung im selben Blick schmelzen. Deshalb role="button" plus tabindex, wie im
+      // Amortisierungsrechner. Das Sternchen bleibt ein reines Zeichen und wird KEIN Link:
+      // ein fokussierbarer Nachfahre in einem Element mit Rolle ist der axe-Befund
+      // nested-interactive, und axe-accessibility ist eine der Pflicht-Pruefungen.
       return (
-        `<div class="tr-col${aktiv}" role="img" title="${d.label}" aria-label="Antragszeitraum ${d.label}: ${eur(d.betrag)}, ${d.quote} Prozent">` +
+        `<div class="tr-col${aktiv}" role="button" tabindex="0" data-tr="${d.periode}" title="${d.label}" aria-label="Antragszeitraum ${d.label} waehlen: ${eur(d.betrag)}, ${d.quote} Prozent">` +
         `<span class="tr-eur">${eur(d.betrag)}</span><span class="tr-pct">${d.quote} %${stern}</span>` +
         `<div class="tr-bar" style="height:${hoehe}px"></div>` +
         `<span class="tr-lbl"><span>ab</span><span>${monat(d.periode)}</span></span></div>`
@@ -2293,6 +2296,35 @@ function hwTreppeAufbauen(treppe, aktivePeriode) {
     `<div class="tr-reihe">${spalten}</div>` +
     `<div class="tr-verlust">${verlustSatz}</div>` +
     `<div class="tr-hint">Jedes Warten kostet Förderung: Im Antragszeitraum ${bezug.label} bekommst du ${eur(bezug.betrag)}.${sternHinweis}</div>`;
+  hwTreppeBedienbarMachen(host);
+}
+
+/**
+ * Macht die Stufen der Treppe zur zweiten Bedienung neben dem Klappfeld: Klick oder Eingabetaste
+ * waehlen den Antragszeitraum, die Seite rechnet neu und die aktive Stufe wandert mit.
+ * Ohne Klappfeld passiert nichts, dann bleibt die Treppe eine reine Anzeige.
+ */
+function hwTreppeBedienbarMachen(host) {
+  const select = document.getElementById('foerderAntragZeitraum');
+  if (!select) return;
+  host.querySelectorAll('.tr-col[data-tr]').forEach((spalte) => {
+    const waehlen = () => {
+      const ziel = spalte.dataset.tr;
+      if (!ziel || select.value === ziel) return;
+      // Nur setzen, wenn die Stufe auch in der Auswahl steht: der Server klemmt abgelaufene
+      // Zeitraeume aus der Auswahl, die Treppe zeigt sie zur Einordnung weiter an.
+      if (!Array.from(select.options).some((option) => option.value === ziel)) return;
+      select.value = ziel;
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+    };
+    spalte.addEventListener('click', waehlen);
+    spalte.addEventListener('keydown', (ereignis) => {
+      if (ereignis.key === 'Enter' || ereignis.key === ' ' || ereignis.key === 'Spacebar') {
+        ereignis.preventDefault();
+        waehlen();
+      }
+    });
+  });
 }
 
 async function calculateFoerder() {
@@ -2342,11 +2374,11 @@ async function calculateFoerder() {
     // foerderung.html (Lane C, anderer Branch). Defensiv gelesen: fehlt die Checkbox, weil noch die
     // alte Seite ausgeliefert wird, bleibt es bei 'nein' (konservativ), nichts bricht.
     kind: document.getElementById('foerderKind')?.checked ? 'ja' : 'nein',
-    // Antrag und Installation sind zwei Termine (GF-Entscheid 19.08.2026): der Antragszeitraum
-    // steuert die Foerderhoehe, der Installationsbeginn wird nur gegen die Reihenfolge geprueft.
-    // Beide Felder defensiv gelesen: fehlt eines, rechnet der Server wie bisher auf heute.
+    // Der Antragszeitraum steuert die Foerderhoehe. Defensiv gelesen: fehlt das Feld, weil noch
+    // eine aeltere Seite ausgeliefert wird, rechnet der Server wie bisher auf heute.
+    // Ein Installationstermin wird von dieser Seite bewusst NICHT geschickt (GF-Entscheid
+    // 21.08.2026): er gehoert in den Angebotskonfigurator und die Datenaufnahme.
     fHalbjahr: document.getElementById('foerderAntragZeitraum')?.value || '',
-    installBeginn: document.getElementById('foerderInstallBeginn')?.value || '',
     origin: 'https://herowerk.de',
   });
 
@@ -2373,7 +2405,6 @@ async function calculateFoerder() {
 
   foerderAntragOptionen(data);
   foerderHinweisSetzen('foerderAntragHinweis', data.antragHinweis);
-  foerderHinweisSetzen('foerderReihenfolgeHinweis', data.installHinweis);
 
   const preis = Number(data.preis) || 0;
   const gesamtZuschuss = Number(data.zuschussGesamt || 0);
