@@ -17,7 +17,7 @@
     "verify:rechner-snapshot-nachlauf": "node tests/rechner-snapshot-nachlauf.mjs && node tests/rechner-snapshot-zeitplan.mjs && php tests/rechner-snapshot-schema.php",
     "verify:rechner-snapshot-apache": "node scripts/verify-rechner-snapshot-apache.mjs",
     "verify:dimensionierung": "node scripts/sync-dimensionierung-icons.mjs --check && node tests/dimensionierung-sanierung-regression.mjs && node tests/dimensionierung-fassung7-regression.mjs && node tests/rechner-review-blocker-regression.mjs && node tests/verbrauchspfad-vaillant-regression.mjs && node tests/geraeteauswahl-regression.mjs && php tests/geraete-katalog-struktur.php",
-    "verify:antragsdatum": "node tests/antragsdatum-und-installation-regression.mjs",
+    "verify:antragsdatum": "node tests/antragsdatum-und-installation-regression.mjs && node tests/rueckfall-antragsdatum-gleichlauf.mjs",
     "verify:foerder-einkommensstaffel": "node tests/foerder-einkommensstaffel-regression.mjs && node apps-script/rechner-backend/tests/foerderung_perioden/run_tests.js",
     "verify:seo": "node scripts/build-structured-data.mjs --check",
     "build:seo": "node scripts/build-structured-data.mjs",

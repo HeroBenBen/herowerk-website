@@ -817,6 +817,97 @@ function heuteAbStichtagIso_(params) {
   return heute < stichtag ? stichtag : heute;
 }
 
+// ===== ANTRAGSZEITPUNKT UND INSTALLATIONSBEGINN DER OEFFENTLICHEN RECHNER =====
+// Nachgezogen am 21.08.2026 (Vorgang T617). Vorlage ist der PHP-Rechenkern der Website, der die
+// Regel seit dem 20.08.2026 draussen fuehrt (Vorgang T616); die Fachregel selbst stammt aus dem
+// Konfigurator (Vorgang T578) und wird hier zum dritten Mal WOERTLICH uebernommen, nicht neu
+// erfunden. Texte und Feldnamen sind absichtlich zeichengleich mit der PHP-Fassung, weil der
+// Doppellauf beide Antworten Feld fuer Feld und in derselben Reihenfolge vergleicht.
+//
+// WARUM DIESER RUECKFALL UEBERHAUPT ZAEHLT: api/rechner.php leitet in zwei Faellen an diese
+// Adresse weiter, naemlich wenn der PHP-Rechenkern per Schalter abgeschaltet ist und wenn der
+// Wertevorrat kalt nicht geladen werden kann. Bis zum 21.08.2026 hat diese Fassung das Feld
+// fHalbjahr auf der Foerderroute ignoriert und einem Antrag im Maerz 2027 unveraendert
+// 12.880 statt 11.445 Euro versprochen.
+
+// Ein Datum aus sechs Schreibweisen als 'yyyy-MM-dd', sonst ''. Im LIVE-Projekt stehen diese
+// beiden Helfer schon weiter oben, sie stammen aus der Konfigurator-Arbeit am Antragsdatum
+// (Vorgang T578). Diese Repo-Kopie traegt nur den Website-Teil und braucht sie deshalb hier.
+function antragsDatumIso_(eingabe) {
+  var t = String(eingabe || '').trim();
+  if (!t) return '';
+  var m;
+  if ((m = t.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/))) return isoAus_(m[1], m[2], m[3]);
+  if ((m = t.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/))) return isoAus_(m[3], m[2], m[1]);
+  if ((m = t.match(/^(\d{1,2})\.(\d{1,2})\.(\d{2})$/))) return isoAus_('20' + m[3], m[2], m[1]);
+  if ((m = t.match(/^(\d{1,2})[\.\/](\d{4})$/))) return isoAus_(m[2], m[1], 1);
+  if ((m = t.match(/^(\d{4})-(\d{1,2})$/))) return isoAus_(m[1], m[2], 1);
+  return '';
+}
+
+function isoAus_(j, mo, t) {
+  var jj = Number(j), mm = Number(mo), tt = Number(t);
+  if (!(jj >= 2026 && jj <= 2099) || !(mm >= 1 && mm <= 12) || !(tt >= 1 && tt <= 31)) return '';
+  return jj + '-' + ('0' + mm).slice(-2) + '-' + ('0' + tt).slice(-2);
+}
+
+// Die waehlbaren Antragszeitraeume: alle Reform-Perioden, deren Ende NICHT in der Vergangenheit
+// liegt. Zwei Klemmungen: nach unten auf HEUTE, weil rueckwirkend niemand beantragt, und nach
+// unten auf den Reform-Stichtag, weil 'alt' nicht mehr beantragbar ist (Option B).
+// Das Feld ab ist das FRUEHESTE Antragsdatum, das in diesem Zeitraum noch moeglich ist.
+function foerderPeriodenWaehlbar_(params) {
+  const heute = heuteAbStichtagIso_(params);
+  const out = [];
+  (params.periodenReihenfolge || []).forEach(function (key) {
+    const per = params.perioden[key];
+    if (!per) return;
+    const bis = String(per.gueltigBis || '');
+    if (bis && bis < heute) return; // Zeitraum ist vorbei, er steht nicht mehr zur Wahl
+    const ab = String(per.gueltigAb || '');
+    out.push({ key: key, label: String(per.label || ''), ab: (!ab || ab < heute) ? heute : ab, bis: bis });
+  });
+  return out;
+}
+
+// Der Antragszeitpunkt, auf den gerechnet wird. quelle ist 'angabe' oder 'heute'.
+function antragsZeitraum_(p, params) {
+  const heute = heuteAbStichtagIso_(params);
+  const gewuenscht = String((p && p.fHalbjahr) || '').trim();
+  const waehlbar = foerderPeriodenWaehlbar_(params);
+  for (let i = 0; i < waehlbar.length; i++) {
+    if (waehlbar[i].key === gewuenscht) {
+      return { key: waehlbar[i].key, ab: waehlbar[i].ab, quelle: 'angabe', hinweis: '' };
+    }
+  }
+  let hinweis = '';
+  if (gewuenscht && params.perioden[gewuenscht]) {
+    hinweis = 'Der gewählte Antragszeitraum ist vorbei. Gerechnet ist der heute geltende '
+            + 'Zeitraum, weil rückwirkend kein Förderantrag gestellt werden kann.';
+  }
+  return { key: kvPeriodeHeute_(params), ab: heute, quelle: 'heute', hinweis: hinweis };
+}
+
+function datumDeutsch_(iso) {
+  const m = String(iso || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  return m ? m[3] + '.' + m[2] + '.' + m[1] : String(iso || '');
+}
+
+// Reihenfolge-Pruefung Antrag vor Installation. Der Foerderantrag muss VOR dem Vorhabensbeginn
+// stehen (BEG EM); liegt der Installationsbeginn davor, entfaellt die Foerderung GANZ, nicht nur
+// ein paar Prozentpunkte. Verglichen wird gegen das FRUEHESTE Antragsdatum des gewaehlten
+// Zeitraums: nur dann ist die Reihenfolge sicher verletzt, egal wann im Zeitraum beantragt wird.
+function installationsbeginn_(eingabe, antragAbIso) {
+  const iso = antragsDatumIso_(eingabe);
+  if (!iso || !antragAbIso || iso >= antragAbIso) return { iso: iso, hinweis: '' };
+  return {
+    iso: iso,
+    hinweis: 'Der geplante Installationsbeginn (' + datumDeutsch_(iso) + ') liegt vor dem '
+           + 'frühesten Förderantrag dieses Zeitraums (' + datumDeutsch_(antragAbIso) + '). Der Antrag '
+           + 'muss vor dem Vorhabensbeginn stehen, sonst entfällt die Förderung vollständig. '
+           + 'Bitte einen der beiden Termine anpassen.'
+  };
+}
+
 function foerderRueckfallLogger_() {
   const gesehen = {};
   return function (periode, feld, fallbackSchluessel) {
@@ -863,10 +954,23 @@ function foerderung_(p) {
   const args = {};
   for (const k in p) args[k] = p[k];
   args.preis = preis;
-  // Option B: nie vor dem Reform-Stichtag; ISO + Mittag, damit periodeFuer_ den Tag zeitzonenrobust nimmt.
-  const heuteEff = heuteAbStichtagIso_(kvParams) + 'T12:00:00';
+  // Der Antragszeitpunkt kommt aus der Anfrage, nicht mehr fest von der Serveruhr (T617).
+  // Option B bleibt: nie vor dem Reform-Stichtag; ISO + Mittag, damit periodeFuer_ den Tag
+  // zeitzonenrobust nimmt.
+  const antrag = antragsZeitraum_(p, kvParams);
+  const install = installationsbeginn_(p.installBeginn, antrag.ab);
+  const heuteEff = antrag.ab + 'T12:00:00';
   const out = foerderCalc_(args, f, heuteEff, foerderPeriodenAusKv_(kvParams), onFallback);
   if (marke === 'vaillant') out.vorlaeufig = true;
+  // Feldreihenfolge zeichengleich mit der PHP-Fassung, der Doppellauf vergleicht sie hart.
+  out.perioden = foerderPeriodenWaehlbar_(kvParams);
+  out.aktivePeriode = kvPeriodeHeute_(kvParams);
+  out.antragPeriode = antrag.key;
+  out.antragAb = antrag.ab;
+  out.antragAutomatik = antrag.quelle === 'heute';
+  out.antragHinweis = antrag.hinweis;
+  out.installBeginn = install.iso;
+  out.installHinweis = install.hinweis;
   // Degressions-Treppe fuer die Anzeige (Maengelpunkte G4/M4, GF-Entscheid 02.08.2026).
   // Gerechnet wird mit DEMSELBEN reinen Kern, je Reform-Periode einmal, mit dem Stichtag
   // der Periode als Antragsdatum. Keine eigene Foerderregel, keine zusaetzliche Sheet-Lesung:
@@ -933,12 +1037,29 @@ function kostenvergleich_(p) {
   }
   const out = kvCalculate(inputs, params);
   out.periodeAutomatik = inputs._periodeAutomatik;
+  // Antrag und Installation sind zwei verschiedene Termine (GF-Entscheid 19.08.2026). Der
+  // Installationsbeginn geht NICHT in die Foerderrechnung ein, er wird nur gegen die Reihenfolge
+  // geprueft: Antrag vor Vorhabensbeginn.
+  const periodeGewaehlt = params.perioden[inputs.fHalbjahr] || {};
+  const heuteKv = heuteAbStichtagIso_(params);
+  let antragAb = String(periodeGewaehlt.gueltigAb || '');
+  if (!antragAb || antragAb < heuteKv) antragAb = heuteKv;
+  const installKv = installationsbeginn_(p.installBeginn, antragAb);
+  out.antragAb = antragAb;
+  out.installBeginn = installKv.iso;
+  out.installHinweis = installKv.hinweis;
   return out;
 }
 
 function kvBootstrap_(p) {
   const params = kvGetParams_();
   const out = kvBootstrapPayload(params);
+  // Nur Zeitraeume, die noch beantragbar sind: ein abgelaufener Zeitraum in der Auswahl waere ein
+  // Versprechen auf eine Foerderung, die es nicht mehr gibt (Klemmung nach unten auf heute, T617).
+  const waehlbar = foerderPeriodenWaehlbar_(params).map(function (eintrag) { return eintrag.key; });
+  out.perioden = (out.perioden || []).filter(function (eintrag) {
+    return waehlbar.indexOf(eintrag.key) >= 0;
+  });
   out.aktivePeriode = kvPeriodeHeute_(params);
   return out;
 }
