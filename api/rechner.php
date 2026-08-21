@@ -19,6 +19,13 @@ register_shutdown_function(static function (): void {
 date_default_timezone_set('Europe/Berlin');
 
 // Einzige Umschaltung zwischen PHP und dem bisherigen Google-Durchreichepfad.
+//
+// WARNUNG, GF-Entscheid vom 21.08.2026 (Vorgang T583): dieser Handschalter ist der Notnagel fuer
+// einen Ausfall des PHP-Kerns und sonst NICHTS. Wer ihn auf false legt, rechnet ab diesem Moment
+// mit dem Google-Rechenwerk, und das ist eine ganze Generation aelter: bei einer bestehenden
+// Waermepumpe liefert es 3,3 statt 7,8 kW. Der automatische Rueckfall beim Kaltstart ist am
+// 21.08.2026 aus genau diesem Grund stillgelegt worden. Vor dem Umlegen bitte den Entscheid lesen:
+// _Entscheidungen/2026-08-21_Google-Rueckfall-des-Website-Rechners-stilllegen_HERO.md
 const RECHNER_PHP_ENGINE_ENABLED = true;
 
 // Die ersten zwei Wochen nur protokollieren. true aktiviert HTTP 429 ab Aufruf 61.
@@ -220,17 +227,22 @@ if (!RECHNER_PHP_ENGINE_ENABLED) {
 try {
     $snapshot = rechner_load_snapshot();
 } catch (RechnerValuesException $error) {
+    // GOOGLE-RUECKFALL STILLGELEGT, GF-Entscheid vom 21.08.2026 (Vorgang T583):
+    // _Entscheidungen/2026-08-21_Google-Rueckfall-des-Website-Rechners-stilllegen_HERO.md
+    //
+    // Bis hierher hat der Kaltstart-Sonderfall ohne Wertevorrat einmal auf das Google-Programm
+    // umgeleitet. Dessen Rechenwerk ist eine GANZE GENERATION aelter als dieser Kern; mit
+    // denselben Eingaben gemessen am 20.08.2026: bei einer bestehenden Waermepumpe liefert es
+    // 3,3 statt 7,8 kW, legt das Haus also um mehr als die Haelfte zu klein aus. Eine falsche
+    // Zahl geht als Zahl zum Kunden und faellt niemandem auf; eine Fehlermeldung kostet einen
+    // Lead in einem seltenen Moment und rechnet nichts falsch.
+    //
+    // Der Aufruf endet deshalb hier mit der regulaeren Fehlerantwort.
     if ($error->publicCode !== 'snapshot_cold_start_failed') {
         rechner_fail(500, $error->publicCode);
     }
 
-    // Einziger Kaltstart-Sonderfall: ohne Snapshot einmal die konkrete Bestandsroute nutzen.
-    try {
-        echo rechner_forward_google($rawQuery)['body'];
-        exit;
-    } catch (RechnerValuesException $fallbackError) {
-        rechner_fail(502, 'calculator_temporarily_unavailable');
-    }
+    rechner_fail(503, 'calculator_temporarily_unavailable');
 }
 
 $action = strtolower((string) ($_GET['action'] ?? 'health'));

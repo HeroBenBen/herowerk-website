@@ -386,9 +386,20 @@ try {
   } catch {
     fallbackPayload = null;
   }
+  // GOOGLE-RUECKFALL STILLGELEGT, GF-Entscheid vom 21.08.2026 (Vorgang T583):
+  // _Entscheidungen/2026-08-21_Google-Rueckfall-des-Website-Rechners-stilllegen_HERO.md
+  // Frueher wurde hier erwartet, dass ein unbrauchbarer Wertevorrat auf das Google-Programm
+  // umleitet. Dessen Rechenwerk ist eine Generation aelter und legt bei einer bestehenden
+  // Waermepumpe um mehr als die Haelfte zu klein aus. Erwartet wird jetzt das Gegenteil: der
+  // Aufruf endet sichtbar mit einem Fehler, und die Attrappe des Google-Programms wird NICHT
+  // angefasst. Der zweite Teil ist der eigentliche Waechter; ohne ihn wuerde ein
+  // wiederhergestellter Rueckfall unbemerkt durchgehen, solange er nur einen Fehler zurueckgibt.
   record(
-    'Unbrauchbarer Snapshot nutzt den bestehenden Google-Rückfall',
-    fallbackResponse.status === 200 && fallbackPayload?.status === 'google-fallback',
+    'Unbrauchbarer Snapshot endet mit sichtbarem Fehler statt Google-Rückfall',
+    fallbackResponse.status === 503 &&
+      fallbackPayload?.error === true &&
+      fallbackPayload?.message === 'calculator_temporarily_unavailable' &&
+      fallbackPayload?.status !== 'google-fallback',
     `HTTP ${fallbackResponse.status}, ${fallbackResponse.body}`
   );
 } catch (error) {
