@@ -1518,6 +1518,11 @@ function hw_antragszeitraum(array $query, array $params): array
  * Reihenfolge sicher verletzt, egal wann innerhalb des Zeitraums der Antrag wirklich gestellt wird.
  *
  * @return array{iso:string,hinweis:string}
+ *
+ * SEIT DEM 21.08.2026 RUFT KEINE OEFFENTLICHE SEITE DIESE PRUEFUNG (GF-Entscheid): der
+ * Installationstermin gehoert nicht auf eine Kundenseite, sondern in den Angebotskonfigurator und
+ * die Datenaufnahme. Die Regel bleibt hier stehen, weil sie geprueft ist und der Rueckfall sie
+ * zeichengleich fuehrt; wer sie braucht, schickt installBeginn mit.
  */
 function hw_installationsbeginn(mixed $eingabe, string $antragAbIso): array
 {

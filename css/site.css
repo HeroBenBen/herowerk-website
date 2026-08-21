@@ -6817,6 +6817,9 @@ samp {
   align-items: flex-end;
   height: 132px;
 }
+/* Seit 21.08.2026 ist jede Stufe eine Schaltflaeche (GF-Entscheid): sie waehlt den
+   Antragszeitraum, damit der Kunde die schmelzende Foerderung im selben Blick bedient.
+   Deshalb Zeigefinger, sichtbarer Tastatur-Fokus und eine Hover-Ruecklmeldung. */
 #hwTreppe .tr-col {
   flex: 1;
   display: flex;
@@ -6825,6 +6828,30 @@ samp {
   align-items: center;
   gap: 4px;
   min-width: 0;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 2px 0;
+  transition:
+    background-color 0.15s ease,
+    transform 0.15s ease;
+}
+#hwTreppe .tr-col:hover {
+  background: rgba(183, 217, 0, 0.08);
+}
+#hwTreppe .tr-col:hover .tr-bar {
+  background: #7a8593;
+}
+#hwTreppe .tr-col.is-active:hover .tr-bar {
+  background: #b7d900;
+}
+#hwTreppe .tr-col:focus-visible {
+  outline: 2px solid #b7d900;
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  #hwTreppe .tr-col {
+    transition: none;
+  }
 }
 /* Woertlicher Wert statt var(--g600): die Marke traegt in tokens.css je Modus einen
    anderen Wert (dunkel #4b5563, hell #5a6470), hier ist genau der Hellmodus-Ton
