@@ -257,6 +257,26 @@ const gs = ANFRAGEN.map(({ anfrage }) => {
 // 5. Vergleich. Der Bootstrap wird nur auf der Zeitraum-Auswahl verglichen: beide Fassungen
 //    fuehren dort bewusst verschieden viele Felder je Eintrag, das ist Bestand und nicht Gegenstand.
 // ---------------------------------------------------------------------------
+/** Der erste Pfad, an dem beide Antworten auseinanderlaufen, im Klartext. */
+function ersteAbweichung(a, b, pfad = '$') {
+  if (a === null || b === null || typeof a !== typeof b) {
+    return Object.is(a, b) ? '' : pfad + ': ' + JSON.stringify(a) + ' != ' + JSON.stringify(b);
+  }
+  if (typeof a !== 'object') {
+    return Object.is(a, b) ? '' : pfad + ': ' + JSON.stringify(a) + ' != ' + JSON.stringify(b);
+  }
+  const schluesselA = JSON.stringify(Object.keys(a));
+  const schluesselB = JSON.stringify(Object.keys(b));
+  if (schluesselA !== schluesselB) {
+    return pfad + ': Feldreihenfolge ' + schluesselA + ' != ' + schluesselB;
+  }
+  for (const key of Object.keys(a)) {
+    const treffer = ersteAbweichung(a[key], b[key], pfad + '.' + key);
+    if (treffer) return treffer;
+  }
+  return '';
+}
+
 let fehler = 0;
 const zeilen = [];
 ANFRAGEN.forEach(({ name, anfrage }, i) => {
@@ -286,11 +306,7 @@ ANFRAGEN.forEach(({ name, anfrage }, i) => {
         ' EUR';
   zeilen.push((gleich ? '  OK   ' : '  ROT  ') + name + '  [' + kern + ']');
   if (!gleich && !istBootstrap) {
-    const schluesselPhp = JSON.stringify(Object.keys(a));
-    const schluesselGs = JSON.stringify(Object.keys(b));
-    if (schluesselPhp !== schluesselGs) {
-      zeilen.push('         Feldreihenfolge: ' + schluesselPhp + '  !=  ' + schluesselGs);
-    }
+    zeilen.push('         ' + ersteAbweichung(a, b));
   }
 });
 
