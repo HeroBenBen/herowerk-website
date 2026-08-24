@@ -789,7 +789,18 @@
        mitten im Fliesstext; die Ausnahme fuer eingebettete Verweise greift
        hier nicht. */
     .legal-footer{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px;padding:24px 16px;font-size:.9rem;}
-    .legal-footer a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 10px;}
+    /* Farbe 24.08.2026: die Regel setzte Trefferflaeche und Ausrichtung, aber KEINE
+       Farbe. Impressum, Datenschutz und Barrierefreiheit erschienen deshalb in der
+       blauvioletten Standardfarbe des Browsers, gemessen rgb(158,158,255), direkt
+       neben dem Knopf Cookie-Einstellungen, der eine Zeile tiefer ausdruecklich die
+       CI-Farbe traegt. Drei blaue Verweise neben einem gruenen.
+       URSACHE, gemessen statt vermutet: diese Seite laedt css/site.css NICHT und
+       erbt deshalb die dortige Verweisfarbe nicht; auf impressum.html und
+       datenschutz.html, die dieselbe Fusszeile tragen, war die Farbe schon richtig.
+       Kontrast der gesetzten Farbe geprueft, in beiden Themen ueber der Norm 4,5:
+       hell 6,19 (Oliv 79/96/0 auf 244/241/234), dunkel 8,93 (183/217/0 auf
+       28/43/54). Das Thema definiert --green im hellen Modus eigens um. */
+    .legal-footer a{color:var(--green);display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 10px;}
     .legal-footer .cookie-settings-button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 10px;border:0;background:transparent;color:var(--green);font:inherit;text-decoration:underline;cursor:pointer;}
     .cookie-settings-button[hidden]{display:none!important;}
     .cookie-settings-button:focus-visible{outline:3px solid var(--green);outline-offset:3px;border-radius:2px;}
