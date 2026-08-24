@@ -562,6 +562,11 @@
     }
     /* Symmetrie (GF 22.06.): einzelner Button = volle Kachelbreite, nicht halb-links */
     .step-nav:has(> button:only-child) { grid-template-columns: 1fr; }
+    /* Nachtrag 24.08.2026: auf dem letzten Schritt steht neben dem einzigen Knopf der
+       Verschluesselungs-Hinweis. Er ist kein Button, deshalb griff die Regel darueber nicht und
+       "Zurueck" stand wieder halb-links, genau die am 22.06. abgeschaffte Form. Der Hinweis
+       rueckt in die zweite Zeile, damit beide Knoepfe des Schritts dieselben Kanten teilen. */
+    .step[data-step='10'] .step-nav { grid-template-columns: 1fr; }
     .btn-back {
       display: flex; align-items: center; justify-content: center; gap: 8px;
       width: 100%; min-height: 54px;
@@ -584,7 +589,12 @@
     .btn-next:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
     .btn-next svg { width: 18px; height: 18px; }
     .btn-submit-final {
-      display: flex; align-items: center; gap: 8px;
+      /* Ausrichtung 24.08.2026: die Regel war eine unvollstaendige Kopie ihrer Geschwister
+         .btn-next und .btn-back. Ihr fehlten Breite, Mindesthoehe und die mittige Ausrichtung,
+         deshalb war der Knopf nur so breit wie sein Text: gemessen 331,7 statt 335,0 Pixel bei
+         375 Fensterbreite und 331,7 statt 394,0 bei 1280. */
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; min-height: 54px;
       background: var(--green); color: var(--schiefer);
       font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 17px;
       padding: 15px 32px; border-radius: 10px; border: none; cursor: pointer;

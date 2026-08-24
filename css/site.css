@@ -6761,13 +6761,22 @@ samp {
   text-decoration: underline;
 }
 
-/* Die technische Datentabelle im Detailbereich ist breiter als ihre Spalte,
-   sobald der Bereich auf dem Telefon offen steht. Eigener waagerechter
-   Bildlauf statt Ueberstand, wie bei den Ratgeber-Tabellen. */
+/* Die technische Datentabelle im Detailbereich soll auf dem Telefon nicht ueberstehen.
+   Bis zum 24.08.2026 stand hier display:block mit waagerechtem Bildlauf. Das nahm der
+   Tabelle ihr Tabellenverhalten: die Box war zwar 545 Pixel breit, die Zeilen darin aber
+   nur 422, rechts blieben 123 Pixel leer (gemessen live bei 593 Pixeln Fensterbreite).
+   Die Tabelle bleibt jetzt eine Tabelle und nutzt die volle Breite; gegen den Ueberstand
+   auf schmalen Geraeten darf stattdessen die Beschriftungsspalte umbrechen. */
 .pa-detail-right .pa-specs {
-  display: block;
-  overflow-x: auto;
+  display: table;
+  width: 100%;
   max-width: 100%;
+  table-layout: auto;
+}
+@media (max-width: 700px) {
+  .pa-detail-right .pa-specs td:first-child {
+    white-space: normal;
+  }
 }
 
 /* ═══ FUSSNOTEN-STERNCHEN: Kontrast und Anbindung (GF-Befund 26.07.2026) ═════

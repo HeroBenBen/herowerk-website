@@ -10,20 +10,56 @@
     "desc": "Gut gedämmtes Haus mit niedrigem Wärmebedarf",
     "preis": 30026,
     "eigen": 7626,
-    "info": "Richtpreis: ab 30.026 € brutto · KfW: bis -22.400 € (Anträge 21.07.2026 bis 31.01.2027)",
+    "info": "Richtpreis: rund 30.000 € brutto · KfW-Zuschuss: bis 22.400 € (Anträge 21.07.2026 bis 31.01.2027)",
     "specs": [
-      ["Heizleistung (WP)", "1,6–6,8 kW"],
-      ["Heizstab (optional)", "9 kW"],
-      ["Kältemittel", "R290 (Propan, natürlich)"],
-      ["Bauart", "Monoblock (Außenaufstellung)"],
-      ["Vorlauftemp.", "bis 70 °C"],
-      ["Schallleistung", "≤ 52 dB(A)"],
-      ["Effizienzklasse", "A+++ (35°C) · A++ (55°C)"],
-      ["SCOP (35°C / 55°C)²", "5,10 / 3,60"],
-      ["JAZ Heizkörper¹", "3,96"],
-      ["JAZ Fußbodenheizung¹", "4,92"],
-      ["Abmessung (BxTxH)", "1.286 × 562 × 979 mm"],
-      ["Herkunft", "Made in Germany"]
+      [
+        "Heizleistung (WP)",
+        "1,6–6,8 kW"
+      ],
+      [
+        "Heizstab (optional)",
+        "9 kW"
+      ],
+      [
+        "Kältemittel",
+        "R290 (Propan, natürlich)"
+      ],
+      [
+        "Bauart",
+        "Monoblock (Außenaufstellung)"
+      ],
+      [
+        "Vorlauftemp.",
+        "bis 70 °C"
+      ],
+      [
+        "Schallleistung",
+        "≤ 52 dB(A)"
+      ],
+      [
+        "Effizienzklasse",
+        "A+++ (35°C) · A++ (55°C)"
+      ],
+      [
+        "SCOP (35°C / 55°C)²",
+        "5,10 / 3,60"
+      ],
+      [
+        "JAZ Heizkörper¹",
+        "3,96"
+      ],
+      [
+        "JAZ Fußbodenheizung¹",
+        "4,92"
+      ],
+      [
+        "Abmessung (BxTxH)",
+        "1.286 × 562 × 979 mm"
+      ],
+      [
+        "Herkunft",
+        "Made in Germany"
+      ]
     ]
   },
   {
@@ -37,20 +73,56 @@
     "desc": "Der Klassiker — für die meisten Einfamilienhäuser",
     "preis": 35349,
     "eigen": 12949,
-    "info": "Richtpreis: ab 35.349 € brutto · KfW: bis -22.400 € (Anträge 21.07.2026 bis 31.01.2027)",
+    "info": "Richtpreis: rund 35.000 € brutto · KfW-Zuschuss: bis 22.400 € (Anträge 21.07.2026 bis 31.01.2027)",
     "specs": [
-      ["Heizleistung (WP)", "2,2–9,8 kW"],
-      ["Heizstab (optional)", "9 kW"],
-      ["Kältemittel", "R290 (Propan, natürlich)"],
-      ["Bauart", "Monoblock (Außenaufstellung)"],
-      ["Vorlauftemp.", "bis 70 °C"],
-      ["Schallleistung", "≤ 52 dB(A)"],
-      ["Effizienzklasse", "A+++ (35°C) · A++ (55°C)"],
-      ["SCOP (35°C / 55°C)²", "5,28 / 3,75"],
-      ["JAZ Heizkörper¹", "4,10"],
-      ["JAZ Fußbodenheizung¹", "5,09"],
-      ["Abmessung (BxTxH)", "1.286 × 562 × 979 mm"],
-      ["Herkunft", "Made in Germany"]
+      [
+        "Heizleistung (WP)",
+        "2,2–9,8 kW"
+      ],
+      [
+        "Heizstab (optional)",
+        "9 kW"
+      ],
+      [
+        "Kältemittel",
+        "R290 (Propan, natürlich)"
+      ],
+      [
+        "Bauart",
+        "Monoblock (Außenaufstellung)"
+      ],
+      [
+        "Vorlauftemp.",
+        "bis 70 °C"
+      ],
+      [
+        "Schallleistung",
+        "≤ 52 dB(A)"
+      ],
+      [
+        "Effizienzklasse",
+        "A+++ (35°C) · A++ (55°C)"
+      ],
+      [
+        "SCOP (35°C / 55°C)²",
+        "5,28 / 3,75"
+      ],
+      [
+        "JAZ Heizkörper¹",
+        "4,10"
+      ],
+      [
+        "JAZ Fußbodenheizung¹",
+        "5,09"
+      ],
+      [
+        "Abmessung (BxTxH)",
+        "1.286 × 562 × 979 mm"
+      ],
+      [
+        "Herkunft",
+        "Made in Germany"
+      ]
     ]
   },
   {
@@ -64,20 +136,56 @@
     "desc": "Für größere Häuser mit höherem Wärmebedarf",
     "preis": 41718,
     "eigen": 19318,
-    "info": "Richtpreis: ab 41.718 € brutto · KfW: bis -22.400 € (Anträge 21.07.2026 bis 31.01.2027)",
+    "info": "Richtpreis: rund 42.000 € brutto · KfW-Zuschuss: bis 22.400 € (Anträge 21.07.2026 bis 31.01.2027)",
     "specs": [
-      ["Heizleistung (WP)", "3,7–16,7 kW"],
-      ["Heizstab (optional)", "9 kW"],
-      ["Kältemittel", "R290 (Propan, natürlich)"],
-      ["Bauart", "Monoblock (Außenaufstellung)"],
-      ["Vorlauftemp.", "bis 70 °C"],
-      ["Schallleistung", "52 dB(A)"],
-      ["Effizienzklasse", "A+++ (35°C) · A++ (55°C)"],
-      ["SCOP (35°C / 55°C)²", "4,95 / 3,52"],
-      ["JAZ Heizkörper¹", "4,04"],
-      ["JAZ Fußbodenheizung¹", "5,03"],
-      ["Abmessung (BxTxH)", "1.286 × 562 × 979 mm"],
-      ["Herkunft", "Made in Germany"]
+      [
+        "Heizleistung (WP)",
+        "3,7–16,7 kW"
+      ],
+      [
+        "Heizstab (optional)",
+        "9 kW"
+      ],
+      [
+        "Kältemittel",
+        "R290 (Propan, natürlich)"
+      ],
+      [
+        "Bauart",
+        "Monoblock (Außenaufstellung)"
+      ],
+      [
+        "Vorlauftemp.",
+        "bis 70 °C"
+      ],
+      [
+        "Schallleistung",
+        "52 dB(A)"
+      ],
+      [
+        "Effizienzklasse",
+        "A+++ (35°C) · A++ (55°C)"
+      ],
+      [
+        "SCOP (35°C / 55°C)²",
+        "4,95 / 3,52"
+      ],
+      [
+        "JAZ Heizkörper¹",
+        "4,04"
+      ],
+      [
+        "JAZ Fußbodenheizung¹",
+        "5,03"
+      ],
+      [
+        "Abmessung (BxTxH)",
+        "1.286 × 562 × 979 mm"
+      ],
+      [
+        "Herkunft",
+        "Made in Germany"
+      ]
     ]
   },
   {
@@ -91,20 +199,56 @@
     "desc": "Zweifamilienhaus oder großes Einfamilienhaus",
     "preis": 48815,
     "eigen": 24789,
-    "info": "Richtpreis: ab 48.815 € brutto · KfW: bis -24.026 € (Anträge 21.07.2026 bis 31.01.2027). Für die erste Wohneinheit sind 28.000 Euro förderfähig, für die zweite bis sechste Wohneinheit je 15.000 Euro, ab der siebten je 8.000 Euro. Die Grenzen der weiteren Wohneinheiten bleiben auch nach der Reform unverändert, nur die Grenze der ersten Wohneinheit sinkt.",
+    "info": "Richtpreis: rund 49.000 € brutto · KfW-Zuschuss: bis 24.026 € (Anträge 21.07.2026 bis 31.01.2027). Für die erste Wohneinheit sind 28.000 Euro förderfähig, für die zweite bis sechste Wohneinheit je 15.000 Euro, ab der siebten je 8.000 Euro. Die Grenzen der weiteren Wohneinheiten bleiben auch nach der Reform unverändert, nur die Grenze der ersten Wohneinheit sinkt.",
     "specs": [
-      ["Heizleistung (WP)", "5,6–24,0 kW"],
-      ["Heizstab (optional)", "9 kW"],
-      ["Kältemittel", "R290 (Propan, natürlich)"],
-      ["Bauart", "Monoblock (Außenaufstellung)"],
-      ["Vorlauftemp.", "bis 70 °C"],
-      ["Schallleistung", "52 dB(A)"],
-      ["Effizienzklasse", "A+++ (35°C) · A++ (55°C)"],
-      ["SCOP (35°C / 55°C)²", "4,82 / 3,45"],
-      ["JAZ Heizkörper¹", "3,99"],
-      ["JAZ Fußbodenheizung¹", "4,96"],
-      ["Abmessung (BxTxH)", "1.700 × 756 × 1.300 mm"],
-      ["Herkunft", "Made in Germany"]
+      [
+        "Heizleistung (WP)",
+        "5,6–24,0 kW"
+      ],
+      [
+        "Heizstab (optional)",
+        "9 kW"
+      ],
+      [
+        "Kältemittel",
+        "R290 (Propan, natürlich)"
+      ],
+      [
+        "Bauart",
+        "Monoblock (Außenaufstellung)"
+      ],
+      [
+        "Vorlauftemp.",
+        "bis 70 °C"
+      ],
+      [
+        "Schallleistung",
+        "52 dB(A)"
+      ],
+      [
+        "Effizienzklasse",
+        "A+++ (35°C) · A++ (55°C)"
+      ],
+      [
+        "SCOP (35°C / 55°C)²",
+        "4,82 / 3,45"
+      ],
+      [
+        "JAZ Heizkörper¹",
+        "3,99"
+      ],
+      [
+        "JAZ Fußbodenheizung¹",
+        "4,96"
+      ],
+      [
+        "Abmessung (BxTxH)",
+        "1.700 × 756 × 1.300 mm"
+      ],
+      [
+        "Herkunft",
+        "Made in Germany"
+      ]
     ]
   },
   {
@@ -119,17 +263,44 @@
     "desc": "Referenz: 6 WE MFH mit 2er-Kaskade*",
     "preis": 89419,
     "eigen": null,
-    "info": "Richtpreis: ab 89.419 € brutto · Für die erste Wohneinheit sind 28.000 Euro förderfähig, für die zweite bis sechste Wohneinheit je 15.000 Euro, ab der siebten je 8.000 Euro. Die Grenzen der weiteren Wohneinheiten bleiben auch nach der Reform unverändert, nur die Grenze der ersten Wohneinheit sinkt. Der ausgewiesene Eigenanteil ist eine Mehrfamilienhaus-Referenz mit sechs Wohneinheiten (erste selbstgenutzt, weitere vermietet); den verbindlichen Eigenanteil rechnen wir projektgenau.",
+    "info": "Richtpreis: rund 89.000 € brutto · Für die erste Wohneinheit sind 28.000 Euro förderfähig, für die zweite bis sechste Wohneinheit je 15.000 Euro, ab der siebten je 8.000 Euro. Die Grenzen der weiteren Wohneinheiten bleiben auch nach der Reform unverändert, nur die Grenze der ersten Wohneinheit sinkt. Der ausgewiesene Eigenanteil ist eine Mehrfamilienhaus-Referenz mit sechs Wohneinheiten (erste selbstgenutzt, weitere vermietet); den verbindlichen Eigenanteil rechnen wir projektgenau.",
     "specs": [
-      ["Heizleistung", "25–100+ kW"],
-      ["Kältemittel", "R290 (Propan, natürlich)"],
-      ["Bauart", "Kaskade bis 5 Geräte"],
-      ["Vorlauftemp.", "bis 70 °C"],
-      ["Kaskadierung", "2–5 Außengeräte"],
-      ["Effizienzklasse", "A+++ (systemabhängig)"],
-      ["SCOP²", "systemabhängig"],
-      ["Regelung", "Wolf Kaskadenmanager"],
-      ["Herkunft", "Made in Germany"]
+      [
+        "Heizleistung",
+        "25–100+ kW"
+      ],
+      [
+        "Kältemittel",
+        "R290 (Propan, natürlich)"
+      ],
+      [
+        "Bauart",
+        "Kaskade bis 5 Geräte"
+      ],
+      [
+        "Vorlauftemp.",
+        "bis 70 °C"
+      ],
+      [
+        "Kaskadierung",
+        "2–5 Außengeräte"
+      ],
+      [
+        "Effizienzklasse",
+        "A+++ (systemabhängig)"
+      ],
+      [
+        "SCOP²",
+        "systemabhängig"
+      ],
+      [
+        "Regelung",
+        "Wolf Kaskadenmanager"
+      ],
+      [
+        "Herkunft",
+        "Made in Germany"
+      ]
     ]
   }
 ]

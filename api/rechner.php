@@ -28,8 +28,14 @@ date_default_timezone_set('Europe/Berlin');
 // _Entscheidungen/2026-08-21_Google-Rueckfall-des-Website-Rechners-stilllegen_HERO.md
 const RECHNER_PHP_ENGINE_ENABLED = true;
 
-// Die ersten zwei Wochen nur protokollieren. true aktiviert HTTP 429 ab Aufruf 61.
-const RECHNER_RATE_LIMIT_ENFORCED = false;
+// SCHARF seit 24.08.2026 (GF-Entscheid, Vorgang T652). HTTP 429 ab Aufruf 61 je Minute.
+// Davor stand hier false mit dem Vermerk "die ersten zwei Wochen nur protokollieren"; die
+// Beobachtungsfrist lief ab dem Umzug auf PHP am 03.08.2026 und endete am 17.08.2026. In
+// diesen drei Wochen hat KEIN Besucher die Grenze erreicht: 241 gezaehlte Adressen unter
+// /rechner-runtime/rate-limit, jede Zaehlerdatei einstellig. Ein echter Kunde loest selbst
+// bei zuegigem Reglerschieben hoechstens wenige Aufrufe je Minute aus, weil die Seite ihre
+// Anfragen um 350 ms verzoegert. Wer 60 Aufrufe je Minute braucht, vermisst uns.
+const RECHNER_RATE_LIMIT_ENFORCED = true;
 
 const RECHNER_RATE_LIMIT_PER_MINUTE = 60;
 const RECHNER_GOOGLE_FORWARD_TIMEOUT_SECONDS = 15;
@@ -214,6 +220,87 @@ if ($rate['limited'] && RECHNER_RATE_LIMIT_ENFORCED) {
     rechner_fail(429, 'rate_limit_exceeded');
 }
 
+/**
+ * INNENFELDER DER AUSLEGUNG: VORHANDEN, ABER NICHT AUSGELIEFERT.
+ *
+ * GF-Entscheid vom 24.08.2026, Vorgang T652. Volltext und Begruendung:
+ * _Entscheidungen/2026-08-24_Auslegungs-Innenfelder-nicht-ausliefern-und-Rechner-Bremse-scharf_HERO.md
+ * Faehigkeitskarte mit jedem Feld, seiner Bedeutung und dem Weg zurueck:
+ * _Learnings/web/reference_rechner_schnittstelle_faehigkeiten_und_bewusste_sperren_2026-08-24.md
+ *
+ * WICHTIG FUER JEDEN SPAETEREN AGENTEN: Diese Werte EXISTIEREN und werden vom Rechenkern
+ * weiterhin vollstaendig berechnet. Sie werden ausschliesslich HIER, an der letzten Stelle
+ * vor der Ausgabe, aus der Antwort genommen. Wer einen davon anzeigen will, loescht nichts
+ * und baut nichts nach, sondern nimmt ihn unten aus der Liste heraus. Eine Auslieferung ist
+ * damit jederzeit wieder moeglich.
+ *
+ * WARUM SIE GESPERRT SIND: Am 24.08.2026 ist gemessen worden, dass zehn Abfragen an diese
+ * Schnittstelle genuegen, um die vollstaendige Auslegungstreppe zu kartieren, also Heizlast
+ * je Quadratmeter, jeden Geraetewechsel und die Kaskadenschwelle. Diese Felder sind der
+ * wertvollste Teil davon, weil sie die Auslegungsentscheidung selbst offenlegen statt nur
+ * ihr Ergebnis. Die Website zeigt KEINEN von ihnen an; zum Stichtag hatte jedes der sieben
+ * Felder null Treffer in js/site.js und in allen HTML-Seiten, und auch das interne
+ * Vertriebswerkzeug unter intern/assets/leadstrecke.js im Portal nutzt keines davon. Sie
+ * gingen also nur deshalb hinaus, weil sie in der Antwort standen.
+ *
+ * NICHT gesperrt sind die Felder, welche die Seite anzeigt: bedarf, stromverbrauch_kwh,
+ * modell, baureihe, anzahl, leistung_kw, brutto, eigenanteil, empfohlen, puffer, kaskade.
+ */
+const RECHNER_INNENFELDER_SPERREN = true;
+
+/**
+ * Die gesperrten Felder, je Feld die Bedeutung und was seine Freigabe dem Kunden brachte.
+ * Diese Liste ist zugleich das Verzeichnis unserer Faehigkeiten an dieser Stelle.
+ */
+const RECHNER_INNENFELDER = [
+    // Aussentemperatur, ab der das Geraet taktet, also unter Teillast schaltet.
+    // Freigabe wuerde erlauben, dem Kunden die Taktgrenze seines Geraets zu zeigen.
+    'taktpunkt_c',
+    // Dieselbe Groesse als gepruefte Grenze der Auswahlregel.
+    'taktpunkt_grenze_c',
+    'taktpunkt_grenze_wirksam',
+    // Aussentemperatur, ab der der Heizstab zuschaltet. Fachlich stark, verraet aber die
+    // Auslegungsphilosophie vollstaendig.
+    'bivalenzpunkt_c',
+    // Deckungsgrad des Geraets am Normpunkt in Prozent. Das ist der KERN unserer
+    // Auswahlregel, kleinste Maschine ueber der Mindestdeckung. Nie freigeben.
+    'leistungsanteil_prozent',
+    // Kennzeichnet, dass ein Geraet ueber dem hinterlegten Sollband liegt. Verraet, dass es
+    // ein Sollband gibt und wo es steht.
+    'ueberSollband',
+    // Sagt, ob zu diesem Geraet ein echter Preis hinterlegt ist oder ein Platzhalter greift.
+    // Verraet die Luecken unseres Preisstamms.
+    'preis_hinterlegt',
+    // Eigenanteil in der ProKlima-Variante. Eigene Foerderrechnung, gehoert nicht nach aussen.
+    'eigenanteilProklima',
+    'vorlaeufig',
+];
+
+/**
+ * Nimmt die Innenfelder rekursiv aus der Antwort, ueber alle Marken und Varianten hinweg.
+ * Beruehrt die Berechnung nicht, nur die Ausgabe.
+ */
+function rechner_innenfelder_entfernen($wert)
+{
+    if (!RECHNER_INNENFELDER_SPERREN) {
+        return $wert;
+    }
+
+    if (is_array($wert)) {
+        $gefiltert = [];
+        foreach ($wert as $schluessel => $inhalt) {
+            if (is_string($schluessel) && in_array($schluessel, RECHNER_INNENFELDER, true)) {
+                continue;
+            }
+            $gefiltert[$schluessel] = rechner_innenfelder_entfernen($inhalt);
+        }
+
+        return $gefiltert;
+    }
+
+    return $wert;
+}
+
 $rawQuery = (string) ($_SERVER['QUERY_STRING'] ?? '');
 if (!RECHNER_PHP_ENGINE_ENABLED) {
     try {
@@ -248,6 +335,7 @@ try {
 $action = strtolower((string) ($_GET['action'] ?? 'health'));
 try {
     $result = hw_rechner_route($action, $_GET, $snapshot['sheets']);
+    $result = rechner_innenfelder_entfernen($result);
     echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
 } catch (Throwable $error) {
     error_log('HeroWerk Rechner: calculation_failed action=' . $action . ' message=' . $error->getMessage());
