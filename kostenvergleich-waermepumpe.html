@@ -709,8 +709,8 @@
       <summary>So rechnet der Vergleich</summary>
       <div class="inhalt">
         <p class="wz-intro">Er vergleicht zwei Wege über einen Zeitraum, den du selbst wählst, bis zu 25 Jahre: noch einmal eine neue Öl- oder Gasheizung, oder der Umstieg auf eine Wärmepumpe. Gerechnet wird nicht nur der Kaufpreis, sondern das, was am Ende zählt: Anschaffung nach Förderung, Energiekosten Jahr für Jahr, der steigende CO2-Preis und auf Wunsch die Finanzierung mit monatlicher Rate.</p>
-        <p class="wz-intro"><strong>Was du dafür brauchst:</strong> deine heutige Heizungsart und ungefähr deinen Jahresverbrauch. Wenn du den nicht zur Hand hast, schätzen wir ihn aus Baujahr, Wohnfläche und Gebäudetyp. Alles Weitere ist freiwillig und macht das Ergebnis nur genauer.</p>
-        <p class="wz-intro"><strong>Was am Ende herauskommt:</strong> dein Kostenunterschied über den gewählten Zeitraum, das Jahr, ab dem sich der Umstieg gerechnet hat, deine voraussichtliche Förderung nach der BEG-Reform 2026 und der Betrag, der nach Abzug der Förderung übrig bleibt. Du kannst jede Annahme selbst verstellen und siehst sofort, wie sie wirkt. <a href="/amortisation-waermepumpe">Wie diese Rechnung funktioniert, erklären wir im Ratgeber.</a></p>
+        <p class="wz-intro"><strong>Was du dafür brauchst:</strong> Deine heutige Heizungsart und ungefähr deinen Jahresverbrauch. Wenn du den nicht zur Hand hast, schätzen wir ihn aus Baujahr, Wohnfläche und Gebäudetyp. Alles Weitere ist freiwillig und macht das Ergebnis nur genauer.</p>
+        <p class="wz-intro"><strong>Was am Ende herauskommt:</strong> Dein Kostenunterschied über den gewählten Zeitraum, das Jahr, ab dem sich der Umstieg gerechnet hat, deine voraussichtliche Förderung nach der BEG-Reform 2026 und der Betrag, der nach Abzug der Förderung übrig bleibt. Du kannst jede Annahme selbst verstellen und siehst sofort, wie sie wirkt. <a href="/amortisation-waermepumpe">Wie diese Rechnung funktioniert, erklären wir im Ratgeber.</a></p>
         <p class="d">Der Rechner ist eine Orientierung, kein Angebot. Wie deine Zahlen konkret aussehen, sagt dir eine Beratung vor Ort.</p>
       </div>
     </details>
@@ -734,7 +734,7 @@
   <div id="wzHiddenStore" hidden></div>
   <div id="wzBottomCta" class="wz-bottom-cta" hidden></div>
   <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('system')">1 · Ihre Situation</button>
+    <button class="tab-btn active" onclick="switchTab('system')">1 · Deine Situation</button>
     <button class="tab-btn" onclick="switchTab('energie')">2 · Energie &amp; Prognose</button>
     <button class="tab-btn" onclick="switchTab('foerderung')">3 · Förderung</button>
     <button class="tab-btn" onclick="switchTab('finanzierung')">4 · Finanzierung</button>
@@ -753,11 +753,11 @@
         <div class="sg" id="wzBedarfGroup"><label>Brennstoffverbrauch laut Jahresabrechnung <span class="v" id="vBedarf">20.000 kWh</span></label>
           <input type="range" id="bedarf" min="5000" max="80000" step="500" value="20000">
           <div class="wz-opt-sub" id="bedarfLive" style="margin-top:6px"></div></div>
-        <div class="sg" id="wzEtaGroup"><label>Wirkungsgrad Ihrer heutigen Heizung <span class="ii" data-tooltip="Wie viel von der abgerechneten Energie wirklich als Wärme im Haus ankommt. Gas wird brennwertbezogen abgerechnet, deshalb liegen die Werte unter Prospektangaben. Typisch: Heizwertkessel vor 1990 rund 70 %, Niedertemperaturkessel rund 80 % (Verbraucherzentrale NRW 2020), Brennwertkessel im Feld 85 bis 87 %, gut eingestellt 93 bis 95 % (BEE/ECONSULT-Feldstudien 2018, vzbv-Brennwertcheck 2011). Stand 15.07.2026.">i</span> <span class="v" id="vEta">85 %</span></label>
+        <div class="sg" id="wzEtaGroup"><label>Wirkungsgrad deiner heutigen Heizung <span class="ii" data-tooltip="Wie viel von der abgerechneten Energie wirklich als Wärme im Haus ankommt. Gas wird brennwertbezogen abgerechnet, deshalb liegen die Werte unter Prospektangaben. Typisch: Heizwertkessel vor 1990 rund 70 %, Niedertemperaturkessel rund 80 % (Verbraucherzentrale NRW 2020), Brennwertkessel im Feld 85 bis 87 %, gut eingestellt 93 bis 95 % (BEE/ECONSULT-Feldstudien 2018, vzbv-Brennwertcheck 2011). Stand 15.07.2026.">i</span> <span class="v" id="vEta">85 %</span></label>
           <input type="range" id="eta" min="65" max="98" step="1" value="85">
           <div class="wz-opt-sub" id="etaHerkunft" data-mobile-summary="Woher kommt der Wirkungsgrad?" style="margin-top:6px;display:none"></div>
           <div class="wz-opt-sub" id="etaLive" data-mobile-summary="So wirkt der Wirkungsgrad" style="margin-top:6px"></div>
-          <div class="wz-opt-sub" data-mobile-summary="Was bedeutet Wirkungsgrad?" style="margin-top:6px">So lesen Sie das: Sie kaufen 1 Kilowattstunde Gas oder Öl ein. Ihre Heizung macht daraus zum Beispiel 0,85 Kilowattstunden Wärme, der Rest geht verloren. Die Wärmepumpe dreht das um: Aus 1 Kilowattstunde Strom macht sie rund 3,8 Kilowattstunden Wärme. Das ist ein Wirkungsgrad von 380 Prozent, und genau das ist die Magie hinter der Wärmepumpe.</div></div>
+          <div class="wz-opt-sub" data-mobile-summary="Was bedeutet Wirkungsgrad?" style="margin-top:6px">So liest du das: du kaufst 1 Kilowattstunde Gas oder Öl ein. Deine Heizung macht daraus zum Beispiel 0,85 Kilowattstunden Wärme, der Rest geht verloren. Die Wärmepumpe dreht das um: Aus 1 Kilowattstunde Strom macht sie rund 3,8 Kilowattstunden Wärme. Das ist ein Wirkungsgrad von 380 Prozent, und genau das ist die Magie hinter der Wärmepumpe.</div></div>
       </div>
       <div class="card" id="wzWpCard">
         <h3>Neue Wärmepumpe</h3>
@@ -770,12 +770,12 @@
       </div>
     </div>
     <div class="card hl" id="wzCompareCard">
-      <h3>Der ehrliche Vergleich: Wenn Ihre Heizung jetzt ausfällt <span class="ii" data-tooltip="Richtwerte inkl. Einbau (Verbraucherzentrale/co2online, marktabhängig): neue Gas-Brennwertheizung ca. 8.000 bis 15.000 €, neue Ölheizung ca. 12.000 bis 20.000 €. Diese Anschaffung würde ohnehin anfallen und bekommt keine Förderung.">i</span></h3>
+      <h3>Der ehrliche Vergleich: Wenn deine Heizung jetzt ausfällt <span class="ii" data-tooltip="Richtwerte inkl. Einbau (Verbraucherzentrale/co2online, marktabhängig): neue Gas-Brennwertheizung ca. 8.000 bis 15.000 €, neue Ölheizung ca. 12.000 bis 20.000 €. Diese Anschaffung würde ohnehin anfallen und bekommt keine Förderung.">i</span></h3>
       <div class="ib" data-mobile-summary="Warum vergleichen wir mit einer neuen Heizung?" style="margin-bottom:16px"><span class="d">Die meisten Eigentümer stehen nicht vor der Wahl „Wärmepumpe oder nichts", sondern <strong>„neue Heizung ODER neue Wärmepumpe"</strong>. Auch eine neue Gas- oder Ölheizung kostet Anschaffung und Einbau, bekommt aber keine Förderung und trägt steigende CO₂- und Biotreppe-Kosten. Deshalb zählt die <strong>Mehrinvestition</strong>, nicht der volle Wärmepumpen-Preis. Hinweis: In Kommunen mit beschlossener Wärmeplanung (Großstädte wie Hannover) ist der Einbau einer neuen reinen Gas-/Ölheizung nach GEG §71 nur noch eingeschränkt bzw. mit steigendem EE-Anteil zulässig. Der Rechner rechnet zugunsten der fossilen Variante nur mit der Biotreppe.</span></div>
       <div class="tg"><label class="tog"><input type="checkbox" id="neuFossilTog" checked onchange="toggleNeuFossil()"><span class="sl"></span></label>
         <div class="tl">Neue fossile Anlage als realistischen Vergleich einrechnen<small>Vergleicht Investition + Folgekosten: neue Ölheizung gegen neue Gasheizung gegen neue Wärmepumpe. (Aktiviert zugleich die Biotreppe, da die Alternative eine neue Öl- oder Gasheizung wäre.)</small></div></div>
       <div id="neuFossilOpt">
-        <div class="selg" id="vglGroup"><label>Wenn Sie heute eine neue Heizung einbauen müssten: Gas oder Öl? <span class="ii" data-tooltip="Diese Wahl steuert den Kern-Vergleich: Investition und Brennstoffpreis der neuen fossilen Alternative. Wo kein Gasanschluss möglich ist, ist Öl der realistische Vergleich.">i</span></label>
+        <div class="selg" id="vglGroup"><label>Wenn du heute eine neue Heizung einbauen müsstest: Gas oder Öl? <span class="ii" data-tooltip="Diese Wahl steuert den Kern-Vergleich: Investition und Brennstoffpreis der neuen fossilen Alternative. Wo kein Gasanschluss möglich ist, ist Öl der realistische Vergleich.">i</span></label>
           <div class="wz-choice-grid"><button type="button" class="wz-choice wahlkarte" data-vgl-fuel="gas" aria-label="Vergleich mit neuer Gasheizung">Gas</button><button type="button" class="wz-choice wahlkarte" data-vgl-fuel="oel" aria-label="Vergleich mit neuer Ölheizung">Öl</button></div>
           <select id="vglBrennstoff" hidden aria-hidden="true"><option value="gas" selected>Gas</option><option value="oel">Öl</option></select>
         </div>
@@ -831,7 +831,7 @@
     <div class="card">
       <h3>GMG-Biotreppe <span class="ii" data-tooltip="Pflichtquoten: GEG §71 Abs. 9; GMG-Eckpunkte Feb. 2026 (Entwurf, nicht beschlossen). Preis-Aufschlag Bio-Brennstoffe (2 bis 3x): BDEW-Gaspreisanalyse Jan. 2026 + ZfK-Auswertung.">i</span></h3>
       <div class="tg"><label class="tog"><input type="checkbox" id="bioTog" checked onchange="toggleBio()"><span class="sl"></span></label>
-        <div class="tl">Biotreppe einrechnen<small>Aktivieren, wenn Ihre Alternative ein neuer Gas-/Ölkessel ist: Für neu eingebaute Kessel gilt ab 2029 die Pflicht-Beimischung (GEG §71 Abs. 9 / GMG-Entwurf). Ein Altkessel muss im Betrachtungszeitraum realistischerweise ohnehin ersetzt werden.</small></div></div>
+        <div class="tl">Biotreppe einrechnen<small>Aktivieren, wenn deine Alternative ein neuer Gas-/Ölkessel ist: Für neu eingebaute Kessel gilt ab 2029 die Pflicht-Beimischung (GEG §71 Abs. 9 / GMG-Entwurf). Ein Altkessel muss im Betrachtungszeitraum realistischerweise ohnehin ersetzt werden.</small></div></div>
       <div id="bioOpt" style="display:block">
         <div class="ib" style="margin-bottom:14px">
           <strong>Gesetzliche Pflichtquoten (GEG §71 Abs. 9):</strong> 2029: 15 % · 2035: 30 % · 2040: 60 %<br>
@@ -884,7 +884,7 @@
       <div class="tg wz-gov"><label class="tog"><input type="checkbox" id="fKlima" checked onchange="updateFoerderung()"><span class="sl"></span></label>
         <div class="tl">Klimageschwindigkeitsbonus: <span id="fKlimaPct">16 %</span><small>Nur selbstnutzende Eigentümer. Sinkt zum 01.02. und 01.08. um je 4 %-Punkte, entfällt ab 01.08.2028.</small></div></div>
       <div class="tg wz-gov"><label class="tog"><input type="checkbox" id="fAlt20" checked onchange="updateFoerderung()"><span class="sl"></span></label>
-        <div class="tl">Klimabonus-Voraussetzung erfüllt<small>Ihre alte Heizung ist eine funktionsfähige Öl-, Kohle-, Gasetagen- oder Nachtspeicherheizung ODER eine Gas-/Biomasseheizung, die mindestens 20 Jahre alt ist (KfW 458). Ohne diese Voraussetzung entfällt der Klimabonus.</small></div></div>
+        <div class="tl">Klimabonus-Voraussetzung erfüllt<small>Deine alte Heizung ist eine funktionsfähige Öl-, Kohle-, Gasetagen- oder Nachtspeicherheizung ODER eine Gas-/Biomasseheizung, die mindestens 20 Jahre alt ist (KfW 458). Ohne diese Voraussetzung entfällt der Klimabonus.</small></div></div>
 <div id="wzIncomeBlock">
       <div class="sg"><label>Zu versteuerndes Haushaltseinkommen <span class="v" id="vFEink">60.000 €</span></label>
         <input type="range" id="fEinkSlider" min="15000" max="120000" step="1000" value="60000" oninput="updateFoerderung()"></div>
@@ -896,7 +896,7 @@
       <div id="wzFoerderAufbau" class="ib"></div>
       <div style="margin-top:20px;padding:16px;background:var(--hero-bg);border-radius:8px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <span style="font-size:0.9rem;">Ihre Förderquote:</span>
+          <span style="font-size:0.9rem;">Deine Förderquote:</span>
           <span id="fQuote" style="font-family:'Barlow',sans-serif;font-weight:800;font-size:1.4rem;color:var(--hero-accent);">46 %</span>
         </div>
         <div id="fBadges" class="fbs"></div>
@@ -912,8 +912,8 @@
   <!-- ====== TAB 4: FINANZIERUNG ====== -->
   <div id="tab-finanzierung" class="tab-content">
     <div class="card hl">
-      <h3>Finanzierung <span class="ii" data-tooltip="Die meisten Kunden zahlen die Wärmepumpe nicht bar, sondern über einen Kredit. Hier legen Sie Rate und Laufzeit fest. Danach zeigt der monatliche Vergleich im Ergebnis, wie sich Rate + Betrieb gegen eine (ebenfalls finanzierte) neue fossile Heizung schlägt.">i</span></h3>
-      <p data-mobile-summary="Wie funktioniert der Finanzierungsvergleich?" style="color:var(--hero-muted);font-size:0.85rem;margin-bottom:16px;">Die wenigsten zahlen die neue Heizung bar, egal ob Wärmepumpe oder Gaskessel. Legen Sie hier Ihre Finanzierung fest. Im Ergebnis vergleichen wir dann fair: neue Wärmepumpe finanziert gegen neue fossile Anlage finanziert, jeweils Rate plus laufende Kosten.</p>
+      <h3>Finanzierung <span class="ii" data-tooltip="Die meisten Kunden zahlen die Wärmepumpe nicht bar, sondern über einen Kredit. Hier legst du Rate und Laufzeit fest. Danach zeigt der monatliche Vergleich im Ergebnis, wie sich Rate + Betrieb gegen eine (ebenfalls finanzierte) neue fossile Heizung schlägt.">i</span></h3>
+      <p data-mobile-summary="Wie funktioniert der Finanzierungsvergleich?" style="color:var(--hero-muted);font-size:0.85rem;margin-bottom:16px;">Die wenigsten zahlen die neue Heizung bar, egal ob Wärmepumpe oder Gaskessel. Lege hier deine Finanzierung fest. Im Ergebnis vergleichen wir dann fair: neue Wärmepumpe finanziert gegen neue fossile Anlage finanziert, jeweils Rate plus laufende Kosten.</p>
       <div class="grid-2">
         <div>
           <div class="tg"><label class="tog"><input type="checkbox" id="finanzTog"><span class="sl"></span></label>
@@ -966,26 +966,26 @@
   <!-- ====== RESULTS ====== -->
   <div id="results" class="results-section">
     <h2 style="font-family:'Barlow',sans-serif;font-weight:800;color:var(--hero-accent);margin:32px 0 8px;font-size:1.3rem;text-transform:uppercase;letter-spacing:1px;">Ergebnis</h2>
-    <p style="color:var(--hero-muted);font-size:0.8rem;margin-bottom:20px;">Unverbindliche Modellrechnung auf Basis Ihrer Eingaben, keine Zusicherung von Einsparungen oder Förderungen. Alle Annahmen und Quellen unten im Detail.</p>
+    <p style="color:var(--hero-muted);font-size:0.8rem;margin-bottom:20px;">Unverbindliche Modellrechnung auf Basis deiner Eingaben, keine Zusicherung von Einsparungen oder Förderungen. Alle Annahmen und Quellen unten im Detail.</p>
     <div class="grid-2" id="pathSummary" style="margin-bottom:24px"></div>
     <div class="results-grid" id="kpiGrid"></div>
     <div class="cc" id="dreiWegeBox" style="display:none"></div>
     <div class="cc">
       <h3>Kumulative Ersparnis</h3>
-      <p style="color:var(--hero-muted);font-size:0.85rem;margin-bottom:14px;">Grüne Fläche = Ihr Gewinn durch die Wärmepumpe. Steigt die Linie über Null, hat sich die Wärmepumpe bezahlt gemacht. Die rote gestrichelte Markierung zeigt diesen Punkt.</p>
+      <p style="color:var(--hero-muted);font-size:0.85rem;margin-bottom:14px;">Grüne Fläche = dein Gewinn durch die Wärmepumpe. Steigt die Linie über Null, hat sich die Wärmepumpe bezahlt gemacht. Die rote gestrichelte Markierung zeigt diesen Punkt.</p>
       <div class="cw"><canvas id="cMain"></canvas></div>
       <div class="chart-daten" id="cMainDaten"></div>
     </div>
     <div class="grid-2">
       <div class="cc">
-        <h3>Was sparen Sie jedes Jahr?</h3>
-        <p style="color:var(--hero-muted);font-size:0.85rem;margin-bottom:14px;">Jeder Balken zeigt, wie viel Sie in dem Jahr mit der Wärmepumpe sparen. Was die einzelnen Farben bedeuten, steht in der Legende direkt unter der Grafik.</p>
+        <h3>Was sparst du jedes Jahr?</h3>
+        <p style="color:var(--hero-muted);font-size:0.85rem;margin-bottom:14px;">Jeder Balken zeigt, wie viel du in dem Jahr mit der Wärmepumpe sparst. Was die einzelnen Farben bedeuten, steht in der Legende direkt unter der Grafik.</p>
         <div class="cw"><canvas id="cBreak"></canvas></div>
       <div class="chart-daten" id="cBreakDaten"></div>
       </div>
       <div class="cc">
         <h3>Was kostet Heizen pro Jahr?</h3>
-        <p style="color:var(--hero-muted);font-size:0.85rem;margin-bottom:14px;">Rote Balken = was Heizen mit Öl oder Gas pro Jahr kostet. Grüne Balken = was die Wärmepumpe pro Jahr kostet. Die orange Linie ist der Unterschied: Ihre jährliche Ersparnis.</p>
+        <p style="color:var(--hero-muted);font-size:0.85rem;margin-bottom:14px;">Rote Balken = was Heizen mit Öl oder Gas pro Jahr kostet. Grüne Balken = was die Wärmepumpe pro Jahr kostet. Die orange Linie ist der Unterschied: deine jährliche Ersparnis.</p>
         <div class="cw"><canvas id="cHeat"></canvas></div>
       <div class="chart-daten" id="cHeatDaten"></div>
       </div>
@@ -1002,7 +1002,7 @@
     <div class="abox" id="assBox"></div>
   </div>
 </div>
-<footer class="footer">© 2026 <a href="https://www.herowerk.de">HeroWerk GmbH</a> · <a href="https://www.herowerk.de/impressum">Impressum</a> · <a href="https://www.herowerk.de/datenschutz">Datenschutz</a> · <button type="button" class="cookie-settings-button" hidden>Cookie-Einstellungen</button> · <a href="https://www.herowerk.de/barrierefreiheit">Barrierefreiheit</a> · Diese Seite speichert nur Ihre Hell-/Dunkel-Auswahl im Browser (localStorage hero-theme), keine Eingaben. · Unverbindliche Modellrechnung auf Basis Ihrer Eingaben und dokumentierter Annahmen; keine Zusicherung von Einsparungen oder Förderungen. Die Förderentscheidung liegt beim Fördergeber (KfW), kein Rechtsanspruch. Kein steuerlicher oder finanzieller Rat. Quellen: siehe Annahmen-Box im Ergebnisbereich.</footer>
+<footer class="footer">© 2026 <a href="https://www.herowerk.de">HeroWerk GmbH</a> · <a href="https://www.herowerk.de/impressum">Impressum</a> · <a href="https://www.herowerk.de/datenschutz">Datenschutz</a> · <button type="button" class="cookie-settings-button" hidden>Cookie-Einstellungen</button> · <a href="https://www.herowerk.de/barrierefreiheit">Barrierefreiheit</a> · Diese Seite speichert nur deine Hell-/Dunkel-Auswahl im Browser (localStorage hero-theme), keine Eingaben. · Unverbindliche Modellrechnung auf Basis deiner Eingaben und dokumentierter Annahmen; keine Zusicherung von Einsparungen oder Förderungen. Die Förderentscheidung liegt beim Fördergeber (KfW), kein Rechtsanspruch. Kein steuerlicher oder finanzieller Rat. Quellen: siehe Annahmen-Box im Ergebnisbereich.</footer>
 
 <script>
 // ===== SLIDER BINDINGS =====
@@ -1252,7 +1252,7 @@ function renderFoerderTreppe(){
   const cur=data.find(d=>d.periode===orig),first=data[0];
   // Fussnoten-Verweis EINMAL hier, ausserhalb jedes Elements mit Rolle.
   const sternHinweis=data.some(d=>d.quote===80)?' <a href="#foerder-80-hinweis" style="color:inherit;text-decoration:underline;">*Was 80 Prozent bedeutet</a>':'';
-  if(hint&&cur)hint.innerHTML='Jedes Warten kostet Förderung: Im gewählten Zeitraum bekommen Sie '+cur.quote+' Prozent'+(cur.quote<first.quote?', im ersten Zeitraum wären es '+first.quote+' Prozent':'')+'.'+sternHinweis;
+  if(hint&&cur)hint.innerHTML='Jedes Warten kostet Förderung: Im gewählten Zeitraum bekommst du '+cur.quote+' Prozent'+(cur.quote<first.quote?', im ersten Zeitraum wären es '+first.quote+' Prozent':'')+'.'+sternHinweis;
   // Bezug ist die GEWAEHLTE Stufe, nicht blind die erste: ein Vergleich gegen einen
   // abgelaufenen Zeitraum bewuerbe einen Betrag, den niemand mehr beantragen kann.
   if(verlust){
@@ -1281,9 +1281,9 @@ function kvRender(data,showResults){
   if(s.neuFossilOn){path.push(kvLine('Anschaffung '+fossilName,eur(i.fossilInvest)));path.push(kvLine('Echter Mehrpreis Wärmepumpe',eurSigned(i.mehrInvest)));}
   path.push(kvLine('Betriebskosten Wärmepumpe über '+s.laufzeit+' Jahre',eur(e.totWPK)));
   path.push(kvLine('Ersparte Betriebs- und CO₂-Kosten über '+s.laufzeit+' Jahre',eur(e.cumSav)));
-  path.push(kvLine('Ihr Vorteil (Barzahlung)',eur(e.wpNG)));
-  if(fin.aktiv){path.push(kvLine('Zinsdifferenz über '+fin.kredLZ+' Jahre',(fin.zinsDelta>=0?'−':'+')+eur(Math.abs(fin.zinsDelta))));path.push(kvLine('Ihr Vorteil (finanziert)',eur(e.wpNGFinanziert)));}
-  document.getElementById('pathSummary').innerHTML='<h3>Ihr Rechenweg</h3>'+path.join('');
+  path.push(kvLine('Dein Vorteil (Barzahlung)',eur(e.wpNG)));
+  if(fin.aktiv){path.push(kvLine('Zinsdifferenz über '+fin.kredLZ+' Jahre',(fin.zinsDelta>=0?'−':'+')+eur(Math.abs(fin.zinsDelta))));path.push(kvLine('Dein Vorteil (finanziert)',eur(e.wpNGFinanziert)));}
+  document.getElementById('pathSummary').innerHTML='<h3>Dein Rechenweg</h3>'+path.join('');
 
   const cards=[];
   cards.push(kvCard('Anschaffung nach Förderung',eur(i.netto),'Brutto '+eur(i.brutto)+' · Förderung '+eur(f.totalFoerderung),'neu'));
@@ -1322,19 +1322,19 @@ function kvRender(data,showResults){
       +'<table class="bt desktop-kv-table"><caption class="visually-hidden">'+titel+', Werte je Jahr in Euro</caption><thead>'+kopf+'</thead><tbody>'+koerper+'</tbody></table>'
       +'<div class="mobile-year-details">'+kvMobileYearContent(labels,reihen)+'</div></div></details>';
   }
-  if(window.Chart){if(cM)cM.destroy();if(cB)cB.destroy();if(cH)cH.destroy();cM=new Chart(document.getElementById('cMain'),{type:'line',data:{labels,datasets:[{label:'Ihr Vorteil',data:data.charts.vermoegen,borderColor:'#B7D900',backgroundColor:'rgba(183,217,0,.15)',fill:true,tension:.25},{label:'Null-Linie',data:data.charts.nullLinie,borderColor:'#E53935',borderDash:[6,4],pointRadius:0}]},options:opts});cB=new Chart(document.getElementById('cBreak'),{type:'bar',data:{labels,datasets:breakDatasets},options:opts});cH=new Chart(document.getElementById('cHeat'),{type:'bar',data:{labels,datasets:[{label:'Heizkosten Gas/Öl',data:data.charts.heizFossil,backgroundColor:'rgba(229,57,53,.65)'},{label:'Heizkosten Wärmepumpe',data:data.charts.heizWp,backgroundColor:'rgba(183,217,0,.65)'},{label:'Jährliche Ersparnis',type:'line',data:data.charts.heizDiff,borderColor:'#FF9800',borderWidth:3}]},options:opts});}
-  kvDatenTabelle('cMainDaten','Kumulative Ersparnis',labels,[{label:'Ihr Vorteil',data:data.charts.vermoegen}]);
+  if(window.Chart){if(cM)cM.destroy();if(cB)cB.destroy();if(cH)cH.destroy();cM=new Chart(document.getElementById('cMain'),{type:'line',data:{labels,datasets:[{label:'Dein Vorteil',data:data.charts.vermoegen,borderColor:'#B7D900',backgroundColor:'rgba(183,217,0,.15)',fill:true,tension:.25},{label:'Null-Linie',data:data.charts.nullLinie,borderColor:'#E53935',borderDash:[6,4],pointRadius:0}]},options:opts});cB=new Chart(document.getElementById('cBreak'),{type:'bar',data:{labels,datasets:breakDatasets},options:opts});cH=new Chart(document.getElementById('cHeat'),{type:'bar',data:{labels,datasets:[{label:'Heizkosten Gas/Öl',data:data.charts.heizFossil,backgroundColor:'rgba(229,57,53,.65)'},{label:'Heizkosten Wärmepumpe',data:data.charts.heizWp,backgroundColor:'rgba(183,217,0,.65)'},{label:'Jährliche Ersparnis',type:'line',data:data.charts.heizDiff,borderColor:'#FF9800',borderWidth:3}]},options:opts});}
+  kvDatenTabelle('cMainDaten','Kumulative Ersparnis',labels,[{label:'Dein Vorteil',data:data.charts.vermoegen}]);
   kvDatenTabelle('cBreakDaten','Jährliche Ersparnis nach Bestandteilen',labels,breakDatasets);
   kvDatenTabelle('cHeatDaten','Heizkosten pro Jahr',labels,[{label:'Heizkosten Gas oder Öl',data:data.charts.heizFossil},{label:'Heizkosten Wärmepumpe',data:data.charts.heizWp},{label:'Jährliche Ersparnis',data:data.charts.heizDiff}]);
 
   const cf=document.getElementById('cashflowBox');cf.style.display=fin.aktiv?'block':'none';
   if(fin.aktiv){
     if(s.neuFossilOn){const mon=(fin.monVorteil>=0?'+':'−')+Math.abs(Math.round(fin.monVorteil)).toLocaleString('de-DE')+' €/Mo.';cf.innerHTML=`<h3>Monatlicher Vergleich</h3><div class="cg3">${kvCard(fossilName,Math.round(fin.fossMon).toLocaleString('de-DE')+' €/Mo.',Math.round(fin.monRateFossil)+' € Rate + '+Math.round(fin.monFossil)+' € Brennstoff · steigend')}${kvCard('Wärmepumpe',Math.round(fin.wpMon).toLocaleString('de-DE')+' €/Mo.',Math.round(fin.monRate)+' € Rate + '+Math.round(fin.monWPStrom)+' € Strom/Wartung')}${kvCard('Vorteil pro Monat',mon,fin.monVorteil>=0?'Wärmepumpe günstiger, ab dem 1. Monat':'Amortisiert sich über die Jahre',fin.monVorteil>=0?'pos':'neg')}</div><div class="ib">${fin.kredLZ<=s.laufzeit?'Nach Kreditende ('+fin.kredLZ+' J.)':'Am Ende des Betrachtungszeitraums ('+s.laufzeit+' J.)'}: Wärmepumpe ~${Math.round(fin.endWpMon)} €/Mo. · ${fossilName} ~${Math.round(fin.endFossilMon)} €/Mo.</div>`;}
-    else {const mon=(fin.monDiff>=0?'+':'−')+Math.abs(Math.round(fin.monDiff)).toLocaleString('de-DE')+' €/Mo.';cf.innerHTML=`<h3>Monatlicher Vergleich</h3><p class="d">Aktivieren Sie „Neue fossile Anlage“ in Schritt 1 für den faireren Vergleich.</p><div class="cg3">${kvCard('Bestehende '+s.heizLabel+'heizung',Math.round(fin.monFossil).toLocaleString('de-DE')+' €/Mo.','Im 1. Jahr · steigend')}${kvCard('Wärmepumpe',Math.round(fin.monGesWP).toLocaleString('de-DE')+' €/Mo.',Math.round(fin.monRate)+' € Rate + '+Math.round(fin.monWPStrom)+' € Strom/Wartung')}${kvCard('Monatlicher Cashflow',mon,fin.monDiff>=0?'Günstiger trotz Kreditrate':'Amortisiert sich über die Jahre',fin.monDiff>=0?'pos':'neg')}</div><div class="ib">${fin.kredLZ<=s.laufzeit?'Nach Kreditende ('+fin.kredLZ+' J.)':'Am Ende des Betrachtungszeitraums ('+s.laufzeit+' J., Kredit läuft noch)'}: Wärmepumpe ~${Math.round(fin.endWpMon)} €/Mo. · Fossil ~${Math.round(fin.endFossilMon)} €/Mo.</div>`;}
+    else {const mon=(fin.monDiff>=0?'+':'−')+Math.abs(Math.round(fin.monDiff)).toLocaleString('de-DE')+' €/Mo.';cf.innerHTML=`<h3>Monatlicher Vergleich</h3><p class="d">Aktiviere „Neue fossile Anlage“ in Schritt 1 für den faireren Vergleich.</p><div class="cg3">${kvCard('Bestehende '+s.heizLabel+'heizung',Math.round(fin.monFossil).toLocaleString('de-DE')+' €/Mo.','Im 1. Jahr · steigend')}${kvCard('Wärmepumpe',Math.round(fin.monGesWP).toLocaleString('de-DE')+' €/Mo.',Math.round(fin.monRate)+' € Rate + '+Math.round(fin.monWPStrom)+' € Strom/Wartung')}${kvCard('Monatlicher Cashflow',mon,fin.monDiff>=0?'Günstiger trotz Kreditrate':'Amortisiert sich über die Jahre',fin.monDiff>=0?'pos':'neg')}</div><div class="ib">${fin.kredLZ<=s.laufzeit?'Nach Kreditende ('+fin.kredLZ+' J.)':'Am Ende des Betrachtungszeitraums ('+s.laufzeit+' J., Kredit läuft noch)'}: Wärmepumpe ~${Math.round(fin.endWpMon)} €/Mo. · Fossil ~${Math.round(fin.endFossilMon)} €/Mo.</div>`;}
   }
-  document.getElementById('co2Box').innerHTML=`<h3>Ihr Klima-Beitrag</h3><div style="text-align:center;margin:20px 0"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.5rem;color:var(--hero-green)">${fix(data.co2.gesamt,1)} t CO₂</div><div class="d">in ${s.laufzeit} Jahren eingespart (Ø ${fix(data.co2.proJahr,1)} t/Jahr)</div></div><div class="cg2"><div class="ib" style="text-align:center"><strong>${data.co2.fluege} Flüge</strong></div><div class="ib" style="text-align:center"><strong>${data.co2.baeume} Bäume</strong></div></div>`;
+  document.getElementById('co2Box').innerHTML=`<h3>Dein Klima-Beitrag</h3><div style="text-align:center;margin:20px 0"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.5rem;color:var(--hero-green)">${fix(data.co2.gesamt,1)} t CO₂</div><div class="d">in ${s.laufzeit} Jahren eingespart (Ø ${fix(data.co2.proJahr,1)} t/Jahr)</div></div><div class="cg2"><div class="ib" style="text-align:center"><strong>${data.co2.fluege} Flüge</strong></div><div class="ib" style="text-align:center"><strong>${data.co2.baeume} Bäume</strong></div></div>`;
   document.getElementById('sensiBox').innerHTML=`<h3>Was wäre wenn? (Szenarien)</h3><table class="bt desktop-kv-table"><tbody><tr><td>Best Case</td><td class="r">${eur(data.sensi.best)}</td></tr><tr><td>Basis</td><td class="r">${eur(data.sensi.basis)}</td></tr><tr><td>Worst Case</td><td class="r">${eur(data.sensi.worst)}</td></tr></tbody></table><div class="mobile-kv-list">${kvMobileCard('Best Case',eur(data.sensi.best),[],'is-wp')}${kvMobileCard('Basis',eur(data.sensi.basis),[])}${kvMobileCard('Worst Case',eur(data.sensi.worst),[])}</div>`;
-  const im=document.getElementById('immoBox');im.style.display=data.immo.aktiv?'block':'none';if(data.immo.aktiv)im.innerHTML=`<h3>Wertsteigerung Ihrer Immobilie</h3><div class="cg3"><div class="rc"><div class="ml">Hauswert heute</div><div class="mv">${eur(data.immo.hausWert)}</div></div><div class="rc pos"><div class="ml">Wertzuwachs durch WP</div><div class="mv">+${eur(data.immo.wertzuwachs)}</div><div class="ms">${Math.round(data.immo.prozent)} % von ${eur(data.immo.hausWert)}</div></div></div>`;
+  const im=document.getElementById('immoBox');im.style.display=data.immo.aktiv?'block':'none';if(data.immo.aktiv)im.innerHTML=`<h3>Wertsteigerung deiner Immobilie</h3><div class="cg3"><div class="rc"><div class="ml">Hauswert heute</div><div class="mv">${eur(data.immo.hausWert)}</div></div><div class="rc pos"><div class="ml">Wertzuwachs durch WP</div><div class="mv">+${eur(data.immo.wertzuwachs)}</div><div class="ms">${Math.round(data.immo.prozent)} % von ${eur(data.immo.hausWert)}</div></div></div>`;
   document.getElementById('detTbl').innerHTML='<thead><tr><th>Jahr</th><th class="r">Fossil ges.</th><th class="r">WP-Kosten</th><th class="r">Ersparnis/J.</th><th class="r">Ersparnis kum.</th></tr></thead><tbody>'+data.jahre.map(row=>`<tr><td>${row.cY}</td><td class="r">${eur(row.fossilG)}</td><td class="r">${eur(row.wpGes)}</td><td class="r">${eur(row.mehrK)}</td><td class="r">${eur(row.cumSav)}</td></tr>`).join('')+'</tbody>';
   const detMobile=document.getElementById('detMobile');if(detMobile)detMobile.innerHTML=kvMobileYearAnswer(e,s)+kvMobileYearDetails('Detailtabelle',data.jahre.map(row=>row.cY),[{label:'Fossil ges.',data:data.jahre.map(row=>row.fossilG)},{label:'WP-Kosten',data:data.jahre.map(row=>row.wpGes)},{label:'Ersparnis/J.',data:data.jahre.map(row=>row.mehrK)},{label:'Ersparnis kum.',data:data.jahre.map(row=>row.cumSav)}]);
   document.getElementById('assBox').innerHTML=`<strong>Annahmen & Hinweise:</strong><br>• Bestandsheizung: ${s.heizLabelBestand}, ${Number(data.annahmen.bedarf).toLocaleString('de-DE')} kWh Brennstoff/J., Nutzungsgrad ${s.etaProzent} % · WP-Strom ${s.laufzeit}J.: ${eur(s.wpStrom*s.laufzeit)}<br>• Wartung: WP ${data.annahmen.wartungWp}€/J. · Fossil ${data.annahmen.wartungFossil}€/J.<br>• Förderung: KfW 458 ${f.quote}% (${eur(f.betrag)}) · Fördermittelantrag ${f.label}, Bemessungsgrenze ${eur(f.grenze)}<br>• Unverbindliche Modellrechnung, ohne Gewähr.`;
@@ -1356,7 +1356,7 @@ kvLoadBootstrap();
 (function(){
   const CTA_URL='/anfrage.html';
   const KV_SESSION_KEY='hero_kv_sitzung';
-  const WZ_LABELS=['1 Ihre Heizung','2 Ihr Vergleich','3 Ihre Förderung','4 Finanzierung','5 Ihr Ergebnis'];
+  const WZ_LABELS=['1 deine Heizung','2 dein Vergleich','3 deine Förderung','4 Finanzierung','5 dein Ergebnis'];
   const WZ_TRACK_IDS=['heizart','bedarf','eta','invWP','jaz','laufzeit','neuFossilTog','gasInvest','oelInvest','vglBrennstoff','fHalbjahr','fGrund','fEU','fKlima','fAlt20','fEinkSlider','fKind','finanzTog','kredLZ','kredZins'];
   const WZ={current:0,maxVisited:0,touched:new Set(),programmatic:false,incomeOpted:false,resultsBuilt:false,resultTracked:false,sitzung:null,estSeq:0,estNachlaufTimer:null,estNachlauf:0,estWartenGesamt:0,estDirty:false,estEntprellTimer:null,estNotaus:null,step1:{heizart:null,bedarf:null,bedarfSource:null,altgas:null,vmode:null,unit:'kwh',unitTouched:false,geb:null,bj:null,san:null,flaeche:140,rohr:null,kbj:null}};
   const $=id=>document.getElementById(id);
@@ -1367,7 +1367,7 @@ kvLoadBootstrap();
   // fruehere Fusszeilen-Link "Berater-Ansicht" (addFooterLink) ist ersatzlos weg.
   const isBerater=()=>false;
   function ctaHtml(compact){
-    return `<h3>Aus Richtwerten wird Ihr Angebot</h3><p>Der Rechner zeigt die Größenordnung. Ihr individuelles Angebot rechnet mit Ihrem Gebäude, Ihrer Heizlast und der aktuell besten Förderung, kostenlos und unverbindlich.</p>${compact?'':`<ul><li>Vor-Ort-Termin mit Meisterbetrieb aus der Region Hannover</li><li>Förderantrag übernehmen wir</li><li>Festpreis statt Richtwert</li></ul>`}<a href="${CTA_URL}">Individuelles Angebot anfragen</a>`;
+    return `<h3>Aus Richtwerten wird dein Angebot</h3><p>Der Rechner zeigt die Größenordnung. Dein individuelles Angebot rechnet mit deinem Gebäude, deiner Heizlast und der aktuell besten Förderung, kostenlos und unverbindlich.</p>${compact?'':`<ul><li>Vor-Ort-Termin mit Meisterbetrieb aus der Region Hannover</li><li>Förderantrag übernehmen wir</li><li>Festpreis statt Richtwert</li></ul>`}<a href="${CTA_URL}">Individuelles Angebot anfragen</a>`;
   }
   function finiteNumber(value){
     const number=Number(value);
@@ -1639,51 +1639,51 @@ kvLoadBootstrap();
   // N2-Schaetzkonstanten, belegt aus herowerk-website apps-script/rechner-backend/Code.gs (Dimensionierungsrechner)
   function wzOpt(grp,val,title,sub){return `<button type="button" class="wz-optcard wahlkarte" data-wz-grp="${grp}" data-wz-val="${val}"><span><span class="wz-opt-title">${title}</span>${sub?`<span class="wz-opt-sub">${sub}</span>`:''}</span><span class="wz-opt-check">✓</span></button>`;}
   function renderStep1(){
-    addStatic(`<h2 class="wz-mobile-step-title">Womit heizen Sie heute?</h2><p class="wz-mobile-step-lead">Wählen Sie Gas oder Öl; danach fragen wir nur die Angaben ab, die für Ihren Vergleich nötig sind.</p><p class="wz-intro wz-step-desktop-intro">Drei Angaben zu Ihrer heutigen Heizung genügen. Alles Weitere belegen wir mit marktüblichen Richtwerten vor, die Sie jederzeit anpassen können.</p>
+    addStatic(`<h2 class="wz-mobile-step-title">Womit heizt du heute?</h2><p class="wz-mobile-step-lead">Wähle Gas oder Öl; danach fragen wir nur die Angaben ab, die für deinen Vergleich nötig sind.</p><p class="wz-intro wz-step-desktop-intro">Drei Angaben zu deiner heutigen Heizung genügen. Alles Weitere belegen wir mit marktüblichen Richtwerten vor, die du jederzeit anpassen kannst.</p>
       <div class="selg"><label>Heizungsart bisher</label><div class="wz-choice-grid"><button type="button" class="wz-choice wahlkarte" data-wz-heizart="gas" aria-label="Gas">Gas</button><button type="button" class="wz-choice wahlkarte" data-wz-heizart="oel" aria-label="Öl">Öl</button></div></div>
       <div id="wzSecVerbrauch" class="wz-hidden">
-      <div class="selg"><label>Kennen Sie Ihren Jahresverbrauch?</label>
+      <div class="selg"><label>Kennst du deinen Jahresverbrauch?</label>
         <div class="wz-optgrid">
           ${wzOpt('vmode','known','Ich kenne meinen Jahresverbrauch','Eingabe in kWh, m³ Gas oder Liter Heizöl')}
-          ${wzOpt('vmode','unknown','Weiß ich nicht','Wir schätzen ihn anhand Ihrer Gebäudedaten')}
+          ${wzOpt('vmode','unknown','Weiß ich nicht','Wir schätzen ihn anhand deiner Gebäudedaten')}
         </div></div>
       <div id="wzVKnown" class="wz-help">
         <div class="wz-unit-btns"><button type="button" data-wz-unit="kwh" class="is-active">kWh</button><button type="button" data-wz-unit="m3">m³ Gas</button><button type="button" data-wz-unit="liter">Liter Heizöl</button></div>
         <div class="sg"><label>Jahresverbrauch <span class="v" id="wzVerbVal"></span></label>
           <input type="range" id="wzVerbSlider" min="5000" max="80000" step="500" value="20000" aria-label="Jahresverbrauch">
           <div class="wz-minmax"><span id="wzVMin">5.000 kWh</span><span id="wzVMax">80.000 kWh</span></div>
-          <div class="wz-opt-sub" id="wzVHinweis" data-mobile-summary="Wo finde ich meinen Verbrauch?" style="margin-top:6px">Steht auf Ihrer letzten Jahresabrechnung.</div>
-          <div class="wz-opt-sub" id="wzVerbLive" data-mobile-summary="So wird Ihr Verbrauch umgerechnet" style="margin-top:6px"></div></div>
+          <div class="wz-opt-sub" id="wzVHinweis" data-mobile-summary="Wo finde ich meinen Verbrauch?" style="margin-top:6px">Steht auf deiner letzten Jahresabrechnung.</div>
+          <div class="wz-opt-sub" id="wzVerbLive" data-mobile-summary="So wird dein Verbrauch umgerechnet" style="margin-top:6px"></div></div>
       </div>
       <div id="wzVUnknown" class="wz-help">
-        <div class="selg"><label>Was für ein Gebäude haben Sie?</label><div class="wz-optgrid cols">
+        <div class="selg"><label>Was für ein Gebäude hast du?</label><div class="wz-optgrid cols">
           ${wzOpt('geb','efh','Einfamilienhaus','Freistehend')}${wzOpt('geb','dhh','Doppelhaushälfte','Geteilte Wand')}${wzOpt('geb','rh','Reihenhaus','Mittel- oder Endhaus')}${wzOpt('geb','zfh','Zweifamilienhaus','2 Wohneinheiten')}${wzOpt('geb','mfh','Mehrfamilienhaus','3 und mehr Wohneinheiten')}
         </div></div>
-        <div class="selg"><label>Wann wurde Ihr Haus gebaut?</label><div class="wz-optgrid cols">
+        <div class="selg"><label>Wann wurde dein Haus gebaut?</label><div class="wz-optgrid cols">
           ${wzOpt('bj','vor1978','Vor 1978','Meist ungedämmt, hoher Bedarf')}${wzOpt('bj','1978-1994','1978 bis 1994','Erste Dämmvorschriften')}${wzOpt('bj','1995-2010','1995 bis 2010','Gute Dämmung')}${wzOpt('bj','nach2010','Nach 2010','Sehr gute Dämmung')}
         </div></div>
-        <div class="selg"><label>Wurde Ihr Haus nachträglich saniert?</label><div class="wz-optgrid cols">
+        <div class="selg"><label>Wurde dein Haus nachträglich saniert?</label><div class="wz-optgrid cols">
           ${wzOpt('san','nein','Nein / Weiß ich nicht','Originalzustand')}${wzOpt('san','teilweise','Teilweise saniert','Zum Beispiel neue Fenster oder Dach gedämmt')}${wzOpt('san','umfassend','Umfassend saniert','Dach, Fassade und Fenster erneuert')}
         </div></div>
         <div class="sg"><label>Wohnfläche <span class="v" id="wzFlVal">140 m²</span></label>
           <input type="range" id="wzFlSlider" min="60" max="800" step="10" value="140" aria-label="Wohnfläche in Quadratmetern"></div>
-        <div class="ib" id="wzEstBox" style="display:none"><strong>Geschätzter Jahresverbrauch: <span id="wzEstVal"></span></strong><br><span class="d">Marktüblicher Richtwert aus Ihren Gebäudedaten. Genauer wird es mit dem Wert aus Ihrer letzten Jahresabrechnung.</span></div>
+        <div class="ib" id="wzEstBox" style="display:none"><strong>Geschätzter Jahresverbrauch: <span id="wzEstVal"></span></strong><br><span class="d">Marktüblicher Richtwert aus deinen Gebäudedaten. Genauer wird es mit dem Wert aus deiner letzten Jahresabrechnung.</span></div>
       </div>
       </div>
-      <div class="selg wz-hidden" id="wzSecBonus" style="margin-top:16px"><label>Ihre Chance auf den Klimageschwindigkeitsbonus (bis 16 Prozent mehr Förderung)</label>
+      <div class="selg wz-hidden" id="wzSecBonus" style="margin-top:16px"><label>Deine Chance auf den Klimageschwindigkeitsbonus (bis 16 Prozent mehr Förderung)</label>
         <div id="wzAltOel" class="wz-help"><div class="ib"><strong>Gute Nachricht:</strong> <span class="d">Für eine funktionsfähige Ölheizung gibt es den Klimabonus unabhängig vom Alter. Wir rechnen ihn ein.</span></div></div>
-        <div id="wzAltGas" class="wz-help"><div class="wz-opt-sub" style="margin-bottom:8px">Ist Ihre Gasheizung mindestens 20 Jahre alt?</div><div class="wz-optgrid cols">
+        <div id="wzAltGas" class="wz-help"><div class="wz-opt-sub" style="margin-bottom:8px">Ist deine Gasheizung mindestens 20 Jahre alt?</div><div class="wz-optgrid cols">
           ${wzOpt('altgas','ja','Ja, 20 Jahre oder älter','+16 % Klimabonus')}${wzOpt('altgas','nein','Nein, jünger','Kein Klimabonus')}${wzOpt('altgas','unklar','Weiß ich nicht','Wir rechnen ohne Bonus')}
-        </div><div id="wzAltTeaser" class="ib ${WZ.step1.altgas==='unklar'?'':'wz-hidden'}"><span class="d">Wir rechnen ohne den Klimabonus von bis zu 16 Prozent. Trifft die Voraussetzung zu, steigt Ihre Förderung deutlich. Das klären wir im Gespräch in zwei Minuten.</span></div></div>
-        <div id="wzAltHint" class="wz-opt-sub">Bitte wählen Sie zuerst oben Ihre Heizungsart.</div></div>
-      <div class="selg wz-hidden" id="wzSecKessel" style="margin-top:16px"><label>Was für eine Heizung hängt bei Ihnen? Zwei kurze Fragen genügen.</label>
-        <div class="wz-opt-sub" style="margin-bottom:8px">Schauen Sie auf das Abgasrohr Ihrer Heizung: Ist es aus Metall oder aus Kunststoff?</div>
+        </div><div id="wzAltTeaser" class="ib ${WZ.step1.altgas==='unklar'?'':'wz-hidden'}"><span class="d">Wir rechnen ohne den Klimabonus von bis zu 16 Prozent. Trifft die Voraussetzung zu, steigt deine Förderung deutlich. Das klären wir im Gespräch in zwei Minuten.</span></div></div>
+        <div id="wzAltHint" class="wz-opt-sub">Bitte wähle zuerst oben deine Heizungsart.</div></div>
+      <div class="selg wz-hidden" id="wzSecKessel" style="margin-top:16px"><label>Was für eine Heizung hängt bei dir? Zwei kurze Fragen genügen.</label>
+        <div class="wz-opt-sub" style="margin-bottom:8px">Schau auf das Abgasrohr deiner Heizung: Ist es aus Metall oder aus Kunststoff?</div>
         <div class="wz-optgrid cols">
           ${wzOpt('rohr','metall','Metall-Abgasrohr','Typisch für ältere Heizungen')}
           ${wzOpt('rohr','kunststoff','Kunststoff-Abgasrohr','Typisch für Brennwert-Heizungen')}
           ${wzOpt('rohr','unklar','Weiß ich nicht','Wir rechnen mit einem Mittelwert')}
         </div>
-        <div class="wz-opt-sub" style="margin:10px 0 8px">Aus welchem Jahr ist Ihre Heizung ungefähr?</div>
+        <div class="wz-opt-sub" style="margin:10px 0 8px">Aus welchem Jahr ist deine Heizung ungefähr?</div>
         <div class="wz-optgrid cols">
           ${wzOpt('kbj','vor1990','Vor 1990','Alte Heizungs-Generation')}
           ${wzOpt('kbj','1990-2010','1990 bis 2010','Mittlere Generation')}
@@ -1698,9 +1698,9 @@ kvLoadBootstrap();
   function wzSliderToKwh(){const v=Number($('wzVerbSlider').value);return WZ.step1.unit==='kwh'?v:v*wzUnitFactor();}
   function wzSetVerbLabel(){
     const v=Number($('wzVerbSlider').value);
-    if(WZ.step1.unit==='kwh'){$('wzVerbVal').textContent=v.toLocaleString('de-DE')+' kWh';$('wzVHinweis').textContent='Steht auf Ihrer letzten Jahresabrechnung.';}
-    else if(WZ.step1.unit==='m3'){$('wzVerbVal').textContent=v.toLocaleString('de-DE')+' m³ (≈ '+(v*wzUnitFactor()).toLocaleString('de-DE')+' kWh)';$('wzVHinweis').textContent='Steht auf Ihrer Gas-Jahresabrechnung (Verbrauch in Kubikmetern).';}
-    else{$('wzVerbVal').textContent=v.toLocaleString('de-DE')+' Liter (≈ '+(v*wzUnitFactor()).toLocaleString('de-DE')+' kWh)';$('wzVHinweis').textContent='Steht auf Ihrer Heizöl-Rechnung oder dem Tankbeleg.';}
+    if(WZ.step1.unit==='kwh'){$('wzVerbVal').textContent=v.toLocaleString('de-DE')+' kWh';$('wzVHinweis').textContent='Steht auf deiner letzten Jahresabrechnung.';}
+    else if(WZ.step1.unit==='m3'){$('wzVerbVal').textContent=v.toLocaleString('de-DE')+' m³ (≈ '+(v*wzUnitFactor()).toLocaleString('de-DE')+' kWh)';$('wzVHinweis').textContent='Steht auf deiner Gas-Jahresabrechnung (Verbrauch in Kubikmetern).';}
+    else{$('wzVerbVal').textContent=v.toLocaleString('de-DE')+' Liter (≈ '+(v*wzUnitFactor()).toLocaleString('de-DE')+' kWh)';$('wzVHinweis').textContent='Steht auf deiner Heizöl-Rechnung oder dem Tankbeleg.';}
   }
   function wzSwitchUnit(unit,fromUser){
     const sl=$('wzVerbSlider');const kwh=wzSliderToKwh();
@@ -1771,15 +1771,15 @@ kvLoadBootstrap();
     const response=KV_STATE.last;if(!response||!response.system)return;
     const b=Number(response.annahmen.bedarf)||0,e=Number(response.system.etaProzent)||0,w=Math.round(Number(response.system.nutzwaerme)||0);
     const fmt=n=>n.toLocaleString('de-DE');
-    const line='Das heißt für Sie: Sie bezahlen '+fmt(b)+' kWh Brennstoff. Ihre Heizung macht daraus bei '+e+' % Wirkungsgrad nur etwa '+fmt(w)+' kWh Wärme. '+fmt(b-w)+' kWh gehen als Verlust verloren.';
+    const line='Das heißt für dich: du bezahlst '+fmt(b)+' kWh Brennstoff. Deine Heizung macht daraus bei '+e+' % Wirkungsgrad nur etwa '+fmt(w)+' kWh Wärme. '+fmt(b-w)+' kWh gehen als Verlust verloren.';
     if($('etaLive'))$('etaLive').textContent=line;
     if($('bedarfLive'))$('bedarfLive').textContent=line;
     const wl=$('wzVerbLive');
     if(wl){
-      let vorn='Sie bezahlen '+fmt(b)+' kWh Brennstoff.';
+      let vorn='Du bezahlst '+fmt(b)+' kWh Brennstoff.';
       const vs=$('wzVerbSlider');
-      if(vs&&WZ.step1.unit!=='kwh'){const v=Number(vs.value);vorn='Sie bezahlen '+fmt(v)+(WZ.step1.unit==='m3'?' m³ Gas':' Liter Heizöl')+' (= '+fmt(b)+' kWh Brennstoff).';}
-      wl.textContent=vorn+' Ihre Heizung macht daraus bei '+e+' % Wirkungsgrad etwa '+fmt(w)+' kWh Wärme.';
+      if(vs&&WZ.step1.unit!=='kwh'){const v=Number(vs.value);vorn='Du bezahlst '+fmt(v)+(WZ.step1.unit==='m3'?' m³ Gas':' Liter Heizöl')+' (= '+fmt(b)+' kWh Brennstoff).';}
+      wl.textContent=vorn+' deine Heizung macht daraus bei '+e+' % Wirkungsgrad etwa '+fmt(w)+' kWh Wärme.';
     }
   }
   function wzEtaDefault(){
@@ -1796,10 +1796,10 @@ kvLoadBootstrap();
     const own=WZ.touched.has('eta');
     if(!own)setControl('eta',d.v,['input','change']);
     if(h){h.style.display='block';
-      if(own)h.textContent='Sie haben den Wert selbst eingestellt. Typisch für '+(d.label||'den Bestand insgesamt')+': rund '+d.v+' % der abgerechneten Energie.';
-      else if(d.label)h.textContent=(KV_STATE.bootstrap.etaMatrix.textVorbelegt||'Vorbelegt aus Ihren Angaben: {label}, typisch rund {wert} %.').replace('{label}',d.label).replace('{wert}',d.v);
+      if(own)h.textContent='Du hast den Wert selbst eingestellt. Typisch für '+(d.label||'den Bestand insgesamt')+': rund '+d.v+' % der abgerechneten Energie.';
+      else if(d.label)h.textContent=(KV_STATE.bootstrap.etaMatrix.textVorbelegt||'Vorbelegt aus deinen Angaben: {label}, typisch rund {wert} %.').replace('{label}',d.label).replace('{wert}',d.v);
       else{const matrix=KV_STATE.bootstrap.etaMatrix;h.textContent=(d.text||matrix.fallback.text)+(matrix.quelle?' Quelle: '+matrix.quelle+'.':'');}}
-    if(d.label)WZ_MARKET_LABELS.eta='Aus Ihren Heizungs-Angaben';else delete WZ_MARKET_LABELS.eta;
+    if(d.label)WZ_MARKET_LABELS.eta='Aus deinen Heizungs-Angaben';else delete WZ_MARKET_LABELS.eta;
     updateChips();updateEtaLive();
   }
   function updateStep1Reveal(){
@@ -1879,16 +1879,16 @@ kvLoadBootstrap();
     updateStep1Reveal();
   }
   function renderStep2(){
-    addStatic(`<h2 class="wz-mobile-step-title">Was möchten Sie vergleichen?</h2><p class="wz-mobile-step-lead">Prüfen Sie die Richtwerte für Wärmepumpe und neue Gas- oder Ölheizung.</p><p class="wz-intro wz-step-desktop-intro">Die ehrliche Vergleichsfrage lautet: neue Gas- oder Ölheizung oder neue Wärmepumpe? Beides kostet Anschaffung und Einbau. Prüfen Sie die Richtwerte und passen Sie Ihr Wärmepumpen-Angebot an, falls Ihnen schon eines vorliegt.</p>`);
+    addStatic(`<h2 class="wz-mobile-step-title">Was möchtest du vergleichen?</h2><p class="wz-mobile-step-lead">Prüfe die Richtwerte für Wärmepumpe und neue Gas- oder Ölheizung.</p><p class="wz-intro wz-step-desktop-intro">Die ehrliche Vergleichsfrage lautet: neue Gas- oder Ölheizung oder neue Wärmepumpe? Beides kostet Anschaffung und Einbau. Prüfe die Richtwerte und passe dein Wärmepumpen-Angebot an, falls dir schon eines vorliegt.</p>`);
     place($('wzWpCard'));place($('wzCompareCard'));
   }
   function renderStep3(){
-    addStatic(`<h2 class="wz-mobile-step-title">Wann möchten Sie den Antrag stellen?</h2><p class="wz-mobile-step-lead">Die Treppe zeigt den Zuschuss je Zeitraum.</p><p class="wz-intro wz-step-desktop-intro">Ihre Förderung nach der BEG-Reform. Die Grundförderung bekommt jeder Heizungstausch, die Boni hängen von Ihren Angaben ab.</p>`);
+    addStatic(`<h2 class="wz-mobile-step-title">Wann möchtest du den Antrag stellen?</h2><p class="wz-mobile-step-lead">Die Treppe zeigt den Zuschuss je Zeitraum.</p><p class="wz-intro wz-step-desktop-intro">Deine Förderung nach der BEG-Reform. Die Grundförderung bekommt jeder Heizungstausch, die Boni hängen von deinen Angaben ab.</p>`);
     place($('tab-foerderung'));
     renderFoerderAufbau();
   }
   function renderStep4(){
-    addStatic(`<h2 class="wz-mobile-step-title">Wie möchten Sie finanzieren?</h2><p class="wz-mobile-step-lead">Aktivieren Sie den Kredit nur, wenn Sie Wärmepumpe und Vergleichsheizung finanziert sehen möchten.</p><p class="wz-intro wz-step-desktop-intro">Die wenigsten zahlen eine neue Heizung bar, egal ob Wärmepumpe oder Gaskessel. Legen Sie hier optional Laufzeit und Zins fest, dann vergleicht das Ergebnis beide Wege fair als monatliche Rate plus Betriebskosten.</p>`);
+    addStatic(`<h2 class="wz-mobile-step-title">Wie möchtest du finanzieren?</h2><p class="wz-mobile-step-lead">Aktiviere den Kredit nur, wenn du Wärmepumpe und Vergleichsheizung finanziert sehen möchten.</p><p class="wz-intro wz-step-desktop-intro">Die wenigsten zahlen eine neue Heizung bar, egal ob Wärmepumpe oder Gaskessel. Lege hier optional Laufzeit und Zins fest, dann vergleicht das Ergebnis beide Wege fair als monatliche Rate plus Betriebskosten.</p>`);
     place($('tab-finanzierung'));
     $('finanzTog').addEventListener('change',()=>window.requestAnimationFrame(syncMobileCollapsibles),{once:true});
   }
@@ -1911,10 +1911,10 @@ kvLoadBootstrap();
     rows.push(['Antrag',f.label]);
     if(WZ.touched.has('fEinkSlider'))rows.push(['Einkommen (anrechenbar)',f.anrechenbar.toLocaleString('de-DE')+' €']);
     const quoteNote=f.quote===80?'<sup><a href="#foerder-80-hinweis" style="color:inherit;text-decoration:underline;">*</a></sup>':'';
-    host.innerHTML=`<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accent);">${f.quote} %${quoteNote}</div><div style="font-size:0.8rem;color:var(--hero-muted);">Ihre Förderquote (KfW 458)</div></div>
-      <div class="ln"><span class="lbl">Ihre Wärmepumpe</span><span class="vv">${inv.toLocaleString('de-DE')} €</span></div>
-      <div class="ln"><span class="lbl">Ihr Zuschuss (KfW 458)</span><span class="vv" style="color:var(--hero-green)">−${betrag.toLocaleString('de-DE')} €</span></div>
-      <div class="ln" style="border-top:1px solid var(--hero-separator);margin-top:4px;padding-top:6px;"><span class="lbl"><strong>Ihr Eigenanteil</strong></span><span class="vv" style="color:var(--hero-accent);font-size:1.05rem;">${eigen.toLocaleString('de-DE')} €</span></div>
+    host.innerHTML=`<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accent);">${f.quote} %${quoteNote}</div><div style="font-size:0.8rem;color:var(--hero-muted);">Deine Förderquote (KfW 458)</div></div>
+      <div class="ln"><span class="lbl">Deine Wärmepumpe</span><span class="vv">${inv.toLocaleString('de-DE')} €</span></div>
+      <div class="ln"><span class="lbl">Dein Zuschuss (KfW 458)</span><span class="vv" style="color:var(--hero-green)">−${betrag.toLocaleString('de-DE')} €</span></div>
+      <div class="ln" style="border-top:1px solid var(--hero-separator);margin-top:4px;padding-top:6px;"><span class="lbl"><strong>Dein Eigenanteil</strong></span><span class="vv" style="color:var(--hero-accent);font-size:1.05rem;">${eigen.toLocaleString('de-DE')} €</span></div>
       <div style="font-size:0.68rem;color:var(--hero-muted);margin:8px 0 12px;">Förderfähig max. ${f.grenze.toLocaleString('de-DE')} €. Unverbindliche Berechnung, ohne Gewähr.</div>
       <div style="border-top:1px solid var(--hero-separator);padding-top:10px;margin-bottom:12px;">${rows.map(r=>`<div class="ln"><span class="lbl">${r[0]}</span><span class="vv" style="font-weight:600;font-size:0.8rem;">${r[1]}</span></div>`).join('')}</div>`;
   }
@@ -1924,24 +1924,24 @@ kvLoadBootstrap();
     const response=KV_STATE.last;if(!response)return;const f=response.foerder;
     const rows=[];
     if(f.euDifferenzierung){
-      rows.push(`<div class="ln"><span class="lbl">Grundförderung: 15 % für alle, Ihr EU-Gerät bekommt 15 % zurück, zusammen</span><span class="vv">+${f.grundPct} %</span></div>`);
+      rows.push(`<div class="ln"><span class="lbl">Grundförderung: 15 % für alle, dein EU-Gerät bekommt 15 % zurück, zusammen</span><span class="vv">+${f.grundPct} %</span></div>`);
     } else {
       rows.push(`<div class="ln"><span class="lbl">Grundförderung: bekommt jeder Heizungstausch</span><span class="vv">+${f.grundPct} %</span></div>`);
     }
     if(f.klimaPct>0){
-      if(f.klima>0)rows.push(`<div class="ln"><span class="lbl">Klimageschwindigkeitsbonus ${f.klimaPct} Prozent: erfüllt laut Ihrer Angabe</span><span class="vv">+${f.klima} %</span></div>`);
-      else rows.push(`<div class="ln"><span class="lbl">Klimageschwindigkeitsbonus: entfällt laut Ihrer Angabe aus Schritt 1</span><span class="vv">+0 %</span></div>`);
+      if(f.klima>0)rows.push(`<div class="ln"><span class="lbl">Klimageschwindigkeitsbonus ${f.klimaPct} Prozent: erfüllt laut deiner Angabe</span><span class="vv">+${f.klima} %</span></div>`);
+      else rows.push(`<div class="ln"><span class="lbl">Klimageschwindigkeitsbonus: entfällt laut deiner Angabe aus Schritt 1</span><span class="vv">+0 %</span></div>`);
     } else {
       rows.push(`<div class="ln"><span class="lbl">Klimageschwindigkeitsbonus: entfällt für diesen Zeitraum</span><span class="vv">+0 %</span></div>`);
     }
     if(f.einkommen>0)rows.push(`<div class="ln"><span class="lbl">Einkommensbonus (anrechenbares Einkommen ${f.anrechenbar.toLocaleString('de-DE')} €)</span><span class="vv">+${f.einkommen} %</span></div>`);
     if(f.gekappt)rows.push(`<div class="ln"><span class="lbl">Gesetzlicher Deckel: mehr als 80 %<sup><a href="#foerder-80-hinweis" style="color:inherit;text-decoration:underline;">*</a></sup> gibt es nicht</span><span class="vv">80 %<sup><a href="#foerder-80-hinweis" style="color:inherit;text-decoration:underline;">*</a></sup></span></div>`);
-    host.innerHTML=`<strong>So setzt sich Ihre Förderung zusammen:</strong>`+rows.join('');
+    host.innerHTML=`<strong>So setzt sich deine Förderung zusammen:</strong>`+rows.join('');
   }
   function prepareIncomeDiscreet(){
     const block=$('wzIncomeBlock');if(!block||$('wzIncomeDiscreet'))return;
-    const d=document.createElement('div');d.id='wzIncomeDiscreet';d.className='ib';d.dataset.mobileSummary='Wie behandeln wir Ihre Einkommensangabe?';
-    d.innerHTML=`<p class="d">Transparenz: Ihre Angaben werden verschlüsselt an unseren Rechner übertragen und nur für diese Berechnung verwendet. Sie werden nicht als Lead gespeichert.</p><p class="d" style="margin-top:8px">Je nach zu versteuerndem Haushaltseinkommen sind bis zu 40 Prozentpunkte zusätzliche Förderung möglich.</p><a class="wz-link-btn" style="display:inline-block;margin-top:12px;text-decoration:none" href="${CTA_URL}">Diskret im persönlichen Gespräch besprechen</a>`;
+    const d=document.createElement('div');d.id='wzIncomeDiscreet';d.className='ib';d.dataset.mobileSummary='Wie behandeln wir deine Einkommensangabe?';
+    d.innerHTML=`<p class="d">Transparenz: Deine Angaben werden verschlüsselt an unseren Rechner übertragen und nur für diese Berechnung verwendet. Die Angaben werden nicht als Lead gespeichert.</p><p class="d" style="margin-top:8px">Je nach zu versteuerndem Haushaltseinkommen sind bis zu 40 Prozentpunkte zusätzliche Förderung möglich.</p><a class="wz-link-btn" style="display:inline-block;margin-top:12px;text-decoration:none" href="${CTA_URL}">Diskret im persönlichen Gespräch besprechen</a>`;
     block.appendChild(d);
   }
   function wireGlobalTracking(){
@@ -1951,9 +1951,9 @@ kvLoadBootstrap();
     ['input','change'].forEach(t=>document.addEventListener(t,e=>{const id=e.target&&e.target.id;if(WZ_FOERDER_IDS.includes(id)){renderFoerderAufbau();renderLiveFoerder();}}));
     ['input','change'].forEach(t=>document.addEventListener(t,e=>{if(KV_STATE.applyingBootstrap)return;const id=e.target&&e.target.id;if(id==='fEinkSlider'&&KV_STATE.bootstrap&&KV_STATE.bootstrap.kredit){applyKreditZinsvorgabe(KV_STATE.bootstrap.kredit);renderKreditHinweise(KV_STATE.bootstrap.kredit);}}));
   }
-  const WZ_MARKET_LABELS={invWP:'Richtwert HeroWerk-Einstiegsangebot',vglBrennstoff:'Vorbelegt nach Ihrer Heizungsart',kredZins:'Rechenannahme'};
+  const WZ_MARKET_LABELS={invWP:'Richtwert HeroWerk-Einstiegsangebot',vglBrennstoff:'Vorbelegt nach deiner Heizungsart',kredZins:'Rechenannahme'};
   function marketLabel(id){return WZ_MARKET_LABELS[id]||'Marktannahme';}
-  function chipFor(id){return `<span class="wz-chip ${WZ.touched.has(id)?'own':'market'}">${WZ.touched.has(id)?'Ihre Angabe':marketLabel(id)}</span>`;}
+  function chipFor(id){return `<span class="wz-chip ${WZ.touched.has(id)?'own':'market'}">${WZ.touched.has(id)?'Deine Angabe':marketLabel(id)}</span>`;}
   function addChips(){
     WZ_TRACK_IDS.forEach(id=>{
       const el=$(id);if(!el||$('wzChip_'+id))return;
@@ -1964,7 +1964,7 @@ kvLoadBootstrap();
     updateChips();
   }
   function updateChips(){
-    WZ_TRACK_IDS.forEach(id=>{const c=$('wzChip_'+id);if(c){const own=WZ.touched.has(id);c.className='wz-chip '+(own?'own':'market');c.textContent=own?'Ihre Angabe':marketLabel(id);}});
+    WZ_TRACK_IDS.forEach(id=>{const c=$('wzChip_'+id);if(c){const own=WZ.touched.has(id);c.className='wz-chip '+(own?'own':'market');c.textContent=own?'Deine Angabe':marketLabel(id);}});
     renderLiveFoerder();
   }
 
@@ -1999,24 +1999,24 @@ kvLoadBootstrap();
     let rechnung='';
     if(d.aktiv){
       const fossil=d[s.vglFuel];
-      rechnung=`<div class="wz-herocalc" data-mobile-summary="So entsteht Ihr Ergebnis"><div class="wz-hc-title">So kommen wir auf diese Zahl:</div>
+      rechnung=`<div class="wz-herocalc" data-mobile-summary="So entsteht dein Ergebnis"><div class="wz-hc-title">So kommen wir auf diese Zahl:</div>
         <div class="ln"><span class="lbl">Gesamtkosten für eine neue ${fuel}heizung mit Betriebskosten (Wartung + ${fuel}) über ${lz} Jahre</span><span class="vv">${eur(fossil.gesamt)}</span></div>
         <div class="ln"><span class="lbl">Gesamtkosten für eine neue Wärmepumpe mit Betriebskosten (Wartung + Strom) über ${lz} Jahre, nach Abzug der Förderung</span><span class="vv">−${eur(d.wp.gesamt)}</span></div>
-        <div class="ln wz-hc-sum"><span class="lbl"><strong>Ihr Vorteil mit der Wärmepumpe</strong></span><span class="vv">siehe Ergebnis oben</span></div></div>`;
+        <div class="ln wz-hc-sum"><span class="lbl"><strong>Dein Vorteil mit der Wärmepumpe</strong></span><span class="vv">siehe Ergebnis oben</span></div></div>`;
     } else {
       const weiter=e.wpNG+i.netto+e.totWPK;
-      rechnung=`<div class="wz-herocalc" data-mobile-summary="So entsteht Ihr Ergebnis"><div class="wz-hc-title">So kommen wir auf diese Zahl (Vergleich: Sie behalten Ihre ${fuel}heizung):</div>
-        <div class="ln"><span class="lbl">Was der Weiterbetrieb Ihrer ${fuel}heizung kostet: ${fuel}, Wartung und CO₂-Preis über ${lz} Jahre</span><span class="vv">${eur(weiter)}</span></div>
+      rechnung=`<div class="wz-herocalc" data-mobile-summary="So entsteht dein Ergebnis"><div class="wz-hc-title">So kommen wir auf diese Zahl (Vergleich: du behältst deine ${fuel}heizung):</div>
+        <div class="ln"><span class="lbl">Was der Weiterbetrieb deiner ${fuel}heizung kostet: ${fuel}, Wartung und CO₂-Preis über ${lz} Jahre</span><span class="vv">${eur(weiter)}</span></div>
         <div class="ln"><span class="lbl">Was die Wärmepumpe stattdessen kostet: Strom und Wartung über ${lz} Jahre</span><span class="vv">−${eur(e.totWPK)}</span></div>
         <div class="ln"><span class="lbl">Anschaffung der Wärmepumpe, nach Abzug der Förderung</span><span class="vv">−${eur(i.netto)}</span></div>
-        <div class="ln wz-hc-sum"><span class="lbl"><strong>Ihr Vorteil mit der Wärmepumpe</strong></span><span class="vv">siehe Ergebnis oben</span></div></div>`;
+        <div class="ln wz-hc-sum"><span class="lbl"><strong>Dein Vorteil mit der Wärmepumpe</strong></span><span class="vv">siehe Ergebnis oben</span></div></div>`;
     }
     let satz;
-    if(!d.aktiv)satz=`Dabei nehmen wir an: Ihre ${fuel}heizung läuft die nächsten ${lz} Jahre weiter, ohne neue Anschaffung, nur mit Wartung und ${fuel}kosten.`;
-    else if(i.mehrInvest<=0||e.breakEvenSofort)satz=`Die Wärmepumpe ist nach Förderung sogar beim Kauf günstiger als eine neue ${fuel}heizung. Sie sparen ab dem ersten Jahr.`;
+    if(!d.aktiv)satz=`Dabei nehmen wir an: Deine ${fuel}heizung läuft die nächsten ${lz} Jahre weiter, ohne neue Anschaffung, nur mit Wartung und ${fuel}kosten.`;
+    else if(i.mehrInvest<=0||e.breakEvenSofort)satz=`Die Wärmepumpe ist nach Förderung sogar beim Kauf günstiger als eine neue ${fuel}heizung. Du sparst ab dem ersten Jahr.`;
     else if(e.breakEven)satz=`Beim Kauf kostet die Wärmepumpe ${mehr} mehr als eine neue ${fuel}heizung. Nach ${e.breakEven} Jahren ist dieser Mehrpreis durch die Ersparnis wieder drin.`;
     else satz=`Beim Kauf kostet die Wärmepumpe ${mehr} mehr als eine neue ${fuel}heizung.`;
-    hero.innerHTML=`<div class="wz-legend">Grün = Ihre Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. ${own} eigene Angaben, ${market} marktübliche Annahmen.</div><h3>Ihr Vorteil mit der Wärmepumpe über ${lz} Jahre</h3><div class="wz-big">${benefit}</div>${rechnung}<p style="color:var(--hero-muted);font-size:0.9rem;">${satz} Basierend auf ${own} eigenen Angaben und marktüblichen Richtwerten.</p>`;
+    hero.innerHTML=`<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. ${own} eigene Angaben, ${market} marktübliche Annahmen.</div><h3>Dein Vorteil mit der Wärmepumpe über ${lz} Jahre</h3><div class="wz-big">${benefit}</div>${rechnung}<p style="color:var(--hero-muted);font-size:0.9rem;">${satz} Basierend auf ${own} eigenen Angaben und marktüblichen Richtwerten.</p>`;
   }
 
   window.WZ_AFTER_KV_RENDER=response=>{
