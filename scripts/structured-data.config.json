@@ -1,7 +1,7 @@
 {
   "_hinweis": "Konfiguration fuer scripts/build-structured-data.mjs. Nur SICHTBARER Seiteninhalt wird ausgezeichnet. Fragen und Antworten werden aus dem HTML gelesen, nicht hier gepflegt. datePublished ist der Tag, an dem die Seite erstmals im Repo lag (git --diff-filter=A), und wird eingefroren, damit er nicht wandert. dateModified errechnet das Skript.",
   "organisation": {
-    "name": "HeroWerk GmbH i. G.",
+    "name": "HeroWerk GmbH",
     "url": "https://www.herowerk.de/",
     "logo": "https://www.herowerk.de/herowerk-logo-stacked.png",
     "telefon": "+4951315059750",
