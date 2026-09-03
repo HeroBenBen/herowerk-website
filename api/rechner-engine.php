@@ -293,6 +293,9 @@ function hw_get_catalog(array $sheets): array
         'pufferLiter' => hw_kopf_index($table, 'Puffer Liter', true),
         'pufferGroesser' => hw_kopf_index($table, 'Puffer, groessere Variante', true),
         'pufferOhne' => hw_kopf_index($table, 'ohne Puffer moeglich', true),
+        // T901 (03.09.2026): Kennzeichnung Sonderplanung, Entscheid 01.09.2026 (hoechstens zwei Aussengeraete). Spalte optional:
+        // fehlt sie, wird gewarnt, nicht gefiltert.
+        'sonderplanung' => hw_kopf_index($table, 'Sonderplanung', true),
     ];
     $out = [];
     foreach ($table['rows'] as $rowIndex => $row) {
@@ -319,6 +322,9 @@ function hw_get_catalog(array $sheets): array
             'puffer' => hw_js_string(hw_tabellen_wert($row, $columns['puffer'])),
             'pufferLiter' => $pufferLiterRaw === '' || !is_numeric($pufferLiterRaw) ? null : hw_num($pufferLiterRaw, 0),
             'pufferGroesser' => hw_js_string(hw_tabellen_wert($row, $columns['pufferGroesser'])),
+            'sonderplanung' => $columns['sonderplanung'] < 0
+                ? null
+                : strtolower(trim(hw_js_string(hw_tabellen_wert($row, $columns['sonderplanung'])))) === 'ja',
             'pufferOhne' => hw_tabellen_wert($row, $columns['pufferOhne']) === ''
                 ? null
                 : strtolower(hw_js_string(hw_tabellen_wert($row, $columns['pufferOhne']))) === 'ja',
@@ -678,6 +684,9 @@ function hw_match_catalog_varianten(
 
     $picks = [];
     foreach ($items as $item) {
+        if ($item['sonderplanung'] === true) {
+            continue; // T901: als Sonderplanung gekennzeichnete Zeile ist kein Kandidat des Rechners
+        }
         $leistung = hw_leistung_am_auslegungspunkt($item, $heizsystem, $nat);
         $mindestAnteil = $item['mindestAnteil'];
         $heizstab = $mindestAnteil >= 1 ? 0 : $markenHeizstab;
@@ -720,6 +729,20 @@ function hw_match_catalog(
     return hw_match_catalog_varianten(
         $sheets, $brand, $auslegung, $heizsystem, $nat, $markenHeizstab, $kaskadenToleranz
     )[0] ?? null;
+}
+
+// T901: traegt das Blatt Geraete_Katalog die Spalte Sonderplanung? Ohne sie bleiben Kaskaden ueber zwei Geraete waehlbar, und die
+// Antwort sagt das ausdruecklich (sonderplanung_kennzeichnung 'fehlt' plus Hinweis), statt still zu filtern oder still zu schweigen.
+function hw_sonderplanung_gekennzeichnet(array $sheets): bool
+{
+    $katalog = hw_get_catalog($sheets);
+    return $katalog !== [] && $katalog[0]['sonderplanung'] !== null;
+}
+
+/** @return list<string> */
+function hw_sonderplanung_hinweise(bool $gekennzeichnet): array
+{
+    return $gekennzeichnet ? [] : ['Kennzeichnung Sonderplanung fehlt im Blatt Geräte_Katalog (Spalte "Sonderplanung", Wert ja bei mehr als zwei Außengeräten, Entscheid 01.09.2026): Kaskaden mit drei und mehr Außengeräten bleiben wählbar.'];
 }
 
 function hw_geraete_anzahl(mixed $modell): int
@@ -1018,6 +1041,7 @@ function hw_dimensionierung(array $query, array $sheets): array
             $marken[$brand] = ['deckt' => false, 'varianten' => []];
         }
     }
+    $sonderplanungGekennzeichnet = hw_sonderplanung_gekennzeichnet($sheets);
     return [
         'bedarf' => $auslegung,
         'fuehrung' => $wwLeistung > $heizlast ? 'warmwasser' : 'heizung',
@@ -1025,6 +1049,8 @@ function hw_dimensionierung(array $query, array $sheets): array
         'strom_hinweis' => 'Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.',
         'taktpunkt_grenze_c' => $d['taktpunkt_grenze_c'] ?? null,
         'taktpunkt_grenze_wirksam' => false,
+        'sonderplanung_kennzeichnung' => $sonderplanungGekennzeichnet ? 'vorhanden' : 'fehlt', // T901, Innenfeld, wird vor der Ausgabe entfernt
+        'hinweise' => hw_sonderplanung_hinweise($sonderplanungGekennzeichnet),
         'marken' => $marken,
     ];
 }

@@ -246,6 +246,7 @@ function dimensionierung_(p) {
       : { deckt: false, varianten: [] };
   });
 
+  const sonderplanungGekennzeichnet = sonderplanungGekennzeichnet_();
   return {
     bedarf: auslegung,
     fuehrung: wwLeistung > heizlast ? 'warmwasser' : 'heizung',
@@ -253,6 +254,8 @@ function dimensionierung_(p) {
     strom_hinweis: stromHinweis,
     taktpunkt_grenze_c: d.taktpunkt_grenze_c == null ? null : d.taktpunkt_grenze_c,
     taktpunkt_grenze_wirksam: false,
+    sonderplanung_kennzeichnung: sonderplanungGekennzeichnet ? 'vorhanden' : 'fehlt', // T901, Innenfeld, wird vor der Ausgabe entfernt
+    hinweise: sonderplanungHinweise_(sonderplanungGekennzeichnet),
     marken: marken
   };
 }
@@ -328,6 +331,7 @@ function matchCatalogVarianten_(marke, auslegung, heizsystem, nat, markenHeizsta
   });
   const picks = {};
   items.forEach(function (item) {
+    if (item.sonderplanung === true) return; // T901: als Sonderplanung gekennzeichnete Zeile ist kein Kandidat des Rechners
     const leistung = leistungAmAuslegungspunkt_(item, heizsystem, nat);
     const heizstab = item.mindestAnteil >= 1 ? 0 : markenHeizstab;
     if (leistung < item.mindestAnteil * auslegung || leistung + heizstab < auslegung) return;
@@ -359,6 +363,16 @@ function matchCatalog_(marke, auslegung, heizsystem, nat, markenHeizstab, kaskad
     markenHeizstab,
     kaskadenToleranz
   )[0] || null;
+}
+
+// T901: traegt das Blatt Geraete_Katalog die Spalte Sonderplanung? Ohne sie bleiben Kaskaden ueber zwei Geraete waehlbar, und die
+// Antwort sagt das ausdruecklich (sonderplanung_kennzeichnung 'fehlt' plus Hinweis), statt still zu filtern oder still zu schweigen.
+function sonderplanungGekennzeichnet_() {
+  const katalog = getCatalog_();
+  return katalog.length > 0 && katalog[0].sonderplanung !== null;
+}
+function sonderplanungHinweise_(gekennzeichnet) {
+  return gekennzeichnet ? [] : ['Kennzeichnung Sonderplanung fehlt im Blatt Geräte_Katalog (Spalte "Sonderplanung", Wert ja bei mehr als zwei Außengeräten, Entscheid 01.09.2026): Kaskaden mit drei und mehr Außengeräten bleiben wählbar.'];
 }
 
 function geraeteAnzahl_(modell) {
@@ -1441,7 +1455,7 @@ function tabellenWert_(row, index) {
 
 function getCatalog_() {
   const cache = CacheService.getScriptCache();
-  const cached = cache.get('catalog:v3');
+  const cached = cache.get('catalog:v4');
   if (cached) return JSON.parse(cached);
   const ss = SpreadsheetApp.openById(SHEET_ID);
   const sh = ss.getSheetByName('Geräte_Katalog');
@@ -1466,7 +1480,10 @@ function getCatalog_() {
     puffer: kopfIndex_(table, 'Puffer (', true),
     pufferLiter: kopfIndex_(table, 'Puffer Liter', true),
     pufferGroesser: kopfIndex_(table, 'Puffer, groessere Variante', true),
-    pufferOhne: kopfIndex_(table, 'ohne Puffer moeglich', true)
+    pufferOhne: kopfIndex_(table, 'ohne Puffer moeglich', true),
+    // T901 (03.09.2026): Kennzeichnung Sonderplanung, Entscheid 01.09.2026 (hoechstens zwei Aussengeraete, Zeilen mit drei und vier
+    // Geraeten werden im Blatt als Sonderplanung gekennzeichnet, nicht geloescht). Spalte optional: fehlt sie, wird gewarnt, nicht gefiltert.
+    sonderplanung: kopfIndex_(table, 'Sonderplanung', true)
   };
   const out = [];
   table.rows.forEach(function (row, rowIndex) {
@@ -1492,13 +1509,14 @@ function getCatalog_() {
         ? null
         : num_(tabellenWert_(row, columns.pufferLiter), null),
       pufferGroesser: String(tabellenWert_(row, columns.pufferGroesser)),
+      sonderplanung: columns.sonderplanung < 0 ? null : String(tabellenWert_(row, columns.sonderplanung)).trim().toLowerCase() === 'ja',
       pufferOhne: tabellenWert_(row, columns.pufferOhne) === ''
         ? null
         : String(tabellenWert_(row, columns.pufferOhne)).toLowerCase() === 'ja',
       reihenfolge: rowIndex
     });
   });
-  cache.put('catalog:v3', JSON.stringify(out), CACHE_TTL_SECONDS);
+  cache.put('catalog:v4', JSON.stringify(out), CACHE_TTL_SECONDS);
   return out;
 }
 

@@ -274,6 +274,10 @@ const RECHNER_INNENFELDER = [
     // Eigenanteil in der ProKlima-Variante. Eigene Foerderrechnung, gehoert nicht nach aussen.
     'eigenanteilProklima',
     'vorlaeufig',
+    // T901 (03.09.2026): ob das Katalogblatt die Sonderplanungs-Kennzeichnung traegt, samt Hinweis. Gehoert dem Vertrieb
+    // (Konfigurator), nicht der Website; verraet sonst den Pflegestand des Katalogs.
+    'sonderplanung_kennzeichnung',
+    'hinweise',
 ];
 
 /**

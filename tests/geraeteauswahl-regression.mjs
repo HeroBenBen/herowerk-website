@@ -115,8 +115,9 @@ for (const [index, row] of geraeteKatalogZeilen.entries()) {
 const { sandbox: appsScript, cache } = buildAppsScript(geraeteKatalogZeilen);
 const appsCatalog = appsScript.getCatalog_();
 assert.equal(appsCatalog.length, 22, 'Apps Script verarbeitet alle 22 Katalogzeilen');
-assert(cache.has('catalog:v3'), 'Apps Script schreibt catalog:v3');
+assert(cache.has('catalog:v4'), 'Apps Script schreibt catalog:v4 (T901: Feld sonderplanung)');
 assert.equal(cache.has('catalog:v1'), false, 'Apps Script verwendet catalog:v1 nicht mehr');
+assert.equal(cache.has('catalog:v3'), false, 'Apps Script verwendet catalog:v3 nicht mehr');
 assert.deepEqual(
   JSON.parse(JSON.stringify(appsScript.getCatalogParameters_())),
   { heizstab_wolf: 9, heizstab_vaillant: 8.54 },
