@@ -372,7 +372,7 @@ function sonderplanungGekennzeichnet_() {
   return katalog.length > 0 && katalog[0].sonderplanung !== null;
 }
 function sonderplanungHinweise_(gekennzeichnet) {
-  return gekennzeichnet ? [] : ['Kennzeichnung Sonderplanung fehlt im Blatt Geräte_Katalog (Spalte "Sonderplanung", Wert ja bei mehr als zwei Außengeräten, Entscheid 01.09.2026): Kaskaden mit drei und mehr Außengeräten bleiben wählbar.'];
+  return gekennzeichnet ? [] : ['Kennzeichnung Sonderplanung fehlt im Blatt Geräte_Katalog (Spalte "Auswahl", ja gleich wählbar, sonst Sonderplanung; Entscheid 01.09.2026): Kaskaden mit drei und mehr Außengeräten bleiben wählbar.'];
 }
 
 function geraeteAnzahl_(modell) {
@@ -1481,9 +1481,11 @@ function getCatalog_() {
     pufferLiter: kopfIndex_(table, 'Puffer Liter', true),
     pufferGroesser: kopfIndex_(table, 'Puffer, groessere Variante', true),
     pufferOhne: kopfIndex_(table, 'ohne Puffer moeglich', true),
-    // T901 (03.09.2026): Kennzeichnung Sonderplanung, Entscheid 01.09.2026 (hoechstens zwei Aussengeraete, Zeilen mit drei und vier
-    // Geraeten werden im Blatt als Sonderplanung gekennzeichnet, nicht geloescht). Spalte optional: fehlt sie, wird gewarnt, nicht gefiltert.
-    sonderplanung: kopfIndex_(table, 'Sonderplanung', true)
+    // T901 (03.09.2026): Kennzeichnung der Zwei-Geraete-Grenze, Entscheid 01.09.2026 (hoechstens zwei Aussengeraete). Das Blatt traegt sie
+    // seit dem 01.09.2026 in Spalte AH 'Auswahl (ja gleich vom Konfigurator waehlbar; sonst Sonderplanung ...)': 'ja' = waehlbar, jeder
+    // andere Text = Sonderplanung. Spalte optional: fehlt sie, wird gewarnt, nicht gefiltert. Massgeblich: Vault
+    // 11_Produkt/Auslegungsmechanik_Konfigurator-und-Website_HERO.md.
+    auswahl: kopfIndex_(table, 'Auswahl', true)
   };
   const out = [];
   table.rows.forEach(function (row, rowIndex) {
@@ -1509,7 +1511,7 @@ function getCatalog_() {
         ? null
         : num_(tabellenWert_(row, columns.pufferLiter), null),
       pufferGroesser: String(tabellenWert_(row, columns.pufferGroesser)),
-      sonderplanung: columns.sonderplanung < 0 ? null : String(tabellenWert_(row, columns.sonderplanung)).trim().toLowerCase() === 'ja',
+      sonderplanung: columns.auswahl < 0 ? null : String(tabellenWert_(row, columns.auswahl)).trim().toLowerCase() !== 'ja',
       pufferOhne: tabellenWert_(row, columns.pufferOhne) === ''
         ? null
         : String(tabellenWert_(row, columns.pufferOhne)).toLowerCase() === 'ja',

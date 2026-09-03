@@ -16,7 +16,11 @@ import { geraeteKatalogZeilen } from './fixtures/geraete-katalog-2026-08-14.mjs'
 
 const codeGs = fs.readFileSync('apps-script/rechner-backend/Code.gs', 'utf8');
 const enginePhp = fs.readFileSync('api/rechner-engine.php', 'utf8');
-const SONDERPLANUNG_KOPF = 'Sonderplanung (mehr als zwei Aussengeraete, GF 01.09.2026)';
+// Kennzeichnung wie live seit 01.09.2026 (Geraete_Katalog AG8:AH30, gelesen 03.09.2026): Spalte AG Aussengeraete, Spalte AH Auswahl
+const AUSWAHL_KOPF =
+  'Auswahl (ja gleich vom Konfigurator waehlbar; sonst Sonderplanung. GF-Entscheid 01.09.2026, Entscheid 3)';
+const SONDERPLANUNG_TEXT =
+  'Sonderplanung, mehr als zwei Aussengeraete (GF-Entscheid 01.09.2026, Zwei-Geraete-Grenze markenuebergreifend)';
 const dreier = /^[34]×/;
 
 function kopfzeile(mitSpalte) {
@@ -43,14 +47,17 @@ function kopfzeile(mitSpalte) {
     'Mindest-Leistungsanteil',
   ];
   if (mitSpalte) {
-    while (kopf.length < 26) kopf.push('');
-    kopf.push(SONDERPLANUNG_KOPF);
+    while (kopf.length < 32) kopf.push('');
+    kopf.push(
+      'Aussengeraete (Anzahl je Katalogzeile; Traeger der Zwei-Geraete-Grenze)',
+      AUSWAHL_KOPF
+    );
   }
   return kopf;
 }
 // Vorlage der Kennzeichnung (Spalte AA): 'ja' in den Zeilen 3x VWL 105/8.1, 3x VWL 115/7.1, 4x VWL 115/7.1, sonst leer
 function blatt(mitSpalte) {
-  const breite = mitSpalte ? 27 : 20;
+  const breite = mitSpalte ? 34 : 20;
   const leer = () => Array(breite).fill('');
   const rows = Array.from({ length: 7 }, leer);
   rows[4] = ['heizstab_wolf', 9];
@@ -59,8 +66,9 @@ function blatt(mitSpalte) {
   for (const zeile of geraeteKatalogZeilen) {
     const r = zeile.slice();
     if (mitSpalte) {
-      while (r.length < 26) r.push('');
-      r.push(dreier.test(String(r[1])) ? 'ja' : '');
+      while (r.length < 32) r.push('');
+      const n = Number((String(r[1]).match(/^(\d)×/) || [0, 1])[1]);
+      r.push(n, n > 2 ? SONDERPLANUNG_TEXT : 'ja');
     }
     rows.push(r);
   }
@@ -268,8 +276,16 @@ const SABOTAGEN = [
     kern: 'gs',
     rot: ['Z04', 'Z06'],
     was: 'Apps Script liest die Spalte gar nicht',
-    von: "sonderplanung: kopfIndex_(table, 'Sonderplanung', true)",
-    nach: 'sonderplanung: -1',
+    von: "auswahl: kopfIndex_(table, 'Auswahl', true)",
+    nach: 'auswahl: -1',
+  },
+  {
+    id: 'S06',
+    kern: 'php',
+    rot: ['Z01', 'Z04', 'Z06', 'Z07'],
+    was: 'PHP sucht den alten Kopftext Sonderplanung statt Auswahl',
+    von: "'auswahl' => hw_kopf_index($table, 'Auswahl', true),",
+    nach: "'auswahl' => hw_kopf_index($table, 'Sonderplanung', true),",
   },
 ];
 const rot = process.argv.includes('--rot');
