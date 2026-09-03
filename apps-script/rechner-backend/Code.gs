@@ -313,6 +313,18 @@ function leistungAmAuslegungspunkt_(item, heizsystem, nat) {
     ? grenzeInterp_(item.leistungW55, item.leistungW55a10, nat)
     : grenzeInterp_(item.leistungW35, item.leistungW35a10, nat);
 }
+// ==========================================================================================================
+// AUSLEGUNGSMECHANIK, MASSGEBLICHE BESCHREIBUNG (Mensch und Maschine, Stand 03.09.2026):
+//   Vault 11_Produkt/Auslegungsmechanik_Konfigurator-und-Website_HERO.md
+// Entscheide: 12.08.2026 (Warmwasser als Fuehrungsgroesse, Kaskaden-Deckungsgrad), 14.08.2026 (Auswahlregel: kleinste
+// Leistung ab Mindest-Leistungsanteil, Kaskade je Baureihe), 16.08.2026 (Obergrenze anzeigen statt filtern),
+// 17.08.2026 (Kennzahlen in den Konfigurator, Website zeigt nur den Geraetetyp), 01.09.2026 (Zwei-Geraete-Grenze).
+// Stellraeder: HeroWerk_Website_Daten, Blatt Dimensionierung B73 (sollband_unten), B74 (sollband_oben), B75
+// (kaskaden_toleranz_kw); Marken-Heizstab Geraete_Katalog B5:B6; Kennzeichnung Zwei-Geraete-Grenze Spalte AH.
+// Zwillinge: api/rechner-engine.php hw_match_catalog_varianten (PHP, live) und herowerk-konfigurator Code.js
+// matchCatalogVarianten_. Wer die Regel aendert: zuerst der Entscheid, dann die Vault-Datei, dann ALLE Kerne
+// zeichengleich, dann die Erklaerzellen der Blaetter.
+// ==========================================================================================================
 function matchCatalogVarianten_(marke, auslegung, heizsystem, nat, markenHeizstab, kaskadenToleranz) {
   const grenzeOf = function (item) {
     return heizsystem === 'heizkoerper'

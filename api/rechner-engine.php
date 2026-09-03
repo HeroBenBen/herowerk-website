@@ -655,6 +655,18 @@ function hw_warmwasser_leistung(array $d, int $personen, int $duschen, int $wann
     return $personenFaktor * $zapflast * 50 / ($temperatur - 10) + hw_get_num($d, 'ww_sockel_kw', 0.70);
 }
 
+// ==========================================================================================================
+// AUSLEGUNGSMECHANIK, MASSGEBLICHE BESCHREIBUNG (Mensch und Maschine, Stand 03.09.2026):
+//   Vault 11_Produkt/Auslegungsmechanik_Konfigurator-und-Website_HERO.md
+// Entscheide: 12.08.2026 (Warmwasser als Fuehrungsgroesse, Kaskaden-Deckungsgrad), 14.08.2026 (Auswahlregel: kleinste
+// Leistung ab Mindest-Leistungsanteil, Kaskade je Baureihe), 16.08.2026 (Obergrenze anzeigen statt filtern),
+// 17.08.2026 (Kennzahlen in den Konfigurator, Website zeigt nur den Geraetetyp), 01.09.2026 (Zwei-Geraete-Grenze).
+// Stellraeder: HeroWerk_Website_Daten, Blatt Dimensionierung B73 (sollband_unten), B74 (sollband_oben), B75
+// (kaskaden_toleranz_kw); Marken-Heizstab Geraete_Katalog B5:B6; Kennzeichnung Zwei-Geraete-Grenze Spalte AH.
+// Zwillinge: apps-script/rechner-backend/Code.gs matchCatalogVarianten_ und herowerk-konfigurator Code.js
+// matchCatalogVarianten_. Wer die Regel aendert: zuerst der Entscheid, dann die Vault-Datei, dann ALLE Kerne
+// zeichengleich, dann die Erklaerzellen der Blaetter.
+// ==========================================================================================================
 /** @return list<array<string,mixed>> */
 function hw_match_catalog_varianten(
     array $sheets,
