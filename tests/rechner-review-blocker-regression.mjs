@@ -554,7 +554,11 @@ assert.equal(
   (dimensionierungHtml.match(/class="wizard-progress-bar(?: active)?"/g) || []).length,
   15
 );
-assert.match(siteJs, /stepNum === 13 && wizData\.duschen === 0/);
+// Seit dem GF-Entscheid vom 09.09.2026 steht die Verbrauchsfrage an Schritt 8 statt als
+// letzte, damit die Abgasrohr-Frage auf dem Flaechenweg entfallen kann. Die Schritte 8
+// bis 14 sind dadurch auf 9 bis 15 gerueckt: der Duschen-Sprung sitzt jetzt an 14.
+assert.match(siteJs, /stepNum === 14 && wizData\.duschen === 0/);
+assert.match(siteJs, /stepNum === 9 && !wizData\.verbrauchKnown/);
 assert.doesNotMatch(anfrageHtml, /1995-2009/);
 assert.match(anfrageHtml, /1995-2010/);
 assert.match(phpEndpoint, /rechner_fail\(500, 'calculator_temporarily_unavailable'\);/);

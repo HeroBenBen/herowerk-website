@@ -151,6 +151,10 @@ const wizData = {
   baujahrModus: 'jahr',
   baujahrJahr: 1960,
   sanierung: 'nein',
+  dach: 1,
+  fenster: 1,
+  wand: 1,
+  boden: 1,
   flaeche: 140,
   heizung: 'gas',
   andereHeizung: 'fernwaerme',
@@ -467,7 +471,10 @@ function checkPlz(input) {
 // Option selection + Auto-Advance
 // Steps that auto-advance on click (no input fields needed):
 // Die Verbrauchsfrage bleibt manuell, weil sie den Schieber ein- oder ausblendet.
-const autoAdvanceSteps = [2, 3, 6, 7, 8, 9, 10, 13, 14];
+// Schritt 8 ist seit dem 09.09.2026 die Verbrauchsfrage und bleibt manuell, weil sie den
+// Schieber ein- oder ausblendet. Der letzte Schritt blaettert nicht weiter, er rechnet.
+const autoAdvanceSteps = [2, 3, 6, 7, 9, 10, 11, 14, 15];
+const LETZTER_SCHRITT = 15;
 
 const wzSanierungErklaerungen = {
   wzDach: [
@@ -587,7 +594,9 @@ document.querySelectorAll('.wizard-options').forEach((group) => {
       if (stepEl) {
         const stepNum = parseInt(stepEl.dataset.step);
         if (autoAdvanceSteps.includes(stepNum)) {
-          setTimeout(() => wizNext(), 250); // Short delay for visual feedback
+          // Kurze Verzoegerung fuer das sichtbare Feedback. Am letzten Schritt gibt es kein
+          // Weiter mehr, dort loest dieselbe Geste die Rechnung aus.
+          setTimeout(() => (stepNum === LETZTER_SCHRITT ? wizCalculate() : wizNext()), 250);
         }
       }
     });
@@ -806,11 +815,21 @@ function wizNext() {
         : currentStep.querySelector('#wzBaujahr .selected')?.dataset.value || '';
   }
   if (stepNum === 4) {
-    // Teil A ist blockiert. Bis dahin verdichten wir die vier sichtbaren Bauteilangaben nur für
-    // den alten Flächenpfad zu dessen bestehender Sanierungsstufe; keine bauteilweise Rechnung.
+    // Die vier Bauteilangaben gehen seit dem 09.09.2026 EINZELN an den Rechenkern, der sie
+    // bauteilweise nach dem Verfahren des Bundesverbands Wärmepumpe verrechnet. Bis dahin
+    // wurden sie hier addiert und auf drei Sanierungsstufen verdichtet, weil Teil A blockiert
+    // war; damit sind vier Antworten zu einer geworden.
+    // Die Schieberegler liefern 0 bis 2, der Rechenkern erwartet die Stufen 1 bis 3.
     const stufen = ['wzDach', 'wzFenster', 'wzWand', 'wzBoden'].map((id) =>
       parseInt(document.getElementById(id)?.value || '0', 10)
     );
+    wizData.dach = stufen[0] + 1;
+    wizData.fenster = stufen[1] + 1;
+    wizData.wand = stufen[2] + 1;
+    wizData.boden = stufen[3] + 1;
+    // Die verdichtete Stufe bleibt und ist KEINE Übergangslösung mehr: sie bedient allein die
+    // Endenergie-Richtwerte nach VDI 3807, die es nur in drei Sanierungsstufen gibt und die seit
+    // dem Entscheid vom 13.08.2026 ausschließlich Stromschätzung und Kostenvergleich tragen.
     const summe = stufen.reduce((sum, wert) => sum + wert, 0);
     wizData.sanierung = summe === 0 ? 'nein' : summe >= 6 ? 'umfassend' : 'teilweise';
   }
@@ -823,18 +842,30 @@ function wizNext() {
     wizData.andereHeizung = currentStep.querySelector('.selected')?.dataset.value || 'fernwaerme';
     wzSyncUnits();
   }
-  if (stepNum === 8)
-    wizData.abgasrohr = currentStep.querySelector('.selected')?.dataset.value || 'unklar';
+  // Die Verbrauchsfrage stand bis zum 09.09.2026 als LETZTE im Fragebogen, und ihre Antwort
+  // wurde erst in wizCalculate() gelesen. Damit stand sie hinter den Bestandsfragen, die nur
+  // dann etwas tragen, wenn der Verbrauch bekannt ist: der Fragebogen konnte sie deshalb gar
+  // nicht ueberspringen. Seit dem GF-Entscheid vom 09.09.2026 steht sie an Schritt 8, direkt
+  // hinter der Heizungsfrage, weil die Einheit des Schiebers vom Energietraeger abhaengt.
+  if (stepNum === 8) {
+    const verbSel = currentStep.querySelector('.wizard-options .selected');
+    wizData.verbrauchKnown = verbSel?.dataset.value === 'known';
+    wizData.verbrauch = wizData.verbrauchKnown
+      ? parseInt(document.getElementById('wzVerbrauchSlider').value) || 0
+      : 0;
+  }
   if (stepNum === 9)
-    wizData.heizungsalter = currentStep.querySelector('.selected')?.dataset.value || 'unklar';
+    wizData.abgasrohr = currentStep.querySelector('.selected')?.dataset.value || 'unklar';
   if (stepNum === 10)
-    wizData.heizsystem = currentStep.querySelector('.selected')?.dataset.value || 'heizkoerper';
+    wizData.heizungsalter = currentStep.querySelector('.selected')?.dataset.value || 'unklar';
   if (stepNum === 11)
+    wizData.heizsystem = currentStep.querySelector('.selected')?.dataset.value || 'heizkoerper';
+  if (stepNum === 12)
     wizData.warmwasser =
       currentStep.querySelector('#wzWarmwasser .selected')?.dataset.value || 'ja';
-  if (stepNum === 13)
-    wizData.duschgroesse = currentStep.querySelector('.selected')?.dataset.value || '1';
   if (stepNum === 14)
+    wizData.duschgroesse = currentStep.querySelector('.selected')?.dataset.value || '1';
+  if (stepNum === 15)
     wizData.wannengroesse = currentStep.querySelector('.selected')?.dataset.value || '1';
 
   // Next step
@@ -866,10 +897,20 @@ function wizBack() {
 
 function wizStepIsSkipped(stepNum) {
   if (stepNum === 7) return wizData.heizung !== 'sonst';
-  if ((stepNum === 8 || stepNum === 9) && ['nacht', 'sonst'].includes(wizData.heizung)) return true;
-  if ([12, 13, 14].includes(stepNum) && wizData.warmwasser !== 'ja') return true;
-  if (stepNum === 13 && wizData.duschen === 0) return true;
-  return stepNum === 14 && wizData.wannen === 0;
+  // KEINE FRAGE OHNE WIRKUNG AUF DAS ERGEBNIS, GF-Entscheid vom 09.09.2026.
+  // Das Abgasrohr hat genau einen Abnehmer, den Nutzwaermefaktor, und der wirkt nur auf dem
+  // Verbrauchsweg. Kennt der Kunde seinen Jahresverbrauch nicht, bewegt die Frage nichts und
+  // wird nicht gestellt. Sie kann hier nur deshalb entfallen, weil die Verbrauchsfrage seit
+  // demselben Entscheid VOR ihr steht; vorher war sie die letzte des Fragebogens.
+  // Heizungsalter und Energietraeger bleiben ausdruecklich stehen: sie tragen zwar auch nicht
+  // die Auslegung, aber die Foerderstrecke und die Uebergabe an den Vertrieb. Wer sie hier
+  // mitnimmt, zerstoert den Klimageschwindigkeits-Bonus.
+  if (stepNum === 9 && !wizData.verbrauchKnown) return true;
+  if ((stepNum === 9 || stepNum === 10) && ['nacht', 'sonst'].includes(wizData.heizung))
+    return true;
+  if ([13, 14, 15].includes(stepNum) && wizData.warmwasser !== 'ja') return true;
+  if (stepNum === 14 && wizData.duschen === 0) return true;
+  return stepNum === 15 && wizData.wannen === 0;
 }
 
 function updateWizProgress() {
@@ -890,18 +931,22 @@ function wizScrollToTop(id = 'wizCard') {
 }
 
 async function wizCalculate() {
-  const step15 = document.querySelector('.wizard-step[data-step="15"]');
-  const verbSel = step15.querySelector('.wizard-options .selected');
+  // Die Verbrauchsfrage steht seit dem 09.09.2026 an Schritt 8 und wird dort auch gelesen.
+  // Hier bleibt nur die Rueckversicherung, dass der Fragebogen nicht ohne sie durchlaufen wurde.
+  const verbrauchsSchritt = document.querySelector('.wizard-step[data-step="8"]');
+  const verbSel = verbrauchsSchritt.querySelector('.wizard-options .selected');
   if (!verbSel) {
-    step15.querySelector('.wizard-options').style.outline = '2px solid #E53935';
-    setTimeout(() => (step15.querySelector('.wizard-options').style.outline = 'none'), 2000);
+    verbrauchsSchritt.classList.add('active');
+    document.querySelector('.wizard-step[data-step="15"]').classList.remove('active');
+    wizStep = 8;
+    updateWizProgress();
+    verbrauchsSchritt.querySelector('.wizard-options').style.outline = '2px solid #E53935';
+    setTimeout(
+      () => (verbrauchsSchritt.querySelector('.wizard-options').style.outline = 'none'),
+      2000
+    );
     return;
   }
-
-  wizData.verbrauchKnown = verbSel.dataset.value === 'known';
-  wizData.verbrauch = wizData.verbrauchKnown
-    ? parseInt(document.getElementById('wzVerbrauchSlider').value) || 0
-    : 0;
 
   // Lead-Prefill für die abgespeckte Leadstrecke (/anfrage) stagen - überlebt auch den
   // Umweg über /foerderung; wird einmalig auf /anfrage konsumiert.
@@ -943,6 +988,10 @@ async function wizCalculate() {
     baujahr: wizData.baujahr,
     gebaeude: wizData.gebaeude,
     sanierung: wizData.sanierung,
+    dach: String(wizData.dach),
+    fenster: String(wizData.fenster),
+    wand: String(wizData.wand),
+    boden: String(wizData.boden),
     warmwasser: wizData.warmwasser,
     heizsystem: wizData.heizsystem,
     verbrauchKnown: wizData.verbrauchKnown ? 'known' : 'unknown',

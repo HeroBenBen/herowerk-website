@@ -92,10 +92,18 @@ const classificationAnchors = [
   [1983, '1979-1983'],
   [1984, '1984-1994'],
   [1994, '1984-1994'],
-  [1995, '1995-2010'],
-  [2010, '1995-2010'],
-  [2011, 'nach2010'],
-  [2026, 'nach2010'],
+  // Seit dem GF-Entscheid vom 09.09.2026 folgen auch die Klassen nach 1994 dem Bundesverband.
+  // Die Annahme, seine Tabelle ende bei 1994, ist am selben Tag Jahr fuer Jahr am Werkzeug
+  // widerlegt worden: sie hat die Schnitte 2001, 2009 und 2015. Belege in
+  // 11_Produkt/reference_bwp_bauteilweise_basiswerte_HERO.md.
+  [1995, '1995-2001'],
+  [2001, '1995-2001'],
+  [2002, '2002-2009'],
+  [2009, '2002-2009'],
+  [2010, '2010-2015'],
+  [2015, '2010-2015'],
+  [2016, 'ab2016'],
+  [2026, 'ab2016'],
 ];
 
 for (const [year, expected] of classificationAnchors) {
@@ -113,19 +121,33 @@ assert.equal(phpClassification.status, 0, phpClassification.stderr);
 assert.deepEqual(
   JSON.parse(phpClassification.stdout),
   classificationAnchors.map(([, expected]) => expected),
-  'PHP: Grenzen der neun Baujahresklassen'
+  'PHP: Grenzen der elf Baujahresklassen'
 );
 
 // Kernparität allein beweist keine fachliche Richtigkeit: erst jeden Kern gegen
 // feste Wahrheitswerte prüfen, danach zusätzlich beide Implementierungen abgleichen.
+//
+// DIE WAHRHEITSWERTE SIND AM 09.09.2026 NEU HERGELEITET, nicht vom geänderten Kern abgelesen.
+// Bis dahin trug der Flächenweg 15,0 / 11,7 / 8,3 kW aus Jahresbedarf geteilt durch 1.800
+// Vollbenutzungsstunden; dieser Weg ist aufgehoben (Entscheid 13.08.2026, seine Kennwerte sind
+// Endenergie nach VDI 3807). Seit dem Bau vom 09.09.2026 rechnet der Flächenweg bauteilweise
+// nach dem Bundesverband (Entscheid 12.08.2026), und die vier Bauteilangaben treiben ihn,
+// nicht mehr die verdichtete Sanierungsstufe.
+//
+// Herleitung je Fall, gemessen am Werkzeug des Verbands bei minus 11,1 Grad, also 31,1 Kelvin,
+// und hier auf die 30 Kelvin des Prüfstands umgerechnet (Rückfall-Normaußentemperatur minus 10):
+//   unsaniert            136 W/m² × 30/31,1 × 150 m² / 1000 = 19,68  ->  19,7 kW
+//   Dach+Fenster üblich  109 W/m² × 30/31,1 × 150 m² / 1000 = 15,77  ->  15,8 kW
+//   alle vier tiefgreif.  39 W/m² × 30/31,1 × 150 m² / 1000 =  5,64  ->   5,6 kW
+// Die Einzelwerte stehen in 11_Produkt/reference_bwp_bauteilweise_basiswerte_HERO.md.
 const truthAnchors = [
-  ['nein', 15.0],
-  ['teilweise', 11.7],
-  ['umfassend', 8.3],
+  ['nein', { dach: 1, fenster: 1, wand: 1, boden: 1 }, 19.7],
+  ['teilweise', { dach: 2, fenster: 2, wand: 1, boden: 1 }, 15.8],
+  ['umfassend', { dach: 3, fenster: 3, wand: 3, boden: 3 }, 5.6],
 ];
 
-for (const [sanierung, expected] of truthAnchors) {
-  const query = { ...base, sanierung };
+for (const [sanierung, bauteile, expected] of truthAnchors) {
+  const query = { ...base, sanierung, ...bauteile };
   const googleResult = JSON.parse(JSON.stringify(appsScript.dimensionierung_(query)));
   const php = spawnSync('php', ['-r', phpRunner], {
     input: JSON.stringify(query),
@@ -139,16 +161,26 @@ for (const [sanierung, expected] of truthAnchors) {
   assert.deepEqual(googleResult, phpResult, `Kernparität: Sanierung ${sanierung}`);
 }
 
-const numericYearQuery = { ...base, baujahr: '1960', sanierung: 'teilweise' };
+// Ein frei eingegebenes Baujahr muss denselben Wert liefern wie seine Klasse: 1960 liegt in
+// 1958-1968, also dieselben 15,8 kW wie der zweite Wahrheitswert oben.
+const numericYearQuery = {
+  ...base,
+  baujahr: '1960',
+  sanierung: 'teilweise',
+  dach: 2,
+  fenster: 2,
+  wand: 1,
+  boden: 1,
+};
 const googleNumericYear = JSON.parse(JSON.stringify(appsScript.dimensionierung_(numericYearQuery)));
 const phpNumericYear = spawnSync('php', ['-r', phpRunner], {
   input: JSON.stringify(numericYearQuery),
   encoding: 'utf8',
 });
 assert.equal(phpNumericYear.status, 0, phpNumericYear.stderr);
-assert.equal(JSON.parse(phpNumericYear.stdout).bedarf, 11.7, 'PHP: exaktes Baujahr 1960');
-assert.equal(googleNumericYear.bedarf, 11.7, 'Apps Script: exaktes Baujahr 1960');
+assert.equal(JSON.parse(phpNumericYear.stdout).bedarf, 15.8, 'PHP: exaktes Baujahr 1960');
+assert.equal(googleNumericYear.bedarf, 15.8, 'Apps Script: exaktes Baujahr 1960');
 
 console.log(
-  'PASS Baujahr 1800-2026 und Flächenweg 1960: unsaniert 15,0 kW, teilweise 11,7 kW, umfassend 8,3 kW'
+  'PASS Baujahr 1800-2026 und bauteilweiser Flächenweg 1960: unsaniert 19,7 kW, Dach und Fenster üblich 15,8 kW, alles tiefgreifend 5,6 kW'
 );

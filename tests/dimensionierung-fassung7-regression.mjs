@@ -10,7 +10,7 @@ const iconParity = spawnSync('node', ['scripts/sync-dimensionierung-icons.mjs', 
   encoding: 'utf8',
 });
 assert.equal(iconParity.status, 0, iconParity.stderr || iconParity.stdout);
-assert.match(iconParity.stdout, /26 von 45 Kartensymbolen und 2 Zählersymbole zeichengleich/);
+assert.match(iconParity.stdout, /28 von 47 Kartensymbolen und 2 Zählersymbole zeichengleich/);
 
 assert.match(html, /id="wzBaujahrModus"[\s\S]*?data-mode="jahr"[\s\S]*?data-mode="spanne"/);
 assert.match(html, /id="wzBaujahrEingabe"[^>]*value="1960"[^>]*min="1800"[^>]*max="2026"/);
@@ -73,9 +73,13 @@ const subtitles = [
   'Erste Dämmungen, noch ohne Vorschrift',
   'Erste Dämmvorschrift',
   'Dämmvorschrift nachgeschärft',
-  'Wärmeschutz deutlich verschärft',
+  // Seit dem GF-Entscheid vom 09.09.2026 elf Karten statt neun: die beiden eigenen Klassen nach
+  // 1994 sind durch die vier Klassen des Bundesverbands ersetzt (Schnitte 2001, 2009, 2015).
+  'Wärmeschutzverordnung 1995',
+  'Erste Energieeinsparverordnung',
+  'Verschärfte Energieeinsparverordnung',
   'Heutiger Dämmstandard',
 ];
 for (const text of subtitles) assert.ok(html.includes(text), `Baujahresuntertitel fehlt: ${text}`);
 
-console.log('PASS Fassung 7: Erklärtexte, Symbole, Zähler, Baujahre und Reihenmittelhaus');
+console.log('PASS Fassung 8: Erklärtexte, Symbole, Zähler, Baujahre und Reihenmittelhaus');
