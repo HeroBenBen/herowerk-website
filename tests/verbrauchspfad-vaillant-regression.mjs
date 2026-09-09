@@ -195,12 +195,27 @@ const flaeche = {
   personen: 2,
   baujahr: '1958-1968',
 };
-for (const [sanierung, soll] of [
-  ['nein', 15.0],
-  ['teilweise', 11.7],
-  ['umfassend', 8.3],
+// WOFUER DIESE PRUEFUNG DA IST, unveraendert: der Vaillant-Angleich vom 19.08.2026 gilt allein
+// dem VERBRAUCHSPFAD und darf den Flaechenpfad nicht mitverschieben. Das gilt weiter.
+//
+// WAS SICH GEAENDERT HAT: die Sollwerte 15,0 / 11,7 / 8,3 kW stammten aus dem alten Rechenweg
+// ueber Jahresbedarf geteilt durch 1.800 Vollbenutzungsstunden. Der ist am 09.09.2026 abgeloest
+// worden, weil seine Kennwerte Endenergie nach VDI 3807 sind (Entscheid 13.08.2026); der
+// Flaechenpfad rechnet seitdem bauteilweise nach dem Bundesverband (Entscheid 12.08.2026), und
+// die vier Bauteilangaben treiben ihn statt der verdichteten Sanierungsstufe.
+//
+// Die neuen Sollwerte sind aus der Messung hergeleitet, nicht vom geaenderten Kern abgelesen.
+// Gemessen bei minus 11,1 Grad, dieser Pruefstand rechnet bei minus 11, also 31 Kelvin:
+//   unsaniert            136 W/m² × 31/31,1 × 150 m² / 1000 = 20,33  ->  20,3 kW
+//   Dach+Fenster ueblich 109 W/m² × 31/31,1 × 150 m² / 1000 = 16,30  ->  16,3 kW
+//   alle vier tiefgreif.  39 W/m² × 31/31,1 × 150 m² / 1000 =  5,83  ->   5,8 kW
+// Einzelwerte in 11_Produkt/reference_bwp_bauteilweise_basiswerte_HERO.md.
+for (const [sanierung, bauteile, soll] of [
+  ['nein', { dach: 1, fenster: 1, wand: 1, boden: 1 }, 20.3],
+  ['teilweise', { dach: 2, fenster: 2, wand: 1, boden: 1 }, 16.3],
+  ['umfassend', { dach: 3, fenster: 3, wand: 3, boden: 3 }, 5.8],
 ]) {
-  const q = { ...flaeche, sanierung };
+  const q = { ...flaeche, sanierung, ...bauteile };
   assert.equal(php(q).bedarf, soll, `Flaechenpfad 1960 ${sanierung} muss ${soll} kW bleiben`);
   assert.equal(
     gs(q).bedarf,
@@ -212,5 +227,5 @@ for (const [sanierung, soll] of [
 console.log(
   `PASS Verbrauchspfad an Vaillant angeglichen: 12 Szenarien, groesste Abweichung ` +
     `${groessteAbweichung.toFixed(2)} kW; 4 Gegenproben ohne Wirkungsgrad- und Personenabhaengigkeit; ` +
-    `Flaechenpfad 1960 unveraendert bei 15,0 / 11,7 / 8,3 kW.`
+    `Flaechenpfad 1960 bauteilweise bei 20,3 / 16,3 / 5,8 kW und vom Verbrauchspfad unberuehrt.`
 );

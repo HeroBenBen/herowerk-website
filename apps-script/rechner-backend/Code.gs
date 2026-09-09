@@ -91,6 +91,77 @@ function health_() {
   return { status: 'ok', service: SERVICE_NAME, ready: !!(data.foerder && data.dimensionierung) };
 }
 
+// BAUTEILWEISES VERFAHREN DES BUNDESVERBANDS WAERMEPUMPE, Bauwerte in W/(m²·K).
+// Wortgleiche Fassung der PHP-Seite in api/rechner-engine.php (hw_bwp_basis, hw_bwp_ersparnis,
+// hw_bwp_klasse, hw_flaechen_heizlast). Wer hier etwas aendert, aendert es dort mit, sonst
+// rechnet die Website je nach Weg anders.
+// Ratifiziert 12.08.2026, vollstaendig vermessen am 09.09.2026; Messreihe und Gegenprobe in
+// 11_Produkt/reference_bwp_bauteilweise_basiswerte_HERO.md.
+// Der Wert des Verbands ist ortsgebunden und linear in (20 Grad minus Normaussentemperatur);
+// die im Werkzeug ANGEZEIGTE Standortkorrektur in Prozent wird nicht angewandt.
+// Elf Klassen, nicht neun: die Tabelle endet nicht bei 1994, sie hat die Schnitte 2001, 2009, 2015.
+// Die Reihe ist nicht monoton, weil je Klasse ein anderes Referenzgebaeude dahintersteht.
+// Uebernommen wie gemessen, nicht geglaettet.
+function bwpBasis_() {
+  return {
+    'bis1918': 4.9196, '1919-1948': 3.6977, '1949-1957': 4.6624,
+    '1958-1968': 4.3730, '1969-1978': 3.1511, '1979-1983': 1.9936,
+    '1984-1994': 2.4116, '1995-2001': 1.8006, '2002-2009': 1.3826,
+    '2010-2015': 1.5113, 'ab2016': 1.2219
+  };
+}
+
+// Ersparnis je Bauteil und Stufe in W/(m²·K), Reihenfolge [ueblich, tiefgreifend].
+// Die Haustuer wird nicht abgefragt. Wo das Referenzgebaeude Bodenplatte UND Kellerdecke fuehrt,
+// sind beide addiert, weil die Fragestrecke dazu nur eine Frage stellt.
+function bwpErsparnis_() {
+  return {
+    'bis1918':   { dach: [0.5466, 0.6752], fenster: [0.1929, 0.3215], wand: [2.4759, 2.7010], boden: [0.1608, 0.1929] },
+    '1919-1948': { dach: [0.6752, 0.8682], fenster: [0.2572, 0.3215], wand: [1.4148, 1.5113], boden: [0.0643, 0.0643] },
+    '1949-1957': { dach: [1.1254, 1.4148], fenster: [0.2572, 0.3215], wand: [1.3183, 1.6720], boden: [0.1608, 0.1608] },
+    '1958-1968': { dach: [0.5466, 0.9003], fenster: [0.3215, 0.4502], wand: [1.4148, 1.5434], boden: [0.2251, 0.2251] },
+    '1969-1978': { dach: [0.3215, 0.4180], fenster: [0.2894, 0.3859], wand: [0.9968, 1.1254], boden: [0.1929, 0.2251] },
+    '1979-1983': { dach: [0.0322, 0.1608], fenster: [0.3537, 0.4180], wand: [0.5466, 0.6109], boden: [0.0322, 0.0322] },
+    '1984-1994': { dach: [0.0000, 0.2251], fenster: [0.3859, 0.4823], wand: [0.4823, 0.7074], boden: [0.0643, 0.0643] },
+    '1995-2001': { dach: [0.0000, 0.1929], fenster: [0.1608, 0.2894], wand: [0.1929, 0.2251], boden: [0.0322, 0.0643] },
+    '2002-2009': { dach: [0.0000, 0.0643], fenster: [0.0000, 0.0965], wand: [0.2251, 0.2572], boden: [0.0000, 0.0000] },
+    '2010-2015': { dach: [0.0322, 0.0643], fenster: [0.0000, 0.1286], wand: [0.1286, 0.2251], boden: [0.0000, 0.0322] },
+    'ab2016':    { dach: [0.0000, 0.0322], fenster: [0.0322, 0.0643], wand: [0.0322, 0.0643], boden: [0.0000, 0.0000] }
+  };
+}
+
+// Vertraeglichkeit mit den beiden abgeloesten Karten. Seit dem GF-Entscheid vom 09.09.2026
+// fragt die Fragestrecke elf Klassen, alle vom Bundesverband. Die frueheren Karten kamen von
+// uns und schnitten quer durch drei Klassen der Quelle; 1995-2010 umspannte 56, 43 und 47 Watt
+// je Quadratmeter, also 30 Prozent. Die Abbildung bleibt, weil die Werte weiter hereinkommen:
+// aus der Lead-Strecke und aus zwischengespeicherten Sitzungen. Sie tragen den unguenstigsten
+// Wert ihrer Spanne, weil eine zu klein ausgelegte Waermepumpe teurer ist als eine zu grosse.
+function bwpKlasse_(klasse) {
+  const abgeloest = { '1995-2010': '1995-2001', 'nach2010': '2010-2015' };
+  return abgeloest[klasse] || klasse;
+}
+
+// Der Flaechenweg: Gebaeudeheizlast in Kilowatt aus Baualtersklasse, vier Bauteilangaben,
+// Wohnflaeche und Normaussentemperatur. Der frueher benutzte Weg ueber Jahresbedarf geteilt
+// durch 1.800 Vollbenutzungsstunden ist aufgehoben (Entscheid 13.08.2026): seine Kennwerte sind
+// Endenergie nach VDI 3807 und tragen nur noch die Geldseite.
+function flaechenHeizlast_(klasse, bauteile, flaeche, nat, gebaeudeFaktor) {
+  const key = bwpKlasse_(klasse);
+  const basis = bwpBasis_()[key] !== undefined ? bwpBasis_()[key] : bwpBasis_()['1958-1968'];
+  const tabelle = bwpErsparnis_()[key] || {};
+  let ersparnis = 0;
+  ['dach', 'fenster', 'wand', 'boden'].forEach(function (teil) {
+    const stufe = parseInt(bauteile[teil], 10) || 1;
+    if (stufe < 2 || stufe > 3 || !tabelle[teil]) return;
+    // Klemme bei null: die Quelle liefert stellenweise eine NEGATIVE Ersparnis, weil ihr
+    // Referenzgebaeude schon besser gedaemmt ist als die angebotene uebliche Sanierung
+    // (gemessen 1998 Dach 56 gegen 58, 2002 bis 2009 Dach 43 gegen 46).
+    ersparnis += Math.max(0, tabelle[teil][stufe - 2]);
+  });
+  const uSpez = Math.max(0, basis - ersparnis);
+  return uSpez * (20 - nat) * flaeche * gebaeudeFaktor / 1000;
+}
+
 function baujahrKlasse_(value) {
   const raw = String(value == null ? '' : value).trim();
   if (/^\d{4}$/.test(raw)) {
@@ -103,11 +174,18 @@ function baujahrKlasse_(value) {
       if (year <= 1978) return '1969-1978';
       if (year <= 1983) return '1979-1983';
       if (year <= 1994) return '1984-1994';
-      if (year <= 2010) return '1995-2010';
-      return 'nach2010';
+      // Seit dem GF-Entscheid vom 09.09.2026 folgen auch die Klassen nach 1994 dem
+      // Bundesverband. Die Annahme, seine Tabelle ende bei 1994, ist am selben Tag Jahr fuer
+      // Jahr widerlegt worden: sie hat die Schnitte 2001, 2009 und 2015.
+      if (year <= 2001) return '1995-2001';
+      if (year <= 2009) return '2002-2009';
+      if (year <= 2015) return '2010-2015';
+      return 'ab2016';
     }
   }
-  const classes = ['bis1918', '1919-1948', '1949-1957', '1958-1968', '1969-1978', '1979-1983', '1984-1994', '1995-2010', 'nach2010'];
+  // Die beiden abgeloesten Karten bleiben gueltige Eingaben: die Lead-Strecke und
+  // zwischengespeicherte Sitzungen schicken sie weiter. bwpKlasse_() bildet sie ab.
+  const classes = ['bis1918', '1919-1948', '1949-1957', '1958-1968', '1969-1978', '1979-1983', '1984-1994', '1995-2001', '2002-2009', '2010-2015', 'ab2016', '1995-2010', 'nach2010'];
   return classes.indexOf(raw) >= 0 ? raw : '1978-1994';
 }
 
@@ -140,13 +218,19 @@ function dimensionierung_(p) {
   // spannen denselben Bereich auf (5.000 bis 120.000 kWh, also 500 bis 12.000 Liter bzw. Kubikmeter).
   if (verbrauch > 0) verbrauch = Math.min(getNum_(d, 'verbrauch_max_kwh', 120000), Math.max(getNum_(d, 'verbrauch_min_kwh', 5000), verbrauch));
 
-  // ÜBERGANGSLÖSUNG: Die neun Baujahresklassen werden bis zum Bau von Teil A des zweiten
-  // Bauauftrags auf die vier alten Klassen des weiterhin blockierten Flächenwegs abgebildet.
-  // Mit Teil A entfällt dieses Mapping vollständig.
+  // AUFGEHOBEN AM 09.09.2026: dies war bis zum Bau von Teil A eine ÜBERGANGSLÖSUNG, die neun
+  // Baujahresklassen auf vier abbildete und damit die Heizlast an vier Klassen aufhängte, obwohl
+  // der Kunde neun beantwortet. Das ist behoben: die HEIZLAST kommt jetzt aus flaechenHeizlast_()
+  // und kennt elf Klassen.
+  // Diese Abbildung bleibt und ist KEINE Übergangslösung mehr: sie bedient allein die
+  // Endenergie-Richtwerte nach VDI 3807, die es nur in vier Klassen gibt und die nach dem
+  // Entscheid vom 13.08.2026 ausschließlich Stromschätzung und Kostenvergleich tragen.
   const baujahrMapping = {
     'bis1918': 'vor1978', '1919-1948': 'vor1978', '1949-1957': 'vor1978',
     '1958-1968': 'vor1978', '1969-1978': 'vor1978',
     '1979-1983': '1978-1994', '1984-1994': '1978-1994',
+    '1995-2001': '1995-2010', '2002-2009': '1995-2010',
+    '2010-2015': 'nach2010', 'ab2016': 'nach2010',
     '1995-2010': '1995-2010', 'nach2010': 'nach2010'
   };
   const bedarfStufen = ['vor1978', '1978-1994', '1995-2010', 'nach2010'];
@@ -193,7 +277,26 @@ function dimensionierung_(p) {
   const heizlastWaerme = verbrauchKnown
     ? (faktorNutzwaerme > 1 ? nutzwaerme : bedarfKwh)
     : raumwaerme;
-  const heizlast = heizlastWaerme / getNum_(d, 'volllaststunden', 1800);
+  // Die vier Bauteilangaben der Fragestrecke, Stufe 1 keine, 2 übliche, 3 tiefgreifende
+  // Sanierung. Sie werden seit dem 09.09.2026 EINZELN gerechnet; fehlen sie im Aufruf, greift
+  // Stufe 1, also unsaniert, und der Fall rechnet konservativ.
+  // Absichtlich vier einzelne, literal ausgeschriebene Lesevorgaenge und keine Schleife ueber
+  // eine Namensliste: der Feldpruefer (_tools/feldpruefer_rechner.py) findet nur, was literal
+  // dasteht. Wer hier eine Schleife baut, macht die Felder fuer ihn unsichtbar.
+  const bauteile = {
+    dach: Math.max(1, Math.min(3, int_(p.dach, 1))),
+    fenster: Math.max(1, Math.min(3, int_(p.fenster, 1))),
+    wand: Math.max(1, Math.min(3, int_(p.wand, 1))),
+    boden: Math.max(1, Math.min(3, int_(p.boden, 1)))
+  };
+  // ZWEI WEGE, ZWEI RECHNUNGEN. Kennt der Kunde seinen Jahresverbrauch, bleibt es beim
+  // Verbrauchsweg über die Vollbenutzungsstunden, angeglichen an Vaillant (Entscheid
+  // 19.08.2026). Kennt er ihn nicht, rechnet der Flächenweg bauteilweise nach dem Verfahren des
+  // Bundesverbands (Entscheid 12.08.2026) und teilt NICHT mehr durch 1.800 Stunden: sein
+  // Ergebnis ist bereits eine Leistung, keine Jahresarbeit.
+  const heizlast = verbrauchKnown
+    ? heizlastWaerme / getNum_(d, 'volllaststunden', 1800)
+    : flaechenHeizlast_(baujahr, bauteile, flaeche, zone.nat, gebaeudeFaktor_(d, gebaeude));
   const wwLeistung = warmwasser === 'ja'
     ? warmwasserLeistung_(d, personen,
       Math.max(0, Math.min(6, int_(p.duschen, 1))),
@@ -246,6 +349,7 @@ function dimensionierung_(p) {
       : { deckt: false, varianten: [] };
   });
 
+  const sonderplanungGekennzeichnet = sonderplanungGekennzeichnet_();
   return {
     bedarf: auslegung,
     fuehrung: wwLeistung > heizlast ? 'warmwasser' : 'heizung',
@@ -253,6 +357,8 @@ function dimensionierung_(p) {
     strom_hinweis: stromHinweis,
     taktpunkt_grenze_c: d.taktpunkt_grenze_c == null ? null : d.taktpunkt_grenze_c,
     taktpunkt_grenze_wirksam: false,
+    sonderplanung_kennzeichnung: sonderplanungGekennzeichnet ? 'vorhanden' : 'fehlt', // T901, Innenfeld, wird vor der Ausgabe entfernt
+    hinweise: sonderplanungHinweise_(sonderplanungGekennzeichnet),
     marken: marken
   };
 }
@@ -310,6 +416,19 @@ function leistungAmAuslegungspunkt_(item, heizsystem, nat) {
     ? grenzeInterp_(item.leistungW55, item.leistungW55a10, nat)
     : grenzeInterp_(item.leistungW35, item.leistungW35a10, nat);
 }
+// ==========================================================================================================
+// AUSLEGUNGSMECHANIK, MASSGEBLICHE BESCHREIBUNG (Mensch und Maschine, Stand 03.09.2026):
+//   Vault 11_Produkt/Auslegungsmechanik_Konfigurator-und-Website_HERO.md
+// Entscheide: 12.08.2026 (Warmwasser als Fuehrungsgroesse, Kaskaden-Deckungsgrad), 14.08.2026 (Auswahlregel: kleinste
+// Leistung ab Mindest-Leistungsanteil, Kaskade je Baureihe), 16.08.2026 (Obergrenze anzeigen statt filtern),
+// 17.08.2026 (Kennzahlen in den Konfigurator, Website zeigt nur den Geraetetyp), 01.09.2026 (Zwei-Geraete-Grenze).
+// Stellraeder: HeroWerk_Website_Daten, Blatt Dimensionierung, Schluessel sollband_unten, sollband_oben und
+// kaskaden_toleranz_kw (ueber den Schluessel in Spalte A gefunden, nie ueber eine Zeilennummer); Marken-Heizstab
+// Geraete_Katalog, Schluessel heizstab_wolf und heizstab_vaillant; Zwei-Geraete-Grenze ueber den Kopftext Auswahl.
+// Zwillinge: api/rechner-engine.php hw_match_catalog_varianten (PHP, live) und herowerk-konfigurator Code.js
+// matchCatalogVarianten_. Wer die Regel aendert: zuerst der Entscheid, dann die Vault-Datei, dann ALLE Kerne
+// zeichengleich, dann die Erklaerzellen der Blaetter.
+// ==========================================================================================================
 function matchCatalogVarianten_(marke, auslegung, heizsystem, nat, markenHeizstab, kaskadenToleranz) {
   const grenzeOf = function (item) {
     return heizsystem === 'heizkoerper'
@@ -328,6 +447,7 @@ function matchCatalogVarianten_(marke, auslegung, heizsystem, nat, markenHeizsta
   });
   const picks = {};
   items.forEach(function (item) {
+    if (item.sonderplanung === true) return; // T901: als Sonderplanung gekennzeichnete Zeile ist kein Kandidat des Rechners
     const leistung = leistungAmAuslegungspunkt_(item, heizsystem, nat);
     const heizstab = item.mindestAnteil >= 1 ? 0 : markenHeizstab;
     if (leistung < item.mindestAnteil * auslegung || leistung + heizstab < auslegung) return;
@@ -359,6 +479,16 @@ function matchCatalog_(marke, auslegung, heizsystem, nat, markenHeizstab, kaskad
     markenHeizstab,
     kaskadenToleranz
   )[0] || null;
+}
+
+// T901: traegt das Blatt Geraete_Katalog die Spalte Sonderplanung? Ohne sie bleiben Kaskaden ueber zwei Geraete waehlbar, und die
+// Antwort sagt das ausdruecklich (sonderplanung_kennzeichnung 'fehlt' plus Hinweis), statt still zu filtern oder still zu schweigen.
+function sonderplanungGekennzeichnet_() {
+  const katalog = getCatalog_();
+  return katalog.length > 0 && katalog[0].sonderplanung !== null;
+}
+function sonderplanungHinweise_(gekennzeichnet) {
+  return gekennzeichnet ? [] : ['Kennzeichnung Sonderplanung fehlt im Blatt Geräte_Katalog (Spalte "Auswahl", ja gleich wählbar, sonst Sonderplanung; Entscheid 01.09.2026): Kaskaden mit drei und mehr Außengeräten bleiben wählbar.'];
 }
 
 function geraeteAnzahl_(modell) {
@@ -1441,7 +1571,7 @@ function tabellenWert_(row, index) {
 
 function getCatalog_() {
   const cache = CacheService.getScriptCache();
-  const cached = cache.get('catalog:v3');
+  const cached = cache.get('catalog:v4');
   if (cached) return JSON.parse(cached);
   const ss = SpreadsheetApp.openById(SHEET_ID);
   const sh = ss.getSheetByName('Geräte_Katalog');
@@ -1466,7 +1596,12 @@ function getCatalog_() {
     puffer: kopfIndex_(table, 'Puffer (', true),
     pufferLiter: kopfIndex_(table, 'Puffer Liter', true),
     pufferGroesser: kopfIndex_(table, 'Puffer, groessere Variante', true),
-    pufferOhne: kopfIndex_(table, 'ohne Puffer moeglich', true)
+    pufferOhne: kopfIndex_(table, 'ohne Puffer moeglich', true),
+    // T901 (03.09.2026): Kennzeichnung der Zwei-Geraete-Grenze, Entscheid 01.09.2026 (hoechstens zwei Aussengeraete). Das Blatt traegt sie
+    // seit dem 01.09.2026 in Spalte AH 'Auswahl (ja gleich vom Konfigurator waehlbar; sonst Sonderplanung ...)': 'ja' = waehlbar, jeder
+    // andere Text = Sonderplanung. Spalte optional: fehlt sie, wird gewarnt, nicht gefiltert. Massgeblich: Vault
+    // 11_Produkt/Auslegungsmechanik_Konfigurator-und-Website_HERO.md.
+    auswahl: kopfIndex_(table, 'Auswahl', true)
   };
   const out = [];
   table.rows.forEach(function (row, rowIndex) {
@@ -1492,13 +1627,14 @@ function getCatalog_() {
         ? null
         : num_(tabellenWert_(row, columns.pufferLiter), null),
       pufferGroesser: String(tabellenWert_(row, columns.pufferGroesser)),
+      sonderplanung: columns.auswahl < 0 ? null : String(tabellenWert_(row, columns.auswahl)).trim().toLowerCase() !== 'ja',
       pufferOhne: tabellenWert_(row, columns.pufferOhne) === ''
         ? null
         : String(tabellenWert_(row, columns.pufferOhne)).toLowerCase() === 'ja',
       reihenfolge: rowIndex
     });
   });
-  cache.put('catalog:v3', JSON.stringify(out), CACHE_TTL_SECONDS);
+  cache.put('catalog:v4', JSON.stringify(out), CACHE_TTL_SECONDS);
   return out;
 }
 

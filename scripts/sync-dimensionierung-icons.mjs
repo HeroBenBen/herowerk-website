@@ -159,7 +159,7 @@ const result = synchronizedHtml(source, target);
 
 if (checkOnly) {
   if (result.html !== target) {
-    console.error('FAIL Symbole der Dimensionierung weichen von Fassung 7 ab.');
+    console.error('FAIL Symbole der Dimensionierung weichen von Fassung 8 ab.');
     process.exit(1);
   }
 } else {
@@ -167,5 +167,5 @@ if (checkOnly) {
 }
 
 console.log(
-  `PASS Fassung 7: ${result.cardIconCount} von ${result.cardCount} Kartensymbolen und ${result.counterIconCount} Zählersymbole zeichengleich.`
+  `PASS Fassung 8: ${result.cardIconCount} von ${result.cardCount} Kartensymbolen und ${result.counterIconCount} Zählersymbole zeichengleich.`
 );

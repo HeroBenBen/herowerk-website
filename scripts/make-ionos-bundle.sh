@@ -20,6 +20,10 @@ mkdir -p "$OUT"
 # Warum 2026-07-30: lokale Prüfläufe erzeugen HTML-Berichte, die kein Website-Inhalt sind.
 # Warum 2026-08-01: .git ist in einem Worktree eine Datei und darf nicht ins Bündel.
 # Warum 2026-08-01: .gitleaks.toml ist interne Secret-Scan-Konfiguration, keine Laufzeit-Datei.
+# Warum 2026-08-25: pytest legt beim Testlauf .pytest_cache in der obersten Ebene ab und
+#   Python __pycache__ neben den Skripten. Beides ist Testartefakt, kein Website-Inhalt.
+#   Ohne diesen Ausschluss bricht der Bundle-Bau nach jedem lokalen Testlauf am
+#   Punktdatei-Waechter ab und sperrt die naechste Auslieferung.
 rsync -a \
   --exclude '.git/' \
   --exclude '.git' \
@@ -49,6 +53,8 @@ rsync -a \
   --exclude 'lighthouserc.json' \
   --exclude 'tsconfig.json' \
   --exclude '.gitignore' \
+  --exclude '.pytest_cache/' \
+  --exclude '__pycache__/' \
   --exclude '.prettier*' \
   --exclude 'README*' \
   "$SRC/" "$OUT/"

@@ -124,6 +124,117 @@ function hw_gebaeude_faktor(array $d, string $gebaeude): float|int
     return hw_get_num($d, 'gebaeudef_' . $key, $rueckfall[$key] ?? 1.0);
 }
 
+/**
+ * BAUTEILWEISES VERFAHREN DES BUNDESVERBANDS WAERMEPUMPE, Bauwerte in W/(m²·K).
+ *
+ * Ratifiziert am 12.08.2026 (_Entscheidungen/2026-08-12_Flaechenpfad-auf-das-bauteilweise-BWP-
+ * Verfahren_HERO.md): massgeblich ist der bauteilweise Wert, nicht der einfache
+ * Baualtersklassen-Rechner. Vollstaendig vermessen am 09.09.2026, Messreihe und Gegenprobe in
+ * 11_Produkt/reference_bwp_bauteilweise_basiswerte_HERO.md.
+ *
+ * WARUM W/(m²·K) UND NICHT W/m²: der Wert des Verbands ist ortsgebunden. Er ist linear in der
+ * Differenz aus 20 Grad Innentemperatur und der Normaussentemperatur; ueber acht Postleitzahlen
+ * von Flensburg bis Oberstdorf steht der Quotient konstant bei 4,373 bis 4,400 fuer die Klasse
+ * 1958 bis 1968. Die im Werkzeug ANGEZEIGTE Standortkorrektur in Prozent wird dabei NICHT
+ * angewandt: Hamburg und Flensburg tragen beide 84 Prozent und liefern 124 gegen 121 W/m².
+ * Die frueher vermutete Umrechnung ueber diese Prozentzahl ist damit widerlegt.
+ *
+ * ELF KLASSEN, NICHT NEUN: die Tabelle des Verbands endet entgegen der bisherigen Annahme nicht
+ * bei 1994, sie hat danach die Schnitte 2001, 2009 und 2015. Die neun Karten der Fragestrecke
+ * bilden darauf ab; wer sein Baujahr frei eingibt, trifft die Klasse genau.
+ *
+ * NICHT MONOTON, und das ist kein Fehler: 1919 bis 1948 traegt weniger als 1949 bis 1957, und
+ * 1979 bis 1983 weniger als 1984 bis 1994. Ursache sind verschiedene Referenzgebaeude je Klasse.
+ * Uebernommen wie gemessen, nicht geglaettet.
+ */
+function hw_bwp_basis(): array
+{
+    return [
+        'bis1918' => 4.9196, '1919-1948' => 3.6977, '1949-1957' => 4.6624,
+        '1958-1968' => 4.3730, '1969-1978' => 3.1511, '1979-1983' => 1.9936,
+        '1984-1994' => 2.4116, '1995-2001' => 1.8006, '2002-2009' => 1.3826,
+        '2010-2015' => 1.5113, 'ab2016' => 1.2219,
+    ];
+}
+
+/**
+ * Ersparnis je Bauteil und Sanierungsstufe, ebenfalls in W/(m²·K), gemessen als Differenz zum
+ * unsanierten Basiswert derselben Klasse und durch 31,1 Kelvin geteilt.
+ * Reihenfolge je Bauteil: [uebliche Sanierung, tiefgreifende Sanierung].
+ * Die Haustuer wird nicht abgefragt; sie traegt ueber alle Klassen null bis ein Watt.
+ * Wo das Referenzgebaeude Bodenplatte UND Kellerdecke fuehrt, sind beide addiert, weil die
+ * Fragestrecke dazu nur eine Frage stellt.
+ */
+function hw_bwp_ersparnis(): array
+{
+    return [
+        //                 Dach              Fenster           Wand              Boden
+        'bis1918'   => ['dach' => [0.5466, 0.6752], 'fenster' => [0.1929, 0.3215], 'wand' => [2.4759, 2.7010], 'boden' => [0.1608, 0.1929]],
+        '1919-1948' => ['dach' => [0.6752, 0.8682], 'fenster' => [0.2572, 0.3215], 'wand' => [1.4148, 1.5113], 'boden' => [0.0643, 0.0643]],
+        '1949-1957' => ['dach' => [1.1254, 1.4148], 'fenster' => [0.2572, 0.3215], 'wand' => [1.3183, 1.6720], 'boden' => [0.1608, 0.1608]],
+        '1958-1968' => ['dach' => [0.5466, 0.9003], 'fenster' => [0.3215, 0.4502], 'wand' => [1.4148, 1.5434], 'boden' => [0.2251, 0.2251]],
+        '1969-1978' => ['dach' => [0.3215, 0.4180], 'fenster' => [0.2894, 0.3859], 'wand' => [0.9968, 1.1254], 'boden' => [0.1929, 0.2251]],
+        '1979-1983' => ['dach' => [0.0322, 0.1608], 'fenster' => [0.3537, 0.4180], 'wand' => [0.5466, 0.6109], 'boden' => [0.0322, 0.0322]],
+        '1984-1994' => ['dach' => [0.0000, 0.2251], 'fenster' => [0.3859, 0.4823], 'wand' => [0.4823, 0.7074], 'boden' => [0.0643, 0.0643]],
+        '1995-2001' => ['dach' => [0.0000, 0.1929], 'fenster' => [0.1608, 0.2894], 'wand' => [0.1929, 0.2251], 'boden' => [0.0322, 0.0643]],
+        '2002-2009' => ['dach' => [0.0000, 0.0643], 'fenster' => [0.0000, 0.0965], 'wand' => [0.2251, 0.2572], 'boden' => [0.0000, 0.0000]],
+        '2010-2015' => ['dach' => [0.0322, 0.0643], 'fenster' => [0.0000, 0.1286], 'wand' => [0.1286, 0.2251], 'boden' => [0.0000, 0.0322]],
+        'ab2016'    => ['dach' => [0.0000, 0.0322], 'fenster' => [0.0322, 0.0643], 'wand' => [0.0322, 0.0643], 'boden' => [0.0000, 0.0000]],
+    ];
+}
+
+/**
+ * Vertraeglichkeit mit den beiden abgeloesten Karten.
+ *
+ * Seit dem GF-Entscheid vom 09.09.2026 fragt die Fragestrecke elf Klassen, alle vom
+ * Bundesverband. Die frueheren Karten `1995-2010` und `nach2010` waren unsere eigenen und
+ * schnitten quer durch drei Klassen der Quelle; die Karte `1995-2010` umspannte 56, 43 und 47
+ * Watt je Quadratmeter, also 30 Prozent.
+ *
+ * Diese Abbildung bleibt, weil die Werte weiter hereinkommen: aus der Lead-Strecke und aus
+ * zwischengespeicherten Sitzungen. Sie tragen den unguenstigsten Wert ihrer Spanne, weil eine
+ * zu klein ausgelegte Waermepumpe teurer ist als eine zu grosse. Wer sie entfernt, laesst
+ * genau diese Aufrufe auf den Rueckfall laufen.
+ */
+function hw_bwp_klasse(string $klasse): string
+{
+    $abgeloest = ['1995-2010' => '1995-2001', 'nach2010' => '2010-2015'];
+    return $abgeloest[$klasse] ?? $klasse;
+}
+
+/**
+ * Der Flaechenweg: die Gebaeudeheizlast aus Baualtersklasse, vier Bauteilangaben, Wohnflaeche
+ * und Normaussentemperatur. Ergebnis in Kilowatt.
+ *
+ * Der frueher benutzte Weg ueber Jahresbedarf geteilt durch 1.800 Vollbenutzungsstunden ist
+ * AUFGEHOBEN (Entscheid 13.08.2026): seine Kennwerte sind Endenergie nach VDI 3807, also
+ * eingekaufter Brennstoff, und wurden ohne Kesselverlust als Waermeleistung behandelt. Sie
+ * bleiben unveraendert im Kostenvergleich, wo es um Geld geht, und tragen die Heizlast nicht mehr.
+ *
+ * @param array<string,int> $bauteile Stufe je Bauteil, 1 keine, 2 uebliche, 3 tiefgreifende Sanierung
+ */
+function hw_flaechen_heizlast(string $klasse, array $bauteile, float $flaeche, float $nat, float $gebaeudeFaktor): float
+{
+    $key = hw_bwp_klasse($klasse);
+    $basis = hw_bwp_basis()[$key] ?? hw_bwp_basis()['1958-1968'];
+    $tabelle = hw_bwp_ersparnis()[$key] ?? [];
+    $ersparnis = 0.0;
+    foreach (['dach', 'fenster', 'wand', 'boden'] as $teil) {
+        $stufe = (int) ($bauteile[$teil] ?? 1);
+        if ($stufe < 2 || $stufe > 3 || !isset($tabelle[$teil])) {
+            continue;
+        }
+        // Klemme bei null: die Quelle liefert stellenweise eine NEGATIVE Ersparnis, weil ihr
+        // Referenzgebaeude schon besser gedaemmt ist als die angebotene uebliche Sanierung
+        // (gemessen 1998 Dach 56 gegen 58, 2002 bis 2009 Dach 43 gegen 46). Eine Sanierung darf
+        // die Heizlast nicht erhoehen.
+        $ersparnis += max(0.0, $tabelle[$teil][$stufe - 2]);
+    }
+    $uSpez = max(0.0, $basis - $ersparnis);
+    $spez = $uSpez * (20.0 - $nat);
+    return $spez * $flaeche * $gebaeudeFaktor / 1000.0;
+}
+
 function hw_baujahr_klasse(mixed $value): string
 {
     $raw = trim(hw_js_string($value));
@@ -138,14 +249,22 @@ function hw_baujahr_klasse(mixed $value): string
                 $year <= 1978 => '1969-1978',
                 $year <= 1983 => '1979-1983',
                 $year <= 1994 => '1984-1994',
-                $year <= 2010 => '1995-2010',
-                default => 'nach2010',
+                // Seit dem GF-Entscheid vom 09.09.2026 folgen auch die Klassen nach 1994 dem
+                // Bundesverband. Die Annahme, seine Tabelle ende bei 1994, ist am selben Tag
+                // Jahr fuer Jahr widerlegt worden: sie hat die Schnitte 2001, 2009 und 2015.
+                $year <= 2001 => '1995-2001',
+                $year <= 2009 => '2002-2009',
+                $year <= 2015 => '2010-2015',
+                default => 'ab2016',
             };
         }
     }
     $classes = [
         'bis1918', '1919-1948', '1949-1957', '1958-1968', '1969-1978',
-        '1979-1983', '1984-1994', '1995-2010', 'nach2010',
+        '1979-1983', '1984-1994', '1995-2001', '2002-2009', '2010-2015', 'ab2016',
+        // Die beiden abgeloesten Karten bleiben gueltige Eingaben: die Lead-Strecke und
+        // zwischengespeicherte Sitzungen schicken sie weiter. hw_bwp_klasse() bildet sie ab.
+        '1995-2010', 'nach2010',
     ];
     return in_array($raw, $classes, true) ? $raw : '1978-1994';
 }
@@ -293,6 +412,10 @@ function hw_get_catalog(array $sheets): array
         'pufferLiter' => hw_kopf_index($table, 'Puffer Liter', true),
         'pufferGroesser' => hw_kopf_index($table, 'Puffer, groessere Variante', true),
         'pufferOhne' => hw_kopf_index($table, 'ohne Puffer moeglich', true),
+        // T901 (03.09.2026): Kennzeichnung der Zwei-Geraete-Grenze, Entscheid 01.09.2026 (hoechstens zwei Aussengeraete). Das Blatt
+        // traegt sie seit dem 01.09.2026 in Spalte AH 'Auswahl (...)': 'ja' = waehlbar, jeder andere Text = Sonderplanung. Spalte
+        // optional: fehlt sie, wird gewarnt, nicht gefiltert. Massgeblich: Vault 11_Produkt/Auslegungsmechanik_Konfigurator-und-Website_HERO.md.
+        'auswahl' => hw_kopf_index($table, 'Auswahl', true),
     ];
     $out = [];
     foreach ($table['rows'] as $rowIndex => $row) {
@@ -319,6 +442,9 @@ function hw_get_catalog(array $sheets): array
             'puffer' => hw_js_string(hw_tabellen_wert($row, $columns['puffer'])),
             'pufferLiter' => $pufferLiterRaw === '' || !is_numeric($pufferLiterRaw) ? null : hw_num($pufferLiterRaw, 0),
             'pufferGroesser' => hw_js_string(hw_tabellen_wert($row, $columns['pufferGroesser'])),
+            'sonderplanung' => $columns['auswahl'] < 0
+                ? null
+                : strtolower(trim(hw_js_string(hw_tabellen_wert($row, $columns['auswahl'])))) !== 'ja',
             'pufferOhne' => hw_tabellen_wert($row, $columns['pufferOhne']) === ''
                 ? null
                 : strtolower(hw_js_string(hw_tabellen_wert($row, $columns['pufferOhne']))) === 'ja',
@@ -648,6 +774,19 @@ function hw_warmwasser_leistung(array $d, int $personen, int $duschen, int $wann
     return $personenFaktor * $zapflast * 50 / ($temperatur - 10) + hw_get_num($d, 'ww_sockel_kw', 0.70);
 }
 
+// ==========================================================================================================
+// AUSLEGUNGSMECHANIK, MASSGEBLICHE BESCHREIBUNG (Mensch und Maschine, Stand 03.09.2026):
+//   Vault 11_Produkt/Auslegungsmechanik_Konfigurator-und-Website_HERO.md
+// Entscheide: 12.08.2026 (Warmwasser als Fuehrungsgroesse, Kaskaden-Deckungsgrad), 14.08.2026 (Auswahlregel: kleinste
+// Leistung ab Mindest-Leistungsanteil, Kaskade je Baureihe), 16.08.2026 (Obergrenze anzeigen statt filtern),
+// 17.08.2026 (Kennzahlen in den Konfigurator, Website zeigt nur den Geraetetyp), 01.09.2026 (Zwei-Geraete-Grenze).
+// Stellraeder: HeroWerk_Website_Daten, Blatt Dimensionierung, Schluessel sollband_unten, sollband_oben und
+// kaskaden_toleranz_kw (ueber den Schluessel in Spalte A gefunden, nie ueber eine Zeilennummer); Marken-Heizstab
+// Geraete_Katalog, Schluessel heizstab_wolf und heizstab_vaillant; Zwei-Geraete-Grenze ueber den Kopftext Auswahl.
+// Zwillinge: apps-script/rechner-backend/Code.gs matchCatalogVarianten_ und herowerk-konfigurator Code.js
+// matchCatalogVarianten_. Wer die Regel aendert: zuerst der Entscheid, dann die Vault-Datei, dann ALLE Kerne
+// zeichengleich, dann die Erklaerzellen der Blaetter.
+// ==========================================================================================================
 /** @return list<array<string,mixed>> */
 function hw_match_catalog_varianten(
     array $sheets,
@@ -678,6 +817,9 @@ function hw_match_catalog_varianten(
 
     $picks = [];
     foreach ($items as $item) {
+        if ($item['sonderplanung'] === true) {
+            continue; // T901: als Sonderplanung gekennzeichnete Zeile ist kein Kandidat des Rechners
+        }
         $leistung = hw_leistung_am_auslegungspunkt($item, $heizsystem, $nat);
         $mindestAnteil = $item['mindestAnteil'];
         $heizstab = $mindestAnteil >= 1 ? 0 : $markenHeizstab;
@@ -720,6 +862,20 @@ function hw_match_catalog(
     return hw_match_catalog_varianten(
         $sheets, $brand, $auslegung, $heizsystem, $nat, $markenHeizstab, $kaskadenToleranz
     )[0] ?? null;
+}
+
+// T901: traegt das Blatt Geraete_Katalog die Spalte Sonderplanung? Ohne sie bleiben Kaskaden ueber zwei Geraete waehlbar, und die
+// Antwort sagt das ausdruecklich (sonderplanung_kennzeichnung 'fehlt' plus Hinweis), statt still zu filtern oder still zu schweigen.
+function hw_sonderplanung_gekennzeichnet(array $sheets): bool
+{
+    $katalog = hw_get_catalog($sheets);
+    return $katalog !== [] && $katalog[0]['sonderplanung'] !== null;
+}
+
+/** @return list<string> */
+function hw_sonderplanung_hinweise(bool $gekennzeichnet): array
+{
+    return $gekennzeichnet ? [] : ['Kennzeichnung Sonderplanung fehlt im Blatt Geräte_Katalog (Spalte "Auswahl", ja gleich wählbar, sonst Sonderplanung; Entscheid 01.09.2026): Kaskaden mit drei und mehr Außengeräten bleiben wählbar.'];
 }
 
 function hw_geraete_anzahl(mixed $modell): int
@@ -905,13 +1061,20 @@ function hw_dimensionierung(array $query, array $sheets): array
         $verbrauch = min(hw_get_num($d, 'verbrauch_max_kwh', 120000), max(hw_get_num($d, 'verbrauch_min_kwh', 5000), $verbrauch));
     }
 
-    // ÜBERGANGSLÖSUNG: Die neun Baujahresklassen werden bis zum Bau von Teil A des zweiten
-    // Bauauftrags auf die vier alten Klassen des weiterhin blockierten Flächenwegs abgebildet.
-    // Mit Teil A entfällt dieses Mapping vollständig.
+    // AUFGEHOBEN AM 09.09.2026: dies war bis zum Bau von Teil A eine ÜBERGANGSLÖSUNG, die neun
+    // Baujahresklassen auf vier abbildete und damit die Heizlast an vier Klassen aufhängte,
+    // obwohl der Kunde neun beantwortet. Das ist behoben: die HEIZLAST kommt jetzt aus
+    // hw_flaechen_heizlast() und kennt elf Klassen.
+    // Diese Abbildung bleibt und ist KEINE Übergangslösung mehr: sie bedient allein die
+    // Endenergie-Richtwerte nach VDI 3807, die es nur in vier Klassen gibt und die nach dem
+    // Entscheid vom 13.08.2026 ausschließlich noch die Stromschätzung und den Kostenvergleich
+    // tragen, also die Geldseite. Wer sie wieder in die Heizlast zieht, dreht den Entscheid um.
     $baujahrMapping = [
         'bis1918' => 'vor1978', '1919-1948' => 'vor1978', '1949-1957' => 'vor1978',
         '1958-1968' => 'vor1978', '1969-1978' => 'vor1978',
         '1979-1983' => '1978-1994', '1984-1994' => '1978-1994',
+        '1995-2001' => '1995-2010', '2002-2009' => '1995-2010',
+        '2010-2015' => 'nach2010', 'ab2016' => 'nach2010',
         '1995-2010' => '1995-2010', 'nach2010' => 'nach2010',
     ];
     $bedarfStufen = ['vor1978', '1978-1994', '1995-2010', 'nach2010'];
@@ -930,6 +1093,20 @@ function hw_dimensionierung(array $query, array $sheets): array
     $klima = hw_get_klima_plz($sheets);
     $plzKey = substr((string) preg_replace('/\D/', '', hw_query_string($query, 'plz')), 0, 5);
     $zone = $klima[$plzKey] ?? $klima['*'] ?? ['nat' => -11, 'volllast' => 1800];
+
+    // Die vier Bauteilangaben der Fragestrecke, Stufe 1 keine, 2 übliche, 3 tiefgreifende
+    // Sanierung. Sie werden seit dem 09.09.2026 EINZELN gerechnet; bis dahin hat die
+    // Bedienoberfläche sie zu einer Summe addiert und auf drei Sanierungsstufen verdichtet.
+    // Fehlen sie im Aufruf, greift Stufe 1, also unsaniert, und der Fall rechnet konservativ.
+    // Absichtlich vier einzelne, literal ausgeschriebene Lesevorgaenge und keine Schleife ueber
+    // eine Namensliste: der Feldpruefer (_tools/feldpruefer_rechner.py) findet nur, was literal
+    // dasteht. Wer hier eine Schleife baut, macht die Felder fuer ihn unsichtbar.
+    $bauteile = [
+        'dach' => max(1, min(3, hw_int($query['dach'] ?? null, 1))),
+        'fenster' => max(1, min(3, hw_int($query['fenster'] ?? null, 1))),
+        'wand' => max(1, min(3, hw_int($query['wand'] ?? null, 1))),
+        'boden' => max(1, min(3, hw_int($query['boden'] ?? null, 1))),
+    ];
     $personen = max(1, min(8, hw_int($query['personen'] ?? null, 2)));
     $heizung = strtolower(hw_query_string($query, 'heizung', 'gas'));
     $andereHeizung = strtolower(hw_query_string($query, 'andere_heizung', 'fernwaerme'));
@@ -958,7 +1135,14 @@ function hw_dimensionierung(array $query, array $sheets): array
     $heizlastWaerme = $verbrauchKnown
         ? ($faktorNutzwaerme > 1 ? $nutzwaerme : $bedarfKwh)
         : $raumwaerme;
-    $heizlast = $heizlastWaerme / hw_get_num($d, 'volllaststunden', 1800);
+    // ZWEI WEGE, ZWEI RECHNUNGEN. Kennt der Kunde seinen Jahresverbrauch, bleibt es beim
+    // Verbrauchsweg über die Vollbenutzungsstunden, angeglichen an Vaillant (Entscheid
+    // 19.08.2026). Kennt er ihn nicht, rechnet der Flächenweg seit dem 09.09.2026 bauteilweise
+    // nach dem Verfahren des Bundesverbands (Entscheid 12.08.2026) und teilt NICHT mehr durch
+    // 1.800 Stunden: sein Ergebnis ist bereits eine Leistung, keine Jahresarbeit.
+    $heizlast = $verbrauchKnown
+        ? $heizlastWaerme / hw_get_num($d, 'volllaststunden', 1800)
+        : hw_flaechen_heizlast($baujahr, $bauteile, $flaeche, (float) $zone['nat'], hw_gebaeude_faktor($d, $gebaeude));
     $wwLeistung = $warmwasser === 'ja'
         ? hw_warmwasser_leistung(
             $d,
@@ -1018,6 +1202,7 @@ function hw_dimensionierung(array $query, array $sheets): array
             $marken[$brand] = ['deckt' => false, 'varianten' => []];
         }
     }
+    $sonderplanungGekennzeichnet = hw_sonderplanung_gekennzeichnet($sheets);
     return [
         'bedarf' => $auslegung,
         'fuehrung' => $wwLeistung > $heizlast ? 'warmwasser' : 'heizung',
@@ -1025,6 +1210,8 @@ function hw_dimensionierung(array $query, array $sheets): array
         'strom_hinweis' => 'Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.',
         'taktpunkt_grenze_c' => $d['taktpunkt_grenze_c'] ?? null,
         'taktpunkt_grenze_wirksam' => false,
+        'sonderplanung_kennzeichnung' => $sonderplanungGekennzeichnet ? 'vorhanden' : 'fehlt', // T901, Innenfeld, wird vor der Ausgabe entfernt
+        'hinweise' => hw_sonderplanung_hinweise($sonderplanungGekennzeichnet),
         'marken' => $marken,
     ];
 }

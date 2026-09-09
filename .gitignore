@@ -7,3 +7,4 @@ dist-ionos/
 rechner-runtime/
 artifacts/
 design-qa.md
+.pytest_cache/
