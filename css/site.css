@@ -1866,6 +1866,43 @@ section {
   }
 }
 
+/* Einheitenknoepfe im Verbrauchsschritt (#wzUnitKwh, #wzUnitM3, #wzUnitLiter).
+   Warum 2026-09-11: Markup UND wzSetActiveBtn setzten feste Inline-Farben fuer den dunklen
+   Grund. Im Hellmodus lag der nicht gewaehlte Knopf dadurch weiss auf weiss, Kontrast 1,00
+   fuer Schrift und Rahmen (GF-Meldung, nachgemessen 10.09.2026). Die Farben kommen jetzt nur
+   aus dem Farbschema: color-mix auf --color-text-primary ergibt im Dunkelmodus exakt die
+   bisherigen Werte (Weiss mit 10 % als Flaeche, 50 % als Rahmen), im Hellmodus Schiefer auf
+   Weiss. Der gewaehlte Knopf traegt .selected; das Skript setzt nur diese Klasse und
+   aria-pressed. Beide Zustaende mit 2 px Rahmen und gleichem Innenabstand, sonst springt beim
+   Umschalten die Zeile. Gate: tests/einheitenknopf-sichtbarkeit.spec.js. */
+.wz-einheit {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid color-mix(in srgb, var(--color-text-primary) 50%, transparent);
+  background: color-mix(in srgb, var(--color-text-primary) 10%, transparent);
+  color: var(--color-text-primary);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+.wz-einheit.selected {
+  border-color: var(--color-accent-primary);
+  background: color-mix(in srgb, var(--color-accent-primary) 15%, transparent);
+  color: var(--color-accent-primary);
+  font-weight: 700;
+}
+/* Hell: CI-Gruen #b7d900 traegt auf Weiss nur 1,62 zu 1. Schrift und Rahmen nehmen die
+   Gruenstufe fuer hellen Grund, wie der Reglerwert .ws-val direkt darunter. */
+[data-theme='light'] .wz-einheit.selected {
+  border-color: var(--color-accent-on-light);
+  color: var(--color-accent-on-light);
+}
+.wz-einheit:focus-visible {
+  outline: 3px solid var(--color-text-primary);
+  outline-offset: 2px;
+}
+
 .wizard-question {
   color: var(--white);
   font-size: 22px;
