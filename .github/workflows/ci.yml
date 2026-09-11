@@ -213,6 +213,13 @@ jobs:
         run: scripts/start-pruefserver.sh
       - env: { PREVIEW_URL: '${{ env.PRUEFSERVER_URL }}' }
         run: npx playwright test --grep "@smoke"
+      # Einheitenknopf-Gate (GF-Meldung, nachgemessen 10.09.2026): im Hellmodus war der nicht
+      # gewaehlte Einheitenknopf im Verbrauchsschritt unsichtbar (Kontrast 1,00), weil Markup
+      # UND wzSetActiveBtn feste Dunkelfarben setzten. Gemessen wird am gemalten Bild in Hell
+      # und Dunkel, fuer Gas, Oel und Strom, vor und nach dem Umschalten: Schrift 4,5 zu 1,
+      # Rahmen 3 zu 1, gewaehlt unterscheidbar, keine Lageaenderung beim Umschalten.
+      - env: { PREVIEW_URL: '${{ env.PRUEFSERVER_URL }}' }
+        run: npm run verify:einheitenknopf
 
   # Job 4: axe-core Accessibility, bleibt HARTES GATE
   #

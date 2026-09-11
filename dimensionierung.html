@@ -62,7 +62,7 @@
   <meta name="twitter:description" content="Wärmepumpen-Rechner für Größe, Verbrauch und Ersparnis in der Region Hannover.">
   <meta name="twitter:image" content="https://www.herowerk.de/hero-paar-terrasse.png">
   <script src="js/theme.js?v=9b163705e9"></script>
-  <link rel="stylesheet" href="css/site.css?v=6366425909">
+  <link rel="stylesheet" href="css/site.css?v=d524a32872">
   <link rel="preload" href="tokens.css?v=bb2619605a" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="tokens.css?v=bb2619605a"></noscript>
 </head>
@@ -286,9 +286,9 @@
           </div>
           <div id="wzVerbrauchInput" style="display:block; margin-top: 20px;">
             <div style="display:flex;gap:8px;margin-bottom:16px;">
-              <button id="wzUnitKwh" onclick="wzSwitchUnit('kwh')" style="flex:1;padding:10px;border-radius:8px;border:2px solid rgba(255,255,255,0.5);background:rgba(255,255,255,0.1);color:#fff;font-weight:600;font-size:14px;cursor:pointer;">Kilowattstunden</button>
-              <button id="wzUnitM3" onclick="wzSwitchUnit('m3')" style="flex:1;padding:12px;border-radius:8px;border:1px solid var(--green);background:rgba(183,217,0,0.15);color:var(--green);font-weight:700;font-size:14px;cursor:pointer;">Kubikmeter Gas</button>
-              <button id="wzUnitLiter" onclick="wzSwitchUnit('liter')" style="flex:1;padding:12px;border-radius:8px;border:2px solid rgba(255,255,255,0.5);background:rgba(255,255,255,0.1);color:#fff;font-weight:600;font-size:14px;cursor:pointer;">Liter Heizöl</button>
+              <button type="button" id="wzUnitKwh" class="wz-einheit" aria-pressed="false" onclick="wzSwitchUnit('kwh')">Kilowattstunden</button>
+              <button type="button" id="wzUnitM3" class="wz-einheit selected" aria-pressed="true" onclick="wzSwitchUnit('m3')">Kubikmeter Gas</button>
+              <button type="button" id="wzUnitLiter" class="wz-einheit" aria-pressed="false" onclick="wzSwitchUnit('liter')">Liter Heizöl</button>
             </div>
             <div class="wizard-slider-group">
               <label>Jahresverbrauch <span class="ws-val" id="wzVerbVal">2.000 m³</span></label>
@@ -604,7 +604,7 @@
     </div>
   </footer>
 
-  <script src="js/site.js?v=ec2cba2311" defer></script>
+  <script src="js/site.js?v=d051a507a9" defer></script>
 
   <!-- MOBILE BOTTOM BAR -->
   <div class="mobile-bottom-bar" role="navigation" aria-label="Mobile Schnellnavigation">

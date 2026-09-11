@@ -653,20 +653,18 @@ let wzUnit = 'm3'; // 'kwh', 'm3' oder 'liter'
 const OEL_FAKTOR = 10; // 1 Liter Heizöl ≈ 10 kWh
 const GAS_FAKTOR = 10; // 1 m³ Erdgas ≈ 10 kWh
 
+// Warum 2026-09-11: Hier standen feste Inline-Farben fuer den dunklen Grund, bei jedem
+// Umschalten neu geschrieben. Im Hellmodus lag der nicht gewaehlte Knopf dadurch weiss auf
+// weiss (GF-Meldung, nachgemessen 10.09.2026). Die Gestaltung liegt jetzt in css/site.css
+// (.wz-einheit, .selected); hier wird nur noch der Zustand gesetzt. Keine Farben zurueck in
+// dieses Skript, das Gate tests/einheitenknopf-sichtbarkeit.spec.js misst beide Modi.
 function wzSetActiveBtn(activeId) {
-  const active =
-    'border-width:2px;border-style:solid;border-color:var(--green);background:rgba(183,217,0,0.15);color:var(--green);font-weight:700;';
-  const inactive =
-    'border-width:2px;border-style:solid;border-color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.1);color:#fff;font-weight:600;';
   ['wzUnitKwh', 'wzUnitM3', 'wzUnitLiter'].forEach((id) => {
     const btn = document.getElementById(id);
-    const s = id === activeId ? active : inactive;
-    s.split(';')
-      .filter(Boolean)
-      .forEach((rule) => {
-        const [k, v] = rule.split(':');
-        btn.style[k.trim()] = v.trim();
-      });
+    if (!btn) return;
+    const gewaehlt = id === activeId;
+    btn.classList.toggle('selected', gewaehlt);
+    btn.setAttribute('aria-pressed', gewaehlt ? 'true' : 'false');
   });
 }
 
