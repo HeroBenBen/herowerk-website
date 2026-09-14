@@ -57,6 +57,7 @@ function phpWert(klasse, bauteile, flaeche, nat) {
   return Number(execFileSync('php', ['-r', code], { encoding: 'utf8' }));
 }
 
+/** @type {Array<[string, string, Record<string, number>, number, number, number]>} */
 const FAELLE = [
   [
     'Bauauftrag A.6 Fall 1: 1958-1968, 200 qm, Dach und Fenster ueblich',
