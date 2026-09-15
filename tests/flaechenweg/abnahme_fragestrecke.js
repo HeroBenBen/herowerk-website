@@ -63,6 +63,7 @@ function strecke(box, antworten) {
 // Die Fragen hinter den Nummern, aus dem Markup gelesen statt aus dem Gedaechtnis.
 function fragenAusMarkup() {
   const html = fs.readFileSync(HTML, 'utf8');
+  /** @type {Array<[number, string]>} */
   const paare = [];
   const re = /<div class="wizard-step(?: active)?" data-step="(\d+)">([\s\S]{0,900}?)<\/div>/g;
   let m;
@@ -73,6 +74,7 @@ function fragenAusMarkup() {
   return paare;
 }
 
+/** @type {Array<[number, string]>} */
 const SOLL_REIHENFOLGE = [
   [1, 'Wie lautet deine Postleitzahl?'],
   [6, 'Was heizt du aktuell?'],
