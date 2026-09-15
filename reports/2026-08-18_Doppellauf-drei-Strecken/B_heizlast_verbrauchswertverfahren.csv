@@ -1,0 +1,13 @@
+nummer,gebaeudetyp,baujahr,wohnflaeche_m2,zustand,uebergabe,jahresverbrauch_menge,jahresverbrauch_einheit,endenergie_kWh,norm_AT_C,herowerk_heizlast_kW,vaillant_heizlast_kW,differenz_kW,differenz_prozent,davon_kesselwirkungsgrad_kW,davon_warmwasserabzug_kW,rest_kW
+S1,Einfamilienhaus,1960,140,unsaniert,Heizkörper,3200,m3 Gas,32000,-11.0,14.5,17.8,3.3,18.5,2.49,0.78,0.03
+S2,Einfamilienhaus,1960,140,teilweise,Heizkörper,2400,m3 Gas,24000,-11.0,10.7,13.4,2.7,20.1,1.87,0.78,0.05
+S3,Einfamilienhaus,1960,200,unsaniert,Heizkörper,4600,m3 Gas,46000,-11.0,21.2,25.6,4.4,17.2,3.58,0.78,0.04
+S4,Einfamilienhaus,1975,160,unsaniert,Heizkörper,3400,m3 Gas,34000,-11.0,15.5,18.9,3.4,18.0,2.64,0.78,-0.02
+S5,Einfamilienhaus,1975,160,teilweise,Heizkörper,2200,m3 Gas,22000,-11.0,9.7,12.3,2.6,21.1,1.71,0.78,0.11
+S6,Einfamilienhaus,1990,150,unsaniert,Heizkörper,2600,m3 Gas,26000,-11.0,11.6,14.5,2.9,20.0,2.02,0.78,0.10
+S7,Einfamilienhaus,2000,150,unsaniert,Flächenheizung,2100,m3 Gas,21000,-11.0,9.3,11.7,2.4,20.5,1.63,0.78,-0.01
+S8,Einfamilienhaus,2015,160,unsaniert,Flächenheizung,1400,m3 Gas,14000,-11.0,5.9,7.8,1.9,24.4,1.09,0.78,0.03
+S9,Doppelhaushälfte,1970,120,unsaniert,Heizkörper,2600,m3 Gas,26000,-11.0,11.6,14.5,2.9,20.0,2.02,0.78,0.10
+S10,Reihenmittelhaus,1970,110,unsaniert,Heizkörper,2100,m3 Gas,21000,-11.0,9.3,11.7,2.4,20.5,1.63,0.78,-0.01
+S11,Zweifamilienhaus,1965,220,unsaniert,Heizkörper,5200,m3 Gas,52000,-11.0,24.1,29.0,4.9,16.9,4.04,0.78,0.08
+S12,Einfamilienhaus,1930,180,teilweise,Heizkörper,4800,m3 Gas,48000,-11.0,22.2,26.7,4.5,16.9,3.73,0.78,-0.01

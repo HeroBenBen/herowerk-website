@@ -1,0 +1,53 @@
+nummer,heizlast_kW,vorlauf_C,uebergabe,norm_AT_C,warmwasser_ueber_wp,personen,marke,baureihe,fremd_werkzeug,fremd_modell,fremd_anzahl,fremd_leistung_kW,fremd_leistungsanteil,herowerk_modell,herowerk_anzahl,herowerk_leistung_kW,herowerk_leistungsanteil,deckung,abweichungsart
+A1,5,55,Heizkörper,-11.1,nein,0,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-07,1,5.9,118.7,nein,nur_herowerk
+A1,5,55,Heizkörper,-11.1,nein,0,Vaillant,aroTHERM plus 8.1,vaillant_schnellauslegung,VWL 35/8.1 A,1,4.3,85.7,Vaillant VWL 35/8.1 A,1,4.3,85.7,ja,gleich
+A2,7,55,Heizkörper,-11.1,nein,0,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-07,1,5.9,84.8,nein,nur_herowerk
+A2,7,55,Heizkörper,-11.1,nein,0,Vaillant,aroTHERM plus 8.1,vaillant_schnellauslegung,VWL 55/8.1 A,1,5.1,73.1,Vaillant VWL 55/8.1 A,1,5.1,73.1,ja,gleich
+A3,9,55,Heizkörper,-11.1,nein,0,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-10,1,7.8,86.2,nein,nur_herowerk
+A3,9,55,Heizkörper,-11.1,nein,0,Vaillant,aroTHERM plus 8.1,vaillant_schnellauslegung,VWL 75/8.1 A,1,6.6,73.9,Vaillant VWL 75/8.1 A,1,6.6,73.9,ja,gleich
+A4,11,55,Heizkörper,-11.1,nein,0,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-10,1,7.8,70.5,nein,nur_herowerk
+A4,11,55,Heizkörper,-11.1,nein,0,Vaillant,aroTHERM pro 7.1,vaillant_schnellauslegung,VWL 115/7.1 A,1,9.4,85.7,Vaillant VWL 115/7.1 A,1,9.5,86.2,ja,gleich
+A5,13,55,Heizkörper,-11.1,nein,0,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-16/20,1,14.1,108.5,nein,nur_herowerk
+A5,13,55,Heizkörper,-11.1,nein,0,Vaillant,aroTHERM pro 7.1,vaillant_schnellauslegung,VWL 115/7.1 A,1,9.4,72.6,Vaillant VWL 115/7.1 A,1,9.5,73,ja,gleich
+A6,15,55,Heizkörper,-11.1,nein,0,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-16/20,1,14.1,94,nein,nur_herowerk
+A6,15,55,Heizkörper,-11.1,nein,0,Vaillant,aroTHERM plus 8.1,vaillant_schnellauslegung,VWL 125/8.1 A,1,11.1,73.9,Vaillant VWL 125/8.1 A,1,11.1,73.9,ja,gleich
+A7,17,55,Heizkörper,-11.1,nein,0,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-16/20,1,14.1,83,nein,nur_herowerk
+A7,17,55,Heizkörper,-11.1,nein,0,Vaillant,aroTHERM plus 8.1,vaillant_schnellauslegung,2× VWL 75/8.1 A,2,13.3,78.2,2× Vaillant VWL 75/8.1 A (Kaskade),2,13.3,78.2,ja,gleich
+A8,20,55,Heizkörper,-11.1,nein,0,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-16/20,1,14.1,70.5,nein,nur_herowerk
+A8,20,55,Heizkörper,-11.1,nein,0,Vaillant,aroTHERM perform 8.1,vaillant_schnellauslegung,VWL 205/8.1 A S2 Q,1,18.6,93.2,Vaillant VWL 205/8.1 A S2 Q,1,18.8,93.9,ja,gleich
+A9,23,55,Heizkörper,-11.1,nein,0,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-20/24,1,17.8,77.6,nein,nur_herowerk
+A9,23,55,Heizkörper,-11.1,nein,0,Vaillant,aroTHERM perform 8.1,vaillant_schnellauslegung,VWL 205/8.1 A S2 Q,1,18.6,81,Vaillant VWL 205/8.1 A S2 Q,1,18.8,81.7,ja,gleich
+A10,26,55,Heizkörper,-11.1,nein,0,Wolf,Wolf CHA,kein_fremdvergleich,,,,,2× Wolf CHA-16/20 (Kaskade),2,28.2,108.5,nein,nur_herowerk
+A10,26,55,Heizkörper,-11.1,nein,0,Vaillant,aroTHERM perform 8.1,vaillant_schnellauslegung,VWL 205/8.1 A S2 Q,1,18.6,71.7,Vaillant VWL 205/8.1 A S2 Q,1,18.8,72.3,ja,gleich
+A11,5,35,Flächenheizung,-11.1,nein,0,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-07,1,6.3,126.3,nein,nur_herowerk
+A11,5,35,Flächenheizung,-11.1,nein,0,Vaillant,aroTHERM plus 8.1,vaillant_schnellauslegung,VWL 35/8.1 A,1,4.5,89.7,Vaillant VWL 35/8.1 A,1,4.5,89.8,ja,gleich
+A12,7,35,Flächenheizung,-11.1,nein,0,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-07,1,6.3,90.2,nein,nur_herowerk
+A12,7,35,Flächenheizung,-11.1,nein,0,Vaillant,aroTHERM plus 8.1,vaillant_schnellauslegung,VWL 55/8.1 A,1,5.5,78.4,Vaillant VWL 55/8.1 A,1,5.5,78.3,ja,gleich
+A13,9,35,Flächenheizung,-11.1,nein,0,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-07,1,6.3,70.1,nein,nur_herowerk
+A13,9,35,Flächenheizung,-11.1,nein,0,Vaillant,aroTHERM pro 7.1,vaillant_schnellauslegung,VWL 75/7.1 A,1,6.5,72.7,Vaillant VWL 75/7.1 A,1,6.5,72.7,ja,gleich
+A14,11,35,Flächenheizung,-11.1,nein,0,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-10,1,8.9,80.6,nein,nur_herowerk
+A14,11,35,Flächenheizung,-11.1,nein,0,Vaillant,aroTHERM plus 8.1,vaillant_schnellauslegung,VWL 105/8.1 A,1,10.2,93,Vaillant VWL 105/8.1 A,1,10.2,93,ja,gleich
+A15,13,35,Flächenheizung,-11.1,nein,0,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-16/20,1,15,115.4,nein,nur_herowerk
+A15,13,35,Flächenheizung,-11.1,nein,0,Vaillant,aroTHERM plus 8.1,vaillant_schnellauslegung,VWL 105/8.1 A,1,10.2,78.7,Vaillant VWL 105/8.1 A,1,10.2,78.7,ja,gleich
+A16,15,35,Flächenheizung,-11.1,nein,0,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-16/20,1,15,100,nein,nur_herowerk
+A16,15,35,Flächenheizung,-11.1,nein,0,Vaillant,aroTHERM pro 7.1,vaillant_schnellauslegung,VWL 115/7.1 A,1,11.5,76.5,Vaillant VWL 115/7.1 A,1,11.5,76.5,ja,gleich
+A17,17,35,Flächenheizung,-11.1,nein,0,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-16/20,1,15,88.3,nein,nur_herowerk
+A17,17,35,Flächenheizung,-11.1,nein,0,Vaillant,aroTHERM pro 7.1,vaillant_schnellauslegung,2× VWL 75/7.1 A,2,13.1,77,2× Vaillant VWL 75/7.1 A (Kaskade),2,13.1,77,ja,gleich
+A18,20,35,Flächenheizung,-11.1,nein,0,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-16/20,1,15,75,nein,nur_herowerk
+A18,20,35,Flächenheizung,-11.1,nein,0,Vaillant,aroTHERM plus 8.1,vaillant_schnellauslegung,2× VWL 75/8.1 A,2,14.6,72.8,2× Vaillant VWL 75/8.1 A (Kaskade),2,14.6,72.8,ja,gleich
+A19,23,35,Flächenheizung,-11.1,nein,0,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-20/24,1,18.8,81.6,nein,nur_herowerk
+A19,23,35,Flächenheizung,-11.1,nein,0,Vaillant,aroTHERM perform 8.1,vaillant_schnellauslegung,VWL 205/8.1 A S2 Q,1,16.3,71.1,Vaillant VWL 205/8.1 A S2 Q,1,16.3,71.1,ja,gleich
+A20,26,35,Flächenheizung,-11.1,nein,0,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-20/24,1,18.8,72.2,nein,nur_herowerk
+A20,26,35,Flächenheizung,-11.1,nein,0,Vaillant,aroTHERM plus 8.1,vaillant_schnellauslegung,2× VWL 105/8.1 A,2,20.5,78.7,2× Vaillant VWL 105/8.1 A (Kaskade),2,20.5,78.7,ja,gleich
+A21,9,55,Heizkörper,-11.1,ja,4,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-10,1,7.8,86.2,nein,nur_herowerk
+A21,9,55,Heizkörper,-11.1,ja,4,Vaillant,aroTHERM plus 8.1,vaillant_schnellauslegung,VWL 75/8.1 A,1,6.6,73.9,Vaillant VWL 75/8.1 A,1,6.6,73.9,ja,gleich
+A22,15,55,Heizkörper,-11.1,ja,4,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-16/20,1,14.1,94,nein,nur_herowerk
+A22,15,55,Heizkörper,-11.1,ja,4,Vaillant,aroTHERM plus 8.1,vaillant_schnellauslegung,VWL 125/8.1 A,1,11.1,73.9,Vaillant VWL 125/8.1 A,1,11.1,73.9,ja,gleich
+A23,23,55,Heizkörper,-11.1,ja,4,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-20/24,1,17.8,77.6,nein,nur_herowerk
+A23,23,55,Heizkörper,-11.1,ja,4,Vaillant,aroTHERM perform 8.1,vaillant_schnellauslegung,VWL 205/8.1 A S2 Q,1,18.6,81,Vaillant VWL 205/8.1 A S2 Q,1,18.8,81.7,ja,gleich
+A24,9,35,Flächenheizung,-11.1,ja,4,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-07,1,6.3,70.1,nein,nur_herowerk
+A24,9,35,Flächenheizung,-11.1,ja,4,Vaillant,aroTHERM pro 7.1,vaillant_schnellauslegung,VWL 75/7.1 A,1,6.5,72.7,Vaillant VWL 75/7.1 A,1,6.5,72.7,ja,gleich
+A25,15,35,Flächenheizung,-11.1,ja,4,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-16/20,1,15,100,nein,nur_herowerk
+A25,15,35,Flächenheizung,-11.1,ja,4,Vaillant,aroTHERM pro 7.1,vaillant_schnellauslegung,VWL 115/7.1 A,1,11.5,76.5,Vaillant VWL 115/7.1 A,1,11.5,76.5,ja,gleich
+A26,23,35,Flächenheizung,-11.1,ja,4,Wolf,Wolf CHA,kein_fremdvergleich,,,,,Wolf CHA-20/24,1,18.8,81.6,nein,nur_herowerk
+A26,23,35,Flächenheizung,-11.1,ja,4,Vaillant,aroTHERM perform 8.1,vaillant_schnellauslegung,VWL 205/8.1 A S2 Q,1,16.3,71.1,Vaillant VWL 205/8.1 A S2 Q,1,16.3,71.1,ja,gleich
