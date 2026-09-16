@@ -43,6 +43,10 @@
   var ga4Loaded = false;
   var metaLoaded = false;
   var cookieSettingsReady = false;
+  var cmpA11yBound = false;
+  var cmpBoundRoot = null;
+  var cmpOpener = null;
+  var cmpClosePending = false;
 
   // ----- GA4 (gtag.js) erst nach analytics-Einwilligung injizieren -----------
   function loadGA4() {
@@ -134,6 +138,7 @@
       if (button.dataset.cmpBound === '1') return;
       button.dataset.cmpBound = '1';
       button.addEventListener('click', function () {
+        cmpOpener = button;
         if (typeof window.__cmp !== 'function') {
           button.hidden = true;
           return;
@@ -147,6 +152,168 @@
     });
   }
 
+  // The CMP owns the dialog markup in an open shadow root. Keep the small
+  // integration boundary here: styling is scoped to that root and keyboard
+  // handling uses the public __cmp API for opening and closing.
+  function cmpRoot() {
+    var wrapper = document.querySelector('#cmpwrapper');
+    return wrapper && wrapper.shadowRoot;
+  }
+
+  function cmpDialog(root) {
+    return root && root.querySelector('[role="dialog"]');
+  }
+
+  function cmpFocusable(dialog) {
+    if (!dialog) return [];
+    return Array.from(
+      dialog.querySelectorAll(
+        'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),' +
+          'textarea:not([disabled]),[tabindex]:not([tabindex="-1"])'
+      )
+    ).filter(function (element) {
+      var current = element;
+      while (current && current !== dialog) {
+        if (current.hidden || current.inert || current.getAttribute('aria-hidden') === 'true')
+          return false;
+        var style = window.getComputedStyle(current);
+        if (style.display === 'none' || style.visibility === 'hidden') return false;
+        current = current.parentElement;
+      }
+      return (
+        element.getAttribute('tabindex') !== '-1' &&
+        !element.disabled &&
+        element.getAttribute('aria-disabled') !== 'true'
+      );
+    });
+  }
+
+  function cmpIsVisible(element) {
+    if (!element) return false;
+    var current = element;
+    while (current) {
+      if (current.hidden || current.inert || current.getAttribute('aria-hidden') === 'true')
+        return false;
+      var style = window.getComputedStyle(current);
+      if (style.display === 'none' || style.visibility === 'hidden') return false;
+      current = current.parentElement;
+    }
+    return true;
+  }
+
+  function cmpFocusFirst() {
+    var root = cmpRoot();
+    var dialog = cmpDialog(root);
+    var focusable = cmpFocusable(dialog);
+    if (focusable.length) focusable[0].focus();
+  }
+
+  function cmpRestoreFocus() {
+    var opener = cmpOpener;
+    cmpOpener = null;
+    cmpClosePending = false;
+    if (opener && opener.isConnected && !opener.hidden) opener.focus();
+  }
+
+  function cmpInstallShadowStyle(root) {
+    if (!root || root.querySelector('#herowerk-cmp-a11y-style')) return;
+    var style = document.createElement('style');
+    style.id = 'herowerk-cmp-a11y-style';
+    style.textContent =
+      '.cmplink.cmplinkvendors{color:#4f6000!important;text-decoration:underline!important;' +
+      'text-underline-offset:2px;}';
+    root.appendChild(style);
+  }
+
+  function cmpOnOpen() {
+    var root = cmpRoot();
+    bindCmpRoot(root);
+    cmpInstallShadowStyle(root);
+    var attempts = 0;
+    function focusWhenRendered() {
+      attempts += 1;
+      var dialog = cmpDialog(cmpRoot());
+      if (cmpIsVisible(dialog) && cmpFocusable(dialog).length) {
+        cmpFocusFirst();
+      } else if (attempts < 20) {
+        window.requestAnimationFrame(focusWhenRendered);
+      }
+    }
+    window.requestAnimationFrame(focusWhenRendered);
+  }
+
+  function cmpOnClose() {
+    if (!cmpOpener && !cmpClosePending) return;
+    window.requestAnimationFrame(function () {
+      var dialog = cmpDialog(cmpRoot());
+      if (!cmpIsVisible(dialog)) {
+        cmpRestoreFocus();
+      }
+    });
+  }
+
+  function bindCmpRoot(root) {
+    if (!root || cmpBoundRoot === root) return;
+    cmpBoundRoot = root;
+    cmpInstallShadowStyle(root);
+    root.addEventListener(
+      'click',
+      function (event) {
+        var target = event.target;
+        var recall = target && target.closest && target.closest('.cmpboxrecalllink');
+        if (recall) cmpOpener = recall;
+      },
+      true
+    );
+    root.addEventListener(
+      'keydown',
+      function (event) {
+        var dialog = cmpDialog(root);
+        if (!cmpIsVisible(dialog)) return;
+        if (event.key === 'Escape') {
+          cmpClosePending = true;
+          return;
+        }
+        if (event.key !== 'Tab') return;
+        var focusable = cmpFocusable(dialog);
+        if (!focusable.length) return;
+        var currentIndex = focusable.indexOf(event.target);
+        if (currentIndex === -1) return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        var nextIndex = event.shiftKey
+          ? (currentIndex - 1 + focusable.length) % focusable.length
+          : (currentIndex + 1) % focusable.length;
+        focusable[nextIndex].focus();
+      },
+      true
+    );
+  }
+
+  function bindCmpA11y() {
+    if (cmpA11yBound || typeof window.__cmp !== 'function') return;
+    cmpA11yBound = true;
+    var root = cmpRoot();
+    bindCmpRoot(root);
+    if (!root && document.documentElement) {
+      var observer = new MutationObserver(function () {
+        var currentRoot = cmpRoot();
+        if (currentRoot) {
+          bindCmpRoot(currentRoot);
+          observer.disconnect();
+        }
+      });
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+    }
+    try {
+      window.__cmp('addEventListener', ['consentscreen', cmpOnOpen, false], null);
+      window.__cmp('addEventListener', ['consentscreencustom', cmpOnOpen, false], null);
+      window.__cmp('addEventListener', ['consentscreenoff', cmpOnClose, false], null);
+    } catch (e) {
+      cmpA11yBound = false;
+    }
+  }
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', syncCookieSettingsButtons);
   } else {
@@ -157,6 +324,7 @@
   // Zustimmungs-Aenderung (Akzeptieren / Ablehnen / Widerruf). Wir reagieren live.
   function bindCmp() {
     if (typeof window.__cmp !== 'function') return false;
+    bindCmpA11y();
     try {
       window.__cmp('addEventListener', ['consent', applyConsent, false], null);
     } catch (e) {
