@@ -1,0 +1,1834 @@
+{
+  "erhoben_am": "2026-08-18T19:25:46.020Z",
+  "commit": "854de12070a2814af2a8d6acab8f6e792f3eac3d",
+  "spreadsheetId": "176a2khhd3eIJJwe23JXfuEaTTjY-qrkccxb-F52yoVA",
+  "annahmen": {
+    "norm_AT_C": -11.1,
+    "warmwasser_neue_waermepumpe": "nein",
+    "personen": 2,
+    "bestehende_heizung": "Gas-Brennwert, Kunststoff-Abgasrohr, Baujahr 1990 bis 2010",
+    "wirkungsgrad_prozent": 86,
+    "warmwasserabzug_kWh_pro_jahr": 1400,
+    "gas_umrechnung_kWh_je_m3": 10,
+    "sanierung_abbildung": "unsaniert = kein Bauteil; teilweise = genau Dach und Fenster",
+    "heizstab_leseweg": "Rechenkern verwendet den Markentreiber heizstab_vaillant, nicht die Zeilenspalten F/G.",
+    "warmwasser_a21_bis_a26": "4 Personen; Standardwerte des Rechenkerns: 1 Dusche, 1 Wanne, Größenstufe 1"
+  },
+  "scenarios": [
+    {
+      "nummer": "S1",
+      "gebaeude": "efh",
+      "baujahr": 1960,
+      "flaeche": 140,
+      "sanierung": "nein",
+      "heizsystem": "heizkoerper",
+      "verbrauch": 3200,
+      "bauteile": []
+    },
+    {
+      "nummer": "S2",
+      "gebaeude": "efh",
+      "baujahr": 1960,
+      "flaeche": 140,
+      "sanierung": "teilweise",
+      "heizsystem": "heizkoerper",
+      "verbrauch": 2400,
+      "bauteile": [
+        "Dach",
+        "Fenster"
+      ]
+    },
+    {
+      "nummer": "S3",
+      "gebaeude": "efh",
+      "baujahr": 1960,
+      "flaeche": 200,
+      "sanierung": "nein",
+      "heizsystem": "heizkoerper",
+      "verbrauch": 4600,
+      "bauteile": []
+    },
+    {
+      "nummer": "S4",
+      "gebaeude": "efh",
+      "baujahr": 1975,
+      "flaeche": 160,
+      "sanierung": "nein",
+      "heizsystem": "heizkoerper",
+      "verbrauch": 3400,
+      "bauteile": []
+    },
+    {
+      "nummer": "S5",
+      "gebaeude": "efh",
+      "baujahr": 1975,
+      "flaeche": 160,
+      "sanierung": "teilweise",
+      "heizsystem": "heizkoerper",
+      "verbrauch": 2200,
+      "bauteile": [
+        "Dach",
+        "Fenster"
+      ]
+    },
+    {
+      "nummer": "S6",
+      "gebaeude": "efh",
+      "baujahr": 1990,
+      "flaeche": 150,
+      "sanierung": "nein",
+      "heizsystem": "heizkoerper",
+      "verbrauch": 2600,
+      "bauteile": []
+    },
+    {
+      "nummer": "S7",
+      "gebaeude": "efh",
+      "baujahr": 2000,
+      "flaeche": 150,
+      "sanierung": "nein",
+      "heizsystem": "fussboden",
+      "verbrauch": 2100,
+      "bauteile": []
+    },
+    {
+      "nummer": "S8",
+      "gebaeude": "efh",
+      "baujahr": 2015,
+      "flaeche": 160,
+      "sanierung": "nein",
+      "heizsystem": "fussboden",
+      "verbrauch": 1400,
+      "bauteile": []
+    },
+    {
+      "nummer": "S9",
+      "gebaeude": "dhh",
+      "baujahr": 1970,
+      "flaeche": 120,
+      "sanierung": "nein",
+      "heizsystem": "heizkoerper",
+      "verbrauch": 2600,
+      "bauteile": []
+    },
+    {
+      "nummer": "S10",
+      "gebaeude": "rh",
+      "baujahr": 1970,
+      "flaeche": 110,
+      "sanierung": "nein",
+      "heizsystem": "heizkoerper",
+      "verbrauch": 2100,
+      "bauteile": []
+    },
+    {
+      "nummer": "S11",
+      "gebaeude": "zfh",
+      "baujahr": 1965,
+      "flaeche": 220,
+      "sanierung": "nein",
+      "heizsystem": "heizkoerper",
+      "verbrauch": 5200,
+      "bauteile": []
+    },
+    {
+      "nummer": "S12",
+      "gebaeude": "efh",
+      "baujahr": 1930,
+      "flaeche": 180,
+      "sanierung": "teilweise",
+      "heizsystem": "heizkoerper",
+      "verbrauch": 4800,
+      "bauteile": [
+        "Dach",
+        "Fenster"
+      ]
+    }
+  ],
+  "a": [
+    {
+      "nummer": "A1",
+      "heizlast_kW": 5,
+      "auslegung_kW": 5,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-07",
+      "anzahl": 1,
+      "leistung_kW": 5.9,
+      "leistungsanteil": 118.7,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A1",
+      "heizlast_kW": 5,
+      "auslegung_kW": 5,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM plus 8.1",
+      "modell": "Vaillant VWL 35/8.1 A",
+      "anzahl": 1,
+      "leistung_kW": 4.3,
+      "leistungsanteil": 85.7,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A2",
+      "heizlast_kW": 7,
+      "auslegung_kW": 7,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-07",
+      "anzahl": 1,
+      "leistung_kW": 5.9,
+      "leistungsanteil": 84.8,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A2",
+      "heizlast_kW": 7,
+      "auslegung_kW": 7,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM plus 8.1",
+      "modell": "Vaillant VWL 55/8.1 A",
+      "anzahl": 1,
+      "leistung_kW": 5.1,
+      "leistungsanteil": 73.1,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A3",
+      "heizlast_kW": 9,
+      "auslegung_kW": 9,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-10",
+      "anzahl": 1,
+      "leistung_kW": 7.8,
+      "leistungsanteil": 86.2,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A3",
+      "heizlast_kW": 9,
+      "auslegung_kW": 9,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM plus 8.1",
+      "modell": "Vaillant VWL 75/8.1 A",
+      "anzahl": 1,
+      "leistung_kW": 6.6,
+      "leistungsanteil": 73.9,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A4",
+      "heizlast_kW": 11,
+      "auslegung_kW": 11,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-10",
+      "anzahl": 1,
+      "leistung_kW": 7.8,
+      "leistungsanteil": 70.5,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A4",
+      "heizlast_kW": 11,
+      "auslegung_kW": 11,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM pro 7.1",
+      "modell": "Vaillant VWL 115/7.1 A",
+      "anzahl": 1,
+      "leistung_kW": 9.5,
+      "leistungsanteil": 86.2,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A5",
+      "heizlast_kW": 13,
+      "auslegung_kW": 13,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-16/20",
+      "anzahl": 1,
+      "leistung_kW": 14.1,
+      "leistungsanteil": 108.5,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A5",
+      "heizlast_kW": 13,
+      "auslegung_kW": 13,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM pro 7.1",
+      "modell": "Vaillant VWL 115/7.1 A",
+      "anzahl": 1,
+      "leistung_kW": 9.5,
+      "leistungsanteil": 73,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A6",
+      "heizlast_kW": 15,
+      "auslegung_kW": 15,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-16/20",
+      "anzahl": 1,
+      "leistung_kW": 14.1,
+      "leistungsanteil": 94,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A6",
+      "heizlast_kW": 15,
+      "auslegung_kW": 15,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM plus 8.1",
+      "modell": "Vaillant VWL 125/8.1 A",
+      "anzahl": 1,
+      "leistung_kW": 11.1,
+      "leistungsanteil": 73.9,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A7",
+      "heizlast_kW": 17,
+      "auslegung_kW": 17,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-16/20",
+      "anzahl": 1,
+      "leistung_kW": 14.1,
+      "leistungsanteil": 83,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A7",
+      "heizlast_kW": 17,
+      "auslegung_kW": 17,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM plus 8.1",
+      "modell": "2× Vaillant VWL 75/8.1 A (Kaskade)",
+      "anzahl": 2,
+      "leistung_kW": 13.3,
+      "leistungsanteil": 78.2,
+      "kaskade": true,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A8",
+      "heizlast_kW": 20,
+      "auslegung_kW": 20,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-16/20",
+      "anzahl": 1,
+      "leistung_kW": 14.1,
+      "leistungsanteil": 70.5,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A8",
+      "heizlast_kW": 20,
+      "auslegung_kW": 20,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM perform 8.1",
+      "modell": "Vaillant VWL 205/8.1 A S2 Q",
+      "anzahl": 1,
+      "leistung_kW": 18.8,
+      "leistungsanteil": 93.9,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A9",
+      "heizlast_kW": 23,
+      "auslegung_kW": 23,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-20/24",
+      "anzahl": 1,
+      "leistung_kW": 17.8,
+      "leistungsanteil": 77.6,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A9",
+      "heizlast_kW": 23,
+      "auslegung_kW": 23,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM perform 8.1",
+      "modell": "Vaillant VWL 205/8.1 A S2 Q",
+      "anzahl": 1,
+      "leistung_kW": 18.8,
+      "leistungsanteil": 81.7,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A10",
+      "heizlast_kW": 26,
+      "auslegung_kW": 26,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "2× Wolf CHA-16/20 (Kaskade)",
+      "anzahl": 2,
+      "leistung_kW": 28.2,
+      "leistungsanteil": 108.5,
+      "kaskade": true,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A10",
+      "heizlast_kW": 26,
+      "auslegung_kW": 26,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM perform 8.1",
+      "modell": "Vaillant VWL 205/8.1 A S2 Q",
+      "anzahl": 1,
+      "leistung_kW": 18.8,
+      "leistungsanteil": 72.3,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A11",
+      "heizlast_kW": 5,
+      "auslegung_kW": 5,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-07",
+      "anzahl": 1,
+      "leistung_kW": 6.3,
+      "leistungsanteil": 126.3,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A11",
+      "heizlast_kW": 5,
+      "auslegung_kW": 5,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM plus 8.1",
+      "modell": "Vaillant VWL 35/8.1 A",
+      "anzahl": 1,
+      "leistung_kW": 4.5,
+      "leistungsanteil": 89.8,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A12",
+      "heizlast_kW": 7,
+      "auslegung_kW": 7,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-07",
+      "anzahl": 1,
+      "leistung_kW": 6.3,
+      "leistungsanteil": 90.2,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A12",
+      "heizlast_kW": 7,
+      "auslegung_kW": 7,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM plus 8.1",
+      "modell": "Vaillant VWL 55/8.1 A",
+      "anzahl": 1,
+      "leistung_kW": 5.5,
+      "leistungsanteil": 78.3,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A13",
+      "heizlast_kW": 9,
+      "auslegung_kW": 9,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-07",
+      "anzahl": 1,
+      "leistung_kW": 6.3,
+      "leistungsanteil": 70.1,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A13",
+      "heizlast_kW": 9,
+      "auslegung_kW": 9,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM pro 7.1",
+      "modell": "Vaillant VWL 75/7.1 A",
+      "anzahl": 1,
+      "leistung_kW": 6.5,
+      "leistungsanteil": 72.7,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A14",
+      "heizlast_kW": 11,
+      "auslegung_kW": 11,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-10",
+      "anzahl": 1,
+      "leistung_kW": 8.9,
+      "leistungsanteil": 80.6,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A14",
+      "heizlast_kW": 11,
+      "auslegung_kW": 11,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM plus 8.1",
+      "modell": "Vaillant VWL 105/8.1 A",
+      "anzahl": 1,
+      "leistung_kW": 10.2,
+      "leistungsanteil": 93,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A15",
+      "heizlast_kW": 13,
+      "auslegung_kW": 13,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-16/20",
+      "anzahl": 1,
+      "leistung_kW": 15,
+      "leistungsanteil": 115.4,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A15",
+      "heizlast_kW": 13,
+      "auslegung_kW": 13,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM plus 8.1",
+      "modell": "Vaillant VWL 105/8.1 A",
+      "anzahl": 1,
+      "leistung_kW": 10.2,
+      "leistungsanteil": 78.7,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A16",
+      "heizlast_kW": 15,
+      "auslegung_kW": 15,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-16/20",
+      "anzahl": 1,
+      "leistung_kW": 15,
+      "leistungsanteil": 100,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A16",
+      "heizlast_kW": 15,
+      "auslegung_kW": 15,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM pro 7.1",
+      "modell": "Vaillant VWL 115/7.1 A",
+      "anzahl": 1,
+      "leistung_kW": 11.5,
+      "leistungsanteil": 76.5,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A17",
+      "heizlast_kW": 17,
+      "auslegung_kW": 17,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-16/20",
+      "anzahl": 1,
+      "leistung_kW": 15,
+      "leistungsanteil": 88.3,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A17",
+      "heizlast_kW": 17,
+      "auslegung_kW": 17,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM pro 7.1",
+      "modell": "2× Vaillant VWL 75/7.1 A (Kaskade)",
+      "anzahl": 2,
+      "leistung_kW": 13.1,
+      "leistungsanteil": 77,
+      "kaskade": true,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A18",
+      "heizlast_kW": 20,
+      "auslegung_kW": 20,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-16/20",
+      "anzahl": 1,
+      "leistung_kW": 15,
+      "leistungsanteil": 75,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A18",
+      "heizlast_kW": 20,
+      "auslegung_kW": 20,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM plus 8.1",
+      "modell": "2× Vaillant VWL 75/8.1 A (Kaskade)",
+      "anzahl": 2,
+      "leistung_kW": 14.6,
+      "leistungsanteil": 72.8,
+      "kaskade": true,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A19",
+      "heizlast_kW": 23,
+      "auslegung_kW": 23,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-20/24",
+      "anzahl": 1,
+      "leistung_kW": 18.8,
+      "leistungsanteil": 81.6,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A19",
+      "heizlast_kW": 23,
+      "auslegung_kW": 23,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM perform 8.1",
+      "modell": "Vaillant VWL 205/8.1 A S2 Q",
+      "anzahl": 1,
+      "leistung_kW": 16.3,
+      "leistungsanteil": 71.1,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A20",
+      "heizlast_kW": 26,
+      "auslegung_kW": 26,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-20/24",
+      "anzahl": 1,
+      "leistung_kW": 18.8,
+      "leistungsanteil": 72.2,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A20",
+      "heizlast_kW": 26,
+      "auslegung_kW": 26,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "nein",
+      "personen": 0,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM plus 8.1",
+      "modell": "2× Vaillant VWL 105/8.1 A (Kaskade)",
+      "anzahl": 2,
+      "leistung_kW": 20.5,
+      "leistungsanteil": 78.7,
+      "kaskade": true,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A21",
+      "heizlast_kW": 9,
+      "auslegung_kW": 9,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "ja",
+      "personen": 4,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-10",
+      "anzahl": 1,
+      "leistung_kW": 7.8,
+      "leistungsanteil": 86.2,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A21",
+      "heizlast_kW": 9,
+      "auslegung_kW": 9,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "ja",
+      "personen": 4,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM plus 8.1",
+      "modell": "Vaillant VWL 75/8.1 A",
+      "anzahl": 1,
+      "leistung_kW": 6.6,
+      "leistungsanteil": 73.9,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A22",
+      "heizlast_kW": 15,
+      "auslegung_kW": 15,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "ja",
+      "personen": 4,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-16/20",
+      "anzahl": 1,
+      "leistung_kW": 14.1,
+      "leistungsanteil": 94,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A22",
+      "heizlast_kW": 15,
+      "auslegung_kW": 15,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "ja",
+      "personen": 4,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM plus 8.1",
+      "modell": "Vaillant VWL 125/8.1 A",
+      "anzahl": 1,
+      "leistung_kW": 11.1,
+      "leistungsanteil": 73.9,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A23",
+      "heizlast_kW": 23,
+      "auslegung_kW": 23,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "ja",
+      "personen": 4,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-20/24",
+      "anzahl": 1,
+      "leistung_kW": 17.8,
+      "leistungsanteil": 77.6,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A23",
+      "heizlast_kW": 23,
+      "auslegung_kW": 23,
+      "vorlauf_C": 55,
+      "uebergabe": "panel",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "ja",
+      "personen": 4,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM perform 8.1",
+      "modell": "Vaillant VWL 205/8.1 A S2 Q",
+      "anzahl": 1,
+      "leistung_kW": 18.8,
+      "leistungsanteil": 81.7,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A24",
+      "heizlast_kW": 9,
+      "auslegung_kW": 9,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "ja",
+      "personen": 4,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-07",
+      "anzahl": 1,
+      "leistung_kW": 6.3,
+      "leistungsanteil": 70.1,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A24",
+      "heizlast_kW": 9,
+      "auslegung_kW": 9,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "ja",
+      "personen": 4,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM pro 7.1",
+      "modell": "Vaillant VWL 75/7.1 A",
+      "anzahl": 1,
+      "leistung_kW": 6.5,
+      "leistungsanteil": 72.7,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A25",
+      "heizlast_kW": 15,
+      "auslegung_kW": 15,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "ja",
+      "personen": 4,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-16/20",
+      "anzahl": 1,
+      "leistung_kW": 15,
+      "leistungsanteil": 100,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A25",
+      "heizlast_kW": 15,
+      "auslegung_kW": 15,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "ja",
+      "personen": 4,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM pro 7.1",
+      "modell": "Vaillant VWL 115/7.1 A",
+      "anzahl": 1,
+      "leistung_kW": 11.5,
+      "leistungsanteil": 76.5,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    },
+    {
+      "nummer": "A26",
+      "heizlast_kW": 23,
+      "auslegung_kW": 23,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "ja",
+      "personen": 4,
+      "marke": "wolf",
+      "baureihe": "Wolf CHA",
+      "modell": "Wolf CHA-20/24",
+      "anzahl": 1,
+      "leistung_kW": 18.8,
+      "leistungsanteil": 81.6,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 9
+    },
+    {
+      "nummer": "A26",
+      "heizlast_kW": 23,
+      "auslegung_kW": 23,
+      "vorlauf_C": 35,
+      "uebergabe": "underfloor",
+      "norm_AT_C": -11.1,
+      "warmwasser_ueber_wp": "ja",
+      "personen": 4,
+      "marke": "vaillant",
+      "baureihe": "aroTHERM perform 8.1",
+      "modell": "Vaillant VWL 205/8.1 A S2 Q",
+      "anzahl": 1,
+      "leistung_kW": 16.3,
+      "leistungsanteil": 71.1,
+      "kaskade": false,
+      "markentreiber_heizstab_kW": 8.54
+    }
+  ],
+  "b": [
+    {
+      "nummer": "S1",
+      "ergebnis": {
+        "bedarf": 14.5,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 6874,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-16/20",
+            "kaskade": false,
+            "brutto": 41718,
+            "eigenanteil": 19318,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 125/8.1 A",
+            "kaskade": false,
+            "brutto": 46159,
+            "eigenanteil": 23195,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": false
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S2",
+      "ergebnis": {
+        "bedarf": 10.7,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 5063,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-10",
+            "kaskade": false,
+            "brutto": 35349,
+            "eigenanteil": 12949,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": false
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 115/7.1 A",
+            "kaskade": false,
+            "brutto": 40276,
+            "eigenanteil": 17876,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S3",
+      "ergebnis": {
+        "bedarf": 21.2,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 10042,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-20/24",
+            "kaskade": false,
+            "brutto": 48815,
+            "eigenanteil": 24789,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 205/8.1 A S2 Q",
+            "kaskade": false,
+            "brutto": 0,
+            "eigenanteil": null,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S4",
+      "ergebnis": {
+        "bedarf": 15.5,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 7326,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-16/20",
+            "kaskade": false,
+            "brutto": 41718,
+            "eigenanteil": 19318,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 125/8.1 A",
+            "kaskade": false,
+            "brutto": 46159,
+            "eigenanteil": 23195,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": false
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S5",
+      "ergebnis": {
+        "bedarf": 9.7,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 4611,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-10",
+            "kaskade": false,
+            "brutto": 35349,
+            "eigenanteil": 12949,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 115/7.1 A",
+            "kaskade": false,
+            "brutto": 40276,
+            "eigenanteil": 17876,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S6",
+      "ergebnis": {
+        "bedarf": 11.6,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 5516,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-16/20",
+            "kaskade": false,
+            "brutto": 41718,
+            "eigenanteil": 19318,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 115/7.1 A",
+            "kaskade": false,
+            "brutto": 40276,
+            "eigenanteil": 17876,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S7",
+      "ergebnis": {
+        "bedarf": 9.3,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 4384,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-10",
+            "kaskade": false,
+            "brutto": 35349,
+            "eigenanteil": 12949,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 75/7.1 A",
+            "kaskade": false,
+            "brutto": 32755,
+            "eigenanteil": 10355,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": false
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S8",
+      "ergebnis": {
+        "bedarf": 5.9,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 2800,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-07",
+            "kaskade": false,
+            "brutto": 30026,
+            "eigenanteil": 7626,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 35/8.1 A",
+            "kaskade": false,
+            "brutto": 0,
+            "eigenanteil": null,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": false
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S9",
+      "ergebnis": {
+        "bedarf": 11.6,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 5516,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-16/20",
+            "kaskade": false,
+            "brutto": 41718,
+            "eigenanteil": 19318,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 115/7.1 A",
+            "kaskade": false,
+            "brutto": 40276,
+            "eigenanteil": 17876,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S10",
+      "ergebnis": {
+        "bedarf": 9.3,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 4384,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-10",
+            "kaskade": false,
+            "brutto": 35349,
+            "eigenanteil": 12949,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 75/8.1 A",
+            "kaskade": false,
+            "brutto": 32755,
+            "eigenanteil": 10355,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": false
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S11",
+      "ergebnis": {
+        "bedarf": 24.1,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 11400,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-20/24",
+            "kaskade": false,
+            "brutto": 48815,
+            "eigenanteil": 24789,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": false
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 205/8.1 A S2 Q",
+            "kaskade": false,
+            "brutto": 0,
+            "eigenanteil": null,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": false
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S12",
+      "ergebnis": {
+        "bedarf": 22.2,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 10495,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-20/24",
+            "kaskade": false,
+            "brutto": 48815,
+            "eigenanteil": 24789,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 205/8.1 A S2 Q",
+            "kaskade": false,
+            "brutto": 0,
+            "eigenanteil": null,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          }
+        }
+      }
+    }
+  ],
+  "c": [
+    {
+      "nummer": "S1",
+      "ergebnis": {
+        "bedarf": 14,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 6632,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-16/20",
+            "kaskade": false,
+            "brutto": 41718,
+            "eigenanteil": 19318,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 105/8.1 A",
+            "kaskade": false,
+            "brutto": 40276,
+            "eigenanteil": 17876,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": false
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S2",
+      "ergebnis": {
+        "bedarf": 10.9,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 5158,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-10",
+            "kaskade": false,
+            "brutto": 35349,
+            "eigenanteil": 12949,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": false
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 115/7.1 A",
+            "kaskade": false,
+            "brutto": 40276,
+            "eigenanteil": 17876,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S3",
+      "ergebnis": {
+        "bedarf": 20,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 9474,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-16/20",
+            "kaskade": false,
+            "brutto": 41718,
+            "eigenanteil": 19318,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": false
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 205/8.1 A S2 Q",
+            "kaskade": false,
+            "brutto": 0,
+            "eigenanteil": null,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S4",
+      "ergebnis": {
+        "bedarf": 16,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 7579,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-16/20",
+            "kaskade": false,
+            "brutto": 41718,
+            "eigenanteil": 19318,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "2× Vaillant VWL 75/7.1 A (Kaskade)",
+            "kaskade": true,
+            "brutto": 0,
+            "eigenanteil": null,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": false
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S5",
+      "ergebnis": {
+        "bedarf": 12.4,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 5895,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-16/20",
+            "kaskade": false,
+            "brutto": 41718,
+            "eigenanteil": 19318,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 115/7.1 A",
+            "kaskade": false,
+            "brutto": 40276,
+            "eigenanteil": 17876,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": false
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S6",
+      "ergebnis": {
+        "bedarf": 11.7,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 5526,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-16/20",
+            "kaskade": false,
+            "brutto": 41718,
+            "eigenanteil": 19318,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 115/7.1 A",
+            "kaskade": false,
+            "brutto": 40276,
+            "eigenanteil": 17876,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S7",
+      "ergebnis": {
+        "bedarf": 8.3,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 3947,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-07",
+            "kaskade": false,
+            "brutto": 30026,
+            "eigenanteil": 7626,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": false
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 75/7.1 A",
+            "kaskade": false,
+            "brutto": 32755,
+            "eigenanteil": 10355,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": false
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S8",
+      "ergebnis": {
+        "bedarf": 5.3,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 2526,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-07",
+            "kaskade": false,
+            "brutto": 30026,
+            "eigenanteil": 7626,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 35/8.1 A",
+            "kaskade": false,
+            "brutto": 0,
+            "eigenanteil": null,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S9",
+      "ergebnis": {
+        "bedarf": 10.8,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 5116,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-10",
+            "kaskade": false,
+            "brutto": 35349,
+            "eigenanteil": 12949,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": false
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 115/7.1 A",
+            "kaskade": false,
+            "brutto": 40276,
+            "eigenanteil": 17876,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S10",
+      "ergebnis": {
+        "bedarf": 9.4,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 4429,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-10",
+            "kaskade": false,
+            "brutto": 35349,
+            "eigenanteil": 12949,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 75/8.1 A",
+            "kaskade": false,
+            "brutto": 32755,
+            "eigenanteil": 10355,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": false
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S11",
+      "ergebnis": {
+        "bedarf": 20.9,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 9900,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-20/24",
+            "kaskade": false,
+            "brutto": 48815,
+            "eigenanteil": 24789,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 205/8.1 A S2 Q",
+            "kaskade": false,
+            "brutto": 0,
+            "eigenanteil": null,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          }
+        }
+      }
+    },
+    {
+      "nummer": "S12",
+      "ergebnis": {
+        "bedarf": 14,
+        "fuehrung": "heizung",
+        "stromverbrauch_kwh": 6632,
+        "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+        "marken": {
+          "wolf": {
+            "deckt": true,
+            "modell": "Wolf CHA-16/20",
+            "kaskade": false,
+            "brutto": 41718,
+            "eigenanteil": 19318,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": true
+          },
+          "vaillant": {
+            "deckt": true,
+            "modell": "Vaillant VWL 105/8.1 A",
+            "kaskade": false,
+            "brutto": 40276,
+            "eigenanteil": 17876,
+            "eigenanteilProklima": null,
+            "vorlaeufig": false,
+            "ueberSollband": false
+          }
+        }
+      }
+    }
+  ]
+}
