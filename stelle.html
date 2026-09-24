@@ -389,7 +389,7 @@
     <div class="st-wrap">
       <section class="st-formkarte" id="bewerben" aria-labelledby="stFormTitel" tabindex="-1">
         <h2 id="stFormTitel">Kurzbewerbung</h2>
-        <p class="st-rolle-info" id="stRolleInfo">Ohne Anschreiben und ohne Lebenslauf. Den reichst du später bequem im Bewerber-Portal nach.</p>
+        <p class="st-rolle-info" id="stRolleInfo">Ohne Anschreiben und ohne Lebenslauf. Den kannst du später nachreichen.</p>
         <noscript><p class="st-fehler">Für das Formular braucht dein Browser JavaScript. Schreib uns sonst einfach an <a href="mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk">bewerbung@herowerk.de</a>.</p></noscript>
         <div class="st-fortschritt" id="stFortschritt">
           <span class="st-fortschritt-text" id="stSchrittText" aria-live="polite">Schritt 1 von 5</span>
@@ -484,8 +484,11 @@
 
         <div class="st-erfolg" id="stErfolg" role="status" aria-live="polite" hidden>
           <h2 tabindex="-1" id="stErfolgTitel">Danke, <span id="stErfolgName"></span>!</h2>
-          <p>Deine Bewerbung ist bei uns eingegangen. Wir melden uns innerhalb von 48 Stunden.</p>
-          <p>Du bekommst gleich eine E-Mail mit dem Link zu deinem persönlichen Bewerber-Portal. Dort kannst du jederzeit Lebenslauf, Zeugnisse und Zertifikate hochladen und sehen, wie es weitergeht.</p>
+          <!-- Bewusst KEIN Versprechen einer Portal-Mail: in der Abnahme am 24.09.2026 kam
+               nach sieben Einsendungen ueber dieses Formular keine Mail an die Testadressen,
+               nur die interne HubSpot-Benachrichtigung. Versprochen wird nur, was belegt ist. -->
+          <p>Deine Bewerbung ist bei uns eingegangen. Wir melden uns innerhalb von 48&nbsp;Stunden telefonisch oder per E-Mail.</p>
+          <p>Lebenslauf und Zeugnisse brauchst du jetzt noch nicht. Die kannst du später nachreichen, zum Beispiel an <a class="st-link" href="mailto:bewerbung@herowerk.de?subject=Unterlagen%20zu%20meiner%20Bewerbung">bewerbung@herowerk.de</a>.</p>
         </div>
       </section>
     </div>
@@ -572,7 +575,7 @@
         document.getElementById('stDetails').hidden = false;
         document.getElementById('stFeldRolle').value = rolle;
         document.getElementById('stRolleInfo').textContent =
-          'Bewerbung als ' + s.titel + '. Ohne Anschreiben, den Lebenslauf reichst du später im Bewerber-Portal nach.';
+          'Bewerbung als ' + s.titel + '. Ohne Anschreiben, den Lebenslauf kannst du später nachreichen.';
       }
 
       function wahlKnopf(name, wert, text) {
