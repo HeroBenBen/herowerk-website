@@ -158,7 +158,10 @@
     .st-formkarte h2 { font: 800 24px/1.2 'Barlow', 'Inter', sans-serif; margin: 0 0 4px; }
     .st-fortschritt { margin: 12px 0 16px; }
     .st-fortschritt-text { font-size: 14px; font-weight: 700; color: var(--color-text-secondary); }
-    .st-balken { height: 8px; border-radius: 999px; background: var(--color-border-subtle); overflow: hidden; margin-top: 6px; }
+    /* Schiene im Dunkelmodus auf Schiefer: --color-border-subtle ist dort gleich der
+       Kartenfarbe und machte die Schiene unsichtbar (gesehen im Bildschirmfoto 24.09.). */
+    .st-balken { height: 8px; border-radius: 999px; background: var(--schiefer); overflow: hidden; margin-top: 6px; }
+    [data-theme='light'] .st-balken { background: var(--color-border-subtle); }
     .st-balken-fuell { height: 100%; width: 0; background: var(--color-accent-primary); border-radius: 999px; transition: width 0.25s ease; }
     @media (prefers-reduced-motion: reduce) { .st-balken-fuell { transition: none; } }
     .st-schritt { border: 0; margin: 0; padding: 0; min-width: 0; }
