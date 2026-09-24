@@ -25,7 +25,8 @@
     "build:seo": "node scripts/build-structured-data.mjs",
     "build:seo:jobs": "node scripts/build-structured-data.mjs --jobs",
     "build:bausteine": "node scripts/build-bausteine.mjs",
-    "verify:bausteine": "node scripts/build-bausteine.mjs --check"
+    "verify:bausteine": "node scripts/build-bausteine.mjs --check",
+    "verify:stelle-live": "node scripts/verify-stelle-live.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",

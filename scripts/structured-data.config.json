@@ -35,6 +35,7 @@
     "barrierefreiheit": "Rechtstext, kein Ratgeber-Artikel",
     "hinweise": "Rechtstext; der Fragenkatalog wird ausgezeichnet, die Seite selbst nicht als Artikel",
     "bewerbung": "Formularseite, noindex",
+    "stelle": "Kampagnen-Zielseite mit Kurzformular, noindex; die Stellen sind auf /karriere als JobPosting ausgezeichnet",
     "anfrage": "Funnel, traegt bereits LocalBusiness und WebPage",
     "kostenvergleich-waermepumpe": "Rechner ohne redaktionellen Artikeltext"
   }

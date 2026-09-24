@@ -65,6 +65,8 @@ const KERNSEITEN = [
   '/waermepumpe-hannover.html',
   '/waermepumpe-laerm.html',
   '/kostenvergleich-waermepumpe.html',
+  // T1157: Kampagnen-Zielseite, stellvertretend mit der laengsten Rollenbezeichnung.
+  '/stelle.html?role=anlagenmechaniker',
 ];
 
 // ── Statischer Server auf dem Arbeitsstand ──────────────────────────────────
