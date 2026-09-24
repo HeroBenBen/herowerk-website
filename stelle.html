@@ -37,10 +37,8 @@
     gtag('set', 'ads_data_redaction', true);
     gtag('set', 'url_passthrough', true);
   </script>
-  <script src="js/consent.js?v=99d7e92283"></script>
+  <script src="js/consent.js?v=99d7e92283" defer></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preload" href="/fonts/barlow-800.woff2?v=231d487a99" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/fonts/inter-400.woff2?v=8909904ab6" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/fonts.css?v=d3f3999a2f">
   <link rel="stylesheet" href="tokens.css?v=bb2619605a">
   <link rel="icon" href="/favicon.ico" sizes="any" type="image/x-icon">
@@ -87,21 +85,34 @@
     .st-anruf {
       display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 12px;
       border: 1px solid var(--color-border-strong); border-radius: 999px;
-      font-size: 14px; font-weight: 600; text-decoration: none; white-space: nowrap;
+      font-size: 14px; font-weight: 700; text-decoration: none; white-space: nowrap;
     }
     .st-kopf .theme-toggle { flex: none; }
+    /* Umschalter hier mit Inter 400/700 statt 500/700: spart eine Schriftdatei (25 KB).
+       Gemessen 24.09.2026, Lighthouse Mobil simuliert: LCP 2,27 s mit Vorladen und vier
+       Schnitten, 1,95 s ohne Vorladen mit drei Schnitten. Deshalb auch kein preload. */
+    .st-kopf .theme-toggle .tt-feld { font-weight: 400; }
+    .st-kopf .theme-toggle .tt-feld[data-aktiv='true'] { font-weight: 700; }
+    /* Schmale Telefone: Logo, Anruf und Umschalter passen nebeneinander nur, wenn der
+       Anrufknopf auf sein Sinnbild schrumpft (Raster-Gate R1/R6 bei 320 bis 375 px).
+       Unter 360 px entfaellt er ganz, die Nummer steht im Fuss. */
+    @media (max-width: 420px) {
+      .st-anruf { width: 44px; padding: 0; justify-content: center; }
+      .st-anruf-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+    }
+    @media (max-width: 359px) { .st-anruf { display: none; } }
 
     /* Erster Bildschirm: Rolle, Gehalt, Ort, Knopf */
     .st-held { padding: 20px 0 8px; }
     .st-marke {
-      display: inline-block; font-size: 13px; font-weight: 600; letter-spacing: 0.04em;
+      display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: 0.04em;
       text-transform: uppercase; color: var(--color-text-secondary); margin: 0 0 8px;
     }
     .st-titel {
       font: 800 clamp(26px, 7vw, 40px)/1.12 'Barlow', 'Inter', sans-serif;
       margin: 0 0 12px; letter-spacing: -0.005em; overflow-wrap: anywhere; hyphens: auto;
     }
-    .st-titel .st-mwd { font-size: 0.6em; font-weight: 700; color: var(--color-text-secondary); white-space: nowrap; }
+    .st-titel .st-mwd { font-size: 0.6em; font-weight: 800; color: var(--color-text-secondary); white-space: nowrap; }
     .st-fakten { list-style: none; margin: 0 0 16px; padding: 0; display: grid; gap: 8px; }
     .st-fakt {
       display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start;
@@ -146,7 +157,7 @@
     [data-theme='light'] .st-formkarte { background: #ffffff; border: 1px solid var(--color-border-subtle); box-shadow: 0 8px 28px var(--color-shadow); }
     .st-formkarte h2 { font: 800 24px/1.2 'Barlow', 'Inter', sans-serif; margin: 0 0 4px; }
     .st-fortschritt { margin: 12px 0 16px; }
-    .st-fortschritt-text { font-size: 14px; font-weight: 600; color: var(--color-text-secondary); }
+    .st-fortschritt-text { font-size: 14px; font-weight: 700; color: var(--color-text-secondary); }
     .st-balken { height: 8px; border-radius: 999px; background: var(--color-border-subtle); overflow: hidden; margin-top: 6px; }
     .st-balken-fuell { height: 100%; width: 0; background: var(--color-accent-primary); border-radius: 999px; transition: width 0.25s ease; }
     @media (prefers-reduced-motion: reduce) { .st-balken-fuell { transition: none; } }
@@ -170,7 +181,7 @@
     .st-wahl input:checked + span::before { border-color: var(--color-accent-primary); background: var(--color-accent-primary); box-shadow: inset 0 0 0 3px var(--color-surface-tertiary); }
     [data-theme='light'] .st-wahl input:checked + span::before { box-shadow: inset 0 0 0 3px #ffffff; }
     .st-feld { display: grid; gap: 6px; margin: 0 0 14px; }
-    .st-feld label { font-weight: 600; font-size: 16px; }
+    .st-feld label { font-weight: 700; font-size: 16px; }
     .st-feld input[type='text'], .st-feld input[type='email'], .st-feld input[type='tel'], .st-feld input[type='date'] {
       width: 100%; min-height: 52px; padding: 12px 14px; border-radius: 10px; font: 400 16px/1.3 'Inter', sans-serif;
       background: var(--schiefer); color: var(--color-text-primary); border: 2px solid var(--color-border-strong);
@@ -185,9 +196,9 @@
     .st-steuer .st-knopf { flex: 1; box-shadow: none; }
     .st-zweit {
       min-height: 56px; padding: 0 18px; border-radius: 12px; cursor: pointer; background: transparent;
-      border: 2px solid var(--color-border-strong); color: var(--color-text-primary); font: 600 16px/1 'Inter', sans-serif;
+      border: 2px solid var(--color-border-strong); color: var(--color-text-primary); font: 700 16px/1 'Inter', sans-serif;
     }
-    .st-fehler { color: var(--color-error); font-weight: 600; margin: 12px 0 0; }
+    .st-fehler { color: var(--color-error); font-weight: 700; margin: 12px 0 0; }
     [data-theme='light'] .st-fehler { color: #b3261e; }
     .st-fehler a { color: inherit; }
     .st-erfolg h2 { margin-bottom: 8px; }
@@ -219,7 +230,7 @@
   <header class="st-kopf">
     <div class="st-wrap">
       <a class="st-logo" href="/" aria-label="HeroWerk, zur Startseite"><img src="herowerk-logo-stacked.png?v=3805a3a2a6" alt="HeroWerk, Meisterbetrieb für Wärmepumpen" class="logo-dunkel" width="607" height="337" decoding="async"><img src="herowerk-logo-stacked-light.png?v=8c40e63d7e" alt="" aria-hidden="true" class="logo-hell" width="607" height="337" decoding="async" loading="lazy"></a>
-      <a class="st-anruf" href="tel:+4951315059750"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>Anrufen</a>
+      <a class="st-anruf" href="tel:+4951315059750"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg><span class="st-anruf-text">Anrufen</span></a>
       <button type="button" class="theme-toggle" data-theme-toggle data-theme-switch>Hell oder Dunkel</button>
     </div>
   </header>
@@ -241,6 +252,17 @@
         </ul>
         <a class="st-knopf btn-primary" href="#bewerben" data-bewerben="oben">Jetzt in 2 Minuten bewerben</a>
         <p class="st-knopf-hinweis">Ohne Anschreiben. Wir melden uns innerhalb von 48&nbsp;Stunden.</p>
+      </div>
+    </section>
+
+
+    <section class="st-block" id="stDetails" aria-labelledby="stDetailsTitel" hidden>
+      <div class="st-wrap">
+        <h2 id="stDetailsTitel">Darauf kannst du dich freuen</h2>
+        <p class="st-teaser" id="stTeaser"></p>
+        <ul class="st-liste" id="stFreuen"></ul>
+        <h2 style="margin-top: 24px;">Das bringst du mit</h2>
+        <ul class="st-liste" id="stProfil"></ul>
       </div>
     </section>
 
@@ -349,18 +371,20 @@
         document.getElementById('stGehaltNeben').textContent = s.gehaltNeben;
         document.getElementById('stGehaltFakt').hidden = false;
         document.getElementById('stOrtNeben').textContent = s.ortNeben;
+        // Details im selben Durchlauf fuellen: der Teaser ist auf dem Telefon oft das
+        // groesste Textelement (LCP). Spaeter nachgefuellt verschob er die LCP-Messung.
+        document.getElementById('stTeaser').textContent = s.teaser;
+        ['freuen', 'profil'].forEach(function (feld) {
+          var ul = document.getElementById(feld === 'freuen' ? 'stFreuen' : 'stProfil');
+          s[feld].forEach(function (t) {
+            var li = document.createElement('li');
+            li.textContent = t;
+            ul.appendChild(li);
+          });
+        });
+        document.getElementById('stDetails').hidden = false;
       })();
     </script>
-
-    <section class="st-block" id="stDetails" aria-labelledby="stDetailsTitel" hidden>
-      <div class="st-wrap">
-        <h2 id="stDetailsTitel">Darauf kannst du dich freuen</h2>
-        <p class="st-teaser" id="stTeaser"></p>
-        <ul class="st-liste" id="stFreuen"></ul>
-        <h2 style="margin-top: 24px;">Das bringst du mit</h2>
-        <ul class="st-liste" id="stProfil"></ul>
-      </div>
-    </section>
 
     <div class="st-wrap">
       <section class="st-formkarte" id="bewerben" aria-labelledby="stFormTitel" tabindex="-1">
