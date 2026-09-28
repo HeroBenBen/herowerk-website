@@ -227,6 +227,9 @@
     .st-fuss button { background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
     .st-fuss button[hidden] { display: none; }
   </style>
+<style>
+html:has(.kb-form){scroll-behavior:auto}html:has(.kb-form) .mobile-bottom-bar{display:none!important}.kb-form input,.kb-form button,.kb-form legend{scroll-margin-block:120px}.kb-form{display:block!important}.kb-form[hidden],.kb-step[hidden]{display:none!important}.kb-step{border:0;padding:0;margin:22px 0;min-width:0}.kb-step legend{font-size:clamp(21px,3vw,28px);font-weight:700;line-height:1.3;margin-bottom:16px}.kb-choices{display:grid;grid-template-columns:1fr;gap:10px}.kb-choice{display:flex;align-items:center;gap:12px;padding:15px 16px;border:1px solid #697174;border-radius:12px;cursor:pointer;background:rgba(128,128,128,.08);line-height:1.4}.kb-choice:has(input:checked){border-color:#8ba600;box-shadow:inset 0 0 0 1px #8ba600;background:rgba(183,217,0,.13)}.kb-choice:focus-within{outline:3px solid #91ad00;outline-offset:3px}.kb-choice input{accent-color:#6d8300;width:20px!important;height:20px!important;flex:0 0 20px}.kb-help{font-size:14px;line-height:1.6;margin:0 0 18px;opacity:1}.kb-progress{font-size:14px;margin-bottom:8px}.kb-form progress{width:100%;height:8px;accent-color:#a6c400}.kb-nav{display:flex;gap:12px;justify-content:space-between;margin-top:26px}.kb-nav button{border-radius:10px;padding:14px 22px;font-weight:700;cursor:pointer;min-height:48px}.kb-next{background:#b7d900;color:#151b19;border:0;flex:1}.kb-back{background:transparent;border:1px solid #697174;color:inherit}.kb-error{color:#d74839;line-height:1.6}.kb-step>input,.kb-step select{width:100%;padding:14px;border:1px solid #697174;border-radius:8px;background:transparent;color:inherit}.kb-step .form-row-2{display:block}.kb-step .form-group,.kb-step .st-feld{margin-bottom:16px}.kb-form input:focus-visible,.kb-form button:focus-visible,.kb-form select:focus-visible{outline:3px solid #91ad00;outline-offset:3px}
+</style>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
@@ -394,10 +397,7 @@
         <h2 id="stFormTitel">Kurzbewerbung</h2>
         <p class="st-rolle-info" id="stRolleInfo">Ohne Anschreiben und ohne Lebenslauf. Den kannst du später nachreichen.</p>
         <noscript><p class="st-fehler">Für das Formular braucht dein Browser JavaScript. Schreib uns sonst einfach an <a href="mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk">bewerbung@herowerk.de</a>.</p></noscript>
-        <div class="st-fortschritt" id="stFortschritt">
-          <span class="st-fortschritt-text" id="stSchrittText" aria-live="polite">Schritt 1 von 5</span>
-          <div class="st-balken" role="progressbar" aria-labelledby="stSchrittText" aria-valuemin="0" aria-valuemax="100" aria-valuenow="20" id="stBalken"><div class="st-balken-fuell" id="stBalkenFuell"></div></div>
-        </div>
+
 
         <form id="stForm" novalidate>
           <input type="hidden" name="beworbene_rolle" id="stFeldRolle" value="">
@@ -408,44 +408,7 @@
             <p class="st-freiwillig">Eine andere Stelle? Alle Jobs findest du auf <a class="st-link" href="/karriere">herowerk.de/karriere</a>.</p>
           </fieldset>
 
-          <fieldset class="st-schritt" data-schritt="q1" hidden>
-            <legend class="st-frage" tabindex="-1" id="stQ1Frage">Welche Ausbildung hast du?</legend>
-            <p class="st-freiwillig">Freiwillig. Deine Antwort hilft uns, das Gespräch vorzubereiten. Sie führt nie zu einer Absage.</p>
-            <div class="st-wahlen" id="stQ1Wahl"></div>
-          </fieldset>
-
-          <fieldset class="st-schritt" data-schritt="q2" hidden>
-            <legend class="st-frage" tabindex="-1">Wie viel Berufserfahrung bringst du mit?</legend>
-            <p class="st-freiwillig">Freiwillig, du kannst auch ohne Antwort weiter.</p>
-            <div class="st-wahlen" role="radiogroup" aria-label="Berufserfahrung">
-              <label class="st-wahl"><input type="radio" name="erfahrung" value="Noch keine"><span>Noch keine</span></label>
-              <label class="st-wahl"><input type="radio" name="erfahrung" value="Unter 2 Jahre"><span>Unter 2 Jahre</span></label>
-              <label class="st-wahl"><input type="radio" name="erfahrung" value="2 bis 5 Jahre"><span>2 bis 5 Jahre</span></label>
-              <label class="st-wahl"><input type="radio" name="erfahrung" value="Mehr als 5 Jahre"><span>Mehr als 5 Jahre</span></label>
-            </div>
-            <p class="st-unterfrage" id="stFsFrage">Hast du den Führerschein Klasse B?</p>
-            <div class="st-wahlen" role="radiogroup" aria-labelledby="stFsFrage">
-              <label class="st-wahl"><input type="radio" name="fuehrerschein" value="Ja"><span>Ja</span></label>
-              <label class="st-wahl"><input type="radio" name="fuehrerschein" value="Mache ich gerade"><span>Mache ich gerade</span></label>
-              <label class="st-wahl"><input type="radio" name="fuehrerschein" value="Nein"><span>Nein</span></label>
-            </div>
-          </fieldset>
-
-          <fieldset class="st-schritt" data-schritt="start" hidden>
-            <legend class="st-frage" tabindex="-1">Ab wann könntest du anfangen?</legend>
-            <p class="st-freiwillig">Freiwillig, du kannst auch ohne Antwort weiter.</p>
-            <div class="st-wahlen" role="radiogroup" aria-label="Möglicher Start">
-              <label class="st-wahl"><input type="radio" name="start" value="Sofort"><span>Sofort</span></label>
-              <label class="st-wahl"><input type="radio" name="start" value="In 1 bis 3 Monaten"><span>In 1 bis 3 Monaten</span></label>
-              <label class="st-wahl"><input type="radio" name="start" value="In mehr als 3 Monaten"><span>In mehr als 3 Monaten</span></label>
-              <label class="st-wahl"><input type="radio" name="start" value="Weiß ich noch nicht"><span>Weiß ich noch nicht</span></label>
-            </div>
-            <div class="st-feld" style="margin-top: 16px;">
-              <label for="stEintritt">Genaues Datum <span class="st-optional">optional</span></label>
-              <input id="stEintritt" type="date" name="fruhester_eintritt">
-            </div>
-          </fieldset>
-
+          <div class="st-feld"><label for="stEintritt">Genaues Datum <span class="st-optional">optional</span></label><input id="stEintritt" type="date" name="fruhester_eintritt"></div>
           <fieldset class="st-schritt" data-schritt="name" hidden>
             <legend class="st-frage" tabindex="-1">Wie heißt du?</legend>
             <div class="st-feld" style="margin-top: 12px;">
@@ -518,14 +481,9 @@
        KURZFORMULAR: dasselbe HubSpot-Formular wie /bewerbung
        (Portal 148110267, Formular c6a199f5-...), also dieselbe
        Bewerberkette: Kontakt, Workflow 4481906878, Recruiting-Deal.
-       Es werden NUR Felder gesendet, die an diesem Formular registriert
-       sind (live gelesen 24.09.2026): beworbene_rolle, firstname,
-       lastname, phone, email, fruhester_eintritt, message,
-       datenschutzeinwilligung_bewerbung, newslettereinwilligung.
-       Die freiwilligen Vorab-Fragen haben kein eigenes Feld; sie gehen
-       als lesbare Zeilen in die Nachricht (message). Sie sortieren vor,
-       entscheiden nichts: keine Absage, nichts wird ausgeblendet
-       (keine automatisierte Entscheidung nach Art. 22 DSGVO).
+       Zielvertrag T1161: acht strukturierte A-Felder, rollenabhängig sichtbar.
+       Vor Auslieferung alle 27 Eigenschaften und die acht optionalen
+       Formularregistrierungen rücklesen. Keine automatische Auswahlentscheidung.
 
        MESSUNG (nur mit Einwilligung, ohne Personendaten):
          Knopfklick     GA4 bewerbung_klick       Meta trackCustom BewerbungKlick
@@ -536,11 +494,10 @@
        Einwilligung existiert. "Abgeschickt" erst nach Antwort 2xx der
        Formular-Schnittstelle (HubSpot antwortet 200).
        ============================================================ -->
+  <script src="js/kurzbewerbung.js?v=ead67caed7"></script>
   <script>
     (function () {
       'use strict';
-      var PORTAL_ID = '148110267';
-      var FORM_ID = 'c6a199f5-bab6-499e-a3ee-3d9605120877';
       var STELLEN = window.HW_STELLEN || {};
       var rolle = window.HW_ROLLE || '';
       var form = document.getElementById('stForm');
@@ -581,189 +538,17 @@
           'Bewerbung als ' + s.titel + '. Ohne Anschreiben, den Lebenslauf kannst du später nachreichen.';
       }
 
-      function wahlKnopf(name, wert, text) {
-        var label = document.createElement('label');
-        label.className = 'st-wahl';
-        var input = document.createElement('input');
-        input.type = 'radio';
-        input.name = name;
-        input.value = wert;
-        var span = document.createElement('span');
-        span.textContent = text;
-        label.appendChild(input);
-        label.appendChild(span);
-        return label;
-      }
-      function q1Aufbauen() {
-        var s = STELLEN[rolle];
-        var box = document.getElementById('stQ1Wahl');
-        box.textContent = '';
-        if (!s) return;
-        document.getElementById('stQ1Frage').textContent = s.frage;
-        box.setAttribute('role', 'radiogroup');
-        box.setAttribute('aria-labelledby', 'stQ1Frage');
-        s.antworten.forEach(function (a) { box.appendChild(wahlKnopf('vorab', a, a)); });
-      }
-
-      // ---------- Schritte ----------
-      var schritte = rolle ? ['q1', 'q2', 'start', 'name', 'kontakt'] : ['rolle', 'q1', 'q2', 'start', 'name', 'kontakt'];
-      var aktiv = 0;
-      if (!rolle) {
-        var rw = document.getElementById('stRollenWahl');
-        rw.setAttribute('role', 'radiogroup');
-        rw.setAttribute('aria-label', 'Stelle');
-        Object.keys(STELLEN).forEach(function (slug) {
-          var k = wahlKnopf('rolle_wahl', slug, STELLEN[slug].titel);
-          k.querySelector('input').required = true;
-          rw.appendChild(k);
-        });
-      } else {
-        detailsZeigen();
-        q1Aufbauen();
-      }
-
-      var fehler = document.getElementById('stFehler');
-      function fehlerZeigen(html) { fehler.innerHTML = html; fehler.hidden = false; }
-      function fehlerWeg() { fehler.hidden = true; fehler.textContent = ''; }
-
-      function feldset(name) { return form.querySelector('[data-schritt="' + name + '"]'); }
-      function zeigen(index, fokus) {
-        aktiv = index;
-        schritte.forEach(function (n, i) { feldset(n).hidden = i !== index; });
-        ['rolle', 'q1', 'q2', 'start', 'name', 'kontakt'].forEach(function (n) {
-          if (schritte.indexOf(n) === -1) feldset(n).hidden = true;
-        });
-        var gesamt = schritte.length;
-        document.getElementById('stSchrittText').textContent = 'Schritt ' + (index + 1) + ' von ' + gesamt;
-        var prozent = Math.round(((index + 1) / gesamt) * 100);
-        document.getElementById('stBalkenFuell').style.width = prozent + '%';
-        document.getElementById('stBalken').setAttribute('aria-valuenow', String(prozent));
-        document.getElementById('stZurueck').hidden = index === 0;
-        document.getElementById('stWeiter').textContent = index === gesamt - 1 ? 'Bewerbung absenden' : 'Weiter';
-        fehlerWeg();
-        if (fokus) {
-          var legend = feldset(schritte[index]).querySelector('legend');
-          if (legend) legend.focus({ preventScroll: true });
-          document.getElementById('bewerben').scrollIntoView({ block: 'start' });
+      if (rolle) detailsZeigen();
+      var kurzbewerbung = window.HeroKurzbewerbung.mount(form, {
+        stelle: true, role: rolle, roles: STELLEN,
+        onRole: function(value) { rolle=value; detailsZeigen(); },
+        success: function(data) {
+          messen('bewerbung_abgeschickt', 'track', 'SubmitApplication', {rolle:rolle});
+          document.getElementById('stErfolgName').textContent=data.firstname || 'dir';
+          document.getElementById('stErfolg').hidden=false;
+          document.getElementById('stErfolgTitel').focus();
         }
-      }
-
-      function schrittGueltig() {
-        var fs = feldset(schritte[aktiv]);
-        var pflicht = fs.querySelectorAll('input[required]');
-        for (var i = 0; i < pflicht.length; i++) {
-          var el = pflicht[i];
-          el.removeAttribute('aria-invalid');
-          if (!el.checkValidity()) {
-            if (el.type !== 'radio') el.setAttribute('aria-invalid', 'true');
-            el.reportValidity();
-            return false;
-          }
-        }
-        return true;
-      }
-
-      function weiter() {
-        if (!schrittGueltig()) return;
-        if (schritte[aktiv] === 'rolle') {
-          var gew = form.querySelector('input[name="rolle_wahl"]:checked');
-          rolle = gew ? gew.value : '';
-          detailsZeigen();
-          q1Aufbauen();
-        }
-        if (aktiv < schritte.length - 1) zeigen(aktiv + 1, true);
-        else absenden();
-      }
-
-      document.getElementById('stZurueck').addEventListener('click', function () {
-        if (aktiv > 0) zeigen(aktiv - 1, true);
       });
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        weiter();
-      });
-
-      // ---------- Absenden ----------
-      function wert(name) {
-        var el = form.querySelector('[name="' + name + '"]:checked') || form.querySelector('[name="' + name + '"]:not([type="radio"])');
-        return el ? String(el.value || '').trim() : '';
-      }
-      function nachricht() {
-        var s = STELLEN[rolle] || {};
-        var zeilen = [];
-        if (wert('vorab')) zeilen.push((s.frage || 'Vorab-Frage') + ' ' + wert('vorab'));
-        if (wert('erfahrung')) zeilen.push('Berufserfahrung: ' + wert('erfahrung'));
-        if (wert('fuehrerschein')) zeilen.push('Führerschein Klasse B: ' + wert('fuehrerschein'));
-        if (wert('start')) zeilen.push('Möglicher Start: ' + wert('start'));
-        if (!zeilen.length) return '';
-        return 'Freiwillige Vorab-Angaben von der Kampagnenseite (nur zur Gesprächsvorbereitung):\n' + zeilen.join('\n');
-      }
-      function datumMs(v) {
-        if (!v) return null;
-        var ms = Date.parse(v + 'T00:00:00Z');
-        return isNaN(ms) ? null : ms;
-      }
-      function nutzlast() {
-        var felder = [
-          { name: 'beworbene_rolle', value: rolle },
-          { name: 'firstname', value: wert('firstname') },
-          { name: 'lastname', value: wert('lastname') },
-          { name: 'email', value: wert('email') },
-          { name: 'phone', value: wert('phone') },
-          { name: 'message', value: nachricht() }
-        ];
-        var ein = datumMs(wert('fruhester_eintritt'));
-        if (ein != null) felder.push({ name: 'fruhester_eintritt', value: String(ein) });
-        if (document.getElementById('stDsgvo').checked) felder.push({ name: 'datenschutzeinwilligung_bewerbung', value: 'true' });
-        if (document.getElementById('stNewsletter').checked) felder.push({ name: 'newslettereinwilligung', value: 'true' });
-        return {
-          fields: felder.filter(function (f) { return f.value !== '' && f.value != null; }),
-          context: { pageUri: window.location.href, pageName: document.title },
-          legalConsentOptions: {
-            consent: {
-              consentToProcess: true,
-              text: 'Ich willige ein, dass HeroWerk meine angegebenen Daten zur Bearbeitung meiner Bewerbung speichert und verarbeitet, und akzeptiere die Datenschutzbedingungen. Die Einwilligung ist jederzeit widerrufbar.',
-              communications: []
-            }
-          }
-        };
-      }
-
-      var sendetGerade = false;
-      function absenden() {
-        if (sendetGerade) return;
-        if (!rolle) { zeigen(0, true); return; }
-        sendetGerade = true;
-        var knopf = document.getElementById('stWeiter');
-        knopf.disabled = true;
-        knopf.textContent = 'Wird gesendet …';
-        var endpunkt = 'https://api.hsforms.com/submissions/v3/integration/submit/' + PORTAL_ID + '/' + FORM_ID;
-        fetch(endpunkt, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(nutzlast())
-        }).then(function (res) {
-          if (!res.ok) throw new Error('Formular-Schnittstelle antwortet ' + res.status);
-          messen('bewerbung_abgeschickt', 'track', 'SubmitApplication', { rolle: rolle });
-          form.hidden = true;
-          document.getElementById('stFortschritt').hidden = true;
-          document.getElementById('stErfolgName').textContent = wert('firstname') || 'dir';
-          var ok = document.getElementById('stErfolg');
-          ok.hidden = false;
-          document.getElementById('stErfolgTitel').focus({ preventScroll: true });
-          document.getElementById('bewerben').scrollIntoView({ block: 'start' });
-        }).catch(function () {
-          // Bewerbung nie still verlieren: Weg per E-Mail anbieten, vom Menschen ausgeloest.
-          var s = STELLEN[rolle] || {};
-          var betreff = encodeURIComponent('Bewerbung: ' + (s.titel || 'HeroWerk'));
-          fehlerZeigen('Das Senden hat gerade nicht geklappt. Bitte versuch es gleich noch einmal oder schreib uns an <a href="mailto:bewerbung@herowerk.de?subject=' + betreff + '">bewerbung@herowerk.de</a>.');
-        }).then(function () {
-          sendetGerade = false;
-          knopf.disabled = false;
-          if (!form.hidden) knopf.textContent = 'Bewerbung absenden';
-        });
-      }
-
       // ---------- Bewerben-Knoepfe und Leiste ----------
       document.querySelectorAll('[data-bewerben]').forEach(function (a) {
         a.addEventListener('click', function (e) {
@@ -774,8 +559,7 @@
           }
           var ziel = document.getElementById('bewerben');
           ziel.scrollIntoView({ block: 'start' });
-          var legend = feldset(schritte[aktiv]).querySelector('legend');
-          if (legend) legend.focus({ preventScroll: true });
+          kurzbewerbung.focus();
         });
       });
       var leiste = document.getElementById('stLeiste');
@@ -793,7 +577,7 @@
           .observe(document.getElementById('bewerben'));
       }
 
-      zeigen(0, false);
+
     })();
   </script>
 </body>

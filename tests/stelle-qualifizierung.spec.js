@@ -2,7 +2,8 @@
 const { test, expect } = require('@playwright/test');
 const { gotoWithConsentRejected } = require('./helpers/consent');
 test.describe.configure({ mode: 'parallel' });
-const pageName = process.env.T1161_STELLE ? 'stelle' : 'bewerbung';
+/** @type {string} */
+const pageName = 'stelle';
 const roles =
   pageName === 'stelle' ? ['anlagenmechaniker', 'vad'] : ['anlagenmechaniker', 'vad', 'hr'];
 async function fill(page, role, ausland = false) {

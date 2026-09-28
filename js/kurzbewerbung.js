@@ -325,6 +325,11 @@
       return true;
     }
     function payload() {
+      // Der tatsächlich sichtbare Checkboxtext ist auch der gespeicherte Wortlaut.
+      // Fehler laufen durch catch/finally des Submitwegs, bevor fetch aufgerufen wird.
+      const checkbox = form.querySelector('[name="datenschutzeinwilligung_bewerbung"]');
+      const consentText = checkbox?.labels?.[0]?.textContent?.replace(/\s+/g, ' ').trim();
+      if (!consentText) throw new Error('consent-label');
       const v = values();
       const out = ['firstname', 'lastname', 'email', 'phone', 'message'].map((name) => ({
         name,
@@ -344,7 +349,7 @@
         legalConsentOptions: {
           consent: {
             consentToProcess: true,
-            text: 'Ich willige ein, dass HeroWerk meine angegebenen Daten zur Bearbeitung meiner Bewerbung speichert und verarbeitet.',
+            text: consentText,
             communications: [],
           },
         },

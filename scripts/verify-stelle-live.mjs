@@ -18,6 +18,9 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import vm from 'node:vm';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const kurzbewerbung = require('../js/kurzbewerbung.js');
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const FEED = 'https://www.herowerk.de/api/jobs';
@@ -31,8 +34,60 @@ if (!block) {
   process.exit(1);
 }
 const stellen = vm.runInNewContext('(' + block[1] + ')');
-const gesendet = [...html.matchAll(/\{ name: '([a-z_]+)', value:/g)].map((m) => m[1]);
-for (const m of html.matchAll(/felder\.push\(\{ name: '([a-z_]+)'/g)) gesendet.push(m[1]);
+// Den tatsächlich eingebundenen gemeinsamen Formularweg auswerten. Eine Suche
+// im alten Inline-Code wäre nach der Integration leer und damit fälschlich grün.
+if (!/src="js\/kurzbewerbung\.js\?v=/.test(html) || !html.includes('HeroKurzbewerbung.mount(')) {
+  throw new Error('Gemeinsames Formularmodul ist auf /stelle nicht eingebunden.');
+}
+const strukturiert = new Set();
+const erwartet = [
+  'arbeitserlaubnis',
+  'berufsabschluss',
+  'anerkennung',
+  'berufserfahrung',
+  'fuehrerschein',
+  'deutsch',
+  'plz',
+  'start',
+].map((n) => 'bewerber_' + n);
+for (const role of Object.keys(stellen)) {
+  for (const abschluss of ['geselle_facharbeiter', 'ausland']) {
+    const values = Object.fromEntries(
+      kurzbewerbung.questions.map((q) => [
+        q.name,
+        q.name === 'bewerber_plz' ? '30159' : q.options[0].value,
+      ])
+    );
+    values.bewerber_berufsabschluss = abschluss;
+    const fields = kurzbewerbung.fields(role, values);
+    const soll = erwartet.filter(
+      (n) =>
+        (n !== 'bewerber_anerkennung' || abschluss === 'ausland') &&
+        (n !== 'bewerber_fuehrerschein' || kurzbewerbung.family(role) !== 'F5')
+    );
+    if (
+      !kurzbewerbung.valid(role, values) ||
+      fields.some((f) => !f.value) ||
+      JSON.stringify(fields.map((f) => f.name).sort()) !== JSON.stringify(soll.sort())
+    ) {
+      throw new Error(`Unvollständiger strukturierter Feldsatz für ${role}/${abschluss}.`);
+    }
+    fields.forEach((f) => strukturiert.add(f.name));
+  }
+}
+if (strukturiert.size !== 8) throw new Error('Die acht strukturierten Felder fehlen.');
+const gesendet = [
+  'firstname',
+  'lastname',
+  'email',
+  'phone',
+  'message',
+  'beworbene_rolle',
+  'fruhester_eintritt',
+  'datenschutzeinwilligung_bewerbung',
+  'newslettereinwilligung',
+  ...strukturiert,
+];
 
 async function holen(url) {
   const res = await fetch(url, { headers: { accept: 'application/json' } });
