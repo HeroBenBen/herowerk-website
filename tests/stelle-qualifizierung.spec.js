@@ -1,4 +1,4 @@
-/* global window */
+/* global window, document */
 const { test, expect } = require('@playwright/test');
 const { gotoWithConsentRejected } = require('./helpers/consent');
 test.describe.configure({ mode: 'parallel' });
@@ -101,6 +101,17 @@ for (const defect of ['fehlt', 'leer']) {
       return route.abort();
     });
     await gotoWithConsentRejected(page, `/${pageName}?role=anlagenmechaniker`);
+    // Aktive Messung rein lokal nachstellen; kein Analytics-Script laden.
+    await page.evaluate(() => {
+      const script = document.createElement('script');
+      script.type = 'text/plain';
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-TEST';
+      document.head.appendChild(script);
+      const w = /** @type {any} */ (window);
+      w.__labelEvents = [];
+      w.gtag = (...args) => w.__labelEvents.push(args);
+      w.fbq = (...args) => w.__labelEvents.push(args);
+    });
     await fill(page, 'anlagenmechaniker');
     await page.locator('[name=datenschutzeinwilligung_bewerbung]').evaluate((el, defect) => {
       const label = /** @type {HTMLInputElement} */ (el).labels[0];
@@ -125,5 +136,9 @@ for (const defect of ['fehlt', 'leer']) {
       JSON.stringify(/** @type {any} */ (window).dataLayer || [])
     );
     expect(events).not.toContain('bewerbung_abgeschickt');
+    await expect(
+      page.locator(pageName === 'stelle' ? '#stErfolg' : '#bewerbungSuccess')
+    ).toBeHidden();
+    expect(await page.evaluate(() => /** @type {any} */ (window).__labelEvents)).toEqual([]);
   });
 }
