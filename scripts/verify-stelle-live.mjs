@@ -49,6 +49,46 @@ try {
 }
 
 const fehler = [];
+
+// Bewusste, eng begrenzte Abweichungen vom Feed: je Rolle und Liste genau EIN Satz,
+// der im Feed woertlich so steht und auf der Seite woertlich ersetzt ist. Alles andere
+// bleibt rot. Traegt der Feed den alten Satz nicht mehr, ist die Ausnahme verbraucht
+// und wird ebenfalls rot gemeldet, damit sie nicht still als Luecke liegen bleibt.
+const AUSNAHMEN = [
+  {
+    // Feed traegt noch den Kaelteschein, Korrektur im Stellen-Sheet offen, T1157.
+    // Fachliche Grenze: Kaelteschein setzt den SHK-Gesellenbrief voraus, fuer
+    // Quereinsteiger nichts versprechen (Textbausteine Verguetung und Bonus, 3.2).
+    slug: 'quereinsteiger',
+    feld: 'freuen',
+    feed: 'Weiterbildung auf unsere Kosten, bis zum Kälteschein & Herstellerschulungen.',
+    seite: 'Wer sich bewährt, für den ist mehr drin, bei der Vergütung wie bei der Verantwortung.',
+  },
+];
+
+/**
+ * Feed-Liste mit angewandten Ausnahmen, Vergleichsgrundlage fuer die Seite.
+ * @param {string} slug
+ * @param {string} feld
+ * @param {string[]} liste
+ */
+function feedMitAusnahmen(slug, feld, liste) {
+  let ergebnis = liste;
+  for (const a of AUSNAHMEN) {
+    if (a.slug !== slug || a.feld !== feld) continue;
+    const treffer = (liste || []).filter((x) => x === a.feed).length;
+    if (treffer !== 1) {
+      fehler.push(
+        `${slug}: Ausnahme fuer "${feld}" greift nicht, der Feed traegt den Satz "${a.feed}" ` +
+          `${treffer} Mal statt genau einmal. Ausnahme pruefen und entfernen.`
+      );
+      continue;
+    }
+    ergebnis = ergebnis.map((x) => (x === a.feed ? a.seite : x));
+  }
+  return ergebnis;
+}
+
 const betrag = (wert, einheit) =>
   einheit === 'HOUR'
     ? wert.toFixed(2).replace('.', ',')
@@ -63,7 +103,8 @@ for (const [slug, s] of Object.entries(stellen)) {
   if (s.titel !== job.name) fehler.push(`${slug}: Titel "${s.titel}" statt "${job.name}".`);
   if (s.teaser !== job.teaser) fehler.push(`${slug}: Teaser weicht vom Feed ab.`);
   for (const feld of ['freuen', 'profil']) {
-    if (JSON.stringify(s[feld]) !== JSON.stringify(job[feld])) {
+    const erwartet = feedMitAusnahmen(slug, feld, job[feld]);
+    if (JSON.stringify(s[feld]) !== JSON.stringify(erwartet)) {
       fehler.push(`${slug}: Liste "${feld}" weicht vom Feed ab.`);
     }
   }
