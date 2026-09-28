@@ -55,7 +55,7 @@ const SOLL = {
   },
 };
 
-// Am Formular c6a199f5 registrierte Felder, gelesen am 24.09.2026 aus
+// Zielvertrag T1161; acht neue Felder vor Auslieferung am Formular registrieren. Altstand vom 24.09.2026:
 // https://forms-eu1.hsforms.com/embed/v3/form/148110267/c6a199f5-bab6-499e-a3ee-3d9605120877/json
 const REGISTRIERT = [
   'beworbene_rolle',
@@ -67,7 +67,34 @@ const REGISTRIERT = [
   'datenschutzeinwilligung_bewerbung',
   'email',
   'newslettereinwilligung',
+  ...[
+    'arbeitserlaubnis',
+    'berufsabschluss',
+    'anerkennung',
+    'berufserfahrung',
+    'fuehrerschein',
+    'deutsch',
+    'plz',
+    'start',
+  ].map((n) => 'bewerber_' + n),
 ];
+
+async function kurzfragen(page) {
+  for (const [n, v] of [
+    ['arbeitserlaubnis', 'ja_uneingeschraenkt'],
+    ['berufsabschluss', 'geselle_facharbeiter'],
+    ['berufserfahrung', '1_bis_3'],
+    ['fuehrerschein', 'b'],
+    ['deutsch', 'gut_arbeitsalltag'],
+    ['plz', '30159'],
+    ['start', '2_bis_3_monate'],
+  ]) {
+    if (n === 'plz') await page.locator('[name=bewerber_plz]').fill(v);
+    else await page.locator(`[name=bewerber_${n}][value="${v}"]`).check();
+    if (n === 'start') await page.locator('#stEintritt').fill('2026-11-01');
+    await page.locator('#stWeiter').click();
+  }
+}
 
 const TELEFON = { width: 390, height: 844 };
 
@@ -151,25 +178,34 @@ for (const [slug, soll] of Object.entries(SOLL)) {
         TELEFON.height
       );
     }
-    await expect(page.locator('#stSchrittText')).toHaveText('Schritt 1 von 5');
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
+    if (slug === 'quereinsteiger') {
+      await expect(page.locator('#stFreuen')).not.toContainText('Kälteschein');
+      await expect(page.locator('#stFreuen')).toContainText(
+        'Wer sich bewährt, für den ist mehr drin, bei der Vergütung wie bei der Verantwortung.'
+      );
+    }
+    await expect(page.locator('#stSchrittText')).toHaveText('Schritt 1 von 9');
   });
 }
 
-test('@smoke /stelle ohne Rolle: Rolle ist der erste Schritt, hoechstens sechs Schritte', async ({
+test('@smoke /stelle ohne Rolle: Rolle ist der erste Schritt, Fragenfolge folgt der Rollenwahl', async ({
   page,
 }) => {
   await gotoWithConsentRejected(page, '/stelle.html?role=gibtsnicht');
   await expect(page.locator('#stTitel')).toContainText('Region Hannover');
-  await expect(page.locator('#stSchrittText')).toHaveText('Schritt 1 von 6');
+  await expect(page.locator('#stSchrittText')).toHaveText('Schritt 1 von 9');
   await expect(page.locator('[data-schritt="rolle"] input[type="radio"]')).toHaveCount(7);
   await page.locator('#stWeiter').click();
   await expect(page.locator('#stSchrittText'), 'ohne Rolle geht es nicht weiter').toHaveText(
-    'Schritt 1 von 6'
+    'Schritt 1 von 9'
   );
-  await page.locator('label.st-wahl', { hasText: 'Quereinsteiger:in Montage' }).click();
+  await page.locator('label.kb-choice', { hasText: 'Quereinsteiger:in Montage' }).click();
   await page.locator('#stWeiter').click();
-  await expect(page.locator('#stSchrittText')).toHaveText('Schritt 2 von 6');
-  await expect(page.locator('#stQ1Frage')).toHaveText('Was machst du bisher beruflich?');
+  await expect(page.locator('#stSchrittText')).toHaveText('Schritt 2 von 10');
+  await expect(page.locator('[data-schritt=a1] legend')).toHaveText(
+    'Darfst du in Deutschland arbeiten?'
+  );
   await expect(page.locator('#stFeldRolle')).toHaveValue('quereinsteiger');
 });
 
@@ -188,16 +224,9 @@ test('@smoke /stelle Einsendung: nur registrierte Felder, Ereignisse getrennt un
     ['trackCustom', 'BewerbungKlick', { rolle: 'elektriker', position: 'oben' }],
   ]);
 
-  // Schritt 1 fachlich und freiwillig, Schritt 2 bewusst uebersprungen.
-  await page.locator('label.st-wahl', { hasText: 'Andere Ausbildung im Elektrohandwerk' }).click();
+  await kurzfragen(page);
   await page.locator('#stWeiter').click();
-  await page.locator('#stWeiter').click();
-  await page.locator('label.st-wahl', { hasText: 'In 1 bis 3 Monaten' }).click();
-  await page.locator('#stEintritt').fill('2026-11-01');
-  await page.locator('#stWeiter').click();
-  // Pflichtfelder halten den Schritt fest.
-  await page.locator('#stWeiter').click();
-  await expect(page.locator('#stSchrittText')).toHaveText('Schritt 4 von 5');
+  await expect(page.locator('[data-schritt=name]')).toBeVisible();
   await page.locator('#stVorname').fill('Test');
   await page.locator('#stNachname').fill('Kampagne');
   await page.locator('#stWeiter').click();
@@ -222,11 +251,8 @@ test('@smoke /stelle Einsendung: nur registrierte Felder, Ereignisse getrennt un
   expect(wert('fruhester_eintritt')).toBe(String(Date.parse('2026-11-01T00:00:00Z')));
   expect(wert('datenschutzeinwilligung_bewerbung')).toBe('true');
   expect(wert('newslettereinwilligung')).toBeUndefined();
-  expect(wert('message')).toContain(
-    'Welche Ausbildung hast du? Andere Ausbildung im Elektrohandwerk'
-  );
-  expect(wert('message')).toContain('Möglicher Start: In 1 bis 3 Monaten');
-  expect(wert('message')).not.toContain('Berufserfahrung');
+  expect(wert('message')).toBeUndefined();
+  expect(wert('bewerber_arbeitserlaubnis')).toBe('ja_uneingeschraenkt');
   expect(einsendungen[0].context.pageUri).toContain('utm_source=meta');
   // Gespeicherte Einwilligung = sichtbarer Checkbox-Text, wortgleich (T1157).
   const sichtbar = (await page.locator('label[for="stDsgvo"]').textContent()) || '';
@@ -250,7 +276,7 @@ test('@smoke /stelle ohne Einwilligung: kein Ereignis, Bewerbung geht trotzdem',
   const einsendungen = await schnittstelleAbfangen(page, 200);
   await gotoWithConsentRejected(page, '/stelle.html?role=gala');
   await page.locator('[data-bewerben="oben"]').click();
-  for (let i = 0; i < 3; i++) await page.locator('#stWeiter').click();
+  await kurzfragen(page);
   await page.locator('#stVorname').fill('Test');
   await page.locator('#stNachname').fill('Kampagne');
   await page.locator('#stWeiter').click();
@@ -272,7 +298,7 @@ test('@smoke /stelle Fehler der Schnittstelle: kein Abgeschickt-Ereignis, Hinwei
   await einwilligungNachstellen(page);
   await schnittstelleAbfangen(page, 500);
   await gotoWithConsentRejected(page, '/stelle.html?role=vad');
-  for (let i = 0; i < 3; i++) await page.locator('#stWeiter').click();
+  await kurzfragen(page);
   await page.locator('#stVorname').fill('Test');
   await page.locator('#stNachname').fill('Kampagne');
   await page.locator('#stWeiter').click();
