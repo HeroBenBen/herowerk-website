@@ -285,6 +285,23 @@
           "words": 60
         }
       ]
+    },
+    {
+      "file": "stelle.html",
+      "sections": [
+        {
+          "id": "class:st-held",
+          "words": 30
+        },
+        {
+          "id": "stDetails",
+          "words": 9
+        },
+        {
+          "id": "bewerben",
+          "words": 229
+        }
+      ]
     }
   ]
 }

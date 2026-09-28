@@ -84,3 +84,13 @@ test('@smoke Funnel Redirect auf /anfrage', async ({ page }) => {
   expect(resp.status()).toBeLessThan(400);
   await expect(page).toHaveURL(/\/anfrage\/?$/);
 });
+
+// T1157: Kampagnen-Zielseite je Rolle. Die ausfuehrlichen Pruefungen (erster
+// Bildschirm, Feldliste, Messereignisse) stehen in tests/stelle.spec.js.
+test('@smoke Kampagnen-Zielseite /stelle lädt mit Rolle und Kurzformular', async ({ page }) => {
+  const resp = await gotoWithConsentRejected(page, '/stelle.html?role=anlagenmechaniker');
+  expect(resp.status()).toBeLessThan(400);
+  await expect(page).toHaveTitle(/Anlagenmechaniker/);
+  await expect(page.locator('#stGehalt')).toHaveText('ab 20,00 € brutto pro Stunde');
+  await expect(page.locator('#stForm')).toBeVisible();
+});

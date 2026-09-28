@@ -18,6 +18,9 @@ const PAGES = [
   '/kontakt.html',
   '/anfrage.html',
   '/karriere.html',
+  // T1157: Kampagnen-Zielseite ohne Rolle (Rollenwahl als erster Schritt). Die
+  // Rollenfassungen prueft tests/stelle.spec.js.
+  '/stelle.html',
 ];
 const THEMES = ['dark', 'light'];
 
