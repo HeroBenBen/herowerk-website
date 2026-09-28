@@ -142,3 +142,29 @@ for (const defect of ['fehlt', 'leer']) {
     expect(await page.evaluate(() => /** @type {any} */ (window).__labelEvents)).toEqual([]);
   });
 }
+
+test('@smoke T1161 Anerkennung Pflicht und Werterhalt beim Zurückgehen', async ({ page }) => {
+  await page.route('https://api.hsforms.com/**', (route) => route.abort());
+  await gotoWithConsentRejected(page, `/${pageName}?role=anlagenmechaniker`);
+  if (pageName === 'bewerbung') {
+    await page.locator('#bwRolle').selectOption('anlagenmechaniker');
+    await page.getByRole('button', { name: 'Weiter', exact: true }).click();
+  }
+  await page.locator('[name=bewerber_arbeitserlaubnis][value=ja_uneingeschraenkt]').check();
+  await page.getByRole('button', { name: 'Weiter', exact: true }).click();
+  await page.locator('[name=bewerber_berufsabschluss][value=ausland]').check();
+  await page.getByRole('button', { name: 'Weiter', exact: true }).click();
+  await page.getByRole('button', { name: 'Weiter', exact: true }).click();
+  await expect(page.locator('[data-schritt=a3]')).toBeVisible();
+  await page.locator('[name=bewerber_anerkennung][value=voll]').check();
+  await page.getByRole('button', { name: 'Weiter', exact: true }).click();
+  await expect(page.locator('[data-schritt=a4]')).toBeVisible();
+  await page.getByRole('button', { name: 'Zurück', exact: true }).click();
+  await expect(page.locator('[name=bewerber_anerkennung][value=voll]')).toBeChecked();
+  await page.getByRole('button', { name: 'Zurück', exact: true }).click();
+  await expect(page.locator('[name=bewerber_berufsabschluss][value=ausland]')).toBeChecked();
+  await page.locator('[name=bewerber_berufsabschluss][value=geselle_facharbeiter]').check();
+  await page.getByRole('button', { name: 'Weiter', exact: true }).click();
+  await expect(page.locator('[data-schritt=a3]')).toBeHidden();
+  await expect(page.locator('[data-schritt=a4]')).toBeVisible();
+});
