@@ -174,7 +174,12 @@
       "medianRunsComment": "Fix-Runde 3: numberOfRuns=3 nutzt den Median, weil einzelne Lighthouse-Läufe auf einem frisch gestarteten Pruefserver ca. ±0,05 schwanken; Schwellen bleiben unverändert hart."
     },
     "collect": {
-      "numberOfRuns": 3
+      "numberOfRuns": 3,
+      "url": [
+        "http://127.0.0.1:8080/stelle.html?role=anlagenmechaniker&theme=dark",
+        "http://127.0.0.1:8080/stelle.html?role=anlagenmechaniker&theme=light"
+      ],
+      "urlComment": "T1157: lokale Laeufe (npx lhci autorun) messen die Kampagnen-Zielseite. In der CI setzt der lighthouse-bericht-Job seine Adressen selbst, dort steht /stelle.html ebenfalls in der Liste."
     }
   }
 }

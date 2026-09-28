@@ -130,6 +130,10 @@
     {
       "pfad": "/wp-kosten-hannover.html",
       "name": "wp-kosten-hannover"
+    },
+    {
+      "pfad": "/stelle.html?role=anlagenmechaniker",
+      "name": "stelle"
     }
   ],
   "toleranzPx": 0.5,

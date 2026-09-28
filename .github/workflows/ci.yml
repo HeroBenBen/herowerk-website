@@ -196,6 +196,7 @@ jobs:
             ${{ env.PRUEFSERVER_URL }}?theme=${{ matrix.theme }}
             ${{ env.PRUEFSERVER_URL }}/preise.html?theme=${{ matrix.theme }}
             ${{ env.PRUEFSERVER_URL }}/anfrage.html?theme=${{ matrix.theme }}
+            ${{ env.PRUEFSERVER_URL }}/stelle.html?role=anlagenmechaniker&theme=${{ matrix.theme }}
           configPath: ./lighthouserc.json
           uploadArtifacts: true
           runs: 3

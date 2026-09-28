@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <!-- ConsentManager nur auf den beiden oeffentlichen HeroWerk-Domains -->
+  <script>
+    (function () {
+      var host = window.location.hostname.toLowerCase().replace(/\.$/, '');
+      var productionHosts = ['herowerk.de', 'www.herowerk.de'];
+
+      if (productionHosts.indexOf(host) === -1) return;
+
+      document.write(
+        '<script type="text/javascript" data-cmp-ab="1"' +
+          ' src="https://cdn.consentmanager.net/delivery/autoblocking/d94854dc5273c.js"' +
+          ' data-cmp-host="a.delivery.consentmanager.net"' +
+          ' data-cmp-cdn="cdn.consentmanager.net"' +
+          ' data-cmp-codesrc="0"></' + 'script>'
+      );
+    }());
+  </script>
+  <meta charset="UTF-8">
+  <!-- Consent Mode v2, Standard: alles verweigert. GA4 und Meta-Pixel laedt erst
+       js/consent.js, und zwar erst NACH der Einwilligung (wie auf allen Seiten). -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+      functionality_storage: 'denied',
+      personalization_storage: 'denied',
+      security_storage: 'granted',
+      wait_for_update: 500
+    });
+    gtag('set', 'ads_data_redaction', true);
+    gtag('set', 'url_passthrough', true);
+  </script>
+  <script src="js/consent.js?v=99d7e92283" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/fonts.css?v=d3f3999a2f">
+  <link rel="stylesheet" href="tokens.css?v=bb2619605a">
+  <link rel="icon" href="/favicon.ico" sizes="any" type="image/x-icon">
+  <meta name="theme-color" content="#1C2B36">
+  <title>Jobs in der Region Hannover: jetzt bewerben | HeroWerk</title>
+  <meta name="description" content="Wärmepumpen-Jobs bei HeroWerk in der Region Hannover: Gehalt, Ort und Bewerbung in zwei Minuten, ohne Anschreiben.">
+  <link rel="canonical" href="https://www.herowerk.de/stelle">
+  <meta name="robots" content="noindex,follow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Jobs bei HeroWerk in der Region Hannover">
+  <meta property="og:description" content="Wärmepumpen-Jobs in der Region Hannover. Bewerbung in zwei Minuten, ohne Anschreiben.">
+  <meta property="og:url" content="https://www.herowerk.de/stelle">
+  <meta property="og:image" content="https://www.herowerk.de/hero-paar-terrasse.png">
+  <script src="js/theme.js?v=9b163705e9"></script>
+  <style>
+    /* ═══ KAMPAGNEN-ZIELSEITE JE ROLLE (T1157) ═══════════════════════════════
+       Bewusst schlank: kein css/site.css und kein js/site.js (zusammen rund
+       300 KB), damit die Seite auf dem Telefon unter zwei Sekunden steht.
+       Farben und Schriften kommen aus tokens.css und css/fonts.css, also aus
+       derselben Quelle wie auf allen anderen Seiten. Dunkelmodus auf Schiefer
+       (tokens.css setzt body im Dunkelmodus auf --color-surface-secondary),
+       Hellmodus auf Sand. */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    body {
+      margin: 0;
+      font: 400 16px/1.55 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      background: var(--schiefer);
+      color: var(--color-text-primary);
+    }
+    [data-theme='light'] body { background: var(--sand); }
+    a { color: inherit; }
+    .st-wrap { max-width: 720px; margin: 0 auto; padding: 0 16px; }
+
+    /* Kopfzeile */
+    .st-kopf { border-bottom: 1px solid var(--color-border-subtle); }
+    .st-kopf .st-wrap { display: flex; align-items: center; gap: 12px; height: 60px; }
+    .st-logo { display: inline-flex; align-items: center; margin-right: auto; }
+    .st-logo img { height: 40px; width: auto; display: block; }
+    .st-logo .logo-hell { display: none; }
+    [data-theme='light'] .st-logo .logo-dunkel { display: none; }
+    [data-theme='light'] .st-logo .logo-hell { display: block; }
+    .st-anruf {
+      display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 12px;
+      border: 1px solid var(--color-border-strong); border-radius: 999px;
+      font-size: 14px; font-weight: 700; text-decoration: none; white-space: nowrap;
+    }
+    .st-kopf .theme-toggle { flex: none; }
+    /* Umschalter hier mit Inter 400/700 statt 500/700: spart eine Schriftdatei (25 KB).
+       Gemessen 24.09.2026, Lighthouse Mobil simuliert: LCP 2,27 s mit Vorladen und vier
+       Schnitten, 1,95 s ohne Vorladen mit drei Schnitten. Deshalb auch kein preload. */
+    .st-kopf .theme-toggle .tt-feld { font-weight: 400; }
+    .st-kopf .theme-toggle .tt-feld[data-aktiv='true'] { font-weight: 700; }
+    /* Schmale Telefone: Logo, Anruf und Umschalter passen nebeneinander nur, wenn der
+       Anrufknopf auf sein Sinnbild schrumpft (Raster-Gate R1/R6 bei 320 bis 375 px).
+       Unter 360 px entfaellt er ganz, die Nummer steht im Fuss. */
+    @media (max-width: 420px) {
+      .st-anruf { width: 44px; padding: 0; justify-content: center; }
+      .st-anruf-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+    }
+    @media (max-width: 359px) { .st-anruf { display: none; } }
+
+    /* Erster Bildschirm: Rolle, Gehalt, Ort, Knopf */
+    .st-held { padding: 20px 0 8px; }
+    .st-marke {
+      display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: 0.04em;
+      text-transform: uppercase; color: var(--color-text-secondary); margin: 0 0 8px;
+    }
+    .st-titel {
+      font: 800 clamp(26px, 7vw, 40px)/1.12 'Barlow', 'Inter', sans-serif;
+      margin: 0 0 12px; letter-spacing: -0.005em; overflow-wrap: anywhere; hyphens: auto;
+    }
+    .st-titel .st-mwd { font-size: 0.6em; font-weight: 800; color: var(--color-text-secondary); white-space: nowrap; }
+    .st-fakten { list-style: none; margin: 0 0 16px; padding: 0; display: grid; gap: 8px; }
+    .st-fakt {
+      display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start;
+      background: var(--color-surface-tertiary); border-radius: 12px; padding: 12px 14px;
+    }
+    [data-theme='light'] .st-fakt { background: #ffffff; border: 1px solid var(--color-border-subtle); }
+    .st-fakt svg { width: 22px; height: 22px; margin-top: 2px; color: var(--green); }
+    [data-theme='light'] .st-fakt svg { color: var(--color-accent-on-light); }
+    .st-fakt-haupt { display: block; font: 800 20px/1.25 'Barlow', 'Inter', sans-serif; }
+    .st-fakt-neben { display: block; font-size: 15px; line-height: 1.4; color: var(--color-text-secondary); }
+    .st-knopf {
+      display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;
+      min-height: 56px; padding: 14px 20px; border: 0; border-radius: 12px; cursor: pointer;
+      background: var(--color-accent-primary); color: var(--color-accent-primary-text);
+      font: 700 18px/1.2 'Inter', sans-serif; text-decoration: none;
+      box-shadow: 0 6px 18px rgba(183, 217, 0, 0.22);
+    }
+    .st-knopf:hover { background: var(--green-dark); }
+    .st-knopf:focus-visible, .st-zweit:focus-visible, .st-anruf:focus-visible,
+    .st-wahl input:focus-visible + span, .st-feld input:focus-visible, .st-link:focus-visible {
+      outline: 3px solid var(--color-text-primary); outline-offset: 2px;
+    }
+    .st-knopf-hinweis { margin: 8px 0 0; font-size: 14px; color: var(--color-text-secondary); text-align: center; }
+
+    /* Inhaltsbloecke */
+    .st-block { padding: 24px 0 8px; }
+    .st-block h2 { font: 800 24px/1.2 'Barlow', 'Inter', sans-serif; margin: 0 0 12px; }
+    .st-teaser { margin: 0 0 8px; font-size: 17px; }
+    .st-liste { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+    .st-liste li { position: relative; padding-left: 26px; }
+    .st-liste li::before {
+      content: ''; position: absolute; left: 4px; top: 0.45em; width: 10px; height: 10px;
+      border-radius: 50%; background: var(--green);
+    }
+    [data-theme='light'] .st-liste li::before { background: var(--color-accent-on-light); }
+
+    /* Kurzformular */
+    .st-formkarte {
+      margin: 24px 0; padding: 20px 16px; border-radius: 16px;
+      background: var(--color-surface-tertiary); scroll-margin-top: 12px;
+    }
+    [data-theme='light'] .st-formkarte { background: #ffffff; border: 1px solid var(--color-border-subtle); box-shadow: 0 8px 28px var(--color-shadow); }
+    .st-formkarte h2 { font: 800 24px/1.2 'Barlow', 'Inter', sans-serif; margin: 0 0 4px; }
+    .st-fortschritt { margin: 12px 0 16px; }
+    .st-fortschritt-text { font-size: 14px; font-weight: 700; color: var(--color-text-secondary); }
+    /* Schiene im Dunkelmodus auf Schiefer: --color-border-subtle ist dort gleich der
+       Kartenfarbe und machte die Schiene unsichtbar (gesehen im Bildschirmfoto 24.09.). */
+    .st-balken { height: 8px; border-radius: 999px; background: var(--schiefer); overflow: hidden; margin-top: 6px; }
+    [data-theme='light'] .st-balken { background: var(--color-border-subtle); }
+    .st-balken-fuell { height: 100%; width: 0; background: var(--color-accent-primary); border-radius: 999px; transition: width 0.25s ease; }
+    @media (prefers-reduced-motion: reduce) { .st-balken-fuell { transition: none; } }
+    .st-schritt { border: 0; margin: 0; padding: 0; min-width: 0; }
+    .st-frage { font: 800 21px/1.25 'Barlow', 'Inter', sans-serif; margin: 0 0 4px; padding: 0; }
+    .st-frage:focus { outline: none; }
+    .st-unterfrage { font-weight: 700; font-size: 16px; margin: 18px 0 8px; }
+    .st-freiwillig { font-size: 14px; color: var(--color-text-secondary); margin: 0 0 12px; }
+    .st-wahlen { display: grid; gap: 8px; }
+    .st-wahl { display: block; position: relative; cursor: pointer; }
+    .st-wahl input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+    .st-wahl span {
+      display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 12px 14px;
+      border: 2px solid var(--color-border-strong); border-radius: 12px; font-size: 16px; line-height: 1.3;
+    }
+    .st-wahl span::before {
+      content: ''; flex: none; width: 20px; height: 20px; border-radius: 50%;
+      border: 2px solid var(--color-border-strong); background: transparent;
+    }
+    .st-wahl input:checked + span { border-color: var(--color-accent-primary); background: rgba(183, 217, 0, 0.12); }
+    .st-wahl input:checked + span::before { border-color: var(--color-accent-primary); background: var(--color-accent-primary); box-shadow: inset 0 0 0 3px var(--color-surface-tertiary); }
+    [data-theme='light'] .st-wahl input:checked + span::before { box-shadow: inset 0 0 0 3px #ffffff; }
+    .st-feld { display: grid; gap: 6px; margin: 0 0 14px; }
+    .st-feld label { font-weight: 700; font-size: 16px; }
+    .st-feld input[type='text'], .st-feld input[type='email'], .st-feld input[type='tel'], .st-feld input[type='date'] {
+      width: 100%; min-height: 52px; padding: 12px 14px; border-radius: 10px; font: 400 16px/1.3 'Inter', sans-serif;
+      background: var(--schiefer); color: var(--color-text-primary); border: 2px solid var(--color-border-strong);
+    }
+    [data-theme='light'] .st-feld input { background: var(--sand); }
+    .st-feld input[aria-invalid='true'] { border-color: var(--color-error); }
+    .st-optional { font-weight: 400; font-size: 14px; color: var(--color-text-secondary); }
+    .st-check { display: grid; grid-template-columns: 24px 1fr; gap: 10px; align-items: start; margin: 0 0 12px; font-size: 15px; line-height: 1.45; }
+    .st-check input { width: 22px; height: 22px; margin: 2px 0 0; accent-color: var(--color-accent-primary); }
+    .st-check a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+    .st-steuer { display: flex; gap: 10px; margin-top: 18px; }
+    .st-steuer .st-knopf { flex: 1; box-shadow: none; }
+    .st-zweit {
+      min-height: 56px; padding: 0 18px; border-radius: 12px; cursor: pointer; background: transparent;
+      border: 2px solid var(--color-border-strong); color: var(--color-text-primary); font: 700 16px/1 'Inter', sans-serif;
+    }
+    .st-fehler { color: var(--color-error); font-weight: 700; margin: 12px 0 0; }
+    [data-theme='light'] .st-fehler { color: #b3261e; }
+    .st-fehler a { color: inherit; }
+    .st-erfolg h2 { margin-bottom: 8px; }
+    .st-erfolg p { margin: 0 0 10px; }
+    .st-rolle-info { font-size: 15px; color: var(--color-text-secondary); margin: 0; }
+    .st-link { color: inherit; text-decoration: underline; text-underline-offset: 2px; background: none; border: 0; padding: 0; font: inherit; cursor: pointer; }
+
+    /* Knopfleiste am unteren Rand, nur solange weder oberer Knopf noch Formular sichtbar sind */
+    .st-leiste {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+      background: var(--schiefer); border-top: 1px solid var(--color-border-subtle);
+      transform: translateY(110%); transition: transform 0.2s ease;
+    }
+    [data-theme='light'] .st-leiste { background: #ffffff; }
+    .st-leiste[data-sichtbar='true'] { transform: none; }
+    @media (prefers-reduced-motion: reduce) { .st-leiste { transition: none; } }
+    .st-leiste .st-knopf { max-width: 688px; margin: 0 auto; min-height: 52px; box-shadow: none; }
+
+    /* Fuss */
+    .st-fuss { margin-top: 24px; padding: 24px 0 96px; border-top: 1px solid var(--color-border-subtle); font-size: 14px; color: var(--color-text-secondary); }
+    .st-fuss nav { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 8px; background: none; border: 0; }
+    .st-fuss a, .st-fuss button { color: inherit; font: inherit; min-height: 44px; display: inline-flex; align-items: center; }
+    .st-fuss button { background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
+    .st-fuss button[hidden] { display: none; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
+  <header class="st-kopf">
+    <div class="st-wrap">
+      <a class="st-logo" href="/" aria-label="HeroWerk, zur Startseite"><img src="herowerk-logo-stacked.png?v=3805a3a2a6" alt="HeroWerk, Meisterbetrieb für Wärmepumpen" class="logo-dunkel" width="607" height="337" decoding="async"><img src="herowerk-logo-stacked-light.png?v=8c40e63d7e" alt="" aria-hidden="true" class="logo-hell" width="607" height="337" decoding="async" loading="lazy"></a>
+      <a class="st-anruf" href="tel:+4951315059750"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg><span class="st-anruf-text">Anrufen</span></a>
+      <button type="button" class="theme-toggle" data-theme-toggle data-theme-switch>Hell oder Dunkel</button>
+    </div>
+  </header>
+
+  <main id="main-content" tabindex="-1">
+    <section class="st-held" aria-labelledby="stTitel">
+      <div class="st-wrap">
+        <p class="st-marke" id="stMarke">Jobs bei HeroWerk</p>
+        <h1 class="st-titel" id="stTitel">Wärmepumpen-Jobs in der Region Hannover</h1>
+        <ul class="st-fakten">
+          <li class="st-fakt" id="stGehaltFakt" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></svg>
+            <span><span class="visually-hidden">Gehalt: </span><span class="st-fakt-haupt" id="stGehalt"></span><span class="st-fakt-neben" id="stGehaltNeben"></span></span>
+          </li>
+          <li class="st-fakt">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 22s7-6.2 7-12a7 7 0 10-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            <span><span class="visually-hidden">Ort: </span><span class="st-fakt-haupt">Region Hannover</span><span class="st-fakt-neben" id="stOrtNeben">Vollzeit, unbefristet, abends daheim</span></span>
+          </li>
+        </ul>
+        <a class="st-knopf btn-primary" href="#bewerben" data-bewerben="oben">Jetzt in 2 Minuten bewerben</a>
+        <p class="st-knopf-hinweis">Ohne Anschreiben. Wir melden uns innerhalb von 48&nbsp;Stunden.</p>
+      </div>
+    </section>
+
+
+    <section class="st-block" id="stDetails" aria-labelledby="stDetailsTitel" hidden>
+      <div class="st-wrap">
+        <h2 id="stDetailsTitel">Darauf kannst du dich freuen</h2>
+        <p class="st-teaser" id="stTeaser"></p>
+        <ul class="st-liste" id="stFreuen"></ul>
+        <h2 style="margin-top: 24px;">Das bringst du mit</h2>
+        <ul class="st-liste" id="stProfil"></ul>
+      </div>
+    </section>
+
+    <!-- Rolleninhalte je Kampagnenrolle. Quelle: Stellen-Feed /api/jobs (Google Sheet
+         Hero_Jobs_Website), live gelesen am 24.09.2026. Verguetung nach dem ratifizierten
+         Entscheid vom 29.07.2026 (Karriere-Verguetungstexte), hier als ab-Wert ohne
+         Obergrenze; beim Aussendienst ist das Fixum fest, deshalb dort kein ab.
+         Abgleich gegen den Live-Feed: npm run verify:stelle-live. -->
+    <script>
+      window.HW_STELLEN = {
+        anlagenmechaniker: {
+          titel: 'Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in',
+          gehalt: 'ab 20,00 € brutto pro Stunde',
+          gehaltNeben: 'rund 3.467 € im Monat bei 40 Stunden, je nach Erfahrung und Qualifikation',
+          ortNeben: 'Vollzeit, unbefristet, keine Fernmontage, abends daheim',
+          teaser: 'Du machst aus alten Öl- und Gasheizungen moderne Wärmepumpen, im festen Zweier-Team, auf vorbereiteten Baustellen in der Region Hannover. Abends bist du zuhause, nicht im Hotel.',
+          freuen: ['Feste Region Hannover, keine Fernmontage, kein Hotel, abends daheim.', 'Modernes Werkzeug, gut ausgestattete Fahrzeuge, Tablet statt Papierkram.', 'Kälteschein & Herstellerschulungen auf unsere Kosten.', 'Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub.'],
+          profil: ['Abgeschlossene Ausbildung als Anlagenmechaniker:in SHK, Gas-/Wasserinstallateur:in oder Heizungsbauer:in.', 'Erfahrung in der Heizungsinstallation, erste Wärmepumpen-Berührung ist ein Plus, aber kein Muss (wir schulen dich).', 'Sorgfältige, kundenfreundliche und eigenverantwortliche Arbeitsweise im Team.', 'Führerschein Klasse B und Deutsch ab B2.'],
+          frage: 'Welche Ausbildung hast du?',
+          antworten: ['Anlagenmechaniker:in SHK', 'Gas- und Wasserinstallateur:in oder Heizungsbauer:in', 'Andere Ausbildung im Handwerk', 'Ich bin noch in der Ausbildung', 'Keine Ausbildung in diesem Bereich']
+        },
+        quereinsteiger: {
+          titel: 'Quereinsteiger:in Montage',
+          gehalt: 'ab 15,00 € brutto pro Stunde',
+          gehaltNeben: 'rund 2.600 € im Monat bei 40 Stunden, je nach Erfahrung und Qualifikation',
+          ortNeben: 'Vollzeit, unbefristet, wir arbeiten dich selbst ein',
+          teaser: 'Du hast handwerkliches Talent und Lust auf die Wärmewende? Wir bilden dich Schritt für Schritt zum Wärmepumpen-Profi aus, im festen Team in der Region Hannover.',
+          freuen: ['Strukturiertes Onboarding durch erfahrene Kolleg:innen.', 'Weiterbildung auf unsere Kosten, bis zum Kälteschein & Herstellerschulungen.', 'Feste Region Hannover, modernes Werkzeug und gut ausgestattete Fahrzeuge.', 'Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub.'],
+          profil: ['Handwerkliche Praxis und ausgeprägte Lernbereitschaft.', 'Bereitschaft, dich zum Wärmepumpen-Profi ausbilden zu lassen, SHK- oder Elektro-Erfahrung ist ein Plus, aber kein Muss.', 'Zuverlässigkeit, Sorgfalt und Teamgeist.', 'Führerschein Klasse B.'],
+          frage: 'Was machst du bisher beruflich?',
+          antworten: ['Handwerk oder Bau', 'Lager, Logistik oder Produktion', 'Etwas ganz anderes', 'Schule, Ausbildung oder Studium gerade beendet']
+        },
+        elektriker: {
+          titel: 'Elektriker:in für Wärmepumpen & Photovoltaik',
+          gehalt: 'ab 21,00 € brutto pro Stunde',
+          gehaltNeben: 'rund 3.640 € im Monat bei 40 Stunden, je nach Erfahrung und Qualifikation',
+          ortNeben: 'Vollzeit, unbefristet, keine Fernmontage, abends daheim',
+          teaser: 'Du bringst Wärmepumpen und PV-Anlagen sauber ans Netz, vom Anschluss bis zur Inbetriebnahme, im festen Team in der Region Hannover.',
+          freuen: ['Feste Region Hannover, keine Fernmontage, kein Hotel, abends daheim.', 'Modernes Werkzeug, gut ausgestattete Fahrzeuge, Tablet statt Papierkram.', 'Herstellerschulungen & Weiterbildung auf unsere Kosten.', 'Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub.'],
+          profil: ['Abgeschlossene Ausbildung als Elektroniker:in (Energie- und Gebäudetechnik) oder vergleichbar.', 'Installationserfahrung, idealerweise mit Wärmepumpen, Wallboxen oder PV-Anlagen.', 'Selbstständige, verantwortungsvolle Arbeitsweise und Qualitätsbewusstsein.', 'Führerschein Klasse B und Deutsch ab B2.'],
+          frage: 'Welche Ausbildung hast du?',
+          antworten: ['Elektroniker:in für Energie- und Gebäudetechnik', 'Andere Ausbildung im Elektrohandwerk', 'Andere Ausbildung im Handwerk', 'Ich bin noch in der Ausbildung', 'Keine Ausbildung in diesem Bereich']
+        },
+        gala: {
+          titel: 'Fundament- & Außenanlagen / GaLa',
+          gehalt: 'ab 17,00 € brutto pro Stunde',
+          gehaltNeben: 'rund 2.947 € im Monat bei 40 Stunden, je nach Erfahrung und Qualifikation',
+          ortNeben: 'Vollzeit, unbefristet, keine Fernmontage, abends daheim',
+          teaser: 'Du schaffst die Basis, damit die Außeneinheit sicher steht und drumherum alles stimmt. Festes Einsatzgebiet: Region Hannover, abends bist du zuhause.',
+          freuen: ['Feste Region Hannover, keine Fernmontage, abends daheim.', 'Modernes Werkzeug und gut ausgestattete Fahrzeuge.', 'Strukturiertes Onboarding durch erfahrene Kolleg:innen.', 'Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub.'],
+          profil: ['Erfahrung im Garten- und Landschaftsbau oder Tiefbau.', 'Handwerkliches Geschick und körperliche Belastbarkeit.', 'Sorgfalt, Zuverlässigkeit und Teamgeist.', 'Führerschein Klasse B, idealerweise BE.'],
+          frage: 'Wo hast du schon gearbeitet?',
+          antworten: ['Garten- und Landschaftsbau', 'Tiefbau oder Hochbau', 'Anderes Handwerk', 'Noch nicht auf dem Bau']
+        },
+        'shk-meister-montage': {
+          titel: 'SHK-Meister:in',
+          gehalt: 'ab 4.500 € brutto im Monat',
+          gehaltNeben: 'je nach Erfahrung und Qualifikation',
+          ortNeben: 'Vollzeit, unbefristet, keine Fernmontage, abends daheim',
+          teaser: 'Du führst dein Team fachlich auf der Baustelle, sorgst für saubere Wärmepumpen-Installationen und packst selbst mit an, als Meister:in mittendrin im festen Einsatzgebiet Region Hannover.',
+          freuen: ['Feste Region Hannover, keine Fernmontage, abends daheim.', 'Modernes Werkzeug, gut ausgestattete Fahrzeuge, Tablet statt Papierkram.', 'Herstellerschulungen & Weiterbildung auf unsere Kosten.', 'Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub.'],
+          profil: ['Meisterbrief im SHK-Handwerk.', 'Mehrjährige Erfahrung in der Heizungs- bzw. Wärmepumpentechnik.', 'Führungsstärke, Verantwortungsbewusstsein und ein Auge fürs Detail, und Lust, selbst auf der Baustelle dabei zu sein.', 'Führerschein Klasse B.'],
+          frage: 'Hast du einen Meisterbrief?',
+          antworten: ['Ja, im SHK-Handwerk', 'Die Meisterschule läuft gerade', 'Staatlich geprüfte:r Techniker:in', 'Noch nicht']
+        },
+        elektromeister: {
+          titel: 'Elektromeister:in / Konzessionsträger:in Elektro',
+          gehalt: 'ab 4.500 € brutto im Monat',
+          gehaltNeben: 'plus Zulage bei Übernahme der Konzession, je nach Erfahrung und Qualifikation',
+          ortNeben: 'Vollzeit, unbefristet, keine Fernmontage, abends daheim',
+          teaser: 'Du verantwortest die Elektro-Seite unserer Installationen, gibst grünes Licht für jeden Anschluss, und bringst die Konzession dafür mit. Festes Einsatzgebiet: Region Hannover.',
+          freuen: ['Feste Region Hannover, keine Fernmontage, abends daheim.', 'Gestaltungsspielraum, flache Hierarchien und kurze Wege.', 'Herstellerschulungen & Weiterbildung auf unsere Kosten.', 'Unbefristete Festanstellung, faire Vergütung + Bonus, 30 Tage Urlaub.'],
+          profil: ['Meisterbrief im Elektrohandwerk (Energie- und Gebäudetechnik).', 'Eintragung in die Handwerksrolle und Eignung als Konzessionsträger:in beim Netzbetreiber.', 'Erfahrung mit WP- bzw. PV-Elektroinstallation.', 'Führerschein Klasse B.'],
+          frage: 'Hast du einen Meisterbrief?',
+          antworten: ['Ja, im Elektrohandwerk', 'Die Meisterschule läuft gerade', 'Staatlich geprüfte:r Techniker:in', 'Noch nicht']
+        },
+        vad: {
+          titel: 'Vertriebsberater:in Außendienst für Wärmepumpen',
+          gehalt: '3.000 € brutto im Monat Fixum',
+          gehaltNeben: 'plus Provision auf deinen Umsatz, ohne\u00a0Deckel',
+          ortNeben: 'Vollzeit, unbefristet, Firmenwagen auch privat',
+          teaser: 'Du holst Menschen bei ihrem Heizungswechsel ab, direkt am Küchentisch, und machst aus Interesse ein überzeugtes Ja zur Wärmepumpe. Dein Revier: die Region Hannover.',
+          freuen: ['Firmenwagen, den du auch privat fahren kannst (1 %-Regelung).', 'Feste Region Hannover, kurze Wege, abends daheim.', 'Faire Vergütung + Bonus und Weiterbildung auf unsere Kosten.', 'Unbefristete Festanstellung und 30 Tage Urlaub.'],
+          profil: ['Kommunikationsstärke und Vertriebstalent, idealerweise im Umfeld SHK, Energie oder Bau (Quereinsteiger:innen willkommen).', 'Technisches Verständnis und Freude an ehrlichen, transparenten Gesprächen.', 'Digital-affin und sicher im Umgang mit CRM-Tools.', 'Führerschein Klasse B.'],
+          frage: 'Was hast du bisher verkauft?',
+          antworten: ['Heizung, Energie oder Solar', 'Andere Produkte im Außendienst', 'Im Innendienst oder im Handel', 'Noch nichts, ich will einsteigen']
+        }
+      };
+      // Rolle aus der Adresse (?role=, wie auf /bewerbung). Unbekannte Werte werden
+      // ignoriert: dann fragt das Formular die Rolle als ersten Schritt ab.
+      (function () {
+        var p = new URLSearchParams(window.location.search);
+        var slug = (p.get('role') || p.get('rolle') || '').toLowerCase().trim();
+        var s = Object.prototype.hasOwnProperty.call(window.HW_STELLEN, slug) ? window.HW_STELLEN[slug] : null;
+        window.HW_ROLLE = s ? slug : '';
+        if (!s) return;
+        document.title = 'Job: ' + s.titel + ' in der Region Hannover | HeroWerk';
+        document.getElementById('stMarke').textContent = 'Job in der Region Hannover';
+        var h1 = document.getElementById('stTitel');
+        h1.textContent = s.titel + ' ';
+        var mwd = document.createElement('span');
+        mwd.className = 'st-mwd';
+        mwd.textContent = '(m/w/d)';
+        h1.appendChild(mwd);
+        document.getElementById('stGehalt').textContent = s.gehalt;
+        document.getElementById('stGehaltNeben').textContent = s.gehaltNeben;
+        document.getElementById('stGehaltFakt').hidden = false;
+        document.getElementById('stOrtNeben').textContent = s.ortNeben;
+        // Details im selben Durchlauf fuellen: der Teaser ist auf dem Telefon oft das
+        // groesste Textelement (LCP). Spaeter nachgefuellt verschob er die LCP-Messung.
+        document.getElementById('stTeaser').textContent = s.teaser;
+        ['freuen', 'profil'].forEach(function (feld) {
+          var ul = document.getElementById(feld === 'freuen' ? 'stFreuen' : 'stProfil');
+          s[feld].forEach(function (t) {
+            var li = document.createElement('li');
+            li.textContent = t;
+            ul.appendChild(li);
+          });
+        });
+        document.getElementById('stDetails').hidden = false;
+      })();
+    </script>
+
+    <div class="st-wrap">
+      <section class="st-formkarte" id="bewerben" aria-labelledby="stFormTitel" tabindex="-1">
+        <h2 id="stFormTitel">Kurzbewerbung</h2>
+        <p class="st-rolle-info" id="stRolleInfo">Ohne Anschreiben und ohne Lebenslauf. Den kannst du später nachreichen.</p>
+        <noscript><p class="st-fehler">Für das Formular braucht dein Browser JavaScript. Schreib uns sonst einfach an <a href="mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk">bewerbung@herowerk.de</a>.</p></noscript>
+        <div class="st-fortschritt" id="stFortschritt">
+          <span class="st-fortschritt-text" id="stSchrittText" aria-live="polite">Schritt 1 von 5</span>
+          <div class="st-balken" role="progressbar" aria-labelledby="stSchrittText" aria-valuemin="0" aria-valuemax="100" aria-valuenow="20" id="stBalken"><div class="st-balken-fuell" id="stBalkenFuell"></div></div>
+        </div>
+
+        <form id="stForm" novalidate data-hubspot-form-id="c6a199f5-bab6-499e-a3ee-3d9605120877">
+          <input type="hidden" name="beworbene_rolle" id="stFeldRolle" value="">
+
+          <fieldset class="st-schritt" data-schritt="rolle" hidden>
+            <legend class="st-frage" tabindex="-1">Auf welche Stelle bewirbst du dich?</legend>
+            <div class="st-wahlen" id="stRollenWahl"></div>
+            <p class="st-freiwillig">Eine andere Stelle? Alle Jobs findest du auf <a class="st-link" href="/karriere">herowerk.de/karriere</a>.</p>
+          </fieldset>
+
+          <fieldset class="st-schritt" data-schritt="q1" hidden>
+            <legend class="st-frage" tabindex="-1" id="stQ1Frage">Welche Ausbildung hast du?</legend>
+            <p class="st-freiwillig">Freiwillig. Deine Antwort hilft uns, das Gespräch vorzubereiten. Sie führt nie zu einer Absage.</p>
+            <div class="st-wahlen" id="stQ1Wahl"></div>
+          </fieldset>
+
+          <fieldset class="st-schritt" data-schritt="q2" hidden>
+            <legend class="st-frage" tabindex="-1">Wie viel Berufserfahrung bringst du mit?</legend>
+            <p class="st-freiwillig">Freiwillig, du kannst auch ohne Antwort weiter.</p>
+            <div class="st-wahlen" role="radiogroup" aria-label="Berufserfahrung">
+              <label class="st-wahl"><input type="radio" name="erfahrung" value="Noch keine"><span>Noch keine</span></label>
+              <label class="st-wahl"><input type="radio" name="erfahrung" value="Unter 2 Jahre"><span>Unter 2 Jahre</span></label>
+              <label class="st-wahl"><input type="radio" name="erfahrung" value="2 bis 5 Jahre"><span>2 bis 5 Jahre</span></label>
+              <label class="st-wahl"><input type="radio" name="erfahrung" value="Mehr als 5 Jahre"><span>Mehr als 5 Jahre</span></label>
+            </div>
+            <p class="st-unterfrage" id="stFsFrage">Hast du den Führerschein Klasse B?</p>
+            <div class="st-wahlen" role="radiogroup" aria-labelledby="stFsFrage">
+              <label class="st-wahl"><input type="radio" name="fuehrerschein" value="Ja"><span>Ja</span></label>
+              <label class="st-wahl"><input type="radio" name="fuehrerschein" value="Mache ich gerade"><span>Mache ich gerade</span></label>
+              <label class="st-wahl"><input type="radio" name="fuehrerschein" value="Nein"><span>Nein</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="st-schritt" data-schritt="start" hidden>
+            <legend class="st-frage" tabindex="-1">Ab wann könntest du anfangen?</legend>
+            <p class="st-freiwillig">Freiwillig, du kannst auch ohne Antwort weiter.</p>
+            <div class="st-wahlen" role="radiogroup" aria-label="Möglicher Start">
+              <label class="st-wahl"><input type="radio" name="start" value="Sofort"><span>Sofort</span></label>
+              <label class="st-wahl"><input type="radio" name="start" value="In 1 bis 3 Monaten"><span>In 1 bis 3 Monaten</span></label>
+              <label class="st-wahl"><input type="radio" name="start" value="In mehr als 3 Monaten"><span>In mehr als 3 Monaten</span></label>
+              <label class="st-wahl"><input type="radio" name="start" value="Weiß ich noch nicht"><span>Weiß ich noch nicht</span></label>
+            </div>
+            <div class="st-feld" style="margin-top: 16px;">
+              <label for="stEintritt">Genaues Datum <span class="st-optional">optional</span></label>
+              <input id="stEintritt" type="date" name="fruhester_eintritt">
+            </div>
+          </fieldset>
+
+          <fieldset class="st-schritt" data-schritt="name" hidden>
+            <legend class="st-frage" tabindex="-1">Wie heißt du?</legend>
+            <div class="st-feld" style="margin-top: 12px;">
+              <label for="stVorname">Vorname</label>
+              <input id="stVorname" type="text" name="firstname" autocomplete="given-name" required>
+            </div>
+            <div class="st-feld">
+              <label for="stNachname">Nachname</label>
+              <input id="stNachname" type="text" name="lastname" autocomplete="family-name" required>
+            </div>
+          </fieldset>
+
+          <fieldset class="st-schritt" data-schritt="kontakt" hidden>
+            <legend class="st-frage" tabindex="-1">Wie erreichen wir dich?</legend>
+            <div class="st-feld" style="margin-top: 12px;">
+              <label for="stTelefon">Telefon</label>
+              <input id="stTelefon" type="tel" name="phone" autocomplete="tel" inputmode="tel" required>
+            </div>
+            <div class="st-feld">
+              <label for="stEmail">E-Mail</label>
+              <input id="stEmail" type="email" name="email" autocomplete="email" inputmode="email" required>
+            </div>
+            <div class="st-check">
+              <input type="checkbox" id="stDsgvo" name="datenschutzeinwilligung_bewerbung" value="true" required>
+              <label for="stDsgvo">Ich willige ein, dass HeroWerk meine angegebenen Daten zur Bearbeitung meiner Bewerbung speichert und verarbeitet, und akzeptiere die <a href="/datenschutz" target="_blank" rel="noopener">Datenschutzbedingungen</a>. Die Einwilligung ist jederzeit widerrufbar.</label>
+            </div>
+            <div class="st-check">
+              <input type="checkbox" id="stNewsletter" name="newslettereinwilligung" value="true">
+              <label for="stNewsletter">Möchtest du von uns hören, wenn es bei HeroWerk etwas Neues gibt, neue Stellen oder Neuigkeiten? <span class="st-optional">optional</span></label>
+            </div>
+          </fieldset>
+
+          <div class="st-steuer">
+            <button type="button" class="st-zweit" id="stZurueck" hidden>Zurück</button>
+            <button type="submit" class="st-knopf" id="stWeiter">Weiter</button>
+          </div>
+          <p class="st-fehler" id="stFehler" role="alert" hidden></p>
+        </form>
+
+        <div class="st-erfolg" id="stErfolg" role="status" aria-live="polite" hidden>
+          <h2 tabindex="-1" id="stErfolgTitel">Danke, <span id="stErfolgName"></span>!</h2>
+          <!-- Bewusst KEIN Versprechen einer Portal-Mail: in der Abnahme am 24.09.2026 kam
+               nach sieben Einsendungen ueber dieses Formular keine Mail an die Testadressen,
+               nur die interne HubSpot-Benachrichtigung. Versprochen wird nur, was belegt ist. -->
+          <p>Deine Bewerbung ist bei uns eingegangen. Wir melden uns innerhalb von 48&nbsp;Stunden telefonisch oder per E-Mail.</p>
+          <p>Lebenslauf und Zeugnisse brauchst du jetzt noch nicht. Die kannst du später nachreichen, zum Beispiel an <a class="st-link" href="mailto:bewerbung@herowerk.de?subject=Unterlagen%20zu%20meiner%20Bewerbung">bewerbung@herowerk.de</a>.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="st-fuss">
+    <div class="st-wrap">
+      <div>HeroWerk GmbH · Meisterbetrieb für Wärmepumpen in der Region Hannover · Tel. <a href="tel:+4951315059750">05131 5059750</a></div>
+      <nav aria-label="Rechtliches">
+        <a href="/karriere">Alle Jobs</a>
+        <a href="/impressum">Impressum</a>
+        <a href="/datenschutz">Datenschutz</a>
+        <button type="button" class="cookie-settings-button" hidden>Cookie-Einstellungen</button>
+        <a href="/barrierefreiheit">Barrierefreiheit</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div class="st-leiste" id="stLeiste" data-sichtbar="false" aria-hidden="true">
+    <a class="st-knopf btn-primary" href="#bewerben" data-bewerben="leiste" tabindex="-1">Jetzt bewerben</a>
+  </div>
+
+  <!-- ============================================================
+       KURZFORMULAR: dasselbe HubSpot-Formular wie /bewerbung
+       (Portal 148110267, Formular c6a199f5-...), also dieselbe
+       Bewerberkette: Kontakt, Workflow 4481906878, Recruiting-Deal.
+       Es werden NUR Felder gesendet, die an diesem Formular registriert
+       sind (live gelesen 24.09.2026): beworbene_rolle, firstname,
+       lastname, phone, email, fruhester_eintritt, message,
+       datenschutzeinwilligung_bewerbung, newslettereinwilligung.
+       Die freiwilligen Vorab-Fragen haben kein eigenes Feld; sie gehen
+       als lesbare Zeilen in die Nachricht (message). Sie sortieren vor,
+       entscheiden nichts: keine Absage, nichts wird ausgeblendet
+       (keine automatisierte Entscheidung nach Art. 22 DSGVO).
+
+       MESSUNG (nur mit Einwilligung, ohne Personendaten):
+         Knopfklick     GA4 bewerbung_klick       Meta trackCustom BewerbungKlick
+         Abgeschickt    GA4 bewerbung_abgeschickt Meta track SubmitApplication
+       Parameter nur rolle (Kennung der Stelle) und beim Klick position.
+       GA4 feuert nur, wenn js/consent.js gtag.js nach Statistik-
+       Einwilligung geladen hat; Meta nur, wenn fbq nach Marketing-
+       Einwilligung existiert. "Abgeschickt" erst nach Antwort 2xx der
+       Formular-Schnittstelle (HubSpot antwortet 200).
+       ============================================================ -->
+  <script>
+    (function () {
+      'use strict';
+      var PORTAL_ID = '148110267';
+      var FORM_ID = 'c6a199f5-bab6-499e-a3ee-3d9605120877';
+      var STELLEN = window.HW_STELLEN || {};
+      var rolle = window.HW_ROLLE || '';
+      var form = document.getElementById('stForm');
+      if (!form) return;
+
+      // ---------- Messung ----------
+      function ga4Geladen() {
+        return typeof window.gtag === 'function' &&
+          !!document.querySelector('script[src*="googletagmanager.com/gtag/js"]');
+      }
+      function messen(ga4Name, metaArt, metaName, parameter) {
+        try {
+          if (ga4Geladen()) window.gtag('event', ga4Name, parameter);
+          if (typeof window.fbq === 'function') window.fbq(metaArt, metaName, parameter);
+        } catch (e) { /* Messung darf die Bewerbung nie stoeren */ }
+      }
+      var klickGemessen = false;
+
+      // ---------- Details der Rolle ----------
+      function liste(id, eintraege) {
+        var ul = document.getElementById(id);
+        ul.textContent = '';
+        (eintraege || []).forEach(function (t) {
+          var li = document.createElement('li');
+          li.textContent = t;
+          ul.appendChild(li);
+        });
+      }
+      function detailsZeigen() {
+        var s = STELLEN[rolle];
+        if (!s) return;
+        document.getElementById('stTeaser').textContent = s.teaser;
+        liste('stFreuen', s.freuen);
+        liste('stProfil', s.profil);
+        document.getElementById('stDetails').hidden = false;
+        document.getElementById('stFeldRolle').value = rolle;
+        document.getElementById('stRolleInfo').textContent =
+          'Bewerbung als ' + s.titel + '. Ohne Anschreiben, den Lebenslauf kannst du später nachreichen.';
+      }
+
+      function wahlKnopf(name, wert, text) {
+        var label = document.createElement('label');
+        label.className = 'st-wahl';
+        var input = document.createElement('input');
+        input.type = 'radio';
+        input.name = name;
+        input.value = wert;
+        var span = document.createElement('span');
+        span.textContent = text;
+        label.appendChild(input);
+        label.appendChild(span);
+        return label;
+      }
+      function q1Aufbauen() {
+        var s = STELLEN[rolle];
+        var box = document.getElementById('stQ1Wahl');
+        box.textContent = '';
+        if (!s) return;
+        document.getElementById('stQ1Frage').textContent = s.frage;
+        box.setAttribute('role', 'radiogroup');
+        box.setAttribute('aria-labelledby', 'stQ1Frage');
+        s.antworten.forEach(function (a) { box.appendChild(wahlKnopf('vorab', a, a)); });
+      }
+
+      // ---------- Schritte ----------
+      var schritte = rolle ? ['q1', 'q2', 'start', 'name', 'kontakt'] : ['rolle', 'q1', 'q2', 'start', 'name', 'kontakt'];
+      var aktiv = 0;
+      if (!rolle) {
+        var rw = document.getElementById('stRollenWahl');
+        rw.setAttribute('role', 'radiogroup');
+        rw.setAttribute('aria-label', 'Stelle');
+        Object.keys(STELLEN).forEach(function (slug) {
+          var k = wahlKnopf('rolle_wahl', slug, STELLEN[slug].titel);
+          k.querySelector('input').required = true;
+          rw.appendChild(k);
+        });
+      } else {
+        detailsZeigen();
+        q1Aufbauen();
+      }
+
+      var fehler = document.getElementById('stFehler');
+      function fehlerZeigen(html) { fehler.innerHTML = html; fehler.hidden = false; }
+      function fehlerWeg() { fehler.hidden = true; fehler.textContent = ''; }
+
+      function feldset(name) { return form.querySelector('[data-schritt="' + name + '"]'); }
+      function zeigen(index, fokus) {
+        aktiv = index;
+        schritte.forEach(function (n, i) { feldset(n).hidden = i !== index; });
+        ['rolle', 'q1', 'q2', 'start', 'name', 'kontakt'].forEach(function (n) {
+          if (schritte.indexOf(n) === -1) feldset(n).hidden = true;
+        });
+        var gesamt = schritte.length;
+        document.getElementById('stSchrittText').textContent = 'Schritt ' + (index + 1) + ' von ' + gesamt;
+        var prozent = Math.round(((index + 1) / gesamt) * 100);
+        document.getElementById('stBalkenFuell').style.width = prozent + '%';
+        document.getElementById('stBalken').setAttribute('aria-valuenow', String(prozent));
+        document.getElementById('stZurueck').hidden = index === 0;
+        document.getElementById('stWeiter').textContent = index === gesamt - 1 ? 'Bewerbung absenden' : 'Weiter';
+        fehlerWeg();
+        if (fokus) {
+          var legend = feldset(schritte[index]).querySelector('legend');
+          if (legend) legend.focus({ preventScroll: true });
+          document.getElementById('bewerben').scrollIntoView({ block: 'start' });
+        }
+      }
+
+      function schrittGueltig() {
+        var fs = feldset(schritte[aktiv]);
+        var pflicht = fs.querySelectorAll('input[required]');
+        for (var i = 0; i < pflicht.length; i++) {
+          var el = pflicht[i];
+          el.removeAttribute('aria-invalid');
+          if (!el.checkValidity()) {
+            if (el.type !== 'radio') el.setAttribute('aria-invalid', 'true');
+            el.reportValidity();
+            return false;
+          }
+        }
+        return true;
+      }
+
+      function weiter() {
+        if (!schrittGueltig()) return;
+        if (schritte[aktiv] === 'rolle') {
+          var gew = form.querySelector('input[name="rolle_wahl"]:checked');
+          rolle = gew ? gew.value : '';
+          detailsZeigen();
+          q1Aufbauen();
+        }
+        if (aktiv < schritte.length - 1) zeigen(aktiv + 1, true);
+        else absenden();
+      }
+
+      document.getElementById('stZurueck').addEventListener('click', function () {
+        if (aktiv > 0) zeigen(aktiv - 1, true);
+      });
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        weiter();
+      });
+
+      // ---------- Absenden ----------
+      function wert(name) {
+        var el = form.querySelector('[name="' + name + '"]:checked') || form.querySelector('[name="' + name + '"]:not([type="radio"])');
+        return el ? String(el.value || '').trim() : '';
+      }
+      function nachricht() {
+        var s = STELLEN[rolle] || {};
+        var zeilen = [];
+        if (wert('vorab')) zeilen.push((s.frage || 'Vorab-Frage') + ' ' + wert('vorab'));
+        if (wert('erfahrung')) zeilen.push('Berufserfahrung: ' + wert('erfahrung'));
+        if (wert('fuehrerschein')) zeilen.push('Führerschein Klasse B: ' + wert('fuehrerschein'));
+        if (wert('start')) zeilen.push('Möglicher Start: ' + wert('start'));
+        if (!zeilen.length) return '';
+        return 'Freiwillige Vorab-Angaben von der Kampagnenseite (nur zur Gesprächsvorbereitung):\n' + zeilen.join('\n');
+      }
+      function datumMs(v) {
+        if (!v) return null;
+        var ms = Date.parse(v + 'T00:00:00Z');
+        return isNaN(ms) ? null : ms;
+      }
+      function nutzlast() {
+        var felder = [
+          { name: 'beworbene_rolle', value: rolle },
+          { name: 'firstname', value: wert('firstname') },
+          { name: 'lastname', value: wert('lastname') },
+          { name: 'email', value: wert('email') },
+          { name: 'phone', value: wert('phone') },
+          { name: 'message', value: nachricht() }
+        ];
+        var ein = datumMs(wert('fruhester_eintritt'));
+        if (ein != null) felder.push({ name: 'fruhester_eintritt', value: String(ein) });
+        if (document.getElementById('stDsgvo').checked) felder.push({ name: 'datenschutzeinwilligung_bewerbung', value: 'true' });
+        if (document.getElementById('stNewsletter').checked) felder.push({ name: 'newslettereinwilligung', value: 'true' });
+        return {
+          fields: felder.filter(function (f) { return f.value !== '' && f.value != null; }),
+          context: { pageUri: window.location.href, pageName: document.title },
+          legalConsentOptions: {
+            consent: {
+              consentToProcess: true,
+              text: 'Ich willige ein, dass HeroWerk meine angegebenen Daten zur Bearbeitung meiner Bewerbung speichert und verarbeitet.',
+              communications: []
+            }
+          }
+        };
+      }
+
+      var sendetGerade = false;
+      function absenden() {
+        if (sendetGerade) return;
+        if (!rolle) { zeigen(0, true); return; }
+        sendetGerade = true;
+        var knopf = document.getElementById('stWeiter');
+        knopf.disabled = true;
+        knopf.textContent = 'Wird gesendet …';
+        var endpunkt = 'https://api.hsforms.com/submissions/v3/integration/submit/' + PORTAL_ID + '/' + FORM_ID;
+        fetch(endpunkt, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(nutzlast())
+        }).then(function (res) {
+          if (!res.ok) throw new Error('Formular-Schnittstelle antwortet ' + res.status);
+          messen('bewerbung_abgeschickt', 'track', 'SubmitApplication', { rolle: rolle });
+          form.hidden = true;
+          document.getElementById('stFortschritt').hidden = true;
+          document.getElementById('stErfolgName').textContent = wert('firstname') || 'dir';
+          var ok = document.getElementById('stErfolg');
+          ok.hidden = false;
+          document.getElementById('stErfolgTitel').focus({ preventScroll: true });
+          document.getElementById('bewerben').scrollIntoView({ block: 'start' });
+        }).catch(function () {
+          // Bewerbung nie still verlieren: Weg per E-Mail anbieten, vom Menschen ausgeloest.
+          var s = STELLEN[rolle] || {};
+          var betreff = encodeURIComponent('Bewerbung: ' + (s.titel || 'HeroWerk'));
+          fehlerZeigen('Das Senden hat gerade nicht geklappt. Bitte versuch es gleich noch einmal oder schreib uns an <a href="mailto:bewerbung@herowerk.de?subject=' + betreff + '">bewerbung@herowerk.de</a>.');
+        }).then(function () {
+          sendetGerade = false;
+          knopf.disabled = false;
+          if (!form.hidden) knopf.textContent = 'Bewerbung absenden';
+        });
+      }
+
+      // ---------- Bewerben-Knoepfe und Leiste ----------
+      document.querySelectorAll('[data-bewerben]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (!klickGemessen) {
+            klickGemessen = true;
+            messen('bewerbung_klick', 'trackCustom', 'BewerbungKlick', { rolle: rolle || 'ohne_rolle', position: a.getAttribute('data-bewerben') });
+          }
+          var ziel = document.getElementById('bewerben');
+          ziel.scrollIntoView({ block: 'start' });
+          var legend = feldset(schritte[aktiv]).querySelector('legend');
+          if (legend) legend.focus({ preventScroll: true });
+        });
+      });
+      var leiste = document.getElementById('stLeiste');
+      if ('IntersectionObserver' in window) {
+        var obenSichtbar = true, formSichtbar = false;
+        var setzen = function () {
+          var an = !obenSichtbar && !formSichtbar;
+          leiste.setAttribute('data-sichtbar', an ? 'true' : 'false');
+          leiste.setAttribute('aria-hidden', an ? 'false' : 'true');
+          leiste.querySelector('a').tabIndex = an ? 0 : -1;
+        };
+        new IntersectionObserver(function (e) { obenSichtbar = e[0].isIntersecting; setzen(); })
+          .observe(document.querySelector('[data-bewerben="oben"]'));
+        new IntersectionObserver(function (e) { formSichtbar = e[0].isIntersecting; setzen(); })
+          .observe(document.getElementById('bewerben'));
+      }
+
+      zeigen(0, false);
+    })();
+  </script>
+</body>
+</html>
