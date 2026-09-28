@@ -37,7 +37,7 @@ async function fill(page, role, ausland = false) {
 }
 for (const role of roles)
   for (const ausland of [false, true])
-    test(`T1161 Nutzlast ${role} Ausland=${ausland}`, async ({ page }) => {
+    test(`@smoke T1161 Nutzlast ${role} Ausland=${ausland}`, async ({ page }) => {
       const sent = [];
       await page.route('https://api.hsforms.com/**', (r) => {
         sent.push(r.request().postDataJSON());
@@ -57,7 +57,7 @@ for (const role of roles)
         7 + (ausland ? 1 : 0) - (role === 'hr' ? 1 : 0)
       );
     });
-test('T1161 Pflicht und PLZ', async ({ page }) => {
+test('@smoke T1161 Pflicht und PLZ', async ({ page }) => {
   await gotoWithConsentRejected(page, `/${pageName}.html?role=anlagenmechaniker`);
   if (pageName === 'bewerbung')
     await page.getByRole('button', { name: 'Weiter', exact: true }).click();
@@ -77,7 +77,7 @@ test('T1161 Pflicht und PLZ', async ({ page }) => {
   await page.getByRole('button', { name: 'Weiter', exact: true }).click();
   await expect(page.locator('[data-schritt=a7]')).toBeVisible();
 });
-test('T1161 Familie und keine Auswahlentscheidung', async ({ page }) => {
+test('@smoke T1161 Familie und keine Auswahlentscheidung', async ({ page }) => {
   await gotoWithConsentRejected(page, `/${pageName}.html`);
   const map = await page.evaluate(() => /** @type {any} */ (window).HeroKurzbewerbung.families);
   expect(Object.keys(map)).toHaveLength(20);
