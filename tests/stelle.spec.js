@@ -228,6 +228,11 @@ test('@smoke /stelle Einsendung: nur registrierte Felder, Ereignisse getrennt un
   expect(wert('message')).toContain('Möglicher Start: In 1 bis 3 Monaten');
   expect(wert('message')).not.toContain('Berufserfahrung');
   expect(einsendungen[0].context.pageUri).toContain('utm_source=meta');
+  // Gespeicherte Einwilligung = sichtbarer Checkbox-Text, wortgleich (T1157).
+  const sichtbar = (await page.locator('label[for="stDsgvo"]').textContent()) || '';
+  expect(einsendungen[0].legalConsentOptions.consent.text).toBe(
+    sichtbar.replace(/\s+/g, ' ').trim()
+  );
 
   e = await ereignisse(page);
   expect(e.ga.map((x) => x.name)).toEqual(['bewerbung_klick', 'bewerbung_abgeschickt']);
