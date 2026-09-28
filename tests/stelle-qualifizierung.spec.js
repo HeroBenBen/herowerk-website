@@ -1,0 +1,86 @@
+/* global window */
+const { test, expect } = require('@playwright/test');
+const { gotoWithConsentRejected } = require('./helpers/consent');
+test.describe.configure({ mode: 'parallel' });
+/** @type {string} */
+const pageName = 'stelle';
+const roles =
+  pageName === 'stelle' ? ['anlagenmechaniker', 'vad'] : ['anlagenmechaniker', 'vad', 'hr'];
+async function fill(page, role, ausland = false) {
+  if (pageName === 'bewerbung') {
+    await page.locator('#bwRolle').selectOption(role);
+    await page.getByRole('button', { name: 'Weiter', exact: true }).click();
+  }
+  for (const [name, value] of [
+    ['arbeitserlaubnis', 'ja_uneingeschraenkt'],
+    ['berufsabschluss', ausland ? 'ausland' : 'meister_techniker'],
+    ...(ausland ? [['anerkennung', 'voll']] : []),
+    ['berufserfahrung', '1_bis_3'],
+    ...(role === 'hr' ? [] : [['fuehrerschein', 'b']]),
+    ['deutsch', 'gut_arbeitsalltag'],
+    ['plz', '30159'],
+    ['start', 'sofort'],
+  ]) {
+    const input = page.locator(
+      '[name="bewerber_' + name + '"]' + (name === 'plz' ? '' : '[value="' + value + '"]')
+    );
+    if (name === 'plz') await input.fill(value);
+    else await input.check();
+    await page.getByRole('button', { name: 'Weiter', exact: true }).click();
+  }
+  await page.locator('[name=firstname]').fill('Synthetisch');
+  await page.locator('[name=lastname]').fill('Test');
+  await page.getByRole('button', { name: 'Weiter', exact: true }).click();
+  await page.locator('[name=email]').fill('test@example.invalid');
+  await page.locator('[name=phone]').fill('000000');
+  await page.locator('[name=datenschutzeinwilligung_bewerbung]').check();
+}
+for (const role of roles)
+  for (const ausland of [false, true])
+    test(`@smoke T1161 Nutzlast ${role} Ausland=${ausland}`, async ({ page }) => {
+      const sent = [];
+      await page.route('https://api.hsforms.com/**', (r) => {
+        sent.push(r.request().postDataJSON());
+        return r.fulfill({ status: 200, contentType: 'application/json', body: '{}' });
+      });
+      await gotoWithConsentRejected(page, `/${pageName}.html?role=${role}`);
+      await fill(page, role, ausland);
+      await page.getByRole('button', { name: 'Bewerbung absenden', exact: true }).click();
+      await expect.poll(() => sent.length).toBe(1);
+      const vals = Object.fromEntries(sent[0].fields.map((f) => [f.name, f.value]));
+      expect(vals.beworbene_rolle).toBe(role);
+      expect(vals.bewerber_plz).toBe('30159');
+      expect(vals.bewerber_anerkennung).toBe(ausland ? 'voll' : undefined);
+      expect(vals.bewerber_fuehrerschein).toBe(role === 'hr' ? undefined : 'b');
+      expect(vals.message || '').not.toMatch(/Arbeitserlaubnis|Berufserfahrung|Führerschein/);
+      expect(Object.keys(vals).filter((k) => k.startsWith('bewerber_')).length).toBe(
+        7 + (ausland ? 1 : 0) - (role === 'hr' ? 1 : 0)
+      );
+    });
+test('@smoke T1161 Pflicht und PLZ', async ({ page }) => {
+  await gotoWithConsentRejected(page, `/${pageName}.html?role=anlagenmechaniker`);
+  if (pageName === 'bewerbung')
+    await page.getByRole('button', { name: 'Weiter', exact: true }).click();
+  await page.getByRole('button', { name: 'Weiter', exact: true }).click();
+  await expect(page.locator('[data-schritt=a1]')).toBeVisible();
+  for (const [n, v] of [
+    ['arbeitserlaubnis', 'nein'],
+    ['berufsabschluss', 'keiner'],
+    ['berufserfahrung', 'keine'],
+    ['fuehrerschein', 'keiner'],
+    ['deutsch', 'kaum'],
+  ]) {
+    await page.locator(`[name=bewerber_${n}][value=${v}]`).check();
+    await page.getByRole('button', { name: 'Weiter', exact: true }).click();
+  }
+  await page.locator('[name=bewerber_plz]').fill('3015');
+  await page.getByRole('button', { name: 'Weiter', exact: true }).click();
+  await expect(page.locator('[data-schritt=a7]')).toBeVisible();
+});
+test('@smoke T1161 Familie und keine Auswahlentscheidung', async ({ page }) => {
+  await gotoWithConsentRejected(page, `/${pageName}.html`);
+  const map = await page.evaluate(() => /** @type {any} */ (window).HeroKurzbewerbung.families);
+  expect(Object.keys(map)).toHaveLength(20);
+  expect(map.vad).toBe('F4');
+  expect(map.hr).toBe('F5');
+});
