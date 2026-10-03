@@ -18,9 +18,9 @@ const UEBERSCHRIFTEN = [
   '13. Kontaktaufnahme per E-Mail/Telefon',
   '14. KI-Telefonassistent bei Anrufen',
   '15. Kundenportal und Bewerberportal',
-  '16. Automatisierte Abläufe (Zapier)',
+  '16. Automatisierte Abläufe',
   '17. Anfragen über Vermittlungsportale (Information nach Art. 14 DSGVO)',
-  '18. Projektplanung, Angebot und Herstellervalidierung (autarc, Wolf, Vaillant)',
+  '18. Projektplanung und Angebot',
   '19. Empfänger',
   '20. Datensicherheit',
   '21. Aktualität',
@@ -31,15 +31,64 @@ const ALTSTELLEN = [
   'autarc Energy GmbH',
   'Art. 13 DSGVO über die Verarbeitung',
   'nur an die genannten Dienstleister',
+  'bei Nutzung unserer Formulare und Portale',
+  'CRM-System',
+  'Herstellervalidierung',
+  'Im Regelfall berechnen wir',
+  'Kennung der Anfrage',
+  'Fassung des angezeigten Angebots',
+  'Annahmeprotokoll',
+  'nicht standardmäßig für jede Anfrage',
+  'Gesprächsinhalte überträgt',
+  'Die Portale laufen bei',
 ];
 
 const SOLLSTELLEN = [
   'HubSpot Germany GmbH, Am Postbahnhof 17, 10243 Berlin',
-  'Scavix Software GmbH & Co. KG, Dörmter Straße 6, 29588 Oetzen',
-  'Zapier, Inc., 548 Market St. #62411',
-  'WattFox GmbH, Engelbergerstr. 21, 79106 Freiburg',
-  'eine Übermittlung in Drittländer erfolgt nur unter Beachtung der Art. 44 ff. DSGVO',
-  'ElevenLabs, Inc.',
+  'eine Übermittlung in Drittländer erfolgt nur unter Beachtung der Art. 44 ff. DSGVO. Wir speichern die Daten für die Dauer der Geschäftsbeziehung',
+  'Art. 13 und Art. 14 DSGVO über die Verarbeitung Ihrer personenbezogenen Daten durch uns',
+  'WattFox GmbH, Freiburg',
+  'Die Namen der eingesetzten Dienstleister nennen wir Ihnen auf Anfrage',
+  'Der Dienstleister setzt Unterauftragsverarbeiter in den USA ein',
+  'ein Dienstleister mit Sitz in Deutschland als Auftragsverarbeiter nach Art. 28 DSGVO',
+  'in unserem Kundensystem (siehe Ziffer 8) vermerkt',
+  'Die Protokolle der Abläufe werden nach spätestens 69 Tagen gelöscht',
+  'einen Automatisierungsdienst als Auftragsverarbeiter nach Art. 28 DSGVO',
+  'eine Planungssoftware als Auftragsverarbeiter nach Art. 28 DSGVO',
+  'Rufnummer, Zeitpunkt und Dauer Ihres Anrufs verarbeiten wir',
+  'stellen wir Online-Portale bereit',
+  'für den Nachweis des Vertragsschlusses Art. 6 Abs. 1 lit. f DSGVO',
+  'Soweit es für die Abrechnung erforderlich ist',
+  'Bei den in den Ziffern 8 und 16 genannten Dienstleistern',
+  'geben wir die für die Auslegung nötigen Daten an den Hersteller der geplanten Wärmepumpe weiter',
+];
+
+const VERBOTENE_INTERNA = [
+  'Zapier',
+  'autarc',
+  'Placetel',
+  'PhoneMondo',
+  'Scavix',
+  'ElevenLabs',
+  'Twilio',
+  'OpenAI',
+  'WOLF',
+  'Wolf',
+  'Vaillant',
+  'ohne Passwort',
+  '30 Minuten',
+  'portal.herowerk.de',
+  'bewerbung.herowerk.de',
+  'Angebotsvergleich.de',
+  'Engelbergerstr',
+  'Invalidenstr',
+  'Market St',
+  'Sitzungskennung',
+  'Anmeldezeitpunkte',
+  'Anmeldelink',
+  'Google Drive',
+  'Singapur',
+  'Supabase',
 ];
 
 function normalisiere(text) {
@@ -72,10 +121,9 @@ test('@smoke Datenschutz 3: neue Schlüsselstellen stehen je genau einmal', asyn
   }
 });
 
-test('@smoke Datenschutz 4: Singapur und Supabase fehlen', async ({ page }) => {
+test('@smoke Datenschutz 4: Anbieternamen und Interna fehlen', async ({ page }) => {
   const text = await ladeText(page);
-  expect(text).not.toContain('Singapur');
-  expect(text).not.toContain('Supabase');
+  for (const internum of VERBOTENE_INTERNA) expect(text).not.toContain(internum);
 });
 
 test('@smoke Datenschutz 5: nur der bestehende Geviertstrich ist vorhanden', async ({ page }) => {
