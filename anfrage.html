@@ -1719,6 +1719,7 @@
   let stepOrder = [0,9,1,2,3,4,5,6,7,8,10];
   let currentStep = stepOrder[0];
   const answers = { interesse: [] };
+  let kvHandoffErkannt = false;
   window.__wpPfad = true;
 
   const plzMap = {'30159':'hannover','30161':'hannover','30163':'hannover','30165':'hannover','30167':'hannover','30169':'hannover','30171':'hannover','30173':'hannover','30175':'hannover','30177':'hannover','30179':'hannover','30419':'hannover','30449':'hannover','30451':'hannover','30453':'hannover','30455':'hannover','30457':'hannover','30459':'hannover','30519':'hannover','30521':'hannover','30539':'hannover','30559':'hannover','30625':'hannover','30627':'hannover','30629':'hannover','30655':'hannover','30657':'hannover','30659':'hannover','30669':'hannover','30851':'langenhagen','30853':'langenhagen','30855':'langenhagen','30926':'seelze','30880':'laatzen','30966':'hemmingen','30952':'ronnenberg','30900':'wedemark','30938':'burgwedel','30916':'isernhagen','30823':'garbsen','30826':'garbsen','30827':'garbsen','31275':'lehrte','31311':'uetze','30974':'wennigsen','30890':'barsinghausen','30989':'gehrden','31832':'springe','30982':'pattensen','31319':'sehnde','31535':'neustadt','31515':'wunstorf','31547':'rehburg-loccum','31542':'bad-nenndorf','31552':'rodenberg','31553':'sachsenhagen','31559':'hohnhorst','31867':'lauenau','31863':'coppenbrügge','31848':'bad-münder','31785':'hameln','31787':'hameln','31789':'hameln','31840':'hessisch-oldendorf','31675':'bückeburg','31655':'stadthagen','31683':'obernkirchen','31688':'nienstädt','31691':'helpsen','31694':'niedernwöhren','31699':'beckedorf','29221':'celle','29223':'celle','29225':'celle','29227':'celle','29229':'celle','31303':'burgdorf','31234':'edemissen','31226':'peine','31228':'peine','31246':'ilsede','31241':'ilsede','31249':'hohenhameln','31171':'nordstemmen','31174':'schellerten','31177':'harsum','31180':'giesen','31185':'söhlde','31061':'alfeld','31073':'grünenplan','31008':'elze','31028':'gronau','31020':'salzhemmendorf'};
@@ -2127,11 +2128,7 @@
     if (submitButton) submitButton.disabled = true;
     try {
       await postToHubSpot(data);
-      const sitzung = readKvSession();
-      if (sitzung) {
-        gtag('event','lead_abgeschickt',{sitzung:sitzung});
-        try { sessionStorage.removeItem(KV_SESSION_KEY); } catch (error) {}
-      }
+      if (kvHandoffErkannt) gtag('event','lead_abgeschickt');
     } catch (error) {
       console.error(error);
       if (submitButton) submitButton.disabled = false;
@@ -2204,7 +2201,6 @@
   }
 
   const KV_LEAD_KEY = 'hero_kv_lead';
-  const KV_SESSION_KEY = 'hero_kv_sitzung';
   const KV_LEAD_ANSWER_KEYS = [
     'step1', 'step2', 'step3', 'step4', 'step5', 'energiebedarf_kwh',
     'jahresverbrauch_kwh', 'jahresverbrauch_menge', 'jahresverbrauch_einheit',
@@ -2218,11 +2214,6 @@
     const allowed = required.concat(optional || []);
     if (!required.every((key) => Object.prototype.hasOwnProperty.call(value, key))) return false;
     return keys.every((key) => allowed.includes(key));
-  }
-  function readKvSession() {
-    let sitzung = null;
-    try { sitzung = sessionStorage.getItem(KV_SESSION_KEY); } catch (error) {}
-    return typeof sitzung === 'string' && sitzung.trim() ? sitzung : null;
   }
   function finiteIn(value, min, max) {
     return typeof value === 'number' && Number.isFinite(value) && value >= min && value <= max;
@@ -2308,8 +2299,8 @@
       let kvLead = null;
       try { kvLead = JSON.parse(kvRaw); } catch (e) {}
       if (validKvLead(kvLead) && applyKvLeadHandoff(kvLead)) {
-        const sitzung = readKvSession();
-        if (sitzung) gtag('event','lead_handoff_erkannt',{sitzung:sitzung});
+        kvHandoffErkannt = true;
+        gtag('event','lead_handoff_erkannt');
         try { sessionStorage.removeItem(KV_LEAD_KEY); } catch (e) {}
         return true;
       }

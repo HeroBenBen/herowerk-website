@@ -13,8 +13,8 @@ const expected = new Map([
   ['wz_details_geoeffnet', ['bereich']],
   ['wz_angaben_aendern', []],
   ['wz_zeitraum_gewechselt', ['zeitraum']],
-  ['lead_handoff_erkannt', ['sitzung']],
-  ['lead_abgeschickt', ['sitzung']],
+  ['lead_handoff_erkannt', []],
+  ['lead_abgeschickt', []],
 ]);
 const eventPattern = /gtag\(\s*'event'\s*,\s*'([^']+)'(?:\s*,\s*\{([\s\S]*?)\})?\s*\);/g;
 const calls = [];

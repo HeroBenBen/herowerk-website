@@ -234,11 +234,6 @@ test('@smoke /stelle Einsendung: nur registrierte Felder, Ereignisse getrennt un
   await page.locator('#stTelefon').fill('0511 000000');
   await page.locator('#stEmail').fill('pruefung@herowerk.de');
   await page.locator('#stWeiter').click();
-  expect(einsendungen, 'ohne Datenschutz-Haken keine Einsendung').toHaveLength(0);
-  e = await ereignisse(page);
-  expect(e.ga.map((x) => x.name)).not.toContain('bewerbung_abgeschickt');
-  await page.locator('#stDsgvo').check();
-  await page.locator('#stWeiter').click();
 
   await expect(page.locator('#stErfolg')).toBeVisible();
   expect(einsendungen).toHaveLength(1);
@@ -249,16 +244,12 @@ test('@smoke /stelle Einsendung: nur registrierte Felder, Ereignisse getrennt un
     (felder.find((/** @type {any} */ f) => f.name === n) || {}).value;
   expect(wert('beworbene_rolle')).toBe('elektriker');
   expect(wert('fruhester_eintritt')).toBe(String(Date.parse('2026-11-01T00:00:00Z')));
-  expect(wert('datenschutzeinwilligung_bewerbung')).toBe('true');
+  expect(wert('datenschutzeinwilligung_bewerbung')).toBeUndefined();
   expect(wert('newslettereinwilligung')).toBeUndefined();
   expect(wert('message')).toBeUndefined();
   expect(wert('bewerber_arbeitserlaubnis')).toBe('ja_uneingeschraenkt');
   expect(einsendungen[0].context.pageUri).toContain('utm_source=meta');
-  // Gespeicherte Einwilligung = sichtbarer Checkbox-Text, wortgleich (T1157).
-  const sichtbar = (await page.locator('label[for="stDsgvo"]').textContent()) || '';
-  expect(einsendungen[0].legalConsentOptions.consent.text).toBe(
-    sichtbar.replace(/\s+/g, ' ').trim()
-  );
+  expect(einsendungen[0].legalConsentOptions).toBeUndefined();
 
   e = await ereignisse(page);
   expect(e.ga.map((x) => x.name)).toEqual(['bewerbung_klick', 'bewerbung_abgeschickt']);
@@ -282,7 +273,6 @@ test('@smoke /stelle ohne Einwilligung: kein Ereignis, Bewerbung geht trotzdem',
   await page.locator('#stWeiter').click();
   await page.locator('#stTelefon').fill('0511 000000');
   await page.locator('#stEmail').fill('pruefung@herowerk.de');
-  await page.locator('#stDsgvo').check();
   await page.locator('#stWeiter').click();
   await expect(page.locator('#stErfolg')).toBeVisible();
   expect(einsendungen).toHaveLength(1);
@@ -304,7 +294,6 @@ test('@smoke /stelle Fehler der Schnittstelle: kein Abgeschickt-Ereignis, Hinwei
   await page.locator('#stWeiter').click();
   await page.locator('#stTelefon').fill('0511 000000');
   await page.locator('#stEmail').fill('pruefung@herowerk.de');
-  await page.locator('#stDsgvo').check();
   await page.locator('#stWeiter').click();
   await expect(page.locator('#stFehler')).toBeVisible();
   await expect(page.locator('#stFehler a[href^="mailto:bewerbung@herowerk.de"]')).toBeVisible();

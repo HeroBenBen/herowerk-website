@@ -121,7 +121,6 @@ test('@smoke Funnel sendet HubSpot-Form-Payload (Standard-Properties, Mock)', as
       await route.fulfill({ status: 200, contentType: 'application/json', body: '{}' });
     }
   );
-  await page.addInitScript(() => sessionStorage.setItem('hero_kv_sitzung', 'test-sitzung'));
   await gotoWithConsentRejected(
     page,
     '/anfrage.html?utm_source=playwright&utm_medium=smoke&utm_campaign=t1-11'
@@ -146,15 +145,9 @@ test('@smoke Funnel sendet HubSpot-Form-Payload (Standard-Properties, Mock)', as
   await expect(page.locator('#successStep')).toBeVisible();
   expect(
     await page.evaluate(() =>
-      dataLayer.some(
-        (entry) =>
-          entry &&
-          entry[0] === 'event' &&
-          entry[1] === 'lead_abgeschickt' &&
-          entry[2].sitzung === 'test-sitzung'
-      )
+      dataLayer.some((entry) => entry && entry[0] === 'event' && entry[1] === 'lead_abgeschickt')
     )
-  ).toBe(true);
+  ).toBe(false);
   expect(await page.evaluate(() => sessionStorage.getItem('hero_kv_sitzung'))).toBeNull();
   if (!submitted) throw new Error('HubSpot mock submit was not captured');
   const fields = Object.fromEntries(submitted.fields.map((field) => [field.name, field.value]));

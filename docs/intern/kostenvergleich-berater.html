@@ -1320,10 +1320,9 @@ kvLoadBootstrap();
 // ===== WIZARD-LAYER =====
 (function(){
   const CTA_URL='/anfrage.html';
-  const KV_SESSION_KEY='hero_kv_sitzung';
   const WZ_LABELS=['1 Ihre Heizung','2 Ihr Vergleich','3 Ihre Förderung','4 Finanzierung','5 Ihr Ergebnis'];
   const WZ_TRACK_IDS=['heizart','bedarf','eta','invWP','jaz','laufzeit','neuFossilTog','gasInvest','oelInvest','vglBrennstoff','fHalbjahr','fGrund','fEU','fKlima','fAlt20','fEinkSlider','fKind','finanzTog','kredLZ','kredZins'];
-  const WZ={current:0,maxVisited:0,touched:new Set(),programmatic:false,incomeOpted:false,resultsBuilt:false,resultTracked:false,sitzung:null,estSeq:0,estNachlaufTimer:null,estNachlauf:0,estWartenGesamt:0,estDirty:false,estEntprellTimer:null,estNotaus:null,step1:{heizart:null,bedarf:null,bedarfSource:null,altgas:null,vmode:null,unit:'kwh',unitTouched:false,geb:null,bj:null,san:null,flaeche:140,rohr:null,kbj:null}};
+  const WZ={current:0,maxVisited:0,touched:new Set(),programmatic:false,incomeOpted:false,resultsBuilt:false,resultTracked:false,estSeq:0,estNachlaufTimer:null,estNachlauf:0,estWartenGesamt:0,estDirty:false,estEntprellTimer:null,estNotaus:null,step1:{heizart:null,bedarf:null,bedarfSource:null,altgas:null,vmode:null,unit:'kwh',unitTouched:false,geb:null,bj:null,san:null,flaeche:140,rohr:null,kbj:null}};
   const $=id=>document.getElementById(id);
   const q=(root,sel)=>root?root.querySelector(sel):null;
   const qa=(root,sel)=>root?Array.from(root.querySelectorAll(sel)):[];
@@ -1339,14 +1338,6 @@ kvLoadBootstrap();
   function finiteNumber(value){
     const number=Number(value);
     return Number.isFinite(number)?number:null;
-  }
-  function createWzSessionId(){
-    try{
-      if(!window.crypto||typeof window.crypto.randomUUID!=='function')throw new Error('randomUUID_unavailable');
-      return window.crypto.randomUUID();
-    }catch(_error){
-      return Date.now().toString(36)+'-'+Math.random().toString(36).slice(2);
-    }
   }
   function ctaPosition(link){
     if(link.closest('nav'))return 'navigation';
@@ -1442,8 +1433,6 @@ kvLoadBootstrap();
     updateEtaLive();
     if(isBerater())return;
     document.body.classList.add('wz-customer');
-    WZ.sitzung=createWzSessionId();
-    try{sessionStorage.setItem(KV_SESSION_KEY,WZ.sitzung);}catch(_error){}
     $('wzShell').hidden=false;
     gtag('event','rechner_start');
     $('wzBottomCta').hidden=false;

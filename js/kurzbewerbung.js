@@ -173,13 +173,13 @@
       return input?.closest('.form-group,.st-feld,.form-checkbox,.st-check') || input;
     };
     const roleControl = form.querySelector('[name="beworbene_rolle"]');
+    const hinweis = form.querySelector('.bewerbung-hinweis, .st-hinweis');
     const contactNodes = [
       'firstname',
       'lastname',
       'email',
       'phone',
       'message',
-      'datenschutzeinwilligung_bewerbung',
       'newslettereinwilligung',
     ]
       .map(take)
@@ -265,6 +265,7 @@
       const input = n.matches('input,textarea') ? n : n.querySelector('input,textarea');
       (input && ['firstname', 'lastname'].includes(input.name) ? nameStep : contactStep).append(n);
     });
+    if (hinweis) contactStep.append(hinweis);
     const nav = make('div', null, 'kb-nav');
     const back = make('button', 'Zurück', 'kb-back');
     back.type = 'button';
@@ -325,11 +326,6 @@
       return true;
     }
     function payload() {
-      // Der tatsächlich sichtbare Checkboxtext ist auch der gespeicherte Wortlaut.
-      // Fehler laufen durch catch/finally des Submitwegs, bevor fetch aufgerufen wird.
-      const checkbox = form.querySelector('[name="datenschutzeinwilligung_bewerbung"]');
-      const consentText = checkbox?.labels?.[0]?.textContent?.replace(/\s+/g, ' ').trim();
-      if (!consentText) throw new Error('consent-label');
       const v = values();
       const out = ['firstname', 'lastname', 'email', 'phone', 'message'].map((name) => ({
         name,
@@ -341,18 +337,10 @@
           name: 'fruhester_eintritt',
           value: String(Date.parse(v.fruhester_eintritt + 'T00:00:00Z')),
         });
-      for (const name of ['datenschutzeinwilligung_bewerbung', 'newslettereinwilligung'])
-        if (v[name]) out.push({ name, value: 'true' });
+      if (v.newslettereinwilligung) out.push({ name: 'newslettereinwilligung', value: 'true' });
       return {
         fields: out.filter((f) => f.value !== ''),
         context: { pageUri: window.location.href, pageName: document.title },
-        legalConsentOptions: {
-          consent: {
-            consentToProcess: true,
-            text: consentText,
-            communications: [],
-          },
-        },
       };
     }
     form.addEventListener('change', (e) => {

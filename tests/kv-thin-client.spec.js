@@ -577,9 +577,7 @@ test('O3 Kunde Light 375: lokaler Consent, Alt-/EU-Text, fünf Förderanker und 
     announcementVisibility: 'visible',
   });
   await page.evaluate(() => document.body.classList.remove('kv-busy', 'kv-busy-visible'));
-  expect(await page.evaluate(() => sessionStorage.getItem('hero_kv_sitzung'))).toMatch(
-    /^[a-z0-9]+-[a-z0-9]+$/
-  );
+  expect(await page.evaluate(() => sessionStorage.getItem('hero_kv_sitzung'))).toBeNull();
   await expect(page.locator('body')).toHaveClass(/wz-customer/);
   await page.locator('[data-wz-heizart="gas"]').click();
   await page.locator('[data-wz-grp="vmode"][data-wz-val="known"]').click();

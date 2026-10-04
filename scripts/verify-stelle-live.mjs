@@ -84,7 +84,6 @@ const gesendet = [
   'message',
   'beworbene_rolle',
   'fruhester_eintritt',
-  'datenschutzeinwilligung_bewerbung',
   'newslettereinwilligung',
   ...strukturiert,
 ];
