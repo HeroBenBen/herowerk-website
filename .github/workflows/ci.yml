@@ -85,6 +85,7 @@ jobs:
       - run: npx tsc --noEmit  # JSDoc-Type-Check via tsconfig.json mit allowJs+checkJs
       - run: npm run verify:website-gates
       - run: npm run verify:rechner-snapshot-nachlauf
+      - run: npm run verify:rechner-zaehlerdateien
       # Cache-Busting-Gate (G3-N2, 25.07.2026): jede lokale CSS-/JS-Referenz muss
       # den aktuellen Inhalts-Fingerabdruck tragen. Ohne das liefert der 1-Jahres-
       # Cache aus .htaccess Bestandsbesuchern alte Dateien aus (zweimal real

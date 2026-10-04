@@ -38,6 +38,17 @@ const RECHNER_PHP_ENGINE_ENABLED = true;
 const RECHNER_RATE_LIMIT_ENFORCED = true;
 
 const RECHNER_RATE_LIMIT_PER_MINUTE = 60;
+
+// GF-Entscheid vom 04.10.2026, Vorgang T1143, Regel 8 aus
+// _Entscheidungen/2026-10-03_Datenschutzerklaerung-nur-Pflichtangaben-keine-Anbieternamen-keine-Technik-keine-Ablaeufe_HERO.md:
+// Ziffer 9 der Datenschutzerklärung beruht auf der Löschung dieser Zählerdateien. Sieben statt
+// dreißig Tage schaffen 23 Tage Reserve, weil nur ein Rechner-Aufruf aufräumt und ein Lauf
+// ausbleiben oder scheitern kann. Diese Schwelle deshalb nicht auf dreißig Tage "berichtigen".
+const RECHNER_RATE_LIMIT_CLEANUP_MAX_AGE_SECONDS = 604800;
+const RECHNER_RATE_LIMIT_CLEANUP_INTERVAL_SECONDS = 3600;
+const RECHNER_RATE_LIMIT_CLEANUP_MARKER_FILE = '.cleanup-last-run';
+const RECHNER_RATE_LIMIT_CLEANUP_FILE_PATTERN = '/\A[0-9a-f]{64}\.json\z/D';
+
 const RECHNER_GOOGLE_FORWARD_TIMEOUT_SECONDS = 15;
 
 require_once __DIR__ . '/rechner-values.php';
@@ -159,6 +170,89 @@ function rechner_request_origin_allowed(array $server): bool
     return strtolower(trim((string) ($server['HTTP_SEC_FETCH_SITE'] ?? ''))) === 'same-origin';
 }
 
+function rechner_rate_limit_cleanup(string $directory): void
+{
+    $marker = $directory . '/' . RECHNER_RATE_LIMIT_CLEANUP_MARKER_FILE;
+    $handle = @fopen($marker, 'c+');
+    if ($handle === false) {
+        error_log('HeroWerk Rechner: rate_limit_cleanup_marker_unavailable');
+        return;
+    }
+
+    $locked = false;
+    try {
+        $locked = @flock($handle, LOCK_EX | LOCK_NB);
+        if (!$locked) {
+            return;
+        }
+
+        if (!@rewind($handle)) {
+            error_log('HeroWerk Rechner: rate_limit_cleanup_marker_unreadable');
+            return;
+        }
+        $raw = @stream_get_contents($handle);
+        $lastCleanup = is_string($raw) && preg_match('/\A[0-9]+\s*\z/D', $raw) === 1
+            ? (int) trim($raw)
+            : 0;
+        $now = time();
+        if ($lastCleanup > 0 && $now - $lastCleanup < RECHNER_RATE_LIMIT_CLEANUP_INTERVAL_SECONDS) {
+            return;
+        }
+
+        $deleted = 0;
+        $failed = false;
+        $entries = @scandir($directory);
+        if ($entries === false) {
+            $failed = true;
+        } else {
+            foreach ($entries as $entry) {
+                if (preg_match(RECHNER_RATE_LIMIT_CLEANUP_FILE_PATTERN, $entry) !== 1) {
+                    continue;
+                }
+                $file = $directory . '/' . $entry;
+                if (@is_link($file) || !@is_file($file)) {
+                    continue;
+                }
+                $modified = @filemtime($file);
+                if ($modified === false) {
+                    $failed = true;
+                    continue;
+                }
+                if ($modified >= $now - RECHNER_RATE_LIMIT_CLEANUP_MAX_AGE_SECONDS) {
+                    continue;
+                }
+                if (!@unlink($file)) {
+                    $failed = true;
+                    continue;
+                }
+                $deleted++;
+            }
+        }
+
+        $timestamp = (string) $now . "\n";
+        $markerUpdated = @rewind($handle)
+            && @ftruncate($handle, 0)
+            && @fwrite($handle, $timestamp) === strlen($timestamp)
+            && @fflush($handle);
+        if (!$markerUpdated) {
+            $failed = true;
+        }
+
+        if ($failed) {
+            error_log('HeroWerk Rechner: rate_limit_cleanup_failed');
+        } elseif ($deleted > 0) {
+            error_log(sprintf('HeroWerk Rechner: rate_limit_cleanup_deleted count=%d', $deleted));
+        }
+    } catch (Throwable $error) {
+        error_log('HeroWerk Rechner: rate_limit_cleanup_failed');
+    } finally {
+        if ($locked) {
+            @flock($handle, LOCK_UN);
+        }
+        @fclose($handle);
+    }
+}
+
 /** @return array{count:int,limited:bool} */
 function rechner_rate_limit(string $remoteAddress): array
 {
@@ -187,6 +281,7 @@ function rechner_rate_limit(string $remoteAddress): array
     flock($handle, LOCK_UN);
     fclose($handle);
     chmod($file, 0600);
+    rechner_rate_limit_cleanup($directory);
 
     $limited = $count > RECHNER_RATE_LIMIT_PER_MINUTE;
     if ($limited) {
