@@ -88,7 +88,6 @@ test('O4 Reader: gültiger v1-Key übernimmt technische Angaben und löscht den 
   const errors = collectErrors(page);
   await page.setViewportSize({ width: 375, height: 812 });
   await setLead(page, VALID_LEAD);
-  await page.addInitScript(() => sessionStorage.setItem('hero_kv_sitzung', 'test-sitzung'));
   await page.goto(`${baseURL}/anfrage.html`, { waitUntil: 'domcontentloaded' });
 
   await expect(page.locator('#leadHandoffBanner')).toContainText(
@@ -121,10 +120,7 @@ test('O4 Reader: gültiger v1-Key übernimmt technische Angaben und löscht den 
     await page.evaluate(() =>
       dataLayer.some(
         (entry) =>
-          entry &&
-          entry[0] === 'event' &&
-          entry[1] === 'lead_handoff_erkannt' &&
-          entry[2].sitzung === 'test-sitzung'
+          entry && entry[0] === 'event' && entry[1] === 'lead_handoff_erkannt' && entry.length === 2
       )
     )
   ).toBe(true);

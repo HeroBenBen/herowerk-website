@@ -106,6 +106,8 @@
     @media (max-width: 560px){ .form-row-2 { grid-template-columns:1fr; } }
     .bewerbung-fallback { margin-top:18px; font-size:14px; color: var(--g300, #b3b3b3); }
     .bewerbung-fallback a { color: var(--green, #B7D900); }
+    .bewerbung-hinweis { margin: 0 0 18px; font-size: 14px; line-height: 1.5; color: var(--g300, #b3b3b3); }
+    .bewerbung-hinweis a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
   </style>
 <style>
 html:has(.kb-form){scroll-behavior:auto}html:has(.kb-form) .mobile-bottom-bar{display:none!important}.kb-form input,.kb-form button,.kb-form legend{scroll-margin-block:120px}.kb-form{display:block!important}.kb-form[hidden],.kb-step[hidden]{display:none!important}.kb-step{border:0;padding:0;margin:22px 0;min-width:0}.kb-step legend{font-size:clamp(21px,3vw,28px);font-weight:700;line-height:1.3;margin-bottom:16px}.kb-choices{display:grid;grid-template-columns:1fr;gap:10px}.kb-choice{display:flex;align-items:center;gap:12px;padding:15px 16px;border:1px solid #697174;border-radius:12px;cursor:pointer;background:rgba(128,128,128,.08);line-height:1.4}.kb-choice:has(input:checked){border-color:#8ba600;box-shadow:inset 0 0 0 1px #8ba600;background:rgba(183,217,0,.13)}.kb-choice:focus-within{outline:3px solid #91ad00;outline-offset:3px}.kb-choice input{accent-color:#6d8300;width:20px!important;height:20px!important;flex:0 0 20px}.kb-help{font-size:14px;line-height:1.6;margin:0 0 18px;opacity:1}.kb-progress{font-size:14px;margin-bottom:8px}.kb-form progress{width:100%;height:8px;accent-color:#a6c400}.kb-nav{display:flex;gap:12px;justify-content:space-between;margin-top:26px}.kb-nav button{border-radius:10px;padding:14px 22px;font-weight:700;cursor:pointer;min-height:48px}.kb-next{background:#b7d900;color:#151b19;border:0;flex:1}.kb-back{background:transparent;border:1px solid #697174;color:inherit}.kb-error{color:#d74839;line-height:1.6}.kb-step>input,.kb-step select{width:100%;padding:14px;border:1px solid #697174;border-radius:8px;background:transparent;color:inherit}.kb-step .form-row-2{display:block}.kb-step .form-group,.kb-step .st-feld{margin-bottom:16px}.kb-form input:focus-visible,.kb-form button:focus-visible,.kb-form select:focus-visible{outline:3px solid #91ad00;outline-offset:3px}
@@ -215,13 +217,10 @@ html:has(.kb-form){scroll-behavior:auto}html:has(.kb-form) .mobile-bottom-bar{di
             <textarea id="bwNachricht" name="message" placeholder="Worauf freust du dich? Was sollen wir wissen?"></textarea>
           </div>
           <div class="form-checkbox">
-            <input type="checkbox" id="bwDsgvo" name="datenschutzeinwilligung_bewerbung" value="true" required>
-            <label for="bwDsgvo">Ich willige ein, dass HeroWerk meine angegebenen Daten zur Bearbeitung meiner Bewerbung speichert und verarbeitet, und akzeptiere die <a href="/datenschutz" target="_blank" rel="noopener" style="color:var(--green);">Datenschutzbedingungen</a>. Die Einwilligung ist jederzeit widerrufbar.</label>
-          </div>
-          <div class="form-checkbox">
             <input type="checkbox" id="bwNewsletter" name="newslettereinwilligung" value="true">
             <label for="bwNewsletter">Möchtest du von uns hören, wenn es bei HeroWerk etwas Neues gibt – neue Stellen oder Neuigkeiten? <span class="form-optional">optional</span></label>
           </div>
+          <p class="bewerbung-hinweis">Wir verarbeiten deine Angaben, um deine Bewerbung zu bearbeiten. Mehr dazu in unserer <a href="/datenschutz" target="_blank" rel="noopener">Datenschutzerklärung</a>.</p>
           <button type="submit" class="form-submit">Bewerbung absenden</button>
           <p class="bewerbung-fallback" id="bewerbungError" style="display:none;color:#ff8a8a;">Da ist etwas schiefgelaufen. Bitte fülle alle Pflichtfelder aus oder schreib uns an <a href="mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk">bewerbung@herowerk.de</a>.</p>
         </form>
@@ -305,7 +304,7 @@ html:has(.kb-form){scroll-behavior:auto}html:has(.kb-form) .mobile-bottom-bar{di
        gegen die echten Optionen; greift nicht -> Bewerber wählt selbst).
        Feld-Mapping = HubSpot-interne Property-Namen (live verifiziert).
        ============================================================ -->
-  <script src="js/kurzbewerbung.js?v=ead67caed7"></script>
+  <script src="js/kurzbewerbung.js?v=0ec92ec713"></script>
   <script>
     (function () {
       var form = document.getElementById('bewerbungForm');
