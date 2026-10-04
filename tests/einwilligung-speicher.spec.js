@@ -1,5 +1,5 @@
 'use strict';
-/* global dataLayer, document, KV_STATE, localStorage, sessionStorage */
+/* global dataLayer, document, getComputedStyle, KV_STATE, localStorage, sessionStorage */
 
 const fs = require('fs');
 const path = require('path');
@@ -8,10 +8,14 @@ const { test, expect } = require('@playwright/test');
 const engine = require('../apps-script/rechner-backend/kv_engine.gs');
 
 const HINWEIS =
-  'Wir verarbeiten deine Angaben, um deine Bewerbung zu bearbeiten. Mehr dazu in unserer Datenschutzerklärung.';
+  'Wir nutzen deine Angaben für deine Bewerbung. Mehr dazu in unserer Datenschutzerklärung.';
 const KONTAKT_TEXT =
   'Ich stimme der Verarbeitung meiner Daten gemäß der Datenschutzerklärung zu und erteile meine Einwilligung zur Kontaktaufnahme. Die Einwilligung ist jederzeit widerrufbar.';
 const ALTE_BREITE = { bewerbung: 320, stelle: 320, kontakt: 320 };
+const SCHRITTE = {
+  bewerbung: ['rolle', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'name', 'kontakt'],
+  stelle: ['a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'name', 'kontakt'],
+};
 const VALID_LEAD = {
   v: 1,
   quelle: 'kostenvergleich-waermepumpe',
@@ -100,6 +104,193 @@ async function bewerbungBisKontakt(page, seite, newsletter = false) {
   await page.locator('[name=email]').fill('synthetisch@example.invalid');
   await page.locator('[name=phone]').fill('000000');
   if (newsletter) await page.locator('[name=newslettereinwilligung]').check();
+}
+
+async function aktuellenSchrittGueltigFuellen(page, schritt) {
+  const werte = {
+    a1: ['bewerber_arbeitserlaubnis', 'ja_uneingeschraenkt'],
+    a2: ['bewerber_berufsabschluss', 'ausland'],
+    a3: ['bewerber_anerkennung', 'voll'],
+    a4: ['bewerber_berufserfahrung', '1_bis_3'],
+    a5: ['bewerber_fuehrerschein', 'b'],
+    a6: ['bewerber_deutsch', 'gut_arbeitsalltag'],
+    a8: ['bewerber_start', 'sofort'],
+  };
+  if (schritt === 'rolle') {
+    await page.locator('[name=beworbene_rolle]').selectOption('anlagenmechaniker');
+  } else if (werte[schritt]) {
+    const [name, value] = werte[schritt];
+    await page.locator(`[name="${name}"][value="${value}"]`).check();
+  } else if (schritt === 'a7') {
+    await page.locator('[name=bewerber_plz]').fill('30159');
+  } else if (schritt === 'name') {
+    await page.locator('[name=firstname]').fill('Synthetisch');
+    await page.locator('[name=lastname]').fill('Prüfung');
+  } else if (schritt === 'kontakt') {
+    await page.locator('[name=email]').fill('synthetisch@example.invalid');
+    await page.locator('[name=phone]').fill('000000');
+  }
+}
+
+async function jedenBewerbungsschritt(page, { seite, breite, theme }, pruefen) {
+  await page.setViewportSize({ width: breite, height: 1000 });
+  await fremdeDiensteAbklemmen(page);
+  const parameter = seite === 'stelle' ? `role=anlagenmechaniker&theme=${theme}` : `theme=${theme}`;
+  await page.goto(`/${seite}.html?${parameter}`, { waitUntil: 'domcontentloaded' });
+  const gesehen = [];
+  for (let index = 0; index < 15; index += 1) {
+    const aktuell = page.locator('.kb-step:not([hidden])');
+    await expect(aktuell).toHaveCount(1);
+    const schritt = await aktuell.getAttribute('data-schritt');
+    gesehen.push(schritt);
+    await aktuellenSchrittGueltigFuellen(page, schritt);
+    await pruefen(schritt);
+    if (schritt === 'kontakt') break;
+    await page.getByRole('button', { name: 'Weiter', exact: true }).click();
+    await page.waitForFunction(
+      (vorher) =>
+        document.querySelector('.kb-step:not([hidden])')?.getAttribute('data-schritt') !== vorher,
+      schritt
+    );
+  }
+  expect(gesehen).toEqual(SCHRITTE[seite]);
+}
+
+async function randmessung(page, { karte, formular, innenabstand, formOptik }) {
+  return page.evaluate(
+    ({ karte, formular, innenabstand, formOptik }) => {
+      const nummer = (wert) => Number.parseFloat(wert) || 0;
+      const card = document.querySelector(karte);
+      const form = document.querySelector(formular);
+      const cardStyle = getComputedStyle(card);
+      const formStyle = getComputedStyle(form);
+      const cardRect = card.getBoundingClientRect();
+      const formRect = form.getBoundingClientRect();
+      const border = {
+        top: nummer(cardStyle.borderTopWidth),
+        right: nummer(cardStyle.borderRightWidth),
+        bottom: nummer(cardStyle.borderBottomWidth),
+        left: nummer(cardStyle.borderLeftWidth),
+      };
+      const padding = {
+        top: nummer(cardStyle.paddingTop),
+        right: nummer(cardStyle.paddingRight),
+        bottom: nummer(cardStyle.paddingBottom),
+        left: nummer(cardStyle.paddingLeft),
+      };
+      const grenzen = {
+        left: cardRect.left + border.left + innenabstand,
+        right: cardRect.right - border.right - innenabstand,
+        top: cardRect.top + border.top + innenabstand,
+        bottom: cardRect.bottom - border.bottom - innenabstand,
+      };
+      const unsichtbar = (element) => {
+        if (['SCRIPT', 'STYLE', 'OPTION'].includes(element.tagName)) return true;
+        if (element.matches('input[type="hidden"]')) return true;
+        const rect = element.getBoundingClientRect();
+        if (rect.width <= 0 || rect.height <= 0) return true;
+        for (let node = element; node; node = node.parentElement) {
+          const style = getComputedStyle(node);
+          if (
+            node.hasAttribute('hidden') ||
+            style.display === 'none' ||
+            style.visibility === 'hidden'
+          )
+            return true;
+        }
+        const style = getComputedStyle(element);
+        if (
+          style.clip === 'rect(0px, 0px, 0px, 0px)' &&
+          style.clipPath === 'inset(50%)' &&
+          style.overflow === 'hidden'
+        )
+          return true;
+        return (
+          element.matches('input') &&
+          style.position === 'absolute' &&
+          Number.parseFloat(style.opacity) === 0
+        );
+      };
+      const fehler = [];
+      for (const [seite, wert] of Object.entries(padding)) {
+        if (Math.abs(wert - innenabstand) > 0.5)
+          fehler.push(`Karten-Padding ${seite}: ${wert} statt ${innenabstand}`);
+      }
+      const inhaltBreite =
+        cardRect.width - border.left - border.right - padding.left - padding.right;
+      if (Math.abs(formRect.width - inhaltBreite) > 0.5)
+        fehler.push(`Formularbreite ${formRect.width} statt ${inhaltBreite}`);
+      if (formOptik) {
+        for (const seite of ['Top', 'Right', 'Bottom', 'Left']) {
+          const wert = nummer(formStyle[`border${seite}Width`]);
+          if (wert > 0.5) fehler.push(`Formularrahmen ${seite}: ${wert}`);
+          const pad = nummer(formStyle[`padding${seite}`]);
+          if (pad > 0.5) fehler.push(`Formular-Padding ${seite}: ${pad}`);
+        }
+        if (formStyle.boxShadow !== 'none') fehler.push(`Formularschatten: ${formStyle.boxShadow}`);
+        if (!['rgba(0, 0, 0, 0)', 'transparent'].includes(formStyle.backgroundColor))
+          fehler.push(`Formularhintergrund: ${formStyle.backgroundColor}`);
+      }
+      const elemente = [...card.querySelectorAll('*')].filter((element) => !unsichtbar(element));
+      for (const element of elemente) {
+        const rect = element.getBoundingClientRect();
+        const name = `${element.tagName.toLowerCase()}${element.id ? `#${element.id}` : ''}${
+          element.classList.length ? `.${[...element.classList].join('.')}` : ''
+        }`;
+        if (rect.left < grenzen.left - 0.5)
+          fehler.push(`${name} links ${rect.left} < ${grenzen.left}`);
+        if (rect.right > grenzen.right + 0.5)
+          fehler.push(`${name} rechts ${rect.right} > ${grenzen.right}`);
+        if (rect.top < grenzen.top - 0.5) fehler.push(`${name} oben ${rect.top} < ${grenzen.top}`);
+        if (rect.bottom > grenzen.bottom + 0.5)
+          fehler.push(`${name} unten ${rect.bottom} > ${grenzen.bottom}`);
+      }
+      return { fehler, padding, formWidth: formRect.width, contentWidth: inhaltBreite };
+    },
+    { karte, formular, innenabstand, formOptik }
+  );
+}
+
+async function ueberlaufmessung(page) {
+  return page.evaluate(() => {
+    const unsichtbar = (element) => {
+      if (['SCRIPT', 'STYLE', 'OPTION'].includes(element.tagName)) return true;
+      if (element.matches('input[type="hidden"]')) return true;
+      const rect = element.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0) return true;
+      for (let node = element; node; node = node.parentElement) {
+        const style = getComputedStyle(node);
+        if (
+          node.hasAttribute('hidden') ||
+          style.display === 'none' ||
+          style.visibility === 'hidden'
+        )
+          return true;
+      }
+      const style = getComputedStyle(element);
+      if (
+        style.clip === 'rect(0px, 0px, 0px, 0px)' &&
+        style.clipPath === 'inset(50%)' &&
+        style.overflow === 'hidden'
+      )
+        return true;
+      return (
+        element.matches('input') &&
+        style.position === 'absolute' &&
+        Number.parseFloat(style.opacity) === 0
+      );
+    };
+    const breite = document.documentElement.clientWidth;
+    return [...document.body.querySelectorAll('*')]
+      .filter((element) => !unsichtbar(element))
+      .flatMap((element) => {
+        const rect = element.getBoundingClientRect();
+        if (rect.left >= -0.5 && rect.right <= breite + 0.5) return [];
+        return [
+          `${element.tagName.toLowerCase()}${element.id ? `#${element.id}` : ''}: ${rect.left} bis ${rect.right} bei ${breite}`,
+        ];
+      });
+  });
 }
 
 async function anfrageBisAbschluss(page) {
@@ -350,5 +541,91 @@ test('@smoke C2 Anfrage zeigt und sendet denselben Einwilligungstext', async ({ 
   expect(gesendet).toHaveLength(1);
   expect(sichtbar(await page.locator('label[for="dsgvo"]').innerText())).toBe(
     gesendet[0].legalConsentOptions.consent.text
+  );
+});
+
+test('@smoke D1 Bewerbung hat genau einen Rahmen und den festen Innenabstand', async ({ page }) => {
+  for (const breite of [1440, 768, 767, 390, 320]) {
+    for (const theme of ['light', 'dark']) {
+      const innenabstand = breite >= 768 ? 40 : 20;
+      await jedenBewerbungsschritt(page, { seite: 'bewerbung', breite, theme }, async (schritt) => {
+        const messung = await randmessung(page, {
+          karte: '#bewerbungCard',
+          formular: '#bewerbungForm',
+          innenabstand,
+          formOptik: true,
+        });
+        expect(messung.fehler, `${breite}px ${theme} Schritt ${schritt}`).toEqual([]);
+      });
+    }
+  }
+});
+
+test('@smoke D2 Stelle hat in jedem Schritt den festen Innenabstand', async ({ page }) => {
+  for (const breite of [1440, 768, 767, 390, 320]) {
+    for (const theme of ['light', 'dark']) {
+      const innenabstand = breite >= 768 ? 40 : 20;
+      await jedenBewerbungsschritt(page, { seite: 'stelle', breite, theme }, async (schritt) => {
+        const messung = await randmessung(page, {
+          karte: '.st-formkarte',
+          formular: '#stForm',
+          innenabstand,
+          formOptik: true,
+        });
+        expect(messung.fehler, `${breite}px ${theme} Schritt ${schritt}`).toEqual([]);
+      });
+    }
+  }
+});
+
+test('@smoke D3 Bewerbungsseiten laufen in keinem Schritt seitlich über', async ({ page }) => {
+  for (const seite of ['bewerbung', 'stelle']) {
+    for (const theme of ['light', 'dark']) {
+      await jedenBewerbungsschritt(page, { seite, breite: 320, theme }, async (schritt) => {
+        expect(await ueberlaufmessung(page), `${seite} ${theme} Schritt ${schritt}`).toEqual([]);
+      });
+    }
+  }
+});
+
+test('@smoke D4 Bewerbungsseite trägt ausschließlich den freigegebenen Wortlaut', async ({
+  page,
+}) => {
+  await fremdeDiensteAbklemmen(page);
+  await page.goto('/bewerbung.html', { waitUntil: 'domcontentloaded' });
+  const labelBewerbung = sichtbar(await page.locator('label[for="bwNewsletter"]').innerText());
+  await fremdeDiensteAbklemmen(page);
+  await page.goto('/stelle.html?role=anlagenmechaniker', { waitUntil: 'domcontentloaded' });
+  const labelStelle = sichtbar(await page.locator('label[for="stNewsletter"]').innerText());
+  expect(labelBewerbung).toBe(labelStelle);
+  expect(labelBewerbung).not.toMatch(/[\u2013\u2014]/u);
+  expect(sichtbar(await page.locator('.st-hinweis').textContent())).toBe(HINWEIS);
+
+  await fremdeDiensteAbklemmen(page);
+  await page.goto('/bewerbung.html', { waitUntil: 'domcontentloaded' });
+  expect(sichtbar(await page.locator('.bewerbung-hinweis').textContent())).toBe(HINWEIS);
+  const sectionText = sichtbar(await page.locator('section#bewerbung').textContent());
+  expect(sectionText).not.toMatch(/[\u2013\u2014]/u);
+  const beschreibungen = await page
+    .locator('head')
+    .evaluate(() => [
+      document.querySelector('meta[name="description"]')?.getAttribute('content'),
+      document.querySelector('meta[property="og:description"]')?.getAttribute('content'),
+      document.querySelector('meta[name="twitter:description"]')?.getAttribute('content'),
+    ]);
+  expect(beschreibungen.join(' ')).not.toMatch(/[\u2013\u2014]/u);
+  expect(beschreibungen).toEqual([
+    'Bewirb dich in zwei Minuten bei HeroWerk, Meisterbetrieb für Wärmepumpen in der Region Hannover. Rolle wählen, Kontakt angeben, fertig.',
+    'Bewirb dich in zwei Minuten bei HeroWerk, Meisterbetrieb für Wärmepumpen in der Region Hannover.',
+    'Bewirb dich in zwei Minuten bei HeroWerk, Meisterbetrieb für Wärmepumpen in der Region Hannover.',
+  ]);
+  await expect(page.locator('.section-lead')).toHaveText(
+    'Zwei Minuten, ein kurzes Formular. Den Rest besprechen wir persönlich.'
+  );
+  expect(sichtbar(await page.locator('#bewerbungRoleHint').textContent())).toBe(
+    'Schön, dass du da bist. Wähle deine Rolle, trag deine Kontaktdaten ein. Wir melden uns zeitnah. Lebenslauf & Zeugnisse brauchst du jetzt noch nicht: die lädst du anschließend bequem in deinem persönlichen Bewerber-Portal hoch.'
+  );
+  expect(sichtbar(await page.locator('#bewerbungSuccess p').textContent())).toBe(
+    'Deine Bewerbung ist bei uns eingegangen. Du bekommst gleich eine E-Mail mit dem Link zu deinem persönlichen Bewerber-Portal. Dort kannst du jederzeit Lebenslauf, Zeugnisse und Zertifikate hochladen und sehen, wie es weitergeht.'
   );
 });

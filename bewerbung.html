@@ -50,17 +50,17 @@
   <link rel="icon" href="/favicon.ico" sizes="any" type="image/x-icon">
   <meta name="theme-color" content="#0A0A0A">
   <title>Jetzt bewerben | HeroWerk</title>
-  <meta name="description" content="Bewirb dich in zwei Minuten bei HeroWerk – Meisterbetrieb für Wärmepumpen in der Region Hannover. Rolle wählen, Kontakt angeben, fertig.">
+  <meta name="description" content="Bewirb dich in zwei Minuten bei HeroWerk, Meisterbetrieb für Wärmepumpen in der Region Hannover. Rolle wählen, Kontakt angeben, fertig.">
   <link rel="canonical" href="https://www.herowerk.de/bewerbung">
   <meta name="robots" content="noindex,follow">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Jetzt bewerben | HeroWerk">
-  <meta property="og:description" content="Bewirb dich in zwei Minuten bei HeroWerk – Meisterbetrieb für Wärmepumpen in der Region Hannover.">
+  <meta property="og:description" content="Bewirb dich in zwei Minuten bei HeroWerk, Meisterbetrieb für Wärmepumpen in der Region Hannover.">
   <meta property="og:url" content="https://www.herowerk.de/bewerbung">
   <meta property="og:image" content="https://www.herowerk.de/hero-paar-terrasse.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Jetzt bewerben | HeroWerk">
-  <meta name="twitter:description" content="Bewirb dich in zwei Minuten bei HeroWerk – Meisterbetrieb für Wärmepumpen in der Region Hannover.">
+  <meta name="twitter:description" content="Bewirb dich in zwei Minuten bei HeroWerk, Meisterbetrieb für Wärmepumpen in der Region Hannover.">
   <meta name="twitter:image" content="https://www.herowerk.de/hero-paar-terrasse.png">
   <script src="js/theme.js?v=9b163705e9"></script>
   <link rel="stylesheet" href="css/site.css?v=d524a32872">
@@ -78,9 +78,13 @@
     .bewerbung-layout { max-width: 680px; margin: 0 auto; }
     /* Förderrechner-Farblayout: gerahmte Karte (.foerder-grid wiederverwendet -> exakt gleiche
        Optik + getestete Light/Dark-Overrides) als Block statt Grid. */
-    #bewerbungCard { display: block; }
-    /* Eine Rahmung wie im Förderrechner: innere .contact-form-Kartenoptik neutralisieren. */
-    #bewerbungCard .contact-form { background: transparent; border: 0; padding: 0; box-shadow: none; }
+    #bewerbungCard { display: block; padding: 40px; }
+    /* Eine Rahmung wie im Förderrechner: innere .contact-form-Kartenoptik neutralisieren.
+       css/site.css und tokens.css setzen Hintergrund, Rahmen und Schatten von .contact-form
+       mit !important, deshalb hier ebenfalls !important bei höherer Spezifität. Die Höchstbreite
+       von 600 Pixeln aus css/site.css entfällt, das Formular füllt die Karte. */
+    #bewerbungCard .contact-form { background: transparent !important; border: 0 !important; padding: 0 !important; box-shadow: none !important; max-width: none; }
+    @media (max-width: 767px) { #bewerbungCard { padding: 20px; } }
     /* Förder-Input-Optik: charcoal/g600/10px/16px (alle Tokens theme-adaptiv wie im Förderrechner). */
     #bewerbungForm .form-group input,
     #bewerbungForm .form-group select,
@@ -161,7 +165,7 @@ html:has(.kb-form){scroll-behavior:auto}html:has(.kb-form) .mobile-bottom-bar{di
     <div class="section-inner">
       <div class="section-tag">Karriere</div>
       <h1 class="section-title" style="color: var(--white);">Jetzt bei HeroWerk bewerben</h1>
-      <p class="section-lead">Zwei Minuten, ein kurzes Formular – den Rest besprechen wir persönlich.</p>
+      <p class="section-lead">Zwei Minuten, ein kurzes Formular. Den Rest besprechen wir persönlich.</p>
       <div class="bewerbung-layout">
         <div class="foerder-grid" id="bewerbungCard">
         <div class="bewerbung-steps">
@@ -170,7 +174,7 @@ html:has(.kb-form){scroll-behavior:auto}html:has(.kb-form) .mobile-bottom-bar{di
           <span><b>3</b> Unterlagen in Ruhe nachreichen</span>
         </div>
         <div class="bewerbung-intro-card" id="bewerbungRoleHint">
-          <strong>Schön, dass du da bist.</strong> Wähle deine Rolle, trag deine Kontaktdaten ein – wir melden uns zeitnah. Lebenslauf &amp; Zeugnisse brauchst du jetzt noch nicht: die lädst du anschließend bequem in deinem persönlichen Bewerber-Portal hoch.
+          <strong>Schön, dass du da bist.</strong> Wähle deine Rolle, trag deine Kontaktdaten ein. Wir melden uns zeitnah. Lebenslauf &amp; Zeugnisse brauchst du jetzt noch nicht: die lädst du anschließend bequem in deinem persönlichen Bewerber-Portal hoch.
         </div>
 
         <form class="contact-form" id="bewerbungForm" data-hubspot-form-id="c6a199f5-bab6-499e-a3ee-3d9605120877" data-mailto="bewerbung@herowerk.de" novalidate>
@@ -218,16 +222,16 @@ html:has(.kb-form){scroll-behavior:auto}html:has(.kb-form) .mobile-bottom-bar{di
           </div>
           <div class="form-checkbox">
             <input type="checkbox" id="bwNewsletter" name="newslettereinwilligung" value="true">
-            <label for="bwNewsletter">Möchtest du von uns hören, wenn es bei HeroWerk etwas Neues gibt – neue Stellen oder Neuigkeiten? <span class="form-optional">optional</span></label>
+            <label for="bwNewsletter">Möchtest du von uns hören, wenn es bei HeroWerk etwas Neues gibt, neue Stellen oder Neuigkeiten? <span class="form-optional">optional</span></label>
           </div>
-          <p class="bewerbung-hinweis">Wir verarbeiten deine Angaben, um deine Bewerbung zu bearbeiten. Mehr dazu in unserer <a href="/datenschutz" target="_blank" rel="noopener">Datenschutzerklärung</a>.</p>
+          <p class="bewerbung-hinweis">Wir nutzen deine Angaben für deine Bewerbung. Mehr dazu in unserer <a href="/datenschutz" target="_blank" rel="noopener">Datenschutzerklärung</a>.</p>
           <button type="submit" class="form-submit">Bewerbung absenden</button>
           <p class="bewerbung-fallback" id="bewerbungError" style="display:none;color:#ff8a8a;">Da ist etwas schiefgelaufen. Bitte fülle alle Pflichtfelder aus oder schreib uns an <a href="mailto:bewerbung@herowerk.de?subject=Bewerbung%20bei%20HeroWerk">bewerbung@herowerk.de</a>.</p>
         </form>
 
         <div class="form-success" id="bewerbungSuccess" role="status" aria-live="polite">
           <h2>Danke, <span id="bewerbungSuccessName"></span>!</h2>
-          <p style="color: var(--g300);">Deine Bewerbung ist bei uns eingegangen. Du bekommst gleich eine E-Mail mit dem Link zu deinem persönlichen Bewerber-Portal – dort kannst du jederzeit Lebenslauf, Zeugnisse und Zertifikate hochladen und sehen, wie es weitergeht.</p>
+          <p style="color: var(--g300);">Deine Bewerbung ist bei uns eingegangen. Du bekommst gleich eine E-Mail mit dem Link zu deinem persönlichen Bewerber-Portal. Dort kannst du jederzeit Lebenslauf, Zeugnisse und Zertifikate hochladen und sehen, wie es weitergeht.</p>
         </div>
         </div><!-- /#bewerbungCard -->
 

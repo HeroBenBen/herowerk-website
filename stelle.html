@@ -151,9 +151,10 @@
 
     /* Kurzformular */
     .st-formkarte {
-      margin: 24px 0; padding: 20px 16px; border-radius: 16px;
+      margin: 24px 0; padding: 20px; border-radius: 16px;
       background: var(--color-surface-tertiary); scroll-margin-top: 12px;
     }
+    @media (min-width: 768px) { .st-formkarte { padding: 40px; } }
     [data-theme='light'] .st-formkarte { background: #ffffff; border: 1px solid var(--color-border-subtle); box-shadow: 0 8px 28px var(--color-shadow); }
     .st-formkarte h2 { font: 800 24px/1.2 'Barlow', 'Inter', sans-serif; margin: 0 0 4px; }
     .st-fortschritt { margin: 12px 0 16px; }
@@ -437,7 +438,7 @@ html:has(.kb-form){scroll-behavior:auto}html:has(.kb-form) .mobile-bottom-bar{di
               <input type="checkbox" id="stNewsletter" name="newslettereinwilligung" value="true">
               <label for="stNewsletter">Möchtest du von uns hören, wenn es bei HeroWerk etwas Neues gibt, neue Stellen oder Neuigkeiten? <span class="st-optional">optional</span></label>
             </div>
-            <p class="st-hinweis">Wir verarbeiten deine Angaben, um deine Bewerbung zu bearbeiten. Mehr dazu in unserer <a href="/datenschutz" target="_blank" rel="noopener">Datenschutzerklärung</a>.</p>
+            <p class="st-hinweis">Wir nutzen deine Angaben für deine Bewerbung. Mehr dazu in unserer <a href="/datenschutz" target="_blank" rel="noopener">Datenschutzerklärung</a>.</p>
           </fieldset>
 
           <div class="st-steuer">
