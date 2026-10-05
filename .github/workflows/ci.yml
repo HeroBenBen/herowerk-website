@@ -223,6 +223,9 @@ jobs:
         run: scripts/start-pruefserver.sh
       - env: { PREVIEW_URL: '${{ env.PRUEFSERVER_URL }}' }
         run: npx playwright test --grep "@smoke"
+      # T1183, 05.10.2026: Die beiden Kostenvergleichsdateien liefen bisher in keiner Kette;
+      # sie starten eigene Server und brauchen deshalb keine PREVIEW_URL.
+      - run: npx playwright test tests/kv-thin-client.spec.js tests/kv-lead-reader.spec.js
       # Einheitenknopf-Gate (GF-Meldung, nachgemessen 10.09.2026): im Hellmodus war der nicht
       # gewaehlte Einheitenknopf im Verbrauchsschritt unsichtbar (Kontrast 1,00), weil Markup
       # UND wzSetActiveBtn feste Dunkelfarben setzten. Gemessen wird am gemalten Bild in Hell

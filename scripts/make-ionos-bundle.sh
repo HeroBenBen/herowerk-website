@@ -93,6 +93,17 @@ if [ "${#FREMDE_PUNKTDATEIEN[@]}" -gt 0 ]; then
 fi
 echo "Punktdatei-Wächter: oberste Ebene $OUT geprüft, nur .htaccess und .well-known erlaubt, keine fremden Treffer."
 
+# AppleDouble-Dateien und Finder-Metadaten duerfen auch in Unterordnern nicht
+# unbemerkt in das Auslieferungsbuendel gelangen.
+VERBOTENE_METADATEN="$(find "$OUT" \( -name '._*' -o -name '.DS_Store' \) -print | sort)"
+if [ -n "$VERBOTENE_METADATEN" ]; then
+  echo "FEHLER: Verbotene Metadaten-Dateien oder -Ordner im Buendel:" >&2
+  echo "$VERBOTENE_METADATEN" >&2
+  echo "Ausweg: Ergaenze die Namen als --exclude im rsync-Aufruf oder entferne sie an der Quelle. Nicht nachtraeglich aus dem fertigen Buendel loeschen." >&2
+  exit 1
+fi
+echo "Metadaten-Waechter: alle Ebenen geprueft, keine Namen ._*, keine .DS_Store."
+
 # Warum 2026-10-05: Ab dem Entfernen der Kommentare darf bei keinem Fehler ein
 # halbfertiges oder ungeprüftes Bündel liegen bleiben. Gelöscht wird nur der
 # Ordner, den genau dieser Lauf angelegt hat; Pfad und Inode schützen vor einem
