@@ -200,7 +200,9 @@ function canonicalHtml(source, file) {
     if (node.nodeName === '#text') {
       return {
         kind: 'text',
-        value: preserveWhitespace ? node.value : node.value.replace(/\s+/g, ' '),
+        value: preserveWhitespace
+          ? normalizeVersion(node.value)
+          : normalizeVersion(node.value.replace(/\s+/g, ' ')),
         exact: preserveWhitespace,
       };
     }
