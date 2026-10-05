@@ -110,6 +110,21 @@ function checkerRedCases() {
     12: 'Kommentar im Ereignis-Attribut',
     13: 'unbekannte Textendung',
   };
+  const expectedTexts = {
+    1: '<!-- intern -->',
+    2: '/* intern */',
+    3: '// intern',
+    4: '// intern',
+    5: '/* intern */',
+    6: '/* intern */',
+    7: '/* intern */',
+    8: '<!-- intern -->',
+    9: '<!-- intern -->',
+    10: '# intern',
+    11: '/* intern */',
+    12: '// intern',
+    13: 'unbekannte Dateiendung .fremd',
+  };
   for (const [number, fixture] of Object.entries(fixtures.checkerRot)) {
     const red = bundleWith({ [fixture.name]: fixture.content });
     const green = bundleWith({ 'index.html': '<!doctype html><p>ok</p>' });
@@ -119,7 +134,7 @@ function checkerRedCases() {
       number,
       descriptions[number],
       redResult.status === 1 &&
-        hasOwnMessage(redResult, `TREFFER ${fixture.name}:1:`) &&
+        hasOwnMessage(redResult, `TREFFER ${fixture.name}:1: ${expectedTexts[number]}`) &&
         greenResult.status === 0,
       redResult.stderr
     );

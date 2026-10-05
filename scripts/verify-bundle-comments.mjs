@@ -26,6 +26,33 @@ function excerpt(raw) {
   return raw.replace(/\s+/g, ' ').trim().slice(0, 60);
 }
 
+function attributeValueRange(source, node, targetName) {
+  let index = (node.startIndex ?? 0) + 1;
+  while (index < source.length && !/[\s/>]/.test(source[index])) index += 1;
+  while (index < source.length) {
+    while (/\s/.test(source[index] ?? '')) index += 1;
+    if (source[index] === '>' || source.startsWith('/>', index)) break;
+    const nameStart = index;
+    while (index < source.length && !/[\s=/>]/.test(source[index])) index += 1;
+    const name = source.slice(nameStart, index).toLowerCase();
+    while (/\s/.test(source[index] ?? '')) index += 1;
+    if (source[index] !== '=') continue;
+    index += 1;
+    while (/\s/.test(source[index] ?? '')) index += 1;
+    const quote = source[index] === '"' || source[index] === "'" ? source[index] : null;
+    const start = quote ? index + 1 : index;
+    if (quote) {
+      index = source.indexOf(quote, start);
+      if (index < 0) throw new Error('Attributwert ist nicht geschlossen');
+    } else {
+      while (index < source.length && !/[\s>]/.test(source[index])) index += 1;
+    }
+    if (name === targetName) return { start, end: index };
+    if (quote) index += 1;
+  }
+  throw new Error(`Attributposition nicht gefunden: ${targetName}`);
+}
+
 function loadAllowlist(file) {
   const parsed = JSON.parse(fs.readFileSync(file, 'utf8'));
   if (parsed.version !== 1 || !Array.isArray(parsed.comments))
@@ -103,11 +130,15 @@ function xmlComments(source, file) {
   const found = [];
   const parser = new SaxesParser({ fileName: file });
   parser.on('comment', (text) => {
-    const end = parser.position;
+    const parserEnd = parser.position;
     const rawLength = text.length + 7;
-    const guessedStart = end - rawLength;
-    const start = source.lastIndexOf('<!--', end);
-    found.push({ start: start >= 0 ? start : guessedStart, end });
+    const guessedStart = parserEnd - rawLength;
+    const start = source.lastIndexOf('<!--', parserEnd);
+    const close = source.indexOf('-->', Math.max(0, start));
+    found.push({
+      start: start >= 0 ? start : guessedStart,
+      end: close >= 0 ? close + 3 : parserEnd,
+    });
   });
   parser.write(source).close();
   return found;
@@ -166,20 +197,23 @@ function htmlFindings(source, file) {
     if (node.type === 'tag' || node.type === 'script' || node.type === 'style') {
       for (const [name, value] of Object.entries(node.attribs ?? {})) {
         if (name === 'style') {
+          const attribute = attributeValueRange(source, node, name);
           for (const comment of cssComments(value)) {
             findings.push({
               kind: 'styleAttribute',
-              start: node.startIndex ?? 0,
-              end: node.startIndex ?? 0,
+              start: attribute.start + comment.start,
+              end: attribute.start + comment.end,
             });
           }
         } else if (name.startsWith('on')) {
-          const wrapped = `function __attribut__(){${value}\n}`;
-          if (typescriptComments(wrapped, `${file} ${name}-Attribut`).length > 0) {
+          const prefix = 'function __attribut__(){';
+          const wrapped = `${prefix}${value}\n}`;
+          const attribute = attributeValueRange(source, node, name);
+          for (const comment of typescriptComments(wrapped, `${file} ${name}-Attribut`)) {
             findings.push({
               kind: 'eventAttribute',
-              start: node.startIndex ?? 0,
-              end: node.startIndex ?? 0,
+              start: attribute.start + comment.start - prefix.length,
+              end: attribute.start + comment.end - prefix.length,
             });
           }
         }
@@ -278,7 +312,11 @@ function main() {
       if (kind === 'html') {
         for (const item of htmlFindings(source, relative)) {
           const key =
-            item.kind === 'html' ? 'html' : item.kind === 'inlineCss' ? 'inlineCss' : 'inlineJs';
+            item.kind === 'html'
+              ? 'html'
+              : item.kind === 'inlineCss' || item.kind === 'styleAttribute'
+                ? 'inlineCss'
+                : 'inlineJs';
           add([item], key);
         }
       } else if (kind === 'js') add(typescriptComments(source, relative), 'js');
