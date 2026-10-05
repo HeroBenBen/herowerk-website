@@ -9,8 +9,14 @@ import { SaxesParser } from 'saxes';
 
 const binaryExtensions = new Set(['.webp', '.jpg', '.jpeg', '.png', '.ico', '.mp4', '.woff2']);
 
+class DifferenceError extends Error {}
+
 function fail(message) {
   throw new Error(message);
+}
+
+function difference(message) {
+  throw new DifferenceError(message);
 }
 
 function slash(value) {
@@ -328,7 +334,7 @@ function compareFile(sourceRoot, bundleRoot, relative) {
     binaryExtensions.has(extension) ||
     relative === 'js/chart-4.4.1.umd.min.js'
   ) {
-    if (!sourceBytes.equals(bundleBytes)) fail(`${relative}: Bytevergleich abweichend.`);
+    if (!sourceBytes.equals(bundleBytes)) difference(`${relative}: Bytevergleich abweichend.`);
     return;
   }
   const source = sourceBytes.toString('utf8');
@@ -348,7 +354,7 @@ function compareFile(sourceRoot, bundleRoot, relative) {
     let offset = 0;
     while (offset < left.length && offset < right.length && left[offset] === right[offset])
       offset += 1;
-    fail(
+    difference(
       `${relative}: Quelle und Buendel unterscheiden sich ausserhalb der erlaubten Transformation ` +
         `bei Vergleichsposition ${offset}; Quelle ${JSON.stringify(left.slice(Math.max(0, offset - 100), offset + 120))}; ` +
         `Buendel ${JSON.stringify(right.slice(Math.max(0, offset - 100), offset + 120))}.`
@@ -370,7 +376,7 @@ function main() {
     const missing = expected.filter((file) => !actual.includes(file));
     const extra = actual.filter((file) => !expected.includes(file));
     if (missing.length || extra.length) {
-      fail(
+      difference(
         `Dateimenge abweichend; fehlend: ${missing.join(', ') || 'keine'}; ueberzaehlig: ${extra.join(', ') || 'keine'}.`
       );
     }
@@ -378,7 +384,7 @@ function main() {
     console.log(`Buendel-Gleichheitspruefung: GRUEN, ${expected.length} Dateien verglichen.`);
   } catch (error) {
     console.error(`FEHLER: ${error.message}`);
-    process.exit(1);
+    process.exit(error instanceof DifferenceError ? 1 : 2);
   }
 }
 

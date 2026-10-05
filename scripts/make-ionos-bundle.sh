@@ -112,6 +112,9 @@ cleanup_buendel_nach_fehler() {
   CODE="$1"
   trap - ERR INT TERM
   set +e
+  if [ "$CODE" -ne 130 ] && [ "$CODE" -ne 143 ]; then
+    CODE=1
+  fi
   if [ "${OUT_VON_DIESEM_LAUF:-0}" = 1 ] && [ -n "${OUT_ABS:-}" ]; then
     AKTUELLER_INODE=""
     if [ -d "$OUT_ABS" ]; then
@@ -175,7 +178,18 @@ node "$SRC/scripts/remove-bundle-comments.mjs" "$OUT_ABS"
 # der Auslieferung (Umschalter-Defekt 25.07.). Genau das darf nicht wieder passieren.
 "$SRC/scripts/version-assets.sh" "$OUT"
 "$SRC/scripts/stamp-version.sh" "$OUT"
-node "$SRC/scripts/verify-bundle-comments.mjs" "$OUT_ABS"
+if node "$SRC/scripts/verify-bundle-comments.mjs" "$OUT_ABS"; then
+  KOMMENTAR_PRUEFSTATUS=0
+else
+  KOMMENTAR_PRUEFSTATUS="$?"
+fi
+if [ "$KOMMENTAR_PRUEFSTATUS" -eq 1 ]; then
+  echo "FEHLER: Kommentar-Selbstprüfung hat einen Treffer gemeldet. Ausweg: genannte Fundstelle oder Erlaubnisliste prüfen." >&2
+  cleanup_buendel_nach_fehler 1
+elif [ "$KOMMENTAR_PRUEFSTATUS" -ne 0 ]; then
+  echo "FEHLER: Kommentar-Selbstprüfung ist abgestürzt (Rückgabewert $KOMMENTAR_PRUEFSTATUS). Ausweg: Prüfwerkzeug und Bündeldatei prüfen." >&2
+  cleanup_buendel_nach_fehler 1
+fi
 
 trap - ERR INT TERM
 OUT_VON_DIESEM_LAUF=0

@@ -155,15 +155,21 @@ function licenseCheckerCases() {
   const wrongPath = bundleWith({ 'js/falsch.js': `${raw}\nvoid 0;` });
   const wrongText = bundleWith({ 'js/erlaubt.js': '/*! veraenderter Testhinweis */\nvoid 0;' });
   const green = bundleWith({ 'js/erlaubt.js': `${raw}\nvoid 0;` });
+  const wrongPathResult = checkerResult(wrongPath, allowFile);
+  const wrongTextResult = checkerResult(wrongText, allowFile);
   record(
     14,
     'erlaubter Wortlaut am falschen Pfad',
-    checkerResult(wrongPath, allowFile).status === 1 && checkerResult(green, allowFile).status === 0
+    wrongPathResult.status === 1 &&
+      hasOwnMessage(wrongPathResult, 'TREFFER js/falsch.js:1: /*! erlaubter Testhinweis */') &&
+      checkerResult(green, allowFile).status === 0
   );
   record(
     15,
     'veraenderter Wortlaut am erlaubten Pfad',
-    checkerResult(wrongText, allowFile).status === 1 && checkerResult(green, allowFile).status === 0
+    wrongTextResult.status === 1 &&
+      hasOwnMessage(wrongTextResult, 'TREFFER js/erlaubt.js:1: /*! veraenderter Testhinweis */') &&
+      checkerResult(green, allowFile).status === 0
   );
   for (const directory of [allowDirectory, wrongPath, wrongText, green])
     fs.rmSync(directory, { recursive: true, force: true });
@@ -270,30 +276,39 @@ function positionCases() {
   const asiSource = 'const a = 1/* mehr\nzeilig */const b = 2\n';
   const asiExpected = 'const a = 1\nconst b = 2\n';
   const asi = bundleWith({ 'js/app.js': asiSource });
-  const beforeTree = acorn.parse(fs.readFileSync(path.join(asi, 'js/app.js'), 'utf8'), {
-    ecmaVersion: 'latest',
-  });
-  const asiResult = removerResult(asi);
-  const afterTree = acorn.parse(fs.readFileSync(path.join(asi, 'js/app.js'), 'utf8'), {
-    ecmaVersion: 'latest',
-  });
   const clean = (tree) =>
     JSON.stringify(tree, (key, value) => (['start', 'end'].includes(key) ? undefined : value));
-  let withoutReplacementIsWrong = false;
+  let asiOk = false;
+  let asiDetail = '';
   try {
+    const beforeTree = acorn.parse(fs.readFileSync(path.join(asi, 'js/app.js'), 'utf8'), {
+      ecmaVersion: 'latest',
+    });
+    const asiResult = removerResult(asi);
+    const afterTree = acorn.parse(fs.readFileSync(path.join(asi, 'js/app.js'), 'utf8'), {
+      ecmaVersion: 'latest',
+    });
     const withoutReplacement = asiSource.replace('/* mehr\nzeilig */', '');
-    withoutReplacementIsWrong =
-      clean(acorn.parse(withoutReplacement, { ecmaVersion: 'latest' })) !== clean(beforeTree);
-  } catch {
-    withoutReplacementIsWrong = true;
+    let withoutReplacementIsWrong = false;
+    try {
+      withoutReplacementIsWrong =
+        clean(acorn.parse(withoutReplacement, { ecmaVersion: 'latest' })) !== clean(beforeTree);
+    } catch {
+      withoutReplacementIsWrong = true;
+    }
+    asiOk =
+      asiResult.status === 0 &&
+      fs.readFileSync(path.join(asi, 'js/app.js'), 'utf8') === asiExpected &&
+      clean(beforeTree) === clean(afterTree) &&
+      withoutReplacementIsWrong;
+  } catch (error) {
+    asiDetail = error.message;
   }
   record(
     24,
     'mehrzeiliger Kommentar zwischen Code ohne Semikolon behaelt AST und Zeilenumbruch',
-    asiResult.status === 0 &&
-      fs.readFileSync(path.join(asi, 'js/app.js'), 'utf8') === asiExpected &&
-      clean(beforeTree) === clean(afterTree) &&
-      withoutReplacementIsWrong
+    asiOk,
+    asiDetail
   );
   fs.rmSync(asi, { recursive: true, force: true });
 
@@ -333,7 +348,13 @@ function replaceOnce(source, from, to, label) {
   return source.replace(from, to);
 }
 
-function buildFailureFixture(file, content, modulesMode, mutateRemover) {
+function buildFailureFixture(
+  file,
+  content,
+  modulesMode,
+  mutateRemover,
+  checkerSource = 'process.exit(0);\n'
+) {
   const directory = temporary('bau');
   write(directory, '.htaccess', 'Require all granted\n');
   write(directory, file, content);
@@ -363,7 +384,7 @@ function buildFailureFixture(file, content, modulesMode, mutateRemover) {
   }
   write(directory, 'scripts/version-assets.sh', '#!/usr/bin/env bash\nexit 0\n');
   write(directory, 'scripts/stamp-version.sh', '#!/usr/bin/env bash\nexit 0\n');
-  write(directory, 'scripts/verify-bundle-comments.mjs', 'process.exit(0);\n');
+  write(directory, 'scripts/verify-bundle-comments.mjs', checkerSource);
   fs.chmodSync(path.join(directory, 'scripts/version-assets.sh'), 0o755);
   fs.chmodSync(path.join(directory, 'scripts/stamp-version.sh'), 0o755);
   if (modulesMode === 'copy') copyNodeModules(directory);
@@ -551,6 +572,62 @@ function additionalSharpnessCases() {
   }
 }
 
+function blankLineCases() {
+  const fixtureRoot = path.join(root, 'tests/fixtures/buendel-kommentare');
+  const mutantRoot = temporary('leerzeilen-mutant');
+  const mutantScript = path.join(mutantRoot, 'scripts/remove-bundle-comments.mjs');
+  fs.mkdirSync(path.dirname(mutantScript), { recursive: true });
+  const removerSource = fs.readFileSync(remover, 'utf8');
+  fs.writeFileSync(
+    mutantScript,
+    replaceOnce(
+      removerSource,
+      '      edit.combined &&\n',
+      '',
+      'Zusammenfassungsmerker fuer Leerzeilen'
+    )
+  );
+  fs.copyFileSync(
+    productionAllowlist,
+    path.join(mutantRoot, 'scripts/bundle-comment-license-allowlist.json')
+  );
+  fs.symlinkSync(path.join(root, 'node_modules'), path.join(mutantRoot, 'node_modules'), 'dir');
+
+  const cases = {
+    52: ['leerzeile-html', 'index.html', 'Seite'],
+    53: ['leerzeile-inline-js', 'index.html', 'Skriptblock'],
+    54: ['leerzeile-js', 'js/app.js', 'Skriptdatei'],
+    55: ['leerzeile-inline-css', 'index.html', 'Stilblock'],
+    56: ['leerzeile-css', 'css/app.css', 'Stildatei'],
+    57: ['leerzeile-svg', 'bild.svg', 'SVG'],
+    58: ['leerzeile-xml', 'sitemap.xml', 'XML'],
+    59: ['leerzeile-robots', 'robots.txt', 'robots.txt'],
+    60: ['leerzeile-crlf-js', 'js/app.js', 'Skriptdatei mit Wagenruecklauf'],
+  };
+  for (const [number, [fixtureName, targetName, description]] of Object.entries(cases)) {
+    const input = fs.readFileSync(path.join(fixtureRoot, `${fixtureName}.eingabe.txt`));
+    const expected = fs.readFileSync(path.join(fixtureRoot, `${fixtureName}.erwartet.txt`));
+    const actualDirectory = bundleWith({ [targetName]: input });
+    const mutantDirectory = bundleWith({ [targetName]: input });
+    const actualResult = removerResult(actualDirectory);
+    const mutantResult = run(process.execPath, [mutantScript, mutantDirectory]);
+    const actual = fs.readFileSync(path.join(actualDirectory, targetName));
+    const mutant = fs.readFileSync(path.join(mutantDirectory, targetName));
+    record(
+      number,
+      `${description}: Leerzeile nach alleinstehendem Kommentar bleibt erhalten`,
+      actualResult.status === 0 &&
+        actual.equals(expected) &&
+        mutantResult.status === 0 &&
+        !mutant.equals(expected),
+      actualResult.stderr || mutantResult.stderr
+    );
+    fs.rmSync(actualDirectory, { recursive: true, force: true });
+    fs.rmSync(mutantDirectory, { recursive: true, force: true });
+  }
+  fs.rmSync(mutantRoot, { recursive: true, force: true });
+}
+
 function equalityBase() {
   const source = temporary('quelle');
   write(source, 'scripts/make-ionos-bundle.sh', fs.readFileSync(makeBundle));
@@ -600,7 +677,17 @@ function equalityCases() {
     const green = run(process.execPath, [equality, source, bundle]);
     write(bundle, file, content);
     const red = run(process.execPath, [equality, source, bundle]);
-    record(number, description, green.status === 0 && red.status === 1, red.stderr);
+    record(
+      number,
+      description,
+      green.status === 0 &&
+        red.status === 1 &&
+        hasOwnMessage(
+          red,
+          `FEHLER: ${file}: Quelle und Buendel unterscheiden sich ausserhalb der erlaubten Transformation`
+        ),
+      red.stderr
+    );
     fs.rmSync(source, { recursive: true, force: true });
     fs.rmSync(bundle, { recursive: true, force: true });
   }
@@ -617,9 +704,73 @@ function equalityCases() {
         : number === 38
           ? 'ueberzaehlige Datei'
           : 'geaendertes Binaerbyte';
-    record(number, description, green.status === 0 && red.status === 1, red.stderr);
+    const expectedMessage =
+      number === 37
+        ? 'FEHLER: Dateimenge abweichend; fehlend: css/app.css; ueberzaehlig: keine.'
+        : number === 38
+          ? 'FEHLER: Dateimenge abweichend; fehlend: keine; ueberzaehlig: extra.png.'
+          : 'FEHLER: bild.png: Bytevergleich abweichend.';
+    record(
+      number,
+      description,
+      green.status === 0 && red.status === 1 && hasOwnMessage(red, expectedMessage),
+      red.stderr
+    );
     fs.rmSync(source, { recursive: true, force: true });
     fs.rmSync(bundle, { recursive: true, force: true });
+  }
+
+  const { source, bundle } = equalityBase();
+  fs.rmSync(bundle, { recursive: true, force: true });
+  const crashed = run(process.execPath, [equality, source, bundle]);
+  record(
+    61,
+    'Absturz der Gleichheitspruefung hat Rueckgabewert 2 statt Abweichungswert 1',
+    crashed.status === 2 && hasOwnMessage(crashed, 'FEHLER:', 'ENOENT'),
+    crashed.stderr
+  );
+  fs.rmSync(source, { recursive: true, force: true });
+}
+
+function bundleSelfCheckCases() {
+  const hit = buildFailureFixture(
+    'index.html',
+    '<!doctype html><p>ok</p>',
+    'copy',
+    undefined,
+    "console.error('TREFFER index.html:1: absichtlich'); process.exit(1);\n"
+  );
+  const crash = buildFailureFixture(
+    'index.html',
+    '<!doctype html><p>ok</p>',
+    'copy',
+    undefined,
+    "console.error('FEHLER: absichtlicher Absturz'); process.exit(2);\n"
+  );
+  record(
+    62,
+    'Buendelbau meldet Treffer der Selbstpruefung und endet mit 1',
+    hit.result.status === 1 &&
+      !fs.existsSync(hit.target) &&
+      hasOwnMessage(hit.result, 'Kommentar-Selbstprüfung hat einen Treffer gemeldet', 'Ausweg:'),
+    output(hit.result)
+  );
+  record(
+    63,
+    'Buendelbau meldet Absturz der Selbstpruefung und endet mit 1',
+    crash.result.status === 1 &&
+      !fs.existsSync(crash.target) &&
+      hasOwnMessage(
+        crash.result,
+        'Kommentar-Selbstprüfung ist abgestürzt',
+        'Rückgabewert 2',
+        'Ausweg:'
+      ),
+    output(crash.result)
+  );
+  for (const fixture of [hit, crash]) {
+    fs.rmSync(fixture.directory, { recursive: true, force: true });
+    fs.rmSync(fixture.target, { recursive: true, force: true });
   }
 }
 
@@ -631,10 +782,12 @@ positionCases();
 directFailureCases();
 buildFailureCases();
 additionalSharpnessCases();
+blankLineCases();
 equalityCases();
+bundleSelfCheckCases();
 
 if (failures > 0) {
   console.error(`Schärfeprüfung: ROT, ${failures} Fall/Faelle fehlgeschlagen.`);
   process.exit(1);
 }
-console.log('Schärfeprüfung: GRÜN, 51 Fälle bestanden.');
+console.log('Schärfeprüfung: GRÜN, 63 Fälle bestanden.');

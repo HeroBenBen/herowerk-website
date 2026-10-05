@@ -137,7 +137,7 @@ function applyEdits(source, edits, file) {
   for (const edit of ascending) {
     const previous = merged.at(-1);
     if (!previous || edit.start >= previous.end) {
-      merged.push({ ...edit });
+      merged.push({ ...edit, combined: false });
       continue;
     }
     const overlap = source.slice(edit.start, Math.min(previous.end, edit.end));
@@ -149,9 +149,14 @@ function applyEdits(source, edits, file) {
       fail(`${file}: ueberlappende Kommentarbereiche. Ausweg: Zerleger pruefen.`);
     }
     previous.end = Math.max(previous.end, edit.end);
+    previous.combined = true;
   }
   for (const edit of merged) {
-    if (edit.start === lineStart(source, edit.start) && edit.end === lineEnd(source, edit.end))
+    if (
+      edit.combined &&
+      edit.start === lineStart(source, edit.start) &&
+      edit.end === lineEnd(source, edit.end)
+    )
       edit.end = newlineEnd(source, edit.end);
   }
   const ordered = merged.toReversed();

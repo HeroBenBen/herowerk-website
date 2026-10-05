@@ -1,0 +1,5 @@
+<svg>
+<!-- allein -->
+
+<path/>
+</svg>
