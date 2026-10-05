@@ -7,6 +7,9 @@
 # Aufruf:  scripts/start-pruefserver.sh [PORT]
 #          Standard-Port 8080 (gleicher Port wie der lokale Standardwert in
 #          playwright.config.js, damit lokal und in der CI dieselbe Adresse gilt).
+#          PRUEFSERVER_NAME setzt den Containernamen, PRUEFSERVER_BUNDLE den
+#          Buendelordner. So koennen zwei Bauten gleichzeitig auf einem Rechner
+#          geprueft werden, ohne einander Container oder Dateien zu entfernen.
 #
 # Gibt die Basis-Adresse auf der Standardausgabe aus und schreibt sie zusaetzlich
 # nach $GITHUB_ENV als PREVIEW_URL, wenn die Variable gesetzt ist.
@@ -17,7 +20,7 @@
 set -euo pipefail
 
 PORT="${1:-8080}"
-NAME="hw-pruefserver"
+NAME="${PRUEFSERVER_NAME:-hw-pruefserver}"
 SRC="$(cd "$(dirname "$0")/.." && pwd)"
 BUNDLE="${PRUEFSERVER_BUNDLE:-/tmp/pruefserver-buendel}"
 
