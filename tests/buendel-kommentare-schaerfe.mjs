@@ -16,6 +16,22 @@ const equality = path.join(root, 'scripts/verify-bundle-equality.mjs');
 const makeBundle = path.join(root, 'scripts/make-ionos-bundle.sh');
 const productionAllowlist = path.join(root, 'scripts/bundle-comment-license-allowlist.json');
 let failures = 0;
+const modulePackages = [
+  'acorn',
+  'css-tree',
+  'dom-serializer',
+  'domelementtype',
+  'domhandler',
+  'domutils',
+  'entities',
+  'htmlparser2',
+  'mdn-data',
+  'parse5',
+  'saxes',
+  'source-map-js',
+  'typescript',
+  'xmlchars',
+];
 
 function temporary(label) {
   return fs.mkdtempSync(path.join(os.tmpdir(), `hw-t1182-${label}-`));
@@ -33,6 +49,23 @@ function run(command, args, options = {}) {
     encoding: options.encoding ?? 'utf8',
     env: options.env ?? process.env,
   });
+}
+
+function output(result) {
+  return `${result.stdout ?? ''}${result.stderr ?? ''}`;
+}
+
+function hasOwnMessage(result, ...parts) {
+  const text = output(result);
+  return parts.every((part) => text.includes(part));
+}
+
+function copyNodeModules(targetRoot) {
+  const target = path.join(targetRoot, 'node_modules');
+  fs.mkdirSync(target, { recursive: true });
+  for (const name of modulePackages) {
+    fs.cpSync(path.join(root, 'node_modules', name), path.join(target, name), { recursive: true });
+  }
 }
 
 function record(number, description, ok, detail = '') {
@@ -85,7 +118,9 @@ function checkerRedCases() {
     record(
       number,
       descriptions[number],
-      redResult.status === 1 && greenResult.status === 0,
+      redResult.status === 1 &&
+        hasOwnMessage(redResult, `TREFFER ${fixture.name}:1:`) &&
+        greenResult.status === 0,
       redResult.stderr
     );
     fs.rmSync(red, { recursive: true, force: true });
@@ -147,29 +182,36 @@ function unchangedCases() {
 function productionLicenseCase() {
   const allowlist = JSON.parse(fs.readFileSync(productionAllowlist, 'utf8'));
   const source = fs.readFileSync(path.join(root, 'js/chart-4.4.1.umd.min.js'), 'utf8');
-  const allowed = allowlist.comments?.find((entry) => entry.path === 'js/chart-4.4.1.umd.min.js');
+  const allowed = allowlist.comments?.filter((entry) => entry.path === 'js/chart-4.4.1.umd.min.js');
   const comments = [...source.matchAll(/\/\*![\s\S]*?\*\//g)].map((match) => match[0]);
-  const raw = comments.find(
-    (comment) => crypto.createHash('sha256').update(comment).digest('hex') === allowed?.sha256
+  const raws = (allowed ?? []).map((entry) =>
+    comments.find(
+      (comment) => crypto.createHash('sha256').update(comment).digest('hex') === entry.sha256
+    )
   );
-  if (!raw) {
+  if (allowed?.length !== 2 || raws.some((raw) => !raw)) {
     record(
       22,
-      'eingebuchter Lizenzhinweis bleibt unveraendert',
+      'beide eingebuchten Lizenzhinweise bleiben unveraendert',
       false,
-      'kein passender eingebuchter Hinweis'
+      'nicht beide eingebuchten Hinweise gefunden'
     );
     return;
   }
-  const directory = bundleWith({ 'js/chart-4.4.1.umd.min.js': `${raw}\nvoid 0;` });
+  const directory = bundleWith({
+    'js/chart-4.4.1.umd.min.js': `${raws.join('\n')}\nvoid 0;`,
+  });
   const before = fs.readFileSync(path.join(directory, 'js/chart-4.4.1.umd.min.js'));
   const check = checkerResult(directory);
   const remove = removerResult(directory);
   const after = fs.readFileSync(path.join(directory, 'js/chart-4.4.1.umd.min.js'));
   record(
     22,
-    'eingebuchter Lizenzhinweis bleibt unveraendert',
-    check.status === 0 && remove.status === 0 && before.equals(after)
+    'beide eingebuchten Lizenzhinweise bleiben unveraendert',
+    check.status === 0 &&
+      hasOwnMessage(check, 'erlaubt 2') &&
+      remove.status === 0 &&
+      before.equals(after)
   );
   fs.rmSync(directory, { recursive: true, force: true });
 }
@@ -210,7 +252,9 @@ function positionCases() {
   record(23, 'alle sprachlich moeglichen Leerraumlagen', exact, result.stderr);
   fs.rmSync(input, { recursive: true, force: true });
 
-  const asi = bundleWith({ 'js/app.js': 'const a = 1\n/* mehr\nzeilig */\nconst b = 2\n' });
+  const asiSource = 'const a = 1/* mehr\nzeilig */const b = 2\n';
+  const asiExpected = 'const a = 1\nconst b = 2\n';
+  const asi = bundleWith({ 'js/app.js': asiSource });
   const beforeTree = acorn.parse(fs.readFileSync(path.join(asi, 'js/app.js'), 'utf8'), {
     ecmaVersion: 'latest',
   });
@@ -220,10 +264,21 @@ function positionCases() {
   });
   const clean = (tree) =>
     JSON.stringify(tree, (key, value) => (['start', 'end'].includes(key) ? undefined : value));
+  let withoutReplacementIsWrong = false;
+  try {
+    const withoutReplacement = asiSource.replace('/* mehr\nzeilig */', '');
+    withoutReplacementIsWrong =
+      clean(acorn.parse(withoutReplacement, { ecmaVersion: 'latest' })) !== clean(beforeTree);
+  } catch {
+    withoutReplacementIsWrong = true;
+  }
   record(
     24,
-    'mehrzeiliger Kommentar ohne Semikolon behaelt AST',
-    asiResult.status === 0 && clean(beforeTree) === clean(afterTree)
+    'mehrzeiliger Kommentar zwischen Code ohne Semikolon behaelt AST und Zeilenumbruch',
+    asiResult.status === 0 &&
+      fs.readFileSync(path.join(asi, 'js/app.js'), 'utf8') === asiExpected &&
+      clean(beforeTree) === clean(afterTree) &&
+      withoutReplacementIsWrong
   );
   fs.rmSync(asi, { recursive: true, force: true });
 
@@ -240,14 +295,30 @@ function positionCases() {
 
 function directFailureCases() {
   const css = bundleWith({ 'css/app.css': 'a{color:re/*x*/d}' });
-  record(26, 'CSS-Kommentar ohne Leerraum bricht ab', removerResult(css).status === 1);
+  const cssResult = removerResult(css);
+  record(
+    26,
+    'CSS-Kommentar ohne Leerraum bricht mit eigener Meldung ab',
+    cssResult.status === 1 && hasOwnMessage(cssResult, 'css/app.css:1:', 'Stilkommentar', 'Ausweg:')
+  );
   fs.rmSync(css, { recursive: true, force: true });
   const js = bundleWith({ 'js/app.js': 'const = ;' });
-  record(27, 'nicht zerlegbare Skriptdatei bricht ab', removerResult(js).status === 1);
+  const jsResult = removerResult(js);
+  record(
+    27,
+    'nicht zerlegbare Skriptdatei bricht mit eigener Meldung ab',
+    jsResult.status === 1 &&
+      hasOwnMessage(jsResult, 'js/app.js:1:', 'Skript nicht zerlegbar', 'Ausweg:')
+  );
   fs.rmSync(js, { recursive: true, force: true });
 }
 
-function buildFailureFixture(file, content, withNodeModules) {
+function replaceOnce(source, from, to, label) {
+  if (!source.includes(from)) throw new Error(`Mutationsstelle fehlt: ${label}`);
+  return source.replace(from, to);
+}
+
+function buildFailureFixture(file, content, modulesMode, mutateRemover) {
   const directory = temporary('bau');
   write(directory, '.htaccess', 'Require all granted\n');
   write(directory, file, content);
@@ -261,7 +332,27 @@ function buildFailureFixture(file, content, withNodeModules) {
     fs.mkdirSync(path.dirname(target), { recursive: true });
     fs.copyFileSync(source, target);
   }
-  if (withNodeModules)
+  const copiedMake = path.join(directory, 'scripts/make-ionos-bundle.sh');
+  let makeSource = fs.readFileSync(copiedMake, 'utf8');
+  makeSource = replaceOnce(
+    makeSource,
+    '$(git -C "$SRC" rev-parse --short=10 HEAD)',
+    'teststand',
+    'Git-Ausgabe der Bauattrappe'
+  );
+  fs.writeFileSync(copiedMake, makeSource);
+  fs.chmodSync(copiedMake, 0o755);
+  if (mutateRemover) {
+    const copiedRemover = path.join(directory, 'scripts/remove-bundle-comments.mjs');
+    fs.writeFileSync(copiedRemover, mutateRemover(fs.readFileSync(copiedRemover, 'utf8')));
+  }
+  write(directory, 'scripts/version-assets.sh', '#!/usr/bin/env bash\nexit 0\n');
+  write(directory, 'scripts/stamp-version.sh', '#!/usr/bin/env bash\nexit 0\n');
+  write(directory, 'scripts/verify-bundle-comments.mjs', 'process.exit(0);\n');
+  fs.chmodSync(path.join(directory, 'scripts/version-assets.sh'), 0o755);
+  fs.chmodSync(path.join(directory, 'scripts/stamp-version.sh'), 0o755);
+  if (modulesMode === 'copy') copyNodeModules(directory);
+  if (modulesMode === 'symlink')
     fs.symlinkSync(path.join(root, 'node_modules'), path.join(directory, 'node_modules'), 'dir');
   const target = `${directory}-ziel`;
   const result = run('bash', [path.join(directory, 'scripts/make-ionos-bundle.sh'), target], {
@@ -271,39 +362,82 @@ function buildFailureFixture(file, content, withNodeModules) {
 }
 
 function buildFailureCases() {
-  const missingModules = buildFailureFixture('index.html', '<!doctype html><p>ok</p>', false);
+  const missingModules = buildFailureFixture('index.html', '<!doctype html><p>ok</p>', 'none');
   record(
     28,
     'Bau ohne node_modules bricht mit Ausweg ab und loescht Ziel',
     missingModules.result.status === 1 &&
       !fs.existsSync(missingModules.target) &&
-      /npm ci|node_modules/.test(missingModules.result.stderr + missingModules.result.stdout)
+      hasOwnMessage(missingModules.result, ':1:', 'node_modules fehlt', 'Ausweg:', 'npm ci')
   );
   fs.rmSync(missingModules.directory, { recursive: true, force: true });
 
   const styleAttribute = buildFailureFixture(
     'index.html',
     '<!doctype html><p style="color:/* intern */red">ok</p>',
-    true
+    'copy'
+  );
+  const styleAttributeMutant = buildFailureFixture(
+    'index.html',
+    '<!doctype html><p style="color:/* intern */red">ok</p>',
+    'copy',
+    (source) =>
+      replaceOnce(
+        source,
+        "cssComments(attribute.value, `${file} style-Attribut`, 'declarationList').length > 0",
+        'false',
+        'style-Attribut-Wache'
+      )
   );
   record(
     29,
-    'style-Attribut bricht Bau ab und loescht Ziel',
-    styleAttribute.result.status === 1 && !fs.existsSync(styleAttribute.target)
+    'style-Attribut bricht mit eigener Meldung ab; ohne Wache wird der Fall rot',
+    styleAttribute.result.status === 1 &&
+      !fs.existsSync(styleAttribute.target) &&
+      hasOwnMessage(
+        styleAttribute.result,
+        'index.html:1:',
+        'Kommentar im style-Attribut',
+        'Ausweg:'
+      ) &&
+      styleAttributeMutant.result.status === 0 &&
+      fs.existsSync(styleAttributeMutant.target)
   );
-  fs.rmSync(styleAttribute.directory, { recursive: true, force: true });
+  for (const fixture of [styleAttribute, styleAttributeMutant]) {
+    fs.rmSync(fixture.directory, { recursive: true, force: true });
+    fs.rmSync(fixture.target, { recursive: true, force: true });
+  }
 
   const unknownType = buildFailureFixture(
     'index.html',
     '<!doctype html><script type="text/x-fremd">inhalt</script>',
-    true
+    'copy'
+  );
+  const unknownTypeMutant = buildFailureFixture(
+    'index.html',
+    '<!doctype html><script type="text/x-fremd">inhalt</script>',
+    'copy',
+    (source) =>
+      replaceOnce(
+        source,
+        'if (\n        type &&',
+        'if (\n        false &&\n        type &&',
+        'Skripttyp-Wache'
+      )
   );
   record(
     40,
-    'unbekannter Skripttyp bricht Bau ab und loescht Ziel',
-    unknownType.result.status === 1 && !fs.existsSync(unknownType.target)
+    'unbekannter Skripttyp bricht mit eigener Meldung ab; ohne Wache wird der Fall rot',
+    unknownType.result.status === 1 &&
+      !fs.existsSync(unknownType.target) &&
+      hasOwnMessage(unknownType.result, 'index.html:1:', 'unbekannter Skripttyp', 'Ausweg:') &&
+      unknownTypeMutant.result.status === 0 &&
+      fs.existsSync(unknownTypeMutant.target)
   );
-  fs.rmSync(unknownType.directory, { recursive: true, force: true });
+  for (const fixture of [unknownType, unknownTypeMutant]) {
+    fs.rmSync(fixture.directory, { recursive: true, force: true });
+    fs.rmSync(fixture.target, { recursive: true, force: true });
+  }
 
   const red = bundleWith({
     'index.html': '<!doctype html><script type="text/x-fremd">inhalt</script>',
@@ -314,18 +448,92 @@ function buildFailureCases() {
   record(
     41,
     'unbekannter Skripttyp macht Kommentarpruefung rot',
-    checkerResult(red).status === 1 && checkerResult(green).status === 0
+    checkerResult(red).status === 1 &&
+      hasOwnMessage(checkerResult(red), 'TREFFER index.html:1:', 'unbekannter Skripttyp') &&
+      checkerResult(green).status === 0
   );
   fs.rmSync(red, { recursive: true, force: true });
   fs.rmSync(green, { recursive: true, force: true });
 
-  const unknownBinary = buildFailureFixture('daten.blob', Buffer.from([0, 255, 1, 2]), true);
+  const unknownBinary = buildFailureFixture('daten.blob', Buffer.from([0, 1, 2, 3]), 'copy');
+  const unknownBinaryMutant = buildFailureFixture(
+    'daten.blob',
+    Buffer.from([0, 1, 2, 3]),
+    'copy',
+    (source) =>
+      replaceOnce(
+        source,
+        "if (kind === 'unknown') {",
+        "if (false && kind === 'unknown') {",
+        'Endungs-Wache'
+      )
+  );
   record(
     42,
-    'unbekannte binaere Endung bricht Bau ab',
-    unknownBinary.result.status === 1 && !fs.existsSync(unknownBinary.target)
+    'unbekannte binaere Endung bricht mit eigener Meldung ab; ohne Wache wird der Fall rot',
+    unknownBinary.result.status === 1 &&
+      !fs.existsSync(unknownBinary.target) &&
+      hasOwnMessage(unknownBinary.result, 'daten.blob:1:', 'unbekannte Dateiendung', 'Ausweg:') &&
+      unknownBinaryMutant.result.status === 0 &&
+      fs.existsSync(unknownBinaryMutant.target)
   );
-  fs.rmSync(unknownBinary.directory, { recursive: true, force: true });
+  for (const fixture of [unknownBinary, unknownBinaryMutant]) {
+    fs.rmSync(fixture.directory, { recursive: true, force: true });
+    fs.rmSync(fixture.target, { recursive: true, force: true });
+  }
+}
+
+function additionalSharpnessCases() {
+  const linkedModules = buildFailureFixture('index.html', '<!doctype html><p>ok</p>', 'symlink');
+  record(
+    43,
+    'verknuepftes node_modules wird nicht in das Buendel kopiert',
+    linkedModules.result.status === 0 &&
+      fs.existsSync(linkedModules.target) &&
+      !fs.existsSync(path.join(linkedModules.target, 'node_modules'))
+  );
+  fs.rmSync(linkedModules.directory, { recursive: true, force: true });
+  fs.rmSync(linkedModules.target, { recursive: true, force: true });
+
+  const brokenXml = bundleWith({ 'sitemap.xml': '<root>' });
+  const brokenResult = checkerResult(brokenXml);
+  record(
+    44,
+    'Absturz der Kommentarpruefung hat Rueckgabewert 2 statt Trefferwert 1',
+    brokenResult.status === 2 && hasOwnMessage(brokenResult, 'FEHLER:')
+  );
+  fs.rmSync(brokenXml, { recursive: true, force: true });
+
+  const cases = {
+    45: ['html', 'index.html', 'HTML'],
+    46: ['inline-js', 'index.html', 'eingebettetes JavaScript'],
+    47: ['js', 'js/app.js', 'JavaScript-Datei'],
+    48: ['inline-css', 'index.html', 'eingebettetes CSS'],
+    49: ['css', 'css/app.css', 'CSS-Datei'],
+    50: ['svg', 'bild.svg', 'SVG'],
+    51: ['xml', 'sitemap.xml', 'XML'],
+  };
+  for (const [number, [fixtureName, targetName, description]] of Object.entries(cases)) {
+    const fixtureRoot = path.join(root, 'tests/fixtures/buendel-kommentare');
+    const input = fs.readFileSync(
+      path.join(fixtureRoot, `doppelt-${fixtureName}.eingabe.txt`),
+      'utf8'
+    );
+    const expected = fs.readFileSync(
+      path.join(fixtureRoot, `doppelt-${fixtureName}.erwartet.txt`),
+      'utf8'
+    );
+    const directory = bundleWith({ [targetName]: input });
+    const result = removerResult(directory);
+    const actual = fs.readFileSync(path.join(directory, targetName), 'utf8');
+    record(
+      number,
+      `zwei Kommentare auf einer Zeile in ${description} stimmen mit Erwartungsdatei ueberein`,
+      result.status === 0 && actual === expected,
+      result.stderr
+    );
+    fs.rmSync(directory, { recursive: true, force: true });
+  }
 }
 
 function equalityBase() {
@@ -407,10 +615,11 @@ productionLicenseCase();
 positionCases();
 directFailureCases();
 buildFailureCases();
+additionalSharpnessCases();
 equalityCases();
 
 if (failures > 0) {
   console.error(`Schärfeprüfung: ROT, ${failures} Fall/Faelle fehlgeschlagen.`);
   process.exit(1);
 }
-console.log('Schärfeprüfung: GRÜN, 42 Fälle bestanden.');
+console.log('Schärfeprüfung: GRÜN, 51 Fälle bestanden.');

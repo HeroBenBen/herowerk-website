@@ -27,6 +27,7 @@ OUT_VON_DIESEM_LAUF=1
 # Warum 2026-07-30: lokale Prüfläufe erzeugen HTML-Berichte, die kein Website-Inhalt sind.
 # Warum 2026-08-01: .git ist in einem Worktree eine Datei und darf nicht ins Bündel.
 # Warum 2026-08-01: .gitleaks.toml ist interne Secret-Scan-Konfiguration, keine Laufzeit-Datei.
+# Warum 2026-10-05: node_modules kann auch eine Verknüpfung sein; beide Formen sind intern.
 # Warum 2026-08-25: pytest legt beim Testlauf .pytest_cache in der obersten Ebene ab und
 #   Python __pycache__ neben den Skripten. Beides ist Testartefakt, kein Website-Inhalt.
 #   Ohne diesen Ausschluss bricht der Bundle-Bau nach jedem lokalen Testlauf am
@@ -38,6 +39,7 @@ rsync -a \
   --exclude '.github/' \
   --exclude '.claude/' \
   --exclude 'node_modules/' \
+  --exclude 'node_modules' \
   --exclude 'tests/' \
   --exclude 'baseline/' \
   --exclude 'docs/' \

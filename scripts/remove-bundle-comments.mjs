@@ -130,7 +130,31 @@ function classifyEdit(source, start, end, language, file) {
 }
 
 function applyEdits(source, edits, file) {
-  const ordered = edits.toSorted((left, right) => right.start - left.start || right.end - left.end);
+  const ascending = edits.toSorted(
+    (left, right) => left.start - right.start || left.end - right.end
+  );
+  const merged = [];
+  for (const edit of ascending) {
+    const previous = merged.at(-1);
+    if (!previous || edit.start >= previous.end) {
+      merged.push({ ...edit });
+      continue;
+    }
+    const overlap = source.slice(edit.start, Math.min(previous.end, edit.end));
+    if (
+      previous.replacement !== '' ||
+      edit.replacement !== '' ||
+      !isHorizontalWhitespace(overlap)
+    ) {
+      fail(`${file}: ueberlappende Kommentarbereiche. Ausweg: Zerleger pruefen.`);
+    }
+    previous.end = Math.max(previous.end, edit.end);
+  }
+  for (const edit of merged) {
+    if (edit.start === lineStart(source, edit.start) && edit.end === lineEnd(source, edit.end))
+      edit.end = newlineEnd(source, edit.end);
+  }
+  const ordered = merged.toReversed();
   let lastStart = source.length + 1;
   let output = source;
   for (const edit of ordered) {

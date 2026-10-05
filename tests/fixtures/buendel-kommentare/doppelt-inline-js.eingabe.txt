@@ -1,0 +1,4 @@
+<!doctype html><script>
+/* eins */ /* zwei */
+void 0;
+</script>

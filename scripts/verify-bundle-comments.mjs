@@ -238,11 +238,11 @@ function main() {
     args = parseArguments(process.argv.slice(2));
   } catch (error) {
     console.error(`FEHLER: ${error.message}`);
-    process.exit(1);
+    process.exit(2);
   }
   if (!fs.statSync(args.root, { throwIfNoEntry: false })?.isDirectory()) {
     console.error(`FEHLER: Buendelordner fehlt: ${args.root}`);
-    process.exit(1);
+    process.exit(2);
   }
   const counts = { html: 0, inlineCss: 0, inlineJs: 0, js: 0, css: 0, svg: 0, xml: 0, robots: 0 };
   const hits = [];
@@ -298,7 +298,7 @@ function main() {
     }
   } catch (error) {
     console.error(`FEHLER: ${error.message}`);
-    process.exit(1);
+    process.exit(2);
   }
 
   console.log(
