@@ -15,11 +15,19 @@ OUT="${1:-$SRC/dist-ionos}"
 
 rm -rf "$OUT"
 mkdir -p "$OUT"
+OUT_ABS="$(cd "$OUT" && pwd)"
+if INODE="$(stat -f '%d:%i' "$OUT_ABS" 2>/dev/null)"; then
+  :
+else
+  INODE="$(stat -c '%d:%i' "$OUT_ABS")"
+fi
+OUT_VON_DIESEM_LAUF=1
 
 # Warum 2026-07-30: docs/ enthält interne Beraterseiten und darf nicht in den Webroot.
 # Warum 2026-07-30: lokale Prüfläufe erzeugen HTML-Berichte, die kein Website-Inhalt sind.
 # Warum 2026-08-01: .git ist in einem Worktree eine Datei und darf nicht ins Bündel.
 # Warum 2026-08-01: .gitleaks.toml ist interne Secret-Scan-Konfiguration, keine Laufzeit-Datei.
+# Warum 2026-10-05: node_modules kann auch eine Verknüpfung sein; beide Formen sind intern.
 # Warum 2026-08-25: pytest legt beim Testlauf .pytest_cache in der obersten Ebene ab und
 #   Python __pycache__ neben den Skripten. Beides ist Testartefakt, kein Website-Inhalt.
 #   Ohne diesen Ausschluss bricht der Bundle-Bau nach jedem lokalen Testlauf am
@@ -31,6 +39,7 @@ rsync -a \
   --exclude '.github/' \
   --exclude '.claude/' \
   --exclude 'node_modules/' \
+  --exclude 'node_modules' \
   --exclude 'tests/' \
   --exclude 'baseline/' \
   --exclude 'docs/' \
@@ -95,6 +104,64 @@ if [ -n "$VERBOTENE_METADATEN" ]; then
 fi
 echo "Metadaten-Waechter: alle Ebenen geprueft, keine Namen ._*, keine .DS_Store."
 
+# Warum 2026-10-05: Ab dem Entfernen der Kommentare darf bei keinem Fehler ein
+# halbfertiges oder ungeprüftes Bündel liegen bleiben. Gelöscht wird nur der
+# Ordner, den genau dieser Lauf angelegt hat; Pfad und Inode schützen vor einem
+# fremden oder zwischenzeitlich ausgetauschten Ziel.
+cleanup_buendel_nach_fehler() {
+  CODE="$1"
+  trap - ERR INT TERM
+  set +e
+  if [ "$CODE" -ne 130 ] && [ "$CODE" -ne 143 ]; then
+    CODE=1
+  fi
+  if [ "${OUT_VON_DIESEM_LAUF:-0}" = 1 ] && [ -n "${OUT_ABS:-}" ]; then
+    AKTUELLER_INODE=""
+    if [ -d "$OUT_ABS" ]; then
+      if AKTUELLER_INODE="$(stat -f '%d:%i' "$OUT_ABS" 2>/dev/null)"; then
+        :
+      else
+        AKTUELLER_INODE="$(stat -c '%d:%i' "$OUT_ABS" 2>/dev/null)"
+      fi
+    fi
+    case "$OUT_ABS" in
+      "" | / | "$SRC") SICHER=0 ;;
+      *)
+        case "$SRC/" in
+          "$OUT_ABS/"*) SICHER=0 ;;
+          *) SICHER=1 ;;
+        esac
+        ;;
+    esac
+    if [ "$SICHER" = 1 ] && [ "$AKTUELLER_INODE" = "$INODE" ]; then
+      rm -rf -- "$OUT_ABS"
+      echo "Unvollständiges Bündel nach Fehler entfernt: $OUT_ABS" >&2
+    else
+      echo "WARNUNG: Zielordner nicht gelöscht, weil Eigentumsprüfung fehlschlug: $OUT_ABS" >&2
+    fi
+  fi
+  exit "$CODE"
+}
+
+trap 'cleanup_buendel_nach_fehler $?' ERR
+trap 'cleanup_buendel_nach_fehler 130' INT
+trap 'cleanup_buendel_nach_fehler 143' TERM
+
+if [ ! -d "$SRC/node_modules" ]; then
+  echo "FEHLER: $OUT_ABS:1: node_modules fehlt. Ausweg: Im Arbeitsbaum npm ci ausführen." >&2
+  false
+fi
+if ! (
+  cd "$SRC"
+  node --input-type=module -e \
+    "await Promise.all(['acorn','parse5','css-tree','htmlparser2','saxes','typescript'].map((name) => import(name)))"
+); then
+  echo "FEHLER: $OUT_ABS:1: Ein Zerleger fehlt. Ausweg: Im Arbeitsbaum npm ci ausführen." >&2
+  false
+fi
+
+node "$SRC/scripts/remove-bundle-comments.mjs" "$OUT_ABS"
+
 # ── Cache-Busting: Content-Hash an lokale JS/CSS-Referenzen anhaengen ────────
 # Grund (2026-07-04): .htaccess cacht JS/CSS 1 Jahr (ExpiresByType ... "access
 # plus 1 year"). Ohne versionierte URL fuehren wiederkehrende Besucher alte
@@ -111,6 +178,21 @@ echo "Metadaten-Waechter: alle Ebenen geprueft, keine Namen ._*, keine .DS_Store
 # der Auslieferung (Umschalter-Defekt 25.07.). Genau das darf nicht wieder passieren.
 "$SRC/scripts/version-assets.sh" "$OUT"
 "$SRC/scripts/stamp-version.sh" "$OUT"
+if node "$SRC/scripts/verify-bundle-comments.mjs" "$OUT_ABS"; then
+  KOMMENTAR_PRUEFSTATUS=0
+else
+  KOMMENTAR_PRUEFSTATUS="$?"
+fi
+if [ "$KOMMENTAR_PRUEFSTATUS" -eq 1 ]; then
+  echo "FEHLER: Kommentar-Selbstprüfung hat einen Treffer gemeldet. Ausweg: genannte Fundstelle oder Erlaubnisliste prüfen." >&2
+  cleanup_buendel_nach_fehler 1
+elif [ "$KOMMENTAR_PRUEFSTATUS" -ne 0 ]; then
+  echo "FEHLER: Kommentar-Selbstprüfung ist abgestürzt (Rückgabewert $KOMMENTAR_PRUEFSTATUS). Ausweg: Prüfwerkzeug und Bündeldatei prüfen." >&2
+  cleanup_buendel_nach_fehler 1
+fi
+
+trap - ERR INT TERM
+OUT_VON_DIESEM_LAUF=0
 
 echo "============================================"
 echo "IONOS-Bundle erstellt: $OUT"

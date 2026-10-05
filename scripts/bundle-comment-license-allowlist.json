@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "comments": [
+    {
+      "path": "js/chart-4.4.1.umd.min.js",
+      "sha256": "cc36e111572df278059c6bcf1e76ed5cf3f36d9b421ef0f360505607d41335d4"
+    },
+    {
+      "path": "js/chart-4.4.1.umd.min.js",
+      "sha256": "11605df350aaa2014c4c35c8b864129dd89bb79f62b61ea24ddaf29902f5db09"
+    }
+  ]
+}

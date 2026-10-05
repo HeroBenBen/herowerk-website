@@ -1,0 +1,4 @@
+<!doctype html><style>
+/* eins */ /* zwei */
+a{}
+</style>

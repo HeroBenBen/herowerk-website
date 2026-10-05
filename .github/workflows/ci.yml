@@ -97,6 +97,11 @@ jobs:
       # werden, obwohl der Checkout vor diesen Berichtsläufen sauber war.
       - run: scripts/make-ionos-bundle.sh /tmp/bundle-pruefung
       - run: scripts/stamp-version.sh --check /tmp/bundle-pruefung
+      # Warum 2026-10-05: Das ausgelieferte Bündel darf interne Kommentare nicht
+      # preisgeben und muss bis auf Kommentare, Stempel und Versionen der Quelle entsprechen.
+      - run: npm run verify:buendel-kommentare -- /tmp/bundle-pruefung
+      - run: npm run verify:buendel-gleichheit -- . /tmp/bundle-pruefung
+      - run: npm run verify:buendel-kommentare-schaerfe
       - run: scripts/stamp-version.sh --selbsttest
       # Consent-Gate (25.07.2026): Auf allen produktiven Seiten muss das synchrone
       # CMP-Autoblocking das erste Skript sein. Beide CSP-Quellen müssen den
@@ -188,6 +193,9 @@ jobs:
       matrix: { theme: [dark, light] }
     steps:
       - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: '20' }
+      - run: npm ci
       - name: Pruefserver starten
         run: scripts/start-pruefserver.sh
       - name: Lighthouse CI ${{ matrix.theme }}
@@ -333,6 +341,9 @@ jobs:
     needs: [lint]
     steps:
       - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: '20' }
+      - run: npm ci
       - name: Pruefserver starten
         run: scripts/start-pruefserver.sh
       - run: node scripts/header-check.js ${{ env.PRUEFSERVER_URL }}
@@ -387,6 +398,9 @@ jobs:
     needs: [lint]
     steps:
       - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: '20' }
+      - run: npm ci
       - name: Pruefserver starten
         run: scripts/start-pruefserver.sh
       - run: node scripts/seo-basics-check.js ${{ env.PRUEFSERVER_URL }}
@@ -402,6 +416,9 @@ jobs:
     needs: [lint]
     steps:
       - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: '20' }
+      - run: npm ci
       - name: Pruefserver starten
         run: scripts/start-pruefserver.sh
       - run: node scripts/rich-results-check.js ${{ env.PRUEFSERVER_URL }}

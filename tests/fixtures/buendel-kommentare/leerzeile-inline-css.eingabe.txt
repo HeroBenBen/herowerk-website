@@ -1,0 +1,5 @@
+<style>
+/* allein */
+
+a { color: red; }
+</style>
