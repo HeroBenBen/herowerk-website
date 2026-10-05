@@ -13,7 +13,7 @@ let server;
 let baseURL;
 let failCalculations = false;
 let calculationDelayMs = 0;
-const LANE_A_ROOT = process.env.LANE_A_ROOT || path.resolve(__dirname, '..', '..', 'wp-lane-a');
+const LANE_A_ROOT = process.env.LANE_A_ROOT || path.resolve(__dirname, '..');
 
 function bool(value, fallback) {
   if (value === null) return fallback;
@@ -131,15 +131,24 @@ test.afterAll(async () => {
 });
 
 async function installLocalConsent(page) {
-  await page.route('https://cdn.consentmanager.net/**', async (route) => {
-    await route.fulfill({
-      status: 200,
-      contentType: 'text/javascript; charset=utf-8',
-      body: `document.addEventListener('DOMContentLoaded',function(){
-        var box=document.createElement('div');box.id='cmpbox';box.setAttribute('role','dialog');box.style.cssText='position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center';
-        var card=document.createElement('div');card.style.cssText='background:#fff;color:#1C2B36;padding:24px;border-radius:12px;max-width:320px';card.innerHTML='<p>Lokaler Test-Consent</p><button type="button" id="cmpwelcomebtnyes">Alle akzeptieren</button>';box.appendChild(card);document.body.appendChild(box);
-        document.getElementById('cmpwelcomebtnyes').addEventListener('click',function(){box.remove();});
-      });`,
+  await page.route('https://cdn.consentmanager.net/**', (route) => route.abort());
+  await page.addInitScript(() => {
+    document.addEventListener('DOMContentLoaded', function () {
+      const box = document.createElement('div');
+      box.id = 'cmpbox';
+      box.setAttribute('role', 'dialog');
+      box.style.cssText =
+        'position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center';
+      const card = document.createElement('div');
+      card.style.cssText =
+        'background:#fff;color:#1C2B36;padding:24px;border-radius:12px;max-width:320px';
+      card.innerHTML =
+        '<p>Lokaler Test-Consent</p><button type="button" id="cmpwelcomebtnyes">Alle akzeptieren</button>';
+      box.appendChild(card);
+      document.body.appendChild(box);
+      document.getElementById('cmpwelcomebtnyes').addEventListener('click', function () {
+        box.remove();
+      });
     });
   });
 }
@@ -310,8 +319,10 @@ test('O3 Contract: Source, Bootstrap und serverseitige Periodeneigenschaft', asy
   ]) {
     expect(source).not.toContain(forbidden);
   }
-  expect((source.match(/80 %|80 Prozent/g) || []).length).toBe(7); // fünf Förderung + zwei Wirkungsgrad
-  expect((source.match(/href="#foerder-80-hinweis"/g) || []).length).toBe(5);
+  // Sechs Stellen zur Förderung und zwei zum Wirkungsgrad; einer der acht Treffer
+  // ist "80 Prozent" innerhalb von "380 Prozent" im erklärenden Wirkungsgradtext.
+  expect((source.match(/80 %|80 Prozent/g) || []).length).toBe(8);
+  expect((source.match(/href="#foerder-80-hinweis"/g) || []).length).toBe(6);
   expect(source).not.toContain("inputsEcho.fHalbjahr!=='h2-2026'");
 
   const bootstrap = await fetch(`${baseURL}/api/rechner?action=kv_bootstrap`);
@@ -523,7 +534,7 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
   ).toEqual([]);
 });
 
-test('O3 Kunde Light 375: lokaler Consent, Alt-/EU-Text, fünf Förderanker und Vollflow', async ({
+test('O3 Kunde Light 375: lokaler Consent, Alt-/EU-Text, sechs Förderanker und Vollflow', async ({
   page,
 }) => {
   await installLocalConsent(page);
@@ -545,11 +556,13 @@ test('O3 Kunde Light 375: lokaler Consent, Alt-/EU-Text, fünf Förderanker und 
   await page.waitForFunction(() => typeof KV_STATE !== 'undefined' && KV_STATE.last);
   await expectOneMobileYearDeck(page);
   await expectNoMobileChartOverflow(page);
-  await page.evaluate(() => {
-    document.body.classList.add('kv-busy', 'kv-busy-visible');
-    const announcement = document.querySelector('#g9-kopfbalken-ansage');
-    if (announcement) announcement.textContent = 'Wir rechnen deine Zahlen neu';
-  });
+  await page.evaluate('g9StartLoading()');
+  await page.waitForFunction(
+    () =>
+      document.body.classList.contains('kv-busy-visible') &&
+      document.querySelector('#g9-kopfbalken-ansage')?.textContent ===
+        'Wir rechnen deine Zahlen neu'
+  );
   const busyProof = await page.evaluate(() => {
     const answer = document.querySelector('#cMainDaten .mobile-year-answer');
     const row = document.querySelector('#cMainDaten .year-bar-row');
@@ -576,7 +589,7 @@ test('O3 Kunde Light 375: lokaler Consent, Alt-/EU-Text, fünf Förderanker und 
     announcementDisplay: 'block',
     announcementVisibility: 'visible',
   });
-  await page.evaluate(() => document.body.classList.remove('kv-busy', 'kv-busy-visible'));
+  await page.evaluate('g9StopLoading()');
   expect(await page.evaluate(() => sessionStorage.getItem('hero_kv_sitzung'))).toBeNull();
   await expect(page.locator('body')).toHaveClass(/wz-customer/);
   await page.locator('[data-wz-heizart="gas"]').click();
@@ -595,7 +608,7 @@ test('O3 Kunde Light 375: lokaler Consent, Alt-/EU-Text, fünf Förderanker und 
       KV_STATE.last.foerder.periode === 'h1-2027' &&
       KV_STATE.last.foerder.euDifferenzierung === true
   );
-  await expect(page.locator('#wzFoerderAufbau')).toContainText('Ihr EU-Gerät bekommt 15 % zurück');
+  await expect(page.locator('#wzFoerderAufbau')).toContainText('dein EU-Gerät bekommt 15 % zurück');
   await page.locator('#fHalbjahr').selectOption('h2-2026');
   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.foerder.periode === 'h2-2026');
   await expect(page.locator('#wzFoerderAufbau')).toContainText(
@@ -606,7 +619,7 @@ test('O3 Kunde Light 375: lokaler Consent, Alt-/EU-Text, fünf Förderanker und 
   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.foerder.quote === 80);
   await expect(page.locator('#fQuote a[href="#foerder-80-hinweis"]')).toHaveCount(1);
   await expect(page.locator('#wzLiveFoerder a[href="#foerder-80-hinweis"]')).toHaveCount(1);
-  await expect(page.locator('a[href="#foerder-80-hinweis"]')).toHaveCount(5);
+  await expect(page.locator('a[href="#foerder-80-hinweis"]')).toHaveCount(6);
   await page.locator('#fQuote a[href="#foerder-80-hinweis"]').click();
   await expect.poll(() => new URL(page.url()).hash).toBe('');
   await expect(
@@ -873,10 +886,6 @@ test('O4 Writer: jeder Anfrage-CTA schreibt ausschließlich das v1-Contract-Sche
 test('O4 Writer fail-safe: setItem-Fehler löscht gültigen stale Key vor der Navigation', async ({
   page,
 }) => {
-  test.skip(
-    !fs.existsSync(path.join(LANE_A_ROOT, 'anfrage.html')),
-    'Lane-A-Worktree für Cross-E2E fehlt'
-  );
   await installLocalConsent(page);
   await page.setViewportSize({ width: 1200, height: 812 });
   await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?theme=dark`, {
@@ -922,10 +931,6 @@ test('O4 Writer fail-safe: setItem-Fehler löscht gültigen stale Key vor der Na
 test('O4 Cross-Worktree E2E: echter CTA-Klick mit Key und direkter Aufruf ohne Key', async ({
   page,
 }) => {
-  test.skip(
-    !fs.existsSync(path.join(LANE_A_ROOT, 'anfrage.html')),
-    'Lane-A-Worktree für Cross-E2E fehlt'
-  );
   await installLocalConsent(page);
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto(`${baseURL}/kostenvergleich-waermepumpe.html?theme=dark`, {
