@@ -16,6 +16,8 @@
 //          RASTER_BASE_URL=https://www.herowerk.de npm run verify:raster
 // Ohne RASTER_BASE_URL startet das Skript einen eigenen statischen Server auf
 // dem Arbeitsstand des Repos. Damit prueft es VOR dem Deploy, nicht danach.
+// Die Preisdaten stammen aus der Browser-Antwort der Live-Seite https://www.herowerk.de/preise.html vom 05.10.2026.
+// Zum Erneuern die Seite im Browser laden und die Antwort auf api/rechner?action=preise&origin=https://herowerk.de als eingeruecktes JSON speichern.
 
 import { chromium } from '@playwright/test';
 import { createServer } from 'node:http';
@@ -147,9 +149,21 @@ const TYPEN = {
 };
 
 async function starteServer() {
+  const preisMomentaufnahme = await readFile(
+    path.join(hier, '..', 'tests', 'fixtures', 'preise-live-2026-10-05.json')
+  );
   const server = createServer(async (req, res) => {
     try {
-      let p = decodeURIComponent(new URL(req.url, 'http://x').pathname);
+      const anfrage = new URL(req.url, 'http://x');
+      if (anfrage.pathname === '/api/rechner' && anfrage.searchParams.get('action') === 'preise') {
+        res.writeHead(200, {
+          'content-type': 'application/json; charset=utf-8',
+          'cache-control': 'no-store',
+        });
+        res.end(preisMomentaufnahme);
+        return;
+      }
+      let p = decodeURIComponent(anfrage.pathname);
       if (p.endsWith('/')) p += 'index.html';
       let datei = path.join(wurzel, p);
       if (!datei.startsWith(wurzel)) {
