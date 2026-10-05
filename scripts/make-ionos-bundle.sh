@@ -84,6 +84,17 @@ if [ "${#FREMDE_PUNKTDATEIEN[@]}" -gt 0 ]; then
 fi
 echo "Punktdatei-Wächter: oberste Ebene $OUT geprüft, nur .htaccess und .well-known erlaubt, keine fremden Treffer."
 
+# AppleDouble-Dateien und Finder-Metadaten duerfen auch in Unterordnern nicht
+# unbemerkt in das Auslieferungsbuendel gelangen.
+VERBOTENE_METADATEN="$(find "$OUT" \( -name '._*' -o -name '.DS_Store' \) -print | sort)"
+if [ -n "$VERBOTENE_METADATEN" ]; then
+  echo "FEHLER: Verbotene Metadaten-Dateien oder -Ordner im Buendel:" >&2
+  echo "$VERBOTENE_METADATEN" >&2
+  echo "Ausweg: Ergaenze die Namen als --exclude im rsync-Aufruf oder entferne sie an der Quelle. Nicht nachtraeglich aus dem fertigen Buendel loeschen." >&2
+  exit 1
+fi
+echo "Metadaten-Waechter: alle Ebenen geprueft, keine Namen ._*, keine .DS_Store."
+
 # ── Cache-Busting: Content-Hash an lokale JS/CSS-Referenzen anhaengen ────────
 # Grund (2026-07-04): .htaccess cacht JS/CSS 1 Jahr (ExpiresByType ... "access
 # plus 1 year"). Ohne versionierte URL fuehren wiederkehrende Besucher alte
