@@ -15,6 +15,13 @@ OUT="${1:-$SRC/dist-ionos}"
 
 rm -rf "$OUT"
 mkdir -p "$OUT"
+OUT_ABS="$(cd "$OUT" && pwd)"
+if INODE="$(stat -f '%d:%i' "$OUT_ABS" 2>/dev/null)"; then
+  :
+else
+  INODE="$(stat -c '%d:%i' "$OUT_ABS")"
+fi
+OUT_VON_DIESEM_LAUF=1
 
 # Warum 2026-07-30: docs/ enthält interne Beraterseiten und darf nicht in den Webroot.
 # Warum 2026-07-30: lokale Prüfläufe erzeugen HTML-Berichte, die kein Website-Inhalt sind.
@@ -84,6 +91,61 @@ if [ "${#FREMDE_PUNKTDATEIEN[@]}" -gt 0 ]; then
 fi
 echo "Punktdatei-Wächter: oberste Ebene $OUT geprüft, nur .htaccess und .well-known erlaubt, keine fremden Treffer."
 
+# Warum 2026-10-05: Ab dem Entfernen der Kommentare darf bei keinem Fehler ein
+# halbfertiges oder ungeprüftes Bündel liegen bleiben. Gelöscht wird nur der
+# Ordner, den genau dieser Lauf angelegt hat; Pfad und Inode schützen vor einem
+# fremden oder zwischenzeitlich ausgetauschten Ziel.
+cleanup_buendel_nach_fehler() {
+  CODE="$1"
+  trap - ERR INT TERM
+  set +e
+  if [ "${OUT_VON_DIESEM_LAUF:-0}" = 1 ] && [ -n "${OUT_ABS:-}" ]; then
+    AKTUELLER_INODE=""
+    if [ -d "$OUT_ABS" ]; then
+      if AKTUELLER_INODE="$(stat -f '%d:%i' "$OUT_ABS" 2>/dev/null)"; then
+        :
+      else
+        AKTUELLER_INODE="$(stat -c '%d:%i' "$OUT_ABS" 2>/dev/null)"
+      fi
+    fi
+    case "$OUT_ABS" in
+      "" | / | "$SRC") SICHER=0 ;;
+      *)
+        case "$SRC/" in
+          "$OUT_ABS/"*) SICHER=0 ;;
+          *) SICHER=1 ;;
+        esac
+        ;;
+    esac
+    if [ "$SICHER" = 1 ] && [ "$AKTUELLER_INODE" = "$INODE" ]; then
+      rm -rf -- "$OUT_ABS"
+      echo "Unvollständiges Bündel nach Fehler entfernt: $OUT_ABS" >&2
+    else
+      echo "WARNUNG: Zielordner nicht gelöscht, weil Eigentumsprüfung fehlschlug: $OUT_ABS" >&2
+    fi
+  fi
+  exit "$CODE"
+}
+
+trap 'cleanup_buendel_nach_fehler $?' ERR
+trap 'cleanup_buendel_nach_fehler 130' INT
+trap 'cleanup_buendel_nach_fehler 143' TERM
+
+if [ ! -d "$SRC/node_modules" ]; then
+  echo "FEHLER: $OUT_ABS:1: node_modules fehlt. Ausweg: Im Arbeitsbaum npm ci ausführen." >&2
+  false
+fi
+if ! (
+  cd "$SRC"
+  node --input-type=module -e \
+    "await Promise.all(['acorn','parse5','css-tree','htmlparser2','saxes','typescript'].map((name) => import(name)))"
+); then
+  echo "FEHLER: $OUT_ABS:1: Ein Zerleger fehlt. Ausweg: Im Arbeitsbaum npm ci ausführen." >&2
+  false
+fi
+
+node "$SRC/scripts/remove-bundle-comments.mjs" "$OUT_ABS"
+
 # ── Cache-Busting: Content-Hash an lokale JS/CSS-Referenzen anhaengen ────────
 # Grund (2026-07-04): .htaccess cacht JS/CSS 1 Jahr (ExpiresByType ... "access
 # plus 1 year"). Ohne versionierte URL fuehren wiederkehrende Besucher alte
@@ -100,6 +162,10 @@ echo "Punktdatei-Wächter: oberste Ebene $OUT geprüft, nur .htaccess und .well-
 # der Auslieferung (Umschalter-Defekt 25.07.). Genau das darf nicht wieder passieren.
 "$SRC/scripts/version-assets.sh" "$OUT"
 "$SRC/scripts/stamp-version.sh" "$OUT"
+node "$SRC/scripts/verify-bundle-comments.mjs" "$OUT_ABS"
+
+trap - ERR INT TERM
+OUT_VON_DIESEM_LAUF=0
 
 echo "============================================"
 echo "IONOS-Bundle erstellt: $OUT"

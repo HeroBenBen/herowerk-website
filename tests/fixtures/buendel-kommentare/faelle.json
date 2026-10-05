@@ -1,0 +1,25 @@
+{
+  "checkerRot": {
+    "1": { "name": "index.html", "content": "<!doctype html><!-- intern --><p>ok</p>" },
+    "2": { "name": "index.html", "content": "<!doctype html><style>/* intern */a{color:red}</style>" },
+    "3": { "name": "index.html", "content": "<!doctype html><script>// intern\nvoid 0;</script>" },
+    "4": { "name": "js/app.js", "content": "void 0; // intern\n" },
+    "5": { "name": "js/app.js", "content": "/* intern */\nvoid 0;\n" },
+    "6": { "name": "css/app.css", "content": "/* intern */\na{}\n" },
+    "7": { "name": "css/app.css", "content": "a{color:re/* intern */ d}\n" },
+    "8": { "name": "bild.svg", "content": "<svg><!-- intern --><path/></svg>" },
+    "9": { "name": "sitemap.xml", "content": "<?xml version=\"1.0\"?><root><!-- intern --><x/></root>" },
+    "10": { "name": "robots.txt", "content": "# intern\nUser-agent: *\n" },
+    "11": { "name": "index.html", "content": "<!doctype html><p style=\"color:/* intern */red\">ok</p>" },
+    "12": { "name": "index.html", "content": "<!doctype html><button onclick=\"void 0; // intern\">ok</button>" },
+    "13": { "name": "daten.fremd", "content": "unbekannt" }
+  },
+  "stehenBleiben": {
+    "16": { "name": "js/app.js", "content": "const adresse = 'https://example.test/a';\n" },
+    "17": { "name": "js/app.js", "content": "const a='/*'; const b=`//`; const c=/\\/\\//;\n" },
+    "18": { "name": "index.html", "content": "<!doctype html><script>const wert='<!--';</script>" },
+    "19": { "name": "css/app.css", "content": "a{content:'/*';background:url(data:image/svg+xml;utf8,/*)}\n" },
+    "20": { "name": "index.html", "content": "<!doctype html><script type=\"application/ld+json\">{\"url\":\"https://example.test/a\"}</script>" },
+    "21": { "name": "llms.txt", "content": "# HeroWerk\n## Abschnitt\n" }
+  }
+}

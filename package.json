@@ -27,15 +27,23 @@
     "build:seo:jobs": "node scripts/build-structured-data.mjs --jobs",
     "build:bausteine": "node scripts/build-bausteine.mjs",
     "verify:bausteine": "node scripts/build-bausteine.mjs --check",
-    "verify:stelle-live": "node scripts/verify-stelle-live.mjs"
+    "verify:stelle-live": "node scripts/verify-stelle-live.mjs",
+    "verify:buendel-kommentare": "node scripts/verify-bundle-comments.mjs",
+    "verify:buendel-gleichheit": "node scripts/verify-bundle-equality.mjs",
+    "verify:buendel-kommentare-schaerfe": "node tests/buendel-kommentare-schaerfe.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",
     "@playwright/test": "^1.53.2",
     "@sentry/cli": "^2.43.0",
     "@types/node": "^25.9.3",
+    "acorn": "8.16.0",
+    "css-tree": "3.1.0",
     "eslint": "^9.29.0",
+    "htmlparser2": "10.0.0",
+    "parse5": "8.0.0",
     "prettier": "^3.5.3",
+    "saxes": "6.0.0",
     "typescript": "^5.8.3"
   }
 }
