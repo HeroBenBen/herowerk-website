@@ -6816,6 +6816,19 @@ samp {
   }
 }
 
+/* Unter 360 Pixeln Fensterbreite passt die Wertespalte mit 16 Pixeln Innenabstand rechts
+   nicht mehr neben die Beschriftung. Gemessen live am 04.10.2026 bei 320 Pixeln: Tabelle
+   279,8 Pixel in einem Behaelter von 272, bei neun von zehn Geraeten. Abgeschnitten wurde
+   kein Text, sondern der halbe Innenabstand. Er wird dort auf 8 Pixel gesetzt, das ist der
+   Abstand, der bis dahin tatsaechlich zu sehen war. Reserve danach: 0,2 Pixel. Ein laengeres
+   Wort in den Geraetedaten laesst die Tabelle wieder ueberstehen; das faengt die
+   Rasterpruefung mit Preisdaten ab (scripts/verify-raster.mjs). */
+@media (max-width: 359px) {
+  .pa-specs td:last-child {
+    padding-right: 8px;
+  }
+}
+
 /* ═══ FUSSNOTEN-STERNCHEN: Kontrast und Anbindung (GF-Befund 26.07.2026) ═════
    (1) Auf der orangen Foerdervorschuss-Flaeche der Startseiten-Karte erreichte
    das gruene Sternchen nur Kontrast 1,28 gegen 232/168/56. Norm fuer Text ist
