@@ -1334,7 +1334,7 @@ function kvRender(data,showResults){
   }
   document.getElementById('co2Box').innerHTML=`<h3>Dein Klima-Beitrag</h3><div style="text-align:center;margin:20px 0"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.5rem;color:var(--hero-green)">${fix(data.co2.gesamt,1)} t CO₂</div><div class="d">in ${s.laufzeit} Jahren eingespart (Ø ${fix(data.co2.proJahr,1)} t/Jahr)</div></div><div class="cg2"><div class="ib" style="text-align:center"><strong>${data.co2.fluege} Flüge</strong></div><div class="ib" style="text-align:center"><strong>${data.co2.baeume} Bäume</strong></div></div>`;
   document.getElementById('sensiBox').innerHTML=`<h3>Was wäre wenn? (Szenarien)</h3><table class="bt desktop-kv-table"><tbody><tr><td>Best Case</td><td class="r">${eur(data.sensi.best)}</td></tr><tr><td>Basis</td><td class="r">${eur(data.sensi.basis)}</td></tr><tr><td>Worst Case</td><td class="r">${eur(data.sensi.worst)}</td></tr></tbody></table><div class="mobile-kv-list">${kvMobileCard('Best Case',eur(data.sensi.best),[],'is-wp')}${kvMobileCard('Basis',eur(data.sensi.basis),[])}${kvMobileCard('Worst Case',eur(data.sensi.worst),[])}</div>`;
-  const im=document.getElementById('immoBox');im.style.display=data.immo.aktiv?'block':'none';if(data.immo.aktiv)im.innerHTML=`<h3>Wertsteigerung deiner Immobilie</h3><div class="cg3"><div class="rc"><div class="ml">Hauswert heute</div><div class="mv">${eur(data.immo.hausWert)}</div></div><div class="rc pos"><div class="ml">Wertzuwachs durch WP</div><div class="mv">+${eur(data.immo.wertzuwachs)}</div><div class="ms">${Math.round(data.immo.prozent)} % von ${eur(data.immo.hausWert)}</div></div></div>`;
+  const im=document.getElementById('immoBox');im.style.display=data.immo.aktiv?'block':'none';if(data.immo.aktiv)im.innerHTML=`<h3>Wertsteigerung deiner Immobilie</h3><div class="cg3"><div class="rc"><div class="ml">Hauswert heute</div> <div class="mv">${eur(data.immo.hausWert)}</div></div><div class="rc pos"><div class="ml">Wertzuwachs durch WP</div> <div class="mv">+${eur(data.immo.wertzuwachs)}</div> <div class="ms">${Math.round(data.immo.prozent)} % von ${eur(data.immo.hausWert)}</div></div></div>`;
   document.getElementById('detTbl').innerHTML='<thead><tr><th>Jahr</th><th class="r">Fossil ges.</th><th class="r">WP-Kosten</th><th class="r">Ersparnis/J.</th><th class="r">Ersparnis kum.</th></tr></thead><tbody>'+data.jahre.map(row=>`<tr><td>${row.cY}</td><td class="r">${eur(row.fossilG)}</td><td class="r">${eur(row.wpGes)}</td><td class="r">${eur(row.mehrK)}</td><td class="r">${eur(row.cumSav)}</td></tr>`).join('')+'</tbody>';
   const detMobile=document.getElementById('detMobile');if(detMobile)detMobile.innerHTML=kvMobileYearAnswer(e,s)+kvMobileYearDetails('Detailtabelle',data.jahre.map(row=>row.cY),[{label:'Fossil ges.',data:data.jahre.map(row=>row.fossilG)},{label:'WP-Kosten',data:data.jahre.map(row=>row.wpGes)},{label:'Ersparnis/J.',data:data.jahre.map(row=>row.mehrK)},{label:'Ersparnis kum.',data:data.jahre.map(row=>row.cumSav)}]);
   document.getElementById('assBox').innerHTML=`<strong>Annahmen & Hinweise:</strong><br>• Bestandsheizung: ${s.heizLabelBestand}, ${Number(data.annahmen.bedarf).toLocaleString('de-DE')} kWh Brennstoff/J., Nutzungsgrad ${s.etaProzent} % · WP-Strom ${s.laufzeit}J.: ${eur(s.wpStrom*s.laufzeit)}<br>• Wartung: WP ${data.annahmen.wartungWp}€/J. · Fossil ${data.annahmen.wartungFossil}€/J.<br>• Förderung: KfW 458 ${f.quote}% (${eur(f.betrag)}) · Fördermittelantrag ${f.label}, Bemessungsgrenze ${eur(f.grenze)}<br>• Unverbindliche Modellrechnung, ohne Gewähr.`;
@@ -1901,11 +1901,11 @@ kvLoadBootstrap();
     if(WZ.touched.has('fEinkSlider'))rows.push(['Einkommen (anrechenbar)',f.anrechenbar.toLocaleString('de-DE')+' €']);
     const quoteNote=f.quote===80?'<sup><a href="#foerder-80-hinweis" style="color:inherit;text-decoration:underline;">*</a></sup>':'';
     host.innerHTML=`<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accent);">${f.quote} %${quoteNote}</div><div style="font-size:0.8rem;color:var(--hero-muted);">Deine Förderquote (KfW 458)</div></div>
-      <div class="ln"><span class="lbl">Deine Wärmepumpe</span><span class="vv">${inv.toLocaleString('de-DE')} €</span></div>
-      <div class="ln"><span class="lbl">Dein Zuschuss (KfW 458)</span><span class="vv" style="color:var(--hero-green)">−${betrag.toLocaleString('de-DE')} €</span></div>
-      <div class="ln" style="border-top:1px solid var(--hero-separator);margin-top:4px;padding-top:6px;"><span class="lbl"><strong>Dein Eigenanteil</strong></span><span class="vv" style="color:var(--hero-accent);font-size:1.05rem;">${eigen.toLocaleString('de-DE')} €</span></div>
+      <div class="ln"><span class="lbl">Deine Wärmepumpe</span> <span class="vv">${inv.toLocaleString('de-DE')} €</span></div>
+      <div class="ln"><span class="lbl">Dein Zuschuss (KfW 458)</span> <span class="vv" style="color:var(--hero-green)">−${betrag.toLocaleString('de-DE')} €</span></div>
+      <div class="ln" style="border-top:1px solid var(--hero-separator);margin-top:4px;padding-top:6px;"><span class="lbl"><strong>Dein Eigenanteil</strong></span> <span class="vv" style="color:var(--hero-accent);font-size:1.05rem;">${eigen.toLocaleString('de-DE')} €</span></div>
       <div style="font-size:0.68rem;color:var(--hero-muted);margin:8px 0 12px;">Förderfähig max. ${f.grenze.toLocaleString('de-DE')} €. Unverbindliche Berechnung, ohne Gewähr.</div>
-      <div style="border-top:1px solid var(--hero-separator);padding-top:10px;margin-bottom:12px;">${rows.map(r=>`<div class="ln"><span class="lbl">${r[0]}</span><span class="vv" style="font-weight:600;font-size:0.8rem;">${r[1]}</span></div>`).join('')}</div>`;
+      <div style="border-top:1px solid var(--hero-separator);padding-top:10px;margin-bottom:12px;">${rows.map(r=>`<div class="ln"><span class="lbl">${r[0]}</span> <span class="vv" style="font-weight:600;font-size:0.8rem;">${r[1]}</span></div>`).join('')}</div>`;
   }
   function renderFoerderAufbau(){
     const host=$('wzFoerderAufbau');
@@ -1913,18 +1913,18 @@ kvLoadBootstrap();
     const response=KV_STATE.last;if(!response)return;const f=response.foerder;
     const rows=[];
     if(f.euDifferenzierung){
-      rows.push(`<div class="ln"><span class="lbl">Grundförderung: 15 % für alle, dein EU-Gerät bekommt 15 % zurück, zusammen</span><span class="vv">+${f.grundPct} %</span></div>`);
+      rows.push(`<div class="ln"><span class="lbl">Grundförderung: 15 % für alle, dein EU-Gerät bekommt 15 % zurück, zusammen</span> <span class="vv">+${f.grundPct} %</span></div>`);
     } else {
-      rows.push(`<div class="ln"><span class="lbl">Grundförderung: bekommt jeder Heizungstausch</span><span class="vv">+${f.grundPct} %</span></div>`);
+      rows.push(`<div class="ln"><span class="lbl">Grundförderung: bekommt jeder Heizungstausch</span> <span class="vv">+${f.grundPct} %</span></div>`);
     }
     if(f.klimaPct>0){
-      if(f.klima>0)rows.push(`<div class="ln"><span class="lbl">Klimageschwindigkeitsbonus ${f.klimaPct} Prozent: erfüllt laut deiner Angabe</span><span class="vv">+${f.klima} %</span></div>`);
-      else rows.push(`<div class="ln"><span class="lbl">Klimageschwindigkeitsbonus: entfällt laut deiner Angabe aus Schritt 1</span><span class="vv">+0 %</span></div>`);
+      if(f.klima>0)rows.push(`<div class="ln"><span class="lbl">Klimageschwindigkeitsbonus ${f.klimaPct} Prozent: erfüllt laut deiner Angabe</span> <span class="vv">+${f.klima} %</span></div>`);
+      else rows.push(`<div class="ln"><span class="lbl">Klimageschwindigkeitsbonus: entfällt laut deiner Angabe aus Schritt 1</span> <span class="vv">+0 %</span></div>`);
     } else {
-      rows.push(`<div class="ln"><span class="lbl">Klimageschwindigkeitsbonus: entfällt für diesen Zeitraum</span><span class="vv">+0 %</span></div>`);
+      rows.push(`<div class="ln"><span class="lbl">Klimageschwindigkeitsbonus: entfällt für diesen Zeitraum</span> <span class="vv">+0 %</span></div>`);
     }
-    if(f.einkommen>0)rows.push(`<div class="ln"><span class="lbl">Einkommensbonus (anrechenbares Einkommen ${f.anrechenbar.toLocaleString('de-DE')} €)</span><span class="vv">+${f.einkommen} %</span></div>`);
-    if(f.gekappt)rows.push(`<div class="ln"><span class="lbl">Gesetzlicher Deckel: mehr als 80 %<sup><a href="#foerder-80-hinweis" style="color:inherit;text-decoration:underline;">*</a></sup> gibt es nicht</span><span class="vv">80 %<sup><a href="#foerder-80-hinweis" style="color:inherit;text-decoration:underline;">*</a></sup></span></div>`);
+    if(f.einkommen>0)rows.push(`<div class="ln"><span class="lbl">Einkommensbonus (anrechenbares Einkommen ${f.anrechenbar.toLocaleString('de-DE')} €)</span> <span class="vv">+${f.einkommen} %</span></div>`);
+    if(f.gekappt)rows.push(`<div class="ln"><span class="lbl">Gesetzlicher Deckel: mehr als 80 %<sup><a href="#foerder-80-hinweis" style="color:inherit;text-decoration:underline;">*</a></sup> gibt es nicht</span> <span class="vv">80 %<sup><a href="#foerder-80-hinweis" style="color:inherit;text-decoration:underline;">*</a></sup></span></div>`);
     host.innerHTML=`<strong>So setzt sich deine Förderung zusammen:</strong>`+rows.join('');
   }
   function prepareIncomeDiscreet(){
@@ -1989,16 +1989,16 @@ kvLoadBootstrap();
     if(d.aktiv){
       const fossil=d[s.vglFuel];
       rechnung=`<div class="wz-herocalc" data-mobile-summary="So entsteht dein Ergebnis"><div class="wz-hc-title">So kommen wir auf diese Zahl:</div>
-        <div class="ln"><span class="lbl">Gesamtkosten für eine neue ${fuel}heizung mit Betriebskosten (Wartung + ${fuel}) über ${lz} Jahre</span><span class="vv">${eur(fossil.gesamt)}</span></div>
-        <div class="ln"><span class="lbl">Gesamtkosten für eine neue Wärmepumpe mit Betriebskosten (Wartung + Strom) über ${lz} Jahre, nach Abzug der Förderung</span><span class="vv">−${eur(d.wp.gesamt)}</span></div>
-        <div class="ln wz-hc-sum"><span class="lbl"><strong>Dein Vorteil mit der Wärmepumpe</strong></span><span class="vv">siehe Ergebnis oben</span></div></div>`;
+        <div class="ln"><span class="lbl">Gesamtkosten für eine neue ${fuel}heizung mit Betriebskosten (Wartung + ${fuel}) über ${lz} Jahre</span> <span class="vv">${eur(fossil.gesamt)}</span></div>
+        <div class="ln"><span class="lbl">Gesamtkosten für eine neue Wärmepumpe mit Betriebskosten (Wartung + Strom) über ${lz} Jahre, nach Abzug der Förderung</span> <span class="vv">−${eur(d.wp.gesamt)}</span></div>
+        <div class="ln wz-hc-sum"><span class="lbl"><strong>Dein Vorteil mit der Wärmepumpe</strong></span> <span class="vv">siehe Ergebnis oben</span></div></div>`;
     } else {
       const weiter=e.wpNG+i.netto+e.totWPK;
       rechnung=`<div class="wz-herocalc" data-mobile-summary="So entsteht dein Ergebnis"><div class="wz-hc-title">So kommen wir auf diese Zahl (Vergleich: du behältst deine ${fuel}heizung):</div>
-        <div class="ln"><span class="lbl">Was der Weiterbetrieb deiner ${fuel}heizung kostet: ${fuel}, Wartung und CO₂-Preis über ${lz} Jahre</span><span class="vv">${eur(weiter)}</span></div>
-        <div class="ln"><span class="lbl">Was die Wärmepumpe stattdessen kostet: Strom und Wartung über ${lz} Jahre</span><span class="vv">−${eur(e.totWPK)}</span></div>
-        <div class="ln"><span class="lbl">Anschaffung der Wärmepumpe, nach Abzug der Förderung</span><span class="vv">−${eur(i.netto)}</span></div>
-        <div class="ln wz-hc-sum"><span class="lbl"><strong>Dein Vorteil mit der Wärmepumpe</strong></span><span class="vv">siehe Ergebnis oben</span></div></div>`;
+        <div class="ln"><span class="lbl">Was der Weiterbetrieb deiner ${fuel}heizung kostet: ${fuel}, Wartung und CO₂-Preis über ${lz} Jahre</span> <span class="vv">${eur(weiter)}</span></div>
+        <div class="ln"><span class="lbl">Was die Wärmepumpe stattdessen kostet: Strom und Wartung über ${lz} Jahre</span> <span class="vv">−${eur(e.totWPK)}</span></div>
+        <div class="ln"><span class="lbl">Anschaffung der Wärmepumpe, nach Abzug der Förderung</span> <span class="vv">−${eur(i.netto)}</span></div>
+        <div class="ln wz-hc-sum"><span class="lbl"><strong>Dein Vorteil mit der Wärmepumpe</strong></span> <span class="vv">siehe Ergebnis oben</span></div></div>`;
     }
     let satz;
     if(!d.aktiv)satz=`Dabei nehmen wir an: Deine ${fuel}heizung läuft die nächsten ${lz} Jahre weiter, ohne neue Anschaffung, nur mit Wartung und ${fuel}kosten.`;
