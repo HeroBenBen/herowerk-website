@@ -48,6 +48,7 @@ function run(command, args, options = {}) {
     cwd: options.cwd ?? root,
     encoding: options.encoding ?? 'utf8',
     env: options.env ?? process.env,
+    timeout: options.timeout,
   });
 }
 
@@ -83,11 +84,11 @@ function bundleWith(files) {
   return directory;
 }
 
-function checkerResult(directory, allowlist) {
-  const args = [checker];
+function checkerResult(directory, allowlist, options = {}) {
+  const args = [options.checker ?? checker];
   if (allowlist) args.push('--erlaubnisliste', allowlist);
   args.push(directory);
-  return run(process.execPath, args);
+  return run(process.execPath, args, { timeout: options.timeout });
 }
 
 function removerResult(directory) {
@@ -628,6 +629,99 @@ function blankLineCases() {
   fs.rmSync(mutantRoot, { recursive: true, force: true });
 }
 
+function attributePositionCases() {
+  const mutantRoot = temporary('attributposition-mutant');
+  const mutantChecker = path.join(mutantRoot, 'scripts/verify-bundle-comments.mjs');
+  fs.mkdirSync(path.dirname(mutantChecker), { recursive: true });
+  const currentSource = fs.readFileSync(checker, 'utf8');
+  const functionStart = currentSource.indexOf('function attributeValueRange');
+  const functionEnd = currentSource.indexOf('\nfunction loadAllowlist', functionStart);
+  if (functionStart < 0 || functionEnd < 0)
+    throw new Error('Mutationsstelle fuer attributeValueRange fehlt');
+  const oldFunction = `function attributeValueRange(source, node, targetName) {
+  let index = (node.startIndex ?? 0) + 1;
+  while (index < source.length && !/[\\s/>]/.test(source[index])) index += 1;
+  while (index < source.length) {
+    while (/\\s/.test(source[index] ?? '')) index += 1;
+    if (source[index] === '>' || source.startsWith('/>', index)) break;
+    const nameStart = index;
+    while (index < source.length && !/[\\s=/>]/.test(source[index])) index += 1;
+    const name = source.slice(nameStart, index).toLowerCase();
+    while (/\\s/.test(source[index] ?? '')) index += 1;
+    if (source[index] !== '=') continue;
+    index += 1;
+    while (/\\s/.test(source[index] ?? '')) index += 1;
+    const quote = source[index] === '"' || source[index] === "'" ? source[index] : null;
+    const start = quote ? index + 1 : index;
+    if (quote) {
+      index = source.indexOf(quote, start);
+      if (index < 0) throw new Error('Attributwert ist nicht geschlossen');
+    } else {
+      while (index < source.length && !/[\\s>]/.test(source[index])) index += 1;
+    }
+    if (name === targetName) return { start, end: index };
+    if (quote) index += 1;
+  }
+  throw new Error(\`Attributposition nicht gefunden: \${targetName}\`);
+}
+`;
+  let mutantSource =
+    currentSource.slice(0, functionStart) + oldFunction + currentSource.slice(functionEnd);
+  const guardedCall =
+    'const attribute = comments.length > 0 ? attributeValueRange(source, node, name) : null;';
+  if (mutantSource.split(guardedCall).length !== 3)
+    throw new Error('Mutationsstellen fuer die Attribut-Aufrufstellen fehlen');
+  mutantSource = mutantSource.replaceAll(
+    guardedCall,
+    'const attribute = attributeValueRange(source, node, name);'
+  );
+  fs.writeFileSync(mutantChecker, mutantSource);
+  fs.copyFileSync(
+    productionAllowlist,
+    path.join(mutantRoot, 'scripts/bundle-comment-license-allowlist.json')
+  );
+  fs.symlinkSync(path.join(root, 'node_modules'), path.join(mutantRoot, 'node_modules'), 'dir');
+
+  const cases = [
+    [64, '<br/ style="color:red">', 'Schraegstrich vor style-Attribut endet gruen', 0, null],
+    [
+      65,
+      '<img alt="x"/ onclick="y() // intern">',
+      'Schraegstrich vor Ereignisattribut liefert den genauen Treffer',
+      1,
+      'TREFFER index.html:1: // intern',
+    ],
+    [66, '<p style>x</p>', 'style-Attribut ohne Wert endet gruen', 0, null],
+    [
+      67,
+      '<br/ style="color:/* intern */red">',
+      'Schraegstrich vor style-Attribut liefert den genauen Treffer',
+      1,
+      'TREFFER index.html:1: /* intern */',
+    ],
+  ];
+  for (const [number, content, description, expectedStatus, expectedText] of cases) {
+    const directory = bundleWith({ 'index.html': content });
+    const actual = checkerResult(directory, undefined, { timeout: 5000 });
+    const mutant = checkerResult(directory, undefined, {
+      checker: mutantChecker,
+      timeout: 5000,
+    });
+    const actualMatches =
+      actual.status === expectedStatus && (!expectedText || hasOwnMessage(actual, expectedText));
+    const mutantMatches =
+      mutant.status === expectedStatus && (!expectedText || hasOwnMessage(mutant, expectedText));
+    record(
+      number,
+      `${description}; Funktion aus 165d043 wird rot`,
+      actualMatches && !mutantMatches,
+      `aktuell: ${output(actual)} alt: ${output(mutant)} ${mutant.error?.code ?? ''}`
+    );
+    fs.rmSync(directory, { recursive: true, force: true });
+  }
+  fs.rmSync(mutantRoot, { recursive: true, force: true });
+}
+
 function equalityBase() {
   const source = temporary('quelle');
   write(source, 'scripts/make-ionos-bundle.sh', fs.readFileSync(makeBundle));
@@ -783,6 +877,7 @@ directFailureCases();
 buildFailureCases();
 additionalSharpnessCases();
 blankLineCases();
+attributePositionCases();
 equalityCases();
 bundleSelfCheckCases();
 
@@ -790,4 +885,4 @@ if (failures > 0) {
   console.error(`Schärfeprüfung: ROT, ${failures} Fall/Faelle fehlgeschlagen.`);
   process.exit(1);
 }
-console.log('Schärfeprüfung: GRÜN, 63 Fälle bestanden.');
+console.log('Schärfeprüfung: GRÜN, 67 Fälle bestanden.');

@@ -32,6 +32,10 @@ function attributeValueRange(source, node, targetName) {
   while (index < source.length) {
     while (/\s/.test(source[index] ?? '')) index += 1;
     if (source[index] === '>' || source.startsWith('/>', index)) break;
+    if (source[index] === '/') {
+      index += 1;
+      continue;
+    }
     const nameStart = index;
     while (index < source.length && !/[\s=/>]/.test(source[index])) index += 1;
     const name = source.slice(nameStart, index).toLowerCase();
@@ -43,14 +47,14 @@ function attributeValueRange(source, node, targetName) {
     const start = quote ? index + 1 : index;
     if (quote) {
       index = source.indexOf(quote, start);
-      if (index < 0) throw new Error('Attributwert ist nicht geschlossen');
+      if (index < 0) return null;
     } else {
       while (index < source.length && !/[\s>]/.test(source[index])) index += 1;
     }
     if (name === targetName) return { start, end: index };
     if (quote) index += 1;
   }
-  throw new Error(`Attributposition nicht gefunden: ${targetName}`);
+  return null;
 }
 
 function loadAllowlist(file) {
@@ -197,23 +201,29 @@ function htmlFindings(source, file) {
     if (node.type === 'tag' || node.type === 'script' || node.type === 'style') {
       for (const [name, value] of Object.entries(node.attribs ?? {})) {
         if (name === 'style') {
-          const attribute = attributeValueRange(source, node, name);
-          for (const comment of cssComments(value)) {
+          const comments = cssComments(value);
+          const attribute = comments.length > 0 ? attributeValueRange(source, node, name) : null;
+          for (const comment of comments) {
             findings.push({
               kind: 'styleAttribute',
-              start: attribute.start + comment.start,
-              end: attribute.start + comment.end,
+              start: attribute ? attribute.start + comment.start : (node.startIndex ?? 0),
+              end: attribute ? attribute.start + comment.end : (node.startIndex ?? 0),
             });
           }
         } else if (name.startsWith('on')) {
           const prefix = 'function __attribut__(){';
           const wrapped = `${prefix}${value}\n}`;
-          const attribute = attributeValueRange(source, node, name);
-          for (const comment of typescriptComments(wrapped, `${file} ${name}-Attribut`)) {
+          const comments = typescriptComments(wrapped, `${file} ${name}-Attribut`);
+          const attribute = comments.length > 0 ? attributeValueRange(source, node, name) : null;
+          for (const comment of comments) {
             findings.push({
               kind: 'eventAttribute',
-              start: attribute.start + comment.start - prefix.length,
-              end: attribute.start + comment.end - prefix.length,
+              start: attribute
+                ? attribute.start + comment.start - prefix.length
+                : (node.startIndex ?? 0),
+              end: attribute
+                ? attribute.start + comment.end - prefix.length
+                : (node.startIndex ?? 0),
             });
           }
         }
