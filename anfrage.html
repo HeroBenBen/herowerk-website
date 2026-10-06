@@ -2120,10 +2120,6 @@
     collectUtmParams();
     const data = Object.fromEntries(new FormData(form).entries());
 
-    // Alle Antworten zusammenführen
-    const payload = { ...answers, ...data };
-    console.log('HeroWerk Lead:', payload);
-
     const submitButton = form.querySelector('button[type="submit"]');
     if (submitButton) submitButton.disabled = true;
     try {
