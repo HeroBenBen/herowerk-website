@@ -6816,16 +6816,43 @@ samp {
   }
 }
 
-/* Unter 360 Pixeln Fensterbreite passt die Wertespalte mit 16 Pixeln Innenabstand rechts
-   nicht mehr neben die Beschriftung. Gemessen live am 04.10.2026 bei 320 Pixeln: Tabelle
-   279,8 Pixel in einem Behaelter von 272, bei neun von zehn Geraeten. Abgeschnitten wurde
-   kein Text, sondern der halbe Innenabstand. Er wird dort auf 8 Pixel gesetzt, das ist der
-   Abstand, der bis dahin tatsaechlich zu sehen war. Reserve danach: 0,2 Pixel. Ein laengeres
-   Wort in den Geraetedaten laesst die Tabelle wieder ueberstehen; das faengt die
-   Rasterpruefung mit Preisdaten ab (scripts/verify-raster.mjs). */
-@media (max-width: 359px) {
+/* Preistabelle im Detailblock bis 900 Pixel Fensterbreite, Fassung D (Entscheid des
+   Geschaeftsfuehrers vom 05.10.2026). Bis dahin sassen Ueberschrift und Tabelle ohne
+   Innenabstand an der Kartenkante, und die Trennlinien der Zeilen waren in der hellen
+   Ansicht unsichtbar (weiss mit 6 Prozent Deckkraft). Jetzt: 16 Pixel Seitenabstand,
+   eine sichtbare Trennlinie je Zeile in beiden Ansichten, Bezeichnung und Wert oben
+   buendig, Umbruch der Werte ausgeglichen. Der Innenabstand rechts der Wertespalte
+   entfaellt, weil der Behaelter ihn traegt. Unter 344 Pixeln Fensterbreite reicht der
+   Platz nur fuer 4 Pixel Seitenabstand. Gemessen am 05.10.2026 mit Live-Preisdaten: alle
+   zehn Geraetekarten ohne Ueberstand bei 320, 344, 360, 375, 390, 414, 768 und 900
+   Pixeln. Dieser Block ersetzt die Regel vom 04.10.2026 (8 Pixel Innenabstand unter 360
+   Pixeln). Ein laengeres Wort in den Geraetedaten zehrt zuerst den Seitenabstand rechts
+   auf; die Rasterpruefung mit Preisdaten (scripts/verify-raster.mjs) meldet es erst, wenn
+   die Tabelle ueber den Rand des Behaelters ragt. Ueber 900 Pixeln aendert sich nichts. */
+@media (max-width: 900px) {
+  .pa-detail-right {
+    padding-left: 16px;
+    padding-right: 16px;
+    box-sizing: border-box;
+  }
+  .pa-specs td {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    vertical-align: top;
+  }
+  html[data-theme='light'] .pa-specs td {
+    border-bottom-color: rgba(28, 43, 54, 0.16);
+  }
   .pa-specs td:last-child {
-    padding-right: 8px;
+    padding-right: 0;
+    text-wrap: balance;
+  }
+}
+@media (max-width: 343px) {
+  .pa-detail-right {
+    padding-left: 4px;
+    padding-right: 4px;
   }
 }
 
