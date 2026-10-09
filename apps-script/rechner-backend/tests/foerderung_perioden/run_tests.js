@@ -390,7 +390,7 @@ pruefe('C-16', 'Reform h2-2026 | 2 WE | Höchstbetrag des Gebäudes zu gleichen 
   effektivSatz: 55,
   grenze: 43000,
   bemessungsBasis: 34510,
-  hinweis: 'Bei mehreren Wohneinheiten verteilt sich der Höchstbetrag des Gebäudes zu gleichen Teilen auf die Wohneinheiten. Wir rechnen dein Projekt genau durch.',
+  hinweis: 'Bei Gebäuden mit mehreren Wohneinheiten wird der Höchstbetrag der förderfähigen Gebäudekosten zu gleichen Teilen auf die Wohneinheiten verteilt. Für selbstgenutzte Wohneinheiten werden zusätzlich die jeweils verfügbaren persönlichen Förderboni berücksichtigt. Bei Wohnungseigentümergemeinschaften (WEG) erfolgt die Antragstellung für eine gemeinsame Heizungsanlage über einen gemeinschaftlichen Basisantrag. Selbstnutzende Eigentümer beantragen einen möglichen Klimageschwindigkeitsbonus und/oder Einkommensbonus jeweils über einen persönlichen Zusatzantrag.',
 });
 
 // C-17 | Horizont: Antrag nach dem 31.07.2029. Kanon A3 verbietet die Fortschreibung der Degression ->

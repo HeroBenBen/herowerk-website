@@ -145,7 +145,13 @@ const SOLL = [
   [
     'S3',
     basis({ we: '2', preisManuell: '41000' }),
-    { zuschussGesamt: 15580, grenze: 43000, bemessungsBasis: 41000 },
+    {
+      zuschussGesamt: 15580,
+      grenze: 43000,
+      bemessungsBasis: 41000,
+      hinweis:
+        'Bei Gebäuden mit mehreren Wohneinheiten wird der Höchstbetrag der förderfähigen Gebäudekosten zu gleichen Teilen auf die Wohneinheiten verteilt. Für selbstgenutzte Wohneinheiten werden zusätzlich die jeweils verfügbaren persönlichen Förderboni berücksichtigt. Bei Wohnungseigentümergemeinschaften (WEG) erfolgt die Antragstellung für eine gemeinsame Heizungsanlage über einen gemeinschaftlichen Basisantrag. Selbstnutzende Eigentümer beantragen einen möglichen Klimageschwindigkeitsbonus und/oder Einkommensbonus jeweils über einen persönlichen Zusatzantrag.',
+    },
   ],
   [
     'S4',

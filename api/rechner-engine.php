@@ -1406,9 +1406,10 @@ function hw_foerderfaehige_kosten(int $we, array $f, float|int|null $ersteWe = n
         + ($we - 6) * hw_get_num($f, 'foerderfaehig_we7plus', 8000);
 }
 
-// T1170 (Festlegung 3.7, vorläufig Weg A; Textfreigabe des Geschäftsführers läuft): der Hinweis bei mehreren Wohneinheiten
+// T1170 (Festlegung 3.7; Wortlaut des Geschäftsführers vom 09.10.2026 10:38, Frage 78 Weg C, Nachtrag zum Entscheid 30.09.2026,
+// Kennung [20261009ae]): der Hinweis bei mehreren Wohneinheiten
 // steht genau einmal, wortgleich mit FOERDER_HINWEIS_MEHRERE_WE_ im Apps-Script-Kern.
-const HW_FOERDER_HINWEIS_MEHRERE_WE = 'Bei mehreren Wohneinheiten verteilt sich der Höchstbetrag des Gebäudes zu gleichen Teilen auf die Wohneinheiten. Wir rechnen dein Projekt genau durch.';
+const HW_FOERDER_HINWEIS_MEHRERE_WE = 'Bei Gebäuden mit mehreren Wohneinheiten wird der Höchstbetrag der förderfähigen Gebäudekosten zu gleichen Teilen auf die Wohneinheiten verteilt. Für selbstgenutzte Wohneinheiten werden zusätzlich die jeweils verfügbaren persönlichen Förderboni berücksichtigt. Bei Wohnungseigentümergemeinschaften (WEG) erfolgt die Antragstellung für eine gemeinsame Heizungsanlage über einen gemeinschaftlichen Basisantrag. Selbstnutzende Eigentümer beantragen einen möglichen Klimageschwindigkeitsbonus und/oder Einkommensbonus jeweils über einen persönlichen Zusatzantrag.';
 // T1170 (RL 17.08.2026 Nr. 8.4.1): Obergrenze des Gesamtsatzes 70 Prozent, 80 Prozent nur bei anrechenbarem Einkommen bis
 // 30.000 Euro. Die Website hat keine Tabelle, deshalb steht der Standarddeckel hier als Konstante; trägt Förder_Parameter den
 // Schlüssel reform_deckel_pct_standard, gewinnt die Tabelle (wortgleich zum Apps-Script-Kern, Rückfall 70).

@@ -771,9 +771,10 @@ function foerderFaehigeKostenGesamt_(we, f, ersteWE) {
   return g1 + 5 * getNum_(f, 'foerderfaehig_we2bis6', 15000) + (we - 6) * getNum_(f, 'foerderfaehig_we7plus', 8000);
 }
 
-// T1170 (Festlegung 3.7, vorläufig Weg A; Textfreigabe des Geschäftsführers läuft): der Hinweis bei mehreren Wohneinheiten
+// T1170 (Festlegung 3.7; Wortlaut des Geschäftsführers vom 09.10.2026 10:38, Frage 78 Weg C, Nachtrag zum Entscheid 30.09.2026,
+// Kennung [20261009ae]): der Hinweis bei mehreren Wohneinheiten
 // steht genau einmal, damit ein Nachauftrag zum Wortlaut nur diese Zeile trifft. Der Konfigurator entfernt genau diesen Satz.
-var FOERDER_HINWEIS_MEHRERE_WE_ = 'Bei mehreren Wohneinheiten verteilt sich der Höchstbetrag des Gebäudes zu gleichen Teilen auf die Wohneinheiten. Wir rechnen dein Projekt genau durch.';
+var FOERDER_HINWEIS_MEHRERE_WE_ = 'Bei Gebäuden mit mehreren Wohneinheiten wird der Höchstbetrag der förderfähigen Gebäudekosten zu gleichen Teilen auf die Wohneinheiten verteilt. Für selbstgenutzte Wohneinheiten werden zusätzlich die jeweils verfügbaren persönlichen Förderboni berücksichtigt. Bei Wohnungseigentümergemeinschaften (WEG) erfolgt die Antragstellung für eine gemeinsame Heizungsanlage über einen gemeinschaftlichen Basisantrag. Selbstnutzende Eigentümer beantragen einen möglichen Klimageschwindigkeitsbonus und/oder Einkommensbonus jeweils über einen persönlichen Zusatzantrag.';
 
 /**
  * Reiner Rechenkern der Förderung. KEIN Sheet-Zugriff, KEIN new Date().
