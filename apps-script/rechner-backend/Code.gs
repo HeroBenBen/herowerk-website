@@ -740,6 +740,15 @@ function foerderPeriodenWerte_(per, f, onFallback) {
   };
 }
 
+// T1170 (RL 17.08.2026 Nr. 8.4.5 Abs. 3): anrechenbares Einkommen = Klassenobergrenze minus Kinderabzug; undefined bei
+// 'unbekannt'. Gemeinsame Grundlage für die Bonusstufe und für die Obergrenze des Gesamtsatzes (Nr. 8.4.1).
+function einkommenAnrechenbar_(einkommenNorm, kind, f, periodenWerte) {
+  const zvE = einkommenGrenzen_(f)[einkommenNorm];
+  if (zvE === undefined) return undefined;
+  const werte = periodenWerte || foerderPeriodenWerte_({ id: 'legacy', reform: true }, f);
+  return Math.max(0, zvE - (kind ? werte.kindFreibetrag : 0));
+}
+
 function einkommensbonusPct_(einkommenNorm, kind, f, periodenWerte) {
   const grenzen = einkommenGrenzen_(f);
   const zvE = grenzen[einkommenNorm];
@@ -762,6 +771,11 @@ function foerderFaehigeKostenGesamt_(we, f, ersteWE) {
   return g1 + 5 * getNum_(f, 'foerderfaehig_we2bis6', 15000) + (we - 6) * getNum_(f, 'foerderfaehig_we7plus', 8000);
 }
 
+// T1170 (Festlegung 3.7; Wortlaut des Geschäftsführers vom 09.10.2026 10:38, Frage 78 Weg C, Nachtrag zum Entscheid 30.09.2026,
+// Kennung [20261009ae]): der Hinweis bei mehreren Wohneinheiten
+// steht genau einmal, damit ein Nachauftrag zum Wortlaut nur diese Zeile trifft. Der Konfigurator entfernt genau diesen Satz.
+var FOERDER_HINWEIS_MEHRERE_WE_ = 'Bei Gebäuden mit mehreren Wohneinheiten wird der Höchstbetrag der förderfähigen Gebäudekosten zu gleichen Teilen auf die Wohneinheiten verteilt. Für selbstgenutzte Wohneinheiten werden zusätzlich die jeweils verfügbaren persönlichen Förderboni berücksichtigt. Bei Wohnungseigentümergemeinschaften (WEG) erfolgt die Antragstellung für eine gemeinsame Heizungsanlage über einen gemeinschaftlichen Basisantrag. Selbstnutzende Eigentümer beantragen einen möglichen Klimageschwindigkeitsbonus und/oder Einkommensbonus jeweils über einen persönlichen Zusatzantrag.';
+
 /**
  * Reiner Rechenkern der Förderung. KEIN Sheet-Zugriff, KEIN new Date().
  * @param {Object} p      Request-Parameter (wie doGet sie liefert).
@@ -773,6 +787,11 @@ function foerderCalc_(p, f, heute, periodenQuelle, onFallback) {
   const periodenWerte = foerderPeriodenWerte_(per, f, onFallback);
   const we = int_(p.we, 1);
   const selbstWE = int_(p.selbstWE, 1);
+  // T1170 (RL 17.08.2026 Nr. 8.3.1 Abs. 2): nur die von der Maßnahme betroffenen Wohneinheiten zählen. Fehlt der Wert,
+  // ist das ganze Gebäude betroffen; nie unter 1, nie über der Zahl der Wohneinheiten.
+  const weBetroffen = Math.min(we, Math.max(1, int_(p.weBetroffen, we)));
+  // T1170 (RL 17.08.2026 Nr. 8.4.4): Funktionstüchtigkeit ist Voraussetzung für JEDE Bonus-Heizung. Fehlt die Angabe, gilt ja.
+  const funktionstuechtig = String(p.funktionstuechtig || 'ja').toLowerCase() !== 'nein';
   const heizung = String(p.heizung || 'gas');
   const einkommen = einkommenNorm_(p.einkommen !== undefined ? p.einkommen : 'ueber40');
   const kind = String(p.kind || '').toLowerCase() === 'ja' || String(p.kind || '').toLowerCase() === 'true';
@@ -782,7 +801,10 @@ function foerderCalc_(p, f, heute, periodenQuelle, onFallback) {
   const hinweise = [];
 
   // --- Klimabonus-Voraussetzung: in beiden Regelwerken gleich (Kanon 1.2 / Orakel Z.116-118 == Ist-Code).
-  // Öl/Kohle/Gasetage/Nachtspeicher immer; Gas-Zentralheizung und Biomasse ab Mindestalter. Nur für selbstgenutzte WE.
+  // Öl/Kohle/Gasetage/Nachtspeicher ohne Altersgrenze; Gas-Zentralheizung und Biomasse ab Mindestalter, das Alter zählt
+  // zum Zeitpunkt der Antragstellung (RL 17.08.2026 Nr. 8.4.4, der Aufrufer rechnet es gegen das Antragsdatum). Nur für
+  // selbstgenutzte WE. T1170: ohne Funktionstüchtigkeit kein Klimabonus, für jede Heizungsart (RL Nr. 8.4.4, nur Reform;
+  // der Altzweig bleibt als Regressionskonserve unverändert).
   let klimaBonus = false;
   if (heizung === 'oel' || heizung === 'kohle' || heizung === 'nachtspeicher' || heizung === 'gas-etage') klimaBonus = true;
   else if (heizung === 'gas' || heizung === 'biomasse') klimaBonus = int_(p.heizungsalter, 20) >= getNum_(f, 'gas_klimabonus_min_alter', 20);
@@ -814,19 +836,32 @@ function foerderCalc_(p, f, heute, periodenQuelle, onFallback) {
     // abgebildet, KEIN Bonus obendrauf (Orakel Z.114-115).
     grundPct = (per.eu && !euOk) ? getNum_(f, 'reform_grund_pct_nicht_eu', 15) : getNum_(f, 'reform_grund_pct', 30);
     klimaPct = per.klima;
+    // T1170 (RL 17.08.2026 Nr. 8.4.4): nur eine funktionstüchtige Heizung bringt den Klimabonus, bei jeder Heizungsart.
+    if (!funktionstuechtig) klimaBonus = false;
     einkommensbonusPct = einkommensbonusPct_(einkommen, kind, f, periodenWerte);
     satzSelbst = grundPct;
     if (selbstWE > 0 && klimaBonus) satzSelbst += klimaPct;
     if (selbstWE > 0) satzSelbst += einkommensbonusPct;
     satzSelbst += periodenWerte.effizienzPct;
-    satzSelbst = Math.min(satzSelbst, periodenWerte.cap);
+    // T1170 (RL 17.08.2026 Nr. 8.4.1): Obergrenze 80 Prozent nur bei anrechenbarem Einkommen bis 30.000 Euro (Klasse bis30,
+    // oder bis40 mit Kind), sonst 70 Prozent. cap der Periode (KV_FoerderPerioden) bleibt der Höchstdeckel, der Standarddeckel
+    // ist der Treiber reform_deckel_pct_standard in Förder_Parameter, Rückfall 70.
+    const anrechenbar = einkommenAnrechenbar_(einkommen, kind, f, periodenWerte);
+    const deckelHoch = anrechenbar !== undefined && anrechenbar <= getNum_(f, 'reform_eink_grenze_bis30', 30000);
+    const deckel = deckelHoch ? periodenWerte.cap : Math.min(periodenWerte.cap, getNum_(f, 'reform_deckel_pct_standard', 70));
+    satzSelbst = Math.min(satzSelbst, deckel);
     // Vermietete WE: nur Grundförderung (Kanon A1 [abgeleitet], W-4-Vorbehalt).
     satzVermietet = grundPct + periodenWerte.effizienzPct;
     // Bemessungsgrenze nach WE-Staffel (Kanon 1.4 / K-1.1; GF-Entscheid E1=A, 23.07.2026): erste WE =
     // Perioden-Grenze (die Degression trifft NUR die erste WE), WE 2-6 je 15.000, ab WE 7 je 8.000,
     // reform-unveraendert. Ersetzt die fruehere konservative Ein-WE-Naeherung (Kanon-A2-Stand vor K-1).
-    foerderFaehigGesamt = foerderFaehigeKostenGesamt_(we, f, per.grenze);
-    if (we > 1) hinweise.push('Bei mehreren Wohneinheiten gelten gestaffelte Grenzen je Wohneinheit. Wir rechnen dein Projekt genau durch.');
+    // E1 vom 23.07.2026 abgelöst durch Entscheid 30.09.2026 (T1170): die Staffel ist der Höchstbetrag des GEBÄUDES
+    // (RL 17.08.2026 Nr. 8.3 und 8.3.1 Buchst. a), nicht mehr eine Grenze je einzelner Wohneinheit.
+    const hoechstbetragGebaeude = foerderFaehigeKostenGesamt_(we, f, per.grenze);
+    // T1170 (RL Nr. 8.3.1 Abs. 2 und Buchst. a): betrifft die Maßnahme nicht alle Wohneinheiten, gilt der Höchstbetrag
+    // anteilig: Höchstbetrag des Gebäudes geteilt durch alle Wohneinheiten mal betroffene Wohneinheiten, auf Cent.
+    foerderFaehigGesamt = Math.round(hoechstbetragGebaeude / we * weBetroffen * 100) / 100;
+    if (we > 1) hinweise.push(FOERDER_HINWEIS_MEHRERE_WE_);
     if (per.ueberHorizont) hinweise.push('Für Anträge nach dem 31.07.2029 stehen die Fördersätze noch nicht fest. Wir rechnen dein Projekt genau durch.');
     bausteine = ['Grundförderung ' + grundPct + '%'];
     if (periodenWerte.effizienzPct > 0) bausteine.push('Effizienzbonus (R290) +' + periodenWerte.effizienzPct + '%');
@@ -839,26 +874,23 @@ function foerderCalc_(p, f, heute, periodenQuelle, onFallback) {
   // verteilen sich gleichmaessig (preis/we). Die hoechste Grenze (erste WE) gehoert der selbst-
   // genutzten WE des Antragstellers (kundenguenstig; Boni sind Selbstnutzer-gebunden). Rundung
   // EINMAL je Topf, damit der we=1-Pfad ziffer-identisch zum Bestand bleibt (tests/we_staffel).
+  // E1 vom 23.07.2026 abgelöst durch Entscheid 30.09.2026 (T1170). Seitdem gilt die Richtlinie BEG EM vom 17.08.2026:
+  // Bemessung = min(Kosten, anteiliger Höchstbetrag des Gebäudes), zu gleichen Teilen auf die betroffenen Wohneinheiten
+  // (RL Nr. 8.3.1 Buchst. a, Merkblatt 458 S. 4). Die selbstgenutzte Wohneinheit trägt ihren Satz, jede weitere betroffene
+  // die Grundförderung; der Klimabonus wirkt damit "nur anteilig" (RL Nr. 8.4.4). Zuschuss je Topf auf Cent, wie die
+  // Rechenbeispiele der KfW (Merkblatt 458, Produktseite 458: 2 WE, 41.000 Euro, 15.580 Euro).
   // ALT: wortgleich der historische Rechenweg (Mittelung). Alt ist seit 21.07.2026 nicht mehr
   // beantragbar (Option B, 19.07.); der Zweig konserviert die damalige Live-Logik fuer
   // Kostenvergleich und Regressions-Beweis (C-R1 bis C-R3) und trifft KEINE Rechts-Aussage.
   const vermieteteWE = we - selbstWE;
   let zuschussSelbst, zuschussVermietet, bemessungsBasis;
   if (per.reform) {
-    const grenzeWE2bis6 = getNum_(f, 'foerderfaehig_we2bis6', 15000);
-    const grenzeWE7plus = getNum_(f, 'foerderfaehig_we7plus', 8000);
-    const kostenJeWE = preis / we;
-    let basisSelbst = 0;
-    let basisVermietet = 0;
-    for (let i = 0; i < we; i++) {
-      const grenzeWE = i === 0 ? per.grenze : (i < 6 ? grenzeWE2bis6 : grenzeWE7plus);
-      const basisWE = Math.min(grenzeWE, kostenJeWE);
-      if (i < selbstWE) basisSelbst += basisWE;
-      else basisVermietet += basisWE;
-    }
-    bemessungsBasis = basisSelbst + basisVermietet;
-    zuschussSelbst = selbstWE > 0 ? Math.round(basisSelbst * (satzSelbst / 100)) : 0;
-    zuschussVermietet = vermieteteWE > 0 ? Math.round(basisVermietet * (satzVermietet / 100)) : 0;
+    bemessungsBasis = Math.min(preis, foerderFaehigGesamt);
+    const basisJeWE = bemessungsBasis / weBetroffen;
+    const selbstBetroffen = Math.min(selbstWE, weBetroffen);
+    const vermietetBetroffen = weBetroffen - selbstBetroffen;
+    zuschussSelbst = selbstBetroffen > 0 ? Math.round(basisJeWE * selbstBetroffen * (satzSelbst / 100) * 100) / 100 : 0;
+    zuschussVermietet = vermietetBetroffen > 0 ? Math.round(basisJeWE * vermietetBetroffen * (satzVermietet / 100) * 100) / 100 : 0;
   } else {
     const foerderProWE = foerderFaehigGesamt / we;
     const kostenProWE = Math.min(foerderProWE, preis / we);
@@ -866,7 +898,7 @@ function foerderCalc_(p, f, heute, periodenQuelle, onFallback) {
     zuschussSelbst = selbstWE > 0 ? Math.round(kostenProWE * (satzSelbst / 100)) : 0;
     zuschussVermietet = vermieteteWE > 0 ? Math.round(kostenProWE * (satzVermietet / 100) * vermieteteWE) : 0;
   }
-  const zuschussGesamt = zuschussSelbst + zuschussVermietet;
+  const zuschussGesamt = Math.round((zuschussSelbst + zuschussVermietet) * 100) / 100;
 
   // --- proKlima (Kanon 1.3, primärquellen-verifiziert).
   // Frist: Richtlinie läuft bis 31.10.2026 (datumsbasiert, nicht periodenbasiert).
@@ -893,11 +925,11 @@ function foerderCalc_(p, f, heute, periodenQuelle, onFallback) {
   const kumCap = preis * getNum_(f, 'kumulierung_max_pct', 60) / 100;
   let totalFoerd = zuschussGesamt + pkRoh;
   if (pkRoh > 0) totalFoerd = Math.max(zuschussGesamt, Math.min(totalFoerd, kumCap));
-  const proklimaZuschuss = Math.max(0, totalFoerd - zuschussGesamt);
+  const proklimaZuschuss = Math.round(Math.max(0, totalFoerd - zuschussGesamt) * 100) / 100;
   const proklimaGekappt = pkRoh > 0 && proklimaZuschuss < pkRoh;
   if (proklimaGekappt) hinweise.push('KfW-Zuschuss und proKlima zusammen sind auf 60 Prozent derselben Kosten begrenzt. Der KfW-Zuschuss allein darf darüber liegen.');
 
-  const eigenanteil = Math.max(0, preis - zuschussGesamt - proklimaZuschuss);
+  const eigenanteil = Math.round(Math.max(0, preis - zuschussGesamt - proklimaZuschuss) * 100) / 100;
   const kfwSatz = selbstWE > 0 ? satzSelbst : satzVermietet;
   const effektivSatz = preis > 0 ? Math.round(((zuschussGesamt + proklimaZuschuss) / preis) * 100) : 0;
   if (proklimaZuschuss > 0) bausteine.push('proKlima Zuschuss ' + proklimaZuschuss + ' €');
@@ -1907,7 +1939,7 @@ function FOERDER_ROWS_() { return [
   ['grundfoerderung_pct',30,'%', 'KfW-Grundförderung','ADR-04 Anhang A / js/site.js calculateFoerder'], ['klimabonus_pct',20,'%', 'Klimageschwindigkeitsbonus','ADR-04 Anhang A'], ['einkommensbonus_pct',30,'%', 'Einkommensbonus bis Einkommensgrenze','ADR-04 Anhang A'], ['effizienzbonus_pct',5,'%', 'Effizienzbonus R290','ADR-04 Anhang A'], ['deckel_selbst_pct',70,'%', 'Maximaler Satz Selbstnutzer','ADR-04 Anhang A'], ['deckel_vermietet_pct',35,'%', 'Maximaler Satz vermietet','ADR-04 Anhang A'], ['gas_klimabonus_min_alter',20,'Jahre', 'Mindestalter Gas-Zentralheizung und Biomasse für Klimabonus','js/site.js getHeizungsalter/calculateFoerder'], ['einkommensgrenze_eur',40000,'EUR', 'Grenze Einkommensbonus','ADR-04 Anhang A'], ['foerderfaehig_we1',30000,'EUR', 'Förderfähige Kosten 1. WE','js/site.js foerderFaehigeKostenGesamt'], ['foerderfaehig_we2bis6',15000,'EUR/WE','Förderfähige Kosten 2. bis 6. WE','js/site.js foerderFaehigeKostenGesamt'], ['foerderfaehig_we7plus',8000,'EUR/WE','Förderfähige Kosten ab 7. WE','js/site.js foerderFaehigeKostenGesamt'], ['proklima_aktiv','N','J/N', 'proKlima global aktiv','GF-Entscheid 15.07.2026: Website aus, Engine bleibt'], ['proklima_pct',5,'%', 'proKlima-Satz','ADR-04 Anhang A'], ['proklima_max_eur',1500,'EUR', 'proKlima-Höchstbetrag','ADR-04 Anhang A'], ['proklima_gemeinden','hannover,seelze,langenhagen,laatzen,hemmingen,ronnenberg','CSV', 'proKlima-Fördergebiet','ADR-04 Anhang A'],
   // --- Reform ab 21.07.2026 (additiv). Defaults im Code = Kanon-Werte: die Engine rechnet auch dann
   // korrekt, wenn diese Zeilen im Sheet noch fehlen. Perioden-Tabelle (Klima/Grenze/EU) = FOERDER_PERIODEN_().
-  ['reform_grund_pct',30,'%', 'Grundförderung Reform (EU-Gerät)','Kanon 1.2 / Orakel Z.106'], ['reform_grund_pct_nicht_eu',15,'%', 'Grundförderung Reform ohne EU-Wertschöpfung (ab 01.02.2027)','Kanon 1.2 / Orakel Z.106, Z.114-115'], ['reform_deckel_pct',80,'%', 'Maximaler Satz Selbstnutzer Reform','Kanon 1.2 / Orakel Z.120'], ['reform_eink_pct_bis30',40,'%', 'Einkommensbonus bis 30.000 EUR anrechenbar','Kanon 1.2 / Orakel Z.113'], ['reform_eink_pct_bis40',30,'%', 'Einkommensbonus bis 40.000 EUR anrechenbar','Kanon 1.2 / Orakel Z.113'], ['reform_eink_pct_bis50',10,'%', 'Einkommensbonus bis 50.000 EUR anrechenbar','Kanon 1.2 / Orakel Z.113'], ['reform_eink_grenze_bis30',30000,'EUR', 'Staffelgrenze 1 anrechenbares zvE','Kanon 1.2 / Orakel Z.113'], ['reform_eink_grenze_bis40',40000,'EUR', 'Staffelgrenze 2 anrechenbares zvE','Kanon 1.2 / Orakel Z.113'], ['reform_eink_grenze_bis50',50000,'EUR', 'Staffelgrenze 3 anrechenbares zvE','Kanon 1.2 / Orakel Z.113'], ['reform_eink_grenze_bis60',60000,'EUR', 'Klassenobergrenze 4 zvE (mit Kind anrechenbar 50.000 -> 10 %)','BEG-EM-Richtlinie 17.07.2026 Nr. 8.4.5 Abs. 3'], ['reform_eink_grenze_bis90',90000,'EUR', 'Klassenobergrenze 5 zvE, zugleich Zinsgrenze Ergaenzungskredit','BEG-EM-Richtlinie 17.07.2026 Nr. 8.1 und Nr. 8.5.2 Buchst. a'], ['reform_kind_abzug_eur',10000,'EUR', 'Einmaliger Abzug vom zvE bei mind. einem minderjährigen Kind','Kanon 1.2 / Orakel Z.109-112'], ['kumulierung_max_pct',60,'%', 'BEG-Kumulierungshöchstsatz aller öffentlichen Mittel','BEG-EM Nr. 8.6 (BAnz AT 29.12.2023 B1) + KfW-Merkblatt 458 12/2025; Kanon 1.3'], ['proklima_frist_ymd',20261031,'YYYYMMDD', 'Letztes Antragsdatum proKlima-Richtlinie','Kanon 1.3 / proKlima-Richtlinie 2026 v1.4'], ['proklima_basis','','Text', 'proKlima-Bemessungsbasis: preis | foerderfaehig (leer = periodenabhängiger Default: Alt foerderfaehig, Reform preis)','Kanon 1.3 / Orakel Z.218 / Kanon 5']
+  ['reform_grund_pct',30,'%', 'Grundförderung Reform (EU-Gerät)','Kanon 1.2 / Orakel Z.106'], ['reform_grund_pct_nicht_eu',15,'%', 'Grundförderung Reform ohne EU-Wertschöpfung (ab 01.02.2027)','Kanon 1.2 / Orakel Z.106, Z.114-115'], ['reform_deckel_pct',80,'%', 'Maximaler Satz Selbstnutzer Reform','Kanon 1.2 / Orakel Z.120'], ['reform_deckel_pct_standard',70,'%', 'Obergrenze des Gesamtsatzes der selbstgenutzten Wohneinheit bei anrechenbarem Einkommen über 30.000 Euro (80 nur bis 30.000)','RL 17.08.2026 Nr. 8.4.1'], ['reform_eink_pct_bis30',40,'%', 'Einkommensbonus bis 30.000 EUR anrechenbar','Kanon 1.2 / Orakel Z.113'], ['reform_eink_pct_bis40',30,'%', 'Einkommensbonus bis 40.000 EUR anrechenbar','Kanon 1.2 / Orakel Z.113'], ['reform_eink_pct_bis50',10,'%', 'Einkommensbonus bis 50.000 EUR anrechenbar','Kanon 1.2 / Orakel Z.113'], ['reform_eink_grenze_bis30',30000,'EUR', 'Staffelgrenze 1 anrechenbares zvE','Kanon 1.2 / Orakel Z.113'], ['reform_eink_grenze_bis40',40000,'EUR', 'Staffelgrenze 2 anrechenbares zvE','Kanon 1.2 / Orakel Z.113'], ['reform_eink_grenze_bis50',50000,'EUR', 'Staffelgrenze 3 anrechenbares zvE','Kanon 1.2 / Orakel Z.113'], ['reform_eink_grenze_bis60',60000,'EUR', 'Klassenobergrenze 4 zvE (mit Kind anrechenbar 50.000 -> 10 %)','BEG-EM-Richtlinie 17.07.2026 Nr. 8.4.5 Abs. 3'], ['reform_eink_grenze_bis90',90000,'EUR', 'Klassenobergrenze 5 zvE, zugleich Zinsgrenze Ergaenzungskredit','BEG-EM-Richtlinie 17.07.2026 Nr. 8.1 und Nr. 8.5.2 Buchst. a'], ['reform_kind_abzug_eur',10000,'EUR', 'Einmaliger Abzug vom zvE bei mind. einem minderjährigen Kind','Kanon 1.2 / Orakel Z.109-112'], ['kumulierung_max_pct',60,'%', 'BEG-Kumulierungshöchstsatz aller öffentlichen Mittel','BEG-EM Nr. 8.6 (BAnz AT 29.12.2023 B1) + KfW-Merkblatt 458 12/2025; Kanon 1.3'], ['proklima_frist_ymd',20261031,'YYYYMMDD', 'Letztes Antragsdatum proKlima-Richtlinie','Kanon 1.3 / proKlima-Richtlinie 2026 v1.4'], ['proklima_basis','','Text', 'proKlima-Bemessungsbasis: preis | foerderfaehig (leer = periodenabhängiger Default: Alt foerderfaehig, Reform preis)','Kanon 1.3 / Orakel Z.218 / Kanon 5']
 ]; }
 function DIMENSION_ROWS_() { return [
   ['spez_bedarf_vor1978',180,'kWh/m²a','spezifischer Bedarf vor 1978','js/site.js wizCalculate'], ['spez_bedarf_1978_1994',140,'kWh/m²a','spezifischer Bedarf 1978–1994','js/site.js wizCalculate'], ['spez_bedarf_1995_2010',100,'kWh/m²a','spezifischer Bedarf 1995–2010','js/site.js wizCalculate'], ['spez_bedarf_nach2010',60,'kWh/m²a','spezifischer Bedarf nach 2010','js/site.js wizCalculate'], ['gebaeudef_efh',1.0,'Faktor','Gebäudefaktor EFH','js/site.js wizCalculate'], ['gebaeudef_dhh',0.9,'Faktor','Gebäudefaktor DHH','js/site.js wizCalculate'], ['gebaeudef_rh',0.85,'Faktor','Gebäudefaktor RH','js/site.js wizCalculate'], ['gebaeudef_rh_end',0.85,'Faktor','Gebäudefaktor Reihenendhaus','js/site.js wizCalculate'], ['gebaeudef_rh_mitte',0.85,'Faktor','Gebäudefaktor Reihenmittelhaus, bewusst gleich der übrigen Reihenhaus-Familie','Befund 14.08.2026, Auswahlkarte ohne Parameter'], ['gebaeudef_zfh',0.95,'Faktor','Gebäudefaktor ZFH','js/site.js wizCalculate'], ['gebaeudef_mfh',0.85,'Faktor','Gebäudefaktor MFH','js/site.js wizCalculate'], ['jaz_vor1978',3.0,'JAZ','JAZ vor 1978','js/site.js wizCalculate'], ['jaz_1978_1994',3.3,'JAZ','JAZ 1978–1994','js/site.js wizCalculate'], ['jaz_1995_2010',3.8,'JAZ','JAZ 1995–2010','js/site.js wizCalculate'], ['jaz_nach2010',4.2,'JAZ','JAZ nach 2010','js/site.js wizCalculate'],
