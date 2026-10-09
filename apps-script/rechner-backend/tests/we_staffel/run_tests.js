@@ -1,25 +1,29 @@
 /**
- * WE-STAFFEL-BEWEIS (G1, Master-Fixplan 23.07.2026; GF-Entscheid E1=A).
+ * WE-STAFFEL-BEWEIS, Fassung T1170 (09.10.2026): Höchstbetrag des Gebäudes zu gleichen Teilen.
  *
  * Start:  node apps-script/rechner-backend/tests/we_staffel/run_tests.js
  * Kein Framework, kein npm-Dependency, kein Netz, kein Sheet.
  *
- * Zweck: Additiver Zusatz-Beweis fuer we > 1. Das eingefrorene Orakel kann kein we > 1
- * (Werkzeug-Grenze, Kanon 1.4 "Verhaeltnis zur Engine") — die Soll-Werte stammen deshalb
- * NICHT aus dem Orakel, sondern aus DOPPELTER unabhaengiger Herleitung:
- *   HAND  = Handrechnung nach Kanon 1.4 (Staffel 28.000 / 15.000 / 8.000, Kostenaufteilung
- *           preis/we, Rundung EINMAL je Topf), als Literal im Vektor, Rechenweg im Kommentar.
- *   BLATT = unabhaengige Blatt-Vorausberechnung: je WE eine Zeile (Grenze, Topf) wie im
- *           Kalkulationsblatt; ein generischer Summierer wertet die Zeilen aus (min(Grenze;
- *           Kosten je WE), Topf-Summen, Satz) — bewusst ANDERE Struktur als der Kern-Loop.
+ * Bis zum 08.10.2026 bewies dieser Ordner den GF-Entscheid E1=A vom 23.07.2026 (jede Wohneinheit
+ * einzeln gedeckelt, die hoechste Grenze bei der selbstgenutzten). E1 vom 23.07.2026 abgelöst durch
+ * Entscheid 30.09.2026 (T1170): es gilt die Foerderrichtlinie BEG EM vom 17.08.2026 (BAnz AT
+ * 27.08.2026 B1) mit dem KfW-Merkblatt 458 (Stand 09/2026):
+ *   - Nr. 8.3 und 8.3.1 Buchst. a: die Staffel 28.000 / je 15.000 / je 8.000 ist der Hoechstbetrag
+ *     des GEBAEUDES; er verteilt sich zu gleichen Teilen auf alle Wohneinheiten (Merkblatt S. 4).
+ *   - Nr. 8.3.1 Abs. 2: betrifft die Massnahme nicht alle Wohneinheiten, zaehlen nur die betroffenen
+ *     (anteiliger Hoechstbetrag = Hoechstbetrag geteilt durch alle mal betroffene Wohneinheiten).
+ *   - Nr. 8.4.4: Klimabonus nur fuer die selbstgenutzte Wohneinheit, bei mehreren "nur anteilig".
+ *   - Nr. 8.4.1: Obergrenze 80 Prozent nur bei anrechenbarem Einkommen bis 30.000 Euro, sonst 70.
+ *   - Rundung je Topf auf Cent wie die KfW-Beispiele (Merkblatt 458; Produktseite 458: 2 WE,
+ *     41.000 Euro, 15.580 Euro).
+ *
+ * Soll-Werte aus DOPPELTER unabhaengiger Herleitung:
+ *   HAND  = Handrechnung nach Richtlinie, als Literal im Vektor, Rechenweg im Kommentar.
+ *   BLATT = unabhaengige Blatt-Vorausberechnung: je Wohneinheit eine Zeile (Grenze, Topf) wie im
+ *           Kalkulationsblatt; ein generischer Summierer wertet sie aus (Hoechstbetrag = Summe der
+ *           Grenzen, anteilig nach betroffenen Zeilen; Bemessung = MIN(Preis; anteiliger
+ *           Hoechstbetrag); je Topf Zeilen mal Bemessung je Wohneinheit mal Satz, auf Cent).
  * PASS nur, wenn HAND == BLATT == Kern (foerderCalc_), Feld fuer Feld, Delta exakt 0.
- *
- * Der 858-Vektoren-Aequivalenz-Bestand (kv_equivalence) und tests/foerderung_perioden
- * bleiben unangetastet; dieser Ordner ist eine reine ERWEITERUNG (Fixplan G1).
- *
- * Belege: Kanon 2026-07-15_Foerder-Regelwerk-Kanon_BEG-Reform_HERO.md Abschnitt 1.4 + 9.1
- * (K-1.1) + 10.6; G1-Fix-Spec 2026-07-23 (Kontrollwert-Anker 22.964); Live-Bug-Beweis
- * 23.07.2026 (we=2 ergab 10.640, we=1 ergab 12.880 bei identischem Preis 35.349).
  */
 'use strict';
 
@@ -60,45 +64,47 @@ const d = (s) => {
 // Basis-Request: Zahlen als TEXT (Lehre 20.07.: int_() frisst Dezimalpunkte und echte Nullen).
 const BASIS = { heizung: 'gas', heizungsalter: '25', gemeinde: 'wedemark', proklimaOptin: 'nein' };
 const p = (o) => Object.assign({}, BASIS, o);
+const cent = (x) => Math.round(x * 100) / 100;
 
 /**
- * BLATT-Vorausberechnung: wertet die Literal-Zeilen des Vektors aus wie das Kalkulationsblatt
- * (je WE: Basis = MIN(Grenze; Preis/WE-Anzahl); Topf-Summen; Zuschuss = ROUND(Topf x Satz)).
+ * BLATT-Vorausberechnung nach Richtlinie: Hoechstbetrag des Gebaeudes = Summe der Grenzen aller
+ * Zeilen; anteilig nach den betroffenen Zeilen (Topf 'keine' = nicht betroffen); Bemessung =
+ * MIN(Preis; anteiliger Hoechstbetrag); je betroffener Zeile Bemessung geteilt durch betroffene
+ * Zeilen; Zuschuss je Topf = Zeilen x Basis je WE x Satz, auf Cent.
  * Bewusst OHNE Rueckgriff auf Kern-Funktionen oder Kern-Parameter.
  */
 function blatt(vec) {
-  const kostenJeWE = vec.preis / vec.blatt.length;
-  let selbst = 0;
-  let vermietet = 0;
-  vec.blatt.forEach((zeile) => {
-    const basis = Math.min(zeile.grenze, kostenJeWE);
-    if (zeile.topf === 'selbst') selbst += basis;
-    else vermietet += basis;
-  });
-  const zuschussSelbst = selbst > 0 ? Math.round((selbst * vec.satzSelbst) / 100) : 0;
-  const zuschussVermietet = vermietet > 0 ? Math.round((vermietet * vec.satzVermietet) / 100) : 0;
+  const hoechstbetrag = vec.blatt.reduce((s, z) => s + z.grenze, 0);
+  const betroffen = vec.blatt.filter((z) => z.topf !== 'keine');
+  const anteilig = cent((hoechstbetrag / vec.blatt.length) * betroffen.length);
+  const bemessung = Math.min(vec.preis, anteilig);
+  const jeWE = bemessung / betroffen.length;
+  const selbst = betroffen.filter((z) => z.topf === 'selbst').length;
+  const vermietet = betroffen.length - selbst;
+  const zuschussSelbst = selbst > 0 ? cent((jeWE * selbst * vec.satzSelbst) / 100) : 0;
+  const zuschussVermietet = vermietet > 0 ? cent((jeWE * vermietet * vec.satzVermietet) / 100) : 0;
+  const zuschuss = cent(zuschussSelbst + zuschussVermietet);
   return {
-    zuschussGesamt: zuschussSelbst + zuschussVermietet,
-    bemessungsBasis: selbst + vermietet,
-    grenze: vec.blatt.reduce((s, z) => s + z.grenze, 0),
-    eigenanteil: Math.max(0, vec.preis - zuschussSelbst - zuschussVermietet),
+    zuschussGesamt: zuschuss,
+    bemessungsBasis: bemessung,
+    grenze: anteilig,
+    eigenanteil: cent(Math.max(0, vec.preis - zuschuss)),
   };
 }
 
 /**
- * Vektoren. HAND-Literale je Kommentar von Hand vorgerechnet (Kanon 1.4).
+ * Vektoren. HAND-Literale je Kommentar von Hand vorgerechnet (Richtlinie 17.08.2026).
  * Saetze h2-2026: Grund 30, Klimabonus 16 (gas >= 20 J.), Einkommensbonus bis30 = 40,
- * Deckel selbst 80; vermietet = nur Grundfoerderung 30 (Kanon A1).
+ * Obergrenze 80 nur bis30 (sonst 70); vermietet = nur Grundfoerderung 30 (Kanon A1).
+ * Bis 08.10.2026 (E1=A) erwartete Werte stehen je Vektor als "vorher".
  */
 const VEKTOREN = [
   {
     id: 'W-01',
     name: 'Live-Beweisfall 23.07. | we=2, Preis 35.349, ohne Einkommensbonus (46/30)',
-    // HAND: Kosten je WE 17.674,50. WE1 selbst: min(28.000; 17.674,50) = 17.674,50 ->
-    // round(17.674,50 x 0,46) = round(8.130,27) = 8.130. WE2 vermietet: min(15.000; 17.674,50)
-    // = 15.000 -> round(4.500) = 4.500. Summe 12.630 (HEUTE live falsch: 10.640 per Mittelung;
-    // we=1 zum Vergleich: 12.880 — bei diesem Preis deckelt der Kosten-Split die erste WE,
-    // deshalb liegt we=2 korrekt UNTER we=1; der Anker-Fall W-02 liegt korrekt DARUEBER).
+    // HAND: Hoechstbetrag 28.000 + 15.000 = 43.000. Bemessung min(35.349; 43.000) = 35.349, je WE 17.674,50.
+    // selbst 17.674,50 x 0,46 = 8.130,27; vermietet 17.674,50 x 0,30 = 5.302,35. Summe 13.432,62.
+    // vorher (E1=A): 12.630.
     req: { we: '2', selbstWE: '1', einkommen: 'ueber50', preis: '35349' },
     datum: '2026-08-01',
     satzSelbst: 46,
@@ -108,15 +114,14 @@ const VEKTOREN = [
       { grenze: 28000, topf: 'selbst' },
       { grenze: 15000, topf: 'vermietet' },
     ],
-    hand: { kfwSatz: 46, zuschussGesamt: 12630, eigenanteil: 22719, effektivSatz: 36, grenze: 43000, bemessungsBasis: 32674.5 },
+    hand: { kfwSatz: 46, zuschussGesamt: 13432.62, eigenanteil: 21916.38, effektivSatz: 38, grenze: 43000, bemessungsBasis: 35349 },
   },
   {
     id: 'W-02',
-    name: 'Kontrollwert-Anker U2-Pruefer | Vaillant XL 46.159, we=2, Bestfall 80/30 -> 22.964',
-    // HAND: Kosten je WE 23.079,50. WE1 selbst: min(28.000; 23.079,50) = 23.079,50 ->
-    // round(23.079,50 x 0,80) = round(18.463,60) = 18.464. WE2 vermietet: 15.000 -> 4.500.
-    // Summe 22.964 (Anker aus G1-Fix-Spec; Blatt heute falsch: 23.650 = +686 Ueberzeichnung).
-    // we=1 zum Vergleich: round(28.000 x 0,80) = 22.400 -> we=2 liegt korrekt DARUEBER.
+    name: 'Kontrollwert-Anker U2-Pruefer | Vaillant XL 46.159, we=2, Bestfall 80/30',
+    // HAND: Hoechstbetrag 43.000. Bemessung min(46.159; 43.000) = 43.000, je WE 21.500.
+    // selbst 21.500 x 0,80 = 17.200; vermietet 21.500 x 0,30 = 6.450. Summe 23.650 (= Vorbereitungsbericht
+    // T1170 Fall S4 mit 56.000 Euro, dieselbe Bemessung). vorher (E1=A): 22.964.
     req: { we: '2', selbstWE: '1', einkommen: 'bis30', preis: '46159' },
     datum: '2026-08-01',
     satzSelbst: 80,
@@ -126,13 +131,13 @@ const VEKTOREN = [
       { grenze: 28000, topf: 'selbst' },
       { grenze: 15000, topf: 'vermietet' },
     ],
-    hand: { kfwSatz: 80, zuschussGesamt: 22964, eigenanteil: 23195, effektivSatz: 50, grenze: 43000, bemessungsBasis: 38079.5 },
+    hand: { kfwSatz: 80, zuschussGesamt: 23650, eigenanteil: 22509, effektivSatz: 51, grenze: 43000, bemessungsBasis: 43000 },
   },
   {
     id: 'W-03',
     name: 'we=3 | Grenzen binden (Preis 90.000)',
-    // HAND: Kosten je WE 30.000. WE1: min(28.000; 30.000) = 28.000 -> 22.400. WE2+WE3 vermietet:
-    // je 15.000 -> Topf 30.000 -> 9.000. Summe 31.400. Grenze 28.000 + 2x15.000 = 58.000.
+    // HAND: Hoechstbetrag 58.000, Bemessung 58.000, je WE 19.333,33.. selbst x 0,80 = 15.466,67;
+    // vermietet 2 x 19.333,33.. x 0,30 = 11.600. Summe 27.066,67. vorher (E1=A): 31.400.
     req: { we: '3', selbstWE: '1', einkommen: 'bis30', preis: '90000' },
     datum: '2026-08-01',
     satzSelbst: 80,
@@ -143,13 +148,13 @@ const VEKTOREN = [
       { grenze: 15000, topf: 'vermietet' },
       { grenze: 15000, topf: 'vermietet' },
     ],
-    hand: { kfwSatz: 80, zuschussGesamt: 31400, eigenanteil: 58600, effektivSatz: 35, grenze: 58000, bemessungsBasis: 58000 },
+    hand: { kfwSatz: 80, zuschussGesamt: 27066.67, eigenanteil: 62933.33, effektivSatz: 30, grenze: 58000, bemessungsBasis: 58000 },
   },
   {
     id: 'W-04',
     name: 'we=6 | letzte 15.000er-WE (Preis 240.000; Grenze 103.000 = XXL-Tafelwert)',
-    // HAND: Kosten je WE 40.000. WE1: 28.000 -> 22.400. WE2-6: 5x15.000 = 75.000 -> 22.500.
-    // Summe 44.900. Grenze 28.000 + 75.000 = 103.000 (== Preistafel-Staffelgrenze XXL).
+    // HAND: Hoechstbetrag 28.000 + 5 x 15.000 = 103.000, je WE 17.166,66.. selbst x 0,80 = 13.733,33;
+    // vermietet 5 x 17.166,66.. x 0,30 = 25.750. Summe 39.483,33. vorher (E1=A): 44.900.
     req: { we: '6', selbstWE: '1', einkommen: 'bis30', preis: '240000' },
     datum: '2026-08-01',
     satzSelbst: 80,
@@ -163,13 +168,13 @@ const VEKTOREN = [
       { grenze: 15000, topf: 'vermietet' },
       { grenze: 15000, topf: 'vermietet' },
     ],
-    hand: { kfwSatz: 80, zuschussGesamt: 44900, eigenanteil: 195100, effektivSatz: 19, grenze: 103000, bemessungsBasis: 103000 },
+    hand: { kfwSatz: 80, zuschussGesamt: 39483.33, eigenanteil: 200516.67, effektivSatz: 16, grenze: 103000, bemessungsBasis: 103000 },
   },
   {
     id: 'W-05',
     name: 'we=7 | 8.000er-Grenze greift erstmals (Preis 280.000)',
-    // HAND: Kosten je WE 40.000. WE1: 28.000 -> 22.400. WE2-6: 75.000; WE7: 8.000 ->
-    // Topf vermietet 83.000 -> 24.900. Summe 47.300. Grenze 111.000.
+    // HAND: Hoechstbetrag 103.000 + 8.000 = 111.000, je WE 15.857,14.. selbst x 0,80 = 12.685,71;
+    // vermietet 6 x 15.857,14.. x 0,30 = 28.542,86. Summe 41.228,57. vorher (E1=A): 47.300.
     req: { we: '7', selbstWE: '1', einkommen: 'bis30', preis: '280000' },
     datum: '2026-08-01',
     satzSelbst: 80,
@@ -184,15 +189,15 @@ const VEKTOREN = [
       { grenze: 15000, topf: 'vermietet' },
       { grenze: 8000, topf: 'vermietet' },
     ],
-    hand: { kfwSatz: 80, zuschussGesamt: 47300, eigenanteil: 232700, effektivSatz: 17, grenze: 111000, bemessungsBasis: 111000 },
+    hand: { kfwSatz: 80, zuschussGesamt: 41228.57, eigenanteil: 238771.43, effektivSatz: 15, grenze: 111000, bemessungsBasis: 111000 },
   },
   {
     id: 'W-06',
-    name: 'we=10 | Kostendeckel je WE unter allen Grenzen (Preis 100.000)',
-    // HAND: Kosten je WE 10.000 < jede Grenze. WE1: 10.000 -> 8.000. WE2-10 vermietet:
-    // 9x10.000 = 90.000... ACHTUNG: Basis je WE = min(Grenze; 10.000) = 10.000 fuer WE2-6,
-    // aber WE7-10 = min(8.000; 10.000) = 8.000. Topf vermietet = 5x10.000 + 4x8.000 = 82.000
-    // -> 24.600. Summe 32.600. Grenze 28.000 + 75.000 + 4x8.000 = 135.000.
+    name: 'we=10 | Kosten unter dem Hoechstbetrag (Preis 100.000, Hoechstbetrag 135.000)',
+    // HAND: Hoechstbetrag 28.000 + 75.000 + 4 x 8.000 = 135.000. Bemessung min(100.000; 135.000) = 100.000,
+    // je WE 10.000. selbst 8.000; vermietet 9 x 10.000 x 0,30 = 27.000. Summe 35.000. vorher (E1=A): 32.600
+    // (dort kappte die 8.000er-Grenze die Wohneinheiten 7 bis 10 einzeln; nach der Richtlinie zaehlt nur der
+    // Hoechstbetrag des Gebaeudes).
     req: { we: '10', selbstWE: '1', einkommen: 'bis30', preis: '100000' },
     datum: '2026-08-01',
     satzSelbst: 80,
@@ -210,13 +215,13 @@ const VEKTOREN = [
       { grenze: 8000, topf: 'vermietet' },
       { grenze: 8000, topf: 'vermietet' },
     ],
-    hand: { kfwSatz: 80, zuschussGesamt: 32600, eigenanteil: 67400, effektivSatz: 33, grenze: 135000, bemessungsBasis: 92000 },
+    hand: { kfwSatz: 80, zuschussGesamt: 35000, eigenanteil: 65000, effektivSatz: 35, grenze: 135000, bemessungsBasis: 100000 },
   },
   {
     id: 'W-07',
     name: 'selbstWE=0 | nur vermietet, keine Boni (Preis 46.159, we=2)',
-    // HAND: satz = Grundfoerderung 30 (Boni sind Selbstnutzer-gebunden). Topf vermietet =
-    // 23.079,50 + 15.000 = 38.079,50 -> round(11.423,85) = 11.424. kfwSatz = 30.
+    // HAND: satz = Grundfoerderung 30 (Boni sind Selbstnutzer-gebunden). Bemessung 43.000 x 0,30 = 12.900. kfwSatz = 30.
+    // vorher (E1=A): 11.424.
     req: { we: '2', selbstWE: '0', einkommen: 'bis30', preis: '46159' },
     datum: '2026-08-01',
     satzSelbst: 30,
@@ -226,14 +231,13 @@ const VEKTOREN = [
       { grenze: 28000, topf: 'vermietet' },
       { grenze: 15000, topf: 'vermietet' },
     ],
-    hand: { kfwSatz: 30, zuschussGesamt: 11424, eigenanteil: 34735, effektivSatz: 25, grenze: 43000, bemessungsBasis: 38079.5 },
+    hand: { kfwSatz: 30, zuschussGesamt: 12900, eigenanteil: 33259, effektivSatz: 28, grenze: 43000, bemessungsBasis: 43000 },
   },
   {
     id: 'W-08',
-    name: 'selbstWE=2 | zweite selbstgenutzte WE erhaelt Selbstnutzer-Satz auf ihre 15.000er-Grenze (we=3, Preis 60.000)',
-    // HAND: Kosten je WE 20.000. WE1 selbst: min(28.000; 20.000) = 20.000; WE2 selbst:
-    // min(15.000; 20.000) = 15.000 -> Topf selbst 35.000 -> 28.000. WE3 vermietet: 15.000 ->
-    // 4.500. Summe 32.500. (Der Alt-Code haette die zweite Selbstnutzer-WE verloren.)
+    name: 'selbstWE=2 | zwei selbstgenutzte Wohneinheiten tragen je ihren Satz (we=3, Preis 60.000)',
+    // HAND: Hoechstbetrag 58.000, Bemessung 58.000, je WE 19.333,33.. selbst 2 x 19.333,33.. x 0,80 = 30.933,33;
+    // vermietet 19.333,33.. x 0,30 = 5.800. Summe 36.733,33. vorher (E1=A): 32.500.
     req: { we: '3', selbstWE: '2', einkommen: 'bis30', preis: '60000' },
     datum: '2026-08-01',
     satzSelbst: 80,
@@ -244,13 +248,13 @@ const VEKTOREN = [
       { grenze: 15000, topf: 'selbst' },
       { grenze: 15000, topf: 'vermietet' },
     ],
-    hand: { kfwSatz: 80, zuschussGesamt: 32500, eigenanteil: 27500, effektivSatz: 54, grenze: 58000, bemessungsBasis: 50000 },
+    hand: { kfwSatz: 80, zuschussGesamt: 36733.33, eigenanteil: 23266.67, effektivSatz: 61, grenze: 58000, bemessungsBasis: 58000 },
   },
   {
     id: 'W-09',
-    name: 'Preis klein | Kostendeckelung je WE greift beidseits der Grenze (Preis 20.000, we=2)',
-    // HAND: Kosten je WE 10.000 < 28.000 und < 15.000. WE1: 10.000 -> 8.000; WE2: 10.000 ->
-    // 3.000. Summe 11.000. (Lehre 20.07.: Testfaelle bewusst beidseits jeder Deckelung.)
+    name: 'Preis klein | Kosten unter dem Hoechstbetrag (Preis 20.000, we=2)',
+    // HAND: Bemessung 20.000, je WE 10.000. selbst 8.000; vermietet 3.000. Summe 11.000 (unveraendert zu E1=A:
+    // unter dem Hoechstbetrag rechnen beide Wege gleich).
     req: { we: '2', selbstWE: '1', einkommen: 'bis30', preis: '20000' },
     datum: '2026-08-01',
     satzSelbst: 80,
@@ -269,25 +273,18 @@ const VEKTOREN = [
     // 15.000 = 45.000. foerderProWE = 22.500. kostenProWE = min(22.500; 14.875) = 14.875.
     // satzSelbst = 30+20+30+5 = 85 -> Deckel 70; satzVermietet = min(35; 35) = 35.
     // selbst round(14.875 x 0,70) = 10.413; vermietet round(14.875 x 0,35) = 5.206. Summe 15.619.
-    // HINWEIS: Bei diesem Preis (Kosten je WE 14.875 < jede Grenze) liefern Mittelung und
-    // echte Staffel dasselbe Ergebnis — der Vektor dokumentiert, dass der Alt-Zweig
-    // UNVERAENDERT rechnet (Regressions-Konserve, seit 21.07.2026 nicht mehr beantragbar).
+    // Der Alt-Zweig rechnet UNVERAENDERT (Regressions-Konserve, seit 21.07.2026 nicht mehr beantragbar),
+    // deshalb hier ganze Euro und die historische Mittelung; die BLATT-Probe gilt fuer diesen Vektor nicht.
     req: { we: '2', selbstWE: '1', einkommen: 'unter40', preis: '29750' },
     datum: '2026-07-15',
-    satzSelbst: 70,
-    satzVermietet: 35,
-    preis: 29750,
-    blatt: [
-      { grenze: 30000, topf: 'selbst' },
-      { grenze: 15000, topf: 'vermietet' },
-    ],
+    alt: true,
     hand: { kfwSatz: 70, zuschussGesamt: 15619, eigenanteil: 14131, effektivSatz: 53, grenze: 45000, bemessungsBasis: 29750 },
   },
   {
     id: 'W-11',
     name: 'NaN-Fall | nicht-numerischer Preis faellt deterministisch auf den Ersatzwert 34.510',
-    // HAND: int_('abc') = NaN -> Fallback 34.510. Kosten je WE 17.255. WE1: 17.255 -> 13.804;
-    // WE2: 15.000 -> 4.500. Summe 18.304. KEIN NaN in irgendeinem Ausgabefeld.
+    // HAND: int_('abc') = NaN -> Fallback 34.510. Bemessung 34.510, je WE 17.255. selbst 13.804; vermietet
+    // 17.255 x 0,30 = 5.176,50. Summe 18.980,50. KEIN NaN in irgendeinem Ausgabefeld. vorher (E1=A): 18.304.
     req: { we: '2', selbstWE: '1', einkommen: 'bis30', preis: 'abc' },
     datum: '2026-08-01',
     satzSelbst: 80,
@@ -297,7 +294,65 @@ const VEKTOREN = [
       { grenze: 28000, topf: 'selbst' },
       { grenze: 15000, topf: 'vermietet' },
     ],
-    hand: { kfwSatz: 80, zuschussGesamt: 18304, eigenanteil: 16206, effektivSatz: 53, grenze: 43000, bemessungsBasis: 32255 },
+    hand: { kfwSatz: 80, zuschussGesamt: 18980.5, eigenanteil: 15529.5, effektivSatz: 55, grenze: 43000, bemessungsBasis: 34510 },
+  },
+  {
+    id: 'W-12',
+    name: 'KfW-Beispiel Produktseite 458 | we=2, 41.000, 46/30 -> 15.580',
+    // HAND (KfW): Bemessung 41.000, je WE 20.500. selbst 20.500 x 0,46 = 9.430; vermietet 20.500 x 0,30 = 6.150.
+    // Summe 15.580 (Produktseite 458, Vorbereitungsbericht T1170 Fall S3). vorher (E1=A): 13.930.
+    req: { we: '2', selbstWE: '1', einkommen: 'ueber90', preis: '41000' },
+    datum: '2026-10-09',
+    satzSelbst: 46,
+    satzVermietet: 30,
+    preis: 41000,
+    blatt: [
+      { grenze: 28000, topf: 'selbst' },
+      { grenze: 15000, topf: 'vermietet' },
+    ],
+    hand: { kfwSatz: 46, zuschussGesamt: 15580, eigenanteil: 25420, effektivSatz: 38, grenze: 43000, bemessungsBasis: 41000 },
+  },
+  {
+    id: 'W-13',
+    name: 'Betroffene Wohneinheiten (RL 8.3.1 Abs. 2) | we=3, weBetroffen=1, 30.000, 46 Prozent',
+    // HAND: Hoechstbetrag 58.000, anteilig 58.000 / 3 x 1 = 19.333,33. Bemessung min(30.000; 19.333,33) = 19.333,33.
+    // selbst 19.333,33 x 0,46 = 8.893,33 (Vorbereitungsbericht T1170 Fall S7). vorher (q23 ungenutzt): 10.600.
+    req: { we: '3', weBetroffen: '1', selbstWE: '1', einkommen: 'ueber90', preis: '30000' },
+    datum: '2026-10-09',
+    satzSelbst: 46,
+    satzVermietet: 30,
+    preis: 30000,
+    blatt: [
+      { grenze: 28000, topf: 'selbst' },
+      { grenze: 15000, topf: 'keine' },
+      { grenze: 15000, topf: 'keine' },
+    ],
+    hand: { kfwSatz: 46, zuschussGesamt: 8893.33, eigenanteil: 21106.67, effektivSatz: 30, grenze: 19333.33, bemessungsBasis: 19333.33 },
+  },
+  {
+    id: 'W-14',
+    name: 'Obergrenze 70 (RL 8.4.1) | we=1, bis40 ohne Kind, 40.000 -> 19.600 statt 76 Prozent',
+    // HAND: 30 + 16 + 30 = 76 -> Obergrenze 70 (anrechenbar 40.000 ueber 30.000). 28.000 x 0,70 = 19.600.
+    // vorher: 76 Prozent, 21.280 (Vorbereitungsbericht T1170 Fall S1).
+    req: { we: '1', selbstWE: '1', einkommen: 'bis40', preis: '40000' },
+    datum: '2026-10-09',
+    satzSelbst: 70,
+    satzVermietet: 30,
+    preis: 40000,
+    blatt: [{ grenze: 28000, topf: 'selbst' }],
+    hand: { kfwSatz: 70, zuschussGesamt: 19600, eigenanteil: 20400, effektivSatz: 49, grenze: 28000, bemessungsBasis: 28000 },
+  },
+  {
+    id: 'W-15',
+    name: 'Funktionstuechtigkeit (RL 8.4.4) | Gas 25 Jahre, funktionstuechtig=nein, 35.000 -> 8.400',
+    // HAND: kein Klimabonus, 30 Prozent von 28.000 = 8.400 (Vorbereitungsbericht T1170 Fall S8). vorher: 12.880.
+    req: { we: '1', selbstWE: '1', einkommen: 'ueber90', funktionstuechtig: 'nein', preis: '35000' },
+    datum: '2026-10-09',
+    satzSelbst: 30,
+    satzVermietet: 30,
+    preis: 35000,
+    blatt: [{ grenze: 28000, topf: 'selbst' }],
+    hand: { kfwSatz: 30, klimaBonus: false, zuschussGesamt: 8400, eigenanteil: 26600, effektivSatz: 24, grenze: 28000, bemessungsBasis: 28000 },
   },
 ];
 
@@ -324,14 +379,16 @@ function pruefe(id, beschreibung, ist, soll) {
 
 // --- Hauptlauf: HAND == BLATT == Kern, je Vektor.
 VEKTOREN.forEach((vec) => {
-  const b = blatt(vec);
-  // (1) Doppelte Herleitung in sich konsistent: BLATT reproduziert die HAND-Literale.
-  pruefe(vec.id + 'a', vec.name + ' | BLATT == HAND', b, {
-    zuschussGesamt: vec.hand.zuschussGesamt,
-    bemessungsBasis: vec.hand.bemessungsBasis,
-    grenze: vec.hand.grenze,
-    eigenanteil: vec.hand.eigenanteil,
-  });
+  if (!vec.alt) {
+    const b = blatt(vec);
+    // (1) Doppelte Herleitung in sich konsistent: BLATT reproduziert die HAND-Literale.
+    pruefe(vec.id + 'a', vec.name + ' | BLATT == HAND', b, {
+      zuschussGesamt: vec.hand.zuschussGesamt,
+      bemessungsBasis: vec.hand.bemessungsBasis,
+      grenze: vec.hand.grenze,
+      eigenanteil: vec.hand.eigenanteil,
+    });
+  }
   // (2) Kern reproduziert die HAND-Literale (alle publizierten Felder).
   const ist = foerderCalc_(p(vec.req), F, d(vec.datum));
   pruefe(vec.id + 'b', vec.name + ' | Kern == HAND', ist, vec.hand);
@@ -343,11 +400,13 @@ VEKTOREN.forEach((vec) => {
   const numerisch = ['kfwSatz', 'zuschussGesamt', 'proklimaZuschuss', 'eigenanteil', 'effektivSatz', 'preis', 'grenze', 'bemessungsBasis'];
   const kaputt = numerisch.filter((k) => !isFinite(ist[k]));
   pruefe(vec.id + 'd', vec.name + ' | alle Zahlenfelder endlich', { kaputt: kaputt }, { kaputt: [] });
+  // (5) Jeder Geldwert hat hoechstens zwei Nachkommastellen (Cent).
+  const krumm = ['zuschussGesamt', 'eigenanteil', 'grenze', 'bemessungsBasis'].filter((k) => ist[k] !== cent(ist[k]));
+  pruefe(vec.id + 'e', vec.name + ' | Geldwerte auf Cent', { krumm: krumm }, { krumm: [] });
 });
 
-// --- R-WE1 | Ziffer-Identitaet des we=1-Pfads: fuer we=1 gilt geschlossen
-//     zuschuss = round(min(Grenze; Preis) x Satz) — exakt die historische Formel.
-//     Sweep ueber Preise beidseits der Grenze und alle Einkommensklassen.
+// --- R-WE1 | Geschlossene Formel des we=1-Pfads: zuschuss = min(Grenze; Preis) x Satz auf Cent
+//     (T1170; bis 08.10.2026 ganze Euro). Sweep ueber Preise beidseits der Grenze und alle Einkommensklassen.
 {
   const abw = [];
   let n = 0;
@@ -355,19 +414,27 @@ VEKTOREN.forEach((vec) => {
     ['20', '5'].forEach((alter) => {
       for (let preis = 5000; preis <= 90000; preis += 1234) {
         const ist = foerderCalc_(p({ we: '1', selbstWE: '1', einkommen: einkommen, heizungsalter: alter, preis: String(preis) }), F, d('2026-08-01'));
-        const soll = Math.round(Math.min(28000, preis) * (ist.kfwSatz / 100));
+        const soll = cent(Math.min(28000, preis) * (ist.kfwSatz / 100));
         n++;
-        if (ist.zuschussGesamt !== soll || ist.eigenanteil !== preis - soll || ist.grenze !== 28000 || ist.bemessungsBasis !== Math.min(28000, preis)) {
+        if (ist.zuschussGesamt !== soll || ist.eigenanteil !== cent(preis - soll) || ist.grenze !== 28000 || ist.bemessungsBasis !== Math.min(28000, preis)) {
           abw.push(`${einkommen}/alter${alter}/${preis}: zuschuss=${ist.zuschussGesamt} soll=${soll}`);
         }
       }
     });
   });
-  pruefe('R-WE1', `we=1 ziffer-identisch zur historischen Formel (${n} Faelle)`, { abweichungen: abw.length, faelle: n }, { abweichungen: 0, faelle: n });
+  pruefe('R-WE1', `we=1 gleich der geschlossenen Formel auf Cent (${n} Faelle)`, { abweichungen: abw.length, faelle: n }, { abweichungen: 0, faelle: n });
+}
+
+// --- R-WE2 | Bemessung haengt nur vom Hoechstbetrag des Gebaeudes ab, nicht von einzelnen Grenzen:
+//     bis zum Hoechstbetrag waechst der Zuschuss mit dem Preis, darueber bleibt er konstant (Vorbereitungsbericht
+//     T1170 Fall S6: 50.000 mit Skonto 0 / 2 / 5 Prozent ergibt dreimal 16.340).
+{
+  const z = (preis) => foerderCalc_(p({ we: '2', selbstWE: '1', einkommen: 'ueber90', preis: String(preis) }), F, d('2026-10-09')).zuschussGesamt;
+  pruefe('R-WE2', 'ueber dem Hoechstbetrag aendert ein Nachlass den Zuschuss nicht (50.000 / 49.000 / 47.500 -> 16.340)', { a: z(50000), b: z(49000), c: z(47500), d: z(43000), e: z(42000) }, { a: 16340, b: 16340, c: 16340, d: 16340, e: 15960 });
 }
 
 // --- Ausgabe
-console.log('\nWE-STAFFEL | Zusatz-Beweis we>1 (G1, E1=A) | Testlauf');
+console.log('\nWE-STAFFEL | Hoechstbetrag des Gebaeudes zu gleichen Teilen (T1170, RL 17.08.2026) | Testlauf');
 console.log('Code.gs: ' + CODE_PATH);
 console.log('\nID | Fall | Status | Delta');
 console.log('---|------|--------|------');
