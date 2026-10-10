@@ -1,0 +1,13 @@
+nummer,gebaeudetyp,baujahr,wohnflaeche_m2,zustand,gesetzte_bauteile,uebergabe,norm_AT_C,herowerk_heizlast_kW,herowerk_watt_je_m2,bwp_bauteilweise_heizlast_kW,bwp_bauteilweise_watt_je_m2,bwp_einfach_heizlast_kW,bwp_einfach_watt_je_m2,differenz_bauteilweise_prozent,differenz_einfach_prozent
+S1,Einfamilienhaus,1960,140,unsaniert,keine,Heizkörper,-11.0,14.0,100,19.0,136,,,-26.5,
+S2,Einfamilienhaus,1960,140,teilweise,"Dach; Fenster",Heizkörper,-11.0,10.9,78,15.2,109,,,-28.4,
+S3,Einfamilienhaus,1960,200,unsaniert,keine,Heizkörper,-11.0,20.0,100,27.2,136,,,-26.5,
+S4,Einfamilienhaus,1975,160,unsaniert,keine,Heizkörper,-11.0,16.0,100,15.7,98,,,2.0,
+S5,Einfamilienhaus,1975,160,teilweise,"Dach; Fenster",Heizkörper,-11.0,12.4,78,12.5,78,,,0.0,
+S6,Einfamilienhaus,1990,150,unsaniert,keine,Heizkörper,-11.0,11.7,78,11.2,74,,,5.4,
+S7,Einfamilienhaus,2000,150,unsaniert,keine,Flächenheizung,-11.0,8.3,55,8.3,56,,,-1.8,
+S8,Einfamilienhaus,2015,160,unsaniert,keine,Flächenheizung,-11.0,5.3,33,7.5,47,,,-29.8,
+S9,Doppelhaushälfte,1970,120,unsaniert,keine,Heizkörper,-11.0,10.8,90,8.0,66,,,36.4,
+S10,Reihenmittelhaus,1970,110,unsaniert,keine,Heizkörper,-11.0,9.4,85,7.3,66,,,28.8,
+S11,Zweifamilienhaus,1965,220,unsaniert,keine,Heizkörper,-11.0,20.9,95.0,14.3,65,,,46.2,
+S12,Einfamilienhaus,1930,180,teilweise,"Dach; Fenster",Heizkörper,-11.0,14.0,78,15.3,85,,,-8.2,
