@@ -223,14 +223,15 @@ pruefe('C-06', 'Reform h2-2026 | Kinderabzug 10k hebt Bonus 30->40', foerderCalc
 });
 
 // C-06b | Gegenprobe ohne Kind: gleiche Eingabe, Bonus bleibt 30.
-// Rechenweg: anr = 40.000 -> 30 %. 30 + 16 + 30 = 76 (unter Deckel 80).
-// Zuschuss = round(28.000 × 0,76) = 21.280. Eigenanteil = 34.510 - 21.280 = 13.230.
-// effektiv = round(21.280/34.510×100) = round(61,66) = 62.
-pruefe('C-06b', 'Reform h2-2026 | Gegenprobe ohne Kind', foerderCalc_(p({ einkommen: 'bis40', preis: 34510 }), F, d('2026-09-01')), {
-  kfwSatz: 76,
-  zuschussGesamt: 21280,
-  eigenanteil: 13230,
-  effektivSatz: 62,
+// Rechenweg: anr = 40.000 -> 30 %. 30 + 16 + 30 = 76. T1170 (RL 17.08.2026 Nr. 8.4.1, Merkblatt 458 S. 4): anrechenbar
+// 40.000 liegt über 30.000, deshalb Obergrenze 70 statt 80 (bis 08.10.2026 erwartet: 76 Prozent, 21.280 Euro).
+// Zuschuss = round(28.000 × 0,70) = 19.600. Eigenanteil = 34.510 - 19.600 = 14.910.
+// effektiv = round(19.600/34.510×100) = round(56,79) = 57.
+pruefe('C-06b', 'Reform h2-2026 | Gegenprobe ohne Kind | Obergrenze 70 (T1170)', foerderCalc_(p({ einkommen: 'bis40', preis: 34510 }), F, d('2026-09-01')), {
+  kfwSatz: 70,
+  zuschussGesamt: 19600,
+  eigenanteil: 14910,
+  effektivSatz: 57,
   einkommensbonusPct: 30,
 });
 
@@ -270,9 +271,10 @@ pruefe('C-09', 'Reform h2-2026 | ohne Klimabonus', foerderCalc_(p({ heizung: 'so
 });
 
 // C-10 | Reform h1-2027 MIT EU-Gerät (Stichtag 01.02.2027), Einkommen bis 40k, proKlima-Frist abgelaufen.
-// Rechenweg: eu:true + euOk -> Grund 30. Klima 12. Einkommen 30. Summe 72 (unter Deckel 80).
-// Grenze 27.250. Zuschuss = round(27.250 × 0,72) = 19.620. Eigenanteil = 34.510 - 19.620 = 14.890.
-// effektiv = round(19.620/34.510×100) = round(56,85) = 57.
+// Rechenweg: eu:true + euOk -> Grund 30. Klima 12. Einkommen 30. Summe 72. T1170 (RL Nr. 8.4.1): anrechenbar 40.000
+// über 30.000, Obergrenze 70 (bis 08.10.2026 erwartet: 72 Prozent, 19.620 Euro).
+// Grenze 27.250. Zuschuss = round(27.250 × 0,70) = 19.075. Eigenanteil = 34.510 - 19.075 = 15.435.
+// effektiv = round(19.075/34.510×100) = round(55,27) = 55.
 // proKlima: 01.02.2027 > 31.10.2026 -> 0 + Frist-Hinweis (Kanon 1.3 / E-11).
 pruefe(
   'C-10',
@@ -281,11 +283,11 @@ pruefe(
   {
     periode: 'h1-2027',
     periodeLabel: '01.02. bis 31.07.2027',
-    kfwSatz: 72,
-    zuschussGesamt: 19620,
+    kfwSatz: 70,
+    zuschussGesamt: 19075,
     proklimaZuschuss: 0,
-    eigenanteil: 14890,
-    effektivSatz: 57,
+    eigenanteil: 15435,
+    effektivSatz: 55,
     grenze: 27250,
     proklimaGekappt: false,
     hinweis: 'Die proKlima-Förderung gilt nur für Anträge bis zum 31.10.2026 und ist deshalb nicht eingerechnet.',
@@ -293,13 +295,14 @@ pruefe(
 );
 
 // C-11 | Reform h1-2027 OHNE EU-Wertschöpfung -> Grundförderung 15 % (Kanon E-13 / Orakel Z.106).
-// Rechenweg: 15 + 12 + 40 = 67. Zuschuss = round(27.250 × 0,67) = round(18.257,5) = 18.258.
-// Eigenanteil = 34.510 - 18.258 = 16.252. effektiv = round(18.258/34.510×100) = round(52,91) = 53.
-pruefe('C-11', 'Reform h1-2027 | Nicht-EU-Gerät = Grund 15 %', foerderCalc_(p({ einkommen: 'bis30', eu: 'nein', preis: 34510 }), F, d('2027-03-15')), {
+// Rechenweg: 15 + 12 + 40 = 67. Zuschuss = 27.250 × 0,67 = 18.257,50 auf Cent (T1170, Merkblatt 458 rechnet die
+// Beispiele auf Cent; bis 08.10.2026 auf ganze Euro 18.258). Eigenanteil = 34.510 - 18.257,50 = 16.252,50.
+// effektiv = round(18.257,5/34.510×100) = round(52,91) = 53.
+pruefe('C-11', 'Reform h1-2027 | Nicht-EU-Gerät = Grund 15 % | Cent (T1170)', foerderCalc_(p({ einkommen: 'bis30', eu: 'nein', preis: 34510 }), F, d('2027-03-15')), {
   periode: 'h1-2027',
   kfwSatz: 67,
-  zuschussGesamt: 18258,
-  eigenanteil: 16252,
+  zuschussGesamt: 18257.5,
+  eigenanteil: 16252.5,
   effektivSatz: 53,
   bausteine: ['Grundförderung 15%', 'Einkommensbonus +40%', 'Klimageschwindigkeitsbonus +12%'],
 });
@@ -374,21 +377,20 @@ pruefe('C-15', 'Reform h2-2026 | vermietet = nur Grundförderung 30 %', foerderC
   bausteine: ['Grundförderung 30%'],
 });
 
-// C-16 | Reform h2-2026, 2 WE (1 selbst + 1 vermietet): echte WE-Staffel je WE (Kanon 1.4 / K-1.1,
-// GF-Entscheid E1=A vom 23.07.2026; ersetzt die fruehere konservative Ein-WE-Naeherung).
-// Rechenweg: Kosten je WE = 34.510/2 = 17.255. WE1 (selbst): min(28.000; 17.255) = 17.255 ->
-// round(17.255 × 0,80) = 13.804. WE2 (vermietet): min(15.000; 17.255) = 15.000 -> round(15.000 × 0,30) = 4.500.
-// Summe = 18.304. grenze = 28.000 + 15.000 = 43.000. Eigenanteil = 34.510 - 18.304 = 16.206.
-// effektiv = round(18.304/34.510×100) = round(53,04) = 53.
-// Pflicht: Hinweis auf die projektgenaue Rechnung (E-08) bleibt.
-pruefe('C-16', 'Reform h2-2026 | 2 WE | echte WE-Staffel + Mehr-WE-Hinweis', foerderCalc_(p({ we: '2', selbstWE: '1', einkommen: 'bis30', preis: 34510 }), F, d('2026-08-01')), {
+// C-16 | Reform h2-2026, 2 WE (1 selbst + 1 vermietet). E1 vom 23.07.2026 abgelöst durch Entscheid 30.09.2026 (T1170):
+// Höchstbetrag des Gebäudes 28.000 + 15.000 = 43.000 zu gleichen Teilen (RL 17.08.2026 Nr. 8.3.1 Buchst. a, Merkblatt 458 S. 4).
+// Rechenweg: Bemessung = min(34.510; 43.000) = 34.510, je WE 17.255. WE1 (selbst): 17.255 × 0,80 = 13.804.
+// WE2 (vermietet): 17.255 × 0,30 = 5.176,50. Summe = 18.980,50 (Cent). grenze = 43.000. Eigenanteil = 15.529,50.
+// effektiv = round(18.980,5/34.510×100) = round(55,00) = 55. Bis 08.10.2026 erwartet: 18.304 (je WE einzeln gedeckelt).
+// Pflicht: Hinweis auf die projektgenaue Rechnung (E-08) bleibt, Wortlaut Weg A (Festlegung 3.7, T1170).
+pruefe('C-16', 'Reform h2-2026 | 2 WE | Höchstbetrag des Gebäudes zu gleichen Teilen + Mehr-WE-Hinweis (T1170)', foerderCalc_(p({ we: '2', selbstWE: '1', einkommen: 'bis30', preis: 34510 }), F, d('2026-08-01')), {
   kfwSatz: 80,
-  zuschussGesamt: 18304,
-  eigenanteil: 16206,
-  effektivSatz: 53,
+  zuschussGesamt: 18980.5,
+  eigenanteil: 15529.5,
+  effektivSatz: 55,
   grenze: 43000,
-  bemessungsBasis: 32255,
-  hinweis: 'Bei mehreren Wohneinheiten gelten gestaffelte Grenzen je Wohneinheit. Wir rechnen dein Projekt genau durch.',
+  bemessungsBasis: 34510,
+  hinweis: 'Bei Gebäuden mit mehreren Wohneinheiten wird der Höchstbetrag der förderfähigen Gebäudekosten zu gleichen Teilen auf die Wohneinheiten verteilt. Für selbstgenutzte Wohneinheiten werden zusätzlich die jeweils verfügbaren persönlichen Förderboni berücksichtigt. Bei Wohnungseigentümergemeinschaften (WEG) erfolgt die Antragstellung für eine gemeinsame Heizungsanlage über einen gemeinschaftlichen Basisantrag. Selbstnutzende Eigentümer beantragen einen möglichen Klimageschwindigkeitsbonus und/oder Einkommensbonus jeweils über einen persönlichen Zusatzantrag.',
 });
 
 // C-17 | Horizont: Antrag nach dem 31.07.2029. Kanon A3 verbietet die Fortschreibung der Degression ->

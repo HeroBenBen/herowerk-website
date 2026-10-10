@@ -1363,6 +1363,18 @@ function hw_foerder_periodenwerte(array $period, array $f, ?callable $onFallback
     ];
 }
 
+// T1170 (RL 17.08.2026 Nr. 8.4.5 Abs. 3): anrechenbares Einkommen = Klassenobergrenze minus Kinderabzug; null bei
+// 'unbekannt'. Gemeinsame Grundlage für die Bonusstufe und für die Obergrenze des Gesamtsatzes (Nr. 8.4.1).
+function hw_einkommen_anrechenbar(string $income, bool $kind, array $f, ?array $periodenWerte = null): float|int|null
+{
+    $grenzen = hw_einkommen_grenzen($f);
+    if (!array_key_exists($income, $grenzen)) {
+        return null;
+    }
+    $werte = $periodenWerte ?? hw_foerder_periodenwerte(['id' => 'legacy', 'reform' => true], $f);
+    return max(0, $grenzen[$income] - ($kind ? $werte['kindFreibetrag'] : 0));
+}
+
 function hw_einkommensbonus_pct(string $income, bool $kind, array $f, ?array $periodenWerte = null): float|int
 {
     $grenzen = hw_einkommen_grenzen($f);
@@ -1394,6 +1406,15 @@ function hw_foerderfaehige_kosten(int $we, array $f, float|int|null $ersteWe = n
         + ($we - 6) * hw_get_num($f, 'foerderfaehig_we7plus', 8000);
 }
 
+// T1170 (Festlegung 3.7; Wortlaut des Geschäftsführers vom 09.10.2026 10:38, Frage 78 Weg C, Nachtrag zum Entscheid 30.09.2026,
+// Kennung [20261009ae]): der Hinweis bei mehreren Wohneinheiten
+// steht genau einmal, wortgleich mit FOERDER_HINWEIS_MEHRERE_WE_ im Apps-Script-Kern.
+const HW_FOERDER_HINWEIS_MEHRERE_WE = 'Bei Gebäuden mit mehreren Wohneinheiten wird der Höchstbetrag der förderfähigen Gebäudekosten zu gleichen Teilen auf die Wohneinheiten verteilt. Für selbstgenutzte Wohneinheiten werden zusätzlich die jeweils verfügbaren persönlichen Förderboni berücksichtigt. Bei Wohnungseigentümergemeinschaften (WEG) erfolgt die Antragstellung für eine gemeinsame Heizungsanlage über einen gemeinschaftlichen Basisantrag. Selbstnutzende Eigentümer beantragen einen möglichen Klimageschwindigkeitsbonus und/oder Einkommensbonus jeweils über einen persönlichen Zusatzantrag.';
+// T1170 (RL 17.08.2026 Nr. 8.4.1): Obergrenze des Gesamtsatzes 70 Prozent, 80 Prozent nur bei anrechenbarem Einkommen bis
+// 30.000 Euro. Die Website hat keine Tabelle, deshalb steht der Standarddeckel hier als Konstante; trägt Förder_Parameter den
+// Schlüssel reform_deckel_pct_standard, gewinnt die Tabelle (wortgleich zum Apps-Script-Kern, Rückfall 70).
+const HW_REFORM_DECKEL_PCT_STANDARD = 70;
+
 /** @return array<string,mixed> */
 function hw_foerder_calc(array $query, array $f, string $date, array $perioden, ?callable $onFallback = null): array
 {
@@ -1401,6 +1422,10 @@ function hw_foerder_calc(array $query, array $f, string $date, array $perioden, 
     $periodenWerte = hw_foerder_periodenwerte($period, $f, $onFallback);
     $we = hw_int($query['we'] ?? null, 1);
     $selbstWe = hw_int($query['selbstWE'] ?? null, 1);
+    // T1170 (RL 17.08.2026 Nr. 8.3.1 Abs. 2): nur die betroffenen Wohneinheiten zählen; fehlt der Wert, das ganze Gebäude.
+    $weBetroffen = min($we, max(1, hw_int($query['weBetroffen'] ?? null, $we)));
+    // T1170 (RL 17.08.2026 Nr. 8.4.4): Funktionstüchtigkeit ist Voraussetzung für JEDE Bonus-Heizung. Fehlt die Angabe, gilt ja.
+    $funktionstuechtig = strtolower(hw_query_string($query, 'funktionstuechtig', 'ja')) !== 'nein';
     $heizung = hw_query_string($query, 'heizung', 'gas');
     $einkommen = hw_einkommen_norm(array_key_exists('einkommen', $query) ? $query['einkommen'] : 'ueber40');
     $kindValue = strtolower(hw_query_string($query, 'kind'));
@@ -1446,6 +1471,10 @@ function hw_foerder_calc(array $query, array $f, string $date, array $perioden, 
             ? hw_get_num($f, 'reform_grund_pct_nicht_eu', 15)
             : hw_get_num($f, 'reform_grund_pct', 30);
         $klimaPct = $period['klima'];
+        // T1170 (RL 17.08.2026 Nr. 8.4.4): nur eine funktionstüchtige Heizung bringt den Klimabonus, bei jeder Heizungsart.
+        if (!$funktionstuechtig) {
+            $klimaBonus = false;
+        }
         $einkommensbonusPct = hw_einkommensbonus_pct($einkommen, $kind, $f, $periodenWerte);
         $satzSelbst = $grundPct;
         if ($selbstWe > 0 && $klimaBonus) {
@@ -1455,11 +1484,22 @@ function hw_foerder_calc(array $query, array $f, string $date, array $perioden, 
             $satzSelbst += $einkommensbonusPct;
         }
         $satzSelbst += $periodenWerte['effizienzPct'];
-        $satzSelbst = min($satzSelbst, $periodenWerte['cap']);
+        // T1170 (RL 17.08.2026 Nr. 8.4.1): Obergrenze 80 Prozent nur bei anrechenbarem Einkommen bis 30.000 Euro (Klasse bis30,
+        // oder bis40 mit Kind), sonst 70 Prozent. cap der Periode bleibt der Höchstdeckel.
+        $anrechenbar = hw_einkommen_anrechenbar($einkommen, $kind, $f, $periodenWerte);
+        $deckelHoch = $anrechenbar !== null && $anrechenbar <= hw_get_num($f, 'reform_eink_grenze_bis30', 30000);
+        $deckel = $deckelHoch
+            ? $periodenWerte['cap']
+            : min($periodenWerte['cap'], hw_get_num($f, 'reform_deckel_pct_standard', HW_REFORM_DECKEL_PCT_STANDARD));
+        $satzSelbst = min($satzSelbst, $deckel);
         $satzVermietet = $grundPct + $periodenWerte['effizienzPct'];
-        $foerderFaehigGesamt = hw_foerderfaehige_kosten($we, $f, $period['grenze']);
+        // E1 vom 23.07.2026 abgelöst durch Entscheid 30.09.2026 (T1170): die Staffel ist der Höchstbetrag des GEBÄUDES
+        // (RL 17.08.2026 Nr. 8.3 und 8.3.1 Buchst. a); betrifft die Maßnahme nicht alle Wohneinheiten, gilt er anteilig
+        // (Höchstbetrag geteilt durch alle Wohneinheiten mal betroffene), auf Cent.
+        $hoechstbetragGebaeude = hw_foerderfaehige_kosten($we, $f, $period['grenze']);
+        $foerderFaehigGesamt = hw_js_round($hoechstbetragGebaeude / $we * $weBetroffen * 100) / 100;
         if ($we > 1) {
-            $hinweise[] = 'Bei mehreren Wohneinheiten gelten gestaffelte Grenzen je Wohneinheit. Wir rechnen dein Projekt genau durch.';
+            $hinweise[] = HW_FOERDER_HINWEIS_MEHRERE_WE;
         }
         if (!empty($period['ueberHorizont'])) {
             $hinweise[] = 'Für Anträge nach dem 31.07.2029 stehen die Fördersätze noch nicht fest. Wir rechnen dein Projekt genau durch.';
@@ -1478,23 +1518,15 @@ function hw_foerder_calc(array $query, array $f, string $date, array $perioden, 
 
     $vermieteteWe = $we - $selbstWe;
     if ($period['reform']) {
-        $grenze2bis6 = hw_get_num($f, 'foerderfaehig_we2bis6', 15000);
-        $grenze7plus = hw_get_num($f, 'foerderfaehig_we7plus', 8000);
-        $kostenJeWe = $preis / $we;
-        $basisSelbst = 0;
-        $basisVermietet = 0;
-        for ($index = 0; $index < $we; $index++) {
-            $grenzeWe = $index === 0 ? $period['grenze'] : ($index < 6 ? $grenze2bis6 : $grenze7plus);
-            $basisWe = min($grenzeWe, $kostenJeWe);
-            if ($index < $selbstWe) {
-                $basisSelbst += $basisWe;
-            } else {
-                $basisVermietet += $basisWe;
-            }
-        }
-        $bemessungsBasis = $basisSelbst + $basisVermietet;
-        $zuschussSelbst = $selbstWe > 0 ? hw_js_round($basisSelbst * ($satzSelbst / 100)) : 0;
-        $zuschussVermietet = $vermieteteWe > 0 ? hw_js_round($basisVermietet * ($satzVermietet / 100)) : 0;
+        // T1170 (RL 17.08.2026 Nr. 8.3.1 Buchst. a, Merkblatt 458 S. 4): Bemessung = min(Kosten, anteiliger Höchstbetrag),
+        // zu gleichen Teilen auf die betroffenen Wohneinheiten; die selbstgenutzte trägt ihren Satz, jede weitere betroffene
+        // die Grundförderung (Klimabonus damit "nur anteilig", RL Nr. 8.4.4). Zuschuss je Topf auf Cent wie die KfW-Beispiele.
+        $bemessungsBasis = min($preis, $foerderFaehigGesamt);
+        $basisJeWe = $bemessungsBasis / $weBetroffen;
+        $selbstBetroffen = min($selbstWe, $weBetroffen);
+        $vermietetBetroffen = $weBetroffen - $selbstBetroffen;
+        $zuschussSelbst = $selbstBetroffen > 0 ? hw_js_round($basisJeWe * $selbstBetroffen * ($satzSelbst / 100) * 100) / 100 : 0;
+        $zuschussVermietet = $vermietetBetroffen > 0 ? hw_js_round($basisJeWe * $vermietetBetroffen * ($satzVermietet / 100) * 100) / 100 : 0;
     } else {
         $foerderProWe = $foerderFaehigGesamt / $we;
         $kostenProWe = min($foerderProWe, $preis / $we);
@@ -1502,7 +1534,7 @@ function hw_foerder_calc(array $query, array $f, string $date, array $perioden, 
         $zuschussSelbst = $selbstWe > 0 ? hw_js_round($kostenProWe * ($satzSelbst / 100)) : 0;
         $zuschussVermietet = $vermieteteWe > 0 ? hw_js_round($kostenProWe * ($satzVermietet / 100) * $vermieteteWe) : 0;
     }
-    $zuschussGesamt = $zuschussSelbst + $zuschussVermietet;
+    $zuschussGesamt = hw_js_round(($zuschussSelbst + $zuschussVermietet) * 100) / 100;
 
     $proGemeinden = array_map('trim', explode(',', hw_js_string(($f['proklima_gemeinden'] ?? '') ?: '')));
     $imFoerdergebiet = in_array($gemeinde, $proGemeinden, true);
@@ -1524,12 +1556,12 @@ function hw_foerder_calc(array $query, array $f, string $date, array $perioden, 
     if ($pkRoh > 0) {
         $totalFoerd = max($zuschussGesamt, min($totalFoerd, $kumCap));
     }
-    $proklimaZuschuss = max(0, $totalFoerd - $zuschussGesamt);
+    $proklimaZuschuss = hw_js_round(max(0, $totalFoerd - $zuschussGesamt) * 100) / 100;
     $proklimaGekappt = $pkRoh > 0 && $proklimaZuschuss < $pkRoh;
     if ($proklimaGekappt) {
         $hinweise[] = 'KfW-Zuschuss und proKlima zusammen sind auf 60 Prozent derselben Kosten begrenzt. Der KfW-Zuschuss allein darf darüber liegen.';
     }
-    $eigenanteil = max(0, $preis - $zuschussGesamt - $proklimaZuschuss);
+    $eigenanteil = hw_js_round(max(0, $preis - $zuschussGesamt - $proklimaZuschuss) * 100) / 100;
     $kfwSatz = $selbstWe > 0 ? $satzSelbst : $satzVermietet;
     $effektivSatz = $preis > 0 ? hw_js_round((($zuschussGesamt + $proklimaZuschuss) / $preis) * 100) : 0;
     if ($proklimaZuschuss > 0) {

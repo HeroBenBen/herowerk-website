@@ -2040,14 +2040,39 @@ const SVG_CHECK_SM =
 // --- Heizungsalter: Modus-Toggle (Alter-Dropdown vs. Baujahr-Input) ---
 let alterModus = 'alter'; // 'alter' oder 'baujahr'
 
+// T1170 (Festlegung 3.5; Richtlinie BEG EM vom 17.08.2026 Nr. 8.4.4): das Alter zaehlt zum Zeitpunkt der
+// Antragstellung, nicht zu heute. Der Rechner kennt keinen Monat der Inbetriebnahme, deshalb die
+// vorsichtige Regel Antragsjahr minus Baujahr minus 1; das Antragsjahr kommt aus dem gewaehlten
+// Foerderzeitraum (fruehester Antrag), ohne Wahl aus dem laufenden Jahr.
+function getFoerderAntragsjahr() {
+  const auswahl = document.getElementById('foerderAntragZeitraum');
+  const option = auswahl && auswahl.selectedOptions ? auswahl.selectedOptions[0] : null;
+  const ab = option && option.dataset ? String(option.dataset.ab || '') : '';
+  const key = auswahl ? String(auswahl.value || '') : '';
+  // Fruehester Antrag im Zeitraum (data-ab vom Server), sonst das Jahr aus dem Schluessel 'h1-2027'.
+  const jahr = parseInt(ab.slice(0, 4), 10) || parseInt(key.replace(/^h[12]-/, ''), 10);
+  return jahr > 2000 ? jahr : new Date().getFullYear();
+}
+
 function getHeizungsalter() {
   if (alterModus === 'baujahr') {
     const baujahr = parseInt(document.getElementById('heizungBaujahr')?.value) || 2000;
-    return new Date().getFullYear() - baujahr;
+    return Math.max(0, getFoerderAntragsjahr() - baujahr - 1);
   } else {
     return parseInt(document.getElementById('heizungAlterSelect')?.value) || 20;
   }
 }
+
+// T1170 (Festlegung 3.3; RL Nr. 8.4.4): Funktionstuechtigkeit der bisherigen Heizung als Ja/Nein-Frage,
+// Vorbelegung ja. Fehlt das Feld, weil noch eine aeltere Seite ausgeliefert wird, rechnet der Server ja.
+function getHeizungFunktionstuechtig() {
+  const el = document.getElementById('heizungFunktionstuechtig');
+  return el && el.value === 'nein' ? 'nein' : 'ja';
+}
+
+// T1170 (Festlegung 3.5): Fussnote zum Heizungsalter, Wortlaut der Steuerung vom 09.10.2026.
+const FOERDER_ALTER_FUSSNOTE =
+  '<div style="margin-top:4px;">Das Alter zählt monatsgenau zum Antragsdatum; ohne Monat rechnen wir vorsichtig.</div>';
 
 const FOERDER_HEIZUNG_BONUS = Object.freeze({
   oel: 'funktional',
@@ -2078,6 +2103,7 @@ function ensureFoerderHeizungsoptionen() {
 
 function foerderHatKlimabonus(heizung, alter) {
   const bedingung = FOERDER_HEIZUNG_BONUS[heizung];
+  if (getHeizungFunktionstuechtig() === 'nein') return false;
   return bedingung === 'funktional' || (bedingung === 'alter20' && alter >= 20);
 }
 
@@ -2154,7 +2180,12 @@ function toggleHeizungsalter(durchKunde = false) {
         heizungsLabel +
         ' ist ' +
         alter +
-        ' Jahre alt. Du erhältst den Klimabonus (+16 %, für Anträge vom 21.07.2026 bis 31.01.2027).</span>';
+        ' Jahre alt. Du erhältst den Klimabonus (+16 %, für Anträge vom 21.07.2026 bis 31.01.2027).</span>' +
+        FOERDER_ALTER_FUSSNOTE;
+    } else if (getHeizungFunktionstuechtig() === 'nein') {
+      hinweis.innerHTML =
+        SVG_WARN +
+        '<span style="color:var(--amber);">Den Klimabonus (+16 %) gibt es nur, wenn die bisherige Heizung noch funktioniert.</span>';
     } else {
       hinweis.innerHTML =
         SVG_WARN +
@@ -2162,11 +2193,16 @@ function toggleHeizungsalter(durchKunde = false) {
         heizungsLabel +
         ' ist erst ' +
         alter +
-        ' Jahre alt. Der Klimabonus (+16 %, für Anträge vom 21.07.2026 bis 31.01.2027) gilt erst ab 20 Jahren.</span>';
+        ' Jahre alt. Der Klimabonus (+16 %, für Anträge vom 21.07.2026 bis 31.01.2027) gilt erst ab 20 Jahren.</span>' +
+        FOERDER_ALTER_FUSSNOTE;
     }
   } else if (bedingung === 'funktional') {
     showFoerderSlot(gruppe, false);
-    hinweis.innerHTML = '';
+    hinweis.innerHTML =
+      getHeizungFunktionstuechtig() === 'nein'
+        ? SVG_WARN +
+          '<span style="color:var(--amber);">Den Klimabonus (+16 %) gibt es nur, wenn die bisherige Heizung noch funktioniert.</span>'
+        : '';
   } else {
     showFoerderSlot(gruppe, false);
     hinweis.innerHTML = '';
@@ -2253,7 +2289,10 @@ function foerderAntragOptionen(data) {
   if (soll !== ist) {
     const gewaehlt = select.value;
     select.innerHTML = data.perioden
-      .map((p) => '<option value="' + p.key + '">' + p.label + '</option>')
+      .map(
+        (p) =>
+          '<option value="' + p.key + '" data-ab="' + (p.ab || '') + '">' + p.label + '</option>'
+      )
       .join('');
     select.value = data.perioden.some((p) => p.key === gewaehlt)
       ? gewaehlt
@@ -2417,6 +2456,7 @@ async function calculateFoerder() {
     wpTyp,
     preisManuell: String(preisManuell),
     heizungsalter: String(getHeizungsalter()),
+    funktionstuechtig: getHeizungFunktionstuechtig(),
     // Kinderabzug (Kanon 1.2: einmalig 10.000 € auf das anrechenbare zvE). Das Markup dazu lebt in
     // foerderung.html (Lane C, anderer Branch). Defensiv gelesen: fehlt die Checkbox, weil noch die
     // alte Seite ausgeliefert wird, bleibt es bei 'nein' (konservativ), nichts bricht.
