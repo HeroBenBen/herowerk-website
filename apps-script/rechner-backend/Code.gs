@@ -450,7 +450,10 @@ function matchCatalogVarianten_(marke, auslegung, heizsystem, nat, markenHeizsta
     if (item.sonderplanung === true) return; // T901: als Sonderplanung gekennzeichnete Zeile ist kein Kandidat des Rechners
     const leistung = leistungAmAuslegungspunkt_(item, heizsystem, nat);
     const heizstab = item.mindestAnteil >= 1 ? 0 : markenHeizstab;
-    if (leistung < item.mindestAnteil * auslegung || leistung + heizstab < auslegung) return;
+    const empfehlungsgrenze = heizsystem === 'heizkoerper' ? item.empfehlungW55 : item.empfehlungW35;
+    const anteilErfuellt = leistung >= item.mindestAnteil * auslegung
+      || (empfehlungsgrenze !== null && auslegung <= empfehlungsgrenze);
+    if (!anteilErfuellt || leistung + heizstab < auslegung) return;
     if (item.kaskade) {
       const einzelgrenze = groessteEinzelgrenze[item.baureihe];
       if (einzelgrenze === undefined || auslegung <= einzelgrenze + kaskadenToleranz) return;
@@ -1603,7 +1606,7 @@ function tabellenWert_(row, index) {
 
 function getCatalog_() {
   const cache = CacheService.getScriptCache();
-  const cached = cache.get('catalog:v4');
+  const cached = cache.get('catalog:v5');
   if (cached) return JSON.parse(cached);
   const ss = SpreadsheetApp.openById(SHEET_ID);
   const sh = ss.getSheetByName('Geräte_Katalog');
@@ -1623,6 +1626,10 @@ function getCatalog_() {
     leistungW55a10: kopfIndex_(table, 'WP NAT W55 @A-10'),
     baureihe: kopfIndex_(table, 'Baureihe'),
     mindestAnteil: kopfIndex_(table, 'Mindest-Leistungsanteil'),
+    empfehlungW55: kopfIndex_(table, 'Empfehlung bis kW W55', true),
+    empfehlungW35: kopfIndex_(table, 'Empfehlung bis kW W35', true),
+    herstellerfreigabeW55: kopfIndex_(table, 'Herstellerfreigabe bis kW W55', true),
+    herstellerfreigabeW35: kopfIndex_(table, 'Herstellerfreigabe bis kW W35', true),
     brutto: kopfIndex_(table, 'Brutto €'),
     stand: kopfIndex_(table, 'Stand'),
     puffer: kopfIndex_(table, 'Puffer (', true),
@@ -1638,6 +1645,10 @@ function getCatalog_() {
   const out = [];
   table.rows.forEach(function (row, rowIndex) {
     if (!tabellenWert_(row, columns.marke) || !tabellenWert_(row, columns.modell)) return;
+    const empfehlungW55 = tabellenWert_(row, columns.empfehlungW55);
+    const empfehlungW35 = tabellenWert_(row, columns.empfehlungW35);
+    const herstellerfreigabeW55 = tabellenWert_(row, columns.herstellerfreigabeW55);
+    const herstellerfreigabeW35 = tabellenWert_(row, columns.herstellerfreigabeW35);
     out.push({
       marke: String(tabellenWert_(row, columns.marke)).toLowerCase(),
       modell: String(tabellenWert_(row, columns.modell)),
@@ -1652,6 +1663,10 @@ function getCatalog_() {
       leistungW55a10: num_(tabellenWert_(row, columns.leistungW55a10), 0),
       baureihe: String(tabellenWert_(row, columns.baureihe)),
       mindestAnteil: num_(tabellenWert_(row, columns.mindestAnteil), 0.7),
+      empfehlungW55: empfehlungW55 === '' ? null : num_(empfehlungW55, null),
+      empfehlungW35: empfehlungW35 === '' ? null : num_(empfehlungW35, null),
+      herstellerfreigabeW55: herstellerfreigabeW55 === '' ? null : num_(herstellerfreigabeW55, null),
+      herstellerfreigabeW35: herstellerfreigabeW35 === '' ? null : num_(herstellerfreigabeW35, null),
       brutto: num_(tabellenWert_(row, columns.brutto), 0),
       stand: String(tabellenWert_(row, columns.stand)),
       puffer: String(tabellenWert_(row, columns.puffer)),
@@ -1666,7 +1681,7 @@ function getCatalog_() {
       reihenfolge: rowIndex
     });
   });
-  cache.put('catalog:v4', JSON.stringify(out), CACHE_TTL_SECONDS);
+  cache.put('catalog:v5', JSON.stringify(out), CACHE_TTL_SECONDS);
   return out;
 }
 
