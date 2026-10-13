@@ -360,6 +360,11 @@ const RECHNER_INNENFELDER = [
     // Deckungsgrad des Geraets am Normpunkt in Prozent. Das ist der KERN unserer
     // Auswahlregel, kleinste Maschine ueber der Mindestdeckung. Nie freigeben.
     'leistungsanteil_prozent',
+    // T1198: interne Kataloggrenzen je Vorlauftemperatur. Die Website zeigt weiter nur den Gerätetyp.
+    'empfehlungW55',
+    'empfehlungW35',
+    'herstellerfreigabeW55',
+    'herstellerfreigabeW35',
     // Kennzeichnet, dass ein Geraet ueber dem hinterlegten Sollband liegt. Verraet, dass es
     // ein Sollband gibt und wo es steht.
     'ueberSollband',

@@ -406,6 +406,10 @@ function hw_get_catalog(array $sheets): array
         'leistungW55a10' => hw_kopf_index($table, 'WP NAT W55 @A-10'),
         'baureihe' => hw_kopf_index($table, 'Baureihe'),
         'mindestAnteil' => hw_kopf_index($table, 'Mindest-Leistungsanteil'),
+        'empfehlungW55' => hw_kopf_index($table, 'Empfehlung bis kW W55', true),
+        'empfehlungW35' => hw_kopf_index($table, 'Empfehlung bis kW W35', true),
+        'herstellerfreigabeW55' => hw_kopf_index($table, 'Herstellerfreigabe bis kW W55', true),
+        'herstellerfreigabeW35' => hw_kopf_index($table, 'Herstellerfreigabe bis kW W35', true),
         'brutto' => hw_kopf_index($table, 'Brutto €'),
         'stand' => hw_kopf_index($table, 'Stand'),
         'puffer' => hw_kopf_index($table, 'Puffer (', true),
@@ -423,6 +427,10 @@ function hw_get_catalog(array $sheets): array
             continue;
         }
         $pufferLiterRaw = hw_tabellen_wert($row, $columns['pufferLiter']);
+        $empfehlungW55 = hw_tabellen_wert($row, $columns['empfehlungW55']);
+        $empfehlungW35 = hw_tabellen_wert($row, $columns['empfehlungW35']);
+        $herstellerfreigabeW55 = hw_tabellen_wert($row, $columns['herstellerfreigabeW55']);
+        $herstellerfreigabeW35 = hw_tabellen_wert($row, $columns['herstellerfreigabeW35']);
         $out[] = [
             'marke' => strtolower(hw_js_string(hw_tabellen_wert($row, $columns['marke']))),
             'modell' => hw_js_string(hw_tabellen_wert($row, $columns['modell'])),
@@ -437,6 +445,18 @@ function hw_get_catalog(array $sheets): array
             'leistungW55a10' => hw_num(hw_tabellen_wert($row, $columns['leistungW55a10']), 0),
             'baureihe' => hw_js_string(hw_tabellen_wert($row, $columns['baureihe'])),
             'mindestAnteil' => hw_num(hw_tabellen_wert($row, $columns['mindestAnteil']), 0.7),
+            'empfehlungW55' => $empfehlungW55 === '' || !is_numeric($empfehlungW55)
+                ? null
+                : hw_num($empfehlungW55, 0),
+            'empfehlungW35' => $empfehlungW35 === '' || !is_numeric($empfehlungW35)
+                ? null
+                : hw_num($empfehlungW35, 0),
+            'herstellerfreigabeW55' => $herstellerfreigabeW55 === '' || !is_numeric($herstellerfreigabeW55)
+                ? null
+                : hw_num($herstellerfreigabeW55, 0),
+            'herstellerfreigabeW35' => $herstellerfreigabeW35 === '' || !is_numeric($herstellerfreigabeW35)
+                ? null
+                : hw_num($herstellerfreigabeW35, 0),
             'brutto' => hw_num(hw_tabellen_wert($row, $columns['brutto']), 0),
             'stand' => hw_js_string(hw_tabellen_wert($row, $columns['stand'])),
             'puffer' => hw_js_string(hw_tabellen_wert($row, $columns['puffer'])),
@@ -823,7 +843,10 @@ function hw_match_catalog_varianten(
         $leistung = hw_leistung_am_auslegungspunkt($item, $heizsystem, $nat);
         $mindestAnteil = $item['mindestAnteil'];
         $heizstab = $mindestAnteil >= 1 ? 0 : $markenHeizstab;
-        if ($leistung < $mindestAnteil * $auslegung || $leistung + $heizstab < $auslegung) {
+        $empfehlungsgrenze = $heizsystem === 'heizkoerper' ? $item['empfehlungW55'] : $item['empfehlungW35'];
+        $anteilErfuellt = $leistung >= $mindestAnteil * $auslegung
+            || ($empfehlungsgrenze !== null && $auslegung <= $empfehlungsgrenze);
+        if (!$anteilErfuellt || $leistung + $heizstab < $auslegung) {
             continue;
         }
         if ($item['kaskade']) {
