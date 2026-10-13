@@ -161,4 +161,6 @@ assert.equal(konflikt.zustand().kopien, 0, 'Konflikt bricht vor Archiv und Schre
 const typfehler = baueUmgebung({ rueckleseAlsText: true });
 assert.throws(() => typfehler.ausfuehren(false), /Rückleseabweichung/);
 
-console.log('PASS T1198-Datenschritt: Trockenlauf, Archiv, Zielsuche, Konflikt und typgleiche Rückleseprobe.');
+console.log(
+  'PASS T1198-Datenschritt: Trockenlauf, Archiv, Zielsuche, Konflikt und typgleiche Rückleseprobe.'
+);

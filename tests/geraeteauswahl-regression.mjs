@@ -563,7 +563,12 @@ for (const [
 }
 
 for (const [index, testCase] of parityCases.entries()) {
-  const apps = appsSelection(testCase.brand, testCase.load, testCase.heizsystem, testCase.nat ?? -11);
+  const apps = appsSelection(
+    testCase.brand,
+    testCase.load,
+    testCase.heizsystem,
+    testCase.nat ?? -11
+  );
   if (index < 1044) {
     assert.deepEqual(phpResults.parity[index], apps, `Kernparität ${JSON.stringify(testCase)}`);
   } else {
