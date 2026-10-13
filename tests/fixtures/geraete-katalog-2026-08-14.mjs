@@ -1,12 +1,41 @@
 /**
- * Eingefrorener Stand von Geräte_Katalog!A9:T30 am 14.08.2026.
+ * Eingefrorener Stand von Geräte_Katalog!A9:AL30, Basis vom 14.08.2026,
+ * ergänzt um die vier für T1198 freigegebenen Spalten aus Plan Runde 1.
  * Sollband-Untergrenze zum Zeitpunkt der Abnahme: sollband_unten = 0,70.
  * Diese 22 Gerätezeilen sind die feste Wahrheit der Auswahlregression und werden
  * ausdrücklich nicht während des Tests aus der Google-Tabelle aktualisiert.
  */
 export const sollbandUnten = 0.7;
 
-export const geraeteKatalogZeilen = [
+export const katalogKopfzeile = [
+  'Marke',
+  'Modell',
+  'Kaskade',
+  'WP NAT W35',
+  'WP NAT W55',
+  '',
+  '',
+  'Auslegungsgrenze W35 (WP÷0,80)',
+  'Auslegungsgrenze W55 (WP÷0,80)',
+  '',
+  'Brutto €',
+  'Stand',
+  '',
+  'Auslegungsgrenze W35 @A-10',
+  'Auslegungsgrenze W55 @A-10',
+  '',
+  'WP NAT W35 @A-10',
+  'WP NAT W55 @A-10',
+  'Baureihe',
+  'Mindest-Leistungsanteil',
+  ...Array(14).fill(''),
+  'Empfehlung bis kW W55',
+  'Empfehlung bis kW W35',
+  'Herstellerfreigabe bis kW W55',
+  'Herstellerfreigabe bis kW W35',
+];
+
+const basisZeilen = [
   [
     'Wolf',
     'Wolf CHA-07',
@@ -492,3 +521,25 @@ export const geraeteKatalogZeilen = [
     0.7,
   ],
 ];
+
+const t1198Werte = {
+  'Wolf CHA-07': ['', '', 11.5, 12],
+  'Wolf CHA-10': [14, 14.5, 16.5, 17.5],
+  'Wolf CHA-16/20': ['', '', 23, 23.5],
+  'Wolf CHA-20/24': ['', '', 26.5, 27],
+  'Vaillant VWL 35/8.1 A': ['', '', 7, 7],
+  'Vaillant VWL 55/8.1 A': ['', '', 9, 10],
+  'Vaillant VWL 75/8.1 A': ['', '', 13, 14],
+  'Vaillant VWL 105/8.1 A': ['', '', 15, 16],
+  'Vaillant VWL 125/8.1 A': ['', '', 18, 20],
+  'Vaillant VWL 55/7.1 A': ['', '', 8, 9],
+  'Vaillant VWL 75/7.1 A': ['', '', 11, 13],
+  'Vaillant VWL 115/7.1 A': ['', '', 16, 18],
+  'Vaillant VWL 205/8.1 A S2 Q': ['', '', 26, 23],
+};
+
+export const geraeteKatalogZeilen = basisZeilen.map((zeile) => [
+  ...zeile,
+  ...Array(14).fill(''),
+  ...(t1198Werte[zeile[1]] ?? ['', '', '', '']),
+]);

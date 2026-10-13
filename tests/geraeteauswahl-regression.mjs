@@ -3,39 +3,22 @@ import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import vm from 'node:vm';
 
-import { geraeteKatalogZeilen, sollbandUnten } from './fixtures/geraete-katalog-2026-08-14.mjs';
+import {
+  geraeteKatalogZeilen,
+  katalogKopfzeile,
+  sollbandUnten,
+} from './fixtures/geraete-katalog-2026-08-14.mjs';
 
 const codeGs = fs.readFileSync('apps-script/rechner-backend/Code.gs', 'utf8');
 
-function buildAppsScript(rows, lastRow = rows.length + 8) {
+function buildAppsScript(rows, lastRow = rows.length + 8, headers = katalogKopfzeile) {
   const cache = new Map();
-  const parameterRows = Array.from({ length: 8 }, () => Array(20).fill(''));
+  const parameterRows = Array.from({ length: 8 }, () => Array(headers.length).fill(''));
   parameterRows[4][0] = 'heizstab_wolf';
   parameterRows[4][1] = 9;
   parameterRows[5][0] = 'heizstab_vaillant';
   parameterRows[5][1] = 8.54;
-  parameterRows[7] = [
-    'Marke',
-    'Modell',
-    'Kaskade',
-    'WP NAT W35',
-    'WP NAT W55',
-    '',
-    '',
-    'Auslegungsgrenze W35 (WP÷0,80)',
-    'Auslegungsgrenze W55 (WP÷0,80)',
-    '',
-    'Brutto €',
-    'Stand',
-    '',
-    'Auslegungsgrenze W35 @A-10',
-    'Auslegungsgrenze W55 @A-10',
-    '',
-    'WP NAT W35 @A-10',
-    'WP NAT W55 @A-10',
-    'Baureihe',
-    'Mindest-Leistungsanteil',
-  ];
+  parameterRows[7] = headers;
   const sheet = {
     getLastRow() {
       return lastRow;
@@ -43,8 +26,8 @@ function buildAppsScript(rows, lastRow = rows.length + 8) {
     getRange(row, column, rowCount, columnCount) {
       assert.deepEqual(
         [row, column, rowCount, columnCount],
-        [9, 1, Math.max(0, lastRow - 8), 20],
-        'Apps Script liest Geräte_Katalog ab Zeile 9 bis Spalte T'
+        [9, 1, Math.max(0, lastRow - 8), headers.length],
+        'Apps Script liest Geräte_Katalog ab Zeile 9 bis zur letzten Kopfspalte'
       );
       return {
         getValues() {
@@ -107,7 +90,7 @@ function buildAppsScript(rows, lastRow = rows.length + 8) {
 assert.equal(geraeteKatalogZeilen.length, 22, 'eingefrorener Katalog enthält 22 Gerätezeilen');
 assert.equal(sollbandUnten, 0.7, 'eingefrorenes Sollband ist 0,70');
 for (const [index, row] of geraeteKatalogZeilen.entries()) {
-  assert.equal(row.length, 20, `Katalogzeile ${index + 9} enthält A bis T`);
+  assert.equal(row.length, 38, `Katalogzeile ${index + 9} enthält A bis AL`);
   assert.notEqual(row[18], '', `Katalogzeile ${index + 9}: Baureihe belegt`);
   assert.notEqual(row[19], '', `Katalogzeile ${index + 9}: Mindestanteil belegt`);
 }
@@ -115,9 +98,55 @@ for (const [index, row] of geraeteKatalogZeilen.entries()) {
 const { sandbox: appsScript, cache } = buildAppsScript(geraeteKatalogZeilen);
 const appsCatalog = appsScript.getCatalog_();
 assert.equal(appsCatalog.length, 22, 'Apps Script verarbeitet alle 22 Katalogzeilen');
-assert(cache.has('catalog:v4'), 'Apps Script schreibt catalog:v4 (T901: Feld sonderplanung)');
-assert.equal(cache.has('catalog:v1'), false, 'Apps Script verwendet catalog:v1 nicht mehr');
-assert.equal(cache.has('catalog:v3'), false, 'Apps Script verwendet catalog:v3 nicht mehr');
+assert(cache.has('catalog:v5'), 'Apps Script schreibt catalog:v5 (T1198: vier Auslegungsfelder)');
+assert.equal(cache.has('catalog:v4'), false, 'Apps Script verwendet catalog:v4 nicht mehr');
+const appsCha10 = appsCatalog.find((item) => item.modell === 'Wolf CHA-10');
+assert.deepEqual(
+  JSON.parse(
+    JSON.stringify({
+      empfehlungW55: appsCha10.empfehlungW55,
+      empfehlungW35: appsCha10.empfehlungW35,
+      herstellerfreigabeW55: appsCha10.herstellerfreigabeW55,
+      herstellerfreigabeW35: appsCha10.herstellerfreigabeW35,
+    })
+  ),
+  {
+    empfehlungW55: 14,
+    empfehlungW35: 14.5,
+    herstellerfreigabeW55: 16.5,
+    herstellerfreigabeW35: 17.5,
+  },
+  'Apps Script liest die vier T1198-Spalten über den Kopftext'
+);
+const alterKopf = katalogKopfzeile.slice(0, 20);
+const alterKatalog = buildAppsScript(
+  geraeteKatalogZeilen.map((row) => row.slice(0, 20)),
+  geraeteKatalogZeilen.length + 8,
+  alterKopf
+).sandbox.getCatalog_();
+assert.equal(
+  alterKatalog.find((item) => item.modell === 'Wolf CHA-10').empfehlungW55,
+  null,
+  'Fehlender Empfehlungskopf fällt ausdrücklich auf die 70-Prozent-Regel zurück'
+);
+assert.deepEqual(
+  JSON.parse(
+    JSON.stringify(
+      Object.fromEntries(
+        ['empfehlungW55', 'empfehlungW35', 'herstellerfreigabeW55', 'herstellerfreigabeW35'].map(
+          (feld) => [feld, alterKatalog.find((item) => item.modell === 'Wolf CHA-10')[feld]]
+        )
+      )
+    )
+  ),
+  {
+    empfehlungW55: null,
+    empfehlungW35: null,
+    herstellerfreigabeW55: null,
+    herstellerfreigabeW35: null,
+  },
+  'Fehlen die vier Köpfe, bleiben alle vier Felder leer'
+);
 assert.deepEqual(
   JSON.parse(JSON.stringify(appsScript.getCatalogParameters_())),
   { heizstab_wolf: 9, heizstab_vaillant: 8.54 },
@@ -157,12 +186,12 @@ const sollfaelle = [
 const heizstaebe = { wolf: 9, vaillant: 8.54 };
 const kaskadenToleranz = 0.5;
 
-function appsSelection(brand, load, heizsystem) {
+function appsSelection(brand, load, heizsystem, nat = -11) {
   const match = appsScript.matchCatalog_(
     brand,
     load,
     heizsystem,
-    -11,
+    nat,
     heizstaebe[brand],
     kaskadenToleranz
   );
@@ -179,16 +208,66 @@ for (let step = 0; step <= 260; step++) {
     for (const brand of ['wolf', 'vaillant']) parityCases.push({ brand, load, heizsystem });
   }
 }
-assert.equal(parityCases.length, 1044, 'Paritätsmatrix enthält 1.044 Vergleiche');
+const wolfReferenzfaelle = [
+  ['A1', 5, 'heizkoerper', 'Wolf CHA-07'],
+  ['A2', 7, 'heizkoerper', 'Wolf CHA-07'],
+  ['A3', 9, 'heizkoerper', 'Wolf CHA-10'],
+  ['A4', 11, 'heizkoerper', 'Wolf CHA-10'],
+  ['A5', 13, 'heizkoerper', 'Wolf CHA-10'],
+  ['A6', 15, 'heizkoerper', 'Wolf CHA-16/20'],
+  ['A7', 17, 'heizkoerper', 'Wolf CHA-16/20'],
+  ['A8', 20, 'heizkoerper', 'Wolf CHA-16/20'],
+  ['A9', 23, 'heizkoerper', 'Wolf CHA-20/24'],
+  ['A10', 26, 'heizkoerper', '2× Wolf CHA-16/20 (Kaskade)'],
+  ['A11', 5, 'fussboden', 'Wolf CHA-07'],
+  ['A12', 7, 'fussboden', 'Wolf CHA-07'],
+  ['A13', 9, 'fussboden', 'Wolf CHA-07'],
+  ['A14', 11, 'fussboden', 'Wolf CHA-10'],
+  ['A15', 13, 'fussboden', 'Wolf CHA-10'],
+  ['A16', 15, 'fussboden', 'Wolf CHA-16/20'],
+  ['A17', 17, 'fussboden', 'Wolf CHA-16/20'],
+  ['A18', 20, 'fussboden', 'Wolf CHA-16/20'],
+  ['A19', 23, 'fussboden', 'Wolf CHA-20/24'],
+  ['A20', 26, 'fussboden', 'Wolf CHA-20/24'],
+];
+const wolfFeinraster = [];
+for (const heizsystem of ['heizkoerper', 'fussboden']) {
+  for (let halb = 8; halb <= 60; halb += 1) {
+    wolfFeinraster.push({ brand: 'wolf', load: halb / 2, heizsystem, nat: -11.1 });
+  }
+}
+const dealFall = { brand: 'wolf', load: 12.2, heizsystem: 'heizkoerper', nat: -10.3 };
+const bandGrenzfaelle = [
+  { brand: 'wolf', load: 11.1, heizsystem: 'heizkoerper', nat: -11.1 },
+  { brand: 'wolf', load: 14, heizsystem: 'heizkoerper', nat: -11.1 },
+  { brand: 'wolf', load: 12.7, heizsystem: 'fussboden', nat: -11.1 },
+  { brand: 'wolf', load: 14.5, heizsystem: 'fussboden', nat: -11.1 },
+];
+parityCases.push(
+  dealFall,
+  ...bandGrenzfaelle,
+  ...wolfReferenzfaelle.map(([, load, heizsystem]) => ({
+    brand: 'wolf',
+    load,
+    heizsystem,
+    nat: -11.1,
+  })),
+  ...wolfFeinraster
+);
+assert.equal(
+  parityCases.length,
+  1175,
+  'Paritätsmatrix enthält 1.044 Bestands-, 20 Wolf-Referenz-, 106 Feinraster-, vier Bandgrenz- und einen Deal-Fall'
+);
 
 const phpRunner = String.raw`
 require 'api/rechner-engine.php';
 $input = json_decode(stream_get_contents(STDIN), true);
-$blank = array_fill(0, 20, '');
+$blank = array_fill(0, count($input['headers']), '');
 $sheets = ['Geräte_Katalog' => array_merge(array_fill(0, 8, $blank), $input['rows'])];
 $sheets['Geräte_Katalog'][4] = ['heizstab_wolf', 9];
 $sheets['Geräte_Katalog'][5] = ['heizstab_vaillant', 8.54];
-$sheets['Geräte_Katalog'][7] = ['Marke','Modell','Kaskade','WP NAT W35','WP NAT W55','','','Auslegungsgrenze W35 (WP÷0,80)','Auslegungsgrenze W55 (WP÷0,80)','','Brutto €','Stand','','Auslegungsgrenze W35 @A-10','Auslegungsgrenze W55 @A-10','','WP NAT W35 @A-10','WP NAT W55 @A-10','Baureihe','Mindest-Leistungsanteil'];
+$sheets['Geräte_Katalog'][7] = $input['headers'];
 $select = static function (array $case) use ($sheets, $input): array {
     $brand = $case['brand'];
     $load = $case['load'];
@@ -197,7 +276,7 @@ $select = static function (array $case) use ($sheets, $input): array {
         $brand,
         $load,
         $case['heizsystem'],
-        -11,
+        $case['nat'] ?? -11,
         $input['heizstaebe'][$brand],
         $input['kaskadenToleranz']
     );
@@ -247,6 +326,20 @@ $reorderedDimension = [
     ['kaskaden_toleranz_kw', 0.37],
 ];
 $dimension = hw_read_kv(['Dimensionierung' => $reorderedDimension], 'Dimensionierung');
+$legacyHeaders = array_slice($input['headers'], 0, 20);
+$legacyRows = array_map(static fn (array $row): array => array_slice($row, 0, 20), $input['rows']);
+$legacyBlank = array_fill(0, 20, '');
+$legacySheets = ['Geräte_Katalog' => array_merge(array_fill(0, 8, $legacyBlank), $legacyRows)];
+$legacySheets['Geräte_Katalog'][7] = $legacyHeaders;
+$sabotageSheets = $sheets;
+$empfehlungW55Index = array_search('Empfehlung bis kW W55', $input['headers'], true);
+foreach ($sabotageSheets['Geräte_Katalog'] as &$row) {
+    if (($row[1] ?? null) === 'Wolf CHA-10') {
+        $row[$empfehlungW55Index] = '';
+    }
+}
+unset($row);
+$sabotageMatch = hw_match_catalog($sabotageSheets, 'wolf', 12.2, 'heizkoerper', -10.3, 9, $input['kaskadenToleranz']);
 echo json_encode([
     'fixed' => $fixed,
     'parity' => $parity,
@@ -256,6 +349,9 @@ echo json_encode([
     'fallbackTolerance' => hw_get_num([], 'kaskaden_toleranz_kw', 0.5),
     'fallbackUpperBand' => hw_get_num([], 'sollband_oben', 0.8),
     'catalogParameters' => hw_read_kv($sheets, 'Geräte_Katalog'),
+    'catalogCha10' => array_values(array_filter(hw_get_catalog($sheets), static fn (array $item): bool => $item['modell'] === 'Wolf CHA-10'))[0],
+    'legacyCha10' => array_values(array_filter(hw_get_catalog($legacySheets), static fn (array $item): bool => $item['modell'] === 'Wolf CHA-10'))[0],
+    'sabotageModell' => $sabotageMatch['modell'] ?? null,
     'varianten' => array_map(static fn (array $item): array => ['baureihe' => $item['baureihe'], 'leistung' => round($item['leistungAuslegung'], 4)], $varianten),
     'kennlinien' => [
         'einzelTakt' => hw_taktpunkt($single, $context, 20),
@@ -270,6 +366,7 @@ echo json_encode([
 const php = spawnSync('php', ['-r', phpRunner], {
   input: JSON.stringify({
     rows: geraeteKatalogZeilen,
+    headers: katalogKopfzeile,
     heizstaebe,
     kaskadenToleranz,
     fixed: sollfaelle.map(([, brand, load, heizsystem]) => ({ brand, load, heizsystem })),
@@ -433,6 +530,27 @@ assert.equal(
   8.54,
   'PHP liest den Vaillant-Heizstab über den Schlüsselnamen im Geräte-Katalog'
 );
+for (const [feld, wert] of [
+  ['empfehlungW55', 14],
+  ['empfehlungW35', 14.5],
+  ['herstellerfreigabeW55', 16.5],
+  ['herstellerfreigabeW35', 17.5],
+]) {
+  assert.equal(phpResults.catalogCha10[feld], wert, `PHP liest ${feld} über den Kopftext`);
+}
+assert.equal(
+  phpResults.legacyCha10.empfehlungW55,
+  null,
+  'PHP: fehlender Empfehlungskopf fällt ausdrücklich auf die 70-Prozent-Regel zurück'
+);
+for (const feld of [
+  'empfehlungW55',
+  'empfehlungW35',
+  'herstellerfreigabeW55',
+  'herstellerfreigabeW35',
+]) {
+  assert.equal(phpResults.legacyCha10[feld], null, `PHP: fehlender Kopf ${feld} bleibt leer`);
+}
 
 for (const [
   index,
@@ -445,9 +563,103 @@ for (const [
 }
 
 for (const [index, testCase] of parityCases.entries()) {
-  const apps = appsSelection(testCase.brand, testCase.load, testCase.heizsystem);
-  assert.deepEqual(phpResults.parity[index], apps, `Kernparität ${JSON.stringify(testCase)}`);
+  const apps = appsSelection(testCase.brand, testCase.load, testCase.heizsystem, testCase.nat ?? -11);
+  if (index < 1044) {
+    assert.deepEqual(phpResults.parity[index], apps, `Kernparität ${JSON.stringify(testCase)}`);
+  } else {
+    assert.equal(
+      phpResults.parity[index].modell,
+      apps.modell,
+      `Empfehlungsparität ${JSON.stringify(testCase)}`
+    );
+  }
 }
+
+assert.equal(
+  appsSelection(dealFall.brand, dealFall.load, dealFall.heizsystem, dealFall.nat).modell,
+  'Wolf CHA-10',
+  'Deal 525406451938: 12,2 kW und 55 Grad empfiehlt CHA-10'
+);
+for (const testCase of bandGrenzfaelle) {
+  assert.equal(
+    appsSelection(testCase.brand, testCase.load, testCase.heizsystem, testCase.nat).modell,
+    'Wolf CHA-10',
+    `CHA-10-Bandgrenze ${JSON.stringify(testCase)}`
+  );
+}
+const sabotierteZeilen = geraeteKatalogZeilen.map((row) => {
+  const kopie = row.slice();
+  if (kopie[1] === 'Wolf CHA-10') kopie[katalogKopfzeile.indexOf('Empfehlung bis kW W55')] = '';
+  return kopie;
+});
+const sabotageApps = buildAppsScript(sabotierteZeilen).sandbox.matchCatalog_(
+  'wolf',
+  12.2,
+  'heizkoerper',
+  -10.3,
+  9,
+  kaskadenToleranz
+);
+assert.equal(sabotageApps.modell, 'Wolf CHA-16/20', 'Sabotage Apps Script: leere CHA-10-Grenze');
+assert.equal(phpResults.sabotageModell, 'Wolf CHA-16/20', 'Sabotage PHP: leere CHA-10-Grenze');
+console.log('PASS Sabotage: CHA-10 Empfehlung W55 leer ergibt in beiden Kernen Wolf CHA-16/20.');
+for (const [id, load, heizsystem, expectedModel] of wolfReferenzfaelle) {
+  assert.equal(
+    appsSelection('wolf', load, heizsystem, -11.1).modell,
+    expectedModel,
+    `Wolf-Referenz ${id}`
+  );
+}
+
+function wolfAngebot(load, heizsystem) {
+  if (heizsystem === 'heizkoerper') {
+    if (load <= 8) return ['Wolf CHA-07'];
+    if (load <= 11.5) return ['Wolf CHA-07', 'Wolf CHA-10'];
+    if (load <= 14) return ['Wolf CHA-10'];
+    if (load <= 16.5) return ['Wolf CHA-10', 'Wolf CHA-16/20'];
+    if (load <= 17.5) return ['Wolf CHA-16/20'];
+    if (load <= 23) return ['Wolf CHA-16/20', 'Wolf CHA-20/24'];
+    if (load <= 26.5) return ['Wolf CHA-20/24', '2× Wolf CHA-07', '2× Wolf CHA-10'];
+    if (load <= 28) return ['2× Wolf CHA-10'];
+    return ['2× Wolf CHA-10', '2× Wolf CHA-16/20 (Kaskade)'];
+  }
+  if (load <= 8.5) return ['Wolf CHA-07'];
+  if (load <= 12) return ['Wolf CHA-07', 'Wolf CHA-10'];
+  if (load <= 14.5) return ['Wolf CHA-10'];
+  if (load <= 17.5) return ['Wolf CHA-10', 'Wolf CHA-16/20'];
+  if (load === 18) return ['Wolf CHA-16/20'];
+  if (load <= 23.5) return ['Wolf CHA-16/20', 'Wolf CHA-20/24'];
+  if (load <= 27) return ['Wolf CHA-20/24', '2× Wolf CHA-07', '2× Wolf CHA-10'];
+  if (load <= 29.5) return ['2× Wolf CHA-10'];
+  return ['2× Wolf CHA-10', '2× Wolf CHA-16/20 (Kaskade)'];
+}
+const kaskadenBefunde = [];
+for (const testCase of wolfFeinraster) {
+  const modell = appsSelection('wolf', testCase.load, testCase.heizsystem, testCase.nat).modell;
+  const angebot = wolfAngebot(testCase.load, testCase.heizsystem);
+  if (!angebot.includes(modell)) {
+    kaskadenBefunde.push({
+      heizlast: testCase.load,
+      vorlauf: testCase.heizsystem === 'heizkoerper' ? 55 : 35,
+      unsereEmpfehlung: modell,
+      wolfAngebot: angebot,
+    });
+  }
+  const imCha10Band =
+    (testCase.heizsystem === 'heizkoerper' && testCase.load >= 11.5 && testCase.load <= 14) ||
+    (testCase.heizsystem === 'fussboden' && testCase.load >= 13 && testCase.load <= 14.5);
+  if (imCha10Band) assert.equal(modell, 'Wolf CHA-10', `CHA-10-Band ${JSON.stringify(testCase)}`);
+}
+const bekannteKaskadenpunkte = [
+  ...Array.from({ length: 9 }, (_, index) => [26 + index / 2, 55]),
+  ...Array.from({ length: 6 }, (_, index) => [27 + index / 2, 35]),
+];
+assert.deepEqual(
+  kaskadenBefunde.map(({ heizlast, vorlauf }) => [heizlast, vorlauf]),
+  bekannteKaskadenpunkte,
+  'Wolf-Abweichungsliste enthält genau die bekannten Kaskadenpunkte und keinen Einzelgerätepunkt'
+);
+console.log('Wolf-Kaskadenbefunde:', JSON.stringify(kaskadenBefunde));
 
 console.log('PHP-Kern, fünf Kontrollwerte bei minus 11,0 Grad:');
 for (const index of [1, 5, 6, 8, 9]) {
@@ -661,5 +873,5 @@ assert.deepEqual(
 );
 
 console.log(
-  'PASS Geräteauswahl: 19 Sollfälle je Kern, 1.044 Paritätsvergleiche, Sollband und Nullpreis.'
+  'PASS Geräteauswahl: 19 Sollfälle je Kern, 1.175 Empfehlungs-Paritätsvergleiche, Sollband und Nullpreis.'
 );
