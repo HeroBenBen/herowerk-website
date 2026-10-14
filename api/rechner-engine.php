@@ -800,6 +800,7 @@ function hw_warmwasser_leistung(array $d, int $personen, int $duschen, int $wann
 // Entscheide: 12.08.2026 (Warmwasser als Fuehrungsgroesse, Kaskaden-Deckungsgrad), 14.08.2026 (Auswahlregel: kleinste
 // Leistung ab Mindest-Leistungsanteil, Kaskade je Baureihe), 16.08.2026 (Obergrenze anzeigen statt filtern),
 // 17.08.2026 (Kennzahlen in den Konfigurator, Website zeigt nur den Geraetetyp), 01.09.2026 (Zwei-Geraete-Grenze).
+// 14.10.2026 (nur Website: Mindestdeckung website_mindestanteil, Rueckfall 0,80; der Konfigurator-Zwilling bleibt ohne).
 // Stellraeder: HeroWerk_Website_Daten, Blatt Dimensionierung, Schluessel sollband_unten, sollband_oben und
 // kaskaden_toleranz_kw (ueber den Schluessel in Spalte A gefunden, nie ueber eine Zeilennummer); Marken-Heizstab
 // Geraete_Katalog, Schluessel heizstab_wolf und heizstab_vaillant; Zwei-Geraete-Grenze ueber den Kopftext Auswahl.
@@ -815,7 +816,8 @@ function hw_match_catalog_varianten(
     string $heizsystem,
     float|int $nat,
     float|int $markenHeizstab,
-    float|int $kaskadenToleranz
+    float|int $kaskadenToleranz,
+    float|int $websiteMindestanteil = 0
 ): array
 {
     $grenze = static fn (array $item): float|int => $heizsystem === 'heizkoerper'
@@ -844,8 +846,11 @@ function hw_match_catalog_varianten(
         $mindestAnteil = $item['mindestAnteil'];
         $heizstab = $mindestAnteil >= 1 ? 0 : $markenHeizstab;
         $empfehlungsgrenze = $heizsystem === 'heizkoerper' ? $item['empfehlungW55'] : $item['empfehlungW35'];
-        $anteilErfuellt = $leistung >= $mindestAnteil * $auslegung
-            || ($empfehlungsgrenze !== null && $auslegung <= $empfehlungsgrenze);
+        $anteilErfuellt = ($leistung >= $mindestAnteil * $auslegung
+            || ($empfehlungsgrenze !== null && $auslegung <= $empfehlungsgrenze))
+            // GF 14.10.2026: die Website zeigt kein Geraet unter der Website-Mindestdeckung, auch nicht ueber die
+            // Empfehlungsgrenze des Konfigurators; der Kunde soll nicht mit zu knapper Erwartung anfragen.
+            && $leistung >= $websiteMindestanteil * $auslegung;
         if (!$anteilErfuellt || $leistung + $heizstab < $auslegung) {
             continue;
         }
@@ -1199,7 +1204,9 @@ function hw_dimensionierung(array $query, array $sheets): array
             $heizsystem,
             $zone['nat'],
             $markenHeizstab,
-            hw_get_num($d, 'kaskaden_toleranz_kw', 0.5)
+            hw_get_num($d, 'kaskaden_toleranz_kw', 0.5),
+            // Treiber im Blatt Dimensionierung, Schluessel website_mindestanteil; Rueckfall 0,80 (GF 14.10.2026).
+            hw_get_num($d, 'website_mindestanteil', 0.8)
         );
         $varianten = [];
         foreach ($matches as $index => $match) {
