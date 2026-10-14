@@ -335,8 +335,47 @@ function hw_tabellen_wert(array $row, int $index): mixed
     return $index < 0 ? '' : ($row[$index] ?? '');
 }
 
-/** @return list<array{klasse:string,modell:string,hausgroesse:string,kw:string,brutto:float|int,eigen:float|int,proklima:float|int}> */
-function hw_read_price_table(array $sheets, string $name): array
+/** Klassenwahl nach tafel; Rohleser für Dimensionierung bleiben vollständig. */
+function hw_tafel_rows(array $table): array
+{
+    $tafel = array_search('tafel', $table['header'], true);
+    if ($tafel === false) {
+        return $table['rows'];
+    }
+    $klasse = hw_kopf_index($table, 'Klasse');
+    $brutto = hw_kopf_index($table, 'Endpreis_brutto');
+    $classes = ['s', 'm', 'l', 'xl', 'xxl'];
+    $found = [];
+    $selected = [];
+    foreach ($table['rows'] as $row) {
+        $marker = trim(hw_js_string(hw_tabellen_wert($row, $tafel)));
+        if ($marker !== '' && $marker !== 'ja') {
+            throw new RuntimeException('invalid_tafel_marker');
+        }
+        if ($marker !== 'ja') {
+            continue;
+        }
+        $key = strtolower(trim(hw_js_string(hw_tabellen_wert($row, $klasse))));
+        if (!in_array($key, $classes, true) || isset($found[$key])) {
+            throw new RuntimeException('invalid_tafel_class_' . $key);
+        }
+        $price = hw_num(hw_tabellen_wert($row, $brutto), 0);
+        if (!is_finite((float) $price) || $price <= 0) {
+            throw new RuntimeException('invalid_tafel_price_' . $key);
+        }
+        $found[$key] = true;
+        $selected[] = $row;
+    }
+    foreach ($classes as $key) {
+        if (!isset($found[$key])) {
+            throw new RuntimeException('missing_tafel_class_' . $key);
+        }
+    }
+    return $selected;
+}
+
+/** @return list<array<string,mixed>> */
+function hw_read_price_table(array $sheets, string $name, bool $tafelOnly = false): array
 {
     $table = hw_finde_tabelle(hw_sheet($sheets, $name), ['Klasse', 'Modell', 'Endpreis_brutto']);
     $columns = [
@@ -348,8 +387,10 @@ function hw_read_price_table(array $sheets, string $name): array
         'eigen' => hw_kopf_index($table, 'Eigenanteil', true),
         'proklima' => hw_kopf_index($table, 'proKlima_Eigenanteil', true),
     ];
+    $tafel = array_search('tafel', $table['header'], true);
+    $rows = $tafelOnly ? hw_tafel_rows($table) : $table['rows'];
     $out = [];
-    foreach ($table['rows'] as $row) {
+    foreach ($rows as $row) {
         if (hw_tabellen_wert($row, $columns['klasse']) === '') {
             continue;
         }
@@ -358,7 +399,7 @@ function hw_read_price_table(array $sheets, string $name): array
             continue;
         }
         $out[] = [
-            'klasse' => strtolower(hw_js_string(hw_tabellen_wert($row, $columns['klasse']))),
+            'klasse' => strtolower(trim(hw_js_string(hw_tabellen_wert($row, $columns['klasse'])))),
             'modell' => hw_js_string(hw_tabellen_wert($row, $columns['modell'])),
             'hausgroesse' => hw_js_string(hw_tabellen_wert($row, $columns['hausgroesse'])),
             'kw' => hw_js_string(hw_tabellen_wert($row, $columns['kw'])),
@@ -366,6 +407,9 @@ function hw_read_price_table(array $sheets, string $name): array
             'eigen' => hw_num(hw_tabellen_wert($row, $columns['eigen']), 0),
             'proklima' => hw_num(hw_tabellen_wert($row, $columns['proklima']), 0),
         ];
+        if ($tafel !== false) {
+            $out[count($out) - 1]['tafel'] = trim(hw_js_string(hw_tabellen_wert($row, $tafel)));
+        }
     }
     return $out;
 }
@@ -380,9 +424,9 @@ function hw_get_prices(array $sheets, string $brand): array
     $klasse = hw_kopf_index($table, 'Klasse');
     $brutto = hw_kopf_index($table, 'Endpreis_brutto');
     $out = [];
-    foreach ($table['rows'] as $row) {
+    foreach (hw_tafel_rows($table) as $row) {
         if (hw_tabellen_wert($row, $klasse) !== '') {
-            $out[strtolower(hw_js_string(hw_tabellen_wert($row, $klasse)))] = hw_num(hw_tabellen_wert($row, $brutto), 0);
+            $out[strtolower(trim(hw_js_string(hw_tabellen_wert($row, $klasse))))] = hw_num(hw_tabellen_wert($row, $brutto), 0);
         }
     }
     return $out;
@@ -2051,11 +2095,11 @@ function hw_preise(array $sheets): array
         return array_map(static fn (array $row): array => [
             'klasse' => $row['klasse'], 'modell' => $row['modell'], 'kw' => $row['kw'],
             'brutto' => $row['brutto'], 'eigen' => $row['eigen'],
-        ], $rows);
+        ] + (array_key_exists('tafel', $row) ? ['tafel' => $row['tafel']] : []), $rows);
     };
     return [
-        'wolf' => $filter(hw_read_price_table($sheets, 'Preise_Wolf')),
-        'vaillant' => $filter(hw_read_price_table($sheets, 'Preise_Vaillant')),
+        'wolf' => $filter(hw_read_price_table($sheets, 'Preise_Wolf', true)),
+        'vaillant' => $filter(hw_read_price_table($sheets, 'Preise_Vaillant', true)),
     ];
 }
 
