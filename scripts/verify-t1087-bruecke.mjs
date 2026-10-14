@@ -64,7 +64,8 @@ export function pruefeSmBruecke(input, soll = false) {
       const chosen = marked[0];
       assert.equal(
         chosen.index,
-        candidates.at(-1).index,
+        // Die noch unveränderte Apps-Script-Version verwendet kein trim().
+        candidates.filter(({ row }) => String(row[0] || '').toLowerCase() === klasse).at(-1)?.index,
         name + ': markierte Zeile ist nicht letzter Klassentreffer ' + klasse
       );
       assert.equal(chosen.row[1], expected[i], name + ': falsches Gerät ' + klasse);

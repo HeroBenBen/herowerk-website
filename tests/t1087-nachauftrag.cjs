@@ -182,17 +182,31 @@ test('Mit Marker wird A7=" S " normalisiert und dieselbe Gerätezeile gewählt',
     assert.equal(b.foerderPackageRows('vaillant')[0].modell, fixture.vaillant[5].modell);
   }
 });
-let failures = 0;
-for (const [name, fn] of tests) {
-  try {
-    fn();
-    console.log('PASS ' + name);
-  } catch (e) {
-    failures++;
-    console.log('FAIL ' + name + ' | ' + e.message.slice(0, 200));
+if (website)
+  test('Brücke darf A7=" S " nicht als alten Klassentreffer bestätigen', async () => {
+    const source = read('scripts/verify-t1087-bruecke.mjs');
+    const { pruefeSmBruecke } = await import(
+      'data:text/javascript;base64,' + Buffer.from(source).toString('base64')
+    );
+    assert.equal(pruefeSmBruecke(old, true).bruecke, true);
+    const spaced = clone(old);
+    spaced.Preise_Vaillant[6][0] = ' S ';
+    assert.throws(() => pruefeSmBruecke(spaced, true), /nicht letzter Klassentreffer/);
+  });
+async function main() {
+  let failures = 0;
+  for (const [name, fn] of tests) {
+    try {
+      await fn();
+      console.log('PASS ' + name);
+    } catch (e) {
+      failures++;
+      console.log('FAIL ' + name + ' | ' + e.message.slice(0, 200));
+    }
   }
+  console.log(
+    `${tests.length - failures}/${tests.length} grün; ${failures} rot; Quelle ${ref || 'Arbeitsbaum'}`
+  );
+  process.exitCode = failures ? 1 : 0;
 }
-console.log(
-  `${tests.length - failures}/${tests.length} grün; ${failures} rot; Quelle ${ref || 'Arbeitsbaum'}`
-);
-process.exitCode = failures ? 1 : 0;
+main();
