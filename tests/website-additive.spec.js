@@ -2,39 +2,36 @@
 'use strict';
 /* global dataLayer, sessionStorage */
 const { test, expect } = require('@playwright/test');
+const fs = require('node:fs');
+const path = require('node:path');
 const { gotoWithConsentRejected } = require('./helpers/consent');
 const { axeBefunde, pruefeGegenBekannte } = require('./helpers/axe');
 
-// O21: Auf einer Vercel-Preview laeuft kein PHP, deshalb liefert /api/rechner
-// (Proxy api/rechner.php) fuer action=preise und action=foerderung 404. Ohne Live-Preise
-// bleibt #wolfMinEigen auf dem Platzhalter und der Foerderrechner rechnet nicht. Die zwei
-// @smoke-Tests mocken genau diese zwei Routen mit kanonischen Werten (Wolf-Eigenanteile aus
-// produkte_HERO.json, Vaillant-VWL-75-Paket 32.755 brutto). Produktion laeuft auf IONOS,
-// dort antwortet der Proxy real; der Mock prueft die Client-Render-Kette, nicht die Preise.
+// T1087: Rohwerte aus dem lesenden Preisabzug in fixtures/t1087-preise.json.
+// Die Sollantwort bindet S/M/L an Preise_Vaillant!B7:B9 und E2:F4.
+// Diese Mocks prüfen die Darstellung und Anfrageverdrahtung, nicht den Förderkern.
+const PREIS_ABZUG = JSON.parse(
+  fs.readFileSync(path.join(__dirname, 'fixtures/t1087-preise.json'), 'utf8')
+);
 const KV_PREISE_FIXTURE = {
-  wolf: [
-    { klasse: 's', brutto: 29750, eigen: 7350 },
-    { klasse: 'm', brutto: 34510, eigen: 12110 },
-    { klasse: 'l', brutto: 45220, eigen: 22820 },
-    { klasse: 'xl', brutto: 57120, eigen: 34720 },
-    { klasse: 'xxl', brutto: 82223, eigen: null },
-  ],
-  vaillant: [
-    { klasse: 's', brutto: 28963, eigen: 7350 },
-    { klasse: 'm', brutto: 32755, eigen: 11755 },
-    { klasse: 'l', brutto: 40276, eigen: 22820 },
-    { klasse: 'xl', brutto: 46159, eigen: 34720 },
-    { klasse: 'xxl', brutto: 79060, eigen: null },
-  ],
+  wolf: PREIS_ABZUG.wolf.map((row) => ({ ...row, tafel: 'ja' })),
+  vaillant: PREIS_ABZUG.vaillant
+    .slice(5)
+    .map((row, index) => ({
+      ...row,
+      brutto: PREIS_ABZUG.vaillant[index].brutto,
+      eigen: PREIS_ABZUG.vaillant[index].eigen,
+      tafel: 'ja',
+    }))
+    .concat(PREIS_ABZUG.vaillant.slice(3, 5).map((row) => ({ ...row, tafel: 'ja' }))),
 };
-
 const KV_FOERDER_FIXTURE = {
-  preis: 32755,
-  eigenanteil: 11755,
-  zuschussGesamt: 21000,
-  kfwSatz: 64,
-  effektivSatz: 64,
-  periodeLabel: '21.07.2026 bis 31.01.2027',
+  preis: KV_PREISE_FIXTURE.vaillant[1].brutto,
+  eigenanteil: KV_PREISE_FIXTURE.vaillant[1].eigen,
+  zuschussGesamt: 22400,
+  kfwSatz: 80,
+  effektivSatz: 65.6,
+  periodeLabel: 'Testzeitraum',
   hinweis: '',
 };
 
@@ -90,25 +87,52 @@ test('@smoke Hersteller-Vorauswahl zeigt Wolf- und Vaillant-Karten im gemeinsame
   await expect(page.locator('#wolfMinEigen')).toContainText(/ab [\d.]+ € Eigenanteil/);
   await page.locator('#manufacturerVaillant').click();
   await expect(page.locator('#paCards .pa-card')).toHaveCount(5);
-  await expect(page.locator('#paCards')).toContainText('Vaillant aroTHERM plus');
+  for (const [index, row] of KV_PREISE_FIXTURE.vaillant.entries()) {
+    const card = page.locator('#paCards .pa-card').nth(index);
+    await expect(card.locator('.pa-modell')).toContainText(
+      row.modell.slice(row.modell.indexOf('VWL'))
+    );
+    await expect(card).toContainText(index < 3 ? 'aroTHERM pro' : 'aroTHERM plus');
+    await expect(card).toContainText(row.eigen.toLocaleString('de-DE') + ' €');
+  }
   await page.locator('#manufacturerWolf').click();
   await expect(page.locator('#paCards .pa-card')).toHaveCount(5);
 });
 
-test('@smoke Förderrechner-Paketliste nutzt Wolf und Vaillant aus der Preisliste', async ({
+test('@smoke Fehlender Eigenanteil sperrt nur die betroffene Tafelklasse', async ({ page }) => {
+  const prices = JSON.parse(JSON.stringify(KV_PREISE_FIXTURE));
+  prices.vaillant[0].eigen = null;
+  await page.route(/[?&]action=preise/, (route) => kvFulfillJson(route, prices));
+  await gotoWithConsentRejected(page, '/preise.html?theme=dark');
+  await expect(page.locator('#wolfMinEigen')).toContainText(/ab [\d.]+ € Eigenanteil/);
+  await page.locator('#manufacturerVaillant').click();
+  const first = page.locator('#paCards .pa-card').first();
+  await expect(first.locator('.pa-modell')).toContainText('VWL 55/7.1 A');
+  await expect(first.locator('.pa-price-compact')).toHaveText('Auf Anfrage');
+  await expect(page.locator('#paDetailCta')).toContainText('Preis auf Anfrage');
+  await expect(page.locator('#paDetailCta')).not.toContainText('ab 0 €');
+  await expect(page.locator('#paCards .pa-card').nth(1)).toContainText(
+    prices.vaillant[1].eigen.toLocaleString('de-DE') + ' €'
+  );
+});
+
+test('@smoke Förderrechner-Paketliste nutzt Geräte und Preise im Abrufrückfall', async ({
   page,
 }) => {
+  await page.route(/[?&]action=preise/, (route) =>
+    route.fulfill({ status: 503, body: 'Testausfall' })
+  );
   await page.route(/[?&]action=foerderung/, (route) => kvFulfillJson(route, KV_FOERDER_FIXTURE));
   await gotoWithConsentRejected(page, '/foerderung.html?theme=dark');
   await page.waitForLoadState('networkidle');
   await expect(page.locator('#foerderWpTyp optgroup')).toHaveCount(2);
   await expect(page.locator('#foerderWpTyp option')).toHaveCount(10);
-  await expect(page.locator('#foerderWpTyp')).toContainText('Vaillant VWL 75/8.1 A');
+  await expect(page.locator('#foerderWpTyp')).toContainText('VWL 75/7.1 A');
   await page.selectOption('#foerderWpTyp', 'vaillant:m');
-  await expect(page.locator('#frPreis')).toHaveText(/32\.755/);
-  await expect(page.locator('#frEigen')).toHaveText(/11\.755/);
+  await expect(page.locator('#frPreis')).toHaveText(/34\.146/);
+  await expect(page.locator('#frEigen')).toHaveText(/11\.746/);
   await page.locator('#kostenToggle button').filter({ hasText: 'Eigener Betrag' }).click();
-  await expect(page.locator('#wpKostenInput')).toHaveValue('32.755 €');
+  await expect(page.locator('#wpKostenInput')).toHaveValue('34.146 €');
 });
 
 test('@smoke Funnel sendet HubSpot-Form-Payload (Standard-Properties, Mock)', async ({ page }) => {

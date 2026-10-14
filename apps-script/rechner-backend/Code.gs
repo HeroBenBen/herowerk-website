@@ -1815,6 +1815,42 @@ function fvPlaetze_() {
   cache.put('fvplaetze:v1', JSON.stringify(out), CACHE_TTL_SECONDS);
   return out;
 }
+// T1087: Nur Klassenverbraucher filtern. Modellleser/Marktanker behalten alle Zeilen.
+function tafelRows_(rows, tafel, klasse, brutto) {
+  if (tafel < 0) return rows;
+  const classes = ['s', 'm', 'l', 'xl', 'xxl'];
+  const found = {};
+  const selected = [];
+  rows.forEach(function (row) {
+    const marker = String(row[tafel] == null ? '' : row[tafel]).trim();
+    if (marker !== '' && marker !== 'ja') throw new Error('invalid_tafel_marker');
+    if (marker !== 'ja') return;
+    const key = String(row[klasse] || '').trim().toLowerCase();
+    if (classes.indexOf(key) < 0 || found[key]) throw new Error('invalid_tafel_class_' + key);
+    const price = num_(row[brutto], 0);
+    if (!isFinite(price) || price <= 0) throw new Error('invalid_tafel_price_' + key);
+    found[key] = true;
+    selected.push(row);
+  });
+  classes.forEach(function (key) {
+    if (!found[key]) throw new Error('missing_tafel_class_' + key);
+  });
+  return selected;
+}
+
+// Fehlend ist nicht kostenlos: vollständige deutsche Zahl oder nativer Zahlenwert.
+function priceEigen_(value) {
+  if (typeof value === 'number') return isFinite(value) ? value : null;
+  if (typeof value !== 'string' || !/^[+-]?(?:[0-9]+|[0-9]{1,3}(?:\.[0-9]{3})+)(?:,[0-9]+)?$/.test(value.trim())) return null;
+  const number = num_(value.trim(), 0);
+  return isFinite(number) ? number : null;
+}
+
+function priceClass_(value, tafel) {
+  const text = String(value);
+  return (tafel >= 0 ? text.trim() : text).toLowerCase();
+}
+
 function getPrices_(marke) {
   const ss = SpreadsheetApp.openById(SHEET_ID);
   const sh = ss.getSheetByName(marke === 'vaillant' ? 'Preise_Vaillant' : 'Preise_Wolf');
@@ -1823,9 +1859,9 @@ function getPrices_(marke) {
   const klasse = kopfIndex_(table, 'Klasse');
   const brutto = kopfIndex_(table, 'Endpreis_brutto');
   const out = {};
-  table.rows.forEach(function (row) {
+  tafelRows_(table.rows, table.header.indexOf('tafel'), klasse, brutto).forEach(function (row) {
     if (tabellenWert_(row, klasse)) {
-      out[String(tabellenWert_(row, klasse)).toLowerCase()] = num_(tabellenWert_(row, brutto), 0);
+      out[priceClass_(tabellenWert_(row, klasse), table.header.indexOf('tafel'))] = num_(tabellenWert_(row, brutto), 0);
     }
   });
   return out;
@@ -1835,7 +1871,7 @@ function getPrices_(marke) {
 // Spalten: Klasse | Modell | Hausgroesse | kW | Endpreis_brutto | Eigenanteil | proKlima_Eigenanteil.
 // Eigenanteil = Brutto - KfW-Zuschuss (max. 70 %); proklima = zusaetzlich - proKlima.
 // Zeilen ohne Brutto (PLATZHALTER, z. B. Vaillant) werden uebersprungen.
-function readPriceTable_(name) {
+function readPriceTable_(name, tafelOnly) {
   const ss = SpreadsheetApp.openById(SHEET_ID);
   const sh = ss.getSheetByName(name);
   if (!sh) return [];
@@ -1849,20 +1885,23 @@ function readPriceTable_(name) {
     eigen: kopfIndex_(table, 'Eigenanteil', true),
     proklima: kopfIndex_(table, 'proKlima_Eigenanteil', true)
   };
+  const tafel = table.header.indexOf('tafel');
+  const rows = tafelOnly ? tafelRows_(table.rows, tafel, columns.klasse, columns.brutto) : table.rows;
   const out = [];
-  table.rows.forEach(function (row) {
+  rows.forEach(function (row) {
     if (!tabellenWert_(row, columns.klasse)) return;
     const brutto = num_(tabellenWert_(row, columns.brutto), 0);
     if (brutto <= 0) return;
     out.push({
-      klasse: String(tabellenWert_(row, columns.klasse)).toLowerCase(),
+      klasse: priceClass_(tabellenWert_(row, columns.klasse), tafel),
       modell: String(tabellenWert_(row, columns.modell)),
       hausgroesse: String(tabellenWert_(row, columns.hausgroesse)),
       kw: String(tabellenWert_(row, columns.kw)),
       brutto: brutto,
-      eigen: num_(tabellenWert_(row, columns.eigen), 0),
+      eigen: priceEigen_(tabellenWert_(row, columns.eigen)),
       proklima: num_(tabellenWert_(row, columns.proklima), 0)
     });
+    if (tafel >= 0) out[out.length - 1].tafel = String(tabellenWert_(row, tafel) || '').trim();
   });
   return out;
 }
@@ -1876,7 +1915,7 @@ function getPriceTableCached_(marke) {
   return rows;
 }
 function preise_(p) {
-  return { wolf: readPriceTable_('Preise_Wolf'), vaillant: readPriceTable_('Preise_Vaillant') };
+  return { wolf: readPriceTable_('Preise_Wolf', true), vaillant: readPriceTable_('Preise_Vaillant', true) };
 }
 
 // Geschützte Rohdaten-Sammelroute für den PHP-Rechenkern. Sie liest ausschließlich

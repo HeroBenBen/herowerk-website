@@ -84,6 +84,7 @@ jobs:
       - run: npm run lint
       - run: npx tsc --noEmit  # JSDoc-Type-Check via tsconfig.json mit allowJs+checkJs
       - run: npm run verify:website-gates
+      - run: npm run verify:tafel
       - run: npm run verify:rechner-snapshot-nachlauf
       - run: npm run verify:rechner-zaehlerdateien
       # Cache-Busting-Gate (G3-N2, 25.07.2026): jede lokale CSS-/JS-Referenz muss

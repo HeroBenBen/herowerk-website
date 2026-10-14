@@ -1,0 +1,97 @@
+{
+  "wolf": [
+    {
+      "klasse": "s",
+      "modell": "Wolf CHA-07",
+      "kw": "5–7 kW",
+      "brutto": 30026,
+      "eigen": 7626
+    },
+    {
+      "klasse": "m",
+      "modell": "Wolf CHA-10",
+      "kw": "9–12 kW",
+      "brutto": 35349,
+      "eigen": 12949
+    },
+    {
+      "klasse": "l",
+      "modell": "Wolf CHA-16/20",
+      "kw": "14–16 kW",
+      "brutto": 41718,
+      "eigen": 19318
+    },
+    {
+      "klasse": "xl",
+      "modell": "Wolf CHA-20/24",
+      "kw": "18–24 kW",
+      "brutto": 48815,
+      "eigen": 24789
+    },
+    {
+      "klasse": "xxl",
+      "modell": "2× Wolf CHA-16",
+      "kw": "2× 16 kW (32 kW)",
+      "brutto": 89419,
+      "eigen": 55141
+    }
+  ],
+  "vaillant": [
+    {
+      "klasse": "s",
+      "modell": "Vaillant VWL 55/8.1 A",
+      "kw": "ca. 5,6 kW (A-7/W35)",
+      "brutto": 29944,
+      "eigen": 7544
+    },
+    {
+      "klasse": "m",
+      "modell": "Vaillant VWL 75/8.1 A",
+      "kw": "ca. 6,9 kW",
+      "brutto": 34146,
+      "eigen": 11746
+    },
+    {
+      "klasse": "l",
+      "modell": "Vaillant VWL 105/8.1 A",
+      "kw": "ca. 10,6 kW",
+      "brutto": 42864,
+      "eigen": 20464
+    },
+    {
+      "klasse": "xl",
+      "modell": "Vaillant VWL 125/8.1 A",
+      "kw": "ca. 12,1 kW",
+      "brutto": 48865,
+      "eigen": 24819
+    },
+    {
+      "klasse": "xxl",
+      "modell": "2× Vaillant VWL 125/8.1 A",
+      "kw": "ca. 24 kW (2 Geraete)",
+      "brutto": 85604,
+      "eigen": 52789
+    },
+    {
+      "klasse": "s",
+      "modell": "Vaillant VWL 55/7.1 A",
+      "kw": "ca. 4,3 kW (A-11/W55)",
+      "brutto": 28963,
+      "eigen": 6563
+    },
+    {
+      "klasse": "m",
+      "modell": "Vaillant VWL 75/7.1 A",
+      "kw": "ca. 5,8 kW (A-11/W55)",
+      "brutto": 32755,
+      "eigen": 10355
+    },
+    {
+      "klasse": "l",
+      "modell": "Vaillant VWL 115/7.1 A",
+      "kw": "ca. 9,5 kW (A-11/W55)",
+      "brutto": 40276,
+      "eigen": 17876
+    }
+  ]
+}
