@@ -344,8 +344,60 @@ function hw_tabellen_wert(array $row, int $index): mixed
     return $index < 0 ? '' : ($row[$index] ?? '');
 }
 
-/** @return list<array{klasse:string,modell:string,hausgroesse:string,kw:string,brutto:float|int,eigen:float|int,proklima:float|int}> */
-function hw_read_price_table(array $sheets, string $name, ?array $tables = null): array
+/** Klassenwahl nach tafel; Rohleser für Dimensionierung bleiben vollständig. */
+function hw_tafel_rows(array $table): array
+{
+    $tafel = array_search('tafel', $table['header'], true);
+    if ($tafel === false) {
+        return $table['rows'];
+    }
+    $klasse = hw_kopf_index($table, 'Klasse');
+    $brutto = hw_kopf_index($table, 'Endpreis_brutto');
+    $classes = ['s', 'm', 'l', 'xl', 'xxl'];
+    $found = [];
+    $selected = [];
+    foreach ($table['rows'] as $row) {
+        $marker = trim(hw_js_string(hw_tabellen_wert($row, $tafel)));
+        if ($marker !== '' && $marker !== 'ja') {
+            throw new RuntimeException('invalid_tafel_marker');
+        }
+        if ($marker !== 'ja') {
+            continue;
+        }
+        $key = strtolower(trim(hw_js_string(hw_tabellen_wert($row, $klasse))));
+        if (!in_array($key, $classes, true) || isset($found[$key])) {
+            throw new RuntimeException('invalid_tafel_class_' . $key);
+        }
+        $price = hw_num(hw_tabellen_wert($row, $brutto), 0);
+        if (!is_finite((float) $price) || $price <= 0) {
+            throw new RuntimeException('invalid_tafel_price_' . $key);
+        }
+        $found[$key] = true;
+        $selected[] = $row;
+    }
+    foreach ($classes as $key) {
+        if (!isset($found[$key])) {
+            throw new RuntimeException('missing_tafel_class_' . $key);
+        }
+    }
+    return $selected;
+}
+
+/** Fehlend ist nicht kostenlos: nur vollständige Zahlen, kein parseFloat-Präfix. */
+function hw_price_eigen(mixed $value): float|int|null
+{
+    if (is_int($value) || is_float($value)) {
+        return is_finite((float) $value) ? $value : null;
+    }
+    if (!is_string($value) || !preg_match('/^[+-]?(?:[0-9]+|[0-9]{1,3}(?:\.[0-9]{3})+)(?:,[0-9]+)?$/D', trim($value))) {
+        return null;
+    }
+    $number = hw_num(trim($value), 0);
+    return is_finite((float) $number) ? $number : null;
+}
+
+/** @return list<array<string,mixed>> */
+function hw_read_price_table(array $sheets, string $name, ?array $tables = null, bool $tafelOnly = false): array
 {
     $table = $tables[$name] ?? hw_finde_tabelle(hw_sheet($sheets, $name), ['Klasse', 'Modell', 'Endpreis_brutto']);
     $columns = [
@@ -357,8 +409,11 @@ function hw_read_price_table(array $sheets, string $name, ?array $tables = null)
         'eigen' => hw_kopf_index($table, 'Eigenanteil', true),
         'proklima' => hw_kopf_index($table, 'proKlima_Eigenanteil', true),
     ];
+    // PR 148 gilt für Schema 1/2; Schema 3 behält den geprüften P3a-Vertrag.
+    $tafel = $tables === null ? array_search('tafel', $table['header'], true) : false;
+    $rows = $tables === null && $tafelOnly ? hw_tafel_rows($table) : $table['rows'];
     $out = [];
-    foreach ($table['rows'] as $row) {
+    foreach ($rows as $row) {
         if (hw_tabellen_wert($row, $columns['klasse']) === '') {
             continue;
         }
@@ -368,15 +423,18 @@ function hw_read_price_table(array $sheets, string $name, ?array $tables = null)
             continue;
         }
         $out[] = [
-            'klasse' => strtolower(hw_js_string(hw_tabellen_wert($row, $columns['klasse']))),
+            'klasse' => strtolower($tafel !== false ? trim(hw_js_string(hw_tabellen_wert($row, $columns['klasse']))) : hw_js_string(hw_tabellen_wert($row, $columns['klasse']))),
             'modell' => hw_js_string(hw_tabellen_wert($row, $columns['modell'])),
             'hausgroesse' => hw_js_string(hw_tabellen_wert($row, $columns['hausgroesse'])),
             'kw' => hw_js_string(hw_tabellen_wert($row, $columns['kw'])),
             'brutto' => $brutto,
             'eigen' => $tables !== null ? rechner_schema3_zahl(hw_tabellen_wert($row, $columns['eigen']), true)
-                : hw_num(hw_tabellen_wert($row, $columns['eigen']), 0),
+                : hw_price_eigen(hw_tabellen_wert($row, $columns['eigen'])),
             'proklima' => hw_num(hw_tabellen_wert($row, $columns['proklima']), 0),
         ];
+        if ($tafel !== false) {
+            $out[count($out) - 1]['tafel'] = trim(hw_js_string(hw_tabellen_wert($row, $tafel)));
+        }
     }
     return $out;
 }
@@ -390,10 +448,12 @@ function hw_get_prices(array $sheets, string $brand, ?array $tables = null): arr
     );
     $klasse = hw_kopf_index($table, 'Klasse');
     $brutto = hw_kopf_index($table, 'Endpreis_brutto');
+    // PR 148 gilt für Schema 1/2; Schema 3 behält den geprüften P3a-Vertrag.
+    $tafel = $tables === null ? array_search('tafel', $table['header'], true) : false;
     $out = [];
-    foreach ($table['rows'] as $row) {
+    foreach ($tables === null ? hw_tafel_rows($table) : $table['rows'] as $row) {
         if (hw_tabellen_wert($row, $klasse) !== '') {
-            $out[strtolower(hw_js_string(hw_tabellen_wert($row, $klasse)))] = $tables !== null ? rechner_schema3_zahl(hw_tabellen_wert($row, $brutto), true)
+            $out[strtolower($tafel !== false ? trim(hw_js_string(hw_tabellen_wert($row, $klasse))) : hw_js_string(hw_tabellen_wert($row, $klasse)))] = $tables !== null ? rechner_schema3_zahl(hw_tabellen_wert($row, $brutto), true)
                 : hw_num(hw_tabellen_wert($row, $brutto), 0);
         }
     }
@@ -2075,11 +2135,11 @@ function hw_preise(array $sheets, ?array $tables = null): array
         return array_map(static fn (array $row): array => [
             'klasse' => $row['klasse'], 'modell' => $row['modell'], 'kw' => $row['kw'],
             'brutto' => $row['brutto'], 'eigen' => $row['eigen'],
-        ], $rows);
+        ] + (array_key_exists('tafel', $row) ? ['tafel' => $row['tafel']] : []), $rows);
     };
     return [
-        'wolf' => $filter(hw_read_price_table($sheets, 'Preise_Wolf', $tables)),
-        'vaillant' => $filter(hw_read_price_table($sheets, 'Preise_Vaillant', $tables)),
+        'wolf' => $filter(hw_read_price_table($sheets, 'Preise_Wolf', $tables, true)),
+        'vaillant' => $filter(hw_read_price_table($sheets, 'Preise_Vaillant', $tables, true)),
     ];
 }
 

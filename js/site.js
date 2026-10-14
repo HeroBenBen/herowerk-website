@@ -1317,8 +1317,8 @@ function formatKostenInput(el) {
 // ===== PREISANKER: Expand/Collapse-Karten mit Tech-Specs =====
 // Produktdaten - Inline-Fallback für lokale Entwicklung (file://)
 // Preise = Single Source: live aus dem Sheet über den Rechner-Server (action=preise).
-// Präsentation (Specs/Bilder/Modell/Icons) bleibt statisch in paDataFallback; nur die
-// Preisfelder (preis/eigen/info) werden mit Live-Werten überschrieben.
+// Modell und belegte Technik werden gemeinsam an die ausgewählte Gerätezeile gebunden.
+// Layout, Bilder und Icons bleiben in den Präsentationsvorlagen.
 // PA_KLASSEN muss in der Reihenfolge zu paDataFallback passen (Kompakt..Kaskade = s..xxl).
 let paData = [];
 let paPrices = { wolf: [], vaillant: [] };
@@ -1332,11 +1332,41 @@ const FOERDER_PACKAGE_FALLBACK = {
     { klasse: 'xxl', modell: '2× Wolf CHA-16', kw: '32 kW', brutto: 89419 },
   ],
   vaillant: [
-    { klasse: 's', modell: 'Vaillant VWL 55/8.1 A', kw: 'ca. 5,6 kW', brutto: 28963 },
-    { klasse: 'm', modell: 'Vaillant VWL 75/8.1 A', kw: 'ca. 6,9 kW', brutto: 32755 },
-    { klasse: 'l', modell: 'Vaillant VWL 105/8.1 A', kw: 'ca. 10,6 kW', brutto: 40276 },
-    { klasse: 'xl', modell: 'Vaillant VWL 125/8.1 A', kw: 'ca. 12,1 kW', brutto: 46159 },
-    { klasse: 'xxl', modell: '2× Vaillant VWL 125/8.1 A', kw: 'ca. 24 kW', brutto: 79060 },
+    {
+      klasse: 's',
+      modell: 'Vaillant VWL 55/7.1 A',
+      kw: 'A-11/W55: 4,34 kW',
+      brutto: 29944,
+      eigen: 7544,
+    },
+    {
+      klasse: 'm',
+      modell: 'Vaillant VWL 75/7.1 A',
+      kw: 'A-11/W55: 5,79 kW',
+      brutto: 34146,
+      eigen: 11746,
+    },
+    {
+      klasse: 'l',
+      modell: 'Vaillant VWL 115/7.1 A',
+      kw: 'A-11/W55: 9,46 kW',
+      brutto: 42864,
+      eigen: 20464,
+    },
+    {
+      klasse: 'xl',
+      modell: 'Vaillant VWL 125/8.1 A',
+      kw: 'ca. 12,1 kW',
+      brutto: 48865,
+      eigen: 24819,
+    },
+    {
+      klasse: 'xxl',
+      modell: '2× Vaillant VWL 125/8.1 A',
+      kw: 'ca. 24 kW',
+      brutto: 85604,
+      eigen: 52789,
+    },
   ],
 };
 
@@ -1355,8 +1385,31 @@ function paCloneFallback(data) {
   }));
 }
 
+// Fehlender Marker erhält den Altvertrag; ein vorhandener, aber ungültiger Marker nicht.
+function paTafelRows(rows) {
+  if (!Array.isArray(rows)) throw new Error('invalid_tafel_rows');
+  if (!rows.some((row) => row && Object.hasOwn(row, 'tafel'))) return rows;
+  const selected = [];
+  const found = new Set();
+  rows.forEach((row) => {
+    if (!row || !Object.hasOwn(row, 'tafel')) throw new Error('invalid_tafel_rows');
+    const marker = String(row.tafel ?? '').trim();
+    if (marker !== '' && marker !== 'ja') throw new Error('invalid_tafel_marker');
+    if (marker !== 'ja') return;
+    const klasse = String(row.klasse || '')
+      .trim()
+      .toLowerCase();
+    if (!PA_KLASSEN.includes(klasse) || found.has(klasse)) throw new Error('invalid_tafel_class');
+    if (!paHasNumber(row.brutto) || row.brutto <= 0) throw new Error('invalid_tafel_price');
+    found.add(klasse);
+    selected.push({ ...row, klasse });
+  });
+  if (PA_KLASSEN.some((klasse) => !found.has(klasse))) throw new Error('missing_tafel_class');
+  return selected;
+}
+
 function paRowsByKlasse(rows) {
-  return (rows || []).reduce((acc, row) => {
+  return paTafelRows(rows || []).reduce((acc, row) => {
     if (row && row.klasse) acc[row.klasse] = row;
     return acc;
   }, {});
@@ -1382,13 +1435,16 @@ function foerderGetSelectedPackage() {
 function foerderPackageRows(brand) {
   const rows =
     paPrices[brand] && paPrices[brand].length ? paPrices[brand] : FOERDER_PACKAGE_FALLBACK[brand];
-  return PA_KLASSEN.map((klasse) => rows.find((row) => row.klasse === klasse)).filter(Boolean);
+  const selected = paTafelRows(rows);
+  return PA_KLASSEN.map((klasse) => selected.find((row) => row.klasse === klasse)).filter(Boolean);
 }
 
 function foerderFormatPackageOption(row) {
   const brutto = Number(row.brutto) || 0;
-  const kw = String(row.kw || '').replace(/^ca\.\s*/i, '');
-  return row.modell + ' · ' + kw + ' · ' + brutto.toLocaleString('de-DE') + ' €';
+  const identity = paDeviceIdentity(row);
+  return [identity.modell, identity.kw, brutto.toLocaleString('de-DE') + ' €']
+    .filter(Boolean)
+    .join(' · ');
 }
 
 function foerderRefreshPackageOptions() {
@@ -1398,7 +1454,7 @@ function foerderRefreshPackageOptions() {
   select.innerHTML = '';
   [
     ['wolf', 'Wolf CHA'],
-    ['vaillant', 'Vaillant aroTHERM plus'],
+    ['vaillant', 'Vaillant'],
   ].forEach(([brand, label]) => {
     const group = document.createElement('optgroup');
     group.label = label;
@@ -1436,6 +1492,7 @@ function paApplyBrand(brand) {
   paData = paCloneFallback(fallback);
   paData.forEach((d, i) => {
     const row = byKlasse[PA_KLASSEN[i]];
+    Object.assign(d, paDeviceIdentity(row || FOERDER_PACKAGE_FALLBACK[selectedBrand][i]));
     if (!row) {
       d.preis = null;
       d.eigen = null;
@@ -1467,12 +1524,15 @@ async function paLoadData() {
     const response = await rechnerFetch(RECHNER_API + '?action=preise&origin=https://herowerk.de');
     if (!response.ok) throw new Error(response.status);
     const data = await response.json();
-    paPrices = {
-      wolf: (data && data.wolf) || [],
-      vaillant: (data && data.vaillant) || [],
-    };
+    if (!data || !Array.isArray(data.wolf) || !Array.isArray(data.vaillant)) {
+      throw new Error('invalid_tafel_response');
+    }
+    // Beide Marken validieren, bevor irgendein neuer Stand sichtbar wird.
+    paTafelRows(data.wolf);
+    paTafelRows(data.vaillant);
+    paPrices = { wolf: data.wolf, vaillant: data.vaillant };
     const bruttoMap = {};
-    paPrices.wolf.forEach((row) => {
+    paTafelRows(paPrices.wolf).forEach((row) => {
       bruttoMap[row.klasse] = row.brutto;
     });
     if (typeof window !== 'undefined') window.HW_PREISE_BRUTTO = bruttoMap;
@@ -1480,6 +1540,10 @@ async function paLoadData() {
     paApplyBrand('vaillant');
     paApplyBrand('wolf');
   } catch (e) {
+    paPrices = { wolf: [], vaillant: [] };
+    if (typeof window !== 'undefined') window.HW_PREISE_BRUTTO = {};
+    paApplyBrand('vaillant');
+    paApplyBrand('wolf');
     console.info('Live-Preise nicht verfügbar, zeige "auf Anfrage"', e);
     foerderRefreshPackageOptions();
   }
@@ -1687,7 +1751,7 @@ const paDataFallback = [
   },
 ];
 
-const paDataFallbackVaillant = [
+const paDataFallbackVaillantPlus = [
   {
     name: 'Kompakt',
     label: 'Kompaktes Wohnhaus',
@@ -1814,6 +1878,71 @@ const paDataFallbackVaillant = [
   },
 ];
 
+// T1087: Quellen Geräte_Katalog!B23:E25, S23:S25, Z23:Z25, Lesung 14.10.2026.
+// Nur diese belegten Leistungswerte; keine Übernahme der Plus-Technik bei einem Pro-Gerät.
+const PA_PRO_TECHNIK = {
+  'Vaillant VWL 55/7.1 A': { baureihe: 'aroTHERM pro 7.1', w35: '4,77', w55: '4,34' },
+  'Vaillant VWL 75/7.1 A': { baureihe: 'aroTHERM pro 7.1', w35: '6,56', w55: '5,79' },
+  'Vaillant VWL 115/7.1 A': { baureihe: 'aroTHERM pro 7.1', w35: '11,5', w55: '9,46' },
+};
+
+function paEscapeHtml(value) {
+  return String(value || '').replace(
+    /[&<>"']/g,
+    (char) =>
+      ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+      })[char]
+  );
+}
+
+function paModelKey(model) {
+  return String(model || '')
+    .replace(/aroTHERM (plus|pro) /g, '')
+    .trim();
+}
+
+function paDeviceIdentity(row) {
+  const model = String(row.modell || '');
+  const key = paModelKey(model);
+  const pro = PA_PRO_TECHNIK[key];
+  if (pro) {
+    return {
+      modell: key.replace('Vaillant ', 'Vaillant ' + pro.baureihe + ' '),
+      baureihe: pro.baureihe,
+      kw: 'A-11/W55: ' + pro.w55 + ' kW',
+      specs: [
+        ['Heizleistung A-11/W35', pro.w35 + ' kW'],
+        ['Heizleistung A-11/W55', pro.w55 + ' kW'],
+      ],
+    };
+  }
+  // Die bekannte Wolf-Kaskade ist im Preisblatt verkürzt benannt.
+  const lookup = key === '2× Wolf CHA-16' ? '2× Wolf CHA-16/20' : key;
+  const detail = [...paDataFallback, ...paDataFallbackVaillantPlus].find(
+    (item) => paModelKey(item.modell) === lookup
+  );
+  const baureihe = detail ? (key.includes('Vaillant') ? 'aroTHERM plus' : 'Wolf CHA') : '';
+  return {
+    modell:
+      baureihe === 'aroTHERM plus' && !model.includes('aroTHERM')
+        ? model.replace('Vaillant ', 'Vaillant aroTHERM plus ')
+        : model,
+    baureihe,
+    kw: detail ? detail.kw : '',
+    specs: detail ? detail.specs.map((spec) => [...spec]) : [],
+  };
+}
+
+const paDataFallbackVaillant = paDataFallbackVaillantPlus.map((card, i) => ({
+  ...card,
+  ...paDeviceIdentity(FOERDER_PACKAGE_FALLBACK.vaillant[i]),
+}));
+
 // Karten rendern (nur kompakte Header, kein Preis-Doppelt)
 function paRenderCards() {
   const container = document.getElementById('paCards');
@@ -1852,7 +1981,7 @@ function paRenderCards() {
           ${labelHtml}
           <h2>${d.name}</h2>
           ${hausHtml}
-          <div class="pa-modell">${d.modell}</div>
+          <div class="pa-modell">${paEscapeHtml(d.modell)}</div>
           <div class="pa-kw">${d.kw}</div>
           ${priceHtml}
         </div>`;
@@ -1981,7 +2110,7 @@ function paZoom(idx) {
   if (imgContainer) {
     const imgSrc = paData[idx].img || 'cha-sanierung.jpg';
     const imgPos = paData[idx].imgPos || 'center center';
-    imgContainer.innerHTML = `<img id="paImg" src="${imgSrc}" alt="${paData[idx].modell}" width="2500" height="2500" style="object-position:${imgPos};" loading="lazy" decoding="async" onerror="this.style.display='none'">`;
+    imgContainer.innerHTML = `<img id="paImg" src="${imgSrc}" alt="${paEscapeHtml(paData[idx].modell)}" width="2500" height="2500" style="object-position:${imgPos};" loading="lazy" decoding="async" onerror="this.style.display='none'">`;
     const img = document.getElementById('paImg');
     if (img) {
       img.style.animation = 'none';

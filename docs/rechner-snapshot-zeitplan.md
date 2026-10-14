@@ -175,3 +175,9 @@ Ungewählte Katalogzeilen und ungebundene Technik bleiben außerhalb dieser
 Identitätsbindung. Die älteren Schemafassungen behalten ihre bisherigen Leser.
 Der gemeinsame JSON-Vertrag enthält die Feldliste und unabhängige Kontrollpaare
 unter `identitaetsdarstellung` (Vertragsfestlegung Nachauftrag 4).
+
+## Integration mit der Tafeländerung aus PR 148
+
+Schema 1 und 2 entsprechen dem Hauptstand `7840681dd2c7eb88b3a53f85c7e2da92fab2c4dc`: Mit Tafelkopf gelten die vollständige Klassenwahl und Markerprüfung; ohne Tafelkopf bleiben Reihenfolge und bisherige Trefferwahl erhalten. Ein leerer oder ungültiger historischer Eigenanteil bleibt `null`, echte Null bleibt 0. Der Rohleser für Dimensionierung behält alle Modellzeilen.
+
+Schema 3 behält den gemeinsam geprüften P3a-Tabellenkontext, kanonische Identitäten, Zahltypen und Leerpreise. Gültige kleine Preisbestände benötigen keine vollständige Fünfklassentafel. Die Zelle `tafel` bleibt im bisherigen Hashumfang, ohne neue Auswahlregel oder zusätzliches Antwortfeld. Tabellenkontext und historische Tafelauswahl sind getrennte Parameter des Preislesers. Die Regression für Schema 1 und 2 verwendet den oben genannten Hauptstand als unabhängige Basis.
