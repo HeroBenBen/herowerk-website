@@ -374,6 +374,19 @@ function hw_tafel_rows(array $table): array
     return $selected;
 }
 
+/** Fehlend ist nicht kostenlos: nur vollständige Zahlen, kein parseFloat-Präfix. */
+function hw_price_eigen(mixed $value): float|int|null
+{
+    if (is_int($value) || is_float($value)) {
+        return is_finite((float) $value) ? $value : null;
+    }
+    if (!is_string($value) || !preg_match('/^[+-]?(?:[0-9]+|[0-9]{1,3}(?:\.[0-9]{3})+)(?:,[0-9]+)?$/D', trim($value))) {
+        return null;
+    }
+    $number = hw_num(trim($value), 0);
+    return is_finite((float) $number) ? $number : null;
+}
+
 /** @return list<array<string,mixed>> */
 function hw_read_price_table(array $sheets, string $name, bool $tafelOnly = false): array
 {
@@ -399,12 +412,12 @@ function hw_read_price_table(array $sheets, string $name, bool $tafelOnly = fals
             continue;
         }
         $out[] = [
-            'klasse' => strtolower(trim(hw_js_string(hw_tabellen_wert($row, $columns['klasse'])))),
+            'klasse' => strtolower($tafel !== false ? trim(hw_js_string(hw_tabellen_wert($row, $columns['klasse']))) : hw_js_string(hw_tabellen_wert($row, $columns['klasse']))),
             'modell' => hw_js_string(hw_tabellen_wert($row, $columns['modell'])),
             'hausgroesse' => hw_js_string(hw_tabellen_wert($row, $columns['hausgroesse'])),
             'kw' => hw_js_string(hw_tabellen_wert($row, $columns['kw'])),
             'brutto' => $brutto,
-            'eigen' => hw_num(hw_tabellen_wert($row, $columns['eigen']), 0),
+            'eigen' => hw_price_eigen(hw_tabellen_wert($row, $columns['eigen'])),
             'proklima' => hw_num(hw_tabellen_wert($row, $columns['proklima']), 0),
         ];
         if ($tafel !== false) {
@@ -423,10 +436,11 @@ function hw_get_prices(array $sheets, string $brand): array
     );
     $klasse = hw_kopf_index($table, 'Klasse');
     $brutto = hw_kopf_index($table, 'Endpreis_brutto');
+    $tafel = array_search('tafel', $table['header'], true);
     $out = [];
     foreach (hw_tafel_rows($table) as $row) {
         if (hw_tabellen_wert($row, $klasse) !== '') {
-            $out[strtolower(trim(hw_js_string(hw_tabellen_wert($row, $klasse))))] = hw_num(hw_tabellen_wert($row, $brutto), 0);
+            $out[strtolower($tafel !== false ? trim(hw_js_string(hw_tabellen_wert($row, $klasse))) : hw_js_string(hw_tabellen_wert($row, $klasse)))] = hw_num(hw_tabellen_wert($row, $brutto), 0);
         }
     }
     return $out;

@@ -1838,6 +1838,19 @@ function tafelRows_(rows, tafel, klasse, brutto) {
   return selected;
 }
 
+// Fehlend ist nicht kostenlos: vollständige deutsche Zahl oder nativer Zahlenwert.
+function priceEigen_(value) {
+  if (typeof value === 'number') return isFinite(value) ? value : null;
+  if (typeof value !== 'string' || !/^[+-]?(?:[0-9]+|[0-9]{1,3}(?:\.[0-9]{3})+)(?:,[0-9]+)?$/.test(value.trim())) return null;
+  const number = num_(value.trim(), 0);
+  return isFinite(number) ? number : null;
+}
+
+function priceClass_(value, tafel) {
+  const text = String(value);
+  return (tafel >= 0 ? text.trim() : text).toLowerCase();
+}
+
 function getPrices_(marke) {
   const ss = SpreadsheetApp.openById(SHEET_ID);
   const sh = ss.getSheetByName(marke === 'vaillant' ? 'Preise_Vaillant' : 'Preise_Wolf');
@@ -1848,7 +1861,7 @@ function getPrices_(marke) {
   const out = {};
   tafelRows_(table.rows, table.header.indexOf('tafel'), klasse, brutto).forEach(function (row) {
     if (tabellenWert_(row, klasse)) {
-      out[String(tabellenWert_(row, klasse)).trim().toLowerCase()] = num_(tabellenWert_(row, brutto), 0);
+      out[priceClass_(tabellenWert_(row, klasse), table.header.indexOf('tafel'))] = num_(tabellenWert_(row, brutto), 0);
     }
   });
   return out;
@@ -1880,12 +1893,12 @@ function readPriceTable_(name, tafelOnly) {
     const brutto = num_(tabellenWert_(row, columns.brutto), 0);
     if (brutto <= 0) return;
     out.push({
-      klasse: String(tabellenWert_(row, columns.klasse)).trim().toLowerCase(),
+      klasse: priceClass_(tabellenWert_(row, columns.klasse), tafel),
       modell: String(tabellenWert_(row, columns.modell)),
       hausgroesse: String(tabellenWert_(row, columns.hausgroesse)),
       kw: String(tabellenWert_(row, columns.kw)),
       brutto: brutto,
-      eigen: num_(tabellenWert_(row, columns.eigen), 0),
+      eigen: priceEigen_(tabellenWert_(row, columns.eigen)),
       proklima: num_(tabellenWert_(row, columns.proklima), 0)
     });
     if (tafel >= 0) out[out.length - 1].tafel = String(tabellenWert_(row, tafel) || '').trim();

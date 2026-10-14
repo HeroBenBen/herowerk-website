@@ -1410,7 +1410,7 @@ function paTafelRows(rows) {
 
 function paRowsByKlasse(rows) {
   return paTafelRows(rows || []).reduce((acc, row) => {
-    if (row && row.klasse) acc[String(row.klasse).trim().toLowerCase()] = row;
+    if (row && row.klasse) acc[row.klasse] = row;
     return acc;
   }, {});
 }
@@ -1436,9 +1436,7 @@ function foerderPackageRows(brand) {
   const rows =
     paPrices[brand] && paPrices[brand].length ? paPrices[brand] : FOERDER_PACKAGE_FALLBACK[brand];
   const selected = paTafelRows(rows);
-  return PA_KLASSEN.map((klasse) =>
-    selected.find((row) => String(row.klasse).trim().toLowerCase() === klasse)
-  ).filter(Boolean);
+  return PA_KLASSEN.map((klasse) => selected.find((row) => row.klasse === klasse)).filter(Boolean);
 }
 
 function foerderFormatPackageOption(row) {
