@@ -232,7 +232,8 @@ if (website) {
       assert.match(cards[i].modell, /aroTHERM pro/);
       assert.match(cards[i].modell, /7\.1/);
       assert.ok(!JSON.stringify(cards[i].specs).includes('A-7/W35'));
-      assert.match(cards[i].kw, /A-11\/W55/);
+      assert.equal(cards[i].kw, '');
+      same(cards[i].specs, []);
     }
   });
   test('Ausfall: neue Rückfallidentität und Preise, Tafel auf Anfrage', () => {

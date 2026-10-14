@@ -66,8 +66,8 @@ try {
         for (let i = 0; i < 3; i++) {
           const card = page.locator('.pa-card').nth(i);
           const text = await card.innerText();
-          assert.match(text, /aroTHERM pro 7\.1/);
-          assert.match(text, /A-11\/W55/);
+          assert.match(text, /aroTHERM pro VWL/);
+          assert.doesNotMatch(text, /kW|W35|W55|A-7|A-11/);
           assert.doesNotMatch(text, /8\.1|A-7\/W35/);
           if (scenario === 'erfolg') {
             assert.ok(text.includes(prices.vaillant[i].brutto.toLocaleString('de-DE')));
@@ -78,8 +78,7 @@ try {
           document.querySelector('#paSpecsSub')?.textContent.includes('7.1')
         );
         const specs = await page.locator('#paSpecsTable').innerText();
-        assert.match(specs, /4,77 kW/);
-        assert.match(specs, /4,34 kW/);
+        assert.equal(specs.trim(), '');
         assert.doesNotMatch(specs, /SCOP|JAZ|A-7\/W35/);
       } else {
         // Den echten Abrufpfad einschließlich Retry vollständig abwarten.
@@ -91,7 +90,7 @@ try {
             '#foerderWpTyp option[value="vaillant:' + ['s', 'm', 'l'][i] + '"]'
           );
           assert.equal(await option.getAttribute('data-price'), String(prices.vaillant[i].brutto));
-          assert.match(await option.textContent(), /aroTHERM pro 7\.1/);
+          assert.match(await option.textContent(), /aroTHERM pro VWL/);
           assert.doesNotMatch(await option.textContent(), /8\.1|A-7\/W35/);
         }
       }
