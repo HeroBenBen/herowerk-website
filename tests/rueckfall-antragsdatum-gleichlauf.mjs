@@ -152,6 +152,9 @@ merke('Bootstrap des Kostenvergleichs', { action: 'kv_bootstrap' });
 // 3. PHP-Fassung, ein Aufruf fuer alle Faelle.
 // ---------------------------------------------------------------------------
 const phpRunner = String.raw`
+// Wie der produktive Einstieg api/rechner.php:19. Der direkte CLI-Test umgeht
+// ihn sonst und vergleicht nach Mitternacht Berlin mit dem UTC-Vortag.
+date_default_timezone_set('Europe/Berlin');
 require 'api/rechner-engine.php';
 $in = json_decode(stream_get_contents(STDIN), true);
 $out = [];
