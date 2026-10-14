@@ -326,7 +326,9 @@ function dimensionierung_(p) {
       heizsystem,
       zone.nat,
       markenHeizstab,
-      getNum_(d, 'kaskaden_toleranz_kw', 0.5)
+      getNum_(d, 'kaskaden_toleranz_kw', 0.5),
+      // Treiber im Blatt Dimensionierung, Schluessel website_mindestanteil; Rueckfall 0,80 (GF 14.10.2026).
+      getNum_(d, 'website_mindestanteil', 0.8)
     );
     const varianten = matches.map(function (match, index) {
       const result = catalogResult_(
@@ -429,7 +431,8 @@ function leistungAmAuslegungspunkt_(item, heizsystem, nat) {
 // matchCatalogVarianten_. Wer die Regel aendert: zuerst der Entscheid, dann die Vault-Datei, dann ALLE Kerne
 // zeichengleich, dann die Erklaerzellen der Blaetter.
 // ==========================================================================================================
-function matchCatalogVarianten_(marke, auslegung, heizsystem, nat, markenHeizstab, kaskadenToleranz) {
+function matchCatalogVarianten_(marke, auslegung, heizsystem, nat, markenHeizstab, kaskadenToleranz, websiteMindestanteil) {
+  const websiteMin = websiteMindestanteil === undefined ? 0 : websiteMindestanteil;
   const grenzeOf = function (item) {
     return heizsystem === 'heizkoerper'
       ? grenzeInterp_(item.grenzeW55, item.grenzeW55a10, nat)
@@ -451,8 +454,10 @@ function matchCatalogVarianten_(marke, auslegung, heizsystem, nat, markenHeizsta
     const leistung = leistungAmAuslegungspunkt_(item, heizsystem, nat);
     const heizstab = item.mindestAnteil >= 1 ? 0 : markenHeizstab;
     const empfehlungsgrenze = heizsystem === 'heizkoerper' ? item.empfehlungW55 : item.empfehlungW35;
-    const anteilErfuellt = leistung >= item.mindestAnteil * auslegung
-      || (empfehlungsgrenze !== null && auslegung <= empfehlungsgrenze);
+    const anteilErfuellt = (leistung >= item.mindestAnteil * auslegung
+      || (empfehlungsgrenze !== null && auslegung <= empfehlungsgrenze))
+      // GF 14.10.2026: die Website zeigt kein Geraet unter der Website-Mindestdeckung.
+      && leistung >= websiteMin * auslegung;
     if (!anteilErfuellt || leistung + heizstab < auslegung) return;
     if (item.kaskade) {
       const einzelgrenze = groessteEinzelgrenze[item.baureihe];
