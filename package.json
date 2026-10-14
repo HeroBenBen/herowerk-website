@@ -31,7 +31,7 @@
     "verify:buendel-kommentare": "node scripts/verify-bundle-comments.mjs",
     "verify:buendel-gleichheit": "node scripts/verify-bundle-equality.mjs",
     "verify:buendel-kommentare-schaerfe": "node tests/buendel-kommentare-schaerfe.mjs",
-    "verify:rechner-snapshot-integritaet": "php tests/rechner-snapshot-integritaet.php && php tests/rechner-snapshot-meldung.php && node tests/rechner-snapshot-wege.mjs && node tests/rechner-snapshot-rotnachweise.mjs && python3 tests/rechner-snapshot-ergebnisse.py && python3 tests/rechner-snapshot-ergebnisse-rotnachweise.py"
+    "verify:rechner-snapshot-integritaet": "php tests/rechner-snapshot-integritaet.php && php tests/rechner-snapshot-meldung.php && node tests/rechner-snapshot-wege.mjs && node tests/rechner-snapshot-rotnachweise.mjs && python3 tests/rechner-snapshot-ergebnisse.py && python3 tests/rechner-snapshot-ergebnisse-rotnachweise.py && python3 tests/rechner-snapshot-nachauftrag2.py && python3 tests/rechner-snapshot-nachauftrag2-rotnachweise.py"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",

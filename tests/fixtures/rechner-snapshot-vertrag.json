@@ -363,22 +363,31 @@
     }
   ],
   "geldtypen": {
-    "kennzeichnung": "Vertragsfestlegung Nachauftrag 1",
-    "pflicht_zahl": [
+    "kennzeichnung": "Vertragsfestlegung Nachauftrag 2",
+    "zahl_oder_leer": [
       "Preise_*.Endpreis_brutto",
       "Preise_*.Eigenanteil",
+      "Preise_*.Endpreis_brutto_ohne_Warmwasser",
       "Geräte_Katalog.Brutto € bei Auswahl ja"
     ],
-    "zahl_oder_null": [
-      "Preise_*.Endpreis_brutto_ohne_Warmwasser"
+    "leerwerte": [
+      "",
+      null
     ],
+    "normalisierte_abwesenheit": null,
+    "normalisierung": "Gleiche kanonische Geldzahlen erhalten vor Berechnung und Speicherung denselben numerischen Typ; exakt darstellbare ganze Zahlen als Integer. Kein Runden und kein Textzahlenlesen.",
     "zahltext_zulaessig": false,
     "typenprobe": {
       "zahl": 30026.01,
       "preisantwort": 30026.01,
       "text": "30026.01",
       "text_fehler": "snapshot_zahltyp_ungueltig"
-    }
+    },
+    "gleichwertige_zahlen": [
+      30026,
+      30026.0
+    ],
+    "fehlpreis_http": "brutto null, Eigenanteil null; preis_hinterlegt intern false und als Innenfeld nicht in HTTP enthalten."
   },
   "tabellenaufloesung": {
     "kennzeichnung": "Vertragsfestlegung Nachauftrag 1",
@@ -504,13 +513,36 @@
     ]
   },
   "auswahlregel": {
-    "kennzeichnung": "Vertragsfestlegung Nachauftrag 1",
-    "regel": "Text, NFC, Unicode-Rand-Leerraum entfernen, Kleinschreibung; ja bedeutet gewählt. Gleiche Normalisierung für Hash und Verbraucher.",
+    "kennzeichnung": "Vertragsfestlegung Nachauftrag 2",
+    "regel": "Auswahlentscheidung: NFC, Unicode-Rand-Leerraum entfernen, Kleinschreibung; ja bedeutet gewählt. Hashtext: nur NFC und Randbeschnitt, Großschreibung bleibt erhalten.",
     "positive": [
       "ja",
       "JA",
       " Ja "
     ],
     "fremder_lauf_bei_JA": "snapshot_lauf_abweichend"
-  }
+  },
+  "grossschreibungsfaelle": [
+    {
+      "zelle": "Geräte_Katalog!AH3",
+      "eingabe": "JA",
+      "kanonische_bytes": "[[\"Preise_Wolf\",[[\"s\",\"Wärmepumpe\",\"bis ca. 85 m²\",\"5–7 kW\",\"30026.01\",\"7626\",\"\",\"wolf-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Preise_Vaillant\",[[\"S\",\"Vaillant VWL 55/8.1 A\",\"bis ca. 80 m²\",\"5,6 kW\",\"29944\",\"7544\",\"\",\"vaillant-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Geräte_Katalog\",[[\"Wolf\",\"Wärmepumpe\",\"N\",\"CHA\",\"1\",\"JA\",\"30026.01\",\"wolf-s\",\"lauf-test\"]]]]",
+      "inhalt_sha256": "b64678ac32edb6044b04dc00eccf42b51e81e8aa5afa660486bec23a38831443",
+      "quelle": "Python unicodedata + decimal + json + hashlib, tests/helpers/snapshot_contract.py"
+    },
+    {
+      "zelle": "Geräte_Katalog!AH3",
+      "eingabe": "Ja",
+      "kanonische_bytes": "[[\"Preise_Wolf\",[[\"s\",\"Wärmepumpe\",\"bis ca. 85 m²\",\"5–7 kW\",\"30026.01\",\"7626\",\"\",\"wolf-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Preise_Vaillant\",[[\"S\",\"Vaillant VWL 55/8.1 A\",\"bis ca. 80 m²\",\"5,6 kW\",\"29944\",\"7544\",\"\",\"vaillant-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Geräte_Katalog\",[[\"Wolf\",\"Wärmepumpe\",\"N\",\"CHA\",\"1\",\"Ja\",\"30026.01\",\"wolf-s\",\"lauf-test\"]]]]",
+      "inhalt_sha256": "49276ade81d89d9277cf018764b688dfd74c97ad850c668d960081585d7c05ae",
+      "quelle": "Python unicodedata + decimal + json + hashlib, tests/helpers/snapshot_contract.py"
+    },
+    {
+      "zelle": "Geräte_Katalog!AH3",
+      "eingabe": "  JA  ",
+      "kanonische_bytes": "[[\"Preise_Wolf\",[[\"s\",\"Wärmepumpe\",\"bis ca. 85 m²\",\"5–7 kW\",\"30026.01\",\"7626\",\"\",\"wolf-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Preise_Vaillant\",[[\"S\",\"Vaillant VWL 55/8.1 A\",\"bis ca. 80 m²\",\"5,6 kW\",\"29944\",\"7544\",\"\",\"vaillant-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Geräte_Katalog\",[[\"Wolf\",\"Wärmepumpe\",\"N\",\"CHA\",\"1\",\"JA\",\"30026.01\",\"wolf-s\",\"lauf-test\"]]]]",
+      "inhalt_sha256": "b64678ac32edb6044b04dc00eccf42b51e81e8aa5afa660486bec23a38831443",
+      "quelle": "Python unicodedata + decimal + json + hashlib, tests/helpers/snapshot_contract.py"
+    }
+  ]
 }

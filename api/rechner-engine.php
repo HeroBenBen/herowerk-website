@@ -362,7 +362,7 @@ function hw_read_price_table(array $sheets, string $name, ?array $tables = null)
         if (hw_tabellen_wert($row, $columns['klasse']) === '') {
             continue;
         }
-        $brutto = $tables !== null ? rechner_schema3_zahl(hw_tabellen_wert($row, $columns['brutto']))
+        $brutto = $tables !== null ? rechner_schema3_zahl(hw_tabellen_wert($row, $columns['brutto']), true)
             : hw_num(hw_tabellen_wert($row, $columns['brutto']), 0);
         if ($brutto <= 0) {
             continue;
@@ -373,7 +373,7 @@ function hw_read_price_table(array $sheets, string $name, ?array $tables = null)
             'hausgroesse' => hw_js_string(hw_tabellen_wert($row, $columns['hausgroesse'])),
             'kw' => hw_js_string(hw_tabellen_wert($row, $columns['kw'])),
             'brutto' => $brutto,
-            'eigen' => $tables !== null ? rechner_schema3_zahl(hw_tabellen_wert($row, $columns['eigen']))
+            'eigen' => $tables !== null ? rechner_schema3_zahl(hw_tabellen_wert($row, $columns['eigen']), true)
                 : hw_num(hw_tabellen_wert($row, $columns['eigen']), 0),
             'proklima' => hw_num(hw_tabellen_wert($row, $columns['proklima']), 0),
         ];
@@ -393,7 +393,7 @@ function hw_get_prices(array $sheets, string $brand, ?array $tables = null): arr
     $out = [];
     foreach ($table['rows'] as $row) {
         if (hw_tabellen_wert($row, $klasse) !== '') {
-            $out[strtolower(hw_js_string(hw_tabellen_wert($row, $klasse)))] = $tables !== null ? rechner_schema3_zahl(hw_tabellen_wert($row, $brutto))
+            $out[strtolower(hw_js_string(hw_tabellen_wert($row, $klasse)))] = $tables !== null ? rechner_schema3_zahl(hw_tabellen_wert($row, $brutto), true)
                 : hw_num(hw_tabellen_wert($row, $brutto), 0);
         }
     }
@@ -470,7 +470,7 @@ function hw_get_catalog(array $sheets, ?array $tables = null): array
                 ? null
                 : hw_num($herstellerfreigabeW35, 0),
             'brutto' => $tables !== null && rechner_schema3_auswahl(hw_tabellen_wert($row, $columns['auswahl']))
-                ? rechner_schema3_zahl(hw_tabellen_wert($row, $columns['brutto']))
+                ? rechner_schema3_zahl(hw_tabellen_wert($row, $columns['brutto']), true)
                 : hw_num(hw_tabellen_wert($row, $columns['brutto']), 0),
             'stand' => hw_js_string(hw_tabellen_wert($row, $columns['stand'])),
             'puffer' => hw_js_string(hw_tabellen_wert($row, $columns['puffer'])),
@@ -1853,7 +1853,11 @@ function hw_foerderung(array $query, array $sheets, ?array $tables = null): arra
     $prices = hw_get_prices($sheets, $brand, $tables);
     $wpTyp = strtolower(hw_query_string($query, 'wpTyp', 'm'));
     $manual = array_key_exists('preisManuell', $query) && $query['preisManuell'] !== '';
-    $preis = $manual ? hw_int($query['preisManuell'], 34510) : (($prices[$wpTyp] ?? 0) ?: 34510);
+    if ($tables !== null && !$manual && ($prices[$wpTyp] ?? null) === null) {
+        throw new RuntimeException('snapshot_preis_fehlt');
+    }
+    $preis = $tables !== null && !$manual ? $prices[$wpTyp]
+        : ($manual ? hw_int($query['preisManuell'], 34510) : (($prices[$wpTyp] ?? 0) ?: 34510));
     $args = $query;
     $args['preis'] = $preis;
     $snapshotPreis = $tables !== null && !$manual ? rechner_schema3_zahl($preis) : null;

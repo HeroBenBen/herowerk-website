@@ -158,6 +158,7 @@ function rechner_validate_snapshot(string $body): array
 
         if ($schemaVersion === 3) {
             rechner_pruefe_integritaet($snapshot);
+            $snapshot = rechner_schema3_geld_normalisieren($snapshot);
         }
     } catch (RechnerValuesException $error) {
         if ($schemaVersion === 3) {

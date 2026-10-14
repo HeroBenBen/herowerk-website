@@ -115,10 +115,7 @@ $answer = hw_rechner_route('preise', [], $base['sheets'], 3);
 check($answer['wolf'][0]['brutto'] === 30026.01 && $answer['vaillant'][0]['brutto'] === 29944, 'Preisantwort verwendet numerische Vertragswerte');
 foreach (['Preise_Wolf', 'Preise_Vaillant'] as $sheet) {
     foreach ([4, 5, 8] as $column) {
-        foreach (['30026.01', '', false, [], null] as $wrong) {
-            if ($column === 8 && $wrong === null) {
-                continue;
-            }
+        foreach (['30026.01', ' ', false, []] as $wrong) {
             $s = $base;
             $s['sheets'][$sheet][1][$column] = $wrong;
             $code = 'snapshot_zahltyp_ungueltig';
@@ -147,3 +144,27 @@ rejected($s, 'snapshot_kopfzeile_unbekannt', 'Technik-Präfixkopf abgewiesen');
 $s = $base;
 $s['sheets']['Preise_Wolf'][1][1] = 'Wärmepumpe';
 check(hw_rechner_route('preise', [], $s['sheets'], 3) === $answer, 'NFC und Rand-Leerzeichen auch im Preisverbrauch gleich');
+
+// Unabhängig erzeugte Großschreibungsbytes, getrennt von der Auswahlentscheidung.
+foreach ($fixture['grossschreibungsfaelle'] as $case) {
+    $s = $base;
+    $s['sheets']['Geräte_Katalog'][2][33] = $case['eingabe'];
+    rejected($s, 'snapshot_inhalt_abweichend', 'Kleinbuchstabenhash passt nicht zu Großschreibung');
+    $s['sheets']['Referenz_Laeufe'][1][4] = $case['inhalt_sha256'];
+    check(rechner_inhaltsbytes($s['sheets'], 'lauf-test') === $case['kanonische_bytes'], 'unabhängige Großschreibungsbytes');
+    check(rechner_validate_snapshot(encoded($s)) === $s, 'Großschreibungsvertrag angenommen');
+}
+foreach ([30026.0, 30026, -0.0, 30026.01, 1e-7, 1e20, PHP_INT_MAX, PHP_INT_MIN] as $number) {
+    $normal = rechner_schema3_zahl($number);
+    check(rechner_dezimal($normal) === rechner_dezimal($number), 'Geldnormalisierung erhält Hashwert');
+    check(rechner_schema3_zahl($normal) === $normal, 'Geldnormalisierung idempotent');
+}
+check(rechner_schema3_zahl(30026.0) === 30026, 'Ganzzahltyp einheitlich');
+foreach (['', null] as $empty) {
+    check(rechner_schema3_zahl($empty, true) === null, 'Fehlpreis einheitlich null');
+}
+
+// Auch nahe der Integergrenze darf gleiche kanonische Zahl nicht verschiedene Typen liefern.
+foreach ([9223372036854775000, 9223372036854775000.0] as $number) {
+    check(rechner_schema3_zahl($number) === 9223372036854775000, 'Kanonisch gleiche große Zahl einheitlich');
+}

@@ -11,6 +11,7 @@ import time
 import unicodedata
 import urllib.error
 import urllib.request
+from helpers.snapshot_contract import seal
 
 REPO = Path(__file__).resolve().parents[1]
 SOURCE = Path(os.environ.get('P3A_RESULT_SOURCE', REPO))
@@ -267,6 +268,7 @@ try:
     def upper():
         s = copy.deepcopy(BASE)
         s['sheets']['Geräte_Katalog'][2][33] = ' \u00a0JA\u00a0 '
+        seal(s, CONTRACT)
         put(INPUT, s)
         selected = cli('price')
         assert selected.returncode == 0 and json.loads(selected.stdout) == baseline, selected.stdout

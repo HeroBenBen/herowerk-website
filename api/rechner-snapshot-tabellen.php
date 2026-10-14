@@ -61,13 +61,16 @@ function rechner_schema3_auswahl(mixed $value): bool
 /** Kein Parsen von Text: exakt dieser numerische Wert wird gehasht und gerechnet. */
 function rechner_schema3_zahl(mixed $value, bool $nullable = false): int|float|null
 {
-    if ($nullable && $value === null) {
+    if ($nullable && ($value === null || $value === '')) {
         return null;
     }
     if ((!is_int($value) && !is_float($value)) || !is_finite((float) $value)) {
         throw new RechnerValuesException('snapshot_zahltyp_ungueltig');
     }
-    return $value;
+    // Die geprüfte kanonische JSON-Zahl bestimmt den Typ, auch an Integergrenzen.
+    // Kein Eingabetext wird geparst: dessen Typ wurde oben bereits abgewiesen.
+    $normalized = json_decode(rechner_dezimal($value), true, 512, JSON_THROW_ON_ERROR);
+    return $normalized;
 }
 
 /** Historische Parameterzeilen sind keine Geräte, nur diese Schlüssel sind zulässig. */
@@ -166,7 +169,6 @@ function rechner_schema3_tabellen_aufloesen(array $sheets): array
             $map = $table['columns'];
             if ($catalog) {
                 $selected = rechner_schema3_auswahl($row[$map['Auswahl']] ?? null);
-                $row[$map['Auswahl']] = strtolower(rechner_kanonische_zelle($row[$map['Auswahl']] ?? null, true));
             }
             foreach ($names as $name) {
                 $index = $map[$name];
@@ -174,7 +176,7 @@ function rechner_schema3_tabellen_aufloesen(array $sheets): array
                 $money = $catalog ? $name === 'Brutto €'
                     : in_array($name, ['Endpreis_brutto', 'Eigenanteil', 'Endpreis_brutto_ohne_Warmwasser'], true);
                 if ($money && (!$catalog || $selected)) {
-                    $row[$index] = rechner_schema3_zahl($value, $name === 'Endpreis_brutto_ohne_Warmwasser');
+                    $row[$index] = rechner_schema3_zahl($value, true);
                 } elseif (is_string($value)) {
                     $row[$index] = rechner_kanonische_zelle($value);
                 }
@@ -184,4 +186,27 @@ function rechner_schema3_tabellen_aufloesen(array $sheets): array
         $tables[$sheet] = $table;
     }
     return $tables;
+}
+
+/** Nach erfolgreicher Integritätsprüfung: dieselben Geldwerte speichern und rechnen. */
+function rechner_schema3_geld_normalisieren(array $snapshot): array
+{
+    foreach (rechner_schema3_tabellen_aufloesen($snapshot['sheets']) as $sheet => $table) {
+        $catalog = $sheet === 'Geräte_Katalog';
+        if ($sheet === 'Referenz_Laeufe') {
+            continue;
+        }
+        $names = $catalog ? ['Brutto €'] : ['Endpreis_brutto', 'Eigenanteil', 'Endpreis_brutto_ohne_Warmwasser'];
+        foreach ($table['rows'] as $offset => $row) {
+            if ($catalog && !rechner_schema3_auswahl($row[$table['columns']['Auswahl']] ?? null)) {
+                continue;
+            }
+            $sourceRow = $table['headerRow'] + 1 + $offset;
+            foreach ($names as $name) {
+                $column = $table['columns'][$name];
+                $snapshot['sheets'][$sheet][$sourceRow][$column] = $row[$column];
+            }
+        }
+    }
+    return $snapshot;
 }

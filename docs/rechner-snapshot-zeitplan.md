@@ -57,18 +57,24 @@ Erlaubte Katalogvorspänne und technische Kopf-Aliase stehen in `tabellenaufloes
 der gemeinsamen Prüfdatei. Historische Parameterzeilen bleiben dort ausdrücklich
 als Vorspann erlaubt.
 
-Geldfelder verlangen JSON-Zahlen, keine numerisch aussehenden Texte. Nur das
-optionale Feld `Endpreis_brutto_ohne_Warmwasser` darf als Abwesenheit `null`
-enthalten. Der Zahlenleser und die Kanonisierung erhalten denselben numerischen
-Wert. Auch die Förderrechnung erhält diesen gebundenen Preis ausdrücklich und
-führt ihn nicht erneut durch den Ganzzahl-Textleser. Manuelle Eingaben und ältere
-Schemas behalten ihren bisherigen Zahlenweg. Die Typwechselprobe ist in
-`geldtypen.typenprobe` festgelegt.
-Auswahl wird zentral NFC-normalisiert, am Rand von Unicode-Leerraum befreit und
-kleingeschrieben. Deshalb wird auch `JA` an den aktiven Lauf gebunden und gehasht.
-Dieselbe Entscheidung steuert die Gerätewahl. Quellen dieser Regeln:
-`tests/fixtures/rechner-snapshot-vertrag.json`, Felder `geldtypen`,
-`tabellenaufloesung` und `auswahlregel`.
+Geldfelder erlauben endliche JSON-Zahlen sowie Leertext und `null` für fehlende
+Preise. Andere Texte bleiben unzulässig. Fehlpreise werden einheitlich als `null`
+weitergegeben; preislose Geräte bleiben gebunden und wählbar. Die vorhandene
+Oberfläche zeigt fehlende Preise als „auf Anfrage“. Der Förderweg berechnet ohne
+manuelle Eingabe keinen Ersatzbetrag aus einem fehlenden Abzugspreis.
+Nach erfolgreicher Prüfung werden die gebundenen Geldzellen vor Berechnung und
+Speicherung gleich normalisiert. Numerisch gleichwertige ganze Zahlen haben
+denselben Typ; Nachkommastellen bleiben erhalten. Der Inhaltsprüfwert ändert sich
+dabei nicht. Kaltstart und anschließendes Dateilesen liefern dieselbe Antwort.
+Manuelle Eingaben und ältere Schemas behalten ihren bisherigen Zahlenweg.
+
+Auswahlentscheidung und Hashtext sind getrennt: Die zentrale Auswahlfunktion
+verwendet NFC, Randbeschnitt und Kleinschreibung. Der Hashtext erhält ausschließlich
+NFC und Randbeschnitt, seine Großschreibung bleibt erhalten. Daher ist auch `JA`
+gewählt und laufgebunden, hat aber andere Hashbytes als `ja`. Unabhängige Sollbytes
+und Hashes stehen in `grossschreibungsfaelle` der gemeinsamen Prüfdatei.
+Quellen: `tests/fixtures/rechner-snapshot-vertrag.json`, Felder `geldtypen`,
+`tabellenaufloesung` und `auswahlregel` (Vertragsfestlegung Nachauftrag 2).
 
 NFC verwendet ausschließlich PHP `Normalizer` aus `intl`. Ohne diese Erweiterung
 endet Schema 3 mit `nfc_nicht_verfuegbar`; Schema 1 und 2 bleiben unabhängig davon
