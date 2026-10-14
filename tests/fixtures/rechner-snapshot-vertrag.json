@@ -116,7 +116,7 @@
           7626,
           "",
           "wolf-s",
-          "",
+          null,
           "lauf-test",
           "2026-10-14",
           "",
@@ -158,7 +158,7 @@
           7544,
           "",
           "vaillant-s",
-          "",
+          null,
           "lauf-test",
           "2026-10-14",
           "",
@@ -361,5 +361,156 @@
       "eingabe": 1e+20,
       "soll": "100000000000000000000"
     }
-  ]
+  ],
+  "geldtypen": {
+    "kennzeichnung": "Vertragsfestlegung Nachauftrag 1",
+    "pflicht_zahl": [
+      "Preise_*.Endpreis_brutto",
+      "Preise_*.Eigenanteil",
+      "Geräte_Katalog.Brutto € bei Auswahl ja"
+    ],
+    "zahl_oder_null": [
+      "Preise_*.Endpreis_brutto_ohne_Warmwasser"
+    ],
+    "zahltext_zulaessig": false,
+    "typenprobe": {
+      "zahl": 30026.01,
+      "preisantwort": 30026.01,
+      "text": "30026.01",
+      "text_fehler": "snapshot_zahltyp_ungueltig"
+    }
+  },
+  "tabellenaufloesung": {
+    "kennzeichnung": "Vertragsfestlegung Nachauftrag 1",
+    "koepfe": "Exakte Namen oder explizite Aliase; keine Präfixsuche. Doppelte, unbekannte und Teilköpfe unzulässig. Spaltenpositionen beliebig.",
+    "preis_vorspann": "Nur leere Zeilen vor dem vollständigen Kopf.",
+    "katalog_vorspann": "Einzelne Textzelle oder bekannte Parameterzeile mit Schlüssel in A und Wert, Einheit, Erklärung in B bis D; übrige Zellen leer.",
+    "katalog_parameter": [
+      "nat_c",
+      "auslegungsfaktor",
+      "heizstab_jahresanteil_max",
+      "heizstab_wolf",
+      "heizstab_vaillant",
+      "sollband_unten"
+    ],
+    "daten": "Jede nichtleere Preiszeile wird gebunden. Keine Werte unter leeren Köpfen. Keine weiteren Köpfe vor oder nach dem vollständigen Kopf.",
+    "katalog_zusatzkoepfe": {
+      "WP NAT W35": [
+        "WP NAT W35"
+      ],
+      "WP NAT W55": [
+        "WP NAT W55"
+      ],
+      "nutzb. Heizstab W35": [
+        "nutzb. Heizstab W35"
+      ],
+      "nutzb. Heizstab W55": [
+        "nutzb. Heizstab W55"
+      ],
+      "Auslegungsgrenze W35 (WP÷0,80)": [
+        "Auslegungsgrenze W35 (WP÷0,80)"
+      ],
+      "Auslegungsgrenze W55 (WP÷0,80)": [
+        "Auslegungsgrenze W55 (WP÷0,80)"
+      ],
+      "Reserve mit Heizstab W55 (techn. Max, NICHT Auslegung)": [
+        "Reserve mit Heizstab W55 (techn. Max, NICHT Auslegung)"
+      ],
+      "Stand": [
+        "Stand"
+      ],
+      "Auslegungsgrenze W35 @A-10": [
+        "Auslegungsgrenze W35 @A-10",
+        "Auslegungsgrenze W35 @A-10 (WP÷0,80)"
+      ],
+      "Auslegungsgrenze W55 @A-10": [
+        "Auslegungsgrenze W55 @A-10",
+        "Auslegungsgrenze W55 @A-10 (WP÷0,80)"
+      ],
+      "WP NAT W35 @A-10": [
+        "WP NAT W35 @A-10",
+        "WP NAT W35 @A-10 (Treiber)"
+      ],
+      "WP NAT W55 @A-10": [
+        "WP NAT W55 @A-10",
+        "WP NAT W55 @A-10 (Treiber)"
+      ],
+      "Mindest-Leistungsanteil": [
+        "Mindest-Leistungsanteil",
+        "Mindest-Leistungsanteil (Auswahlkriterium; 1,00 = monovalent ohne Heizstab)"
+      ],
+      "Puffer (": [
+        "Puffer (",
+        "Puffer (Vaillant-Werkzeug, gemessen 17.08.2026)"
+      ],
+      "Puffer Liter": [
+        "Puffer Liter"
+      ],
+      "Puffer, groessere Variante": [
+        "Puffer, groessere Variante"
+      ],
+      "ohne Puffer moeglich": [
+        "ohne Puffer moeglich",
+        "ohne Puffer moeglich (nur bei Flaechenheizung)"
+      ],
+      "Art der Leistungszahl in D, E, Q, R (T546, 19.08.2026)": [
+        "Art der Leistungszahl in D, E, Q, R (T546, 19.08.2026)"
+      ],
+      "Betriebspunkt der Leistungszahl (T546, 19.08.2026)": [
+        "Betriebspunkt der Leistungszahl (T546, 19.08.2026)"
+      ],
+      "Beleg der Leistungszahl, Dokument und Fundstelle (T546, 19.08.2026)": [
+        "Beleg der Leistungszahl, Dokument und Fundstelle (T546, 19.08.2026)"
+      ],
+      "Mindest-Modulationsleistung W35 bei minus 11 Grad, kW (T463, 19.08.2026)": [
+        "Mindest-Modulationsleistung W35 bei minus 11 Grad, kW (T463, 19.08.2026)"
+      ],
+      "Mindest-Modulationsleistung W55 bei minus 11 Grad, kW (T463, 19.08.2026)": [
+        "Mindest-Modulationsleistung W55 bei minus 11 Grad, kW (T463, 19.08.2026)"
+      ],
+      "Beleg der Modulationsangabe (T463, 19.08.2026); bei Kaskaden gilt der Wert EINES Geraetes": [
+        "Beleg der Modulationsangabe (T463, 19.08.2026); bei Kaskaden gilt der Wert EINES Geraetes"
+      ],
+      "Urspruenglicher Werkzeugwert W55 bei minus 11 Grad vor der konservativen Kappung (T428, 20.08.2026)": [
+        "Urspruenglicher Werkzeugwert W55 bei minus 11 Grad vor der konservativen Kappung (T428, 20.08.2026)"
+      ],
+      "Urspruenglicher Werkzeugwert W55 bei minus 10 Grad vor der konservativen Kappung (T428, 20.08.2026)": [
+        "Urspruenglicher Werkzeugwert W55 bei minus 10 Grad vor der konservativen Kappung (T428, 20.08.2026)"
+      ],
+      "Empfehlung bis kW W55": [
+        "Empfehlung bis kW W55"
+      ],
+      "Empfehlung bis kW W35": [
+        "Empfehlung bis kW W35"
+      ],
+      "Herstellerfreigabe bis kW W55": [
+        "Herstellerfreigabe bis kW W55"
+      ],
+      "Herstellerfreigabe bis kW W35": [
+        "Herstellerfreigabe bis kW W35"
+      ]
+    },
+    "katalog_pflicht_technik": [
+      "WP NAT W35",
+      "WP NAT W55",
+      "Auslegungsgrenze W35 (WP÷0,80)",
+      "Auslegungsgrenze W55 (WP÷0,80)",
+      "Auslegungsgrenze W35 @A-10",
+      "Auslegungsgrenze W55 @A-10",
+      "WP NAT W35 @A-10",
+      "WP NAT W55 @A-10",
+      "Mindest-Leistungsanteil",
+      "Stand"
+    ]
+  },
+  "auswahlregel": {
+    "kennzeichnung": "Vertragsfestlegung Nachauftrag 1",
+    "regel": "Text, NFC, Unicode-Rand-Leerraum entfernen, Kleinschreibung; ja bedeutet gewählt. Gleiche Normalisierung für Hash und Verbraucher.",
+    "positive": [
+      "ja",
+      "JA",
+      " Ja "
+    ],
+    "fremder_lauf_bei_JA": "snapshot_lauf_abweichend"
+  }
 }

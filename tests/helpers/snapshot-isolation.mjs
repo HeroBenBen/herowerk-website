@@ -5,7 +5,7 @@ import os from 'node:os';
 export function snapshotTestEnvironment() {
   return Object.fromEntries(
     Object.entries(process.env).filter(([key]) =>
-      /^(PATH|HOME|TMPDIR|TMP|TEMP|SystemRoot|PHP_CLI_SERVER_WORKERS|P3A_RUNTIME_DIR|P3A_TEST_ROOT|P3A_KEEP_ARTIFACTS)$/.test(
+      /^(PHP_INI_SCAN_DIR|PATH|HOME|TMPDIR|TMP|TEMP|SystemRoot|PHP_CLI_SERVER_WORKERS|P3A_RUNTIME_DIR|P3A_TEST_ROOT|P3A_KEEP_ARTIFACTS)$/.test(
         key
       )
     )
@@ -40,6 +40,7 @@ export async function copySnapshotModules(sourceRoot, apiDirectory, runtime, ups
   for (const name of [
     'rechner-values.php',
     'rechner-snapshot-integritaet.php',
+    'rechner-snapshot-tabellen.php',
     'rechner-snapshot-meldung.php',
   ]) {
     let source = await fs.readFile(path.join(sourceRoot, 'api', name), 'utf8');

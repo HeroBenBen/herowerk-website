@@ -438,7 +438,7 @@ try {
 
 $action = strtolower((string) ($_GET['action'] ?? 'health'));
 try {
-    $result = hw_rechner_route($action, $_GET, $snapshot['sheets']);
+    $result = hw_rechner_route($action, $_GET, $snapshot['sheets'], $snapshot['schemaVersion']);
     $result = rechner_innenfelder_entfernen($result);
     echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
 } catch (Throwable $error) {

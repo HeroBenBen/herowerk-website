@@ -35,6 +35,7 @@ for (const [name, file, search, replacement] of cases) {
   for (const module of [
     'rechner-values.php',
     'rechner-snapshot-integritaet.php',
+    'rechner-snapshot-tabellen.php',
     'rechner-snapshot-meldung.php',
   ]) {
     await fs.copyFile(path.join(repo, 'api', module), path.join(root, module));
@@ -85,6 +86,7 @@ for (const [name, file, search, replacement] of cases) {
   for (const module of [
     'rechner-values.php',
     'rechner-snapshot-integritaet.php',
+    'rechner-snapshot-tabellen.php',
     'rechner-snapshot-meldung.php',
   ]) {
     await fs.copyFile(path.join(repo, 'api', module), path.join(root, 'api', module));

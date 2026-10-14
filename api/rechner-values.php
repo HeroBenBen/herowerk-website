@@ -59,8 +59,21 @@ function rechner_snapshot_sheet_names(int $schemaVersion = 2): array
 function rechner_config(): array
 {
     $file = RECHNER_RUNTIME_DIR . '/rechner-config.json';
-    if (!file_exists($file)) {
+    clearstatcache(true, $file);
+    $entries = @scandir(RECHNER_RUNTIME_DIR);
+    if ($entries === false) {
+        // Ein nachweislich noch nicht angelegter Laufzeitordner enthält keine Konfiguration.
+        $parentEntries = @scandir(dirname(RECHNER_RUNTIME_DIR));
+        if (is_array($parentEntries) && !in_array(basename(RECHNER_RUNTIME_DIR), $parentEntries, true)) {
+            return [];
+        }
+        throw new RechnerValuesException('snapshot_config_invalid');
+    }
+    if (!in_array('rechner-config.json', $entries, true)) {
         return [];
+    }
+    if (!@is_file($file) || !@is_readable($file)) {
+        throw new RechnerValuesException('snapshot_config_invalid');
     }
     $raw = @file_get_contents($file);
     try {

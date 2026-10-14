@@ -47,6 +47,26 @@ sonst ist `aktiv` leer. Jede nichtleere Preis-Datenzeile und jede Katalogzeile m
 Auswahl `ja` braucht `geraet_id` und die aktive `lauf_id`. Katalogtechnik und
 Auswahl-nein-Zeilen sind nicht im Hash gebunden.
 
+Nachauftrag: Prüfung und Rechenkern verwenden `rechner_schema3_tabellen_aufloesen`
+aus `api/rechner-snapshot-tabellen.php`. Die Schemafassung wird ausdrücklich vom
+validierten Abzug an die Route übergeben. Die gemeinsame Zuordnung ersetzt im
+neuen Schema die freie Kopf- und Präfixsuche. Zusatzköpfe, doppelte Aliase,
+Teilköpfe und ungebundene Preiszeilen sind ungültig. Spalten dürfen gemeinsam mit
+ihren Werten umgestellt werden; dadurch bleibt die Preisantwort identisch.
+Erlaubte Katalogvorspänne und technische Kopf-Aliase stehen in `tabellenaufloesung`
+der gemeinsamen Prüfdatei. Historische Parameterzeilen bleiben dort ausdrücklich
+als Vorspann erlaubt.
+
+Geldfelder verlangen JSON-Zahlen, keine numerisch aussehenden Texte. Nur das
+optionale Feld `Endpreis_brutto_ohne_Warmwasser` darf als Abwesenheit `null`
+enthalten. Der Zahlenleser und die Kanonisierung erhalten denselben numerischen
+Wert. Die Typwechselprobe ist in `geldtypen.typenprobe` festgelegt.
+Auswahl wird zentral NFC-normalisiert, am Rand von Unicode-Leerraum befreit und
+kleingeschrieben. Deshalb wird auch `JA` an den aktiven Lauf gebunden und gehasht.
+Dieselbe Entscheidung steuert die Gerätewahl. Quellen dieser Regeln:
+`tests/fixtures/rechner-snapshot-vertrag.json`, Felder `geldtypen`,
+`tabellenaufloesung` und `auswahlregel`.
+
 NFC verwendet ausschließlich PHP `Normalizer` aus `intl`. Ohne diese Erweiterung
 endet Schema 3 mit `nfc_nicht_verfuegbar`; Schema 1 und 2 bleiben unabhängig davon
 lesbar. Die Serververfügbarkeit von `intl` ist vor P2 zu prüfen.
@@ -63,7 +83,7 @@ Optional liegt im privaten Rechner-Laufzeitordner `rechner-config.json`:
 ```
 
 Ohne Datei oder ohne `apps_script_url` bleibt die bisherige Produktionsadresse die
-Vorgabe. Eine vorhandene ungültige Datei führt zu `snapshot_config_invalid`.
+Vorgabe. Eine vorhandene ungültige oder unlesbare Datei, auch eine defekte Verknüpfung, führt zu `snapshot_config_invalid`. Dabei findet kein Transportversuch statt.
 Abzug und manueller Google-Durchreicheweg lesen dieselbe Adresse. HTTP ist nur für
 `127.0.0.1` als lokales Prüfziel erlaubt; sonst HTTPS. Keine Zugangsdaten, Query oder
 Fragmente in der konfigurierten Basisadresse. Konfiguration kommt nie aus einer

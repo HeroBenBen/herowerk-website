@@ -107,3 +107,43 @@ rejected($s, 'snapshot_zelltyp_ungueltig', 'Kaskade bleibt Text');
 $s = $base;
 $s['sheets']['Preise_Wolf'][1][1] = 'Wärmepumpe';
 check(rechner_validate_snapshot(encoded($s)) === $s, 'NFC und Rand-Leerzeichen gleichwertig');
+
+// Nachauftrag: Vertrag und tatsächlicher Preisverbrauch teilen Feldtypen und Werte.
+require __DIR__ . '/../api/rechner-engine.php';
+check(array_diff_key(rechner_schema3_katalog_koepfe(), rechner_katalog_spalten()) === $fixture['tabellenaufloesung']['katalog_zusatzkoepfe'], 'explizite technische Kopf-Aliase im Vertrag');
+$answer = hw_rechner_route('preise', [], $base['sheets'], 3);
+check($answer['wolf'][0]['brutto'] === 30026.01 && $answer['vaillant'][0]['brutto'] === 29944, 'Preisantwort verwendet numerische Vertragswerte');
+foreach (['Preise_Wolf', 'Preise_Vaillant'] as $sheet) {
+    foreach ([4, 5, 8] as $column) {
+        foreach (['30026.01', '', false, [], null] as $wrong) {
+            if ($column === 8 && $wrong === null) {
+                continue;
+            }
+            $s = $base;
+            $s['sheets'][$sheet][1][$column] = $wrong;
+            $code = 'snapshot_zahltyp_ungueltig';
+            rejected($s, $code, 'Geldtyp ' . $sheet . ':' . $column . ' ' . gettype($wrong));
+        }
+    }
+}
+foreach ([30026, 30026.01, 1e-7, 1e20] as $number) {
+    $s = $base;
+    $s['sheets']['Preise_Wolf'][1][4] = $number;
+    $tables = rechner_schema3_tabellen_aufloesen($s['sheets']);
+    $prices = hw_get_prices($s['sheets'], 'wolf', $tables);
+    $list = hw_read_price_table($s['sheets'], 'Preise_Wolf', $tables);
+    check($prices['s'] === $number && $list[0]['brutto'] === $number
+        && (float) rechner_dezimal($number) === (float) $number, 'Kanonisierung und beide Zahlenverbraucher: ' . rechner_dezimal($number));
+}
+$s = $base;
+$s['sheets']['Geräte_Katalog'][2][10] = '30026.01';
+rejected($s, 'snapshot_zahltyp_ungueltig', 'Katalogpreis ist Zahl, kein Text');
+$s = $base;
+$s['sheets']['Geräte_Katalog'][1][] = 'Baureihe';
+rejected($s, 'snapshot_kopfzeile_mehrdeutig', 'Langform und Alias kollidieren');
+$s = $base;
+$s['sheets']['Geräte_Katalog'][1][] = 'WP NAT W35_TEST';
+rejected($s, 'snapshot_kopfzeile_unbekannt', 'Technik-Präfixkopf abgewiesen');
+$s = $base;
+$s['sheets']['Preise_Wolf'][1][1] = 'Wärmepumpe';
+check(hw_rechner_route('preise', [], $s['sheets'], 3) === $answer, 'NFC und Rand-Leerzeichen auch im Preisverbrauch gleich');

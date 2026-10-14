@@ -82,76 +82,21 @@ function rechner_kanonische_zelle(mixed $value, bool $textOnly = false): string
     return $trimmed;
 }
 
-/** @return array{int,array<string,int>} */
-function rechner_kopfzeile(array $rows, array $columns): array
-{
-    $found = null;
-    foreach ($rows as $number => $row) {
-        if (!is_array($row) || !array_is_list($row)) {
-            throw new RechnerValuesException('snapshot_zeile_ungueltig');
-        }
-        $map = [];
-        $ambiguous = false;
-        foreach ($columns as $name => $aliases) {
-            $hits = [];
-            foreach ($row as $index => $cell) {
-                if (is_string($cell) && in_array(rechner_kanonische_zelle($cell), $aliases, true)) {
-                    $hits[] = $index;
-                }
-            }
-            if (count($hits) > 1) {
-                $ambiguous = true;
-            }
-            if (count($hits) >= 1) {
-                $map[$name] = $hits[0];
-            }
-        }
-        if (count($map) === count($columns)) {
-            if ($found !== null || $ambiguous) {
-                throw new RechnerValuesException('snapshot_kopfzeile_mehrdeutig');
-            }
-            $found = [$number, $map];
-        }
-    }
-    if ($found === null) {
-        throw new RechnerValuesException('snapshot_kopfzeile_fehlt');
-    }
-    return $found;
-}
-
-function rechner_spalten_ohne_alias(array $names): array
-{
-    return array_combine($names, array_map(static fn (string $name): array => [$name], $names));
-}
-
-function rechner_zeile_leer(array $row): bool
-{
-    foreach ($row as $cell) {
-        if (rechner_kanonische_zelle($cell) !== '') {
-            return false;
-        }
-    }
-    return true;
-}
+require_once __DIR__ . '/rechner-snapshot-tabellen.php';
 
 /** Liefert exakt die gemeinsamen Hashbytes, keine Referenz-Lauf-Metadaten. */
 function rechner_inhaltsbytes(array $sheets, string $activeId): string
 {
     $document = [];
+    $tables = rechner_schema3_tabellen_aufloesen($sheets);
     foreach (['Preise_Wolf', 'Preise_Vaillant', 'Geräte_Katalog'] as $sheet) {
         $catalog = $sheet === 'Geräte_Katalog';
-        $columns = $catalog ? rechner_katalog_spalten() : rechner_spalten_ohne_alias(rechner_preis_spalten());
-        $rows = $sheets[$sheet];
-        [$header, $map] = rechner_kopfzeile($rows, $columns);
+        $table = $tables[$sheet];
+        $names = $catalog ? array_keys(rechner_katalog_spalten()) : rechner_preis_spalten();
         $canonicalRows = [];
-        foreach (array_slice($rows, $header + 1) as $row) {
-            // Kopfzeilensuche hat jede Zeile bereits auf Arrayform geprüft.
-            if ($catalog) {
-                $selection = rechner_kanonische_zelle($row[$map['Auswahl']] ?? null, true);
-                if ($selection !== 'ja') {
-                    continue;
-                }
-            } elseif (rechner_zeile_leer($row)) {
+        foreach ($table['rows'] as $row) {
+            $map = $table['columns'];
+            if ($catalog && !rechner_schema3_auswahl($row[$map['Auswahl']] ?? null)) {
                 continue;
             }
             $id = rechner_kanonische_zelle($row[$map['geraet_id']] ?? null, true);
@@ -163,8 +108,8 @@ function rechner_inhaltsbytes(array $sheets, string $activeId): string
                 throw new RechnerValuesException('snapshot_lauf_abweichend');
             }
             $canonical = [];
-            foreach ($map as $name => $index) {
-                $canonical[] = rechner_kanonische_zelle($row[$index] ?? null,
+            foreach ($names as $name) {
+                $canonical[] = rechner_kanonische_zelle($row[$map[$name]] ?? null,
                     in_array($name, ['Kaskade', 'Auswahl', 'geraet_id', 'lauf_id'], true));
             }
             $canonicalRows[] = $canonical;
@@ -188,12 +133,10 @@ function rechner_pruefe_integritaet(array $snapshot): void
             throw new RechnerValuesException('snapshot_zeile_ungueltig');
         }
     }
-    $rows = $snapshot['sheets']['Referenz_Laeufe'];
-    [$header, $map] = rechner_kopfzeile($rows, rechner_spalten_ohne_alias(
-        ['lauf_id', 'laufart', 'status', 'aktiv', 'inhalt_sha256', 'veroeffentlicht_am']
-    ));
+    $table = rechner_schema3_tabellen_aufloesen($snapshot['sheets'])['Referenz_Laeufe'];
+    $map = $table['columns'];
     $active = [];
-    foreach (array_slice($rows, $header + 1) as $row) {
+    foreach ($table['rows'] as $row) {
         $flag = rechner_kanonische_zelle($row[$map['aktiv']] ?? null, true);
         if ($flag !== '' && $flag !== 'ja') {
             throw new RechnerValuesException('snapshot_aktiv_ungueltig');

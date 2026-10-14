@@ -322,10 +322,12 @@ try {
       requestCalculator(mainServer.port),
       requestCalculator(secondParallelServer.port),
     ]);
+    // Die Antwort ist vor dem Nachlauf fertig. Den zweiten Server erst danach
+    // beenden: Er kann die Sperre gewonnen haben und muss zu Ende schreiben dürfen.
+    await waitForNewMtime(parallelSnapshot.snapshotFile, parallelSnapshot.oldMtime);
   } finally {
     await stopProcess(secondParallelServer.processHandle);
   }
-  await waitForNewMtime(parallelSnapshot.snapshotFile, parallelSnapshot.oldMtime);
   let lockMarker = '';
   try {
     lockMarker = await fs.readFile(
