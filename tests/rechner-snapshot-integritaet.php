@@ -140,7 +140,9 @@ $s['sheets']['Geräte_Katalog'][1][] = 'Baureihe';
 rejected($s, 'snapshot_kopfzeile_mehrdeutig', 'Langform und Alias kollidieren');
 $s = $base;
 $s['sheets']['Geräte_Katalog'][1][] = 'WP NAT W35_TEST';
-rejected($s, 'snapshot_kopfzeile_unbekannt', 'Technik-Präfixkopf abgewiesen');
+$validated = rechner_validate_snapshot(encoded($s));
+check(rechner_inhaltsbytes($validated['sheets'], 'lauf-test') === $fixture['kanonische_bytes'], 'Zusätzliche Technik erlaubt, kein Präfixverbrauch');
+check(hw_rechner_route('preise', [], $s['sheets'], 3) === $answer, 'Zusätzlicher Technikkopf ändert keine Preiszuordnung');
 $s = $base;
 $s['sheets']['Preise_Wolf'][1][1] = 'Wärmepumpe';
 check(hw_rechner_route('preise', [], $s['sheets'], 3) === $answer, 'NFC und Rand-Leerzeichen auch im Preisverbrauch gleich');
@@ -168,3 +170,18 @@ foreach (['', null] as $empty) {
 foreach ([9223372036854775000, 9223372036854775000.0] as $number) {
     check(rechner_schema3_zahl($number) === 9223372036854775000, 'Kanonisch gleiche große Zahl einheitlich');
 }
+
+foreach ($fixture['speichervertrag']['kontrollfaelle'] as $case) {
+    $s = $base;
+    $s['sheets'][$case['ersetzt_blatt']] = $case['zeilen'];
+    $s['sheets']['Referenz_Laeufe'][1][4] = $case['inhalt_sha256'];
+    $normal = rechner_validate_snapshot(encoded($s));
+    check(rechner_inhaltsbytes($normal['sheets'], 'lauf-test') === $case['kanonische_bytes'], 'Speichervertrag Sollbytes ' . $case['fall']);
+    check(array_is_list($normal['sheets']['Preise_Wolf'][1]), 'Speichervertrag Liste ' . $case['fall']);
+    check(rechner_validate_snapshot(encoded($normal)) === $normal, 'Speichervertrag idempotent ' . $case['fall']);
+}
+$precision = ini_get('serialize_precision');
+ini_set('serialize_precision', '4');
+check(rechner_json_encode_verlustfrei(30026.01, 0) === '30026.01', 'Verlustfreie Zahlenbytes');
+check(ini_get('serialize_precision') === '4', 'Prozesspräzision wiederhergestellt');
+ini_set('serialize_precision', $precision);

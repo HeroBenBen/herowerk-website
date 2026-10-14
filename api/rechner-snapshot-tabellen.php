@@ -46,11 +46,20 @@ function rechner_spalten_ohne_alias(array $names): array
 function rechner_zeile_leer(array $row): bool
 {
     foreach ($row as $cell) {
-        if (rechner_kanonische_zelle($cell) !== '') {
+        if ($cell !== null && (!is_string($cell) || rechner_kanonische_zelle($cell) !== '')) {
             return false;
         }
     }
     return true;
+}
+
+/** Fehlende Schlusszellen auffüllen, niemals vorhandene Zellindizes umnummerieren. */
+function rechner_schema3_zeile_auffuellen(array $row, int $width): array
+{
+    if (!array_is_list($row)) {
+        throw new RechnerValuesException('snapshot_zeile_ungueltig');
+    }
+    return array_pad($row, max(count($row), $width), null);
 }
 
 function rechner_schema3_auswahl(mixed $value): bool
@@ -106,39 +115,42 @@ function rechner_schema3_tabelle(array $rows, array $columns, array $required, b
             continue;
         }
         $map = [];
+        $duplicate = false;
         foreach ($row as $index => $cell) {
             $text = is_string($cell) ? rechner_kanonische_zelle($cell) : '';
             if (isset($aliases[$text])) {
                 $name = $aliases[$text];
                 if (isset($map[$name])) {
-                    throw new RechnerValuesException('snapshot_kopfzeile_mehrdeutig');
+                    $duplicate = true;
                 }
                 $map[$name] = $index;
             }
         }
-        if ($table === null && count(array_diff($required, array_keys($map))) === 0) {
+        $completeHeader = count(array_diff($required, array_keys($map))) === 0;
+        if ($completeHeader) {
+            if ($table !== null || $duplicate) {
+                throw new RechnerValuesException('snapshot_kopfzeile_mehrdeutig');
+            }
             foreach ($row as $cell) {
                 $text = rechner_kanonische_zelle($cell, true);
-                if ($text !== '' && !isset($aliases[$text])) {
+                if (!$catalog && $text !== '' && !isset($aliases[$text])) {
                     throw new RechnerValuesException('snapshot_kopfzeile_unbekannt');
                 }
             }
-            $table = ['headerRow' => $number, 'columns' => $map, 'rows' => [], 'sourceRows' => []];
-        } elseif ($map !== []) {
-            throw new RechnerValuesException($table === null ? 'snapshot_kopfzeile_fehlt' : 'snapshot_kopfzeile_mehrdeutig');
+            $table = ['headerRow' => $number, 'headerWidth' => count($row), 'columns' => $map, 'rows' => [], 'sourceRows' => []];
         } elseif ($table === null) {
             if (!$catalog || !rechner_schema3_vorspann($row)) {
                 throw new RechnerValuesException('snapshot_kopfzeile_fehlt');
             }
         } else {
             foreach ($row as $index => $cell) {
-                if (!in_array($index, $table['columns'], true) && rechner_kanonische_zelle($cell) !== '') {
+                if (!$catalog && !in_array($index, $table['columns'], true) && rechner_kanonische_zelle($cell) !== '') {
                     throw new RechnerValuesException('snapshot_spalte_ohne_kopf');
                 }
             }
             // Schlüssel erhalten den Abstand zum Kopf für unveränderte Gleichstandsauswahl.
             $table['rows'][$number - $table['headerRow'] - 1] = $row;
-            $table['sourceRows'][] = $number;
+            $table['sourceRows'][$number - $table['headerRow'] - 1] = $number;
         }
     }
     if ($table === null) {
@@ -166,6 +178,8 @@ function rechner_schema3_tabellen_aufloesen(array $sheets): array
             'WP NAT W35 @A-10', 'WP NAT W55 @A-10', 'Mindest-Leistungsanteil', 'Stand']) : $names;
         $table = rechner_schema3_tabelle($sheets[$sheet], $columns, $required, $catalog);
         foreach ($table['rows'] as &$row) {
+            $width = $table['headerWidth'];
+            $row = rechner_schema3_zeile_auffuellen($row, $width);
             $map = $table['columns'];
             if ($catalog) {
                 $selected = rechner_schema3_auswahl($row[$map['Auswahl']] ?? null);
@@ -201,11 +215,14 @@ function rechner_schema3_geld_normalisieren(array $snapshot): array
             if ($catalog && !rechner_schema3_auswahl($row[$table['columns']['Auswahl']] ?? null)) {
                 continue;
             }
-            $sourceRow = $table['headerRow'] + 1 + $offset;
+            $sourceRow = $table['sourceRows'][$offset];
+            $original = $snapshot['sheets'][$sheet][$sourceRow];
+            $original = rechner_schema3_zeile_auffuellen($original, $table['headerWidth']);
             foreach ($names as $name) {
                 $column = $table['columns'][$name];
-                $snapshot['sheets'][$sheet][$sourceRow][$column] = $row[$column];
+                $original[$column] = $row[$column];
             }
+            $snapshot['sheets'][$sheet][$sourceRow] = $original;
         }
     }
     return $snapshot;

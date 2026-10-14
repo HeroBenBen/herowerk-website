@@ -67,6 +67,14 @@ if mutation:
     needle, replacement = changes[mutation]
     assert needle in text
     file.write_text(text.replace(needle, replacement))
+    if mutation == 'zahl':
+        # Die neue Speicherlesung normalisiert zusätzlich. Für den ursprünglichen
+        # Ergebnisfehler beide Schutzstellen auf den alten Rückgabeweg setzen.
+        values = API / 'rechner-values.php'
+        text = values.read_text()
+        needle = "return $fresh['schemaVersion'] === 3 ? $stored : $fresh;"
+        assert needle in text
+        values.write_text(text.replace(needle, 'return $fresh;'))
 
 isolation = subprocess.run(PHP + ['-r', '''echo json_encode(['include_path'=>get_include_path(),
 'open_basedir'=>ini_get('open_basedir'), 'secret'=>@stream_resolve_include_path('secrets.local.php'),

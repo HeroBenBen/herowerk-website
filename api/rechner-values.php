@@ -129,6 +129,22 @@ function rechner_snapshot_key(): string
     return $key;
 }
 
+/** JSON-Objekte mit Zahlenschlüsseln dürfen nicht als Tabellenlisten durchgehen. */
+function rechner_schema3_listen_pruefen(string $body): void
+{
+    $document = json_decode($body, false, 512, JSON_THROW_ON_ERROR);
+    foreach ($document->sheets as $rows) {
+        if (!is_array($rows)) {
+            throw new RechnerValuesException('snapshot_zeile_ungueltig');
+        }
+        foreach ($rows as $row) {
+            if (!is_array($row)) {
+                throw new RechnerValuesException('snapshot_zeile_ungueltig');
+            }
+        }
+    }
+}
+
 /** @return array{service:string,schemaVersion:int,sheets:array<string,array<int,array<int,mixed>>>} */
 function rechner_validate_snapshot(string $body): array
 {
@@ -157,6 +173,7 @@ function rechner_validate_snapshot(string $body): array
         }
 
         if ($schemaVersion === 3) {
+            rechner_schema3_listen_pruefen($body);
             rechner_pruefe_integritaet($snapshot);
             $snapshot = rechner_schema3_geld_normalisieren($snapshot);
         }
@@ -225,14 +242,16 @@ function rechner_fetch_snapshot(string $key): array
 }
 
 /** @param array<string,mixed> $snapshot */
-function rechner_write_snapshot_atomic(array $snapshot): void
+function rechner_write_snapshot_atomic(array $snapshot): array
 {
     if (!is_dir(RECHNER_RUNTIME_DIR) || !is_writable(RECHNER_RUNTIME_DIR)) {
         throw new RechnerValuesException('snapshot_runtime_not_writable');
     }
 
     try {
-        $body = json_encode($snapshot, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
+        $flags = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR;
+        $body = ($snapshot['schemaVersion'] ?? null) === 3
+            ? rechner_json_encode_verlustfrei($snapshot, $flags) : json_encode($snapshot, $flags);
     } catch (JsonException $error) {
         throw new RechnerValuesException('snapshot_encode_failed', $error->getMessage());
     }
@@ -254,17 +273,47 @@ function rechner_write_snapshot_atomic(array $snapshot): void
         @unlink($temporary);
         throw new RechnerValuesException('snapshot_write_failed');
     }
-    fflush($handle);
-    if (function_exists('fsync')) {
-        fsync($handle);
+    if (!fflush($handle) || (function_exists('fsync') && !fsync($handle))) {
+        fclose($handle);
+        throw new RechnerValuesException('snapshot_flush_failed');
     }
-    fclose($handle);
-    chmod($temporary, 0600);
+    if (!fclose($handle)) {
+        throw new RechnerValuesException('snapshot_close_failed');
+    }
+    if (!chmod($temporary, 0600)) {
+        throw new RechnerValuesException('snapshot_chmod_failed');
+    }
+
+    // Genau die gespeicherten Bytes prüfen. Danach weder umformen noch neu schreiben.
+    try {
+        $stored = rechner_read_snapshot_path($temporary, $body);
+    } catch (RechnerValuesException $error) {
+        // Fachfehler meldet der gemeinsame Validator bereits. Lesefehler kennt erst der Schreiber.
+        if (($snapshot['schemaVersion'] ?? null) === 3 && in_array($error->publicCode,
+            ['snapshot_json_invalid', 'snapshot_read_failed', 'snapshot_written_bytes_differ'], true)) {
+            rechner_snapshot_melden($error->publicCode);
+        }
+        throw $error;
+    }
 
     if (!rename($temporary, RECHNER_SNAPSHOT_FILE)) {
         @unlink($temporary);
         throw new RechnerValuesException('snapshot_rename_failed');
     }
+    return $stored;
+}
+
+/** Gemeinsamer Leser für endgültige Datei und Kandidat vor dem atomaren Ersetzen. */
+function rechner_read_snapshot_path(string $path, ?string $expectedBytes = null): array
+{
+    $body = @file_get_contents($path);
+    if ($body === false) {
+        throw new RechnerValuesException('snapshot_read_failed');
+    }
+    if ($expectedBytes !== null && $body !== $expectedBytes) {
+        throw new RechnerValuesException('snapshot_written_bytes_differ');
+    }
+    return rechner_validate_snapshot($body);
 }
 
 /** @return array{service:string,schemaVersion:int,sheets:array<string,array<int,array<int,mixed>>>}|null */
@@ -274,16 +323,11 @@ function rechner_read_snapshot_file(): ?array
         return null;
     }
 
-    $body = file_get_contents(RECHNER_SNAPSHOT_FILE);
-    if ($body === false) {
-        error_log('HeroWerk Rechner: snapshot_read_failed');
-        return null;
-    }
-
     try {
-        return rechner_validate_snapshot($body);
+        return rechner_read_snapshot_path(RECHNER_SNAPSHOT_FILE);
     } catch (RechnerValuesException $error) {
-        error_log('HeroWerk Rechner: snapshot_file_invalid code=' . $error->publicCode);
+        error_log($error->publicCode === 'snapshot_read_failed' ? 'HeroWerk Rechner: snapshot_read_failed'
+            : 'HeroWerk Rechner: snapshot_file_invalid code=' . $error->publicCode);
         return null;
     }
 }
@@ -447,8 +491,8 @@ function rechner_load_snapshot(): array
 
     try {
         $fresh = rechner_fetch_snapshot($key);
-        rechner_write_snapshot_atomic($fresh);
-        return $fresh;
+        $stored = rechner_write_snapshot_atomic($fresh);
+        return $fresh['schemaVersion'] === 3 ? $stored : $fresh;
     } catch (RechnerValuesException $error) {
         error_log('HeroWerk Rechner: snapshot_refresh_failed code=' . $error->publicCode);
         throw new RechnerValuesException('snapshot_cold_start_failed', $error->publicCode);

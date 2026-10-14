@@ -26,19 +26,25 @@ function rechner_katalog_spalten(): array
     ];
 }
 
+/** JSON-Zahlen bleiben unabhängig von der Prozessvorgabe verlustfrei lesbar. */
+function rechner_json_encode_verlustfrei(mixed $value, int $flags): string
+{
+    $previous = ini_get('serialize_precision');
+    ini_set('serialize_precision', '-1');
+    try {
+        return json_encode($value, $flags | JSON_THROW_ON_ERROR);
+    } finally {
+        ini_set('serialize_precision', (string) $previous);
+    }
+}
+
 /** Dezimaldarstellung ohne Exponent, ohne Rundung auf Geldstellen. */
 function rechner_dezimal(int|float $value): string
 {
     if (is_float($value) && !is_finite($value)) {
         throw new RechnerValuesException('snapshot_zelltyp_ungueltig');
     }
-    $previous = ini_get('serialize_precision');
-    ini_set('serialize_precision', '-1');
-    try {
-        $raw = strtolower(json_encode($value, JSON_THROW_ON_ERROR));
-    } finally {
-        ini_set('serialize_precision', (string) $previous);
-    }
+    $raw = strtolower(rechner_json_encode_verlustfrei($value, JSON_THROW_ON_ERROR));
     $negative = str_starts_with($raw, '-');
     $raw = ltrim($raw, '-');
     $parts = explode('e', $raw);

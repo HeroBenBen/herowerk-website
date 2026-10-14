@@ -50,12 +50,19 @@ Auswahl-nein-Zeilen sind nicht im Hash gebunden.
 Nachauftrag: Prüfung und Rechenkern verwenden `rechner_schema3_tabellen_aufloesen`
 aus `api/rechner-snapshot-tabellen.php`. Die Schemafassung wird ausdrücklich vom
 validierten Abzug an die Route übergeben. Die gemeinsame Zuordnung ersetzt im
-neuen Schema die freie Kopf- und Präfixsuche. Zusatzköpfe, doppelte Aliase,
-Teilköpfe und ungebundene Preiszeilen sind ungültig. Spalten dürfen gemeinsam mit
+neuen Schema die freie Kopf- und Präfixsuche. Unbekannte Preisköpfe, doppelte konsumierte Aliase,
+alternative Teilköpfe und ungebundene Preiszeilen sind ungültig. Spalten dürfen gemeinsam mit
 ihren Werten umgestellt werden; dadurch bleibt die Preisantwort identisch.
 Erlaubte Katalogvorspänne und technische Kopf-Aliase stehen in `tabellenaufloesung`
 der gemeinsamen Prüfdatei. Historische Parameterzeilen bleiben dort ausdrücklich
 als Vorspann erlaubt.
+
+Eine Kopfzeile benötigt den vollständigen Satz ihrer Pflichtköpfe. Einzelne
+Datenwerte wie `Modell` oder `Stand` sind keine zusätzlichen Köpfe. Ungebundene
+Katalogtechnik und nicht gewählte Katalogzeilen dürfen solche Texte enthalten.
+Zusätzliche technische Katalogspalten sind zulässig und bekommen durch eine
+Präfixähnlichkeit keine Bedeutung für den Rechenkern. Der Hashumfang bleibt gleich.
+Quelle: gemeinsame Prüfdatei, `tabellenaufloesung`.
 
 Geldfelder erlauben endliche JSON-Zahlen sowie Leertext und `null` für fehlende
 Preise. Andere Texte bleiben unzulässig. Fehlpreise werden einheitlich als `null`
@@ -67,6 +74,18 @@ Speicherung gleich normalisiert. Numerisch gleichwertige ganze Zahlen haben
 denselben Typ; Nachkommastellen bleiben erhalten. Der Inhaltsprüfwert ändert sich
 dabei nicht. Kaltstart und anschließendes Dateilesen liefern dieselbe Antwort.
 Manuelle Eingaben und ältere Schemas behalten ihren bisherigen Zahlenweg.
+
+Nachauftrag zur Speicherung: Fehlende Schlusszellen werden vor Zuweisungen
+positionsgetreu aufgefüllt. Blätter und Zeilen bleiben JSON-Listen; Objekte mit
+Zahlenschlüsseln gelten im neuen Schema nicht als Listen. Der Schreiber liest die
+tatsächlich geschriebene temporäre Datei zurück, vergleicht ihre Bytes und prüft
+sie mit demselben Leser wie die endgültige Datei. Erst dann ersetzt er den
+Altbestand. Schreib- und Lesefehler verhindern das Ersetzen. Der Kaltstart
+verwendet den aus den Speicherbytes gelesenen Zustand. Zahlen werden bei Speicherung
+und Ausgabe des neuen Schemas verlustfrei serialisiert, unabhängig von der
+Prozessvorgabe für `serialize_precision`. Die vorherige Einstellung wird danach
+wiederhergestellt. Quelle: gemeinsame Prüfdatei, `speichervertrag`, und
+`tests/rechner-snapshot-nachauftrag3.py`.
 
 Auswahlentscheidung und Hashtext sind getrennt: Die zentrale Auswahlfunktion
 verwendet NFC, Randbeschnitt und Kleinschreibung. Der Hashtext erhält ausschließlich

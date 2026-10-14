@@ -390,8 +390,8 @@
     "fehlpreis_http": "brutto null, Eigenanteil null; preis_hinterlegt intern false und als Innenfeld nicht in HTTP enthalten."
   },
   "tabellenaufloesung": {
-    "kennzeichnung": "Vertragsfestlegung Nachauftrag 1",
-    "koepfe": "Exakte Namen oder explizite Aliase; keine Präfixsuche. Doppelte, unbekannte und Teilköpfe unzulässig. Spaltenpositionen beliebig.",
+    "kennzeichnung": "Vertragsfestlegung Nachauftrag 3",
+    "koepfe": "Kopf nur bei vollständigem Satz der Pflichtköpfe in einer Zeile. Exakte Namen oder explizite Aliase, keine Präfixsuche. Doppelte konsumierte Köpfe und weitere vollständige Köpfe unzulässig. Spaltenpositionen beliebig. Gewöhnliche Datenwerte sind keine Teilköpfe.",
     "preis_vorspann": "Nur leere Zeilen vor dem vollständigen Kopf.",
     "katalog_vorspann": "Einzelne Textzelle oder bekannte Parameterzeile mit Schlüssel in A und Wert, Einheit, Erklärung in B bis D; übrige Zellen leer.",
     "katalog_parameter": [
@@ -402,7 +402,7 @@
       "heizstab_vaillant",
       "sollband_unten"
     ],
-    "daten": "Jede nichtleere Preiszeile wird gebunden. Keine Werte unter leeren Köpfen. Keine weiteren Köpfe vor oder nach dem vollständigen Kopf.",
+    "daten": "Jede nichtleere Preiszeile wird gebunden; keine zusätzlichen unbekannten Preisköpfe. Technikwerte und Zeilen mit Auswahl ungleich ja im Katalog lösen keine Kopfablehnung aus. Ungebundene zusätzliche Katalogtechnikspalten sind zulässig und werden nicht über Präfixe zugeordnet.",
     "katalog_zusatzkoepfe": {
       "WP NAT W35": [
         "WP NAT W35"
@@ -544,5 +544,164 @@
       "inhalt_sha256": "b64678ac32edb6044b04dc00eccf42b51e81e8aa5afa660486bec23a38831443",
       "quelle": "Python unicodedata + decimal + json + hashlib, tests/helpers/snapshot_contract.py"
     }
-  ]
+  ],
+  "speichervertrag": {
+    "kennzeichnung": "Vertragsfestlegung Nachauftrag 3",
+    "listen": "Blätter und Zeilen sind JSON-Arrays, keine Objekte mit Zahlenschlüsseln. Fehlende Schlusszellen vor normalisierten Zuweisungen positionsgetreu mit null auffüllen; keine Umnummerierung vorhandener Zellen.",
+    "pruefung": "Tatsächlich temporär geschriebene Bytes mit beabsichtigten Bytes vergleichen und mit demselben Leser vollständig prüfen, bevor die Altdatei ersetzt wird. Kaltstart verwendet daraus gelesene Daten.",
+    "zahlen": "Verlustfreie Zahlenserialisierung unabhängig von serialize_precision, auch für Schema-3-HTTP-Antworten. Vorherige Prozesseinstellung wiederherstellen.",
+    "kontrollfaelle": [
+      {
+        "fall": "vollstaendig",
+        "ersetzt_blatt": "Preise_Wolf",
+        "zeilen": [
+          [
+            "Klasse",
+            "Modell",
+            "Hausgroesse",
+            "kW",
+            "Endpreis_brutto",
+            "Hinweis",
+            "geraet_id",
+            "lauf_id",
+            "veroeffentlicht_am",
+            "technik_l",
+            "technik_m",
+            "technik_n",
+            "technik_o",
+            "technik_p",
+            "technik_q",
+            "tafel",
+            "Endpreis_brutto_ohne_Warmwasser",
+            "Eigenanteil"
+          ],
+          [
+            "s",
+            "  Wärmepumpe  ",
+            "bis ca. 85 m²",
+            "5–7 kW",
+            30026.01,
+            "",
+            "wolf-s",
+            "lauf-test",
+            "2026-10-14",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "ja",
+            null,
+            ""
+          ]
+        ],
+        "kanonische_bytes": "[[\"Preise_Wolf\",[[\"s\",\"Wärmepumpe\",\"bis ca. 85 m²\",\"5–7 kW\",\"30026.01\",\"\",\"\",\"wolf-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Preise_Vaillant\",[[\"S\",\"Vaillant VWL 55/8.1 A\",\"bis ca. 80 m²\",\"5,6 kW\",\"29944\",\"7544\",\"\",\"vaillant-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Geräte_Katalog\",[[\"Wolf\",\"Wärmepumpe\",\"N\",\"CHA\",\"1\",\"ja\",\"30026.01\",\"wolf-s\",\"lauf-test\"]]]]",
+        "inhalt_sha256": "5cf9b28335cb699ac6a5e76ec998f0ae15adb20b3a2c5e8578db337036f9c951"
+      },
+      {
+        "fall": "gekuerzt",
+        "ersetzt_blatt": "Preise_Wolf",
+        "zeilen": [
+          [
+            "Klasse",
+            "Modell",
+            "Hausgroesse",
+            "kW",
+            "Endpreis_brutto",
+            "Hinweis",
+            "geraet_id",
+            "lauf_id",
+            "veroeffentlicht_am",
+            "technik_l",
+            "technik_m",
+            "technik_n",
+            "technik_o",
+            "technik_p",
+            "technik_q",
+            "tafel",
+            "Endpreis_brutto_ohne_Warmwasser",
+            "Eigenanteil"
+          ],
+          [
+            "s",
+            "  Wärmepumpe  ",
+            "bis ca. 85 m²",
+            "5–7 kW",
+            30026.01,
+            "",
+            "wolf-s",
+            "lauf-test",
+            "2026-10-14",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "ja"
+          ]
+        ],
+        "kanonische_bytes": "[[\"Preise_Wolf\",[[\"s\",\"Wärmepumpe\",\"bis ca. 85 m²\",\"5–7 kW\",\"30026.01\",\"\",\"\",\"wolf-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Preise_Vaillant\",[[\"S\",\"Vaillant VWL 55/8.1 A\",\"bis ca. 80 m²\",\"5,6 kW\",\"29944\",\"7544\",\"\",\"vaillant-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Geräte_Katalog\",[[\"Wolf\",\"Wärmepumpe\",\"N\",\"CHA\",\"1\",\"ja\",\"30026.01\",\"wolf-s\",\"lauf-test\"]]]]",
+        "inhalt_sha256": "5cf9b28335cb699ac6a5e76ec998f0ae15adb20b3a2c5e8578db337036f9c951"
+      },
+      {
+        "fall": "umgekehrt",
+        "ersetzt_blatt": "Preise_Wolf",
+        "zeilen": [
+          [
+            "Klasse",
+            "Modell",
+            "Hausgroesse",
+            "kW",
+            "Endpreis_brutto",
+            "Hinweis",
+            "geraet_id",
+            "lauf_id",
+            "veroeffentlicht_am",
+            "technik_l",
+            "technik_m",
+            "technik_n",
+            "technik_o",
+            "technik_p",
+            "technik_q",
+            "tafel",
+            "Eigenanteil",
+            "Endpreis_brutto_ohne_Warmwasser"
+          ],
+          [
+            "s",
+            "  Wärmepumpe  ",
+            "bis ca. 85 m²",
+            "5–7 kW",
+            30026.01,
+            "",
+            "wolf-s",
+            "lauf-test",
+            "2026-10-14",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "ja"
+          ]
+        ],
+        "kanonische_bytes": "[[\"Preise_Wolf\",[[\"s\",\"Wärmepumpe\",\"bis ca. 85 m²\",\"5–7 kW\",\"30026.01\",\"\",\"\",\"wolf-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Preise_Vaillant\",[[\"S\",\"Vaillant VWL 55/8.1 A\",\"bis ca. 80 m²\",\"5,6 kW\",\"29944\",\"7544\",\"\",\"vaillant-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Geräte_Katalog\",[[\"Wolf\",\"Wärmepumpe\",\"N\",\"CHA\",\"1\",\"ja\",\"30026.01\",\"wolf-s\",\"lauf-test\"]]]]",
+        "inhalt_sha256": "5cf9b28335cb699ac6a5e76ec998f0ae15adb20b3a2c5e8578db337036f9c951"
+      }
+    ],
+    "kaltstart_darstellung": {
+      "kennzeichnung": "Zusätzliche Darstellungsprobe Nachauftrag 3",
+      "zellen": [
+        "Preise_Wolf!B2",
+        "Geräte_Katalog!B3"
+      ],
+      "eingabe": 1000000000000000.0,
+      "modell_in_http": "1000000000000000",
+      "kanonische_bytes": "[[\"Preise_Wolf\",[[\"s\",\"1000000000000000\",\"bis ca. 85 m²\",\"5–7 kW\",\"30026.01\",\"7626\",\"\",\"wolf-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Preise_Vaillant\",[[\"S\",\"Vaillant VWL 55/8.1 A\",\"bis ca. 80 m²\",\"5,6 kW\",\"29944\",\"7544\",\"\",\"vaillant-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Geräte_Katalog\",[[\"Wolf\",\"1000000000000000\",\"N\",\"CHA\",\"1\",\"ja\",\"30026.01\",\"wolf-s\",\"lauf-test\"]]]]",
+      "inhalt_sha256": "5c2971df0f76f24663293a4165cecc75ac8729a0154d6bd296779a6687e4dd95"
+    }
+  }
 }
