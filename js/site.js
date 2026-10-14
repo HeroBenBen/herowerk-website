@@ -1093,8 +1093,11 @@ function renderBrandCard(key, label, brand, bedarf) {
       <div class="wiz-variant-empty">Kein Gerät in dieser Vorauswahl.</div>
     </button>`;
   }
-  const varianten =
+  // Kunde sieht je Marke genau ein Gerät: die Empfehlung des Hauses (GF 02.09.2026 und 14.10.2026).
+  // Weitere Baureihen und Baugrößen sind Werkzeug des Vertriebs im Konfigurator.
+  const alleVarianten =
     Array.isArray(brand.varianten) && brand.varianten.length ? brand.varianten : [brand];
+  const varianten = [alleVarianten.find((v) => v && v.empfohlen === true) || alleVarianten[0]];
   let empfehlungGezeigt = false;
   const variantenHtml = varianten
     .map((variante) => {
