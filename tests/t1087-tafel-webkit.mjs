@@ -67,19 +67,28 @@ try {
           const card = page.locator('.pa-card').nth(i);
           const text = await card.innerText();
           assert.match(text, /aroTHERM pro VWL/);
-          assert.doesNotMatch(text, /kW|W35|W55|A-7|A-11/);
-          assert.doesNotMatch(text, /8\.1|A-7\/W35/);
+          assert.doesNotMatch(text, /W55|A-11|8\.1/);
+          assert.match(text, /A-7\/W35/);
           if (scenario === 'erfolg') {
             assert.ok(text.includes(prices.vaillant[i].brutto.toLocaleString('de-DE')));
             assert.ok(text.includes(prices.vaillant[i].eigen.toLocaleString('de-DE')));
           } else assert.match(text, /Auf Anfrage/);
+          if (i) await card.click();
+          assert.equal(await page.locator('#paSpecsTable tbody tr').count(), 11);
+          const detail = await page.locator('#paSpecsTable').innerText();
+          assert.match(detail, /SCOP/);
+          assert.doesNotMatch(detail, /JAZ|A-11/);
+          assert.equal(
+            await page.locator('#paImg').getAttribute('src'),
+            i < 2 ? 'vwl-pro-s-m.jpg' : 'vwl-pro-l.jpg'
+          );
         }
         await page.waitForFunction(() =>
           document.querySelector('#paSpecsSub')?.textContent.includes('7.1')
         );
         const specs = await page.locator('#paSpecsTable').innerText();
-        assert.equal(specs.trim(), '');
-        assert.doesNotMatch(specs, /SCOP|JAZ|A-7\/W35/);
+        assert.match(specs, /SCOP|A-7\/W35/);
+        assert.doesNotMatch(specs, /JAZ|A-11/);
       } else {
         // Den echten Abrufpfad einschließlich Retry vollständig abwarten.
         await page.evaluate(async () => {

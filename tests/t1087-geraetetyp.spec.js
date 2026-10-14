@@ -1,5 +1,5 @@
 'use strict';
-/* global paLoadData */
+/* global paLoadData, HTMLImageElement, window */
 const { test, expect } = require('@playwright/test');
 const { gotoWithConsentRejected } = require('./helpers/consent');
 const {
@@ -9,10 +9,10 @@ const {
   marked,
   selected,
   forbidden,
-  conditioned,
   model,
   label,
 } = require('./helpers/t1087-geraetetyp.cjs');
+const { internal } = require('./helpers/t1087-datenblatt.cjs');
 
 for (const mode of ['marker', 'altvertrag', 'ausfall']) {
   test('@smoke Förderoptionen nur Gerätetyp und Preis: ' + mode, async ({ page }) => {
@@ -37,7 +37,7 @@ for (const mode of ['marker', 'altvertrag', 'ausfall']) {
     }
   });
 
-  test('@smoke Tafel ohne Betriebspunkte mit gebundener Identität: ' + mode, async ({ page }) => {
+  test('@smoke Tafel mit Herstellerdaten und gebundener Identität: ' + mode, async ({ page }) => {
     const response = mode === 'marker' ? marked : mode === 'altvertrag' ? raw : null;
     await page.route(/[?&]action=preise/, (route) =>
       response
@@ -57,19 +57,34 @@ for (const mode of ['marker', 'altvertrag', 'ausfall']) {
               .at(-1)
           : selected[brand][index];
         await expect(cards.nth(index).locator('.pa-modell')).toHaveText(model(row));
-        expect(await cards.nth(index).innerText()).not.toMatch(forbidden);
+        expect(await cards.nth(index).innerText()).not.toMatch(internal);
         if (response) {
           await expect(cards.nth(index)).toContainText(row.brutto.toLocaleString('de-DE') + ' €');
           await expect(cards.nth(index)).toContainText(row.eigen.toLocaleString('de-DE') + ' €');
         } else await expect(cards.nth(index)).toContainText('Auf Anfrage');
         // Die erste Karte öffnet beim Markenwechsel automatisch.
         if (index) await cards.nth(index).click();
-        await expect(page.locator('#paSpecsSub')).toHaveText(model(row));
-        expect(await page.locator('#paSpecsTable').innerText()).not.toMatch(conditioned);
-        if (row.modell.includes('/7.1'))
-          await expect(page.locator('#paSpecsTable tbody')).toBeEmpty();
+        const kw = await cards.nth(index).locator('.pa-kw').innerText();
+        await expect(page.locator('#paSpecsSub')).toHaveText(model(row) + ' · ' + kw);
+        expect(await page.locator('#paSpecsTable').innerText()).not.toMatch(internal);
+        if (row.modell.includes('/7.1')) {
+          await expect(page.locator('#paSpecsTable tbody tr')).toHaveCount(11);
+          await expect(page.locator('#paSpecsTable')).toContainText('SCOP');
+          await expect(page.locator('#paSpecsTable')).not.toContainText('JAZ');
+          await expect(page.locator('#paJazFootnote')).toBeHidden();
+          await expect(page.locator('#paScopFootnote')).toBeVisible();
+          await expect(page.locator('#paImg')).toHaveAttribute(
+            'src',
+            index < 2 ? 'vwl-pro-s-m.jpg' : 'vwl-pro-l.jpg'
+          );
+        } else {
+          await expect(page.locator('#paSpecsTable')).toContainText('JAZ');
+          await expect(page.locator('#paJazFootnote')).toBeVisible();
+          if (brand === 'vaillant')
+            await expect(page.locator('#paImg')).toHaveAttribute('src', 'vwl-plus-l-xl.jpg');
+        }
       }
-      await expect(page.locator('.pa-kw')).toHaveCount(0);
+      await expect(page.locator('.pa-kw')).toHaveCount(5);
     }
   });
 }
@@ -104,3 +119,63 @@ test('@smoke Ungültiger Marker nutzt dieselbe leistungsfreie Rückfallauswahl',
     Object.values(selected).flat().map(label)
   );
 });
+
+for (const width of [375, 1440]) {
+  test('@smoke Tafel Sichtbelege und Bildzuordnung bei ' + width, async ({ page }, testInfo) => {
+    const fs = require('node:fs');
+    const path = require('node:path');
+    await page.setViewportSize({ width, height: 1000 });
+    await page.route(/[?&]action=preise/, (route) => route.fulfill({ json: marked }));
+    await gotoWithConsentRejected(page, '/preise.html');
+    await page.waitForLoadState('networkidle');
+    const files = {
+      wolf: [
+        'cha-sanierung.jpg',
+        'cha-neubau-dunkel.jpg',
+        'cha-komfort-neubau.jpg',
+        'cha-mfh-saniert.jpg',
+        'cha-kaskade-mfh.jpg',
+      ],
+      vaillant: [
+        'vwl-pro-s-m.jpg',
+        'vwl-pro-s-m.jpg',
+        'vwl-pro-l.jpg',
+        'vwl-plus-l-xl.jpg',
+        'vwl-plus-l-xl.jpg',
+      ],
+    };
+    const out = path.join('artifacts', 'tafel-sicht', String(width));
+    fs.mkdirSync(out, { recursive: true });
+    for (const brand of ['wolf', 'vaillant']) {
+      await page.locator(brand === 'wolf' ? '#manufacturerWolf' : '#manufacturerVaillant').click();
+      for (const [i, key] of keys.entries()) {
+        if (i) await page.locator('#paCards .pa-card').nth(i).click();
+        const img = page.locator('#paImg');
+        await expect(img).toHaveAttribute('src', files[brand][i]);
+        await expect
+          .poll(() =>
+            img.evaluate(
+              (el) => el instanceof HTMLImageElement && el.complete && el.naturalWidth > 0
+            )
+          )
+          .toBe(true);
+        if (brand === 'vaillant') {
+          expect(
+            await img.evaluate((el) =>
+              el instanceof HTMLImageElement ? [el.naturalWidth, el.naturalHeight] : []
+            )
+          ).toEqual([1280, 853]);
+        }
+        await expect(page.locator('#paDetail')).toHaveClass(/open/);
+        const overflow = await page.locator('#paSpecsTable').evaluate((el) => {
+          const bounds = el.getBoundingClientRect();
+          return bounds.right > window.innerWidth + 1 || bounds.left < -1;
+        });
+        expect(overflow).toBe(false);
+        const file = path.join(out, brand + '-' + key + '.png');
+        await page.locator('#paDetail').screenshot({ path: file, animations: 'disabled' });
+        await testInfo.attach(brand + '-' + key, { path: file, contentType: 'image/png' });
+      }
+    }
+  });
+}

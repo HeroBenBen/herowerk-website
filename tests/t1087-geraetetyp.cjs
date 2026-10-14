@@ -17,10 +17,10 @@ const {
   marked,
   selected,
   forbidden,
-  conditioned,
   model,
   label,
 } = require('./helpers/t1087-geraetetyp.cjs');
+const { internal } = require('./helpers/t1087-datenblatt.cjs');
 function element() {
   return {
     dataset: {},
@@ -109,7 +109,7 @@ for (const [name, rows] of Object.entries({ marker: marked, altvertrag: raw, aus
       }
     }
   });
-  test('Tafel: Geräte, Paare und keine Betriebspunkte: ' + name, async () => {
+  test('Tafel: Geräte, Paare und Herstellerdaten: ' + name, async () => {
     const { ctx, nodes } = browser();
     ctx.rechnerFetch = async () =>
       rows ? { ok: true, json: async () => clone(rows) } : { ok: false, status: 503 };
@@ -118,8 +118,8 @@ for (const [name, rows] of Object.entries({ marker: marked, altvertrag: raw, aus
       ctx.paApplyBrand(brand);
       const cards = vm.runInContext('paData', ctx);
       ctx.paRenderCards();
-      assert.doesNotMatch(nodes.paCards.innerHTML, forbidden);
-      assert.doesNotMatch(nodes.paCards.innerHTML, /class="pa-kw"/);
+      assert.doesNotMatch(nodes.paCards.innerHTML, internal);
+      assert.match(nodes.paCards.innerHTML, /class="pa-kw"/);
       for (const [i, card] of cards.entries()) {
         const expected = rows
           ? keys.map((key) =>
@@ -147,9 +147,13 @@ for (const [name, rows] of Object.entries({ marker: marked, altvertrag: raw, aus
               specs: card.specs,
             })
         );
-        assert.equal(nodes.paSpecsSub.textContent, model(expected));
-        assert.doesNotMatch(nodes.paSpecsTable.innerHTML, conditioned);
-        if (expected.modell.includes('/7.1')) assert.deepEqual(clone(card.specs), []);
+        assert.equal(nodes.paSpecsSub.textContent, model(expected) + ' · ' + card.kw);
+        assert.doesNotMatch(nodes.paSpecsTable.innerHTML, internal);
+        if (expected.modell.includes('/7.1')) {
+          assert.equal(card.specs.length, 11);
+          assert.doesNotMatch(nodes.paSpecsTable.innerHTML, /JAZ/);
+          assert.match(nodes.paSpecsTable.innerHTML, /SCOP/);
+        }
       }
     }
   });
@@ -173,19 +177,26 @@ test('Erfolg, Ausfall, Markerfehler, neuer Erfolg: kein alter Leistungstext', as
     );
   }
 });
-test('Technikvorlagen können keinen Betriebspunkt zurück in die Anzeige bringen', () => {
+test('Rohdaten können keine interne Auslegung zurück in die Anzeige bringen', () => {
   const { ctx, nodes } = browser();
-  vm.runInContext(
-    "paDataFallback[0].kw='A-12/W45: 99 kW'; paDataFallback[0].specs.push(['Heizleistung A-12/W45', '99 kW']);",
-    ctx
-  );
-  ctx.paApplyBrand('wolf');
-  ctx.paRenderCards();
-  ctx.paUpdateDetail(vm.runInContext('paData[0]', ctx));
-  assert.doesNotMatch(
-    nodes.paCards.innerHTML + nodes.paSpecsSub.textContent + nodes.paSpecsTable.innerHTML,
-    conditioned
-  );
+  ctx.input = clone(marked);
+  Object.values(ctx.input)
+    .flat()
+    .forEach((row) => {
+      row.kw = 'A-11/W55: 99 kW';
+    });
+  vm.runInContext('paPrices=input', ctx);
+  for (const brand of ['wolf', 'vaillant']) {
+    ctx.paApplyBrand(brand);
+    ctx.paRenderCards();
+    for (const card of vm.runInContext('paData', ctx)) {
+      ctx.paUpdateDetail(card);
+      assert.doesNotMatch(
+        nodes.paCards.innerHTML + nodes.paSpecsSub.textContent + nodes.paSpecsTable.innerHTML,
+        internal
+      );
+    }
+  }
 });
 test('Statische Förderoptionen haben denselben Vertrag', () => {
   const html = read('foerderung.html');
@@ -198,12 +209,12 @@ test('Statische Förderoptionen haben denselben Vertrag', () => {
     assert.equal(text, label(Object.values(selected).flat()[i]));
   });
 });
-test('Statischer Tafeluntertitel und Fußtexte ohne Betriebspunkt', () => {
+test('Statischer Tafeluntertitel mit Herstellerpunkt, Fußtext ohne interne Temperatur', () => {
   const html = read('preise.html');
-  assert.equal(html.match(/id="paSpecsSub">([^<]*)</)[1], 'Wolf CHA-10');
+  assert.equal(html.match(/id="paSpecsSub">([^<]*)</)[1], 'Wolf CHA-10 · A-7/W35: 2,3–9,8 kW');
   assert.doesNotMatch(
     html.slice(html.indexOf('id="paSpecsTitle"'), html.indexOf('<!-- CTAs')),
-    conditioned
+    internal
   );
 });
 async function main() {
