@@ -1464,7 +1464,7 @@ const HW_FOERDER_HINWEIS_MEHRERE_WE = 'Bei Gebäuden mit mehreren Wohneinheiten 
 const HW_REFORM_DECKEL_PCT_STANDARD = 70;
 
 /** @return array<string,mixed> */
-function hw_foerder_calc(array $query, array $f, string $date, array $perioden, ?callable $onFallback = null): array
+function hw_foerder_calc(array $query, array $f, string $date, array $perioden, ?callable $onFallback = null, int|float|null $snapshotPreis = null): array
 {
     $period = hw_periode_fuer($date, $perioden);
     $periodenWerte = hw_foerder_periodenwerte($period, $f, $onFallback);
@@ -1480,7 +1480,8 @@ function hw_foerder_calc(array $query, array $f, string $date, array $perioden, 
     $kind = $kindValue === 'ja' || $kindValue === 'true';
     $euOk = strtolower(hw_query_string($query, 'eu', 'ja')) !== 'nein';
     $gemeinde = strtolower(hw_query_string($query, 'gemeinde'));
-    $preis = hw_int($query['preis'] ?? null, 34510);
+    // Gebundene Schema-3-Zahl nicht erneut als lokalisierten Ganzzahltext lesen.
+    $preis = $snapshotPreis ?? hw_int($query['preis'] ?? null, 34510);
     $hinweise = [];
 
     $klimaBonus = in_array($heizung, ['oel', 'kohle', 'nachtspeicher', 'gas-etage'], true);
@@ -1855,13 +1856,14 @@ function hw_foerderung(array $query, array $sheets, ?array $tables = null): arra
     $preis = $manual ? hw_int($query['preisManuell'], 34510) : (($prices[$wpTyp] ?? 0) ?: 34510);
     $args = $query;
     $args['preis'] = $preis;
+    $snapshotPreis = $tables !== null && !$manual ? rechner_schema3_zahl($preis) : null;
     $perioden = hw_foerder_perioden_aus_kv($params);
     // Der Antragszeitpunkt kommt jetzt aus der Anfrage, nicht mehr fest von der Serveruhr. Bis zum
     // 20.08.2026 rechnete diese Seite IMMER auf heute und versprach damit jedem, der spaeter
     // beantragt, zu viel: der Kostenvergleich liess den Zeitraum schon waehlen, diese Seite nicht.
     $antrag = hw_antragszeitraum($query, $params);
     $install = hw_installationsbeginn($query['installBeginn'] ?? null, $antrag['ab']);
-    $out = hw_foerder_calc($args, $f, $antrag['ab'] . 'T12:00:00', $perioden, $onFallback);
+    $out = hw_foerder_calc($args, $f, $antrag['ab'] . 'T12:00:00', $perioden, $onFallback, $snapshotPreis);
     if ($brand === 'vaillant') {
         $out['vorlaeufig'] = true;
     }
@@ -1876,7 +1878,7 @@ function hw_foerderung(array $query, array $sheets, ?array $tables = null): arra
     $treppe = [];
     foreach ($params['periodenReihenfolge'] ?? [] as $id) {
         $period = $params['perioden'][$id];
-        $stufe = hw_foerder_calc($args, $f, hw_js_string($period['gueltigAb']) . 'T12:00:00', $perioden, $onFallback);
+        $stufe = hw_foerder_calc($args, $f, hw_js_string($period['gueltigAb']) . 'T12:00:00', $perioden, $onFallback, $snapshotPreis);
         $treppe[] = [
             'periode' => $id,
             'label' => $stufe['periodeLabel'],

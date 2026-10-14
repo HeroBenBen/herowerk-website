@@ -60,7 +60,8 @@ for file in (SOURCE / 'api').glob('*.php'):
 mutation = os.environ.get('P3A_RESULT_MUTATION')
 if mutation:
     paths = {'kopf': 'rechner-engine.php', 'zahl': 'rechner-snapshot-tabellen.php',
-             'auswahl': 'rechner-snapshot-integritaet.php', 'config': 'rechner-values.php'}
+             'auswahl': 'rechner-snapshot-integritaet.php', 'config': 'rechner-values.php',
+             'foerderpreis': 'rechner-engine.php'}
     file = API / paths[mutation]
     text = file.read_text()
     if mutation == 'kopf':
@@ -76,6 +77,9 @@ if mutation:
         needle = "if ($run !== $activeId)"
         replacement = "if ($run !== $activeId && $sheet !== 'Geräte_Katalog')"
         text = text.replace('if (!hash_equals($expected, $actual))', 'if (false)')
+    elif mutation == 'foerderpreis':
+        needle = '$preis = $snapshotPreis ?? hw_int'
+        replacement = '$preis = hw_int'
     else:
         needle = '    clearstatcache(true, $file);'
         replacement = '    if (!file_exists($file)) { return []; }\n    clearstatcache(true, $file);'
@@ -121,8 +125,8 @@ def calls():
     return len(CALLS.read_text().splitlines()) if CALLS.exists() else 0
 
 
-def http(port):
-    request = urllib.request.Request(f'http://127.0.0.1:{port}/api/rechner.php?action=preise',
+def http(port, action="preise"):
+    request = urllib.request.Request(f'http://127.0.0.1:{port}/api/rechner.php?action={action}',
                                     headers={'Origin': 'https://herowerk.de'})
     try:
         response = urllib.request.urlopen(request, timeout=25)
@@ -274,6 +278,39 @@ try:
         assert selected.returncode == 0 and len(picks) == 1 and picks[0]['brutto'] == 30026.01, selected.stdout
         return {'preisantwort': baseline, 'gerätewahl': picks}
     record('aktiver-lauf-normalisiertes-JA', upper)
+    def calculation():
+        context = json.loads((REPO / 'tests/fixtures/rechner-schema3-rechenkontext.json').read_text())
+        s = copy.deepcopy(BASE)
+        s['sheets'].update(context['sheets'])
+        catalog = s['sheets']['Geräte_Katalog']
+        for col in [3, 4, 16, 17]:
+            catalog[2][col] = 8
+        catalog[1:1] = [['heizstab_wolf', 9], ['heizstab_vaillant', 8.54]]
+        # Nicht gebundene Technik ergänzt die Rechenprobe, Hashbytes bleiben gleich.
+        answers = []
+        for shifted in [False, True]:
+            if shifted:
+                for sheet in ['Preise_Wolf', 'Preise_Vaillant']:
+                    for row in s['sheets'][sheet]:
+                        row.insert(4, row.pop(8))
+                for row in catalog[3:]:
+                    row.reverse()
+            archive(SAVED)
+            archive(RUNTIME / 'rate-limit')
+            put(SAVED, s)
+            put(INPUT, s)
+            answer = {}
+            for brand, expected in [('wolf', 30026.01), ('vaillant', 29944)]:
+                code, response = http(port, 'foerderung&wpTyp=s&marke=' + brand)
+                assert code == 200 and response['preis'] == expected, (code, response)
+                answer[brand] = response
+            code, response = http(port, 'dimensionierung&flaeche=60&plz=30159&gebaeude=efh')
+            assert code == 200 and response.get('marken', {}).get('wolf', {}).get('brutto') == 30026.01, (code, response)
+            answer['dimensionierung'] = response
+            answers.append(answer)
+        assert answers[0] == answers[1], answers
+        return {'vor_und_nach_umstellung_identisch': True, 'antworten': answers[0]}
+    record('preis-in-foerderung-und-dimensionierung', calculation)
     put(INPUT, BASE)
     for kind in ['defekter-link', 'linkschleife', 'unlesbar', 'verzeichnis', 'json-kaputt']:
         def bad_config(kind=kind):

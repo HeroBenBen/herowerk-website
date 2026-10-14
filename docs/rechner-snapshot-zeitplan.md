@@ -60,7 +60,10 @@ als Vorspann erlaubt.
 Geldfelder verlangen JSON-Zahlen, keine numerisch aussehenden Texte. Nur das
 optionale Feld `Endpreis_brutto_ohne_Warmwasser` darf als Abwesenheit `null`
 enthalten. Der Zahlenleser und die Kanonisierung erhalten denselben numerischen
-Wert. Die Typwechselprobe ist in `geldtypen.typenprobe` festgelegt.
+Wert. Auch die Förderrechnung erhält diesen gebundenen Preis ausdrücklich und
+führt ihn nicht erneut durch den Ganzzahl-Textleser. Manuelle Eingaben und ältere
+Schemas behalten ihren bisherigen Zahlenweg. Die Typwechselprobe ist in
+`geldtypen.typenprobe` festgelegt.
 Auswahl wird zentral NFC-normalisiert, am Rand von Unicode-Leerraum befreit und
 kleingeschrieben. Deshalb wird auch `JA` an den aktiven Lauf gebunden und gehasht.
 Dieselbe Entscheidung steuert die Gerätewahl. Quellen dieser Regeln:
