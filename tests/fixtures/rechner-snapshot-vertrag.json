@@ -1,0 +1,365 @@
+{
+  "kennzeichnung": "Vertragsfestlegung",
+  "quelle": "Leitstand-Anpassung 14.10.2026, Punkt 3; Fassung 8 Abschnitt 3.2",
+  "quellen_commit": "206ed96c205b887e997fb87848e6040857e25d87",
+  "kopfquellen": {
+    "preise": "data/2026-09-12_v33/Konfigurator_Tabelle/Preise_Wolf.csv:1; A bis F unverändert",
+    "katalog": "data/2026-09-12_v33/Konfigurator_Tabelle/Geräte_Katalog.csv:8",
+    "neue_preiskoepfe": "G Hinweis, H geraet_id, I Endpreis_brutto_ohne_Warmwasser, J lauf_id, K veroeffentlicht_am, L bis Q technik_l bis technik_q, R tafel: neue Vertragsnamen, kein Live-Bestand"
+  },
+  "schema3_blattfolge": [
+    "KV_Parameter",
+    "KV_FoerderPerioden",
+    "Förder_Parameter",
+    "Dimensionierung",
+    "Preise_Wolf",
+    "Preise_Vaillant",
+    "Geräte_Katalog",
+    "Geraete_Kennlinien",
+    "Klima_PLZ",
+    "Fördervorschuss",
+    "Referenz_Laeufe"
+  ],
+  "preis_spalten": [
+    "Klasse",
+    "Modell",
+    "Hausgroesse",
+    "kW",
+    "Endpreis_brutto",
+    "Eigenanteil",
+    "Hinweis",
+    "geraet_id",
+    "Endpreis_brutto_ohne_Warmwasser",
+    "lauf_id",
+    "veroeffentlicht_am",
+    "technik_l",
+    "technik_m",
+    "technik_n",
+    "technik_o",
+    "technik_p",
+    "technik_q",
+    "tafel"
+  ],
+  "referenz_kopfzeile": [
+    "lauf_id",
+    "laufart",
+    "status",
+    "aktiv",
+    "inhalt_sha256",
+    "veroeffentlicht_am"
+  ],
+  "katalog_identitaetskoepfe": [
+    "Marke",
+    "Modell",
+    "Kaskade",
+    "Baureihe (Kaskaden-Untergrenze gilt je Baureihe, GF 14.08.2026)",
+    "Aussengeraete (Anzahl je Katalogzeile; Traeger der Zwei-Geraete-Grenze)",
+    "Auswahl (ja gleich vom Konfigurator waehlbar; sonst Sonderplanung. GF-Entscheid 01.09.2026, Entscheid 3)",
+    "Brutto €",
+    "geraet_id",
+    "lauf_id"
+  ],
+  "serialisierung": "[[Blattname, [[kanonische Zellstrings], ...]], ...], kompakte UTF-8-JSON-Arrays, keine ASCII-Escapes für Unicode oder Slash, kein Endumbruch; Blattfolge Preise_Wolf, Preise_Vaillant, Geräte_Katalog; Datenzeilenfolge unverändert",
+  "kanonische_bytes": "[[\"Preise_Wolf\",[[\"s\",\"Wärmepumpe\",\"bis ca. 85 m²\",\"5–7 kW\",\"30026.01\",\"7626\",\"\",\"wolf-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Preise_Vaillant\",[[\"S\",\"Vaillant VWL 55/8.1 A\",\"bis ca. 80 m²\",\"5,6 kW\",\"29944\",\"7544\",\"\",\"vaillant-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Geräte_Katalog\",[[\"Wolf\",\"Wärmepumpe\",\"N\",\"CHA\",\"1\",\"ja\",\"30026.01\",\"wolf-s\",\"lauf-test\"]]]]",
+  "inhalt_sha256": "70a317b59282bcdc811c3c03a2f0bb4554746cb5abf0935f04b4fb7af3f7d53e",
+  "snapshot": {
+    "service": "werte_snapshot",
+    "schemaVersion": 3,
+    "sheets": {
+      "KV_Parameter": [
+        [
+          "KV_Parameter"
+        ]
+      ],
+      "KV_FoerderPerioden": [
+        [
+          "KV_FoerderPerioden"
+        ]
+      ],
+      "Förder_Parameter": [
+        [
+          "Förder_Parameter"
+        ]
+      ],
+      "Dimensionierung": [
+        [
+          "Dimensionierung"
+        ]
+      ],
+      "Preise_Wolf": [
+        [
+          "Klasse",
+          "Modell",
+          "Hausgroesse",
+          "kW",
+          "Endpreis_brutto",
+          "Eigenanteil",
+          "Hinweis",
+          "geraet_id",
+          "Endpreis_brutto_ohne_Warmwasser",
+          "lauf_id",
+          "veroeffentlicht_am",
+          "technik_l",
+          "technik_m",
+          "technik_n",
+          "technik_o",
+          "technik_p",
+          "technik_q",
+          "tafel"
+        ],
+        [
+          "s",
+          "  Wärmepumpe  ",
+          "bis ca. 85 m²",
+          "5–7 kW",
+          30026.01,
+          7626,
+          "",
+          "wolf-s",
+          "",
+          "lauf-test",
+          "2026-10-14",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "ja"
+        ]
+      ],
+      "Preise_Vaillant": [
+        [
+          "Klasse",
+          "Modell",
+          "Hausgroesse",
+          "kW",
+          "Endpreis_brutto",
+          "Eigenanteil",
+          "Hinweis",
+          "geraet_id",
+          "Endpreis_brutto_ohne_Warmwasser",
+          "lauf_id",
+          "veroeffentlicht_am",
+          "technik_l",
+          "technik_m",
+          "technik_n",
+          "technik_o",
+          "technik_p",
+          "technik_q",
+          "tafel"
+        ],
+        [
+          "S",
+          "Vaillant VWL 55/8.1 A",
+          "bis ca. 80 m²",
+          "5,6 kW",
+          29944,
+          7544,
+          "",
+          "vaillant-s",
+          "",
+          "lauf-test",
+          "2026-10-14",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "ja"
+        ]
+      ],
+      "Geräte_Katalog": [
+        [
+          "Vorspann"
+        ],
+        [
+          "Marke",
+          "Modell",
+          "Kaskade",
+          "WP NAT W35",
+          "WP NAT W55",
+          "nutzb. Heizstab W35",
+          "nutzb. Heizstab W55",
+          "Auslegungsgrenze W35 (WP÷0,80)",
+          "Auslegungsgrenze W55 (WP÷0,80)",
+          "Reserve mit Heizstab W55 (techn. Max, NICHT Auslegung)",
+          "Brutto €",
+          "Stand",
+          "",
+          "Auslegungsgrenze W35 @A-10 (WP÷0,80)",
+          "Auslegungsgrenze W55 @A-10 (WP÷0,80)",
+          "",
+          "WP NAT W35 @A-10 (Treiber)",
+          "WP NAT W55 @A-10 (Treiber)",
+          "Baureihe (Kaskaden-Untergrenze gilt je Baureihe, GF 14.08.2026)",
+          "Mindest-Leistungsanteil (Auswahlkriterium; 1,00 = monovalent ohne Heizstab)",
+          "Puffer (Vaillant-Werkzeug, gemessen 17.08.2026)",
+          "Puffer Liter",
+          "Puffer, groessere Variante",
+          "ohne Puffer moeglich (nur bei Flaechenheizung)",
+          "Art der Leistungszahl in D, E, Q, R (T546, 19.08.2026)",
+          "Betriebspunkt der Leistungszahl (T546, 19.08.2026)",
+          "Beleg der Leistungszahl, Dokument und Fundstelle (T546, 19.08.2026)",
+          "Mindest-Modulationsleistung W35 bei minus 11 Grad, kW (T463, 19.08.2026)",
+          "Mindest-Modulationsleistung W55 bei minus 11 Grad, kW (T463, 19.08.2026)",
+          "Beleg der Modulationsangabe (T463, 19.08.2026); bei Kaskaden gilt der Wert EINES Geraetes",
+          "Urspruenglicher Werkzeugwert W55 bei minus 11 Grad vor der konservativen Kappung (T428, 20.08.2026)",
+          "Urspruenglicher Werkzeugwert W55 bei minus 10 Grad vor der konservativen Kappung (T428, 20.08.2026)",
+          "Aussengeraete (Anzahl je Katalogzeile; Traeger der Zwei-Geraete-Grenze)",
+          "Auswahl (ja gleich vom Konfigurator waehlbar; sonst Sonderplanung. GF-Entscheid 01.09.2026, Entscheid 3)",
+          "",
+          "",
+          "",
+          "",
+          "geraet_id",
+          "lauf_id"
+        ],
+        [
+          "Wolf",
+          "  Wärmepumpe  ",
+          "N",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          30026.01,
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "CHA",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          1,
+          "ja",
+          "",
+          "",
+          "",
+          "",
+          "wolf-s",
+          "lauf-test"
+        ],
+        [
+          "Wolf",
+          "  Wärmepumpe  ",
+          "N",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          30026.01,
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "CHA",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          1,
+          "nein",
+          "",
+          "",
+          "",
+          "",
+          "wolf-s",
+          "alter-lauf"
+        ]
+      ],
+      "Geraete_Kennlinien": [
+        [
+          "Geraete_Kennlinien"
+        ]
+      ],
+      "Klima_PLZ": [
+        [
+          "Klima_PLZ"
+        ]
+      ],
+      "Fördervorschuss": [
+        [
+          "Fördervorschuss"
+        ]
+      ],
+      "Referenz_Laeufe": [
+        [
+          "lauf_id",
+          "laufart",
+          "status",
+          "aktiv",
+          "inhalt_sha256",
+          "veroeffentlicht_am"
+        ],
+        [
+          "lauf-test",
+          "altstand",
+          "freigegeben",
+          "ja",
+          "70a317b59282bcdc811c3c03a2f0bb4554746cb5abf0935f04b4fb7af3f7d53e",
+          "2026-10-14"
+        ]
+      ]
+    }
+  },
+  "zellfaelle": [
+    {
+      "eingabe": 12.34,
+      "soll": "12.34"
+    },
+    {
+      "eingabe": "  Wärme  ",
+      "soll": "Wärme"
+    },
+    {
+      "eingabe": null,
+      "soll": ""
+    },
+    {
+      "eingabe": "001.20",
+      "soll": "001.20"
+    },
+    {
+      "eingabe": 1e-07,
+      "soll": "0.0000001"
+    },
+    {
+      "eingabe": 1e+20,
+      "soll": "100000000000000000000"
+    }
+  ]
+}

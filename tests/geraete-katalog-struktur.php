@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+if (getenv('P3A_RUNTIME_DIR')) {
+    define('RECHNER_RUNTIME_DIR', getenv('P3A_RUNTIME_DIR'));
+}
+
 require_once __DIR__ . '/../api/rechner-values.php';
 
 if (!is_file(RECHNER_SNAPSHOT_FILE)) {

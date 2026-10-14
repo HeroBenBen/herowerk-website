@@ -18,7 +18,9 @@ const RECHNER_SNAPSHOT_MAX_QUIET_AGE_SECONDS = 86400;
 const RECHNER_SNAPSHOT_FETCH_TIMEOUT_SECONDS = 12;
 
 // /website/api/rechner-values.php -> privater Geschwisterordner /rechner-runtime.
-const RECHNER_RUNTIME_DIR = __DIR__ . '/../../rechner-runtime';
+if (!defined('RECHNER_RUNTIME_DIR')) {
+    define('RECHNER_RUNTIME_DIR', __DIR__ . '/../../rechner-runtime');
+}
 const RECHNER_SNAPSHOT_FILE = RECHNER_RUNTIME_DIR . '/werte_snapshot.json';
 const RECHNER_SNAPSHOT_KEY_FILE = RECHNER_RUNTIME_DIR . '/werte_snapshot_key.txt';
 const RECHNER_SNAPSHOT_LOCK_FILE = RECHNER_RUNTIME_DIR . '/werte_snapshot.lock';
@@ -30,6 +32,9 @@ final class RechnerValuesException extends RuntimeException
         parent::__construct($detail !== '' ? $detail : $publicCode);
     }
 }
+
+require_once __DIR__ . '/rechner-snapshot-integritaet.php';
+require_once __DIR__ . '/rechner-snapshot-meldung.php';
 
 /** @return list<string> */
 function rechner_snapshot_sheet_names(int $schemaVersion = 2): array
@@ -46,7 +51,49 @@ function rechner_snapshot_sheet_names(int $schemaVersion = 2): array
     if ($schemaVersion >= 2) {
         $sheets[] = 'Geraete_Kennlinien';
     }
-    return array_merge($sheets, ['Klima_PLZ', 'Fördervorschuss']);
+    return array_merge($sheets, ['Klima_PLZ', 'Fördervorschuss'],
+        $schemaVersion === 3 ? ['Referenz_Laeufe'] : []);
+}
+
+/** Private Konfiguration; fehlende Datei behält die heutige Produktionsvorgabe. */
+function rechner_config(): array
+{
+    $file = RECHNER_RUNTIME_DIR . '/rechner-config.json';
+    if (!file_exists($file)) {
+        return [];
+    }
+    $raw = @file_get_contents($file);
+    try {
+        $config = $raw === false ? null : json_decode($raw, false, 512, JSON_THROW_ON_ERROR);
+    } catch (JsonException $error) {
+        throw new RechnerValuesException('snapshot_config_invalid');
+    }
+    if (!$config instanceof stdClass) {
+        throw new RechnerValuesException('snapshot_config_invalid');
+    }
+    $config = (array) $config;
+    foreach (['apps_script_url', 'mail_adapter'] as $key) {
+        if (array_key_exists($key, $config) && (!is_string($config[$key]) || trim($config[$key]) === '')) {
+            throw new RechnerValuesException('snapshot_config_invalid');
+        }
+    }
+    if (isset($config['mail_adapter']) && !str_starts_with($config['mail_adapter'], '/')) {
+        throw new RechnerValuesException('snapshot_config_invalid');
+    }
+    return $config;
+}
+
+function rechner_apps_script_url(): string
+{
+    $url = rechner_config()['apps_script_url'] ?? APPS_SCRIPT_URL;
+    $parts = parse_url($url);
+    if (!is_array($parts) || !isset($parts['host']) || isset($parts['user']) || isset($parts['pass'])
+        || isset($parts['query']) || isset($parts['fragment'])
+        || (($parts['scheme'] ?? '') !== 'https'
+            && !(($parts['scheme'] ?? '') === 'http' && $parts['host'] === '127.0.0.1'))) {
+        throw new RechnerValuesException('snapshot_config_invalid');
+    }
+    return $url;
 }
 
 function rechner_snapshot_key(): string
@@ -82,17 +129,28 @@ function rechner_validate_snapshot(string $body): array
         throw new RechnerValuesException('snapshot_schema_invalid');
     }
     $schemaVersion = $snapshot['schemaVersion'] ?? null;
-    if (($snapshot['service'] ?? null) !== 'werte_snapshot'
-        || !in_array($schemaVersion, [1, 2], true)
-        || !is_array($snapshot['sheets'] ?? null)
-        || array_keys($snapshot['sheets']) !== rechner_snapshot_sheet_names($schemaVersion)) {
-        throw new RechnerValuesException('snapshot_schema_invalid');
-    }
-
-    foreach ($snapshot['sheets'] as $rows) {
-        if (!is_array($rows)) {
+    try {
+        if (($snapshot['service'] ?? null) !== 'werte_snapshot'
+            || !in_array($schemaVersion, [1, 2, 3], true)
+            || !is_array($snapshot['sheets'] ?? null)
+            || array_keys($snapshot['sheets']) !== rechner_snapshot_sheet_names($schemaVersion)) {
             throw new RechnerValuesException('snapshot_schema_invalid');
         }
+
+        foreach ($snapshot['sheets'] as $rows) {
+            if (!is_array($rows)) {
+                throw new RechnerValuesException('snapshot_schema_invalid');
+            }
+        }
+
+        if ($schemaVersion === 3) {
+            rechner_pruefe_integritaet($snapshot);
+        }
+    } catch (RechnerValuesException $error) {
+        if ($schemaVersion === 3) {
+            rechner_snapshot_melden($error->publicCode);
+        }
+        throw $error;
     }
 
     return $snapshot;
@@ -140,7 +198,7 @@ function rechner_fetch_snapshot(string $key): array
         'key' => $key,
         'origin' => 'https://herowerk.de',
     ], '', '&', PHP_QUERY_RFC3986);
-    $response = rechner_curl_get(APPS_SCRIPT_URL . '?' . $query, RECHNER_SNAPSHOT_FETCH_TIMEOUT_SECONDS);
+    $response = rechner_curl_get(rechner_apps_script_url() . '?' . $query, RECHNER_SNAPSHOT_FETCH_TIMEOUT_SECONDS);
 
     if ($response['errno'] !== 0) {
         throw new RechnerValuesException('snapshot_upstream_unreachable', $response['error']);
@@ -386,7 +444,7 @@ function rechner_load_snapshot(): array
 /** @return array{body:string,status:int} */
 function rechner_forward_google(string $rawQuery): array
 {
-    $target = APPS_SCRIPT_URL . ($rawQuery !== '' ? '?' . $rawQuery : '');
+    $target = rechner_apps_script_url() . ($rawQuery !== '' ? '?' . $rawQuery : '');
     $response = rechner_curl_get($target, RECHNER_GOOGLE_FORWARD_TIMEOUT_SECONDS);
     if ($response['errno'] !== 0) {
         throw new RechnerValuesException('upstream_unreachable', $response['error']);

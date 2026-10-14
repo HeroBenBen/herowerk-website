@@ -1,8 +1,15 @@
+import {
+  snapshotTestEnvironment,
+  snapshotTestRoot,
+  snapshotRuntime,
+  preserveSnapshotState,
+  copySnapshotModules,
+  finishSnapshotRoots,
+} from './helpers/snapshot-isolation.mjs';
 import { spawn } from 'node:child_process';
 import fs from 'node:fs/promises';
 import http from 'node:http';
 import net from 'node:net';
-import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -102,7 +109,7 @@ function replaceExactlyOnce(source, search, replacement, label) {
 async function buildFixture(root, upstreamUrl, fatalMode = '') {
   const websiteDirectory = path.join(root, 'website');
   const apiDirectory = path.join(websiteDirectory, 'api');
-  const runtimeDirectory = path.join(root, 'rechner-runtime');
+  const runtimeDirectory = await snapshotRuntime(root);
   await fs.mkdir(apiDirectory, { recursive: true });
   await fs.mkdir(runtimeDirectory, { recursive: true });
 
@@ -111,14 +118,7 @@ async function buildFixture(root, upstreamUrl, fatalMode = '') {
     path.join(apiDirectory, 'rechner-engine.php')
   );
 
-  let valuesSource = await fs.readFile(path.join(sourceRoot, 'api', 'rechner-values.php'), 'utf8');
-  valuesSource = replaceExactlyOnce(
-    valuesSource,
-    /const APPS_SCRIPT_URL = '[^']+';/g,
-    `const APPS_SCRIPT_URL = '${upstreamUrl}';`,
-    'APPS_SCRIPT_URL'
-  );
-  await fs.writeFile(path.join(apiDirectory, 'rechner-values.php'), valuesSource);
+  await copySnapshotModules(sourceRoot, apiDirectory, runtimeDirectory, upstreamUrl);
 
   let rechnerSource = await fs.readFile(path.join(sourceRoot, 'api', 'rechner.php'), 'utf8');
 
@@ -148,7 +148,7 @@ async function startPhpServer(websiteDirectory) {
     'php',
     ['-d', 'display_errors=0', '-S', `127.0.0.1:${port}`, '-t', websiteDirectory],
     {
-      env: process.env,
+      env: snapshotTestEnvironment(),
       stdio: ['ignore', 'pipe', 'pipe'],
     }
   );
@@ -289,7 +289,8 @@ try {
   if (!upstreamPort) throw new Error('Die langsame Attrappe konnte nicht starten.');
   const upstreamUrl = `http://127.0.0.1:${upstreamPort}/rechner`;
 
-  const mainRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'rechner-nachlauf-'));
+  await preserveSnapshotState();
+  const mainRoot = await snapshotTestRoot('rechner-nachlauf-');
   temporaryRoots.push(mainRoot);
   const fixture = await buildFixture(mainRoot, upstreamUrl);
   mainServer = await startPhpServer(fixture.websiteDirectory);
@@ -358,7 +359,7 @@ try {
 
   const fatalResponses = [];
   for (const fatalMode of ['exception', 'fatal']) {
-    const fatalRoot = await fs.mkdtemp(path.join(os.tmpdir(), `rechner-${fatalMode}-`));
+    const fatalRoot = await snapshotTestRoot(`rechner-${fatalMode}-`);
     temporaryRoots.push(fatalRoot);
     const fatalFixture = await buildFixture(fatalRoot, upstreamUrl, fatalMode);
     const fatalServer = await startPhpServer(fatalFixture.websiteDirectory);
@@ -409,7 +410,7 @@ try {
 } finally {
   await stopProcess(mainServer?.processHandle);
   await new Promise((resolve) => upstreamServer.close(resolve));
-  await Promise.all(temporaryRoots.map((root) => fs.rm(root, { recursive: true, force: true })));
+  await finishSnapshotRoots(temporaryRoots);
 }
 
 if (process.exitCode !== 2) {
