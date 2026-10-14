@@ -129,6 +129,11 @@ assert.match(renderBrandSource, /Brutto-Richtpreis vor Förderung/);
 assert.match(renderBrandSource, /variante\.empfohlen === true/);
 assert.match(renderBrandSource, /wiz-variant-recommendation-badge/);
 assert.match(renderBrandSource, /empfehlungGezeigt/);
+// Kunde sieht je Marke genau ein Geraet, die Empfehlung (GF 14.10.2026).
+assert.match(
+  renderBrandSource,
+  /const varianten = \[alleVarianten\.find\(\(v\) => v && v\.empfohlen === true\) \|\| alleVarianten\[0\]\]/
+);
 for (const vertriebsfeld of [
   'leistungsanteil',
   'taktpunkt',
