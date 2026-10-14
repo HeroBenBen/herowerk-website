@@ -159,6 +159,16 @@ function rechner_schema3_tabelle(array $rows, array $columns, array $required, b
     return $table;
 }
 
+/** Gebundene Zellidentitäten, die Verbraucher als Text oder Textschlüssel nutzen. */
+function rechner_schema3_textverbraucher(string $sheet): array
+{
+    return match ($sheet) {
+        'Preise_Wolf', 'Preise_Vaillant' => ['Klasse', 'Modell', 'Hausgroesse', 'kW'],
+        'Geräte_Katalog' => ['Marke', 'Modell', 'Baureihe'],
+        default => [],
+    };
+}
+
 /** Einziger Schema-3-Auflöser. Wird vor der Annahme und im Rechenkern verwendet. */
 function rechner_schema3_tabellen_aufloesen(array $sheets): array
 {
@@ -191,6 +201,9 @@ function rechner_schema3_tabellen_aufloesen(array $sheets): array
                     : in_array($name, ['Endpreis_brutto', 'Eigenanteil', 'Endpreis_brutto_ohne_Warmwasser'], true);
                 if ($money && (!$catalog || $selected)) {
                     $row[$index] = rechner_schema3_zahl($value, true);
+                } elseif (in_array($name, rechner_schema3_textverbraucher($sheet), true) && (!$catalog || $selected)) {
+                    // Gleicher Hashtext wird auch vor Gerätewahl und Antwortaufbau konsumiert.
+                    $row[$index] = rechner_kanonische_zelle($value);
                 } elseif (is_string($value)) {
                     $row[$index] = rechner_kanonische_zelle($value);
                 }

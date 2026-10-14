@@ -81,6 +81,15 @@ if mutation:
     text = file.read_text()
     assert needle in text, mutation
     file.write_text(text.replace(needle, replacement))
+    if mutation == 'rueckgabe':
+        # Die kanonische Identität schließt nun auch die frühere Float-Text-Lücke.
+        # Beide Schutzstellen in den damaligen Zustand versetzen, um deren
+        # ursprünglichen Kaltstartfehler weiterhin am Ergebnis nachzuweisen.
+        table_file = API / 'rechner-snapshot-tabellen.php'
+        table_text = table_file.read_text()
+        guard = "in_array($name, rechner_schema3_textverbraucher($sheet), true) && (!$catalog || $selected)"
+        assert guard in table_text
+        table_file.write_text(table_text.replace(guard, 'false'))
 
 isolation = subprocess.run(PHP + ['-r', '''echo json_encode(['include_path'=>get_include_path(),
 'open_basedir'=>ini_get('open_basedir'), 'secret'=>@stream_resolve_include_path('secrets.local.php'),

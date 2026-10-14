@@ -163,3 +163,15 @@ Die historischen Regressionsabzüge beweisen Rückwärtskompatibilität; sie sin
 aktueller Live-Nachweis. Nach Auslieferung ist im Zeitplan-Protokoll die Annahme des
 Live-Abzugs zu belegen. Vor P2 sind `intl` und die konfigurierte Mailanbindung auf
 der Zielinstallation zu prüfen. Dieser Auftrag führt keine Auslieferung aus.
+
+Gebundene Identitätszellen des neuen Schemas werden auch im Verbraucher mit der
+Hashkanonisierung dargestellt. Die gemeinsame Feldliste umfasst Klasse, Modell,
+Hausgröße und Leistungsbeschriftung der Preisblätter sowie Marke, Modell und
+Baureihe gewählter Katalogzeilen. Zahlzellen werden zu kanonischem Dezimaltext;
+Textzellen behalten nach NFC und Randbeschnitt ihre Großschreibung. Die
+Darstellung gilt vor Auswahl, Gruppierung und Antwortaufbau. Der gespeicherte
+Zelltyp bleibt erhalten, jede Lesung verwendet denselben Tabellenkontext.
+Ungewählte Katalogzeilen und ungebundene Technik bleiben außerhalb dieser
+Identitätsbindung. Die älteren Schemafassungen behalten ihre bisherigen Leser.
+Der gemeinsame JSON-Vertrag enthält die Feldliste und unabhängige Kontrollpaare
+unter `identitaetsdarstellung` (Vertragsfestlegung Nachauftrag 4).

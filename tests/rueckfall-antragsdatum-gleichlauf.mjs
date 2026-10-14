@@ -162,7 +162,8 @@ foreach ($in['anfragen'] as $q) {
 }
 echo json_encode($out, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 `;
-const roh = spawnSync('php', ['-r', phpRunner], {
+// Beide Prüfkerne verwenden denselben Berliner Kalendertag, auch auf UTC-Rechnern.
+const roh = spawnSync('php', ['-d', 'date.timezone=Europe/Berlin', '-r', phpRunner], {
   input: JSON.stringify({ sheets: BLAETTER, anfragen: ANFRAGEN.map((a) => a.anfrage) }),
   encoding: 'utf8',
 });

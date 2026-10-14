@@ -703,5 +703,132 @@
       "kanonische_bytes": "[[\"Preise_Wolf\",[[\"s\",\"1000000000000000\",\"bis ca. 85 m²\",\"5–7 kW\",\"30026.01\",\"7626\",\"\",\"wolf-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Preise_Vaillant\",[[\"S\",\"Vaillant VWL 55/8.1 A\",\"bis ca. 80 m²\",\"5,6 kW\",\"29944\",\"7544\",\"\",\"vaillant-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Geräte_Katalog\",[[\"Wolf\",\"1000000000000000\",\"N\",\"CHA\",\"1\",\"ja\",\"30026.01\",\"wolf-s\",\"lauf-test\"]]]]",
       "inhalt_sha256": "5c2971df0f76f24663293a4165cecc75ac8729a0154d6bd296779a6687e4dd95"
     }
+  },
+  "identitaetsdarstellung": {
+    "kennzeichnung": "Vertragsfestlegung Nachauftrag 4",
+    "regel": "Gebundene Textverbraucher verwenden im gemeinsamen Tabellenkontext exakt den kanonischen Zellstring des Inhaltsprüfwerts, auch für numerische Identitäten. Keine Textzahl wird geparst. NFC, Randbeschnitt und Großschreibung bleiben unverändert. Fachliche Ableitungen folgen erst danach.",
+    "felder": {
+      "Preise_Wolf": [
+        "Klasse",
+        "Modell",
+        "Hausgroesse",
+        "kW"
+      ],
+      "Preise_Vaillant": [
+        "Klasse",
+        "Modell",
+        "Hausgroesse",
+        "kW"
+      ],
+      "Geräte_Katalog": [
+        "Marke",
+        "Modell",
+        "Baureihe"
+      ]
+    },
+    "katalogumfang": "Nur gewählte Katalogzeilen sind gebunden. Technikspalten bleiben außerhalb des Hashs.",
+    "speicherung": "Identitätszellen behalten den Eingabetyp im Abzug; jede Lesung verwendet denselben kanonischen Tabellenkontext.",
+    "kontrollpaare": [
+      {
+        "feld": "Modell",
+        "ziele": [
+          {
+            "blatt": "Preise_Wolf",
+            "zeile": 2,
+            "spalte": 2
+          },
+          {
+            "blatt": "Geräte_Katalog",
+            "zeile": 5,
+            "spalte": 2
+          }
+        ],
+        "zahl": 1e+19,
+        "text": "10000000000000000000",
+        "antworttext": "10000000000000000000",
+        "kanonische_bytes": "[[\"Preise_Wolf\",[[\"s\",\"10000000000000000000\",\"bis ca. 85 m²\",\"5–7 kW\",\"30026.01\",\"7626\",\"\",\"wolf-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Preise_Vaillant\",[[\"S\",\"Vaillant VWL 55/8.1 A\",\"bis ca. 80 m²\",\"5,6 kW\",\"29944\",\"7544\",\"\",\"vaillant-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Geräte_Katalog\",[[\"Wolf\",\"10000000000000000000\",\"N\",\"CHA\",\"1\",\"ja\",\"30026.01\",\"wolf-s\",\"lauf-test\"]]]]",
+        "inhalt_sha256": "7fde0ea413c4e369ab6de87f27910741749c012e4058b45e1c3d8acc20a374a8"
+      },
+      {
+        "feld": "Modell",
+        "ziele": [
+          {
+            "blatt": "Preise_Wolf",
+            "zeile": 2,
+            "spalte": 2
+          },
+          {
+            "blatt": "Geräte_Katalog",
+            "zeile": 5,
+            "spalte": 2
+          }
+        ],
+        "zahl": 1.2345678901234567,
+        "text": "1.2345678901234567",
+        "antworttext": "1.2345678901234567",
+        "kanonische_bytes": "[[\"Preise_Wolf\",[[\"s\",\"1.2345678901234567\",\"bis ca. 85 m²\",\"5–7 kW\",\"30026.01\",\"7626\",\"\",\"wolf-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Preise_Vaillant\",[[\"S\",\"Vaillant VWL 55/8.1 A\",\"bis ca. 80 m²\",\"5,6 kW\",\"29944\",\"7544\",\"\",\"vaillant-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Geräte_Katalog\",[[\"Wolf\",\"1.2345678901234567\",\"N\",\"CHA\",\"1\",\"ja\",\"30026.01\",\"wolf-s\",\"lauf-test\"]]]]",
+        "inhalt_sha256": "160bc2d02bbae9fc023c2d778ee47006aef3a467f50b37484a90e43fb6b6ab68"
+      },
+      {
+        "feld": "Baureihe",
+        "ziele": [
+          {
+            "blatt": "Geräte_Katalog",
+            "zeile": 5,
+            "spalte": 19
+          }
+        ],
+        "zahl": 1e+19,
+        "text": "10000000000000000000",
+        "antworttext": "10000000000000000000",
+        "kanonische_bytes": "[[\"Preise_Wolf\",[[\"s\",\"Wärmepumpe\",\"bis ca. 85 m²\",\"5–7 kW\",\"30026.01\",\"7626\",\"\",\"wolf-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Preise_Vaillant\",[[\"S\",\"Vaillant VWL 55/8.1 A\",\"bis ca. 80 m²\",\"5,6 kW\",\"29944\",\"7544\",\"\",\"vaillant-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Geräte_Katalog\",[[\"Wolf\",\"Wärmepumpe\",\"N\",\"10000000000000000000\",\"1\",\"ja\",\"30026.01\",\"wolf-s\",\"lauf-test\"]]]]",
+        "inhalt_sha256": "e463b23a3dc102cd5cb5c042f6f98360ddf05558c93310dace098893de7d2353"
+      },
+      {
+        "feld": "Baureihe",
+        "ziele": [
+          {
+            "blatt": "Geräte_Katalog",
+            "zeile": 5,
+            "spalte": 19
+          }
+        ],
+        "zahl": 1.2345678901234567,
+        "text": "1.2345678901234567",
+        "antworttext": "1.2345678901234567",
+        "kanonische_bytes": "[[\"Preise_Wolf\",[[\"s\",\"Wärmepumpe\",\"bis ca. 85 m²\",\"5–7 kW\",\"30026.01\",\"7626\",\"\",\"wolf-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Preise_Vaillant\",[[\"S\",\"Vaillant VWL 55/8.1 A\",\"bis ca. 80 m²\",\"5,6 kW\",\"29944\",\"7544\",\"\",\"vaillant-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Geräte_Katalog\",[[\"Wolf\",\"Wärmepumpe\",\"N\",\"1.2345678901234567\",\"1\",\"ja\",\"30026.01\",\"wolf-s\",\"lauf-test\"]]]]",
+        "inhalt_sha256": "ad572e4a9ed3696844cdc1155684fe401fa5a10b0e095e5a60c8c0955eb8bcaf"
+      },
+      {
+        "feld": "kW",
+        "ziele": [
+          {
+            "blatt": "Preise_Wolf",
+            "zeile": 2,
+            "spalte": 4
+          }
+        ],
+        "zahl": 1e+19,
+        "text": "10000000000000000000",
+        "antworttext": "10000000000000000000",
+        "kanonische_bytes": "[[\"Preise_Wolf\",[[\"s\",\"Wärmepumpe\",\"bis ca. 85 m²\",\"10000000000000000000\",\"30026.01\",\"7626\",\"\",\"wolf-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Preise_Vaillant\",[[\"S\",\"Vaillant VWL 55/8.1 A\",\"bis ca. 80 m²\",\"5,6 kW\",\"29944\",\"7544\",\"\",\"vaillant-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Geräte_Katalog\",[[\"Wolf\",\"Wärmepumpe\",\"N\",\"CHA\",\"1\",\"ja\",\"30026.01\",\"wolf-s\",\"lauf-test\"]]]]",
+        "inhalt_sha256": "6186b98b24de785d3536d36db49d1fdded8ff8b168f4eaa9f9a99014b669137e"
+      },
+      {
+        "feld": "kW",
+        "ziele": [
+          {
+            "blatt": "Preise_Wolf",
+            "zeile": 2,
+            "spalte": 4
+          }
+        ],
+        "zahl": 1.2345678901234567,
+        "text": "1.2345678901234567",
+        "antworttext": "1.2345678901234567",
+        "kanonische_bytes": "[[\"Preise_Wolf\",[[\"s\",\"Wärmepumpe\",\"bis ca. 85 m²\",\"1.2345678901234567\",\"30026.01\",\"7626\",\"\",\"wolf-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Preise_Vaillant\",[[\"S\",\"Vaillant VWL 55/8.1 A\",\"bis ca. 80 m²\",\"5,6 kW\",\"29944\",\"7544\",\"\",\"vaillant-s\",\"\",\"lauf-test\",\"2026-10-14\",\"\",\"\",\"\",\"\",\"\",\"\",\"ja\"]]],[\"Geräte_Katalog\",[[\"Wolf\",\"Wärmepumpe\",\"N\",\"CHA\",\"1\",\"ja\",\"30026.01\",\"wolf-s\",\"lauf-test\"]]]]",
+        "inhalt_sha256": "f4a27a8e4e9399849b6622b4ebb0fb2cbf6f9318394fca96425a46eb79be1cf8"
+      }
+    ]
   }
 }
