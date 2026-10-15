@@ -7055,7 +7055,8 @@ samp {
   }
   .foerder-package-field.is-vaillant > select {
     height: 100%;
-    color: transparent;
+    /* Auch die wichtige Hellmodus-Eingabefarbe darf die zweite Textschicht nicht zeigen. */
+    color: transparent !important;
   }
   .foerder-package-field.is-vaillant > select option,
   .foerder-package-field.is-vaillant > select optgroup {

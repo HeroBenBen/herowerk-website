@@ -131,3 +131,91 @@ Vier vorhandene A11-Browserfälle erwarteten noch, dass Antworten eines historis
 Die heruntergeladenen Aufnahmen aus Lauf 38766797325 bestätigen die WebKit-Korrektur: Vaillant-XXL-Gesamtaufnahme exakt 375 px breit (ebenso Chromium), Gerätetyp und 85.604 € vollständig lesbar. In allen vier Browser-/Breitenkombinationen kein Panelüberlauf, alle Links innerhalb; mobil 327/327 px, Desktop 1100/1100 px. Artefakte lokal unter `WR/pruef/ci-ef087/`. Der identische Lauf am reinen Berichtskopf wurde nach dem bekannten Testvertragsbefund beendet; Abschlussnachweis bleibt der vollständig grüne neueste PR-Kopf.
 
 Der ergänzende Bildvergleich zeigte außerdem zeitabhängige Positionen der festen Navigation und Seitenleiste nach weichem Wizard-Scrollen. Der Screenshot-Helfer fordert deshalb nach Bild-/Schriftladung in beiden Fassungen den Seitenanfang an und wartet zwei Renderframes. Eine zunächst verwendete starre Wartebedingung auf exakt `scrollY === 0` führte in Chromium zu Zeitüberschreitungen und wurde entfernt; solche Zwischenläufe gelten nicht als Abschlussnachweis. Das verändert ausschließlich die Aufnahmebedingungen, keine Website-Funktion. Wort- und Optionsvergleiche bleiben vollständig erhalten.
+
+## Nachauftrag 1
+
+Auftrag: `NACHAUFTRAG_1.md`, Leitstand Kundenportal und Web 98, 15.10.2026, 21:2x. Unmittelbare Korrekturbasis: `0ea2c8f0f970c11e8fd163e54c47af64ff4538c6`; ursprüngliche WR-Baubasis nach Zusammenführung von PR 150: `40951542b4903adde7cc1e694a96fa81a41a7197`. Derselbe eigene Klon, derselbe Zweig und Entwurfs-PR 151. Keine Änderung an Punkten 2–7.
+
+### Ursachen und Änderungen
+
+1. `css/site.css:7059`: Die spätere mobile Vaillant-Regel setzt `color: transparent !important`. Sie überstimmt damit die gleich spezifische, wichtige Hellmodus-Farbe aus Zeile 4858. Die Begrenzung auf höchstens 600 px und `.foerder-package-field.is-vaillant > select` bleibt bestehen. Die Optionsliste behält ihre eigenen Vorder- und Hintergrundfarben; Overlay, Feldgeometrie und Bedienung bleiben unverändert. Sichtbar bei 375 px vorher im Hellmodus: zwei überlagerte Gerätebeschriftungen. Nachher: genau einmal „Vaillant aroTHERM pro VWL 55/7.1 A“ mit vollständigem „29.944 €“ darunter. Dunkelmodus, Wolf und 1440 px behalten ihr Sollbild und ihren Wortlaut.
+2. `tests/t1087-wr.spec.js:76`: `settleCostComparison` wartet auf geladene Schriften, den bereits eingeplanten Renderdurchlauf und die abgeschlossene Initialisierung aller mobilen Klappbereiche. Vor jedem Kostenvergleich-Wortabzug werden außerdem Kennung, Zusammenfassung und Offen-/Geschlossen-Zustand sämtlicher Klappbereiche erfasst und zwischen den Fassungen exakt verglichen. Die explizit geöffneten Ergebnisdetails werden erst nach der Aufbereitung geöffnet und auf ihren Zustand geprüft. Kein festes Zeitwarten hinzugefügt. Die Website selbst und ihre Kostenvergleichsberechnung ändern sich nicht.
+
+Rot zu Punkt 2 ist im unabhängigen Prüferlauf an `0ea2c8f` dokumentiert: `WR/pruef/pruefer1/browser-produkttests.log:20`, WebKit 375, Schritt 5. Der alte Test verglich den noch offenen Text „So kommen wir auf diese Zahl:“ mit der bereits aufbereiteten geschlossenen Zusammenfassung „So entsteht dein Ergebnis“. Die neue Zusicherung verlangt gleiche Klappzustände und den gesamten gleichen Seitenwortlaut.
+
+### Dateiliste dieses Nachauftrags
+
+Gegen `0ea2c8f`: **31 Dateien**. Produktänderung ausschließlich die CSS-Deklaration samt erläuterndem Kommentar; zusätzlich Test und Bericht sowie 28 notwendige CSS-Versionsverweise. Das Versionsskript meldet 79 Assets, 33 geprüfte Seiten und genau 28 aktualisierte Referenzen. Ohne neuen Inhaltsfingerabdruck würden bereits besuchte Seiten die alte CSS-Datei aus dem Cache weiterverwenden. Keine Änderung der JS-Versionen und keine zusätzlichen Eingriffe in die früher diskutierten 32 Versionsstellen.
+
+| Datei                                      | Änderung und Grund                                                                   |
+| ------------------------------------------ | ------------------------------------------------------------------------------------ |
+| `css/site.css`                             | Nur mobile Vaillant-Transparenz auch gegen die wichtige Hellmodus-Regel durchsetzen. |
+| `tests/t1087-wr.spec.js`                   | Zustandsabhängiger Wortvergleich, Themen-Rot/Grün und zehn WebKit-Wiederholungen.    |
+| `BERICHT_WR.md`                            | Dieser Nachweisabschnitt.                                                            |
+| `amortisation-waermepumpe.html`            | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `barrierefreiheit.html`                    | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `baubarkeitspruefung.html`                 | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `bewerbung.html`                           | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `dimensionierung-verstehen.html`           | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `dimensionierung.html`                     | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `docs/intern/kostenvergleich-berater.html` | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `foerderung-hannover.html`                 | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `foerderung-jetzt-mitnehmen.html`          | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `foerderung.html`                          | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `foerdervorschuss.html`                    | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `gasheizung-tauschen-oder-reparieren.html` | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `hinweise.html`                            | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `index.html`                               | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `karriere.html`                            | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `kontakt.html`                             | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `kostenvergleich-waermepumpe.html`         | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `preise.html`                              | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `propan-waermepumpe.html`                  | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `prozess.html`                             | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `ratgeber.html`                            | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `rechner.html`                             | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `waermepumpe-altbau.html`                  | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `waermepumpe-hannover.html`                | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `waermepumpe-laerm.html`                   | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `waermepumpenstrom-hannover.html`          | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `wertsteigerung-waermepumpe.html`          | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+| `wp-kosten-hannover.html`                  | Ausschließlich Inhaltsfingerabdruck von `css/site.css`.                              |
+
+### Browsernachweise und Aufnahmen
+
+Die Ausführung erfolgt diesmal auch lokal mit echten Chromium-/WebKit-Browsern im vorhandenen Playwright-Container `mcr.microsoft.com/playwright:v1.60.0-noble`: kein Netz, schreibgeschützter Container und Repo-Mount, flüchtiges `/tmp`, eigener schreibbarer Belegordner. Die früher dokumentierte Einschränkung des direkten Browserstarts wird damit für diesen Nachauftrag durch echte lokale Browsernachweise ergänzt. Reproduktion und Protokolle: `WR/pruef/nachauftrag1/`.
+
+Das Themenpaar startet jeweils direkt hell und direkt dunkel; anschließend wird über den vorhandenen Themenwechsel-Handler zweimal umgeschaltet. Gemessen werden native Schriftfarbe, Overlay-Farbe, Options-/Gruppenfarben, Feldmaße, Fokuszustand, sichtbare Outline, Rahmen und Schatten. Bei `outline-style: none` wird die nicht gezeichnete `currentColor` nicht als sichtbarer Fokusrahmen gewertet. Native Auswahlwechsel von S nach M prüfen die Bedienung und Synchronisierung der Beschriftung. Wolf und 1440 px werden mit denselben Messgrößen exakt gegen `0ea2c8f` verglichen.
+
+Alle 24 Feldaufnahmen sowie die vollständigen Farbprotokolle liegen lokal unter `WR/pruef/nachauftrag1/browser/wr/nachauftrag1/`; in CI liegen dieselben Dateien im Artefakt `tafel-sicht` unter `wr/nachauftrag1/`. Beispielpaare für beide Browser:
+
+| Browser / Thema bei 375 px | Vorher, `0ea2c8f`                                | Nachher, Korrektur                                |
+| -------------------------- | ------------------------------------------------ | ------------------------------------------------- |
+| Chromium hell              | `chromium-vorher-375-light-0-light-vaillant.png` | `chromium-nachher-375-light-0-light-vaillant.png` |
+| Chromium dunkel            | `chromium-vorher-375-dark-0-dark-vaillant.png`   | `chromium-nachher-375-dark-0-dark-vaillant.png`   |
+| WebKit hell                | `webkit-vorher-375-light-0-light-vaillant.png`   | `webkit-nachher-375-light-0-light-vaillant.png`   |
+| WebKit dunkel              | `webkit-vorher-375-dark-0-dark-vaillant.png`     | `webkit-nachher-375-dark-0-dark-vaillant.png`     |
+
+Dateien mit `-1-` beziehungsweise `-2-` belegen die beiden anschließenden Themenwechsel. `chromium-farben.json` und `webkit-farben.json` enthalten alle Einzelmessungen, einschließlich Wolf und Desktop.
+
+### Bytegleichheit und unveränderter Umfang
+
+`WR/pruef/nachauftrag1/bytes-both-bases.log`: 74 API-, Rechenkern- und Fixture-Dateien bytegleich zu `4095154`; 75 bytegleich zu `0ea2c8f` (zusätzliche bereits freigegebene Runde-5-Fixture). Gegen **jede** Basis werden außerdem alle 18 öffentlichen Antwortkörper für sämtliche acht action-Routen und zehn Förderkombinationen byteweise verglichen, ohne entfernte Felder oder Zahlen-Normalisierung. Preise, Eigenanteile und Förderbeträge bleiben unverändert. Die zugehörige Probe `byte-probe.cjs` verwendet den vorhandenen API-Vertrag mit jeweils anderer Vergleichsbasis; sie verändert keinen Produktcode.
+
+Alle 35 vorhandenen HTML-Dateien sind gegenüber `0ea2c8f` nach ausschließlich dem CSS-URL-Hash-Austausch bytegleich; alle fünf `js/`-Dateien sind vollständig bytegleich. Damit bleiben alle Produkttexte und die Implementierung der Punkte 2–7 gegenüber der Nachauftragsbasis unverändert. Die bereits genehmigte Herstellerkorrektur und wörtliche Textausgabe gegenüber der ursprünglichen WR-Basis bleiben Bestandteil der bestehenden Rot/Grün-Prüfung.
+
+### Rot/Grün-Ergebnisse des Nachauftrags
+
+| Zusicherung                                  | Rot / unveränderte Gegenprobe an `0ea2c8f`                                                                            | Grün an der Korrektur                                                                                                                                                                                                  |
+| -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Vaillant 375, Hellmodus, Chromium und WebKit | Native Schrift **und** Overlay `rgb(28, 43, 54)`: doppelte, überlagerte Beschriftung. Gilt auch nach Themenwechsel.   | Native Schrift `rgba(0, 0, 0, 0)`, Overlay weiterhin `rgb(28, 43, 54)`: eine lesbare Beschriftung, Preis vollständig.                                                                                                  |
+| Vaillant 375, Dunkelmodus, beide Browser     | Bereits transparent; Overlay `rgb(255, 255, 255)`.                                                                    | Identische Farben, identische Feldgeometrie 297 × 96 px. Direkte Dunkelmodus-PNGs vorher/nachher bytegleich.                                                                                                           |
+| Optionen, Fokus, Bedienung, Wolf und Desktop | Vergleichsgrößen an der unveränderten Basis erfasst.                                                                  | 96 Einzelmessungen über beide Browser/Fassungen, 375/1440 px, beide Startthemen und je zwei Themenwechsel. Optionsfarben sichtbar, Auswahlwechsel synchron, Rahmen/Schatten/Focus-visible-Zustand und Feldmaße gleich. |
+| Kostenvergleich, WebKit 375, Schritt 5       | Unabhängiger Prüferlauf liest verschiedene Aufbereitungs-/Klappzustände und scheitert am vollständigen Wortvergleich. | **Zehn von zehn** separat ausgeführten Wiederholungen grün, ohne Retry und ohne festes Zeitwarten; gleiche Klappzustände und gesamter Seitenwortlaut.                                                                  |
+| Bestehende WR-Regelfallvergleiche            | Ursprüngliche Basis `4095154` mit den genehmigten WR-Differenzen.                                                     | Alle vier vollständigen Vergleiche Chromium/WebKit × 375/1440 px grün, einschließlich der neuen Klappzustandsprüfung.                                                                                                  |
+
+Lokale Ausführung: `wr-browser-final.log` enthält 23 bestandene Prüfungen und einen bestehenden WebKit-Transportfehler beim Seitenwechsel im P7-Test (`access control checks`), keinen fehlgeschlagenen Text- oder HTML-Senkenvertrag. Die unveränderte gezielte Wiederholung `webkit-antworttexte-nachpruefung.log` besteht ohne Retry (1/1). Sämtliche zwölf neuen Nachauftragsprüfungen bestehen im Gesamtlauf ohne Retry. Die ersten Versuche der Themen-Zusicherung verglichen noch die nicht gezeichnete Outline-Farbe bei `outline-style: none`; der korrigierte Vergleich prüft die sichtbare Outline sowie Rahmen und Schatten und verändert keine Fokusgestaltung im Produkt.
+
+Weitere lokale Prüfungen grün: vollständiges Lint/Prettier, TypeScript ohne Ausgabe, TAFEL-Verträge einschließlich sieben Rot/Grün-Zusicherungen, Website-Gates, Asset-Versionen und beide API-Bytevergleiche. Protokolle und genaue Container-Befehle liegen unter `WR/pruef/nachauftrag1/BEFEHLE.md`.
+
+Verbindlicher CI-Abschlussnachweis ist die [vollständige Checkliste des aktuellen PR-Kopfes](https://github.com/HeroBenBen/herowerk-website/pull/151/checks). Die neuen Prüfungen laufen dort als reguläre Smoke-Tests; die Aufnahmen werden im bestehenden Artefakt `tafel-sicht` gesichert. PR 151 bleibt Entwurf, ohne automatische Zusammenführung und ohne Auslieferung.

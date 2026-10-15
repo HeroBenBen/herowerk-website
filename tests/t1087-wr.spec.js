@@ -71,6 +71,27 @@ async function screenshot(page, name, testInfo) {
   await page.screenshot({ path: file, fullPage: true, animations: 'disabled' });
   await testInfo.attach(name, { path: file, contentType: 'image/png' });
 }
+// calculate/goStep planen die mobile Aufbereitung im nächsten Renderframe ein.
+// Erst diesen Arbeitsgang abschließen, dann dessen Initialisierungszustand prüfen.
+async function settleCostComparison(page) {
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await new Promise((resolve) => window.requestAnimationFrame(resolve));
+  });
+  await page.waitForFunction(() => {
+    const mobile = window.matchMedia('(max-width:760px)').matches;
+    return Array.from(document.querySelectorAll('details'))
+      .filter((el) => el.hasAttribute('data-mobile-collapsed'))
+      .every((el) => (mobile ? el.dataset.mobileInitialized === '1' : el.open));
+  });
+  return page.locator('details').evaluateAll((nodes) =>
+    nodes.map((el) => ({
+      id: el.id,
+      summary: el.querySelector(':scope > summary')?.textContent,
+      open: el.open,
+    }))
+  );
+}
 for (const [name, type] of Object.entries({ chromium, webkit }))
   for (const width of [375, 1440]) {
     const label = name + '-' + width;
@@ -406,6 +427,8 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
         async function capture(url, version) {
           const result = {};
           async function words(key) {
+            if (key.includes('kostenvergleich'))
+              result[key + '-klappzustaende'] = JSON.stringify(await settleCostComparison(page));
             // WebKit zählt native Optionslisten bei begrenztem Überlauf anders in innerText.
             // Deshalb Pakettexte vollständig separat vergleichen, Seitenworte ohne Doppelung.
             result[key + '-paketauswahl'] = await page.evaluate(() => {
@@ -576,10 +599,19 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
 
             // Bestehender Wizard-Ereignispfad; beide Fassungen erhalten dieselben Eingaben.
             await page.evaluate('calculate({showResults:true,scroll:false})');
+            await settleCostComparison(page);
             await page.evaluate(() =>
               document
                 .querySelectorAll('#results details')
                 .forEach((el) => el.setAttribute('open', ''))
+            );
+            await page.waitForFunction(() =>
+              Array.from(document.getElementById('results').querySelectorAll('details')).every(
+                (el) => el.open
+              )
+            );
+            result[file + '-results-klappzustaende'] = JSON.stringify(
+              await settleCostComparison(page)
             );
             result[file + '-results'] = await page.locator('#results').textContent();
             await screenshot(page, label + '-' + version + '-' + path.basename(file), testInfo);
@@ -637,3 +669,160 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
       }
     );
   }
+
+const nachauftragBase = '0ea2c8f0f970c11e8fd163e54c47af64ff4538c6';
+for (const [name, type] of Object.entries({ chromium, webkit })) {
+  test('@smoke WR Nachauftrag 1 Themen ' + name, async ({}, testInfo) => {
+    test.setTimeout(120000);
+    const beforeServer = await serve(nachauftragBase);
+    const { browser, page, errors } = await setup(type, 375);
+    const captures = {};
+    const folder = path.join(root, 'artifacts/tafel-sicht/wr/nachauftrag1');
+    fs.mkdirSync(folder, { recursive: true });
+    try {
+      for (const [version, url] of Object.entries({
+        vorher: beforeServer.url,
+        nachher: server.url,
+      })) {
+        captures[version] = {};
+        for (const width of [375, 1440]) {
+          await page.setViewportSize({ width, height: 900 });
+          for (const initial of ['dark', 'light']) {
+            await page.goto(url + '/foerderung.html?theme=' + initial);
+            await page.evaluate('paLoadData()');
+            for (let change = 0; change < 3; change++) {
+              if (change)
+                await page
+                  .locator('[data-theme-toggle]')
+                  .first()
+                  .evaluate((el) => el.click());
+              const theme = await page.locator('html').getAttribute('data-theme');
+              for (const brand of ['wolf', 'vaillant']) {
+                await page.evaluate(
+                  (brand) => window.eval('foerderSelectPackage(' + JSON.stringify(brand) + ',"s")'),
+                  brand
+                );
+                const select = page.locator('#foerderWpTyp');
+                await page.keyboard.press('Tab');
+                await select.focus();
+                await expect(select).toBeFocused();
+                await page.evaluate(async () => {
+                  await document.fonts.ready;
+                  await new Promise((resolve) => window.requestAnimationFrame(resolve));
+                });
+                const measurement = await select.evaluate((el) => {
+                  const native = getComputedStyle(el);
+                  const overlay = document.querySelector('.foerder-package-label');
+                  const label = getComputedStyle(overlay);
+                  const options = Array.from(el.querySelectorAll('option,optgroup'), (opt) => ({
+                    color: getComputedStyle(opt).color,
+                    background: getComputedStyle(opt).backgroundColor,
+                    text: opt.textContent,
+                  }));
+                  return {
+                    color: native.color,
+                    labelColor: label.color,
+                    labelDisplay: label.display,
+                    // Bei outline-style:none ist currentColor keine gezeichnete Fokusfarbe.
+                    outline: [
+                      native.outlineStyle === 'none' ? null : native.outlineColor,
+                      native.outlineStyle,
+                      native.outlineWidth,
+                    ],
+                    focusVisible: el.matches(':focus-visible'),
+                    boxShadow: native.boxShadow,
+                    border: [native.borderColor, native.borderStyle, native.borderWidth],
+                    options,
+                    text: el.selectedOptions[0].textContent,
+                    labelText: overlay.textContent,
+                    width: el.getBoundingClientRect().width,
+                    height: el.getBoundingClientRect().height,
+                  };
+                });
+                const key = [width, initial, change, theme, brand].join('-');
+                captures[version][key] = measurement;
+                const mobileVaillant = width === 375 && brand === 'vaillant';
+                if (mobileVaillant) {
+                  expect(measurement.labelDisplay).toBe('block');
+                  expect(measurement.labelColor).not.toBe('rgba(0, 0, 0, 0)');
+                  expect(measurement.labelText.replace(/\s+/g, ' ')).toBe(measurement.text);
+                  const transparent = version === 'nachher' || theme === 'dark';
+                  expect(measurement.color === 'rgba(0, 0, 0, 0)', version + '-' + key).toBe(
+                    transparent
+                  );
+                  for (const option of measurement.options) {
+                    expect(option.color).not.toBe('rgba(0, 0, 0, 0)');
+                    expect(option.color).not.toBe(option.background);
+                  }
+                  const file = path.join(folder, name + '-' + version + '-' + key + '.png');
+                  await page.locator('.foerder-package-field').screenshot({ path: file });
+                  await testInfo.attach(path.basename(file), {
+                    path: file,
+                    contentType: 'image/png',
+                  });
+                } else {
+                  expect(measurement.labelDisplay).toBe('none');
+                  expect(measurement.color).not.toBe('rgba(0, 0, 0, 0)');
+                }
+                // Nativer Auswahlwechsel, einschließlich unveränderter Optionsliste.
+                await select.selectOption(brand + ':m');
+                await expect(select).toHaveValue(brand + ':m');
+                if (mobileVaillant)
+                  expect(await page.locator('.foerder-package-label').textContent()).toBe(
+                    await select.evaluate((el) => el.selectedOptions[0].textContent)
+                  );
+                if (version === 'nachher') {
+                  const expected = { ...captures.vorher[key] };
+                  if (mobileVaillant) expected.color = 'rgba(0, 0, 0, 0)';
+                  expect(measurement, 'Nur native mobile Vaillant-Farbe: ' + key).toEqual(expected);
+                }
+              }
+            }
+          }
+        }
+      }
+      expect(errors).toEqual([]);
+    } finally {
+      const file = path.join(folder, name + '-farben.json');
+      fs.writeFileSync(file, JSON.stringify(captures, null, 2));
+      await testInfo.attach(name + '-farben', { path: file, contentType: 'application/json' });
+      await browser.close();
+      await beforeServer.close();
+    }
+  });
+}
+for (let repetition = 1; repetition <= 10; repetition++) {
+  test('@smoke WR Nachauftrag 1 WebKit 375 Schritt 5 Wiederholung ' + repetition, async () => {
+    test.setTimeout(90000);
+    const beforeServer = await serve(nachauftragBase);
+    const { browser, page, errors } = await setup(webkit, 375);
+    const captures = [];
+    try {
+      for (const url of [beforeServer.url, server.url]) {
+        await page.goto(url + '/kostenvergleich-waermepumpe.html');
+        await page.waitForFunction('typeof KV_STATE!=="undefined"&&KV_STATE.last');
+        await page.locator('[data-wz-heizart="gas"]').click();
+        await page.locator('[data-wz-grp="vmode"][data-wz-val="known"]').click();
+        await page.locator('[data-wz-grp="altgas"][data-wz-val="ja"]').click();
+        for (let step = 1; step <= 5; step++) {
+          await page.evaluate('calculate({showResults:false,scroll:false})');
+          const details = await settleCostComparison(page);
+          if (step === 5) {
+            await expect(page.locator('.wz-herocalc')).toHaveCount(1);
+            await expect(page.locator('.wz-herocalc')).toBeHidden();
+            await expect(
+              page.locator('summary').filter({ hasText: 'So entsteht dein Ergebnis' })
+            ).toBeVisible();
+            captures.push({ details, text: await page.locator('body').innerText() });
+          } else await page.locator('#wzNext').click();
+        }
+      }
+      expect(captures[1].details).toEqual(captures[0].details);
+      expect(captures[1].text).toBe(captures[0].text);
+      expect(errors).toEqual([]);
+    } finally {
+      await browser.close();
+      await beforeServer.close();
+    }
+  });
+}
