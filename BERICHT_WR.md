@@ -31,53 +31,53 @@ Die Planung nannte 32 HTML-Kandidaten. Nachmessung: vier Treffer stehen nur in K
 
 Überschneidung mit den neun Dateien aus PR 150: `package.json` und `tests/a11-oeffentliche-antworten.spec.js`. WR ergänzt `verify:tafel` und passt zwei Browser-Erwartungen für historische API-Antworten an Punkt 7 an. Der aktuelle API-Schutz, seine Fehlerantworten und `verify:a11` bleiben unverändert.
 
-| Datei                                      | Zweck                                                                                             |
-| ------------------------------------------ | ------------------------------------------------------------------------------------------------- |
-| `BERICHT_WR.md`                            | Quellenbeleg beziehungsweise Baunachweis                                                          |
-| `amortisation-waermepumpe.html`            | Nur zwei Asset-Hashes                                                                             |
-| `barrierefreiheit.html`                    | Nur zwei Asset-Hashes                                                                             |
-| `baubarkeitspruefung.html`                 | Nur zwei Asset-Hashes                                                                             |
-| `bewerbung.html`                           | Nur zwei Asset-Hashes                                                                             |
-| `css/site.css`                             | Punkte 1–3: eng begrenzte Darstellung                                                             |
-| `dimensionierung-verstehen.html`           | Nur zwei Asset-Hashes                                                                             |
-| `dimensionierung.html`                     | Nur zwei Asset-Hashes                                                                             |
-| `docs/intern/kostenvergleich-berater.html` | HTML-Textsenken und zwei Asset-Hashes                                                             |
-| `docs/tafel-vaillant-quellen.md`           | Quellenbeleg beziehungsweise Baunachweis                                                          |
-| `foerderung-hannover.html`                 | Nur zwei Asset-Hashes                                                                             |
-| `foerderung-jetzt-mitnehmen.html`          | Nur zwei Asset-Hashes                                                                             |
-| `foerderung.html`                          | Nur zwei Asset-Hashes                                                                             |
-| `foerdervorschuss.html`                    | Nur zwei Asset-Hashes                                                                             |
-| `gasheizung-tauschen-oder-reparieren.html` | Nur zwei Asset-Hashes                                                                             |
-| `hinweise.html`                            | Nur zwei Asset-Hashes                                                                             |
-| `index.html`                               | Nur zwei Asset-Hashes                                                                             |
-| `js/site.js`                               | Punkte 1–7: Browserausgabe                                                                        |
-| `karriere.html`                            | Nur zwei Asset-Hashes                                                                             |
-| `kontakt.html`                             | Nur zwei Asset-Hashes                                                                             |
-| `kostenvergleich-waermepumpe.html`         | HTML-Textsenken und zwei Asset-Hashes                                                             |
-| `package.json`                             | WR-Vertragsprüfung im bestehenden TAFEL-Gate                                                      |
-| `preise.html`                              | Nur zwei Asset-Hashes                                                                             |
-| `propan-waermepumpe.html`                  | Nur zwei Asset-Hashes                                                                             |
-| `prozess.html`                             | Nur zwei Asset-Hashes                                                                             |
-| `ratgeber.html`                            | Nur zwei Asset-Hashes                                                                             |
-| `rechner.html`                             | Nur zwei Asset-Hashes                                                                             |
-| `scripts/make-ionos-bundle.sh`             | Genau eine Ausschlusszeile für den internen Baunachweis                                           |
+| Datei                                      | Zweck                                                                                               |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------- |
+| `BERICHT_WR.md`                            | Quellenbeleg beziehungsweise Baunachweis                                                            |
+| `amortisation-waermepumpe.html`            | Nur zwei Asset-Hashes                                                                               |
+| `barrierefreiheit.html`                    | Nur zwei Asset-Hashes                                                                               |
+| `baubarkeitspruefung.html`                 | Nur zwei Asset-Hashes                                                                               |
+| `bewerbung.html`                           | Nur zwei Asset-Hashes                                                                               |
+| `css/site.css`                             | Punkte 1–3: eng begrenzte Darstellung                                                               |
+| `dimensionierung-verstehen.html`           | Nur zwei Asset-Hashes                                                                               |
+| `dimensionierung.html`                     | Nur zwei Asset-Hashes                                                                               |
+| `docs/intern/kostenvergleich-berater.html` | HTML-Textsenken und zwei Asset-Hashes                                                               |
+| `docs/tafel-vaillant-quellen.md`           | Quellenbeleg beziehungsweise Baunachweis                                                            |
+| `foerderung-hannover.html`                 | Nur zwei Asset-Hashes                                                                               |
+| `foerderung-jetzt-mitnehmen.html`          | Nur zwei Asset-Hashes                                                                               |
+| `foerderung.html`                          | Nur zwei Asset-Hashes                                                                               |
+| `foerdervorschuss.html`                    | Nur zwei Asset-Hashes                                                                               |
+| `gasheizung-tauschen-oder-reparieren.html` | Nur zwei Asset-Hashes                                                                               |
+| `hinweise.html`                            | Nur zwei Asset-Hashes                                                                               |
+| `index.html`                               | Nur zwei Asset-Hashes                                                                               |
+| `js/site.js`                               | Punkte 1–7: Browserausgabe                                                                          |
+| `karriere.html`                            | Nur zwei Asset-Hashes                                                                               |
+| `kontakt.html`                             | Nur zwei Asset-Hashes                                                                               |
+| `kostenvergleich-waermepumpe.html`         | HTML-Textsenken und zwei Asset-Hashes                                                               |
+| `package.json`                             | WR-Vertragsprüfung im bestehenden TAFEL-Gate                                                        |
+| `preise.html`                              | Nur zwei Asset-Hashes                                                                               |
+| `propan-waermepumpe.html`                  | Nur zwei Asset-Hashes                                                                               |
+| `prozess.html`                             | Nur zwei Asset-Hashes                                                                               |
+| `ratgeber.html`                            | Nur zwei Asset-Hashes                                                                               |
+| `rechner.html`                             | Nur zwei Asset-Hashes                                                                               |
+| `scripts/make-ionos-bundle.sh`             | Genau eine Ausschlusszeile für den internen Baunachweis                                             |
 | `tests/a11-oeffentliche-antworten.spec.js` | Zwei historische Browser-Erwartungen auf wörtliche Antworttexte umstellen; API-Verträge unverändert |
-| `tests/fixtures/t1087-wr-runde5.json`      | Unveränderter Original-Prüfbeleg aus A11 Runde 5                                                  |
-| `tests/helpers/t1087-datenblatt.cjs`       | Rot/Grün, Sichtvergleich beziehungsweise gezielte Bestands-Testanpassung                          |
-| `tests/t1087-beschriftung.cjs`             | Rot/Grün, Sichtvergleich beziehungsweise gezielte Bestands-Testanpassung                          |
-| `tests/t1087-datenblatt.cjs`               | Rot/Grün, Sichtvergleich beziehungsweise gezielte Bestands-Testanpassung                          |
-| `tests/t1087-geraetetyp.cjs`               | Rot/Grün, Sichtvergleich beziehungsweise gezielte Bestands-Testanpassung                          |
-| `tests/t1087-geraetetyp.spec.js`           | Browsererwartung nach Folgeabruffehler auf den freigegebenen neutralen Mindestpreis aktualisieren |
-| `tests/t1087-herstellerreiter.cjs`         | Rot/Grün, Sichtvergleich beziehungsweise gezielte Bestands-Testanpassung                          |
-| `tests/t1087-jaz.cjs`                      | Rot/Grün, Sichtvergleich beziehungsweise gezielte Bestands-Testanpassung                          |
-| `tests/t1087-wr.cjs`                       | Rot/Grün, Sichtvergleich beziehungsweise gezielte Bestands-Testanpassung                          |
-| `tests/t1087-wr.spec.js`                   | Rot/Grün, Sichtvergleich beziehungsweise gezielte Bestands-Testanpassung                          |
-| `waermepumpe-altbau.html`                  | Nur zwei Asset-Hashes                                                                             |
-| `waermepumpe-hannover.html`                | Nur zwei Asset-Hashes                                                                             |
-| `waermepumpe-laerm.html`                   | Nur zwei Asset-Hashes                                                                             |
-| `waermepumpenstrom-hannover.html`          | Nur zwei Asset-Hashes                                                                             |
-| `wertsteigerung-waermepumpe.html`          | Nur zwei Asset-Hashes                                                                             |
-| `wp-kosten-hannover.html`                  | Nur zwei Asset-Hashes                                                                             |
+| `tests/fixtures/t1087-wr-runde5.json`      | Unveränderter Original-Prüfbeleg aus A11 Runde 5                                                    |
+| `tests/helpers/t1087-datenblatt.cjs`       | Rot/Grün, Sichtvergleich beziehungsweise gezielte Bestands-Testanpassung                            |
+| `tests/t1087-beschriftung.cjs`             | Rot/Grün, Sichtvergleich beziehungsweise gezielte Bestands-Testanpassung                            |
+| `tests/t1087-datenblatt.cjs`               | Rot/Grün, Sichtvergleich beziehungsweise gezielte Bestands-Testanpassung                            |
+| `tests/t1087-geraetetyp.cjs`               | Rot/Grün, Sichtvergleich beziehungsweise gezielte Bestands-Testanpassung                            |
+| `tests/t1087-geraetetyp.spec.js`           | Browsererwartung nach Folgeabruffehler auf den freigegebenen neutralen Mindestpreis aktualisieren   |
+| `tests/t1087-herstellerreiter.cjs`         | Rot/Grün, Sichtvergleich beziehungsweise gezielte Bestands-Testanpassung                            |
+| `tests/t1087-jaz.cjs`                      | Rot/Grün, Sichtvergleich beziehungsweise gezielte Bestands-Testanpassung                            |
+| `tests/t1087-wr.cjs`                       | Rot/Grün, Sichtvergleich beziehungsweise gezielte Bestands-Testanpassung                            |
+| `tests/t1087-wr.spec.js`                   | Rot/Grün, Sichtvergleich beziehungsweise gezielte Bestands-Testanpassung                            |
+| `waermepumpe-altbau.html`                  | Nur zwei Asset-Hashes                                                                               |
+| `waermepumpe-hannover.html`                | Nur zwei Asset-Hashes                                                                               |
+| `waermepumpe-laerm.html`                   | Nur zwei Asset-Hashes                                                                               |
+| `waermepumpenstrom-hannover.html`          | Nur zwei Asset-Hashes                                                                               |
+| `wertsteigerung-waermepumpe.html`          | Nur zwei Asset-Hashes                                                                               |
+| `wp-kosten-hannover.html`                  | Nur zwei Asset-Hashes                                                                               |
 
 Gesamt: **45 Dateien**. Kein API-, Tabellen-, Preis- oder Workflow-Eingriff. Der Bündelwächter hatte den neuen internen `BERICHT_WR.md` im ersten CI-Lauf korrekt als unbekannte Laufzeit-Datei abgewiesen. Die konkrete Ausschlusszeile hält ihn aus dem öffentlichen Bündel heraus. Lokaler Bündelbau und Gleichheitsprüfung (124 Dateien) danach grün.
 
