@@ -48,7 +48,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="js/theme.js?v=9b163705e9"></script>
   <link rel="stylesheet" href="css/fonts.css?v=d3f3999a2f">
-  <link rel="stylesheet" href="css/site.css?v=787df10683">
+  <link rel="stylesheet" href="css/site.css?v=31593686d6">
   <link rel="preload" href="tokens.css?v=bb2619605a" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="tokens.css?v=bb2619605a"></noscript>
 <style>
@@ -1072,14 +1072,16 @@ function eur(v){return Math.round(Number(v)||0).toLocaleString('de-DE')+' €';}
 function eurSigned(v){const n=Number(v)||0;return n>0?eur(n):'−'+eur(Math.abs(n));}
 function fix(v,n){return Number(v||0).toFixed(n).replace('.',',');}
 function pct(v){return Number(v||0).toLocaleString('de-DE',{maximumFractionDigits:1})+' %';}
-function kvLine(label,value,extra){return `<div class="ln${extra?' '+extra:''}"><span class="lbl">${label}</span> <span class="vv">${value}</span></div>`;}
-function kvCard(label,value,sub,extra){return `<div class="rc${extra?' '+extra:''}"><div class="ml">${label}</div> <div class="mv">${value}</div>${sub?` <div class="ms">${sub}</div>`:''}</div>`;}
+// WR: Antwort- und Katalogwerte sind Text, eigenes Struktur-Markup bleibt getrennt.
+function kvText(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function kvLine(label,value,extra){return `<div class="ln${extra?' '+kvText(extra):''}"><span class="lbl">${kvText(label)}</span> <span class="vv">${kvText(value)}</span></div>`;}
+function kvCard(label,value,sub,extra){return `<div class="rc${extra?' '+kvText(extra):''}"><div class="ml">${kvText(label)}</div> <div class="mv">${kvText(value)}</div>${sub?` <div class="ms">${kvText(sub)}</div>`:''}</div>`;}
 function kvMobileCard(label,value,lines,extra){
-  return `<div class="rc kv-mobile-card${extra?' '+extra:''}"><div class="kv-mobile-card-head"><div class="ml">${label}</div> <div class="mv">${value}</div></div>${(lines||[]).map(line=>kvLine(line[0],line[1],line[2])).join('')}</div>`;
+  return `<div class="rc kv-mobile-card${extra?' '+kvText(extra):''}"><div class="kv-mobile-card-head"><div class="ml">${kvText(label)}</div> <div class="mv">${kvText(value)}</div></div>${(lines||[]).map(line=>kvLine(line[0],line[1],line[2])).join('')}</div>`;
 }
 function kvMobileYearAnswer(ergebnis,system){
   const breakEven=ergebnis.breakEvenSofort?'Ab sofort im Plus':(ergebnis.breakEven?'Ab Jahr '+ergebnis.breakEven+' im Plus':'Innerhalb von '+system.laufzeit+' Jahren noch nicht im Plus');
-  return `<div class="mobile-year-answer"><strong>${breakEven}</strong><span>Gesamtersparnis über ${system.laufzeit} Jahre: ${eur(ergebnis.cumSav)}</span></div>`;
+  return `<div class="mobile-year-answer"><strong>${kvText(breakEven)}</strong><span>Gesamtersparnis über ${kvText(system.laufzeit)} Jahre: ${eur(ergebnis.cumSav)}</span></div>`;
 }
 function kvMobileYearContent(labels,datasets){
   const reihen=datasets.filter(d=>d&&d.data);
@@ -1087,14 +1089,14 @@ function kvMobileYearContent(labels,datasets){
   if(reihen.length===1){
     const werte=reihen[0].data.map(v=>Math.round(Number(v)||0));
     const max=Math.max(1,...werte.map(v=>Math.abs(v)));
-    return labels.map((lab,i)=>`<div class="year-bar-row"><span class="year-label">${lab}</span><span class="year-bar-track" aria-hidden="true"><span class="year-bar-fill${werte[i]<0?' is-negative':''}" style="width:${Math.round(Math.abs(werte[i])/max*100)}%"></span></span><span class="year-value">${eurSigned(werte[i])}</span></div>`).join('');
+    return labels.map((lab,i)=>`<div class="year-bar-row"><span class="year-label">${kvText(lab)}</span><span class="year-bar-track" aria-hidden="true"><span class="year-bar-fill${werte[i]<0?' is-negative':''}" style="width:${Math.round(Math.abs(werte[i])/max*100)}%"></span></span><span class="year-value">${eurSigned(werte[i])}</span></div>`).join('');
   }
-  return labels.map((lab,i)=>`<div class="mobile-year-card"><h4>${lab}</h4>${reihen.map(r=>kvLine(r.label,eur(Math.round(Number(r.data[i])||0)))).join('')}</div>`).join('');
+  return labels.map((lab,i)=>`<div class="mobile-year-card"><h4>${kvText(lab)}</h4>${reihen.map(r=>kvLine(r.label,eur(Math.round(Number(r.data[i])||0)))).join('')}</div>`).join('');
 }
 function kvMobileYearDetails(titel,labels,datasets){
   const content=kvMobileYearContent(labels,datasets);
   if(!content)return '';
-  return `<details class="mobile-year-details klapp" aria-label="${titel}"><summary>Alle ${labels.length} Jahre im Detail</summary><div class="inhalt">${content}</div></details>`;
+  return `<details class="mobile-year-details klapp" aria-label="${kvText(titel)}"><summary>Alle ${labels.length} Jahre im Detail</summary><div class="inhalt">${content}</div></details>`;
 }
 const G9_LOADING_TEXT='Wir rechnen deine Zahlen neu';
 const G9_LOADING_VALUE_SELECTORS=[
@@ -1213,8 +1215,8 @@ function kvApplyBootstrap(data){
   const sel=document.getElementById('fHalbjahr');
   if(sel&&Array.isArray(data.perioden)){
     const activeKnown=data.perioden.some(p=>p.key===data.aktivePeriode);
-    const activeOption=!activeKnown&&data.aktivePeriode?`<option value="${data.aktivePeriode}">Aktuell gültiger Antragszeitraum</option>`:'';
-    sel.innerHTML=activeOption+data.perioden.map(p=>`<option value="${p.key}">${p.label}</option>`).join('');
+    const activeOption=!activeKnown&&data.aktivePeriode?`<option value="${kvText(data.aktivePeriode)}">Aktuell gültiger Antragszeitraum</option>`:'';
+    sel.innerHTML=activeOption+data.perioden.map(p=>`<option value="${kvText(p.key)}">${kvText(p.label)}</option>`).join('');
     const active=data.aktivePeriode||(data.defaults&&data.defaults.fHalbjahr);
     if(active)sel.value=active;
   }
@@ -1244,15 +1246,15 @@ function renderFoerderTreppe(){
     // Nur das Zeichen, KEIN Link: die Stufe traegt role="button", ein fokussierbarer
     // Nachfahre darin ist der axe-Befund nested-interactive.
     const stern=d.quote===80?'*':'';
-    const kopf=mitEuro?`<span class="tr-eur">${eur(d.betrag)}</span><span class="tr-pct">${d.quote} %${stern}</span>`:`<span class="tr-pct">${d.quote} %${stern}</span>`;
+    const kopf=mitEuro?`<span class="tr-eur">${eur(d.betrag)}</span><span class="tr-pct">${kvText(d.quote)} %${stern}</span>`:`<span class="tr-pct">${kvText(d.quote)} %${stern}</span>`;
     const beschriftung=mitEuro?`Zeitraum ${d.label}: ${eur(d.betrag)}, ${d.quote} Prozent`:`Zeitraum ${d.label}: ${d.quote} Prozent`;
-    return `<div class="tr-col${d.periode===orig?' is-active':''}" data-tr="${d.periode}" title="${d.label}" role="button" aria-label="${beschriftung}">${kopf}<div class="tr-bar" style="height:${h}px"></div><span class="tr-lbl"><span>ab</span><span>${monat}</span></span></div>`;
+    return `<div class="tr-col${d.periode===orig?' is-active':''}" data-tr="${kvText(d.periode)}" title="${kvText(d.label)}" role="button" aria-label="${kvText(beschriftung)}">${kopf}<div class="tr-bar" style="height:${h}px"></div><span class="tr-lbl"><span>ab</span><span>${kvText(monat)}</span></span></div>`;
   }).join('');
   host.querySelectorAll('.tr-col').forEach(c=>c.addEventListener('click',()=>{const sel=document.getElementById('fHalbjahr');sel.value=c.dataset.tr;sel.dispatchEvent(new Event('change',{bubbles:true}));}));
   const cur=data.find(d=>d.periode===orig),first=data[0];
   // Fussnoten-Verweis EINMAL hier, ausserhalb jedes Elements mit Rolle.
   const sternHinweis=data.some(d=>d.quote===80)?' <a href="#foerder-80-hinweis" style="color:inherit;text-decoration:underline;">*Was 80 Prozent bedeutet</a>':'';
-  if(hint&&cur)hint.innerHTML='Jedes Warten kostet Förderung: Im gewählten Zeitraum bekommst du '+cur.quote+' Prozent'+(cur.quote<first.quote?', im ersten Zeitraum wären es '+first.quote+' Prozent':'')+'.'+sternHinweis;
+  if(hint&&cur)hint.innerHTML='Jedes Warten kostet Förderung: Im gewählten Zeitraum bekommst du '+kvText(cur.quote)+' Prozent'+(cur.quote<first.quote?', im ersten Zeitraum wären es '+kvText(first.quote)+' Prozent':'')+'.'+sternHinweis;
   // Bezug ist die GEWAEHLTE Stufe, nicht blind die erste: ein Vergleich gegen einen
   // abgelaufenen Zeitraum bewuerbe einen Betrag, den niemand mehr beantragen kann.
   if(verlust){
@@ -1260,8 +1262,8 @@ function renderFoerderTreppe(){
     if(!mitEuro){verlust.textContent='';}
     else if(!naechste){verlust.textContent='Das ist der letzte Zeitraum, für den die Fördersätze feststehen.';}
     else{
-      verlust.innerHTML=`Wer bis ${zeitraumName(naechste.periode)} wartet, bekommt <strong>${eur(bezug.betrag-naechste.betrag)} weniger</strong> Zuschuss.`
-        +(letzte!==naechste?` Bis ${zeitraumName(letzte.periode)} sind es <strong>${eur(bezug.betrag-letzte.betrag)} weniger</strong>.`:'');
+      verlust.innerHTML=`Wer bis ${kvText(zeitraumName(naechste.periode))} wartet, bekommt <strong>${eur(bezug.betrag-naechste.betrag)} weniger</strong> Zuschuss.`
+        +(letzte!==naechste?` Bis ${kvText(zeitraumName(letzte.periode))} sind es <strong>${eur(bezug.betrag-letzte.betrag)} weniger</strong>.`:'');
     }
   }
 }
@@ -1272,9 +1274,9 @@ document.getElementById('immoTog').addEventListener('change',toggleImmo);documen
 let cM=null,cB=null,cH=null;
 function kvRender(data,showResults){
   KV_STATE.last=data;const f=data.foerder,i=data.invest,s=data.system,e=data.ergebnis,d=data.dreiWege,fin=data.finanzierung;
-  const periodSelect=document.getElementById('fHalbjahr'),activeOption=periodSelect&&periodSelect.querySelector(`option[value="${f.periode}"]`);if(activeOption&&activeOption.textContent==='Aktuell gültiger Antragszeitraum')activeOption.textContent=f.label;
+  const periodSelect=document.getElementById('fHalbjahr'),activeOption=periodSelect&&Array.from(periodSelect.options).find(option=>option.value===f.periode);if(activeOption&&activeOption.textContent==='Aktuell gültiger Antragszeitraum')activeOption.textContent=f.label;
   const foerderNote=f.quote===80?'<sup><a href="#foerder-80-hinweis" style="color:inherit;text-decoration:underline;">*</a></sup>':'';
-  document.getElementById('vFEink').textContent=Number(f.zvE).toLocaleString('de-DE')+' €';document.getElementById('fEinkAnr').textContent=Number(f.anrechenbar).toLocaleString('de-DE')+' €';document.getElementById('fEinkBonusLbl').textContent='+'+f.einkommen+' %';document.getElementById('fGrundPct').textContent=f.grundPct+' %';document.getElementById('fKlimaPct').textContent=f.klimaPct+' %';document.getElementById('fQuote').innerHTML=f.quote+' %'+foerderNote+(f.gekappt?' (gekappt)':'');document.getElementById('fGrenzeLbl').textContent=eur(f.grenze);document.getElementById('fBasis').textContent=eur(f.basis);document.getElementById('fBetrag').textContent=eur(f.anzeigeBetrag);document.getElementById('fNetto').textContent=eur(f.netto);document.getElementById('fBadges').innerHTML=[{n:'Grund '+f.grundPct+'%',a:f.grund>0},{n:'Klima '+f.klimaPct+'%',a:f.klima>0},{n:'Einkommen '+f.einkommen+'%',a:f.einkommen>0}].map(x=>`<span class="fb ${x.a?'a':'i'}">${x.n}</span>`).join('');
+  document.getElementById('vFEink').textContent=Number(f.zvE).toLocaleString('de-DE')+' €';document.getElementById('fEinkAnr').textContent=Number(f.anrechenbar).toLocaleString('de-DE')+' €';document.getElementById('fEinkBonusLbl').textContent='+'+f.einkommen+' %';document.getElementById('fGrundPct').textContent=f.grundPct+' %';document.getElementById('fKlimaPct').textContent=f.klimaPct+' %';document.getElementById('fQuote').innerHTML=kvText(f.quote)+' %'+foerderNote+(f.gekappt?' (gekappt)':'');document.getElementById('fGrenzeLbl').textContent=eur(f.grenze);document.getElementById('fBasis').textContent=eur(f.basis);document.getElementById('fBetrag').textContent=eur(f.anzeigeBetrag);document.getElementById('fNetto').textContent=eur(f.netto);document.getElementById('fBadges').innerHTML=[{n:'Grund '+f.grundPct+'%',a:f.grund>0},{n:'Klima '+f.klimaPct+'%',a:f.klima>0},{n:'Einkommen '+f.einkommen+'%',a:f.einkommen>0}].map(x=>`<span class="fb ${x.a?'a':'i'}">${kvText(x.n)}</span>`).join('');
   renderFoerderTreppe();
   const fossilName='Neue '+s.heizLabel+'heizung';
   const path=[];path.push(kvLine('Anschaffung Wärmepumpe (nach Förderung)',eur(i.netto)));
@@ -1302,7 +1304,7 @@ function kvRender(data,showResults){
   document.getElementById('kpiGrid').innerHTML=cards.join('');
 
   const dreiBox=document.getElementById('dreiWegeBox');dreiBox.style.display=d.aktiv?'block':'none';
-  if(d.aktiv){const rows=[['Neue Ölheizung',d.oel],['Neue Gasheizung',d.gas],['Wärmepumpe',d.wp]];const mobileRows=[['Wärmepumpe',d.wp,'is-wp'],['Neue Gasheizung',d.gas,''],['Neue Ölheizung',d.oel,'']];const result=d.vorteil>=0?'Über '+s.laufzeit+' Jahre '+eur(d.vorteil)+' günstiger'+(i.mehrInvest>0?' · Mehrinvestition '+eur(i.mehrInvest):''):eur(-d.vorteil)+' unter der Wärmepumpe';dreiBox.innerHTML=`<h3>Gesamtkosten über ${s.laufzeit} Jahre</h3><table class="bt desktop-kv-table"><thead><tr><th>Weg</th><th class="r">Anschaffung</th><th class="r">Betrieb ${s.laufzeit} J.</th><th class="r">Gesamt ${s.laufzeit} J.</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r[0]}</td><td class="r">${eur(r[1].invest)}</td><td class="r">${eur(r[1].betrieb)}</td><td class="r">${eur(r[1].gesamt)}</td></tr>`).join('')}</tbody></table><div class="mobile-kv-list">${mobileRows.map(r=>{const lines=[[r[1]===d.wp?'Anschaffung nach Förderung':'Anschaffung',eur(r[1].invest)],['Betrieb '+s.laufzeit+' J.',eur(r[1].betrieb)]];if(r[1]!==d.wp)lines.push(['Mehrkosten gegenüber Wärmepumpe','+'+eur(r[1].gesamt-d.wp.gesamt),'neg']);return kvMobileCard(r[0],eur(r[1].gesamt),lines,r[2]);}).join('')}</div><div class="ib"><strong>${result}</strong></div>`;}
+  if(d.aktiv){const rows=[['Neue Ölheizung',d.oel],['Neue Gasheizung',d.gas],['Wärmepumpe',d.wp]];const mobileRows=[['Wärmepumpe',d.wp,'is-wp'],['Neue Gasheizung',d.gas,''],['Neue Ölheizung',d.oel,'']];const result=d.vorteil>=0?'Über '+s.laufzeit+' Jahre '+eur(d.vorteil)+' günstiger'+(i.mehrInvest>0?' · Mehrinvestition '+eur(i.mehrInvest):''):eur(-d.vorteil)+' unter der Wärmepumpe';dreiBox.innerHTML=`<h3>Gesamtkosten über ${kvText(s.laufzeit)} Jahre</h3><table class="bt desktop-kv-table"><thead><tr><th>Weg</th><th class="r">Anschaffung</th><th class="r">Betrieb ${kvText(s.laufzeit)} J.</th><th class="r">Gesamt ${kvText(s.laufzeit)} J.</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${kvText(r[0])}</td><td class="r">${eur(r[1].invest)}</td><td class="r">${eur(r[1].betrieb)}</td><td class="r">${eur(r[1].gesamt)}</td></tr>`).join('')}</tbody></table><div class="mobile-kv-list">${mobileRows.map(r=>{const lines=[[r[1]===d.wp?'Anschaffung nach Förderung':'Anschaffung',eur(r[1].invest)],['Betrieb '+s.laufzeit+' J.',eur(r[1].betrieb)]];if(r[1]!==d.wp)lines.push(['Mehrkosten gegenüber Wärmepumpe','+'+eur(r[1].gesamt-d.wp.gesamt),'neg']);return kvMobileCard(r[0],eur(r[1].gesamt),lines,r[2]);}).join('')}</div><div class="ib"><strong>${kvText(result)}</strong></div>`;}
 
   const labels=data.charts.labels;const css=getComputedStyle(document.documentElement);const tick=(css.getPropertyValue('--hero-muted')||'#ccc').trim();const grid=(css.getPropertyValue('--hero-separator')||'#333').trim();const opts={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:tick}}},scales:{x:{ticks:{color:tick},grid:{color:grid}},y:{ticks:{color:tick},grid:{color:grid}}}};
   const breakDatasets=[{label:'Energie und CO₂',data:data.charts.sparEnergieCo2,backgroundColor:'rgba(183,217,0,.7)'},{label:'Dynamischer Tarif',data:data.charts.sparDyn,backgroundColor:'rgba(30,136,229,.7)'},{label:'Bio-Aufschlag',data:data.charts.bioAufschlag,backgroundColor:'rgba(229,57,53,.6)'},{label:'Wartungsdifferenz',data:data.charts.wartungDelta,backgroundColor:'rgba(158,158,158,.5)'}];
@@ -1316,10 +1318,10 @@ function kvRender(data,showResults){
     const ziel=document.getElementById(zielId);
     if(!ziel)return;
     const reihen=datasets.filter(d=>d&&d.data);
-    const kopf='<tr><th scope="col">Jahr</th>'+reihen.map(d=>'<th scope="col" class="r">'+d.label+'</th>').join('')+'</tr>';
-    const koerper=labels.map((lab,i)=>'<tr><th scope="row">'+lab+'</th>'+reihen.map(d=>'<td class="r">'+eur(Math.round(Number(d.data[i])||0))+'</td>').join('')+'</tr>').join('');
-    ziel.innerHTML=kvMobileYearAnswer(e,s)+'<details class="chart-daten-details klapp"><summary><span class="chart-summary-desktop">'+titel+' als Tabelle anzeigen</span><span class="chart-summary-mobile">Alle '+labels.length+' Jahre im Detail</span></summary><div class="inhalt">'
-      +'<table class="bt desktop-kv-table"><caption class="visually-hidden">'+titel+', Werte je Jahr in Euro</caption><thead>'+kopf+'</thead><tbody>'+koerper+'</tbody></table>'
+    const kopf='<tr><th scope="col">Jahr</th>'+reihen.map(d=>'<th scope="col" class="r">'+kvText(d.label)+'</th>').join('')+'</tr>';
+    const koerper=labels.map((lab,i)=>'<tr><th scope="row">'+kvText(lab)+'</th>'+reihen.map(d=>'<td class="r">'+eur(Math.round(Number(d.data[i])||0))+'</td>').join('')+'</tr>').join('');
+    ziel.innerHTML=kvMobileYearAnswer(e,s)+'<details class="chart-daten-details klapp"><summary><span class="chart-summary-desktop">'+kvText(titel)+' als Tabelle anzeigen</span><span class="chart-summary-mobile">Alle '+labels.length+' Jahre im Detail</span></summary><div class="inhalt">'
+      +'<table class="bt desktop-kv-table"><caption class="visually-hidden">'+kvText(titel)+', Werte je Jahr in Euro</caption><thead>'+kopf+'</thead><tbody>'+koerper+'</tbody></table>'
       +'<div class="mobile-year-details">'+kvMobileYearContent(labels,reihen)+'</div></div></details>';
   }
   if(window.Chart){if(cM)cM.destroy();if(cB)cB.destroy();if(cH)cH.destroy();cM=new Chart(document.getElementById('cMain'),{type:'line',data:{labels,datasets:[{label:'Dein Vorteil',data:data.charts.vermoegen,borderColor:'#B7D900',backgroundColor:'rgba(183,217,0,.15)',fill:true,tension:.25},{label:'Null-Linie',data:data.charts.nullLinie,borderColor:'#E53935',borderDash:[6,4],pointRadius:0}]},options:opts});cB=new Chart(document.getElementById('cBreak'),{type:'bar',data:{labels,datasets:breakDatasets},options:opts});cH=new Chart(document.getElementById('cHeat'),{type:'bar',data:{labels,datasets:[{label:'Heizkosten Gas/Öl',data:data.charts.heizFossil,backgroundColor:'rgba(229,57,53,.65)'},{label:'Heizkosten Wärmepumpe',data:data.charts.heizWp,backgroundColor:'rgba(183,217,0,.65)'},{label:'Jährliche Ersparnis',type:'line',data:data.charts.heizDiff,borderColor:'#FF9800',borderWidth:3}]},options:opts});}
@@ -1329,15 +1331,15 @@ function kvRender(data,showResults){
 
   const cf=document.getElementById('cashflowBox');cf.style.display=fin.aktiv?'block':'none';
   if(fin.aktiv){
-    if(s.neuFossilOn){const mon=(fin.monVorteil>=0?'+':'−')+Math.abs(Math.round(fin.monVorteil)).toLocaleString('de-DE')+' €/Mo.';cf.innerHTML=`<h3>Monatlicher Vergleich</h3><div class="cg3">${kvCard(fossilName,Math.round(fin.fossMon).toLocaleString('de-DE')+' €/Mo.',Math.round(fin.monRateFossil)+' € Rate + '+Math.round(fin.monFossil)+' € Brennstoff · steigend')}${kvCard('Wärmepumpe',Math.round(fin.wpMon).toLocaleString('de-DE')+' €/Mo.',Math.round(fin.monRate)+' € Rate + '+Math.round(fin.monWPStrom)+' € Strom/Wartung')}${kvCard('Vorteil pro Monat',mon,fin.monVorteil>=0?'Wärmepumpe günstiger, ab dem 1. Monat':'Amortisiert sich über die Jahre',fin.monVorteil>=0?'pos':'neg')}</div><div class="ib">${fin.kredLZ<=s.laufzeit?'Nach Kreditende ('+fin.kredLZ+' J.)':'Am Ende des Betrachtungszeitraums ('+s.laufzeit+' J.)'}: Wärmepumpe ~${Math.round(fin.endWpMon)} €/Mo. · ${fossilName} ~${Math.round(fin.endFossilMon)} €/Mo.</div>`;}
-    else {const mon=(fin.monDiff>=0?'+':'−')+Math.abs(Math.round(fin.monDiff)).toLocaleString('de-DE')+' €/Mo.';cf.innerHTML=`<h3>Monatlicher Vergleich</h3><p class="d">Aktiviere „Neue fossile Anlage“ in Schritt 1 für den faireren Vergleich.</p><div class="cg3">${kvCard('Bestehende '+s.heizLabel+'heizung',Math.round(fin.monFossil).toLocaleString('de-DE')+' €/Mo.','Im 1. Jahr · steigend')}${kvCard('Wärmepumpe',Math.round(fin.monGesWP).toLocaleString('de-DE')+' €/Mo.',Math.round(fin.monRate)+' € Rate + '+Math.round(fin.monWPStrom)+' € Strom/Wartung')}${kvCard('Monatlicher Cashflow',mon,fin.monDiff>=0?'Günstiger trotz Kreditrate':'Amortisiert sich über die Jahre',fin.monDiff>=0?'pos':'neg')}</div><div class="ib">${fin.kredLZ<=s.laufzeit?'Nach Kreditende ('+fin.kredLZ+' J.)':'Am Ende des Betrachtungszeitraums ('+s.laufzeit+' J., Kredit läuft noch)'}: Wärmepumpe ~${Math.round(fin.endWpMon)} €/Mo. · Fossil ~${Math.round(fin.endFossilMon)} €/Mo.</div>`;}
+    if(s.neuFossilOn){const mon=(fin.monVorteil>=0?'+':'−')+Math.abs(Math.round(fin.monVorteil)).toLocaleString('de-DE')+' €/Mo.';cf.innerHTML=`<h3>Monatlicher Vergleich</h3><div class="cg3">${kvCard(fossilName,Math.round(fin.fossMon).toLocaleString('de-DE')+' €/Mo.',Math.round(fin.monRateFossil)+' € Rate + '+Math.round(fin.monFossil)+' € Brennstoff · steigend')}${kvCard('Wärmepumpe',Math.round(fin.wpMon).toLocaleString('de-DE')+' €/Mo.',Math.round(fin.monRate)+' € Rate + '+Math.round(fin.monWPStrom)+' € Strom/Wartung')}${kvCard('Vorteil pro Monat',mon,fin.monVorteil>=0?'Wärmepumpe günstiger, ab dem 1. Monat':'Amortisiert sich über die Jahre',fin.monVorteil>=0?'pos':'neg')}</div><div class="ib">${kvText(fin.kredLZ<=s.laufzeit?'Nach Kreditende ('+fin.kredLZ+' J.)':'Am Ende des Betrachtungszeitraums ('+s.laufzeit+' J.)')}: Wärmepumpe ~${Math.round(fin.endWpMon)} €/Mo. · ${kvText(fossilName)} ~${Math.round(fin.endFossilMon)} €/Mo.</div>`;}
+    else {const mon=(fin.monDiff>=0?'+':'−')+Math.abs(Math.round(fin.monDiff)).toLocaleString('de-DE')+' €/Mo.';cf.innerHTML=`<h3>Monatlicher Vergleich</h3><p class="d">Aktiviere „Neue fossile Anlage“ in Schritt 1 für den faireren Vergleich.</p><div class="cg3">${kvCard('Bestehende '+s.heizLabel+'heizung',Math.round(fin.monFossil).toLocaleString('de-DE')+' €/Mo.','Im 1. Jahr · steigend')}${kvCard('Wärmepumpe',Math.round(fin.monGesWP).toLocaleString('de-DE')+' €/Mo.',Math.round(fin.monRate)+' € Rate + '+Math.round(fin.monWPStrom)+' € Strom/Wartung')}${kvCard('Monatlicher Cashflow',mon,fin.monDiff>=0?'Günstiger trotz Kreditrate':'Amortisiert sich über die Jahre',fin.monDiff>=0?'pos':'neg')}</div><div class="ib">${kvText(fin.kredLZ<=s.laufzeit?'Nach Kreditende ('+fin.kredLZ+' J.)':'Am Ende des Betrachtungszeitraums ('+s.laufzeit+' J., Kredit läuft noch)')}: Wärmepumpe ~${Math.round(fin.endWpMon)} €/Mo. · Fossil ~${Math.round(fin.endFossilMon)} €/Mo.</div>`;}
   }
-  document.getElementById('co2Box').innerHTML=`<h3>Dein Klima-Beitrag</h3><div style="text-align:center;margin:20px 0"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.5rem;color:var(--hero-green)">${fix(data.co2.gesamt,1)} t CO₂</div><div class="d">in ${s.laufzeit} Jahren eingespart (Ø ${fix(data.co2.proJahr,1)} t/Jahr)</div></div><div class="cg2"><div class="ib" style="text-align:center"><strong>${data.co2.fluege} Flüge</strong></div><div class="ib" style="text-align:center"><strong>${data.co2.baeume} Bäume</strong></div></div>`;
+  document.getElementById('co2Box').innerHTML=`<h3>Dein Klima-Beitrag</h3><div style="text-align:center;margin:20px 0"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.5rem;color:var(--hero-green)">${fix(data.co2.gesamt,1)} t CO₂</div><div class="d">in ${kvText(s.laufzeit)} Jahren eingespart (Ø ${fix(data.co2.proJahr,1)} t/Jahr)</div></div><div class="cg2"><div class="ib" style="text-align:center"><strong>${kvText(data.co2.fluege)} Flüge</strong></div><div class="ib" style="text-align:center"><strong>${kvText(data.co2.baeume)} Bäume</strong></div></div>`;
   document.getElementById('sensiBox').innerHTML=`<h3>Was wäre wenn? (Szenarien)</h3><table class="bt desktop-kv-table"><tbody><tr><td>Best Case</td><td class="r">${eur(data.sensi.best)}</td></tr><tr><td>Basis</td><td class="r">${eur(data.sensi.basis)}</td></tr><tr><td>Worst Case</td><td class="r">${eur(data.sensi.worst)}</td></tr></tbody></table><div class="mobile-kv-list">${kvMobileCard('Best Case',eur(data.sensi.best),[],'is-wp')}${kvMobileCard('Basis',eur(data.sensi.basis),[])}${kvMobileCard('Worst Case',eur(data.sensi.worst),[])}</div>`;
   const im=document.getElementById('immoBox');im.style.display=data.immo.aktiv?'block':'none';if(data.immo.aktiv)im.innerHTML=`<h3>Wertsteigerung deiner Immobilie</h3><div class="cg3"><div class="rc"><div class="ml">Hauswert heute</div> <div class="mv">${eur(data.immo.hausWert)}</div></div><div class="rc pos"><div class="ml">Wertzuwachs durch WP</div> <div class="mv">+${eur(data.immo.wertzuwachs)}</div> <div class="ms">${Math.round(data.immo.prozent)} % von ${eur(data.immo.hausWert)}</div></div></div>`;
-  document.getElementById('detTbl').innerHTML='<thead><tr><th>Jahr</th><th class="r">Fossil ges.</th><th class="r">WP-Kosten</th><th class="r">Ersparnis/J.</th><th class="r">Ersparnis kum.</th></tr></thead><tbody>'+data.jahre.map(row=>`<tr><td>${row.cY}</td><td class="r">${eur(row.fossilG)}</td><td class="r">${eur(row.wpGes)}</td><td class="r">${eur(row.mehrK)}</td><td class="r">${eur(row.cumSav)}</td></tr>`).join('')+'</tbody>';
+  document.getElementById('detTbl').innerHTML='<thead><tr><th>Jahr</th><th class="r">Fossil ges.</th><th class="r">WP-Kosten</th><th class="r">Ersparnis/J.</th><th class="r">Ersparnis kum.</th></tr></thead><tbody>'+data.jahre.map(row=>`<tr><td>${kvText(row.cY)}</td><td class="r">${eur(row.fossilG)}</td><td class="r">${eur(row.wpGes)}</td><td class="r">${eur(row.mehrK)}</td><td class="r">${eur(row.cumSav)}</td></tr>`).join('')+'</tbody>';
   const detMobile=document.getElementById('detMobile');if(detMobile)detMobile.innerHTML=kvMobileYearAnswer(e,s)+kvMobileYearDetails('Detailtabelle',data.jahre.map(row=>row.cY),[{label:'Fossil ges.',data:data.jahre.map(row=>row.fossilG)},{label:'WP-Kosten',data:data.jahre.map(row=>row.wpGes)},{label:'Ersparnis/J.',data:data.jahre.map(row=>row.mehrK)},{label:'Ersparnis kum.',data:data.jahre.map(row=>row.cumSav)}]);
-  document.getElementById('assBox').innerHTML=`<strong>Annahmen & Hinweise:</strong><br>• Bestandsheizung: ${s.heizLabelBestand}, ${Number(data.annahmen.bedarf).toLocaleString('de-DE')} kWh Brennstoff/J., Nutzungsgrad ${s.etaProzent} % · WP-Strom ${s.laufzeit}J.: ${eur(s.wpStrom*s.laufzeit)}<br>• Wartung: WP ${data.annahmen.wartungWp}€/J. · Fossil ${data.annahmen.wartungFossil}€/J.<br>• Förderung: KfW 458 ${f.quote}% (${eur(f.betrag)}) · Fördermittelantrag ${f.label}, Bemessungsgrenze ${eur(f.grenze)}<br>• Unverbindliche Modellrechnung, ohne Gewähr.`;
+  document.getElementById('assBox').innerHTML=`<strong>Annahmen & Hinweise:</strong><br>• Bestandsheizung: ${kvText(s.heizLabelBestand)}, ${Number(data.annahmen.bedarf).toLocaleString('de-DE')} kWh Brennstoff/J., Nutzungsgrad ${kvText(s.etaProzent)} % · WP-Strom ${kvText(s.laufzeit)}J.: ${eur(s.wpStrom*s.laufzeit)}<br>• Wartung: WP ${kvText(data.annahmen.wartungWp)}€/J. · Fossil ${kvText(data.annahmen.wartungFossil)}€/J.<br>• Förderung: KfW 458 ${kvText(f.quote)}% (${eur(f.betrag)}) · Fördermittelantrag ${kvText(f.label)}, Bemessungsgrenze ${eur(f.grenze)}<br>• Unverbindliche Modellrechnung, ohne Gewähr.`;
   if(showResults){document.getElementById('results').classList.add('visible');}
   if(typeof window.WZ_AFTER_KV_RENDER==='function')window.WZ_AFTER_KV_RENDER(data);
 }
@@ -1498,7 +1500,7 @@ kvLoadBootstrap();
   },true);
 
   function renderStepper(){
-    $('wzStepper').innerHTML=WZ_LABELS.map((label,i)=>`<button type="button" class="wz-step" data-step="${i}" aria-label="${label}"><span class="wz-dot">${i+1}</span><span>${label}</span></button>`).join('');
+    $('wzStepper').innerHTML=WZ_LABELS.map((label,i)=>`<button type="button" class="wz-step" data-step="${i}" aria-label="${kvText(label)}"><span class="wz-dot">${i+1}</span><span>${kvText(label)}</span></button>`).join('');
     qa($('wzStepper'),'.wz-step').forEach(btn=>btn.addEventListener('click',()=>{const i=Number(btn.dataset.step);if(i<=WZ.maxVisited)goStep(i);}));
     $('wzMobileStepper').innerHTML='<span class="wz-stepper-label">Schritt 1 von '+WZ_LABELS.length+'</span><span class="punkte" aria-hidden="true">'+WZ_LABELS.map((_,i)=>'<i'+(i===0?' class="an"':'')+'></i>').join('')+'</span>';
   }
@@ -1626,7 +1628,7 @@ kvLoadBootstrap();
   function step1Valid(){return !!WZ.step1.heizart&&!!WZ.step1.bedarf;}
 
   // N2-Schaetzkonstanten, belegt aus herowerk-website apps-script/rechner-backend/Code.gs (Dimensionierungsrechner)
-  function wzOpt(grp,val,title,sub){return `<button type="button" class="wz-optcard wahlkarte" data-wz-grp="${grp}" data-wz-val="${val}"><span><span class="wz-opt-title">${title}</span>${sub?`<span class="wz-opt-sub">${sub}</span>`:''}</span><span class="wz-opt-check">✓</span></button>`;}
+  function wzOpt(grp,val,title,sub){return `<button type="button" class="wz-optcard wahlkarte" data-wz-grp="${grp}" data-wz-val="${val}"><span><span class="wz-opt-title">${title}</span>${sub?`<span class="wz-opt-sub">${kvText(sub)}</span>`:''}</span><span class="wz-opt-check">✓</span></button>`;}
   function renderStep1(){
     addStatic(`<h2 class="wz-mobile-step-title">Womit heizt du heute?</h2><p class="wz-mobile-step-lead">Wähle Gas oder Öl; danach fragen wir nur die Angaben ab, die für deinen Vergleich nötig sind.</p><p class="wz-intro wz-step-desktop-intro">Drei Angaben zu deiner heutigen Heizung genügen. Alles Weitere belegen wir mit marktüblichen Richtwerten vor, die du jederzeit anpassen kannst.</p>
       <div class="selg"><label>Heizungsart bisher</label><div class="wz-choice-grid"><button type="button" class="wz-choice wahlkarte" data-wz-heizart="gas" aria-label="Gas">Gas</button><button type="button" class="wz-choice wahlkarte" data-wz-heizart="oel" aria-label="Öl">Öl</button></div></div>
@@ -1900,12 +1902,12 @@ kvLoadBootstrap();
     rows.push(['Antrag',f.label]);
     if(WZ.touched.has('fEinkSlider'))rows.push(['Einkommen (anrechenbar)',f.anrechenbar.toLocaleString('de-DE')+' €']);
     const quoteNote=f.quote===80?'<sup><a href="#foerder-80-hinweis" style="color:inherit;text-decoration:underline;">*</a></sup>':'';
-    host.innerHTML=`<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accent);">${f.quote} %${quoteNote}</div><div style="font-size:0.8rem;color:var(--hero-muted);">Deine Förderquote (KfW 458)</div></div>
-      <div class="ln"><span class="lbl">Deine Wärmepumpe</span> <span class="vv">${inv.toLocaleString('de-DE')} €</span></div>
-      <div class="ln"><span class="lbl">Dein Zuschuss (KfW 458)</span> <span class="vv" style="color:var(--hero-green)">−${betrag.toLocaleString('de-DE')} €</span></div>
-      <div class="ln" style="border-top:1px solid var(--hero-separator);margin-top:4px;padding-top:6px;"><span class="lbl"><strong>Dein Eigenanteil</strong></span> <span class="vv" style="color:var(--hero-accent);font-size:1.05rem;">${eigen.toLocaleString('de-DE')} €</span></div>
-      <div style="font-size:0.68rem;color:var(--hero-muted);margin:8px 0 12px;">Förderfähig max. ${f.grenze.toLocaleString('de-DE')} €. Unverbindliche Berechnung, ohne Gewähr.</div>
-      <div style="border-top:1px solid var(--hero-separator);padding-top:10px;margin-bottom:12px;">${rows.map(r=>`<div class="ln"><span class="lbl">${r[0]}</span> <span class="vv" style="font-weight:600;font-size:0.8rem;">${r[1]}</span></div>`).join('')}</div>`;
+    host.innerHTML=`<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accent);">${kvText(f.quote)} %${quoteNote}</div><div style="font-size:0.8rem;color:var(--hero-muted);">Deine Förderquote (KfW 458)</div></div>
+      <div class="ln"><span class="lbl">Deine Wärmepumpe</span> <span class="vv">${kvText(inv.toLocaleString('de-DE'))} €</span></div>
+      <div class="ln"><span class="lbl">Dein Zuschuss (KfW 458)</span> <span class="vv" style="color:var(--hero-green)">−${kvText(betrag.toLocaleString('de-DE'))} €</span></div>
+      <div class="ln" style="border-top:1px solid var(--hero-separator);margin-top:4px;padding-top:6px;"><span class="lbl"><strong>Dein Eigenanteil</strong></span> <span class="vv" style="color:var(--hero-accent);font-size:1.05rem;">${kvText(eigen.toLocaleString('de-DE'))} €</span></div>
+      <div style="font-size:0.68rem;color:var(--hero-muted);margin:8px 0 12px;">Förderfähig max. ${kvText(f.grenze.toLocaleString('de-DE'))} €. Unverbindliche Berechnung, ohne Gewähr.</div>
+      <div style="border-top:1px solid var(--hero-separator);padding-top:10px;margin-bottom:12px;">${rows.map(r=>`<div class="ln"><span class="lbl">${kvText(r[0])}</span> <span class="vv" style="font-weight:600;font-size:0.8rem;">${kvText(r[1])}</span></div>`).join('')}</div>`;
   }
   function renderFoerderAufbau(){
     const host=$('wzFoerderAufbau');
@@ -1913,17 +1915,17 @@ kvLoadBootstrap();
     const response=KV_STATE.last;if(!response)return;const f=response.foerder;
     const rows=[];
     if(f.euDifferenzierung){
-      rows.push(`<div class="ln"><span class="lbl">Grundförderung: 15 % für alle, dein EU-Gerät bekommt 15 % zurück, zusammen</span> <span class="vv">+${f.grundPct} %</span></div>`);
+      rows.push(`<div class="ln"><span class="lbl">Grundförderung: 15 % für alle, dein EU-Gerät bekommt 15 % zurück, zusammen</span> <span class="vv">+${kvText(f.grundPct)} %</span></div>`);
     } else {
-      rows.push(`<div class="ln"><span class="lbl">Grundförderung: bekommt jeder Heizungstausch</span> <span class="vv">+${f.grundPct} %</span></div>`);
+      rows.push(`<div class="ln"><span class="lbl">Grundförderung: bekommt jeder Heizungstausch</span> <span class="vv">+${kvText(f.grundPct)} %</span></div>`);
     }
     if(f.klimaPct>0){
-      if(f.klima>0)rows.push(`<div class="ln"><span class="lbl">Klimageschwindigkeitsbonus ${f.klimaPct} Prozent: erfüllt laut deiner Angabe</span> <span class="vv">+${f.klima} %</span></div>`);
+      if(f.klima>0)rows.push(`<div class="ln"><span class="lbl">Klimageschwindigkeitsbonus ${kvText(f.klimaPct)} Prozent: erfüllt laut deiner Angabe</span> <span class="vv">+${kvText(f.klima)} %</span></div>`);
       else rows.push(`<div class="ln"><span class="lbl">Klimageschwindigkeitsbonus: entfällt laut deiner Angabe aus Schritt 1</span> <span class="vv">+0 %</span></div>`);
     } else {
       rows.push(`<div class="ln"><span class="lbl">Klimageschwindigkeitsbonus: entfällt für diesen Zeitraum</span> <span class="vv">+0 %</span></div>`);
     }
-    if(f.einkommen>0)rows.push(`<div class="ln"><span class="lbl">Einkommensbonus (anrechenbares Einkommen ${f.anrechenbar.toLocaleString('de-DE')} €)</span> <span class="vv">+${f.einkommen} %</span></div>`);
+    if(f.einkommen>0)rows.push(`<div class="ln"><span class="lbl">Einkommensbonus (anrechenbares Einkommen ${kvText(f.anrechenbar.toLocaleString('de-DE'))} €)</span> <span class="vv">+${kvText(f.einkommen)} %</span></div>`);
     if(f.gekappt)rows.push(`<div class="ln"><span class="lbl">Gesetzlicher Deckel: mehr als 80 %<sup><a href="#foerder-80-hinweis" style="color:inherit;text-decoration:underline;">*</a></sup> gibt es nicht</span> <span class="vv">80 %<sup><a href="#foerder-80-hinweis" style="color:inherit;text-decoration:underline;">*</a></sup></span></div>`);
     host.innerHTML=`<strong>So setzt sich deine Förderung zusammen:</strong>`+rows.join('');
   }
@@ -1942,7 +1944,7 @@ kvLoadBootstrap();
   }
   const WZ_MARKET_LABELS={invWP:'Richtwert HeroWerk-Einstiegsangebot',vglBrennstoff:'Vorbelegt nach deiner Heizungsart',kredZins:'Rechenannahme'};
   function marketLabel(id){return WZ_MARKET_LABELS[id]||'Marktannahme';}
-  function chipFor(id){return `<span class="wz-chip ${WZ.touched.has(id)?'own':'market'}">${WZ.touched.has(id)?'Deine Angabe':marketLabel(id)}</span>`;}
+  function chipFor(id){return `<span class="wz-chip ${WZ.touched.has(id)?'own':'market'}">${kvText(WZ.touched.has(id)?'Deine Angabe':marketLabel(id))}</span>`;}
   function addChips(){
     WZ_TRACK_IDS.forEach(id=>{
       const el=$(id);if(!el||$('wzChip_'+id))return;
@@ -1989,14 +1991,14 @@ kvLoadBootstrap();
     if(d.aktiv){
       const fossil=d[s.vglFuel];
       rechnung=`<div class="wz-herocalc" data-mobile-summary="So entsteht dein Ergebnis"><div class="wz-hc-title">So kommen wir auf diese Zahl:</div>
-        <div class="ln"><span class="lbl">Gesamtkosten für eine neue ${fuel}heizung mit Betriebskosten (Wartung + ${fuel}) über ${lz} Jahre</span> <span class="vv">${eur(fossil.gesamt)}</span></div>
-        <div class="ln"><span class="lbl">Gesamtkosten für eine neue Wärmepumpe mit Betriebskosten (Wartung + Strom) über ${lz} Jahre, nach Abzug der Förderung</span> <span class="vv">−${eur(d.wp.gesamt)}</span></div>
+        <div class="ln"><span class="lbl">Gesamtkosten für eine neue ${kvText(fuel)}heizung mit Betriebskosten (Wartung + ${kvText(fuel)}) über ${kvText(lz)} Jahre</span> <span class="vv">${eur(fossil.gesamt)}</span></div>
+        <div class="ln"><span class="lbl">Gesamtkosten für eine neue Wärmepumpe mit Betriebskosten (Wartung + Strom) über ${kvText(lz)} Jahre, nach Abzug der Förderung</span> <span class="vv">−${eur(d.wp.gesamt)}</span></div>
         <div class="ln wz-hc-sum"><span class="lbl"><strong>Dein Vorteil mit der Wärmepumpe</strong></span> <span class="vv">siehe Ergebnis oben</span></div></div>`;
     } else {
       const weiter=e.wpNG+i.netto+e.totWPK;
-      rechnung=`<div class="wz-herocalc" data-mobile-summary="So entsteht dein Ergebnis"><div class="wz-hc-title">So kommen wir auf diese Zahl (Vergleich: du behältst deine ${fuel}heizung):</div>
-        <div class="ln"><span class="lbl">Was der Weiterbetrieb deiner ${fuel}heizung kostet: ${fuel}, Wartung und CO₂-Preis über ${lz} Jahre</span> <span class="vv">${eur(weiter)}</span></div>
-        <div class="ln"><span class="lbl">Was die Wärmepumpe stattdessen kostet: Strom und Wartung über ${lz} Jahre</span> <span class="vv">−${eur(e.totWPK)}</span></div>
+      rechnung=`<div class="wz-herocalc" data-mobile-summary="So entsteht dein Ergebnis"><div class="wz-hc-title">So kommen wir auf diese Zahl (Vergleich: du behältst deine ${kvText(fuel)}heizung):</div>
+        <div class="ln"><span class="lbl">Was der Weiterbetrieb deiner ${kvText(fuel)}heizung kostet: ${kvText(fuel)}, Wartung und CO₂-Preis über ${kvText(lz)} Jahre</span> <span class="vv">${eur(weiter)}</span></div>
+        <div class="ln"><span class="lbl">Was die Wärmepumpe stattdessen kostet: Strom und Wartung über ${kvText(lz)} Jahre</span> <span class="vv">−${eur(e.totWPK)}</span></div>
         <div class="ln"><span class="lbl">Anschaffung der Wärmepumpe, nach Abzug der Förderung</span> <span class="vv">−${eur(i.netto)}</span></div>
         <div class="ln wz-hc-sum"><span class="lbl"><strong>Dein Vorteil mit der Wärmepumpe</strong></span> <span class="vv">siehe Ergebnis oben</span></div></div>`;
     }
@@ -2005,7 +2007,7 @@ kvLoadBootstrap();
     else if(i.mehrInvest<=0||e.breakEvenSofort)satz=`Die Wärmepumpe ist nach Förderung sogar beim Kauf günstiger als eine neue ${fuel}heizung. Du sparst ab dem ersten Jahr.`;
     else if(e.breakEven)satz=`Beim Kauf kostet die Wärmepumpe ${mehr} mehr als eine neue ${fuel}heizung. Nach ${e.breakEven} Jahren ist dieser Mehrpreis durch die Ersparnis wieder drin.`;
     else satz=`Beim Kauf kostet die Wärmepumpe ${mehr} mehr als eine neue ${fuel}heizung.`;
-    hero.innerHTML=`<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. ${own} eigene Angaben, ${market} marktübliche Annahmen.</div><h3>Dein Vorteil mit der Wärmepumpe über ${lz} Jahre</h3><div class="wz-big">${benefit}</div>${rechnung}<p style="color:var(--hero-muted);font-size:0.9rem;">${satz} Basierend auf ${own} eigenen Angaben und marktüblichen Richtwerten.</p>`;
+    hero.innerHTML=`<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. ${own} eigene Angaben, ${market} marktübliche Annahmen.</div><h3>Dein Vorteil mit der Wärmepumpe über ${kvText(lz)} Jahre</h3><div class="wz-big">${benefit}</div>${rechnung}<p style="color:var(--hero-muted);font-size:0.9rem;">${kvText(satz)} Basierend auf ${own} eigenen Angaben und marktüblichen Richtwerten.</p>`;
   }
 
   window.WZ_AFTER_KV_RENDER=response=>{
@@ -2071,6 +2073,6 @@ if(window.Chart&&Chart.register){Chart.register({id:'wzAmortMark',afterDraw(char
 </script>
 <div id="g9-kopfbalken" role="status"><span id="g9-kopfbalken-ansage" class="visually-hidden"></span></div>
 <div id="g9-kopftext" aria-hidden="true"></div>
-<script src="js/site.js?v=3004d5f861" defer></script>
+<script src="js/site.js?v=4a1a215753" defer></script>
 </body>
 </html>

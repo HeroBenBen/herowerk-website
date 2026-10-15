@@ -59,18 +59,21 @@ for (const [mode, rows] of Object.entries({ marker: marked, altvertrag: raw, aus
     console.log(mode + ': ' + after.output('Vaillant'));
   });
 }
-test('Folgeabrufe behalten den Bestandsvertrag einschließlich bekanntem Rücksetzbefund', async () => {
+test('Folgeabruffehler setzt beide Markenminima neutral, erneuter Erfolg stellt Preise her', async () => {
   const before = setup(baseline),
     after = setup(ref);
   for (const rows of [marked, null, raw, marked]) {
     await load(before, rows);
     await load(after, rows);
-    assert.equal(after.output('Wolf'), before.output('Wolf'));
+    if (rows) {
+      assert.equal(after.output('Wolf'), before.output('Wolf'));
+      assert.equal(price(after.output('Vaillant')), price(before.output('Vaillant')));
+    }
     assert.equal(name(after.output('Vaillant')), 'Vaillant aroTHERM');
-    assert.equal(price(after.output('Vaillant')), price(before.output('Vaillant')));
     if (!rows) {
       assert.match(render(after, 'vaillant').cardsHtml, /Auf Anfrage/);
-      assert.notEqual(price(after.output('Vaillant')), 'ab … dein Anteil*');
+      assert.equal(price(after.output('Vaillant')), 'ab … dein Anteil*');
+      assert.equal(price(after.output('Wolf')), 'ab … dein Anteil*');
     }
   }
 });

@@ -2,6 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const cp = require('node:child_process');
 const vm = require('node:vm');
+const { parseDocument, DomUtils } = require('htmlparser2');
 const root = path.resolve(__dirname, '../..');
 const baseline = '7840681dd2c7eb88b3a53f85c7e2da92fab2c4dc';
 const read = (file, ref = '') =>
@@ -15,10 +16,33 @@ function element() {
     dataset: {},
     style: {},
     children: [],
-    textContent: '',
+    _text: '',
+    set textContent(value) {
+      this._text = value;
+      this._html = '';
+    },
+    get textContent() {
+      return this._html ? DomUtils.textContent(parseDocument(this._html)) : this._text;
+    },
+    setAttribute(name, value) {
+      this[name] = value;
+    },
+    before(node) {
+      this.wrapper = node;
+    },
+    closest() {
+      return this.wrapper || null;
+    },
+    replaceChildren(...nodes) {
+      this.children = nodes;
+      this._html = '';
+    },
+    append(...nodes) {
+      nodes.forEach((node) => this.appendChild(node));
+    },
     _html: '',
     value: 'wolf:m',
-    classList: { add() {}, remove() {} },
+    classList: { add() {}, remove() {}, toggle() {} },
     appendChild(child) {
       this.children.push(child);
     },
@@ -35,8 +59,8 @@ function element() {
     get selectedOptions() {
       return this.options.filter((o) => o.value === this.value);
     },
-    querySelector() {
-      return this;
+    querySelector(selector) {
+      return this.children.find((child) => selector === '.' + child.className) || this;
     },
   };
 }
@@ -111,4 +135,27 @@ function render(b, brand) {
     }),
   };
 }
-module.exports = { root, baseline, read, internal, browser, load, render };
+// Ausschließlich WR-Freigaben 2 und 6 in historischen Vergleichserwartungen.
+function wrExpectedDetail(detail) {
+  const out = structuredClone(detail);
+  if (!out.card.modell.includes('Vaillant')) return out;
+  out.card.specs = out.card.specs.map(([name, value]) => [
+    name,
+    name === 'Hersteller' ? 'Vaillant GmbH' : value,
+  ]);
+  out.table = out.table
+    .replace('Vaillant Deutschland GmbH & Co. KG', 'Vaillant GmbH')
+    .replaceAll('A-7/W35', '<span class="pa-kennwert">A-7/W35</span>');
+  return out;
+}
+module.exports = {
+  root,
+  baseline,
+  read,
+  internal,
+  browser,
+  load,
+  render,
+  element,
+  wrExpectedDetail,
+};

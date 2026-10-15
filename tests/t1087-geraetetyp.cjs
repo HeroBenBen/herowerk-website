@@ -20,36 +20,7 @@ const {
   model,
   label,
 } = require('./helpers/t1087-geraetetyp.cjs');
-const { internal } = require('./helpers/t1087-datenblatt.cjs');
-function element() {
-  return {
-    dataset: {},
-    style: {},
-    children: [],
-    textContent: '',
-    _html: '',
-    value: 'wolf:m',
-    appendChild(child) {
-      this.children.push(child);
-    },
-    set innerHTML(value) {
-      this._html = value;
-      this.children = [];
-    },
-    get innerHTML() {
-      return this._html;
-    },
-    get options() {
-      return this.children.flatMap((g) => g.children);
-    },
-    get selectedOptions() {
-      return this.options.filter((o) => o.value === this.value);
-    },
-    querySelector() {
-      return this;
-    },
-  };
-}
+const { internal, element } = require('./helpers/t1087-datenblatt.cjs');
 function browser() {
   const nodes = Object.fromEntries(
     ['foerderWpTyp', 'paCards', 'paSpecsTitle', 'paSpecsSub', 'paSpecsTable', 'paDetailCta'].map(

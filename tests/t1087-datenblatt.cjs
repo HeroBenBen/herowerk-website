@@ -1,3 +1,4 @@
+const { wrExpectedDetail } = require('./helpers/t1087-datenblatt.cjs');
 // Bauauftrag TAFEL, Anpassung 1. --ref prüft denselben Vertrag an alten Git-Objekten.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -96,9 +97,9 @@ for (const [mode, rows] of Object.entries(modes)) {
       const a = render(before, brand),
         b = render(after, brand);
       if (brand === 'wolf' || mode === 'plusAlt')
-        assert.equal(b.cardsHtml, a.cardsHtml, 'Karten bytegleich');
+        assert.equal(b.cardsHtml, a.cardsHtml.replaceAll(' & ', ' &amp; '), 'Karten bytegleich');
       b.details.forEach((d, i) => {
-        const old = a.details[i],
+        const old = wrExpectedDetail(a.details[i]),
           isPro = brand === 'vaillant' && i < 3 && mode !== 'plusAlt';
         assert.deepEqual(
           [d.card.preis, d.card.eigen],
