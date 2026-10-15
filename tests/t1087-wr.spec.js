@@ -48,6 +48,16 @@ async function setup(browserType, width) {
   return { browser, page, state, errors };
 }
 async function screenshot(page, name, testInfo) {
+  // Full-page evidence must include the selected device image even below the viewport.
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await Promise.all(
+      Array.from(document.images).map((img) => {
+        img.loading = 'eager';
+        return img.decode().catch(() => {});
+      })
+    );
+  });
   const folder = path.join(root, 'artifacts/tafel-sicht/wr', process.env.WR_REF ? 'rot' : 'gruen');
   fs.mkdirSync(folder, { recursive: true });
   const file = path.join(folder, name + '.png');
@@ -89,10 +99,26 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
           });
           if (width === 375)
             expect.soft(field.fits, 'P1 ' + klasse + ': ' + JSON.stringify(field)).toBe(true);
+          if (width === 375)
+            expect
+              .soft(
+                await page.evaluate(() => document.documentElement.scrollWidth),
+                'P1 kein neuer Seitenüberlauf'
+              )
+              .toBeLessThanOrEqual(width);
           if (field.overlay) expect.soft(field.overlay.replace(/\s+/g, ' ')).toBe(field.text);
           if (klasse === 's' || klasse === 'xxl')
             await screenshot(page, label + '-foerder-' + klasse, testInfo);
         }
+        await page.locator('#foerderWpTyp').selectOption('vaillant:s');
+        const optionText = await page
+          .locator('#foerderWpTyp')
+          .evaluate((el) => el.selectedOptions[0].textContent);
+        expect(await page.locator('.foerder-package-label').textContent()).toBe(optionText);
+        await page.evaluate('paLoadData()');
+        expect(await page.locator('.foerder-package-label').textContent()).toBe(optionText);
+        await page.locator('#foerderWpTyp').focus();
+        await expect(page.locator('#foerderWpTyp')).toBeFocused();
         await page.evaluate('foerderSelectPackage("wolf","m")');
         await screenshot(page, label + '-foerder-wolf', testInfo);
         await page.goto(server.url + '/preise.html');
@@ -489,18 +515,33 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
             await page.goto(url + '/' + file);
             await page.waitForFunction('typeof KV_STATE!=="undefined"&&KV_STATE.last');
             await words(file + '-start');
-            await page.locator('[data-wz-heizart="gas"]').click();
-            await page.locator('[data-wz-grp="vmode"][data-wz-val="known"]').click();
-            await page.locator('[data-wz-grp="altgas"][data-wz-val="ja"]').click();
-            for (let step = 1; step <= 5; step++) {
-              await page.evaluate('calculate({showResults:false,scroll:false})');
-              await words(file + '-schritt-' + step);
-              await screenshot(
-                page,
-                label + '-' + version + '-' + path.basename(file) + '-schritt-' + step,
-                testInfo
-              );
-              if (step < 5) await page.locator('#wzNext').click();
+            if (file.startsWith('docs/')) {
+              for (const tab of ['system', 'energie', 'foerderung', 'finanzierung', 'extras']) {
+                await page.evaluate(
+                  (t) => window.eval('switchTab(' + JSON.stringify(t) + ')'),
+                  tab
+                );
+                await words(file + '-reiter-' + tab);
+                await screenshot(page, label + '-' + version + '-berater-' + tab, testInfo);
+              }
+            } else {
+              await page.locator('[data-wz-heizart="gas"]').click({ timeout: 10000 });
+              await page
+                .locator('[data-wz-grp="vmode"][data-wz-val="known"]')
+                .click({ timeout: 10000 });
+              await page
+                .locator('[data-wz-grp="altgas"][data-wz-val="ja"]')
+                .click({ timeout: 10000 });
+              for (let step = 1; step <= 5; step++) {
+                await page.evaluate('calculate({showResults:false,scroll:false})');
+                await words(file + '-schritt-' + step);
+                await screenshot(
+                  page,
+                  label + '-' + version + '-' + path.basename(file) + '-schritt-' + step,
+                  testInfo
+                );
+                if (step < 5) await page.locator('#wzNext').click({ timeout: 10000 });
+              }
             }
 
             // Bestehender Wizard-Ereignispfad; beide Fassungen erhalten dieselben Eingaben.

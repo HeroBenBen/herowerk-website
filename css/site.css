@@ -7046,6 +7046,8 @@ samp {
 @media (max-width: 600px) {
   .foerder-package-field.is-vaillant {
     display: grid;
+    /* WebKit zählt den unsichtbaren nativen Auswahltext sonst als Seitenüberlauf. */
+    overflow: hidden;
   }
   .foerder-package-field.is-vaillant > select,
   .foerder-package-field.is-vaillant > .foerder-package-label {

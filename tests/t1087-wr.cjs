@@ -345,9 +345,90 @@ async function apiBytes() {
   }
 }
 
+function costTextContracts() {
+  const vm = require('node:vm'),
+    acorn = require('acorn');
+  const { parseDocument, DomUtils } = require('htmlparser2');
+  const { read } = require('./helpers/t1087-datenblatt.cjs');
+  const names = [
+    'kvText',
+    'kvLine',
+    'kvCard',
+    'kvMobileCard',
+    'kvMobileYearAnswer',
+    'kvMobileYearContent',
+    'kvMobileYearDetails',
+    'chipFor',
+    'eur',
+    'eurSigned',
+  ];
+  for (const file of [
+    'kostenvergleich-waermepumpe.html',
+    'docs/intern/kostenvergleich-berater.html',
+  ]) {
+    for (const ref of [base, '']) {
+      const functions = [];
+      for (const script of read(file, ref).matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)) {
+        if (script[0].includes('application/ld+json')) continue;
+        const s = script[1];
+        function walk(node) {
+          if (!node || typeof node !== 'object') return;
+          if (node.type === 'FunctionDeclaration' && names.includes(node.id.name))
+            functions.push(s.slice(node.start, node.end));
+          for (const child of Object.values(node)) {
+            if (Array.isArray(child)) child.forEach(walk);
+            else if (child && typeof child === 'object') walk(child);
+          }
+        }
+        walk(acorn.parse(s, { ecmaVersion: 'latest' }));
+      }
+      for (const value of [
+        'A&#45;11',
+        'A<span>-</span>11',
+        'Heizleistung <12 kW bei A<span>&minus;</span>11/W55',
+        'A" data-wr-injected="yes\'&<span>WR</span>',
+      ]) {
+        const ctx = vm.createContext({ WZ: { touched: new Set() }, marketLabel: () => value });
+        vm.runInContext(functions.join('\n'), ctx);
+        const outputs = [
+          ctx.kvLine(value, value),
+          ctx.kvCard(value, value, value),
+          ctx.kvMobileCard(value, value, [[value, value]]),
+          ctx.kvMobileYearAnswer({ breakEven: value, cumSav: 1 }, { laufzeit: value }),
+          ctx.kvMobileYearContent([value], [{ label: value, data: [1] }]),
+          ctx.kvMobileYearDetails(value, [value], [{ label: value, data: [1] }]),
+          ctx.chipFor('kredZins'),
+        ];
+        for (const [index, html] of outputs.entries()) {
+          const doc = parseDocument(html),
+            text = DomUtils.textContent(doc);
+          assert.equal(
+            text.includes(value),
+            !ref,
+            file + ' Helfer ' + names[index + 1] + ' ' + (ref ? 'ROT' : 'GRÜN')
+          );
+          if (!ref)
+            assert.equal(
+              DomUtils.findAll(
+                (node) => Object.hasOwn(node.attribs || {}, 'data-wr-injected'),
+                doc.children
+              ).length,
+              0,
+              'Kein injiziertes Attribut'
+            );
+        }
+      }
+    }
+  }
+  console.log(
+    'WR: Texthelfer beider Kostenvergleichsseiten einschließlich latentem Chip ROT/GRÜN.'
+  );
+}
+
 async function verify() {
   unchanged();
   await apiBytes();
+  costTextContracts();
   const red = await contracts(base),
     green = await contracts('');
   for (let i = 1; i <= 7; i++) {

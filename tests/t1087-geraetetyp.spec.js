@@ -122,13 +122,14 @@ for (const mode of ['marker', 'altvertrag', 'ausfall']) {
       }
       await expect(page.locator('.pa-kw')).toHaveCount(5);
     }
-    // Der bekannte Bestandsbefund bei Folgeabruffehlern wird hier nicht korrigiert.
+    // WR: Nach einem Folgeabruffehler darf kein alter Mindestpreis stehen bleiben.
     response = null;
     await page.evaluate(async () => {
       await paLoadData();
     });
     await page.locator('#manufacturerVaillant').click();
-    await expectManufacturerTabs(page, minimum);
+    await expectManufacturerTabs(page, 'ab … dein Anteil*');
+    await expect(page.locator('#wolfMinEigen')).toHaveText('ab … dein Anteil*');
     await expect(page.locator('#paCards')).toContainText('Auf Anfrage');
     response = marked;
     await page.evaluate(async () => {

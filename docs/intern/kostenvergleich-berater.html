@@ -33,7 +33,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="/js/theme.js?v=9b163705e9"></script>
   <link rel="stylesheet" href="/css/fonts.css?v=d3f3999a2f">
-  <link rel="stylesheet" href="/css/site.css?v=31593686d6">
+  <link rel="stylesheet" href="/css/site.css?v=2605b76af6">
   <link rel="preload" href="/tokens.css?v=bb2619605a" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="/tokens.css?v=bb2619605a"></noscript>
 <style>
@@ -1911,7 +1911,7 @@ kvLoadBootstrap();
   }
   const WZ_MARKET_LABELS={invWP:'Richtwert HeroWerk-Einstiegsangebot',vglBrennstoff:'Vorbelegt nach Ihrer Heizungsart',kredZins:'Rechenannahme'};
   function marketLabel(id){return WZ_MARKET_LABELS[id]||'Marktannahme';}
-  function chipFor(id){return `<span class="wz-chip ${WZ.touched.has(id)?'own':'market'}">${WZ.touched.has(id)?'Ihre Angabe':marketLabel(id)}</span>`;}
+  function chipFor(id){return `<span class="wz-chip ${WZ.touched.has(id)?'own':'market'}">${kvText(WZ.touched.has(id)?'Ihre Angabe':marketLabel(id))}</span>`;}
   function addChips(){
     WZ_TRACK_IDS.forEach(id=>{
       const el=$(id);if(!el||$('wzChip_'+id))return;
