@@ -3306,6 +3306,9 @@ section {
   opacity: 1;
   margin-top: 16px;
 }
+.pa-detail.open.pa-jaz-bwp {
+  max-height: none;
+}
 .pa-detail-inner {
   background: var(--schiefer);
   border-radius: 16px;

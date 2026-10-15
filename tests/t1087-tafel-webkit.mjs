@@ -66,21 +66,38 @@ try {
         for (let i = 0; i < 3; i++) {
           const card = page.locator('.pa-card').nth(i);
           const text = await card.innerText();
-          assert.match(text, /aroTHERM pro 7\.1/);
-          assert.match(text, /A-11\/W55/);
-          assert.doesNotMatch(text, /8\.1|A-7\/W35/);
+          assert.match(text, /aroTHERM pro VWL/);
+          assert.doesNotMatch(text, /W55|A-11|8\.1/);
+          assert.match(text, /A-7\/W35/);
           if (scenario === 'erfolg') {
             assert.ok(text.includes(prices.vaillant[i].brutto.toLocaleString('de-DE')));
             assert.ok(text.includes(prices.vaillant[i].eigen.toLocaleString('de-DE')));
           } else assert.match(text, /Auf Anfrage/);
+          if (i) await card.click();
+          // Der Markenwechsel öffnet die erste Karte im nächsten Animationsframe.
+          // Erst die passende Geräteansicht abwarten, dann ihre Zeilen zählen.
+          const modell = await card.locator('.pa-modell').innerText();
+          await page.waitForFunction(
+            (value) => document.querySelector('#paSpecsSub')?.textContent.startsWith(value + ' · '),
+            modell
+          );
+          assert.equal(await page.locator('#paSpecsTable tbody tr').count(), 13);
+          const detail = await page.locator('#paSpecsTable').innerText();
+          assert.match(detail, /SCOP/);
+          assert.match(detail, /JAZ Heizkörper¹/);
+          assert.doesNotMatch(detail, /A-11/);
+          assert.equal(
+            await page.locator('#paImg').getAttribute('src'),
+            i < 2 ? 'vwl-pro-s-m.jpg' : 'vwl-pro-l.jpg'
+          );
         }
         await page.waitForFunction(() =>
           document.querySelector('#paSpecsSub')?.textContent.includes('7.1')
         );
         const specs = await page.locator('#paSpecsTable').innerText();
-        assert.match(specs, /4,77 kW/);
-        assert.match(specs, /4,34 kW/);
-        assert.doesNotMatch(specs, /SCOP|JAZ|A-7\/W35/);
+        assert.match(specs, /SCOP|A-7\/W35/);
+        assert.match(specs, /JAZ Fußbodenheizung¹/);
+        assert.doesNotMatch(specs, /A-11/);
       } else {
         // Den echten Abrufpfad einschließlich Retry vollständig abwarten.
         await page.evaluate(async () => {
@@ -91,7 +108,7 @@ try {
             '#foerderWpTyp option[value="vaillant:' + ['s', 'm', 'l'][i] + '"]'
           );
           assert.equal(await option.getAttribute('data-price'), String(prices.vaillant[i].brutto));
-          assert.match(await option.textContent(), /aroTHERM pro 7\.1/);
+          assert.match(await option.textContent(), /aroTHERM pro VWL/);
           assert.doesNotMatch(await option.textContent(), /8\.1|A-7\/W35/);
         }
       }

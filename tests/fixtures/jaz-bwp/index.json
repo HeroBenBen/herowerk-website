@@ -1,0 +1,64 @@
+{
+  "tool": "BWP-JAZ-Rechner",
+  "standard": "VDI 4650 Blatt 1: 2024-02",
+  "retrieved_date": "2026-10-15",
+  "result_field": "jazTotalWithSupplementaryHeater",
+  "values": [
+    {
+      "device": "VWL 55/7.1 A 230V",
+      "system": "Heizkörper",
+      "value": "3,94",
+      "response": "final-5082-hk.json",
+      "sha256": "c61fe3041988e75ae7ac17f21583ee3101b2f70d0291773dc84b9b0bd17a0ac6"
+    },
+    {
+      "device": "VWL 55/7.1 A 230V",
+      "system": "Fußbodenheizung",
+      "value": "4,49",
+      "response": "final-5082-fbh.json",
+      "sha256": "3a6ebf2db87d2759622d5242786a114585ee3d2c160c5f038599201456f59503"
+    },
+    {
+      "device": "VWL 75/7.1 A 230V",
+      "system": "Heizkörper",
+      "value": "3,86",
+      "response": "final-5083-hk.json",
+      "sha256": "431deefc4c18466a20fe82a378bea1eb44442497f19bc2510c34742f07fcaaca"
+    },
+    {
+      "device": "VWL 75/7.1 A 230V",
+      "system": "Fußbodenheizung",
+      "value": "4,40",
+      "response": "final-5083-fbh.json",
+      "sha256": "415b7abc51c9b601ed636f584902afe7a4a22ca398166b578eb9b95163c6d304"
+    },
+    {
+      "device": "VWL 115/7.1 A 400V",
+      "system": "Heizkörper",
+      "value": "3,95",
+      "response": "final-5085-hk.json",
+      "sha256": "b7a1d464a08dc03259c7c51a9319a243c5d371860b1eefbdd0a2abe9bbd4e988"
+    },
+    {
+      "device": "VWL 115/7.1 A 400V",
+      "system": "Fußbodenheizung",
+      "value": "4,50",
+      "response": "final-5085-fbh.json",
+      "sha256": "e284a26f044c0662d34d9e60984b9599226bff1dbb5d5718f7d3c78f76e1dc38"
+    },
+    {
+      "device": "VWL 125/8.1 A 400V",
+      "system": "Heizkörper",
+      "value": "4,21",
+      "response": "final-5077-hk.json",
+      "sha256": "69c43ddbb8cb2cf49a5a7fe58e06f46964bee0e56eea520918444bab85a603f6"
+    },
+    {
+      "device": "VWL 125/8.1 A 400V",
+      "system": "Fußbodenheizung",
+      "value": "4,80",
+      "response": "final-5077-fbh.json",
+      "sha256": "a9ce64ec978df9be4f1772690fc4470a7a8ef78f25c0bc9d3a2926db58fb77ca"
+    }
+  ]
+}

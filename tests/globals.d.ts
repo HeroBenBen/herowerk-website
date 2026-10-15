@@ -43,3 +43,6 @@ interface Window {
 
 /** Apps-Script-Engine als CommonJS-Modul in Perioden-/Aequivalenztests geladen. module.exports Fundstelle: apps-script/rechner-backend/kv_engine.gs:721 */
 declare module '*.gs';
+
+/** Preisabruf und Aktualisierung der Geräteauswahl. Fundstelle: js/site.js, paLoadData. */
+declare function paLoadData(): Promise<void>;

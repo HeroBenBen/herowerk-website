@@ -1317,53 +1317,53 @@ function formatKostenInput(el) {
 // ===== PREISANKER: Expand/Collapse-Karten mit Tech-Specs =====
 // Produktdaten - Inline-Fallback für lokale Entwicklung (file://)
 // Preise = Single Source: live aus dem Sheet über den Rechner-Server (action=preise).
-// Modell und belegte Technik werden gemeinsam an die ausgewählte Gerätezeile gebunden.
-// Layout, Bilder und Icons bleiben in den Präsentationsvorlagen.
+// Geräteidentität und freigegebene Produktdetails folgen der ausgewählten Gerätezeile.
+// Layout und Icons bleiben in den Präsentationsvorlagen, Bilder folgen dem Gerät.
 // PA_KLASSEN muss in der Reihenfolge zu paDataFallback passen (Kompakt..Kaskade = s..xxl).
 let paData = [];
 let paPrices = { wolf: [], vaillant: [] };
 const PA_KLASSEN = ['s', 'm', 'l', 'xl', 'xxl'];
 const FOERDER_PACKAGE_FALLBACK = {
   wolf: [
-    { klasse: 's', modell: 'Wolf CHA-07', kw: '5-7 kW', brutto: 30026 },
-    { klasse: 'm', modell: 'Wolf CHA-10', kw: '9-12 kW', brutto: 35349 },
-    { klasse: 'l', modell: 'Wolf CHA-16/20', kw: '14-16 kW', brutto: 41718 },
-    { klasse: 'xl', modell: 'Wolf CHA-20/24', kw: '18-24 kW', brutto: 48815 },
-    { klasse: 'xxl', modell: '2× Wolf CHA-16', kw: '32 kW', brutto: 89419 },
+    { klasse: 's', modell: 'Wolf CHA-07', kw: '', brutto: 30026 },
+    { klasse: 'm', modell: 'Wolf CHA-10', kw: '', brutto: 35349 },
+    { klasse: 'l', modell: 'Wolf CHA-16/20', kw: '', brutto: 41718 },
+    { klasse: 'xl', modell: 'Wolf CHA-20/24', kw: '', brutto: 48815 },
+    { klasse: 'xxl', modell: '2× Wolf CHA-16', kw: '', brutto: 89419 },
   ],
   vaillant: [
     {
       klasse: 's',
       modell: 'Vaillant VWL 55/7.1 A',
-      kw: 'A-11/W55: 4,34 kW',
+      kw: '',
       brutto: 29944,
       eigen: 7544,
     },
     {
       klasse: 'm',
       modell: 'Vaillant VWL 75/7.1 A',
-      kw: 'A-11/W55: 5,79 kW',
+      kw: '',
       brutto: 34146,
       eigen: 11746,
     },
     {
       klasse: 'l',
       modell: 'Vaillant VWL 115/7.1 A',
-      kw: 'A-11/W55: 9,46 kW',
+      kw: '',
       brutto: 42864,
       eigen: 20464,
     },
     {
       klasse: 'xl',
       modell: 'Vaillant VWL 125/8.1 A',
-      kw: 'ca. 12,1 kW',
+      kw: '',
       brutto: 48865,
       eigen: 24819,
     },
     {
       klasse: 'xxl',
       modell: '2× Vaillant VWL 125/8.1 A',
-      kw: 'ca. 24 kW',
+      kw: '',
       brutto: 85604,
       eigen: 52789,
     },
@@ -1442,9 +1442,7 @@ function foerderPackageRows(brand) {
 function foerderFormatPackageOption(row) {
   const brutto = Number(row.brutto) || 0;
   const identity = paDeviceIdentity(row);
-  return [identity.modell, identity.kw, brutto.toLocaleString('de-DE') + ' €']
-    .filter(Boolean)
-    .join(' · ');
+  return [identity.modell, brutto.toLocaleString('de-DE') + ' €'].filter(Boolean).join(' · ');
 }
 
 function foerderRefreshPackageOptions() {
@@ -1759,7 +1757,7 @@ const paDataFallbackVaillantPlus = [
     modell: 'Vaillant aroTHERM plus VWL 55/8.1 A',
     kw: 'A-7/W35: 5,59 kW',
     icon: paDataFallback[0].icon,
-    img: 'vwl-s-m.jpg',
+    img: 'vwl-plus-s-m.jpg',
     desc: 'Kompaktes Haus mit moderatem Wärmebedarf',
     specs: [
       ['Heizleistung A-7/W35', '5,59 kW (COP 2,67)'],
@@ -1784,7 +1782,7 @@ const paDataFallbackVaillantPlus = [
     modell: 'Vaillant aroTHERM plus VWL 75/8.1 A',
     kw: 'A-7/W35: 6,94 kW',
     icon: paDataFallback[1].icon,
-    img: 'vwl-s-m.jpg',
+    img: 'vwl-plus-s-m.jpg',
     desc: 'Der Klassiker für viele Einfamilienhäuser',
     specs: [
       ['Heizleistung A-7/W35', '6,94 kW (COP 2,94)'],
@@ -1809,7 +1807,7 @@ const paDataFallbackVaillantPlus = [
     modell: 'Vaillant aroTHERM plus VWL 105/8.1 A',
     kw: 'A-7/W35: 10,58 kW',
     icon: paDataFallback[2].icon,
-    img: 'vwl-l.jpg',
+    img: 'vwl-plus-l-xl.jpg',
     desc: 'Für größere Häuser mit höherem Wärmebedarf',
     specs: [
       ['Heizleistung A-7/W35', '10,58 kW (COP 3,01)'],
@@ -1834,7 +1832,7 @@ const paDataFallbackVaillantPlus = [
     modell: 'Vaillant aroTHERM plus VWL 125/8.1 A',
     kw: 'A-7/W35: 12,14 kW',
     icon: paDataFallback[3].icon,
-    img: 'vwl-xl.jpg',
+    img: 'vwl-plus-l-xl.jpg',
     desc: 'Großes Einfamilienhaus mit hohem Bedarf',
     specs: [
       ['Heizleistung A-7/W35', '12,14 kW (COP 2,72)'],
@@ -1846,7 +1844,7 @@ const paDataFallbackVaillantPlus = [
       ['Effizienzklasse (35 / 55 °C)', 'A+++ / A+++'],
       ['ηs (35 / 55 °C)', '202 % / 151 %'],
       ['SCOP (35 / 55 °C)²', '5,12 / 3,85'],
-      ['JAZ Heizkörper¹', '4,05'],
+      ['JAZ Heizkörper¹', '4,21'],
       ['JAZ Fußbodenheizung¹', '4,80'],
       ['Abmessung (BxTxH)', '1.100 × 450 × 1.480 mm'],
       ['Hersteller', 'Vaillant Deutschland GmbH & Co. KG'],
@@ -1860,7 +1858,7 @@ const paDataFallbackVaillantPlus = [
     kw: '2× 12,14 kW @A-7/W35',
     imgPos: 'center 70%',
     icon: paDataFallback[4].icon,
-    img: 'vwl-xxl.jpg',
+    img: 'vwl-plus-l-xl.jpg',
     desc: 'Mehrfamilienhaus mit 2er-Kaskade*',
     specs: [
       ['Heizleistung A-7/W35', '24,28 kW (2× 12,14)'],
@@ -1870,7 +1868,7 @@ const paDataFallbackVaillantPlus = [
       ['Effizienzklasse', 'A+++ (systemabhängig)'],
       ['ηs (35 / 55 °C)', '202 % / 151 % je Gerät'],
       ['SCOP (35 / 55 °C)²', '5,12 / 3,85 je Gerät'],
-      ['JAZ Heizkörper¹', '4,05 je Gerät; projektbezogen prüfen'],
+      ['JAZ Heizkörper¹', '4,21 je Gerät; projektbezogen prüfen'],
       ['JAZ Fußbodenheizung¹', '4,80 je Gerät; projektbezogen prüfen'],
       ['Schallleistung ErP außen', '50 dB(A) je Gerät'],
       ['Hersteller', 'Vaillant Deutschland GmbH & Co. KG'],
@@ -1878,13 +1876,68 @@ const paDataFallbackVaillantPlus = [
   },
 ];
 
-// T1087: Quellen Geräte_Katalog!B23:E25, S23:S25, Z23:Z25, Lesung 14.10.2026.
-// Nur diese belegten Leistungswerte; keine Übernahme der Plus-Technik bei einem Pro-Gerät.
+// Herstellerdaten und Quellenkonflikte: docs/tafel-vaillant-quellen.md.
+// Freigegebene JAZ-Beispiele: BWP-Rohantworten, docs/tafel-vaillant-quellen.md.
 const PA_PRO_TECHNIK = {
-  'Vaillant VWL 55/7.1 A': { baureihe: 'aroTHERM pro 7.1', w35: '4,77', w55: '4,34' },
-  'Vaillant VWL 75/7.1 A': { baureihe: 'aroTHERM pro 7.1', w35: '6,56', w55: '5,79' },
-  'Vaillant VWL 115/7.1 A': { baureihe: 'aroTHERM pro 7.1', w35: '11,5', w55: '9,46' },
+  'Vaillant VWL 55/7.1 A': {
+    leistung: '4,84',
+    cop: '2,91',
+    pdesignh: '5',
+    schall: '49,0',
+    eta: '198 % / 145 %',
+    scop: '5,01 / 3,70',
+    masse: '1.104 × 454 × 750 mm',
+    img: 'vwl-pro-s-m.jpg',
+    jaz: { heizkoerper: '3,94', fussboden: '4,49' },
+  },
+  'Vaillant VWL 75/7.1 A': {
+    leistung: '6,37',
+    cop: '2,66',
+    pdesignh: '7',
+    schall: '49,0',
+    eta: '192 % / 142 %',
+    scop: '4,87 / 3,62',
+    masse: '1.104 × 454 × 750 mm',
+    img: 'vwl-pro-s-m.jpg',
+    jaz: { heizkoerper: '3,86', fussboden: '4,40' },
+  },
+  'Vaillant VWL 115/7.1 A': {
+    leistung: '11,12',
+    cop: '2,55',
+    pdesignh: '11',
+    schall: '54,8',
+    eta: '194 % / 143 %',
+    scop: '4,93 / 3,66',
+    masse: '1.169 × 454 × 1.103 mm',
+    img: 'vwl-pro-l.jpg',
+    jaz: { heizkoerper: '3,95', fussboden: '4,50' },
+  },
 };
+
+function paProSpecs(pro) {
+  const specs = [
+    ['Heizleistung A-7/W35', pro.leistung + ' kW (COP ' + pro.cop + ')'],
+    ['Heizleistung (Pdesignh)', pro.pdesignh + ' kW'],
+    ['Kältemittel', 'R290 (Propan, natürlich)'],
+    ['Bauart', 'Monoblock (Außenaufstellung)'],
+    ['Vorlauftemp.', 'bis 70 °C'],
+    ['Schallleistung ErP außen', pro.schall + ' dB(A)'],
+    ['Effizienzklasse (35 / 55 °C)', 'A+++ / A++'],
+    ['ηs (35 / 55 °C)', pro.eta],
+    ['SCOP (35 / 55 °C)²', pro.scop],
+  ];
+  for (const [field, label] of [
+    ['heizkoerper', 'JAZ Heizkörper¹'],
+    ['fussboden', 'JAZ Fußbodenheizung¹'],
+  ]) {
+    const value = pro.jaz?.[field];
+    if (typeof value === 'string' && /^\d+,\d+$/.test(value)) specs.push([label, value]);
+  }
+  return specs.concat([
+    ['Abmessung (BxTxH)', pro.masse],
+    ['Hersteller', 'Vaillant GmbH'],
+  ]);
+}
 
 function paEscapeHtml(value) {
   return String(value || '').replace(
@@ -1912,13 +1965,14 @@ function paDeviceIdentity(row) {
   const pro = PA_PRO_TECHNIK[key];
   if (pro) {
     return {
-      modell: key.replace('Vaillant ', 'Vaillant ' + pro.baureihe + ' '),
-      baureihe: pro.baureihe,
-      kw: 'A-11/W55: ' + pro.w55 + ' kW',
-      specs: [
-        ['Heizleistung A-11/W35', pro.w35 + ' kW'],
-        ['Heizleistung A-11/W55', pro.w55 + ' kW'],
-      ],
+      modell: key.replace('Vaillant ', 'Vaillant aroTHERM pro '),
+      baureihe: 'aroTHERM pro',
+      kw: 'A-7/W35: ' + pro.leistung + ' kW',
+      specs: paProSpecs(pro),
+      img: pro.img,
+      imgPos: 'center center',
+      imgWidth: 1280,
+      imgHeight: 853,
     };
   }
   // Die bekannte Wolf-Kaskade ist im Preisblatt verkürzt benannt.
@@ -1935,6 +1989,17 @@ function paDeviceIdentity(row) {
     baureihe,
     kw: detail ? detail.kw : '',
     specs: detail ? detail.specs.map((spec) => [...spec]) : [],
+    img: detail ? detail.img : '',
+    ...(baureihe === 'aroTHERM plus'
+      ? {
+          imgPos: 'center center',
+          imgWidth: 1280,
+          imgHeight: 853,
+          imgAlt: model.startsWith('2×')
+            ? 'Vaillant aroTHERM plus, einzelnes Außengerät der Kaskade'
+            : '',
+        }
+      : {}),
   };
 }
 
@@ -1982,28 +2047,54 @@ function paRenderCards() {
           <h2>${d.name}</h2>
           ${hausHtml}
           <div class="pa-modell">${paEscapeHtml(d.modell)}</div>
-          <div class="pa-kw">${d.kw}</div>
+          <div class="pa-kw">${paDeviceIdentity(d).kw}</div>
           ${priceHtml}
         </div>`;
     })
     .join('');
 }
 
+// BWP-Beispiele gelten nur für die belegten Geräte; Wolf und alte Plus-Geräte
+// behalten ihren ursprünglichen Fußtext auch nach einem Markenwechsel.
+const PA_VAILLANT_JAZ_FOOTNOTE =
+  '¹ JAZ = Jahresarbeitszahl. Beispielrechnung mit dem BWP-JAZ-Rechner nach VDI 4650 Blatt 1 für einen Altbau in Hannover. Heizkörper: Vorlauf/Rücklauf 55/45 °C; Fußbodenheizung: Vorlauf/Rücklauf 35/30 °C. Warmwasserbereitung durch die Wärmepumpe; einschließlich erforderlichem elektrischem Zusatzheizer. Individuelle Anlagenwerte können abweichen.';
+let paOriginalJazFootnote;
+
 // Detail-Panel aktualisieren
 function paUpdateDetail(d) {
   document.getElementById('paSpecsTitle').textContent = d.name;
-  document.getElementById('paSpecsSub').textContent = d.modell + ' · ' + d.kw;
-  const hasEfficiencyFootnote = d.specs.some(
-    (s) => s[0].startsWith('JAZ') || s[0].startsWith('SCOP')
-  );
-  document.getElementById('paSpecsTable').querySelector('tbody').innerHTML = d.specs
+  // Nur bekannte gerätebezogene Vorlagen, niemals Technik aus Preisantwort oder DOM.
+  const identity = paDeviceIdentity(d);
+  document.getElementById('paSpecsSub').textContent = d.modell + ' · ' + identity.kw;
+  const hasJaz = identity.specs.some((s) => s[0].startsWith('JAZ'));
+  const hasScop = identity.specs.some((s) => s[0].startsWith('SCOP'));
+  document.getElementById('paSpecsTable').querySelector('tbody').innerHTML = identity.specs
     .map((s) => {
       const isHighlight = s[0].startsWith('JAZ') || s[0].startsWith('SCOP');
       return `<tr${isHighlight ? ' style="background:rgba(183,217,0,0.08)"' : ''}><td>${s[0]}</td><td>${isHighlight ? '<strong>' + s[1] + '</strong>' : s[1]}</td></tr>`;
     })
     .join('');
   const fn = document.getElementById('paJazFootnote');
-  if (fn) fn.style.display = hasEfficiencyFootnote ? 'block' : 'none';
+  const scopFn = document.getElementById('paScopFootnote');
+  const modelKey = paModelKey(d.modell);
+  const bwpJaz =
+    hasJaz &&
+    (Boolean(PA_PRO_TECHNIK[modelKey]) || /^(?:2× )?Vaillant VWL 125\/8\.1 A$/.test(modelKey));
+  if (fn) {
+    if (paOriginalJazFootnote === undefined) paOriginalJazFootnote = fn.innerHTML;
+    fn.innerHTML = bwpJaz
+      ? PA_VAILLANT_JAZ_FOOTNOTE.replace(
+          '¹ JAZ',
+          '<strong style="color:var(--green);font-size:12px;text-transform:uppercase;letter-spacing:0.3px;">¹ JAZ</strong>'
+        ) +
+        '<br>' +
+        (scopFn?.innerHTML || '')
+      : paOriginalJazFootnote;
+    fn.style.display = hasJaz ? 'block' : 'none';
+  }
+  const detail = document.getElementById('paDetail');
+  if (detail) detail.classList[bwpJaz ? 'add' : 'remove']('pa-jaz-bwp');
+  if (scopFn) scopFn.style.display = hasScop && !hasJaz ? 'block' : 'none';
 
   const cta = document.getElementById('paDetailCta');
   if (paHasNumber(d.eigen)) {
@@ -2108,9 +2199,13 @@ function paZoom(idx) {
   // Bild pro Modell - Ambiente-Bilder als Cover
   const imgContainer = document.querySelector('.pa-detail-img');
   if (imgContainer) {
-    const imgSrc = paData[idx].img || 'cha-sanierung.jpg';
+    const imgSrc = paData[idx].img;
+    if (!imgSrc) {
+      imgContainer.innerHTML = '';
+      return;
+    }
     const imgPos = paData[idx].imgPos || 'center center';
-    imgContainer.innerHTML = `<img id="paImg" src="${imgSrc}" alt="${paEscapeHtml(paData[idx].modell)}" width="2500" height="2500" style="object-position:${imgPos};" loading="lazy" decoding="async" onerror="this.style.display='none'">`;
+    imgContainer.innerHTML = `<img id="paImg" src="${imgSrc}" alt="${paEscapeHtml(paData[idx].imgAlt || paData[idx].modell)}" width="${paData[idx].imgWidth || 2500}" height="${paData[idx].imgHeight || 2500}" style="object-position:${imgPos};" loading="lazy" decoding="async" onerror="this.style.display='none'">`;
     const img = document.getElementById('paImg');
     if (img) {
       img.style.animation = 'none';

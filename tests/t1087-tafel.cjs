@@ -231,8 +231,9 @@ if (website) {
     for (let i = 0; i < 3; i++) {
       assert.match(cards[i].modell, /aroTHERM pro/);
       assert.match(cards[i].modell, /7\.1/);
-      assert.ok(!JSON.stringify(cards[i].specs).includes('A-7/W35'));
-      assert.match(cards[i].kw, /A-11\/W55/);
+      assert.equal(cards[i].kw, ['A-7/W35: 4,84 kW', 'A-7/W35: 6,37 kW', 'A-7/W35: 11,12 kW'][i]);
+      assert.equal(cards[i].specs.length, 13);
+      assert.ok(JSON.stringify(cards[i].specs).includes('JAZ Heizkörper¹'));
     }
   });
   test('Ausfall: neue Rückfallidentität und Preise, Tafel auf Anfrage', () => {

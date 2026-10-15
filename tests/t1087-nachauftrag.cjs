@@ -61,6 +61,7 @@ function browser(rows, revision = ref) {
         innerHTML: '',
         textContent: '',
         style: {},
+        classList: { add() {}, remove() {} },
         querySelector: (sel) => node(id + sel),
       });
     return nodes.get(id);

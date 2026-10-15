@@ -227,6 +227,13 @@ jobs:
         run: scripts/start-pruefserver.sh
       - env: { PREVIEW_URL: '${{ env.PRUEFSERVER_URL }}' }
         run: npx playwright test --grep "@smoke"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tafel-sicht
+          path: artifacts/tafel-sicht/
+          if-no-files-found: error
+      - run: npm run verify:tafel-webkit
       # T1183, 05.10.2026: Die beiden Kostenvergleichsdateien liefen bisher in keiner Kette;
       # sie starten eigene Server und brauchen deshalb keine PREVIEW_URL.
       # P3a: Die bestehende Welle-Prüfung an die bereits beschlossene Ansprache,
