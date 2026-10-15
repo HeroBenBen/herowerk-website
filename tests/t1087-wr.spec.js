@@ -71,6 +71,80 @@ async function screenshot(page, name, testInfo) {
   await page.screenshot({ path: file, fullPage: true, animations: 'disabled' });
   await testInfo.attach(name, { path: file, contentType: 'image/png' });
 }
+// Die Basis kann Pfeil/Transition außerhalb des sichtbaren Bereichs verzögert malen.
+// Auf den fertigen Renderzustand warten, niemals auf den erwarteten Überlaufwert.
+async function settlePriceDetail(page, index) {
+  const panel = page.locator('#paDetail');
+  await expect(panel).toBeVisible();
+  await expect(page.locator('.pa-card.zoomed')).toHaveAttribute('data-idx', String(index));
+  await panel.scrollIntoViewIfNeeded();
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    const img = document.getElementById('paImg');
+    if (img instanceof window.HTMLImageElement) {
+      img.loading = 'eager';
+      await img.decode().catch(() => {});
+    }
+  });
+  await expect
+    .poll(
+      () =>
+        page.evaluate(async () => {
+          const panel = document.getElementById('paDetail');
+          const cards = document.getElementById('paCards');
+          const arrow = document.getElementById('paDetailArrow');
+          const sample = () => {
+            const style = getComputedStyle(arrow);
+            const rect = panel.getBoundingClientRect();
+            return {
+              geometry: JSON.stringify([
+                rect.toJSON(),
+                arrow.getBoundingClientRect().toJSON(),
+                cards.scrollLeft,
+                arrow.style.left,
+                style.left,
+              ]),
+              visible:
+                rect.bottom > 0 &&
+                rect.top < window.innerHeight &&
+                getComputedStyle(panel).opacity === '1',
+              positioned:
+                arrow.style.left !== '' &&
+                Math.abs(parseFloat(style.left) - parseFloat(arrow.style.left)) < 0.05,
+              animations: [panel, cards].flatMap((el) =>
+                el
+                  .getAnimations({ subtree: true })
+                  // Dauerhafte CTA-Leuchteffekte haben keinen Endzustand und ändern
+                  // die gemessene Panel-/Pfeilgeometrie nicht.
+                  .filter((animation) => animation.effect?.getComputedTiming().endTime !== Infinity)
+                  .filter((animation) => animation.pending || animation.playState === 'running')
+                  .map((animation) => ({
+                    state: animation.playState,
+                    pending: animation.pending,
+                    time: animation.currentTime,
+                    timing: animation.effect?.getTiming(),
+                  }))
+              ),
+            };
+          };
+          const before = sample();
+          await new Promise((resolve) => window.requestAnimationFrame(resolve));
+          await new Promise((resolve) => window.requestAnimationFrame(resolve));
+          const after = sample();
+          return {
+            visible: after.visible,
+            positioned: after.positioned,
+            animations: after.animations,
+            stable: before.geometry === after.geometry,
+          };
+        }),
+      {
+        timeout: 15000,
+        message: 'Detail sichtbar, Pfeil positioniert, Animationen/Geometrie fertig',
+      }
+    )
+    .toEqual({ visible: true, positioned: true, animations: [], stable: true });
+}
 // calculate/goStep planen die mobile Aufbereitung im nächsten Renderframe ein.
 // Erst diesen Arbeitsgang abschließen, dann dessen Initialisierungszustand prüfen.
 async function settleCostComparison(page) {
@@ -162,7 +236,7 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
             .toBe(brand === 'wolf' ? 'manufacturerWolf' : 'manufacturerVaillant');
           for (let i = 0; i < 5; i++) {
             await page.evaluate((i) => window.eval('paOpenIdx=-1;paZoom(' + i + ')'), i);
-            await page.waitForTimeout(500);
+            await settlePriceDetail(page, i);
             const m = await page.evaluate(() => {
               const panel = document.getElementById('paDetail'),
                 r = panel.getBoundingClientRect();
@@ -474,9 +548,9 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
             );
             for (let i = 0; i < 5; i++) {
               await page.evaluate((i) => window.eval('paOpenIdx=-1;paZoom(' + i + ')'), i);
-              await page.waitForTimeout(450);
+              await settlePriceDetail(page, i);
               await words('preise-' + brand + '-' + i);
-              if (version === 'basis' && width === 375 && i === 4) {
+              if (width === 375 && i === 4) {
                 const geometry = await page.locator('#paDetail').evaluate((el) => {
                   const arrow = document.getElementById('paDetailArrow'),
                     before = el.scrollWidth;
@@ -486,9 +560,22 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
                   arrow.style.display = old;
                   return { before, without, width: el.clientWidth };
                 });
-                expect(geometry.before, 'P3 Basis Überlauf').toBeGreaterThan(geometry.width);
+                if (version === 'basis')
+                  expect(geometry.before, 'P3 Basis Überlauf').toBeGreaterThan(geometry.width);
+                else expect(geometry.before, 'P3 Kopf ohne Überlauf').toBe(geometry.width);
                 expect(geometry.without, 'P3 isolierte Pfeil-Gegenprobe').toBe(geometry.width);
-                await testInfo.attach('P3-' + brand, {
+                console.log(
+                  'WR P3',
+                  JSON.stringify({
+                    browser: name,
+                    viewport: width,
+                    version,
+                    brand,
+                    repetition: testInfo.repeatEachIndex + 1,
+                    ...geometry,
+                  })
+                );
+                await testInfo.attach('P3-' + version + '-' + brand, {
                   body: JSON.stringify(geometry),
                   contentType: 'application/json',
                 });
