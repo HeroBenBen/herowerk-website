@@ -23,7 +23,7 @@ async function setup(browserType, width) {
     reducedMotion: 'reduce',
   });
   const page = await context.newPage();
-  const state = { data: responses(), priceFailure: '' };
+  const state = { data: responses(), priceFailure: '', rawDimension: '' };
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.route('**/*', (route) => {
@@ -31,6 +31,8 @@ async function setup(browserType, width) {
     if (url.hostname !== '127.0.0.1') return route.abort();
     if (url.pathname.startsWith('/api/rechner')) {
       const action = url.searchParams.get('action');
+      if (action === 'dimensionierung' && state.rawDimension)
+        return route.fulfill({ contentType: 'application/json', body: state.rawDimension });
       if (action === 'preise' && state.priceFailure) {
         if (state.priceFailure === 'network') return route.abort();
         if (state.priceFailure === 'http')
@@ -73,7 +75,7 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
             const visibleOverlay = overlay && getComputedStyle(overlay).display !== 'none';
             const canvas = document.createElement('canvas'),
               ctx = canvas.getContext('2d');
-            ctx.font = style.font;
+            ctx.font = style.fontWeight + ' ' + style.fontSize + ' ' + style.fontFamily;
             return {
               value: select.value,
               text: select.selectedOptions[0].textContent,
@@ -320,6 +322,37 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
         expect
           .soft(await page.locator('[data-wr-injected]').count(), 'Kein injiziertes Attribut')
           .toBe(0);
+        // Unveränderter tatsächlicher Antwortkörper aus A11 Runde 5, Schema 3.
+        state.rawDimension = fs.readFileSync(
+          path.join(__dirname, 'fixtures/t1087-wr-runde5.json'),
+          'utf8'
+        );
+        const rawModel = JSON.parse(state.rawDimension).marken.vaillant.modell.replace(
+          /^Vaillant /,
+          ''
+        );
+        const oldServer = await serve(base);
+        try {
+          for (const [version, url] of [
+            ['basis', oldServer.url],
+            ['bau', server.url],
+          ]) {
+            await page.goto(url + '/dimensionierung.html');
+            await page.evaluate(
+              'document.querySelector(\'.wizard-step[data-step="8"] .wizard-options .wizard-option\').classList.add("selected");wizData.verbrauchKnown=false;wizCalculate()'
+            );
+            await page.waitForFunction('document.querySelector(".wiz-variant-device")');
+            expect(await page.locator('.wiz-variant-device').nth(1).textContent()).toBe(
+              version === 'bau' ? rawModel : rawModel.replace('A<span>&minus;</span>11', 'A−11')
+            );
+            expect(await page.locator('.wiz-variant-device').nth(1).locator('span').count()).toBe(
+              version === 'bau' ? 0 : 1
+            );
+            await screenshot(page, label + '-' + version + '-runde5-original', testInfo);
+          }
+        } finally {
+          await oldServer.close();
+        }
         expect(errors).toEqual([]);
       } finally {
         await browser.close();
@@ -381,6 +414,20 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
                   contentType: 'application/json',
                 });
               }
+              if (version === 'basis' && brand === 'vaillant' && i === 0 && width === 375) {
+                const lines = await page
+                  .locator('#paSpecsTable td')
+                  .first()
+                  .evaluate((cell) => {
+                    const node = cell.firstChild,
+                      start = node.textContent.indexOf('A-7/W35'),
+                      range = document.createRange();
+                    range.setStart(node, start);
+                    range.setEnd(node, start + 7);
+                    return new Set(Array.from(range.getClientRects()).map((r) => r.top)).size;
+                  });
+                expect(lines, 'P2 Basis Kennwert bricht').toBeGreaterThan(1);
+              }
               if (version === 'basis' && brand === 'vaillant' && i === 3) {
                 expect(
                   await page.locator('#wolfPricePanel').getAttribute('aria-labelledby'),
@@ -405,6 +452,28 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
               k
             );
             await words('foerder-vaillant-' + k);
+            if (version === 'basis' && width === 375) {
+              const clipping = await page.locator('#foerderWpTyp').evaluate((select) => {
+                const style = getComputedStyle(select),
+                  context = document.createElement('canvas').getContext('2d');
+                context.font = style.fontWeight + ' ' + style.fontSize + ' ' + style.fontFamily;
+                return {
+                  needed: context.measureText(select.selectedOptions[0].textContent).width,
+                  available:
+                    select.clientWidth -
+                    parseFloat(style.paddingLeft) -
+                    parseFloat(style.paddingRight) -
+                    20,
+                };
+              });
+              expect(clipping.needed, 'P1 Basis Preis abgeschnitten ' + k).toBeGreaterThan(
+                clipping.available
+              );
+              await testInfo.attach('P1-Basis-' + k, {
+                body: JSON.stringify(clipping),
+                contentType: 'application/json',
+              });
+            }
           }
           await page.goto(url + '/dimensionierung.html');
           await page.evaluate(

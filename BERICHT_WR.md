@@ -60,6 +60,8 @@ Die Planung nannte 32 HTML-Kandidaten. Nachmessung: vier Treffer stehen nur in K
 | `prozess.html`                             | Nur zwei Asset-Hashes                                                    |
 | `ratgeber.html`                            | Nur zwei Asset-Hashes                                                    |
 | `rechner.html`                             | Nur zwei Asset-Hashes                                                    |
+| `scripts/make-ionos-bundle.sh`             | Genau eine Ausschlusszeile für den internen Baunachweis                  |
+| `tests/fixtures/t1087-wr-runde5.json`      | Unveränderter Original-Prüfbeleg aus A11 Runde 5                         |
 | `tests/helpers/t1087-datenblatt.cjs`       | Rot/Grün, Sichtvergleich beziehungsweise gezielte Bestands-Testanpassung |
 | `tests/t1087-beschriftung.cjs`             | Rot/Grün, Sichtvergleich beziehungsweise gezielte Bestands-Testanpassung |
 | `tests/t1087-datenblatt.cjs`               | Rot/Grün, Sichtvergleich beziehungsweise gezielte Bestands-Testanpassung |
@@ -75,6 +77,26 @@ Die Planung nannte 32 HTML-Kandidaten. Nachmessung: vier Treffer stehen nur in K
 | `wertsteigerung-waermepumpe.html`          | Nur zwei Asset-Hashes                                                    |
 | `wp-kosten-hannover.html`                  | Nur zwei Asset-Hashes                                                    |
 
-Gesamt: 42 Dateien. Kein API-, Tabellen-, Preis- oder Workflow-Eingriff. `scripts/make-ionos-bundle.sh` schließt ausschließlich den neu angelegten internen `BERICHT_WR.md` aus dem öffentlichen Bündel aus; der erste CI-Lauf hatte ihn ansonsten korrekt als unbekannte Laufzeit-Datei zurückgewiesen.
+Gesamt: **43 Dateien**. Kein API-, Tabellen-, Preis- oder Workflow-Eingriff. Der Bündelwächter hatte den neuen internen `BERICHT_WR.md` im ersten CI-Lauf korrekt als unbekannte Laufzeit-Datei abgewiesen. Die konkrete Ausschlusszeile hält ihn aus dem öffentlichen Bündel heraus. Lokaler Bündelbau und Gleichheitsprüfung (124 Dateien) danach grün.
 
-Zusätzliche Datei: `scripts/make-ionos-bundle.sh`, eine konkrete Ausschlusszeile für den internen Baunachweis.
+## Abschlussinventar der Textsenken
+
+AST-Nachmessung aller fünf Dateien in `js/`: 36 HTML-Zuweisungen, davon 34 in `site.js`, zwei in `theme.js`. Keine `outerHTML`- oder `insertAdjacentHTML`-Ausgabe. Chart.js, Consent und Kurzbewerbung enthalten keine dieser Senken. Die zwei Theme-Ausgaben bestehen aus eigenen Symbolen und Beschriftungen.
+
+`js/site.js` – sämtliche `innerHTML`-Zuweisungen am Produktstand `d961de2`: Zeilen 3, 437, 445, 454, 462, 980, 1037, 1050, 1479, 2055, 2110, 2113, 2127, 2159, 2166, 2251, 2255, 2451, 2460, 2464, 2475, 2482, 2537, 2541, 2593, 2599, 2657, 2715, 2717, 2760, 2829, 2853, 2857, 3273. `js/theme.js`: Zeilen 52 und 60. Die Datenflüsse J1–J10 und K1–K15 sind im freigegebenen `PLAN_WR.md`, Abschnitt 8, einzeln mit Basis-Fundstellen dokumentiert.
+
+| Relevanter Weg                                                                                                                                                                                       | Absicherung am Bau                                                                                                                             |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Dimensionierung: Hinweis, Modell, Baureihe, Varianten/Fallback, latenter Modellhelfer                                                                                                                | `paEscapeHtml` an Textteilen; Empfehlungsabzeichen und Struktur separat                                                                        |
+| Förderantragsoptionen: Schlüssel, Beginn, Beschriftung                                                                                                                                               | DOM-Optionen über `value`, `dataset.ab`, `textContent`                                                                                         |
+| Fördertreppe: Zeiträume, Labels, Quote, Titel und ARIA                                                                                                                                               | Text-/Attributescaping; eigene Balkenstruktur und Fußnoten bleiben                                                                             |
+| Förderbausteine                                                                                                                                                                                      | Textescaping vor Einsetzen in eigenes Zeilen-Markup                                                                                            |
+| Preistafel: lokale Karten-/Datenblatttexte, Info, Bildattribute                                                                                                                                      | Text-/Attributescaping; bekannte SVG-Symbole bleiben eigenes Markup; Technik stammt weiter ausschließlich aus bekannten Herstellervorlagen     |
+| Beide Kostenvergleiche: Bootstrap-Optionen, Treppe, Quote/Badges, Karten, Rechenweg, mobile Jahre, Datentabellen, Cashflow, CO₂, Annahmen, Liveförderung, Förderaufbau, Hero und latenter Chiphelfer | Eigenes Inline-`kvText` an jeder Textgrenze; Diagramme bekommen ihre ursprünglichen Rohlabels für Canvas; keine Vorabkodierung des API-Objekts |
+| Klima und Vorschussplätze                                                                                                                                                                            | Bereits Text-DOM beziehungsweise validierte Zahlen; unverändert                                                                                |
+| Health/fehlende/unbekannte action                                                                                                                                                                    | Kein Browser-HTML-Verbraucher; unverändert                                                                                                     |
+| FAQ, feste PLZ-/Heizungs-/WEG-/Fehler-/Animationsbausteine                                                                                                                                           | Nur eigenes Seiten-Markup, lokale feste Wortlisten oder bereits validierte Zahlen, keine Rechnerantwortstücke                                  |
+
+Der tatsächlich durchgelassene Prüfer-Antwortkörper aus `A11/pruef/runde5/belege/kleiner-vergleich-markup-s3.json` liegt bytegleich als `tests/fixtures/t1087-wr-runde5.json` vor (SHA-256 `408d27e27b85bd9ea07d8d0ebe012418eff7ccd6876482268564c1f5c683563a`). Die Browserprobe spielt dieselben Bytes an Basis und Bau ein und prüft die unterschiedlichen Textausgaben und die Zahl eingefügter `span`-Knoten. Zusätzliche harmlose Anführungszeichen-/Attributfälle prüfen, dass kein `data-wr-injected`-Attribut entsteht.
+
+Die zusätzliche Fixture ist in der obigen Dateiliste enthalten; Überschneidung mit PR 150 unverändert ausschließlich `package.json`.
