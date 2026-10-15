@@ -220,6 +220,15 @@ for (const width of [375, 1440]) {
         }
         await expect(page.locator('#paDetail')).toHaveClass(/open/);
         if (brand === 'vaillant') {
+          if (i < 3) {
+            const rows = page.locator('#paSpecsTable tr');
+            await expect(rows.nth(1).locator('td').first()).toHaveText('Heizleistung (Pdesignh)');
+            await expect(rows.nth(2).locator('td')).toHaveText([
+              'Kältemittel',
+              'R290 (Propan, natürlich)',
+            ]);
+            await expect(rows.last().locator('td')).toHaveText(['Hersteller', 'Vaillant GmbH']);
+          }
           await expectJaz(
             page,
             await page.locator('#paCards .pa-card').nth(i).locator('.pa-modell').innerText()

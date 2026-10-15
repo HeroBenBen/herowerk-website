@@ -1917,8 +1917,8 @@ const PA_PRO_TECHNIK = {
 function paProSpecs(pro) {
   const specs = [
     ['Heizleistung A-7/W35', pro.leistung + ' kW (COP ' + pro.cop + ')'],
-    ['Heizleistung Pdesignh (W55, mittleres Klima)', pro.pdesignh + ' kW'],
-    ['Kältemittel', 'R290 (natürlich)'],
+    ['Heizleistung (Pdesignh)', pro.pdesignh + ' kW'],
+    ['Kältemittel', 'R290 (Propan, natürlich)'],
     ['Bauart', 'Monoblock (Außenaufstellung)'],
     ['Vorlauftemp.', 'bis 70 °C'],
     ['Schallleistung ErP außen', pro.schall + ' dB(A)'],

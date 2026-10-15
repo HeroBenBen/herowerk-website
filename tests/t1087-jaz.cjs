@@ -42,7 +42,19 @@ for (const [mode, rows] of Object.entries({
           return;
         }
         const noJaz = (specs) => specs.filter(([name]) => !name.startsWith('JAZ'));
-        assert.deepEqual(noJaz(d.card.specs), noJaz(old.card.specs));
+        // Nachauftrag 3 erlaubt ausschließlich diese beiden Pro-Beschriftungen.
+        const oldSpecs = noJaz(old.card.specs).map(([name, value]) => {
+          if (!/VWL (?:55|75|115)\/7\.1 A$/.test(d.card.modell)) return [name, value];
+          return [
+            name === 'Heizleistung Pdesignh (W55, mittleres Klima)'
+              ? 'Heizleistung (Pdesignh)'
+              : name,
+            name === 'Kältemittel' && value === 'R290 (natürlich)'
+              ? 'R290 (Propan, natürlich)'
+              : value,
+          ];
+        });
+        assert.deepEqual(noJaz(d.card.specs), oldSpecs);
         assert.deepEqual({ ...d.card, specs: [] }, { ...old.card, specs: [] });
         for (const field of ['title', 'sub', 'cta', 'image']) assert.equal(d[field], old[field]);
         assert.deepEqual(

@@ -67,8 +67,8 @@ const pro = [
 function expectedSpecs(p, model) {
   return [
     ['Heizleistung A-7/W35', `${p[0]} kW (COP ${p[1]})`],
-    ['Heizleistung Pdesignh (W55, mittleres Klima)', p[2] + ' kW'],
-    ['Kältemittel', 'R290 (natürlich)'],
+    ['Heizleistung (Pdesignh)', p[2] + ' kW'],
+    ['Kältemittel', 'R290 (Propan, natürlich)'],
     ['Bauart', 'Monoblock (Außenaufstellung)'],
     ['Vorlauftemp.', 'bis 70 °C'],
     ['Schallleistung ErP außen', p[3] + ' dB(A)'],
