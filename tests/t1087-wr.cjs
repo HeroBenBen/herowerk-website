@@ -232,8 +232,122 @@ async function contracts(ref) {
   );
   return { result, literal };
 }
+async function apiBytes() {
+  const os = require('node:os');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'wr-api-'));
+  const old = path.join(dir, 'api');
+  fs.mkdirSync(old);
+  const files = cp
+    .execFileSync('git', ['ls-tree', '-r', '--name-only', base, 'api'], {
+      cwd: root,
+      encoding: 'utf8',
+    })
+    .trim()
+    .split('\n')
+    .filter((f) => f.endsWith('.php'));
+  for (const file of files)
+    fs.writeFileSync(
+      path.join(old, path.basename(file)),
+      cp.execFileSync('git', ['show', base + ':' + file], { cwd: root })
+    );
+  const contract = JSON.parse(
+    fs.readFileSync(path.join(root, 'tests/fixtures/rechner-snapshot-vertrag.json'), 'utf8')
+  );
+  const context = JSON.parse(
+    fs.readFileSync(path.join(root, 'tests/fixtures/rechner-schema3-rechenkontext.json'), 'utf8')
+  );
+  const sheets = { ...contract.snapshot.sheets, ...context.sheets };
+  for (const brand of ['wolf', 'vaillant']) {
+    const name = brand === 'wolf' ? 'Preise_Wolf' : 'Preise_Vaillant';
+    const [header, template] = sheets[name];
+    sheets[name] = [
+      header,
+      ...fixture.preise[brand].map((item, index) => {
+        const row = [...template];
+        for (const [key, value] of Object.entries({
+          Klasse: item.klasse,
+          Modell: item.modell,
+          kW: item.kw,
+          Endpreis_brutto: item.brutto,
+          Eigenanteil: item.eigen,
+          geraet_id: brand + index,
+        }))
+          row[header.indexOf(key)] = value;
+        return row;
+      }),
+    ];
+  }
+
+  const { geraeteKatalogZeilen } = await import('./fixtures/geraete-katalog-2026-08-14.mjs');
+  sheets.Geräte_Katalog = [
+    ['Vorspann'],
+    ['heizstab_wolf', 9],
+    ['heizstab_vaillant', 8.54],
+    contract.snapshot.sheets.Geräte_Katalog[1],
+    ...geraeteKatalogZeilen.map((row, index) => {
+      const r = [...row];
+      r[33] = 'ja';
+      r[38] = 'katalog' + index;
+      r[39] = 'lauf-test';
+      return r;
+    }),
+  ];
+  const program = `date_default_timezone_set('Europe/Berlin'); require $argv[1].'/rechner-values.php'; require $argv[1].'/rechner-engine.php'; $source=file_get_contents($argv[1].'/rechner.php'); $start=strpos($source,'const RECHNER_INNENFELDER_SPERREN'); $end=strpos($source,'$rawQuery ='); eval(substr($source,$start,$end-$start)); $in=json_decode(stream_get_contents(STDIN),true); $out=hw_rechner_route($in['action'],$in['query'],$in['sheets'],2); if($in['action']==='preise')$out=hw_oeffentliche_preistexte($out); $out=rechner_innenfelder_entfernen($out); echo json_encode($out,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_THROW_ON_ERROR);`;
+  let count = 0;
+  try {
+    /** @type {Array<{action:string, query:Record<string,string>}>} */
+    const cases = [
+      'preise',
+      'dimensionierung',
+      'klima',
+      'foerderung',
+      'kostenvergleich',
+      'kv_bootstrap',
+      'fv_plaetze',
+      'health',
+    ].map((action) => ({
+      action,
+      query: { plz: '30159', verbrauchKnown: 'nein', fHalbjahr: 'h2-2026' },
+    }));
+    for (const marke of ['wolf', 'vaillant'])
+      for (const wpTyp of ['s', 'm', 'l', 'xl', 'xxl'])
+        cases.push({
+          action: 'foerderung',
+          query: {
+            marke,
+            wpTyp,
+            fHalbjahr: 'h2-2026',
+            einkommen: 'bis30',
+            selbstnutzung: '1',
+            wohneinheiten: '1',
+          },
+        });
+    for (const sample of cases) {
+      const input = JSON.stringify({ ...sample, sheets });
+      const run = (api) =>
+        cp.execFileSync('php', ['-r', program, api], { input, stdio: ['pipe', 'pipe', 'pipe'] });
+      const before = run(old),
+        after = run(path.join(root, 'api'));
+      assert.deepEqual(after, before, 'API-Antwortbytes ' + JSON.stringify(sample));
+      assert(
+        !JSON.parse(after.toString()).error,
+        'Kein Fehlerantwort-Platzhalter ' + sample.action
+      );
+      count++;
+    }
+    console.log(
+      'WR: ' +
+        count +
+        ' öffentliche Antwortkörper aller action-Routen bytegleich (identische lokale Tabellen; keine entfernten/normalisierten Felder).'
+    );
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+}
+
 async function verify() {
   unchanged();
+  await apiBytes();
   const red = await contracts(base),
     green = await contracts('');
   for (let i = 1; i <= 7; i++) {

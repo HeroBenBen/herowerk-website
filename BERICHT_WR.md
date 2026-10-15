@@ -20,7 +20,7 @@ Baufreigabe: genau `go` im Auftragschat. Baubasis: `40951542b4903adde7cc1e694a96
 
 - TAFEL-Vertragsprüfungen einschließlich Rot-/Grünvergleich WR lokal grün. Historische Erwartungen erlauben ausschließlich die freigegebenen Hersteller-/Kennwert-Markupänderungen und die gleich sichtbare Entity-Kodierung von `&`; Wolf-Fußtext und statische Förderauswahl bleiben bytegleich.
 - A11: 169 Prüfgruppen lokal grün, einschließlich der vollständigen Kernvergleiche. Keine Änderung am A11-Schutz oder seinen Prüfungen.
-- 74 API-, Rechenkern- und Fixture-Dateien bytegleich zur Baubasis; keine Änderung an Preisen, Eigenanteilen, Förderbeträgen, Katalogbindung oder API.
+- 74 API-, Rechenkern- und Fixture-Dateien bytegleich zur Baubasis; zusätzlich 18 öffentliche Antwortkörper aller action-Routen und zehn Förder-Paketfälle mit identischen lokalen Tabellen direkt bytegleich verglichen; keine Änderung an Preisen, Eigenanteilen, Förderbeträgen, Katalogbindung oder API.
 - Chromium und WebKit lokal durch die Sandbox beim Start blockiert. Chromium: `bootstrap_check_in … Permission denied (1100)`, WebKit beendet beim Start. Kein lokaler Sichtlauf behauptet. Leitstand übernimmt die lokale Sichtabnahme.
 - `tests/t1087-wr.spec.js` prüft Chromium/WebKit bei 375/1440 px: Geometrie, beide Reiter und sämtliche Datenblätter, Förderauswahl, Dimensionierung, beide Kostenvergleichsseiten; Basis/Bau mit identischen Antwortbytes. Screenshots und Messungen unter `artifacts/tafel-sicht/wr/`, im vorhandenen CI-Artefakt `tafel-sicht`.
 - CI am endgültigen Kopf: **noch ausstehend**. Dieser Arbeitsstand wird vor Abschluss um Lauf und Ergebnis ergänzt.
@@ -75,4 +75,6 @@ Die Planung nannte 32 HTML-Kandidaten. Nachmessung: vier Treffer stehen nur in K
 | `wertsteigerung-waermepumpe.html`          | Nur zwei Asset-Hashes                                                    |
 | `wp-kosten-hannover.html`                  | Nur zwei Asset-Hashes                                                    |
 
-Gesamt: 41 Dateien. Kein API-, Tabellen-, Preis- oder Workflow-Eingriff.
+Gesamt: 42 Dateien. Kein API-, Tabellen-, Preis- oder Workflow-Eingriff. `scripts/make-ionos-bundle.sh` schließt ausschließlich den neu angelegten internen `BERICHT_WR.md` aus dem öffentlichen Bündel aus; der erste CI-Lauf hatte ihn ansonsten korrekt als unbekannte Laufzeit-Datei zurückgewiesen.
+
+Zusätzliche Datei: `scripts/make-ionos-bundle.sh`, eine konkrete Ausschlusszeile für den internen Baunachweis.

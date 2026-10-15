@@ -116,15 +116,13 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
               arrow.style.display = 'none';
               const withoutArrow = panel.scrollWidth;
               arrow.style.display = saved;
-              const links = Array.from(panel.querySelectorAll('a.btn-primary,a.btn-ghost')).map(
-                (el) => {
-                  const b = el.getBoundingClientRect();
-                  return {
-                    text: el.textContent.trim(),
-                    inside: b.bottom <= r.bottom + 1 && b.right <= r.right + 1,
-                  };
-                }
-              );
+              const links = Array.from(panel.querySelectorAll('a.pa-bottom-cta')).map((el) => {
+                const b = el.getBoundingClientRect();
+                return {
+                  text: el.textContent.trim(),
+                  inside: b.bottom <= r.bottom + 1 && b.right <= r.right + 1,
+                };
+              });
               const tokens = [];
               for (const node of [
                 document.getElementById('paSpecsSub'),
@@ -223,6 +221,9 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
           ),
           JSON.stringify(metrics, null, 2)
         );
+        expect
+          .soft(await page.locator('[data-wr-injected]').count(), 'Kein injiziertes Attribut')
+          .toBe(0);
         expect(errors).toEqual([]);
       } finally {
         await browser.close();
@@ -232,7 +233,7 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
       test.setTimeout(120000);
       const { browser, page, state, errors } = await setup(type, width);
       try {
-        for (const payload of payloads) {
+        for (const payload of [...payloads, 'A" data-wr-injected="yes\'&<span>WR</span>']) {
           state.data = responses();
           state.data.dimensionierung.strom_hinweis = payload;
           for (const b of Object.values(state.data.dimensionierung.marken)) {
@@ -287,6 +288,14 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
             c.charts.labels[0] = payload;
             c.jahre[0].cY = payload;
             c.foerder.treppe[0].label = payload;
+            c.system.laufzeit = payload;
+            c.ergebnis.breakEven = payload;
+            c.foerder.quote = payload;
+            c.foerder.grundPct = payload;
+            c.co2.fluege = payload;
+            c.co2.baeume = payload;
+            c.annahmen.wartungWp = payload;
+            c.annahmen.wartungFossil = payload;
             state.data.kv_bootstrap.perioden[0].label = payload;
             await page.goto(server.url + '/' + file);
             await page.waitForFunction('typeof KV_STATE!=="undefined"&&KV_STATE.last');
@@ -308,6 +317,9 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
               .toBe(payload);
           }
         }
+        expect
+          .soft(await page.locator('[data-wr-injected]').count(), 'Kein injiziertes Attribut')
+          .toBe(0);
         expect(errors).toEqual([]);
       } finally {
         await browser.close();
@@ -408,6 +420,20 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
             await page.goto(url + '/' + file);
             await page.waitForFunction('typeof KV_STATE!=="undefined"&&KV_STATE.last');
             await words(file + '-start');
+            await page.locator('[data-wz-heizart="gas"]').click();
+            await page.locator('[data-wz-grp="vmode"][data-wz-val="known"]').click();
+            await page.locator('[data-wz-grp="altgas"][data-wz-val="ja"]').click();
+            for (let step = 1; step <= 5; step++) {
+              await page.evaluate('calculate({showResults:false,scroll:false})');
+              await words(file + '-schritt-' + step);
+              await screenshot(
+                page,
+                label + '-' + version + '-' + path.basename(file) + '-schritt-' + step,
+                testInfo
+              );
+              if (step < 5) await page.locator('#wzNext').click();
+            }
+
             // Bestehender Wizard-Ereignispfad; beide Fassungen erhalten dieselben Eingaben.
             await page.evaluate('calculate({showResults:true,scroll:false})');
             await page.evaluate(() =>
@@ -460,6 +486,9 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
             ).toBe(i === 2 ? 'Heizleistung <12 kW bei A−11/W55' : 'A-11');
             await screenshot(page, label + '-basis-literal-' + i, testInfo);
           }
+          expect
+            .soft(await page.locator('[data-wr-injected]').count(), 'Kein injiziertes Attribut')
+            .toBe(0);
           expect(errors).toEqual([]);
         } finally {
           await browser.close();
