@@ -1,9 +1,16 @@
+import {
+  snapshotTestEnvironment,
+  snapshotTestRoot,
+  snapshotRuntime,
+  preserveSnapshotState,
+  copySnapshotModules,
+  finishSnapshotRoots,
+} from './helpers/snapshot-isolation.mjs';
 import { spawn } from 'node:child_process';
 import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
 import http from 'node:http';
 import net from 'node:net';
-import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -107,7 +114,7 @@ function replaceExactlyOnce(source, search, replacement, label) {
 async function buildFixture(root, upstreamUrl, removeSapiGuard = false) {
   const websiteDirectory = path.join(root, 'website');
   const apiDirectory = path.join(websiteDirectory, 'api');
-  const runtimeDirectory = path.join(root, 'rechner-runtime');
+  const runtimeDirectory = await snapshotRuntime(root);
   await fs.mkdir(apiDirectory, { recursive: true });
   await fs.mkdir(runtimeDirectory, { recursive: true });
 
@@ -115,14 +122,7 @@ async function buildFixture(root, upstreamUrl, removeSapiGuard = false) {
     await fs.copyFile(path.join(repoRoot, 'api', file), path.join(apiDirectory, file));
   }
 
-  let valuesSource = await fs.readFile(path.join(repoRoot, 'api', 'rechner-values.php'), 'utf8');
-  valuesSource = replaceExactlyOnce(
-    valuesSource,
-    /const APPS_SCRIPT_URL = '[^']+';/g,
-    `const APPS_SCRIPT_URL = '${upstreamUrl}';`,
-    'APPS_SCRIPT_URL'
-  );
-  await fs.writeFile(path.join(apiDirectory, 'rechner-values.php'), valuesSource);
+  await copySnapshotModules(repoRoot, apiDirectory, runtimeDirectory, upstreamUrl);
 
   let scheduleSource = await fs.readFile(
     path.join(repoRoot, 'api', 'werte-auffrischen.php'),
@@ -149,7 +149,7 @@ async function startPhpServer(websiteDirectory) {
   const processHandle = spawn(
     'php',
     ['-d', 'display_errors=0', '-S', `127.0.0.1:${port}`, '-t', websiteDirectory],
-    { env: process.env, stdio: ['ignore', 'pipe', 'pipe'] }
+    { env: snapshotTestEnvironment(), stdio: ['ignore', 'pipe', 'pipe'] }
   );
   phpProcesses.push(processHandle);
   const collect = (chunk) => {
@@ -202,7 +202,7 @@ async function runCli(websiteDirectory) {
     'php',
     [path.join(websiteDirectory, 'api', 'werte-auffrischen.php')],
     {
-      env: process.env,
+      env: snapshotTestEnvironment(),
       stdio: ['ignore', 'pipe', 'pipe'],
     }
   );
@@ -270,7 +270,8 @@ try {
   if (!upstreamPort) throw new Error('Die Snapshot-Attrappe konnte nicht starten.');
   const upstreamUrl = `http://127.0.0.1:${upstreamPort}/rechner`;
 
-  const mainRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'rechner-zeitplan-'));
+  await preserveSnapshotState();
+  const mainRoot = await snapshotTestRoot('rechner-zeitplan-');
   temporaryRoots.push(mainRoot);
   const fixture = await buildFixture(mainRoot, upstreamUrl);
 
@@ -370,7 +371,7 @@ try {
     `HTTP ${guardedResponse.status}, ${guardedResponse.body.trim()}`
   );
 
-  const mutantRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'rechner-zeitplan-ohne-sperre-'));
+  const mutantRoot = await snapshotTestRoot('rechner-zeitplan-ohne-sperre-');
   temporaryRoots.push(mutantRoot);
   const mutantFixture = await buildFixture(mutantRoot, upstreamUrl, true);
   const mutantServer = await startPhpServer(mutantFixture.websiteDirectory);
@@ -391,7 +392,7 @@ try {
 } finally {
   await Promise.all(phpProcesses.map((processHandle) => stopProcess(processHandle)));
   await new Promise((resolve) => upstreamServer.close(resolve));
-  await Promise.all(temporaryRoots.map((root) => fs.rm(root, { recursive: true, force: true })));
+  await finishSnapshotRoots(temporaryRoots);
 }
 
 if (process.exitCode !== 2) {

@@ -1,0 +1,41 @@
+{
+  "quelle": "HTTP-Vertragsproben tests/rechner-snapshot-nachauftrag2.py: leere Preiszellen E2 und K5, Kaltstart",
+  "preise": {
+    "wolf": [],
+    "vaillant": [
+      {
+        "klasse": "s",
+        "modell": "Vaillant VWL 55/8.1 A",
+        "kw": "5,6 kW",
+        "brutto": 29944,
+        "eigen": 7544
+      }
+    ]
+  },
+  "geraet": {
+    "deckt": true,
+    "baureihe": "CHA",
+    "modell": "Wärmepumpe",
+    "anzahl": 1,
+    "kaskade": false,
+    "leistung_kw": 8,
+    "puffer": null,
+    "brutto": null,
+    "empfohlen": true,
+    "eigenanteil": null,
+    "varianten": [
+      {
+        "deckt": true,
+        "baureihe": "CHA",
+        "modell": "Wärmepumpe",
+        "anzahl": 1,
+        "kaskade": false,
+        "leistung_kw": 8,
+        "puffer": null,
+        "brutto": null,
+        "empfohlen": true,
+        "eigenanteil": null
+      }
+    ]
+  }
+}

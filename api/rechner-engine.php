@@ -318,6 +318,15 @@ function hw_finde_tabelle(array $values, array $requiredHeaders): array
 
 function hw_kopf_index(array $table, string $name, bool $optional = false): int
 {
+    if (isset($table['columns'])) {
+        if (isset($table['columns'][$name])) {
+            return $table['columns'][$name];
+        }
+        if (!$optional) {
+            throw new RuntimeException('missing_header_' . $name);
+        }
+        return -1;
+    }
     $needle = hw_normalisiere_kopf($name);
     foreach ($table['header'] as $index => $header) {
         if ($header === $needle || str_starts_with($header, $needle)) {
@@ -388,9 +397,9 @@ function hw_price_eigen(mixed $value): float|int|null
 }
 
 /** @return list<array<string,mixed>> */
-function hw_read_price_table(array $sheets, string $name, bool $tafelOnly = false): array
+function hw_read_price_table(array $sheets, string $name, ?array $tables = null, bool $tafelOnly = false): array
 {
-    $table = hw_finde_tabelle(hw_sheet($sheets, $name), ['Klasse', 'Modell', 'Endpreis_brutto']);
+    $table = $tables[$name] ?? hw_finde_tabelle(hw_sheet($sheets, $name), ['Klasse', 'Modell', 'Endpreis_brutto']);
     $columns = [
         'klasse' => hw_kopf_index($table, 'Klasse'),
         'modell' => hw_kopf_index($table, 'Modell'),
@@ -400,14 +409,16 @@ function hw_read_price_table(array $sheets, string $name, bool $tafelOnly = fals
         'eigen' => hw_kopf_index($table, 'Eigenanteil', true),
         'proklima' => hw_kopf_index($table, 'proKlima_Eigenanteil', true),
     ];
-    $tafel = array_search('tafel', $table['header'], true);
-    $rows = $tafelOnly ? hw_tafel_rows($table) : $table['rows'];
+    // PR 148 gilt für Schema 1/2; Schema 3 behält den geprüften P3a-Vertrag.
+    $tafel = $tables === null ? array_search('tafel', $table['header'], true) : false;
+    $rows = $tables === null && $tafelOnly ? hw_tafel_rows($table) : $table['rows'];
     $out = [];
     foreach ($rows as $row) {
         if (hw_tabellen_wert($row, $columns['klasse']) === '') {
             continue;
         }
-        $brutto = hw_num(hw_tabellen_wert($row, $columns['brutto']), 0);
+        $brutto = $tables !== null ? rechner_schema3_zahl(hw_tabellen_wert($row, $columns['brutto']), true)
+            : hw_num(hw_tabellen_wert($row, $columns['brutto']), 0);
         if ($brutto <= 0) {
             continue;
         }
@@ -417,7 +428,8 @@ function hw_read_price_table(array $sheets, string $name, bool $tafelOnly = fals
             'hausgroesse' => hw_js_string(hw_tabellen_wert($row, $columns['hausgroesse'])),
             'kw' => hw_js_string(hw_tabellen_wert($row, $columns['kw'])),
             'brutto' => $brutto,
-            'eigen' => hw_price_eigen(hw_tabellen_wert($row, $columns['eigen'])),
+            'eigen' => $tables !== null ? rechner_schema3_zahl(hw_tabellen_wert($row, $columns['eigen']), true)
+                : hw_price_eigen(hw_tabellen_wert($row, $columns['eigen'])),
             'proklima' => hw_num(hw_tabellen_wert($row, $columns['proklima']), 0),
         ];
         if ($tafel !== false) {
@@ -428,28 +440,30 @@ function hw_read_price_table(array $sheets, string $name, bool $tafelOnly = fals
 }
 
 /** @return array<string,float|int> */
-function hw_get_prices(array $sheets, string $brand): array
+function hw_get_prices(array $sheets, string $brand, ?array $tables = null): array
 {
-    $table = hw_finde_tabelle(
+    $table = $tables[$brand === 'vaillant' ? 'Preise_Vaillant' : 'Preise_Wolf'] ?? hw_finde_tabelle(
         hw_sheet($sheets, $brand === 'vaillant' ? 'Preise_Vaillant' : 'Preise_Wolf'),
         ['Klasse', 'Endpreis_brutto']
     );
     $klasse = hw_kopf_index($table, 'Klasse');
     $brutto = hw_kopf_index($table, 'Endpreis_brutto');
-    $tafel = array_search('tafel', $table['header'], true);
+    // PR 148 gilt für Schema 1/2; Schema 3 behält den geprüften P3a-Vertrag.
+    $tafel = $tables === null ? array_search('tafel', $table['header'], true) : false;
     $out = [];
-    foreach (hw_tafel_rows($table) as $row) {
+    foreach ($tables === null ? hw_tafel_rows($table) : $table['rows'] as $row) {
         if (hw_tabellen_wert($row, $klasse) !== '') {
-            $out[strtolower($tafel !== false ? trim(hw_js_string(hw_tabellen_wert($row, $klasse))) : hw_js_string(hw_tabellen_wert($row, $klasse)))] = hw_num(hw_tabellen_wert($row, $brutto), 0);
+            $out[strtolower($tafel !== false ? trim(hw_js_string(hw_tabellen_wert($row, $klasse))) : hw_js_string(hw_tabellen_wert($row, $klasse)))] = $tables !== null ? rechner_schema3_zahl(hw_tabellen_wert($row, $brutto), true)
+                : hw_num(hw_tabellen_wert($row, $brutto), 0);
         }
     }
     return $out;
 }
 
 /** @return list<array<string,mixed>> */
-function hw_get_catalog(array $sheets): array
+function hw_get_catalog(array $sheets, ?array $tables = null): array
 {
-    $table = hw_finde_tabelle(hw_sheet($sheets, 'Geräte_Katalog'), ['Marke', 'Modell', 'Kaskade']);
+    $table = $tables['Geräte_Katalog'] ?? hw_finde_tabelle(hw_sheet($sheets, 'Geräte_Katalog'), ['Marke', 'Modell', 'Kaskade']);
     $columns = [
         'marke' => hw_kopf_index($table, 'Marke'),
         'modell' => hw_kopf_index($table, 'Modell'),
@@ -515,14 +529,17 @@ function hw_get_catalog(array $sheets): array
             'herstellerfreigabeW35' => $herstellerfreigabeW35 === '' || !is_numeric($herstellerfreigabeW35)
                 ? null
                 : hw_num($herstellerfreigabeW35, 0),
-            'brutto' => hw_num(hw_tabellen_wert($row, $columns['brutto']), 0),
+            'brutto' => $tables !== null && rechner_schema3_auswahl(hw_tabellen_wert($row, $columns['auswahl']))
+                ? rechner_schema3_zahl(hw_tabellen_wert($row, $columns['brutto']), true)
+                : hw_num(hw_tabellen_wert($row, $columns['brutto']), 0),
             'stand' => hw_js_string(hw_tabellen_wert($row, $columns['stand'])),
             'puffer' => hw_js_string(hw_tabellen_wert($row, $columns['puffer'])),
             'pufferLiter' => $pufferLiterRaw === '' || !is_numeric($pufferLiterRaw) ? null : hw_num($pufferLiterRaw, 0),
             'pufferGroesser' => hw_js_string(hw_tabellen_wert($row, $columns['pufferGroesser'])),
             'sonderplanung' => $columns['auswahl'] < 0
                 ? null
-                : strtolower(trim(hw_js_string(hw_tabellen_wert($row, $columns['auswahl'])))) !== 'ja',
+                : ($tables !== null ? !rechner_schema3_auswahl(hw_tabellen_wert($row, $columns['auswahl']))
+                    : strtolower(trim(hw_js_string(hw_tabellen_wert($row, $columns['auswahl'])))) !== 'ja'),
             'pufferOhne' => hw_tabellen_wert($row, $columns['pufferOhne']) === ''
                 ? null
                 : strtolower(hw_js_string(hw_tabellen_wert($row, $columns['pufferOhne']))) === 'ja',
@@ -875,13 +892,14 @@ function hw_match_catalog_varianten(
     float|int $nat,
     float|int $markenHeizstab,
     float|int $kaskadenToleranz,
-    float|int $websiteMindestanteil = 0
+    float|int $websiteMindestanteil = 0,
+    ?array $tables = null
 ): array
 {
     $grenze = static fn (array $item): float|int => $heizsystem === 'heizkoerper'
         ? hw_grenze_interp($item['grenzeW55'], $item['grenzeW55a10'], $nat)
         : hw_grenze_interp($item['grenzeW35'], $item['grenzeW35a10'], $nat);
-    $items = array_values(array_filter(hw_get_catalog($sheets), static fn (array $item): bool => $item['marke'] === $brand));
+    $items = array_values(array_filter(hw_get_catalog($sheets, $tables), static fn (array $item): bool => $item['marke'] === $brand));
 
     $groessteEinzelgrenze = [];
     foreach ($items as $item) {
@@ -943,18 +961,19 @@ function hw_match_catalog(
     string $heizsystem,
     float|int $nat,
     float|int $markenHeizstab,
-    float|int $kaskadenToleranz
+    float|int $kaskadenToleranz,
+    ?array $tables = null
 ): ?array {
     return hw_match_catalog_varianten(
-        $sheets, $brand, $auslegung, $heizsystem, $nat, $markenHeizstab, $kaskadenToleranz
+        $sheets, $brand, $auslegung, $heizsystem, $nat, $markenHeizstab, $kaskadenToleranz, 0, $tables
     )[0] ?? null;
 }
 
 // T901: traegt das Blatt Geraete_Katalog die Spalte Sonderplanung? Ohne sie bleiben Kaskaden ueber zwei Geraete waehlbar, und die
 // Antwort sagt das ausdruecklich (sonderplanung_kennzeichnung 'fehlt' plus Hinweis), statt still zu filtern oder still zu schweigen.
-function hw_sonderplanung_gekennzeichnet(array $sheets): bool
+function hw_sonderplanung_gekennzeichnet(array $sheets, ?array $tables = null): bool
 {
-    $katalog = hw_get_catalog($sheets);
+    $katalog = hw_get_catalog($sheets, $tables);
     return $katalog !== [] && $katalog[0]['sonderplanung'] !== null;
 }
 
@@ -1114,7 +1133,7 @@ function hw_catalog_result(
 }
 
 /** @return array<string,mixed> */
-function hw_dimensionierung(array $query, array $sheets): array
+function hw_dimensionierung(array $query, array $sheets, ?array $tables = null): array
 {
     $d = hw_read_kv($sheets, 'Dimensionierung');
     // Grenzen der Bedienoberflaeche serverseitig durchsetzen: der Schieberegler fuer die
@@ -1264,13 +1283,14 @@ function hw_dimensionierung(array $query, array $sheets): array
             $markenHeizstab,
             hw_get_num($d, 'kaskaden_toleranz_kw', 0.5),
             // Treiber im Blatt Dimensionierung, Schluessel website_mindestanteil; Rueckfall 0,80 (GF 14.10.2026).
-            hw_get_num($d, 'website_mindestanteil', 0.8)
+            hw_get_num($d, 'website_mindestanteil', 0.8),
+            $tables
         );
         $varianten = [];
         foreach ($matches as $index => $match) {
             $result = hw_catalog_result(
                 $match,
-                hw_read_price_table($sheets, $brand === 'vaillant' ? 'Preise_Vaillant' : 'Preise_Wolf'),
+                hw_read_price_table($sheets, $brand === 'vaillant' ? 'Preise_Vaillant' : 'Preise_Wolf', $tables),
                 $auslegung,
                 hw_get_num($d, 'sollband_oben', 0.8),
                 [
@@ -1290,7 +1310,7 @@ function hw_dimensionierung(array $query, array $sheets): array
             $marken[$brand] = ['deckt' => false, 'varianten' => []];
         }
     }
-    $sonderplanungGekennzeichnet = hw_sonderplanung_gekennzeichnet($sheets);
+    $sonderplanungGekennzeichnet = hw_sonderplanung_gekennzeichnet($sheets, $tables);
     return [
         'bedarf' => $auslegung,
         'fuehrung' => $wwLeistung > $heizlast ? 'warmwasser' : 'heizung',
@@ -1504,7 +1524,7 @@ const HW_FOERDER_HINWEIS_MEHRERE_WE = 'Bei Gebäuden mit mehreren Wohneinheiten 
 const HW_REFORM_DECKEL_PCT_STANDARD = 70;
 
 /** @return array<string,mixed> */
-function hw_foerder_calc(array $query, array $f, string $date, array $perioden, ?callable $onFallback = null): array
+function hw_foerder_calc(array $query, array $f, string $date, array $perioden, ?callable $onFallback = null, int|float|null $snapshotPreis = null): array
 {
     $period = hw_periode_fuer($date, $perioden);
     $periodenWerte = hw_foerder_periodenwerte($period, $f, $onFallback);
@@ -1520,7 +1540,8 @@ function hw_foerder_calc(array $query, array $f, string $date, array $perioden, 
     $kind = $kindValue === 'ja' || $kindValue === 'true';
     $euOk = strtolower(hw_query_string($query, 'eu', 'ja')) !== 'nein';
     $gemeinde = strtolower(hw_query_string($query, 'gemeinde'));
-    $preis = hw_int($query['preis'] ?? null, 34510);
+    // Gebundene Schema-3-Zahl nicht erneut als lokalisierten Ganzzahltext lesen.
+    $preis = $snapshotPreis ?? hw_int($query['preis'] ?? null, 34510);
     $hinweise = [];
 
     $klimaBonus = in_array($heizung, ['oel', 'kohle', 'nachtspeicher', 'gas-etage'], true);
@@ -1883,25 +1904,30 @@ function hw_foerder_params_mit_rueckfall(array $params, array $f, ?callable $onF
 }
 
 /** @return array<string,mixed> */
-function hw_foerderung(array $query, array $sheets): array
+function hw_foerderung(array $query, array $sheets, ?array $tables = null): array
 {
     $f = hw_read_kv($sheets, 'Förder_Parameter');
     $onFallback = hw_foerder_rueckfall_logger();
     $params = hw_foerder_params_mit_rueckfall(hw_kv_get_params($sheets), $f, $onFallback);
     $brand = strtolower(hw_query_string($query, 'marke', 'wolf'));
-    $prices = hw_get_prices($sheets, $brand);
+    $prices = hw_get_prices($sheets, $brand, $tables);
     $wpTyp = strtolower(hw_query_string($query, 'wpTyp', 'm'));
     $manual = array_key_exists('preisManuell', $query) && $query['preisManuell'] !== '';
-    $preis = $manual ? hw_int($query['preisManuell'], 34510) : (($prices[$wpTyp] ?? 0) ?: 34510);
+    if ($tables !== null && !$manual && ($prices[$wpTyp] ?? null) === null) {
+        throw new RuntimeException('snapshot_preis_fehlt');
+    }
+    $preis = $tables !== null && !$manual ? $prices[$wpTyp]
+        : ($manual ? hw_int($query['preisManuell'], 34510) : (($prices[$wpTyp] ?? 0) ?: 34510));
     $args = $query;
     $args['preis'] = $preis;
+    $snapshotPreis = $tables !== null && !$manual ? rechner_schema3_zahl($preis) : null;
     $perioden = hw_foerder_perioden_aus_kv($params);
     // Der Antragszeitpunkt kommt jetzt aus der Anfrage, nicht mehr fest von der Serveruhr. Bis zum
     // 20.08.2026 rechnete diese Seite IMMER auf heute und versprach damit jedem, der spaeter
     // beantragt, zu viel: der Kostenvergleich liess den Zeitraum schon waehlen, diese Seite nicht.
     $antrag = hw_antragszeitraum($query, $params);
     $install = hw_installationsbeginn($query['installBeginn'] ?? null, $antrag['ab']);
-    $out = hw_foerder_calc($args, $f, $antrag['ab'] . 'T12:00:00', $perioden, $onFallback);
+    $out = hw_foerder_calc($args, $f, $antrag['ab'] . 'T12:00:00', $perioden, $onFallback, $snapshotPreis);
     if ($brand === 'vaillant') {
         $out['vorlaeufig'] = true;
     }
@@ -1916,7 +1942,7 @@ function hw_foerderung(array $query, array $sheets): array
     $treppe = [];
     foreach ($params['periodenReihenfolge'] ?? [] as $id) {
         $period = $params['perioden'][$id];
-        $stufe = hw_foerder_calc($args, $f, hw_js_string($period['gueltigAb']) . 'T12:00:00', $perioden, $onFallback);
+        $stufe = hw_foerder_calc($args, $f, hw_js_string($period['gueltigAb']) . 'T12:00:00', $perioden, $onFallback, $snapshotPreis);
         $treppe[] = [
             'periode' => $id,
             'label' => $stufe['periodeLabel'],
@@ -2103,7 +2129,7 @@ function hw_kv_bootstrap(array $sheets): array
 }
 
 /** @return array<string,mixed> */
-function hw_preise(array $sheets): array
+function hw_preise(array $sheets, ?array $tables = null): array
 {
     $filter = static function (array $rows): array {
         return array_map(static fn (array $row): array => [
@@ -2112,8 +2138,8 @@ function hw_preise(array $sheets): array
         ] + (array_key_exists('tafel', $row) ? ['tafel' => $row['tafel']] : []), $rows);
     };
     return [
-        'wolf' => $filter(hw_read_price_table($sheets, 'Preise_Wolf', true)),
-        'vaillant' => $filter(hw_read_price_table($sheets, 'Preise_Vaillant', true)),
+        'wolf' => $filter(hw_read_price_table($sheets, 'Preise_Wolf', $tables, true)),
+        'vaillant' => $filter(hw_read_price_table($sheets, 'Preise_Vaillant', $tables, true)),
     ];
 }
 
@@ -2508,13 +2534,14 @@ function hw_health(array $sheets): array
 }
 
 /** @return array<string,mixed> */
-function hw_rechner_route(string $action, array $query, array $sheets): array
+function hw_rechner_route(string $action, array $query, array $sheets, int $schemaVersion = 2): array
 {
+    $tables = $schemaVersion === 3 ? rechner_schema3_tabellen_aufloesen($sheets) : null;
     return match ($action) {
-        'dimensionierung' => hw_dimensionierung($query, $sheets),
+        'dimensionierung' => hw_dimensionierung($query, $sheets, $tables),
         'klima' => hw_klima($query, $sheets),
-        'foerderung' => hw_foerderung($query, $sheets),
-        'preise' => hw_preise($sheets),
+        'foerderung' => hw_foerderung($query, $sheets, $tables),
+        'preise' => hw_preise($sheets, $tables),
         'kostenvergleich' => hw_kostenvergleich($query, $sheets),
         'kv_bootstrap' => hw_kv_bootstrap($sheets),
         'fv_plaetze' => hw_fv_plaetze($sheets),

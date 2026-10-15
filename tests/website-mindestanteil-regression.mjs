@@ -6,7 +6,10 @@ import fs from 'node:fs';
 const php = fs.readFileSync('api/rechner-engine.php', 'utf8');
 const gs = fs.readFileSync('apps-script/rechner-backend/Code.gs', 'utf8');
 
-assert.match(php, /float\|int \$websiteMindestanteil = 0\n\): array/);
+assert.match(
+  php,
+  /float\|int \$websiteMindestanteil = 0(?:,\n    \?array \$tables = null)?\n\): array/
+);
 assert.match(php, /&& \$leistung >= \$websiteMindestanteil \* \$auslegung;/);
 assert.match(php, /hw_get_num\(\$d, 'website_mindestanteil', 0\.8\)/);
 assert.match(gs, /function matchCatalogVarianten_\([^)]*websiteMindestanteil\)/);

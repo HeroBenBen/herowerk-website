@@ -145,13 +145,15 @@ pruefe(
 // 5. Der Filter ist an der Ausgabestelle eingehaengt. Eine Funktion, die niemand ruft,
 //    ist keine Sperre.
 const eingehaengt =
-  /\$result = rechner_innenfelder_entfernen\(\$result\);\s*\n\s*echo json_encode\(\$result/.test(
+  /\$result = rechner_innenfelder_entfernen\(\$result\);\s*\$jsonFlags = JSON_UNESCAPED_UNICODE \| JSON_UNESCAPED_SLASHES \| JSON_THROW_ON_ERROR;\s*echo \$snapshot\['schemaVersion'\] === 3 \? rechner_json_encode_verlustfrei\(\$result, \$jsonFlags\)\s*:\s*json_encode\(\$result, \$jsonFlags\);/.test(
     quelle
   );
 pruefe(
   'Filter ist vor der einzigen Ausgabestelle eingehaengt',
   eingehaengt,
-  eingehaengt ? 'Aufruf steht direkt vor json_encode' : 'AUFRUF FEHLT'
+  eingehaengt
+    ? 'Beide Schema-Ausgabewege verwenden ausschließlich das gefilterte Ergebnis'
+    : 'AUFRUF FEHLT'
 );
 
 // 6. Die Sperre steht scharf.

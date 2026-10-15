@@ -336,5 +336,7 @@ fall(pruefnamen[13], () => {
 
 const rot = ergebnisse.filter((ergebnis) => !ergebnis.bestanden);
 console.log(`\n${ergebnisse.length - rot.length} von ${ergebnisse.length} Prüfungen grün.`);
-fs.rmSync(wurzel, { recursive: true, force: true });
+if (process.env.P3A_KEEP_ARTIFACTS !== '1') {
+  fs.rmSync(wurzel, { recursive: true, force: true });
+}
 if (rot.length) process.exit(1);

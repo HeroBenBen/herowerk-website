@@ -438,9 +438,11 @@ try {
 
 $action = strtolower((string) ($_GET['action'] ?? 'health'));
 try {
-    $result = hw_rechner_route($action, $_GET, $snapshot['sheets']);
+    $result = hw_rechner_route($action, $_GET, $snapshot['sheets'], $snapshot['schemaVersion']);
     $result = rechner_innenfelder_entfernen($result);
-    echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
+    $jsonFlags = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR;
+    echo $snapshot['schemaVersion'] === 3 ? rechner_json_encode_verlustfrei($result, $jsonFlags)
+        : json_encode($result, $jsonFlags);
 } catch (Throwable $error) {
     error_log('HeroWerk Rechner: calculation_failed action=' . $action . ' message=' . $error->getMessage());
     rechner_fail(500, 'calculator_temporarily_unavailable');

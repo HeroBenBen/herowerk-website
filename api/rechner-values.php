@@ -18,7 +18,9 @@ const RECHNER_SNAPSHOT_MAX_QUIET_AGE_SECONDS = 86400;
 const RECHNER_SNAPSHOT_FETCH_TIMEOUT_SECONDS = 12;
 
 // /website/api/rechner-values.php -> privater Geschwisterordner /rechner-runtime.
-const RECHNER_RUNTIME_DIR = __DIR__ . '/../../rechner-runtime';
+if (!defined('RECHNER_RUNTIME_DIR')) {
+    define('RECHNER_RUNTIME_DIR', __DIR__ . '/../../rechner-runtime');
+}
 const RECHNER_SNAPSHOT_FILE = RECHNER_RUNTIME_DIR . '/werte_snapshot.json';
 const RECHNER_SNAPSHOT_KEY_FILE = RECHNER_RUNTIME_DIR . '/werte_snapshot_key.txt';
 const RECHNER_SNAPSHOT_LOCK_FILE = RECHNER_RUNTIME_DIR . '/werte_snapshot.lock';
@@ -30,6 +32,9 @@ final class RechnerValuesException extends RuntimeException
         parent::__construct($detail !== '' ? $detail : $publicCode);
     }
 }
+
+require_once __DIR__ . '/rechner-snapshot-integritaet.php';
+require_once __DIR__ . '/rechner-snapshot-meldung.php';
 
 /** @return list<string> */
 function rechner_snapshot_sheet_names(int $schemaVersion = 2): array
@@ -46,7 +51,62 @@ function rechner_snapshot_sheet_names(int $schemaVersion = 2): array
     if ($schemaVersion >= 2) {
         $sheets[] = 'Geraete_Kennlinien';
     }
-    return array_merge($sheets, ['Klima_PLZ', 'Fördervorschuss']);
+    return array_merge($sheets, ['Klima_PLZ', 'Fördervorschuss'],
+        $schemaVersion === 3 ? ['Referenz_Laeufe'] : []);
+}
+
+/** Private Konfiguration; fehlende Datei behält die heutige Produktionsvorgabe. */
+function rechner_config(): array
+{
+    $file = RECHNER_RUNTIME_DIR . '/rechner-config.json';
+    clearstatcache(true, $file);
+    $entries = @scandir(RECHNER_RUNTIME_DIR);
+    if ($entries === false) {
+        // Ein nachweislich noch nicht angelegter Laufzeitordner enthält keine Konfiguration.
+        $parentEntries = @scandir(dirname(RECHNER_RUNTIME_DIR));
+        if (is_array($parentEntries) && !in_array(basename(RECHNER_RUNTIME_DIR), $parentEntries, true)) {
+            return [];
+        }
+        throw new RechnerValuesException('snapshot_config_invalid');
+    }
+    if (!in_array('rechner-config.json', $entries, true)) {
+        return [];
+    }
+    if (!@is_file($file) || !@is_readable($file)) {
+        throw new RechnerValuesException('snapshot_config_invalid');
+    }
+    $raw = @file_get_contents($file);
+    try {
+        $config = $raw === false ? null : json_decode($raw, false, 512, JSON_THROW_ON_ERROR);
+    } catch (JsonException $error) {
+        throw new RechnerValuesException('snapshot_config_invalid');
+    }
+    if (!$config instanceof stdClass) {
+        throw new RechnerValuesException('snapshot_config_invalid');
+    }
+    $config = (array) $config;
+    foreach (['apps_script_url', 'mail_adapter'] as $key) {
+        if (array_key_exists($key, $config) && (!is_string($config[$key]) || trim($config[$key]) === '')) {
+            throw new RechnerValuesException('snapshot_config_invalid');
+        }
+    }
+    if (isset($config['mail_adapter']) && !str_starts_with($config['mail_adapter'], '/')) {
+        throw new RechnerValuesException('snapshot_config_invalid');
+    }
+    return $config;
+}
+
+function rechner_apps_script_url(): string
+{
+    $url = rechner_config()['apps_script_url'] ?? APPS_SCRIPT_URL;
+    $parts = parse_url($url);
+    if (!is_array($parts) || !isset($parts['host']) || isset($parts['user']) || isset($parts['pass'])
+        || isset($parts['query']) || isset($parts['fragment'])
+        || (($parts['scheme'] ?? '') !== 'https'
+            && !(($parts['scheme'] ?? '') === 'http' && $parts['host'] === '127.0.0.1'))) {
+        throw new RechnerValuesException('snapshot_config_invalid');
+    }
+    return $url;
 }
 
 function rechner_snapshot_key(): string
@@ -69,6 +129,22 @@ function rechner_snapshot_key(): string
     return $key;
 }
 
+/** JSON-Objekte mit Zahlenschlüsseln dürfen nicht als Tabellenlisten durchgehen. */
+function rechner_schema3_listen_pruefen(string $body): void
+{
+    $document = json_decode($body, false, 512, JSON_THROW_ON_ERROR);
+    foreach ($document->sheets as $rows) {
+        if (!is_array($rows)) {
+            throw new RechnerValuesException('snapshot_zeile_ungueltig');
+        }
+        foreach ($rows as $row) {
+            if (!is_array($row)) {
+                throw new RechnerValuesException('snapshot_zeile_ungueltig');
+            }
+        }
+    }
+}
+
 /** @return array{service:string,schemaVersion:int,sheets:array<string,array<int,array<int,mixed>>>} */
 function rechner_validate_snapshot(string $body): array
 {
@@ -82,17 +158,30 @@ function rechner_validate_snapshot(string $body): array
         throw new RechnerValuesException('snapshot_schema_invalid');
     }
     $schemaVersion = $snapshot['schemaVersion'] ?? null;
-    if (($snapshot['service'] ?? null) !== 'werte_snapshot'
-        || !in_array($schemaVersion, [1, 2], true)
-        || !is_array($snapshot['sheets'] ?? null)
-        || array_keys($snapshot['sheets']) !== rechner_snapshot_sheet_names($schemaVersion)) {
-        throw new RechnerValuesException('snapshot_schema_invalid');
-    }
-
-    foreach ($snapshot['sheets'] as $rows) {
-        if (!is_array($rows)) {
+    try {
+        if (($snapshot['service'] ?? null) !== 'werte_snapshot'
+            || !in_array($schemaVersion, [1, 2, 3], true)
+            || !is_array($snapshot['sheets'] ?? null)
+            || array_keys($snapshot['sheets']) !== rechner_snapshot_sheet_names($schemaVersion)) {
             throw new RechnerValuesException('snapshot_schema_invalid');
         }
+
+        foreach ($snapshot['sheets'] as $rows) {
+            if (!is_array($rows)) {
+                throw new RechnerValuesException('snapshot_schema_invalid');
+            }
+        }
+
+        if ($schemaVersion === 3) {
+            rechner_schema3_listen_pruefen($body);
+            rechner_pruefe_integritaet($snapshot);
+            $snapshot = rechner_schema3_geld_normalisieren($snapshot);
+        }
+    } catch (RechnerValuesException $error) {
+        if ($schemaVersion === 3) {
+            rechner_snapshot_melden($error->publicCode);
+        }
+        throw $error;
     }
 
     return $snapshot;
@@ -140,7 +229,7 @@ function rechner_fetch_snapshot(string $key): array
         'key' => $key,
         'origin' => 'https://herowerk.de',
     ], '', '&', PHP_QUERY_RFC3986);
-    $response = rechner_curl_get(APPS_SCRIPT_URL . '?' . $query, RECHNER_SNAPSHOT_FETCH_TIMEOUT_SECONDS);
+    $response = rechner_curl_get(rechner_apps_script_url() . '?' . $query, RECHNER_SNAPSHOT_FETCH_TIMEOUT_SECONDS);
 
     if ($response['errno'] !== 0) {
         throw new RechnerValuesException('snapshot_upstream_unreachable', $response['error']);
@@ -153,14 +242,16 @@ function rechner_fetch_snapshot(string $key): array
 }
 
 /** @param array<string,mixed> $snapshot */
-function rechner_write_snapshot_atomic(array $snapshot): void
+function rechner_write_snapshot_atomic(array $snapshot): array
 {
     if (!is_dir(RECHNER_RUNTIME_DIR) || !is_writable(RECHNER_RUNTIME_DIR)) {
         throw new RechnerValuesException('snapshot_runtime_not_writable');
     }
 
     try {
-        $body = json_encode($snapshot, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
+        $flags = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR;
+        $body = ($snapshot['schemaVersion'] ?? null) === 3
+            ? rechner_json_encode_verlustfrei($snapshot, $flags) : json_encode($snapshot, $flags);
     } catch (JsonException $error) {
         throw new RechnerValuesException('snapshot_encode_failed', $error->getMessage());
     }
@@ -182,17 +273,47 @@ function rechner_write_snapshot_atomic(array $snapshot): void
         @unlink($temporary);
         throw new RechnerValuesException('snapshot_write_failed');
     }
-    fflush($handle);
-    if (function_exists('fsync')) {
-        fsync($handle);
+    if (!fflush($handle) || (function_exists('fsync') && !fsync($handle))) {
+        fclose($handle);
+        throw new RechnerValuesException('snapshot_flush_failed');
     }
-    fclose($handle);
-    chmod($temporary, 0600);
+    if (!fclose($handle)) {
+        throw new RechnerValuesException('snapshot_close_failed');
+    }
+    if (!chmod($temporary, 0600)) {
+        throw new RechnerValuesException('snapshot_chmod_failed');
+    }
+
+    // Genau die gespeicherten Bytes prüfen. Danach weder umformen noch neu schreiben.
+    try {
+        $stored = rechner_read_snapshot_path($temporary, $body);
+    } catch (RechnerValuesException $error) {
+        // Fachfehler meldet der gemeinsame Validator bereits. Lesefehler kennt erst der Schreiber.
+        if (($snapshot['schemaVersion'] ?? null) === 3 && in_array($error->publicCode,
+            ['snapshot_json_invalid', 'snapshot_read_failed', 'snapshot_written_bytes_differ'], true)) {
+            rechner_snapshot_melden($error->publicCode);
+        }
+        throw $error;
+    }
 
     if (!rename($temporary, RECHNER_SNAPSHOT_FILE)) {
         @unlink($temporary);
         throw new RechnerValuesException('snapshot_rename_failed');
     }
+    return $stored;
+}
+
+/** Gemeinsamer Leser für endgültige Datei und Kandidat vor dem atomaren Ersetzen. */
+function rechner_read_snapshot_path(string $path, ?string $expectedBytes = null): array
+{
+    $body = @file_get_contents($path);
+    if ($body === false) {
+        throw new RechnerValuesException('snapshot_read_failed');
+    }
+    if ($expectedBytes !== null && $body !== $expectedBytes) {
+        throw new RechnerValuesException('snapshot_written_bytes_differ');
+    }
+    return rechner_validate_snapshot($body);
 }
 
 /** @return array{service:string,schemaVersion:int,sheets:array<string,array<int,array<int,mixed>>>}|null */
@@ -202,16 +323,11 @@ function rechner_read_snapshot_file(): ?array
         return null;
     }
 
-    $body = file_get_contents(RECHNER_SNAPSHOT_FILE);
-    if ($body === false) {
-        error_log('HeroWerk Rechner: snapshot_read_failed');
-        return null;
-    }
-
     try {
-        return rechner_validate_snapshot($body);
+        return rechner_read_snapshot_path(RECHNER_SNAPSHOT_FILE);
     } catch (RechnerValuesException $error) {
-        error_log('HeroWerk Rechner: snapshot_file_invalid code=' . $error->publicCode);
+        error_log($error->publicCode === 'snapshot_read_failed' ? 'HeroWerk Rechner: snapshot_read_failed'
+            : 'HeroWerk Rechner: snapshot_file_invalid code=' . $error->publicCode);
         return null;
     }
 }
@@ -375,8 +491,8 @@ function rechner_load_snapshot(): array
 
     try {
         $fresh = rechner_fetch_snapshot($key);
-        rechner_write_snapshot_atomic($fresh);
-        return $fresh;
+        $stored = rechner_write_snapshot_atomic($fresh);
+        return $fresh['schemaVersion'] === 3 ? $stored : $fresh;
     } catch (RechnerValuesException $error) {
         error_log('HeroWerk Rechner: snapshot_refresh_failed code=' . $error->publicCode);
         throw new RechnerValuesException('snapshot_cold_start_failed', $error->publicCode);
@@ -386,7 +502,7 @@ function rechner_load_snapshot(): array
 /** @return array{body:string,status:int} */
 function rechner_forward_google(string $rawQuery): array
 {
-    $target = APPS_SCRIPT_URL . ($rawQuery !== '' ? '?' . $rawQuery : '');
+    $target = rechner_apps_script_url() . ($rawQuery !== '' ? '?' . $rawQuery : '');
     $response = rechner_curl_get($target, RECHNER_GOOGLE_FORWARD_TIMEOUT_SECONDS);
     if ($response['errno'] !== 0) {
         throw new RechnerValuesException('upstream_unreachable', $response['error']);

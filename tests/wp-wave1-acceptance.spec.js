@@ -179,7 +179,8 @@ test('Zinsvorgabe, Touch-Sperre und Bootstrap-Kommunikation', async ({ page }) =
     element.dispatchEvent(new window.Event('input', { bubbles: true }));
     element.dispatchEvent(new window.Event('change', { bubbles: true }));
   });
-  await expect(page.locator('#wzChip_kredZins')).toHaveText('Ihre Angabe');
+  // Bestehende Ansprache seit 3bd5b67: auch eigene Werte werden geduzt.
+  await expect(page.locator('#wzChip_kredZins')).toHaveText('Deine Angabe');
   await page.locator('#fEinkSlider').evaluate((element) => {
     /** @type {HTMLInputElement} */ (element).value = '60000';
     element.dispatchEvent(new window.Event('input', { bubbles: true }));
@@ -189,11 +190,13 @@ test('Zinsvorgabe, Touch-Sperre und Bootstrap-Kommunikation', async ({ page }) =
   await expect(page.locator('#vKredZins')).toHaveText('5,25 %');
 });
 
-test('Beratermodus überschreibt den Zins nicht bei Einkommensänderung', async ({ page }) => {
+test('Öffentliche Seite ignoriert den entfernten Beratermodus', async ({ page }) => {
   await page.goto(`${baseURL}/kostenvergleich-waermepumpe?modus=berater`, {
     waitUntil: 'domcontentloaded',
   });
   await page.waitForFunction(() => KV_STATE.bootstrap && KV_STATE.last);
+  // GF-Entscheid in dc7ea6d: Der Adressparameter schaltet keinen Beratermodus frei.
+  await expect(page.locator('body')).toHaveClass(/wz-customer/);
   const zins = page.locator('#kredZins');
   await expect(zins).toHaveValue('0.98');
   await page.locator('#fEinkSlider').evaluate((element) => {
@@ -201,7 +204,8 @@ test('Beratermodus überschreibt den Zins nicht bei Einkommensänderung', async 
     element.dispatchEvent(new window.Event('input', { bubbles: true }));
     element.dispatchEvent(new window.Event('change', { bubbles: true }));
   });
-  await expect(zins).toHaveValue('0.98');
+  await expect(zins).toHaveValue('4.1');
+  await expect(page.locator('#vKredZins')).toHaveText('4,10 %');
 });
 
 test('Stand-Datum wird ausschließlich aus dem Bootstrap formatiert', async ({ page }) => {
@@ -246,9 +250,12 @@ for (const viewport of [
         waitUntil: 'domcontentloaded',
       });
       await page.waitForFunction(() => document.body.classList.contains('wz-customer'));
-      await expect(
-        page.getByRole('heading', { name: 'Was dieser Rechner für dich macht' })
-      ).toBeVisible();
+      const introHeading = page.locator('#rechner-einleitung');
+      await expect(introHeading).toHaveText('Was dieser Rechner für dich macht');
+      // Mobile Sichtfreigabe in ca32c10: Überschrift ausgeblendet, Einleitung bleibt.
+      if (viewport.name === 'mobil') await expect(introHeading).toBeHidden();
+      else await expect(introHeading).toBeVisible();
+      await expect(page.locator('section[aria-labelledby="rechner-einleitung"]')).toBeVisible();
       await expect(page.locator('.page-head .lead')).toContainText(
         'über 20 Jahre, den Zeitraum kannst du selbst anpassen'
       );
