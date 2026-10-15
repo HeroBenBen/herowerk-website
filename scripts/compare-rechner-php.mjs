@@ -139,6 +139,18 @@ function buildCases() {
   return cases.slice(0, CASE_LIMIT);
 }
 
+// Nur die ausdrücklich freigegebenen öffentlichen Innenfelder entfernen.
+function withoutInternalFields(value) {
+  if (Array.isArray(value)) return value.map(withoutInternalFields);
+  if (value && typeof value === 'object')
+    return Object.fromEntries(
+      Object.entries(value)
+        .filter(([key]) => key !== 'leistung_kw' && key !== 'puffer')
+        .map(([key, item]) => [key, withoutInternalFields(item)])
+    );
+  return value;
+}
+
 function publicGoogleShape(action, payload) {
   if (action === 'preise') {
     for (const brand of ['wolf', 'vaillant']) {
@@ -159,7 +171,7 @@ function publicGoogleShape(action, payload) {
     delete payload.etaMatrix.textEigen;
     payload.schaetzung = { einheitFaktor: payload.schaetzung.einheitFaktor };
   }
-  return payload;
+  return withoutInternalFields(payload);
 }
 
 function firstDifference(expected, actual, path = '$') {

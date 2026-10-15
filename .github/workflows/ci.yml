@@ -86,6 +86,7 @@ jobs:
       - run: npx tsc --noEmit  # JSDoc-Type-Check via tsconfig.json mit allowJs+checkJs
       - run: npm run verify:website-gates
       - run: npm run verify:tafel
+      - run: npm run verify:a11
       - run: npm run verify:rechner-snapshot-nachlauf
       - run: npm run verify:rechner-snapshot-integritaet
       - run: php -n tests/rechner-snapshot-integritaet.php --ohne-nfc
@@ -220,6 +221,9 @@ jobs:
     needs: [lint]
     steps:
       - uses: actions/checkout@v5
+        with:
+          # A11 vergleicht die Browserausgabe mit dem festen Kopf e359ec7.
+          fetch-depth: 0
       - uses: actions/setup-node@v5
       - run: npm ci
       - run: npx playwright install --with-deps
