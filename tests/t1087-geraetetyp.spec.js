@@ -219,6 +219,19 @@ for (const width of [375, 1440]) {
         await testInfo.attach(brand + '-' + key, { path: file, contentType: 'image/png' });
         if (brand === 'vaillant' && (key === 's' || key === 'xl')) {
           await expectManufacturerTabs(page, minimumLabel(selected.vaillant));
+          // Die mobile Kartenleiste kann noch die Position der vorherigen Marke haben.
+          await page.locator('#paCards .pa-card').nth(i).scrollIntoViewIfNeeded();
+          await expect
+            .poll(() =>
+              page
+                .locator('#paCards .pa-card')
+                .nth(i)
+                .evaluate((el) => {
+                  const bounds = el.getBoundingClientRect();
+                  return bounds.left >= 0 && bounds.right <= window.innerWidth;
+                })
+            )
+            .toBe(true);
           await page.evaluate(() => window.scrollTo(0, 0));
           await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
           const full = path.join(out, 'seite-' + brand + '-' + key + '.png');
