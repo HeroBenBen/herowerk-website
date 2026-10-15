@@ -12,6 +12,7 @@ import { geraeteKatalogZeilen } from './fixtures/geraete-katalog-2026-08-14.mjs'
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const basis = '99a95ae9b386dd76763e60577b9cde6172c27598';
 const nachauftragBasis = 'e359ec7d28d462cd97ae6af78c4e262a40182d4d';
+const nachauftrag2Basis = '2abe040f235b4fe50212518f599e0946b46da364';
 const fixture = JSON.parse(
   await fs.readFile(path.join(repo, 'tests/fixtures/a11-oeffentliche-antworten.json'), 'utf8')
 );
@@ -156,10 +157,15 @@ async function start(mode) {
   await fs.mkdir(runtime, { recursive: true });
   for (const file of await fs.readdir(path.join(repo, 'api'))) {
     if (!file.endsWith('.php')) continue;
-    let source = ['basis', 'prior'].includes(mode)
+    let source = ['basis', 'prior', 'prior2'].includes(mode)
       ? execFileSync(
           'git',
-          ['show', (mode === 'prior' ? nachauftragBasis : basis) + ':api/' + file],
+          [
+            'show',
+            (mode === 'prior2' ? nachauftrag2Basis : mode === 'prior' ? nachauftragBasis : basis) +
+              ':api/' +
+              file,
+          ],
           { cwd: repo, encoding: 'utf8' }
         )
       : await fs.readFile(path.join(repo, 'api', file), 'utf8');
@@ -179,6 +185,17 @@ async function start(mode) {
           'const RECHNER_PHP_ENGINE_ENABLED = true;',
           'const RECHNER_PHP_ENGINE_ENABLED = false;'
         );
+      if (mode === 'reihenfolge-sabotage') {
+        const needle = "    return $pfad === '$' ? rechner_a11_rest_bereinigen($wert) : $wert;";
+        assert(source.includes(needle));
+        source = source
+          .replace(needle, '    return $wert;')
+          .replace(
+            '    if (is_array($wert)) {\n        $gefiltert = [];',
+            () =>
+              "    if ($pfad === '$') $wert = rechner_a11_rest_bereinigen($wert);\n    if (is_array($wert)) {\n        $gefiltert = [];"
+          );
+      }
       if (mode === 'puffer-sabotage')
         source = source
           .replace("    'puffer',\n", '')
@@ -461,6 +478,218 @@ try {
   ok(
     'Nachauftrag 1: alle Aktionen und URL-Wege, Schema 2/3, Google, Prüferfälle und Bytegleichheit zu e359ec7'
   );
+  const prior2 = await start('prior2');
+  const failures2 = [];
+  const checked2 = async (name, run) => {
+    try {
+      await run();
+    } catch (error) {
+      failures2.push({ name, error: error.message });
+    }
+  };
+  const internalForms = ['A-11/W35', 'Typ_A-11/W55', 'A‑11/W35', 'A−11/W55', 'A  -  11 / W55'];
+  const baselinePublic = {
+    wolf: [],
+    vaillant: [],
+    modell: 'VWL',
+    brutto: 29944.0123456789,
+    eigenanteil: 7544,
+    tafel: 'ja',
+    kaskade: true,
+    anzahl: 2,
+    varianten: [{ modell: 'VWL', brutto: 48815 }],
+  };
+  const inside = (text) => [
+    { puffer: { bezeichnung: text } },
+    { puffer: { liter: text } },
+    { puffer: { groessere_variante: text } },
+    { puffer: text },
+    { puffer_A11: { modell: text } },
+    { ['puffer_' + text]: 303 },
+    { leistung_kw: text },
+    { leistung_kw: { modell: text } },
+    { bivalenzpunkt_c: { modell: text } },
+    {
+      varianten: [
+        {
+          modell: 'VWL',
+          brutto: 48815,
+          puffer: { bezeichnung: text, liter: text, groessere_variante: text },
+          leistung_kw: text,
+        },
+      ],
+    },
+  ];
+  for (const version of [2, 3]) {
+    const data = seal(snapshot(version));
+    await put(current, data);
+    await put(prior2, data);
+    for (const route of routes)
+      for (const action of actions) {
+        for (const server of [current, googleProbe]) {
+          const send = async (payload) => {
+            if (server === current) return inject(server, payload, action, route);
+            await fs.writeFile(path.join(server.dir, 'upstream.json'), JSON.stringify(payload));
+            return request(server, { action }, { route });
+          };
+          await checked2(
+            `Innenfelder/${version}/${server === current ? 'PHP' : 'Google'}/${route}/${action}`,
+            async () => {
+              const normal = await send(baselinePublic);
+              assert.equal(normal.status, 200);
+              for (const extra of inside(
+                internalForms[(version + actions.indexOf(action)) % internalForms.length]
+              )) {
+                const result = await send({ ...baselinePublic, ...extra });
+                assert.equal(result.status, 200);
+                assert.equal(result.raw, normal.raw);
+                clean(result.value);
+              }
+              for (const field of [
+                'modell',
+                'brutto',
+                'eigen',
+                'eigenanteil',
+                'zuschussGesamt',
+                'tafel',
+              ])
+                mustFail(
+                  await send({
+                    ...baselinePublic,
+                    puffer: { bezeichnung: 'Speicher für A-11/W55' },
+                    [field]: 'Typ_A-11/W35',
+                  })
+                );
+              mustFail(
+                await send({
+                  ...baselinePublic,
+                  puffer: 'A-11/W55',
+                  hinweis: { modell: 'Typ_A-11/W35' },
+                })
+              );
+              const hint = await send({
+                ...baselinePublic,
+                puffer: 'A-11/W55',
+                hinweis: 'A-11/W35',
+              });
+              assert.equal(hint.status, 200);
+              assert.equal(hint.raw, normal.raw);
+            }
+          );
+        }
+      }
+    await fs.rm(path.join(current.dir, 'override.json'), { force: true });
+    const query = {
+      action: 'dimensionierung',
+      flaeche: '150',
+      baujahr: '1978-1994',
+      heizsystem: 'heizkoerper',
+      warmwasser: 'ja',
+      personen: '4',
+      plz: '00000',
+    };
+    await checked2(`Katalogzelle U/${version}`, async () => {
+      const normal = await request(current, query),
+        original = await request(prior2, query);
+      assert.equal(normal.status, 200);
+      assert.equal(normal.raw, original.raw);
+      const changed = structuredClone(data);
+      const row = changed.sheets['Geräte_Katalog'].find(
+        (row) => row[1] === normal.value.marken.vaillant.modell
+      );
+      assert(row && row.length > 20);
+      row[20] = 'Speicher für A-11/W55';
+      const sealed = seal(changed);
+      await put(current, sealed);
+      await put(prior2, sealed);
+      const oldFailure = await request(prior2, query);
+      mustFail(oldFailure);
+      const result = await request(current, query);
+      assert.equal(result.status, 200);
+      assert.equal(result.raw, normal.raw);
+      clean(result.value);
+      const core = (snapshot) =>
+        JSON.parse(
+          execFileSync('php', [...current.phpOptions, path.join(current.dir, 'core.php')], {
+            input: JSON.stringify({ snapshot, query }),
+            encoding: 'utf8',
+            env: snapshotTestEnvironment(),
+          })
+        ).dimensionierung;
+      const before = core(data),
+        after = core(sealed);
+      assert.equal(after.marken.vaillant.puffer.bezeichnung, 'Speicher für A-11/W55');
+      const removeBuffer = (v) =>
+        Array.isArray(v)
+          ? v.map(removeBuffer)
+          : v && typeof v === 'object'
+            ? Object.fromEntries(
+                Object.entries(v)
+                  .filter(([key]) => key !== 'puffer')
+                  .map(([key, value]) => [key, removeBuffer(value)])
+              )
+            : v;
+      assert.deepEqual(removeBuffer(before), removeBuffer(after));
+      if (process.env.A11_RESPONSE_DIR) {
+        await fs.mkdir(process.env.A11_RESPONSE_DIR, { recursive: true });
+        for (const [label, response] of [
+          ['unbelastet', normal],
+          ['alter-fehler', oldFailure],
+          ['belastet', result],
+        ])
+          await fs.writeFile(
+            path.join(process.env.A11_RESPONSE_DIR, `na2-${label}-${version}.json`),
+            response.raw
+          );
+      }
+    });
+    await put(current, data);
+    await put(prior2, data);
+    for (const action of actions)
+      await checked2(`Bytegleich/2abe040/${version}/${action}`, async () => {
+        const a = await request(current, { ...query, action }),
+          b = await request(prior2, { ...query, action });
+        assert.equal(a.status, 200);
+        assert.equal(a.raw, b.raw);
+        if (process.env.A11_RESPONSE_DIR) {
+          await fs.mkdir(process.env.A11_RESPONSE_DIR, { recursive: true });
+          for (const [label, response] of [
+            ['vorher', b],
+            ['nachher', a],
+          ])
+            await fs.writeFile(
+              path.join(
+                process.env.A11_RESPONSE_DIR,
+                `na2-${label}-${version}-${action || 'ohne'}.json`
+              ),
+              response.raw
+            );
+        }
+      });
+  }
+  console.log('Nachauftrag 2 Befunde: ' + JSON.stringify(failures2));
+  assert.equal(
+    failures2.length,
+    0,
+    'Nachauftrag 2: interne Texte dürfen öffentliche Antworten nicht sperren'
+  );
+  ok(
+    'Nachauftrag 2: Innenfelder zuerst, gemischte Fehlerfälle, Katalogzelle und 22 unveränderte Antworten zu 2abe040'
+  );
+  const orderSabotage = await start('reihenfolge-sabotage');
+  await put(orderSabotage, snapshot(2));
+  mustFail(
+    await inject(orderSabotage, {
+      ...baselinePublic,
+      puffer: { bezeichnung: 'Speicher für A-11/W55' },
+    })
+  );
+  const scalar = await inject(current, 'Typ_A-11/W35');
+  mustFail(scalar);
+  await fs.rm(path.join(current.dir, 'override.json'), { force: true });
+  ok(
+    'Nachauftrag 2: alte Reihenfolge verwirft wieder interne Puffertexte; verbleibende skalare Texte weiter geschützt'
+  );
   for (const version of [2, 3]) {
     const data = seal(snapshot(version));
     await put(current, data);
@@ -647,7 +876,11 @@ try {
       'preise'
     )
   );
-  mustFail(await inject(current, { hinweise: [{ modell: 'A-11/W55' }] }));
+  // Nachauftrag 2: hinweise ist selbst ein Innenfeld; die öffentliche Gegenprobe bleibt streng.
+  const internalHints = await inject(current, { hinweise: [{ modell: 'A-11/W55' }] });
+  assert.equal(internalHints.status, 200);
+  assert.deepEqual(internalHints.value, []);
+  mustFail(await inject(current, { hinweis: [{ modell: 'A-11/W55' }] }));
   mustFail(await inject(current, { 'A-11/W35': 'Text' }));
   const list = await inject(current, { beschreibung: ['gut', ['A-11/W35']], brutto: 12 });
   assert.deepEqual(list.value, { brutto: 12 });

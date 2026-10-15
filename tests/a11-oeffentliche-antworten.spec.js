@@ -13,14 +13,18 @@ const filter = source.slice(
   source.indexOf('const RECHNER_INNENFELDER_SPERREN'),
   source.indexOf('$rawQuery =')
 );
-function project(value, prices = false) {
+function project(value, prices = false, selectedFilter = filter) {
   const program = `require $argv[1]; eval($argv[2]); $value=json_decode(stream_get_contents(STDIN),true); try { ${prices ? '$value=hw_oeffentliche_preistexte($value);' : ''} echo json_encode(['status'=>200,'value'=>rechner_innenfelder_entfernen($value)],JSON_THROW_ON_ERROR); } catch (RechnerOeffentlicheAntwortException $e) { echo json_encode(['status'=>503,'value'=>['error'=>true,'message'=>'calculator_temporarily_unavailable']]); }`;
   return JSON.parse(
-    execFileSync('php', ['-r', program, path.join(repo, 'api/rechner-engine.php'), filter], {
-      input: JSON.stringify(value),
-      encoding: 'utf8',
-      stdio: ['pipe', 'pipe', 'pipe'],
-    })
+    execFileSync(
+      'php',
+      ['-r', program, path.join(repo, 'api/rechner-engine.php'), selectedFilter],
+      {
+        input: JSON.stringify(value),
+        encoding: 'utf8',
+        stdio: ['pipe', 'pipe', 'pipe'],
+      }
+    )
   );
 }
 test.beforeEach(async ({ page }) => {
@@ -235,5 +239,80 @@ for (const width of [375, 1280]) {
       );
     expect(b).toEqual(a);
     expect(errors).toEqual([]);
+  });
+}
+
+for (const width of [375, 1280]) {
+  test(`@smoke A11 Nachauftrag 2: interne A-11-Texte lassen Geräte sichtbar, ${width}px`, async ({
+    page,
+  }, testInfo) => {
+    await page.setViewportSize({ width, height: 900 });
+    const oldSource = execFileSync(
+      'git',
+      ['show', '2abe040f235b4fe50212518f599e0946b46da364:api/rechner.php'],
+      { cwd: repo, encoding: 'utf8' }
+    );
+    const oldFilter = oldSource.slice(
+      oldSource.indexOf('const RECHNER_INNENFELDER_SPERREN'),
+      oldSource.indexOf('$rawQuery =')
+    );
+    const normal = project(fixture.dimensionierung, false, oldFilter);
+    const contaminated = JSON.parse(JSON.stringify(fixture.dimensionierung));
+    for (const brand of Object.values(contaminated.marken)) {
+      for (const device of [brand, ...brand.varianten]) {
+        device.puffer = {
+          bezeichnung: 'Speicher für A-11/W55',
+          liter: '303 l bei A−11/W35',
+          groessere_variante: 'Typ_A-11/W55',
+        };
+        device.leistung_kw = 'A‑11/W35';
+      }
+    }
+    const oldFailure = project(contaminated, false, oldFilter);
+    const repaired = project(contaminated);
+    expect(normal.status).toBe(200);
+    expect(oldFailure).toEqual({
+      status: 503,
+      value: { error: true, message: 'calculator_temporarily_unavailable' },
+    });
+    expect(repaired).toEqual(normal);
+    let response = normal;
+    await page.route(/[?&]action=dimensionierung/, (route) =>
+      route.fulfill({ status: response.status, json: response.value })
+    );
+    await page.goto('/dimensionierung.html');
+    async function calculate() {
+      await page.evaluate(
+        `document.querySelector('.wizard-step[data-step="8"] .wizard-options .wizard-option').classList.add('selected'); wizData.verbrauchKnown=false; wizCalculate()`
+      );
+      return {
+        title: await page.locator('#wizResultTitle').innerText(),
+        cards: await page.locator('#wizResultCards').innerText(),
+      };
+    }
+    const before = await calculate();
+    expect(before.cards).toContain('48.815');
+    expect(before.cards).toContain('Vaillant');
+    response = oldFailure;
+    const broken = await calculate();
+    expect(broken.title).toBe('Berechnung gerade nicht verfügbar');
+    response = repaired;
+    const after = await calculate();
+    expect(after).toEqual(before);
+    expect(after.cards).not.toContain('A-11');
+    const evidence = JSON.stringify(
+      { unbelastet: before, alterFehler: broken, korrigiert: after },
+      null,
+      2
+    );
+    await testInfo.attach('A11 innerhalb von Innenfeldern', {
+      body: evidence,
+      contentType: 'application/json',
+    });
+    if (process.env.A11_BROWSER_EVIDENCE_DIR)
+      fs.writeFileSync(
+        path.join(process.env.A11_BROWSER_EVIDENCE_DIR, `na2-innenfelder-${width}.json`),
+        evidence
+      );
   });
 }

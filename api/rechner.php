@@ -506,10 +506,6 @@ function rechner_innenfelder_entfernen($wert, string $pfad = '$')
         return $wert;
     }
 
-    if ($pfad === '$') {
-        // Vor der Entfernung übergeordneter Innenfelder auf tragende Belastung prüfen.
-        $wert = rechner_a11_rest_bereinigen($wert);
-    }
     if (is_array($wert)) {
         $gefiltert = [];
         foreach ($wert as $schluessel => $inhalt) {
@@ -523,10 +519,11 @@ function rechner_innenfelder_entfernen($wert, string $pfad = '$')
             $gefiltert[$schluessel] = rechner_innenfelder_entfernen($inhalt, $pfad . '[' . json_encode($schluessel, JSON_THROW_ON_ERROR) . ']');
         }
 
-        return $gefiltert;
+        $wert = $gefiltert;
     }
 
-    return $wert;
+    // Erst nach vollständiger Innenfeldentfernung den öffentlichen Rest prüfen.
+    return $pfad === '$' ? rechner_a11_rest_bereinigen($wert) : $wert;
 }
 
 $rawQuery = (string) ($_SERVER['QUERY_STRING'] ?? '');

@@ -1,6 +1,6 @@
 # Öffentliche Rechnerantworten ohne interne Auslegungsleistung
 
-A11, Freigabe einschließlich Nachauftrag 1 und Anpassung 2 vom 15.10.2026. Die Änderung betrifft ausschließlich die PHP-Ausgabe der Website. Interne Rückgaben, Preisanker, Katalog, Tabellen und Apps Script bleiben unverändert.
+A11, Freigabe einschließlich Nachauftrag 2 vom 15.10.2026. Die Änderung betrifft ausschließlich die PHP-Ausgabe der Website. Interne Rückgaben, Preisanker, Katalog, Tabellen und Apps Script bleiben unverändert.
 
 ## Herstellerleistung in der Preisantwort
 
@@ -23,7 +23,7 @@ Die gesonderte Maximalzeile mit 11,08 kW wird nicht verwendet. Die drei Zahlen s
 
 `leistung_kw` und `puffer` entfallen rekursiv, einschließlich aller Marken und Varianten. Auch zusätzliche Schlüssel mit Präfix `puffer` werden entfernt. Die Speicherempfehlung mit Bezeichnung, Litern, größerer Variante und ohne-Puffer-Kennung bleibt ausschließlich intern; öffentlich fehlt das Feld vollständig. Die interne Ausgabe von `hw_dimensionierung` behält das Feld und sämtliche übrigen Kennzahlen für den Vertrieb.
 
-Vor der Serialisierung prüft der öffentliche Filter Betriebspunkttexte bei A-11. Auch Unterstriche vor `A`, geschützte Bindestriche, Leerzeichen, unterschiedliche Schreibweisen des Minuszeichens und JSON-Escapes werden erfasst. Die Erkennung gilt ebenso für Feldnamen. `A-7/W35` und `A-110` bleiben zulässig. Die Zahl minus elf bleibt als Ortsklimawert zulässig.
+Vor der Serialisierung entfernt der öffentliche Filter zunächst rekursiv alle festgelegten Innenfelder und `puffer*` samt Unterbäumen. Erst danach prüft er den verbleibenden öffentlichen Inhalt auf Betriebspunkttexte bei A-11. Ein solcher Text innerhalb bereits entfernter Speicher- oder Leistungsdaten verursacht deshalb keinen Fehler der öffentlichen Antwort. Auch Unterstriche vor `A`, geschützte Bindestriche, Leerzeichen, unterschiedliche Schreibweisen des Minuszeichens und JSON-Escapes werden erfasst. Die Erkennung gilt ebenso für Feldnamen. `A-7/W35` und `A-110` bleiben zulässig. Die Zahl minus elf bleibt als Ortsklimawert zulässig.
 
 Ein belastetes nicht tragendes Textfeld wird vollständig entfernt. Es wird kein leerer Text und kein Ersatzwert eingesetzt. Die explizite Liste umfasst `kw`, `leistung_kw`, `hinweis`, `hinweise`, `beschreibung`, `beschreibungen`, `description`, `descriptions`, `strom_hinweis`, `antragHinweis` und `installHinweis`. Reine Textlisten können als solches Feld entfallen. Eingebettete Objekte werden rekursiv geprüft, damit ein belastetes Modell oder ein Preis nicht durch das Entfernen eines übergeordneten Hinweisfeldes verdeckt wird. Eine Entfernung wird mit Route, Pfad und Grund serverseitig protokolliert, ohne den Feldinhalt zu protokollieren.
 
@@ -40,3 +40,5 @@ Schema 2 und Schema 3 verwenden denselben Schutz. Der abgeschaltete Google-Durch
 `tests/a11-oeffentliche-antworten.spec.js` ergänzt die vorhandene Smoke-Kette um den tatsächlichen Browser: bekannte und unbekannte Modelle, erhaltene Preise und Förderoptionen, Dimensionierung, Hinweisersatz und neutrale Fehleranzeige. Die eingespeisten Nachherantworten werden mit den echten PHP-Projektions- und Filterfunktionen erzeugt; deren HTTP-Anbindung prüft die separate Vertragskette.
 
 Der Konfigurator-`doGet` und der Website-Spiegel `apps-script/rechner-backend/Code.gs` gehören in einen gesonderten Auftrag der Steuerung Konfigurator. Der historische Vergleich `scripts/compare-rechner-php.mjs` liest `kw` und kann nach dieser absichtlichen Änderung keine vollständige öffentliche PHP-/Apps-Script-Gleichheit mehr behaupten. Die Google-Seite des Vergleichs wird zusätzlich ausschließlich um `leistung_kw` und `puffer` bereinigt. Alle anderen Vergleichszusicherungen bleiben erhalten. Die öffentlichen JSON-Erwartungsdaten verlieren ausschließlich ihre Pufferfelder; interne Snapshotverträge bleiben unverändert. Kein Blattwrite und keine Apps-Script-Auslieferung in A11.
+
+Nachauftrag 2 vergleicht zusätzlich mit `2abe040f235b4fe50212518f599e0946b46da364`, ohne weitere Feld- oder Wertausnahmen. Eine einzelne geänderte interne Pufferzelle, Texte in Literangabe und größerer Variante sowie Puffer-/Leistungsdaten innerhalb von Varianten und Kaskaden müssen HTTP 200 mit identischer öffentlicher Antwort ergeben. Gleichzeitige belastete öffentliche Modelle, Preise, Förderbeträge oder Marker bleiben HTTP 503. Eine isoliert wiederhergestellte alte Prüfreihenfolge muss den neuen Test erneut rot werden lassen. Die interne Rechnung und die bestehende Protokollierung bleiben erhalten.
