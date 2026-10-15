@@ -18,7 +18,6 @@
     "modell": "Wärmepumpe",
     "anzahl": 1,
     "kaskade": false,
-    "puffer": null,
     "brutto": null,
     "empfohlen": true,
     "eigenanteil": null,
@@ -29,7 +28,6 @@
         "modell": "Wärmepumpe",
         "anzahl": 1,
         "kaskade": false,
-        "puffer": null,
         "brutto": null,
         "empfohlen": true,
         "eigenanteil": null

@@ -99,7 +99,6 @@
         "anzahl": 1,
         "kaskade": false,
         "leistung_kw": 17.9,
-        "puffer": null,
         "brutto": 48815,
         "empfohlen": true,
         "eigenanteil": 24789,
@@ -111,7 +110,6 @@
             "anzahl": 1,
             "kaskade": false,
             "leistung_kw": 17.9,
-            "puffer": null,
             "brutto": 48815,
             "empfohlen": true,
             "eigenanteil": 24789
@@ -125,12 +123,6 @@
         "anzahl": 1,
         "kaskade": false,
         "leistung_kw": 16.4,
-        "puffer": {
-          "bezeichnung": "VPS 300/3-5",
-          "liter": 303,
-          "groessere_variante": "VPS 500/3-5, 491 l",
-          "ohne_puffer_moeglich": false
-        },
         "brutto": null,
         "empfohlen": true,
         "eigenanteil": null,
@@ -142,12 +134,6 @@
             "anzahl": 1,
             "kaskade": false,
             "leistung_kw": 16.4,
-            "puffer": {
-              "bezeichnung": "VPS 300/3-5",
-              "liter": 303,
-              "groessere_variante": "VPS 500/3-5, 491 l",
-              "ohne_puffer_moeglich": false
-            },
             "brutto": null,
             "empfohlen": true,
             "eigenanteil": null
@@ -159,12 +145,6 @@
             "anzahl": 2,
             "kaskade": true,
             "leistung_kw": 18.9,
-            "puffer": {
-              "bezeichnung": "VPS R 100/1 M",
-              "liter": 101,
-              "groessere_variante": "VPS R 200/1 B, 202 l",
-              "ohne_puffer_moeglich": false
-            },
             "brutto": null,
             "empfohlen": false,
             "eigenanteil": null
@@ -176,12 +156,6 @@
             "anzahl": 2,
             "kaskade": true,
             "leistung_kw": 20,
-            "puffer": {
-              "bezeichnung": "VPS R 100/1 M",
-              "liter": 101,
-              "groessere_variante": "VPS R 200/1 B, 202 l",
-              "ohne_puffer_moeglich": false
-            },
             "brutto": null,
             "empfohlen": false,
             "eigenanteil": null

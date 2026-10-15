@@ -1,6 +1,6 @@
 # Öffentliche Rechnerantworten ohne interne Auslegungsleistung
 
-A11, Freigabe einschließlich Anpassung 1 vom 15.10.2026. Die Änderung betrifft ausschließlich die PHP-Ausgabe der Website. Interne Rückgaben, Preisanker, Katalog, Tabellen und Apps Script bleiben unverändert.
+A11, Freigabe einschließlich Nachauftrag 1 und Anpassung 2 vom 15.10.2026. Die Änderung betrifft ausschließlich die PHP-Ausgabe der Website. Interne Rückgaben, Preisanker, Katalog, Tabellen und Apps Script bleiben unverändert.
 
 ## Herstellerleistung in der Preisantwort
 
@@ -21,9 +21,9 @@ Die gesonderte Maximalzeile mit 11,08 kW wird nicht verwendet. Die drei Zahlen s
 
 ## Öffentliche Grenze
 
-`leistung_kw` entfällt rekursiv, einschließlich aller Marken und Varianten. Die interne Ausgabe von `hw_dimensionierung` behält das Feld und sämtliche übrigen Kennzahlen für den Vertrieb.
+`leistung_kw` und `puffer` entfallen rekursiv, einschließlich aller Marken und Varianten. Auch zusätzliche Schlüssel mit Präfix `puffer` werden entfernt. Die Speicherempfehlung mit Bezeichnung, Litern, größerer Variante und ohne-Puffer-Kennung bleibt ausschließlich intern; öffentlich fehlt das Feld vollständig. Die interne Ausgabe von `hw_dimensionierung` behält das Feld und sämtliche übrigen Kennzahlen für den Vertrieb.
 
-Vor der Serialisierung prüft der öffentliche Filter Betriebspunkttexte bei A-11. Auch Leerzeichen, unterschiedliche Schreibweisen des Minuszeichens und JSON-Escapes werden erfasst. Die Zahl minus elf bleibt als Ortsklimawert zulässig.
+Vor der Serialisierung prüft der öffentliche Filter Betriebspunkttexte bei A-11. Auch Unterstriche vor `A`, geschützte Bindestriche, Leerzeichen, unterschiedliche Schreibweisen des Minuszeichens und JSON-Escapes werden erfasst. Die Erkennung gilt ebenso für Feldnamen. `A-7/W35` und `A-110` bleiben zulässig. Die Zahl minus elf bleibt als Ortsklimawert zulässig.
 
 Ein belastetes nicht tragendes Textfeld wird vollständig entfernt. Es wird kein leerer Text und kein Ersatzwert eingesetzt. Die explizite Liste umfasst `kw`, `leistung_kw`, `hinweis`, `hinweise`, `beschreibung`, `beschreibungen`, `description`, `descriptions`, `strom_hinweis`, `antragHinweis` und `installHinweis`. Reine Textlisten können als solches Feld entfallen. Eingebettete Objekte werden rekursiv geprüft, damit ein belastetes Modell oder ein Preis nicht durch das Entfernen eines übergeordneten Hinweisfeldes verdeckt wird. Eine Entfernung wird mit Route, Pfad und Grund serverseitig protokolliert, ohne den Feldinhalt zu protokollieren.
 
@@ -35,8 +35,8 @@ Schema 2 und Schema 3 verwenden denselben Schutz. Der abgeschaltete Google-Durch
 
 ## Prüfung und Zuständigkeit
 
-`npm run verify:a11` prüft den echten PHP-Einstieg über einen isolierten HTTP-Server. Vorherbasis ist der unveränderte Merge-Commit von PR 149, `99a95ae9b386dd76763e60577b9cde6172c27598`. Die Testdaten kombinieren bereits versionierte synthetische Snapshot-/Katalogdaten und aufgezeichnete öffentliche Antworten. Geldwerte, Förderbeträge, Gerätebindung, Marker und vollständige interne Rückgaben werden gegen diese Basis verglichen. Schema 2/3, umgeordnete Klassen, Unicode-Varianten, tiefe Verschachtelung, Feldentfernung, Fehlerverträge, der stillgelegte Durchreicheweg und eine ausgeschaltete Schutzfunktion werden geprüft. Testtransporte sind lokal abgefangen, Mailversand und Zugriff außerhalb der eigenen temporären Laufzeitordner sind gesperrt.
+`npm run verify:a11` prüft den echten PHP-Einstieg über einen isolierten HTTP-Server. Zusätzliche Vorherbasis des Nachauftrags ist `e359ec7d28d462cd97ae6af78c4e262a40182d4d`: alle regulären Antworten werden bis auf die expliziten Feldentfernungen bytegleich verglichen, einschließlich Zahlenschreibweise und Reihenfolge. Die Einschleusungsfälle des Prüfers und eine gezielt ausgeschaltete Pufferentfernung sind enthalten. Das unabhängige Prüforakel normalisiert Zeichen vor der Suche. Vorherbasis der ursprünglichen A11-Prüfungen bleibt der unveränderte Merge-Commit von PR 149, `99a95ae9b386dd76763e60577b9cde6172c27598`. Die Testdaten kombinieren bereits versionierte synthetische Snapshot-/Katalogdaten und aufgezeichnete öffentliche Antworten. Geldwerte, Förderbeträge, Gerätebindung, Marker und vollständige interne Rückgaben werden gegen diese Basis verglichen. Schema 2/3, umgeordnete Klassen, Unicode-Varianten, tiefe Verschachtelung, Feldentfernung, Fehlerverträge, der stillgelegte Durchreicheweg und eine ausgeschaltete Schutzfunktion werden geprüft. Testtransporte sind lokal abgefangen, Mailversand und Zugriff außerhalb der eigenen temporären Laufzeitordner sind gesperrt.
 
 `tests/a11-oeffentliche-antworten.spec.js` ergänzt die vorhandene Smoke-Kette um den tatsächlichen Browser: bekannte und unbekannte Modelle, erhaltene Preise und Förderoptionen, Dimensionierung, Hinweisersatz und neutrale Fehleranzeige. Die eingespeisten Nachherantworten werden mit den echten PHP-Projektions- und Filterfunktionen erzeugt; deren HTTP-Anbindung prüft die separate Vertragskette.
 
-Der Konfigurator-`doGet` und der Website-Spiegel `apps-script/rechner-backend/Code.gs` gehören in einen gesonderten Auftrag der Steuerung Konfigurator. Der historische Vergleich `scripts/compare-rechner-php.mjs` liest `kw` und kann nach dieser absichtlichen Änderung keine vollständige öffentliche PHP-/Apps-Script-Gleichheit mehr behaupten. Vorhandene Tests werden hierfür nicht abgeschwächt. Kein Blattwrite und keine Apps-Script-Auslieferung in A11.
+Der Konfigurator-`doGet` und der Website-Spiegel `apps-script/rechner-backend/Code.gs` gehören in einen gesonderten Auftrag der Steuerung Konfigurator. Der historische Vergleich `scripts/compare-rechner-php.mjs` liest `kw` und kann nach dieser absichtlichen Änderung keine vollständige öffentliche PHP-/Apps-Script-Gleichheit mehr behaupten. Die Google-Seite des Vergleichs wird zusätzlich ausschließlich um `leistung_kw` und `puffer` bereinigt. Alle anderen Vergleichszusicherungen bleiben erhalten. Die öffentlichen JSON-Erwartungsdaten verlieren ausschließlich ihre Pufferfelder; interne Snapshotverträge bleiben unverändert. Kein Blattwrite und keine Apps-Script-Auslieferung in A11.

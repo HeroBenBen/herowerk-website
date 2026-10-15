@@ -1,4 +1,5 @@
 'use strict';
+/* global sessionStorage */
 const { test, expect } = require('@playwright/test');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -128,3 +129,111 @@ test('@smoke A11 Dimensionierung: Leistung fehlt, Hinweis entfällt einzeln, tra
   );
   await expect(page.locator('#wizResultCards')).not.toContainText('A-11');
 });
+
+for (const width of [375, 1280]) {
+  test(`@smoke A11 Nachauftrag: vier Seiten ohne Puffer wortgleich, ${width}px`, async ({
+    page,
+  }, testInfo) => {
+    test.setTimeout(120000);
+    await page.setViewportSize({ width, height: 900 });
+    const reference = 'e359ec7d28d462cd97ae6af78c4e262a40182d4d';
+    const oldFixture = JSON.parse(
+      execFileSync('git', ['show', reference + ':tests/fixtures/a11-oeffentliche-antworten.json'], {
+        cwd: repo,
+        encoding: 'utf8',
+      })
+    );
+    const oldSource = execFileSync('git', ['show', reference + ':api/rechner.php'], {
+      cwd: repo,
+      encoding: 'utf8',
+    });
+    const oldFilter = oldSource.slice(
+      oldSource.indexOf('const RECHNER_INNENFELDER_SPERREN'),
+      oldSource.indexOf('$rawQuery =')
+    );
+    const engine = require('../apps-script/rechner-backend/kv_engine.gs');
+    const values = {
+      preise: oldFixture.preise,
+      dimensionierung: oldFixture.dimensionierung,
+      kv_bootstrap: engine.kvBootstrapPayload(engine.KV_PARAMS_SEED),
+      kostenvergleich: engine.kvCalculate({ ...engine.KV_DEFAULTS }, engine.KV_PARAMS_SEED),
+    };
+    const before = {},
+      after = {};
+    for (const [action, input] of Object.entries(values)) {
+      const program = `require $argv[1]; eval($argv[2]); $v=json_decode(stream_get_contents(STDIN),true); ${action === 'preise' ? '$v=hw_oeffentliche_preistexte($v);' : ''} echo json_encode(rechner_innenfelder_entfernen($v), JSON_THROW_ON_ERROR);`;
+      before[action] = JSON.parse(
+        execFileSync('php', ['-r', program, path.join(repo, 'api/rechner-engine.php'), oldFilter], {
+          input: JSON.stringify(input),
+          encoding: 'utf8',
+        })
+      );
+      const result = project(before[action]);
+      expect(result.status).toBe(200);
+      after[action] = result.value;
+    }
+    expect(before.dimensionierung.marken.vaillant.puffer.liter).toBeGreaterThan(0);
+    expect(after.dimensionierung.marken.vaillant).not.toHaveProperty('puffer');
+    let responses = before;
+    await page.route(/\/api\/rechner(?:\.php)?\??/, (route) => {
+      const action = new URL(route.request().url()).searchParams.get('action');
+      return responses[action]
+        ? route.fulfill({ json: responses[action] })
+        : route.fulfill({ json: {} });
+    });
+    const errors = [];
+    page.on('pageerror', (error) => errors.push(error.message));
+    async function capture() {
+      const result = {};
+      await page.goto('/dimensionierung.html');
+      await page.evaluate(
+        `document.querySelector('.wizard-step[data-step="8"] .wizard-options .wizard-option').classList.add('selected'); wizData.verbrauchKnown=false; wizCalculate()`
+      );
+      await expect(page.locator('#wizResultCards')).toContainText('48.815');
+      result.dimensionierung = await page.locator('body').innerText();
+      await page.evaluate('wizToFoerder()');
+      await page.waitForURL(/foerderung/);
+      await page.evaluate('paLoadData()');
+      await page.evaluate('calculateFoerder()');
+      result.vorbefuellung = await page.evaluate(() => sessionStorage.getItem('hwFoerderPrefill'));
+      result.foerderung = await page.locator('body').innerText();
+      await page.goto('/kostenvergleich-waermepumpe.html');
+      await page.waitForFunction('typeof KV_STATE !== "undefined" && KV_STATE.last');
+      await page.evaluate('calculate({showResults:true,scroll:false})');
+      await expect(page.locator('#results')).toBeVisible();
+      result.kostenvergleich = await page.locator('body').innerText();
+      result.ratgeber = await page.locator('#wzPufferCard').innerText();
+      await page.goto('/preise.html');
+      await page.evaluate('paLoadData()');
+      result.preise = {};
+      for (const brand of ['Wolf', 'Vaillant']) {
+        await page.locator('#manufacturer' + brand).click();
+        await expect(page.locator('#paCards .pa-card')).toHaveCount(5);
+        const details = [];
+        for (let i = 0; i < 5; i++) {
+          await page.locator('#paCards .pa-card').nth(i).click();
+          details.push(
+            await page.locator('#paSpecsTable').innerText(),
+            await page.locator('#paDetailCta').innerText()
+          );
+        }
+        result.preise[brand] = { text: await page.locator('body').innerText(), details };
+      }
+      return result;
+    }
+    const a = await capture();
+    responses = after;
+    const b = await capture();
+    await testInfo.attach('Wortlaut vorher und nachher', {
+      body: JSON.stringify({ vorher: a, nachher: b }, null, 2),
+      contentType: 'application/json',
+    });
+    if (process.env.A11_BROWSER_EVIDENCE_DIR)
+      fs.writeFileSync(
+        path.join(process.env.A11_BROWSER_EVIDENCE_DIR, `wortlaut-${width}.json`),
+        JSON.stringify({ vorher: a, nachher: b }, null, 2)
+      );
+    expect(b).toEqual(a);
+    expect(errors).toEqual([]);
+  });
+}

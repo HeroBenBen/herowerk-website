@@ -339,8 +339,8 @@ if ($rate['limited'] && RECHNER_RATE_LIMIT_ENFORCED) {
  * gingen also nur deshalb hinaus, weil sie in der Antwort standen.
  *
  * NICHT gesperrt sind die Felder, welche die Seite anzeigt: bedarf, stromverbrauch_kwh,
- * modell, baureihe, anzahl, brutto, eigenanteil, empfohlen, puffer, kaskade.
- * A11, 15.10.2026: leistung_kw wird nicht angezeigt und bleibt ausschließlich intern.
+ * modell, baureihe, anzahl, brutto, eigenanteil, empfohlen, kaskade.
+ * A11, 15.10.2026: leistung_kw und puffer werden nicht angezeigt und bleiben intern.
  */
 const RECHNER_INNENFELDER_SPERREN = true;
 
@@ -351,6 +351,8 @@ const RECHNER_INNENFELDER_SPERREN = true;
 const RECHNER_INNENFELDER = [
     // Interne Geräteleistung am Auslegungspunkt, auch in sämtlichen Varianten.
     'leistung_kw',
+    // Speicherempfehlung einschließlich aller Varianten gehört dem Vertrieb.
+    'puffer',
     // Aussentemperatur, ab der das Geraet taktet, also unter Teillast schaltet.
     // Freigabe wuerde erlauben, dem Kunden die Taktgrenze seines Geraets zu zeigen.
     'taktpunkt_c',
@@ -417,7 +419,7 @@ function hw_oeffentliche_preistexte(array $antwort): array
 /** Betriebspunkt statt pauschaler Sperre der Zahl minus elf (z. B. Ortsklima). */
 function rechner_a11_text(string $text): bool
 {
-    $treffer = preg_match('/\bA[\s\p{Z}]*[-\x{2212}\p{Pd}][\s\p{Z}]*11(?!\d)/iu', $text);
+    $treffer = preg_match('/A[\s\p{Z}]*[-\x{2212}\p{Pd}][\s\p{Z}]*11(?!\d)/iu', $text);
     if ($treffer === false) {
         throw new RechnerOeffentlicheAntwortException('public_response_invalid_text');
     }
@@ -511,7 +513,8 @@ function rechner_innenfelder_entfernen($wert, string $pfad = '$')
     if (is_array($wert)) {
         $gefiltert = [];
         foreach ($wert as $schluessel => $inhalt) {
-            if (is_string($schluessel) && in_array($schluessel, RECHNER_INNENFELDER, true)) {
+            if (is_string($schluessel) && (in_array($schluessel, RECHNER_INNENFELDER, true)
+                || str_starts_with(strtolower($schluessel), 'puffer'))) {
                 if ($schluessel === 'leistung_kw') {
                     rechner_oeffentliches_feld_protokollieren($pfad . '.leistung_kw', 'internal_power');
                 }

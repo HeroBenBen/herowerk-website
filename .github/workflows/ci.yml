@@ -221,6 +221,9 @@ jobs:
     needs: [lint]
     steps:
       - uses: actions/checkout@v5
+        with:
+          # A11 vergleicht die Browserausgabe mit dem festen Kopf e359ec7.
+          fetch-depth: 0
       - uses: actions/setup-node@v5
       - run: npm ci
       - run: npx playwright install --with-deps
