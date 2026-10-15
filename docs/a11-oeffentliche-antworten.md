@@ -1,6 +1,6 @@
 # Öffentliche Rechnerantworten ohne interne Auslegungsleistung
 
-A11, Freigabe einschließlich Nachauftrag 2 vom 15.10.2026. Die Änderung betrifft ausschließlich die PHP-Ausgabe der Website. Interne Rückgaben, Preisanker, Katalog, Tabellen und Apps Script bleiben unverändert.
+A11, Freigabe einschließlich Nachauftrag 3 vom 15.10.2026. Die Änderung betrifft ausschließlich die PHP-Ausgabe der Website. Interne Rückgaben, Preisanker, Katalog, Tabellen und Apps Script bleiben unverändert.
 
 ## Herstellerleistung in der Preisantwort
 
@@ -42,3 +42,7 @@ Schema 2 und Schema 3 verwenden denselben Schutz. Der abgeschaltete Google-Durch
 Der Konfigurator-`doGet` und der Website-Spiegel `apps-script/rechner-backend/Code.gs` gehören in einen gesonderten Auftrag der Steuerung Konfigurator. Der historische Vergleich `scripts/compare-rechner-php.mjs` liest `kw` und kann nach dieser absichtlichen Änderung keine vollständige öffentliche PHP-/Apps-Script-Gleichheit mehr behaupten. Die Google-Seite des Vergleichs wird zusätzlich ausschließlich um `leistung_kw` und `puffer` bereinigt. Alle anderen Vergleichszusicherungen bleiben erhalten. Die öffentlichen JSON-Erwartungsdaten verlieren ausschließlich ihre Pufferfelder; interne Snapshotverträge bleiben unverändert. Kein Blattwrite und keine Apps-Script-Auslieferung in A11.
 
 Nachauftrag 2 vergleicht zusätzlich mit `2abe040f235b4fe50212518f599e0946b46da364`, ohne weitere Feld- oder Wertausnahmen. Eine einzelne geänderte interne Pufferzelle, Texte in Literangabe und größerer Variante sowie Puffer-/Leistungsdaten innerhalb von Varianten und Kaskaden müssen HTTP 200 mit identischer öffentlicher Antwort ergeben. Gleichzeitige belastete öffentliche Modelle, Preise, Förderbeträge oder Marker bleiben HTTP 503. Eine isoliert wiederhergestellte alte Prüfreihenfolge muss den neuen Test erneut rot werden lassen. Die interne Rechnung und die bestehende Protokollierung bleiben erhalten.
+
+Nachauftrag 3 prüft zusätzlich eine lokale Kopie jedes öffentlichen Textes und Feldnamens: HTML-Zeichenreferenzen dekodieren, Markup entfernen und dasselbe A-11-Muster anwenden. Die unveränderte Rohtextprüfung bleibt erhalten. Die normalisierte Kopie wird niemals ausgegeben. Dezimale und hexadezimale Referenzen, `&minus;` und `A<span>-</span>11` sind damit erfasst. Das unabhängige Testorakel verwendet JavaScript-HTML-Verarbeitung statt der Produktfunktion. 22 reguläre Antworten werden ohne Projektion mit `5188c99` verglichen; ausgeschaltete HTML-Normalisierung muss die neuen Zusicherungen verletzen.
+
+Abnahmemaßstab gemäß Leitstand vom 15.10.2026, Destillat Prozesse Regel 38: Schutz vor realistischen Pflege- und Übernahmefehlern in eigenen Tabellen. Klartext, Unicode-Striche und Leerzeichen, Feldnamen, HTML-Kodierung und Markup gelten als abgedeckt. Weitere synthetische Varianten, etwa unsichtbare Zeichen oder Homoglyphen, bleiben eine niedrige Auflage und sind kein Abnahmehindernis. Seiten-JavaScript, Ausgabeform, Feldwerte, Feldlisten und Fehlervertrag bleiben unverändert.

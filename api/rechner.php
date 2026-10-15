@@ -419,11 +419,18 @@ function hw_oeffentliche_preistexte(array $antwort): array
 /** Betriebspunkt statt pauschaler Sperre der Zahl minus elf (z. B. Ortsklima). */
 function rechner_a11_text(string $text): bool
 {
-    $treffer = preg_match('/A[\s\p{Z}]*[-\x{2212}\p{Pd}][\s\p{Z}]*11(?!\d)/iu', $text);
-    if ($treffer === false) {
-        throw new RechnerOeffentlicheAntwortException('public_response_invalid_text');
+    // Nur Prüfkopien normalisieren; öffentliche Feldwerte bleiben unverändert.
+    $prueftexte = [$text, strip_tags(html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8'))];
+    foreach ($prueftexte as $prueftext) {
+        $treffer = preg_match('/A[\s\p{Z}]*[-\x{2212}\p{Pd}][\s\p{Z}]*11(?!\d)/iu', $prueftext);
+        if ($treffer === false) {
+            throw new RechnerOeffentlicheAntwortException('public_response_invalid_text');
+        }
+        if ($treffer === 1) {
+            return true;
+        }
     }
-    return $treffer === 1;
+    return false;
 }
 
 /** Nur reine Texte/Textlisten dürfen als Ganzes entfallen, keine eingebetteten Geräte. */

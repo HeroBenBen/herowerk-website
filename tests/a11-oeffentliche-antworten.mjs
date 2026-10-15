@@ -1,5 +1,8 @@
 // Echte PHP-HTTP-Grenze, eingefrorene Basis und isolierte Gegenproben. Keine Netz-/Blattwrites.
 import assert from 'node:assert/strict';
+import { runInNewContext } from 'node:vm';
+import { decodeHTML } from 'entities';
+import { Parser } from 'htmlparser2';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
@@ -12,6 +15,7 @@ import { geraeteKatalogZeilen } from './fixtures/geraete-katalog-2026-08-14.mjs'
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const basis = '99a95ae9b386dd76763e60577b9cde6172c27598';
 const nachauftragBasis = 'e359ec7d28d462cd97ae6af78c4e262a40182d4d';
+const nachauftrag3Basis = '5188c99c3005fb0a27d9482b924a8fba4c94fb3d';
 const nachauftrag2Basis = '2abe040f235b4fe50212518f599e0946b46da364';
 const fixture = JSON.parse(
   await fs.readFile(path.join(repo, 'tests/fixtures/a11-oeffentliche-antworten.json'), 'utf8')
@@ -36,17 +40,35 @@ const normalized = (v) =>
     .replace(/[\p{Dash_Punctuation}\u2212]/gu, '-')
     .replace(/\s/gu, '')
     .toUpperCase();
+// Eigenständiges Orakel mit JavaScript-HTML-Parser, ohne Produktfunktion.
+function normalizedHTML(v) {
+  let text = '';
+  const parser = new Parser(
+    {
+      ontext: (part) => {
+        text += part;
+      },
+    },
+    { decodeEntities: false }
+  );
+  parser.end(decodeHTML(v));
+  return normalized(text);
+}
 const errorContract = { error: true, message: 'calculator_temporarily_unavailable' };
 const quote = (s) => "'" + s.replaceAll('\\', '\\\\').replaceAll("'", "\\'") + "'";
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 function clean(v) {
-  if (typeof v === 'string') assert.doesNotMatch(normalized(v), forbidden);
+  if (typeof v === 'string') {
+    assert.doesNotMatch(normalized(v), forbidden);
+    assert.doesNotMatch(normalizedHTML(v), forbidden);
+  }
   if (Array.isArray(v)) v.forEach(clean);
   else if (v && typeof v === 'object')
     for (const [k, x] of Object.entries(v)) {
       assert.notEqual(k, 'leistung_kw');
       assert(!k.toLowerCase().startsWith('puffer'), 'Öffentliches Pufferfeld: ' + k);
       assert.doesNotMatch(normalized(k), forbidden);
+      assert.doesNotMatch(normalizedHTML(k), forbidden);
       clean(x);
     }
 }
@@ -157,12 +179,18 @@ async function start(mode) {
   await fs.mkdir(runtime, { recursive: true });
   for (const file of await fs.readdir(path.join(repo, 'api'))) {
     if (!file.endsWith('.php')) continue;
-    let source = ['basis', 'prior', 'prior2'].includes(mode)
+    let source = ['basis', 'prior', 'prior2', 'prior3'].includes(mode)
       ? execFileSync(
           'git',
           [
             'show',
-            (mode === 'prior2' ? nachauftrag2Basis : mode === 'prior' ? nachauftragBasis : basis) +
+            (mode === 'prior3'
+              ? nachauftrag3Basis
+              : mode === 'prior2'
+                ? nachauftrag2Basis
+                : mode === 'prior'
+                  ? nachauftragBasis
+                  : basis) +
               ':api/' +
               file,
           ],
@@ -185,6 +213,18 @@ async function start(mode) {
           'const RECHNER_PHP_ENGINE_ENABLED = true;',
           'const RECHNER_PHP_ENGINE_ENABLED = false;'
         );
+      if (mode === 'html-sabotage') {
+        const oldSource = execFileSync('git', ['show', nachauftrag3Basis + ':api/rechner.php'], {
+          cwd: repo,
+          encoding: 'utf8',
+        });
+        const begin = 'function rechner_a11_text(string $text): bool';
+        const end = '/** Nur reine Texte/Textlisten';
+        source =
+          source.slice(0, source.indexOf(begin)) +
+          oldSource.slice(oldSource.indexOf(begin), oldSource.indexOf(end)) +
+          source.slice(source.indexOf(end));
+      }
       if (mode === 'reihenfolge-sabotage') {
         const needle = "    return $pfad === '$' ? rechner_a11_rest_bereinigen($wert) : $wert;";
         assert(source.includes(needle));
@@ -676,6 +716,179 @@ try {
   ok(
     'Nachauftrag 2: Innenfelder zuerst, gemischte Fehlerfälle, Katalogzelle und 22 unveränderte Antworten zu 2abe040'
   );
+
+  const htmlForms = ['A&#45;11/W55', 'A&#x2D;11/W55', 'A&minus;11/W55', 'A<span>-</span>11/W55'];
+  const previousTest = execFileSync(
+    'git',
+    ['show', nachauftrag3Basis + ':tests/a11-oeffentliche-antworten.mjs'],
+    { cwd: repo, encoding: 'utf8' }
+  );
+  const oldOracle =
+    previousTest.slice(
+      previousTest.indexOf('const forbidden ='),
+      previousTest.indexOf('const errorContract =')
+    ) +
+    previousTest.slice(
+      previousTest.indexOf('function clean('),
+      previousTest.indexOf('function withoutPower(')
+    );
+  for (const text of htmlForms) {
+    const payload = { marken: { vaillant: { modell: 'VWL (' + text + ': 12 kW)' } } };
+    assert.doesNotThrow(() => runInNewContext(oldOracle + 'clean(payload);', { assert, payload }));
+    assert.throws(() => clean(payload), assert.AssertionError);
+    assert.throws(() => clean({ [text]: 12 }), assert.AssertionError);
+  }
+  ok(
+    'Nachauftrag 3: altes Orakel akzeptiert vier HTML-Lecks, unabhängiges neues Orakel lehnt Werte und Schlüssel ab'
+  );
+  const prior3 = await start('prior3');
+  const failures3 = [];
+  const checked3 = async (name, run) => {
+    try {
+      await run();
+    } catch (error) {
+      failures3.push({ name, error: error.message });
+    }
+  };
+  const publicBase = {
+    wolf: [],
+    vaillant: [],
+    modell: 'VWL',
+    brutto: 29944.0123456789,
+    eigenanteil: 7544,
+    tafel: 'ja',
+  };
+  const export3 = async (name, result) => {
+    if (!process.env.A11_RESPONSE_DIR) return;
+    await fs.mkdir(process.env.A11_RESPONSE_DIR, { recursive: true });
+    await fs.writeFile(
+      path.join(process.env.A11_RESPONSE_DIR, 'na3-' + name + '.json'),
+      result.raw
+    );
+  };
+  for (const version of [2, 3]) {
+    const data = seal(snapshot(version));
+    await put(current, data);
+    await put(prior3, data);
+    for (const route of routes)
+      for (const action of actions)
+        for (const server of [current, googleProbe]) {
+          const send = async (payload) => {
+            if (server === current) return inject(server, payload, action, route);
+            await fs.writeFile(path.join(server.dir, 'upstream.json'), JSON.stringify(payload));
+            return request(server, { action }, { route });
+          };
+          const name = `${version}/${server === current ? 'PHP' : 'Google'}/${route}/${action}`;
+          for (const text of htmlForms)
+            await checked3(`HTML/${name}/${text}`, async () => {
+              for (const field of ['modell', 'brutto', 'eigenanteil', 'zuschussGesamt', 'tafel'])
+                mustFail(await send({ ...publicBase, [field]: text }));
+              mustFail(await send({ ...publicBase, [text]: 12 }));
+              mustFail(await send({ ...publicBase, varianten: [{ modell: text }] }));
+              mustFail(await send({ ...publicBase, hinweis: { modell: text } }));
+              const normal = await send(publicBase);
+              assert.equal(normal.status, 200);
+              for (const field of ['kw', 'hinweis', 'beschreibung']) {
+                const result = await send({ ...publicBase, [field]: [text] });
+                assert.equal(result.status, 200);
+                assert.equal(result.raw, normal.raw);
+                clean(result.value);
+              }
+              const internal = await send({
+                ...publicBase,
+                puffer: { bezeichnung: text },
+                leistung_kw: text,
+              });
+              assert.equal(internal.status, 200);
+              assert.equal(internal.raw, normal.raw);
+            });
+          await checked3(`Zulässig/${name}`, async () => {
+            const safe = {
+              ...publicBase,
+              nat: -11,
+              brutto: 1234,
+              ortsklima: '&#45;11',
+              klimaText: '<span>-</span>11',
+              kw: 'A&#45;7/W35',
+              beschreibung: 'A&#x2D;110',
+              info: 'A&minus;7/W35',
+              detail: 'A<span>-</span>110',
+              'A&#45;110': 'zulässig',
+            };
+            const result = await send(safe);
+            assert.equal(result.status, 200);
+            assert.deepEqual(result.value, safe);
+            clean(result.value);
+          });
+        }
+    await fs.rm(path.join(current.dir, 'override.json'), { force: true });
+    const query = {
+      action: 'dimensionierung',
+      flaeche: '150',
+      baujahr: '1978-1994',
+      heizsystem: 'heizkoerper',
+      warmwasser: 'ja',
+      personen: '4',
+      plz: '00000',
+    };
+    for (const [index, text] of htmlForms.entries())
+      await checked3(`Katalogmodell/${version}/${index}`, async () => {
+        await put(current, data);
+        await put(prior3, data);
+        const normal = await request(prior3, query);
+        assert.equal(normal.status, 200);
+        const changed = structuredClone(data);
+        const row = changed.sheets['Geräte_Katalog'].find(
+          (row) => row[1] === normal.value.marken.vaillant.modell
+        );
+        assert(row);
+        row[1] += ' (' + text + ': 12 kW)';
+        const sealed = seal(changed);
+        await put(current, sealed);
+        await put(prior3, sealed);
+        const before = await request(prior3, query),
+          after = await request(current, query);
+        assert.equal(before.status, 200);
+        assert.throws(() => clean(before.value), assert.AssertionError);
+        await export3(`html-vorher-${version}-${index}`, before);
+        await export3(`html-nachher-${version}-${index}`, after);
+        mustFail(after);
+      });
+    await put(current, data);
+    await put(prior3, data);
+    for (const action of actions)
+      await checked3(`Bytegleich/5188c99/${version}/${action}`, async () => {
+        const before = await request(prior3, { ...query, action }),
+          after = await request(current, { ...query, action });
+        assert.equal(before.status, 200);
+        assert.equal(after.status, 200);
+        assert.equal(after.raw, before.raw);
+        clean(after.value);
+        await export3(`vorher-${version}-${action || 'ohne'}`, before);
+        await export3(`nachher-${version}-${action || 'ohne'}`, after);
+      });
+  }
+  console.log('Nachauftrag 3 Befunde: ' + JSON.stringify(failures3));
+  assert.equal(
+    failures3.length,
+    0,
+    'Nachauftrag 3: HTML-Schreibweisen an allen öffentlichen Ausgabewegen'
+  );
+  ok(
+    'Nachauftrag 3: vier HTML-Fälle, zulässige Gegenfälle, Katalogmodell und 22 bytegleiche Antworten zu 5188c99'
+  );
+  const htmlSabotage = await start('html-sabotage');
+  await put(htmlSabotage, snapshot(2));
+  for (const text of htmlForms) {
+    const leak = await inject(htmlSabotage, { modell: text });
+    assert.equal(leak.status, 200);
+    assert.throws(() => clean(leak.value), assert.AssertionError);
+    mustFail(await inject(htmlSabotage, { modell: 'A-11/W55' }));
+  }
+  ok(
+    'Nachauftrag 3: ausschließlich HTML-Normalisierung ausgeschaltet, vier Lecks wieder rot; Klartextschutz erhalten'
+  );
+
   const orderSabotage = await start('reihenfolge-sabotage');
   await put(orderSabotage, snapshot(2));
   mustFail(
