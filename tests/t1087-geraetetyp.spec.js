@@ -220,6 +220,7 @@ for (const width of [375, 1440]) {
         if (brand === 'vaillant' && (key === 's' || key === 'xl')) {
           await expectManufacturerTabs(page, minimumLabel(selected.vaillant));
           await page.evaluate(() => window.scrollTo(0, 0));
+          await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
           const full = path.join(out, 'seite-' + brand + '-' + key + '.png');
           // Vollständige Seite einschließlich Reitern, Karten, Detail und realer Navigation.
           await page.screenshot({ path: full, fullPage: true, animations: 'disabled' });

@@ -133,12 +133,21 @@ test('Fußtext und statischer Untertitel aus N, nur Temperaturzusatz entfällt',
   assert.equal(foot(html), foot(old).replace(' · −11 °C', ''));
   assert.doesNotMatch(html, internal);
 });
-test('Dimensionierungsanzeige und Rechenkerne unverändert', () => {
+test('Dimensionierungsanzeige unverändert; keine Rechenkernänderung aus dem Tafelzweig', () => {
   const block = (s) =>
     s.slice(s.indexOf('function formatNormaussentemperatur'), s.indexOf('function checkPlz'));
   assert.equal(block(read('js/site.js', ref)), block(read('js/site.js', baseline)));
+  // Die PR-CI prüft den kombinierten Stand mit main. Bereits dort integrierte
+  // Änderungen anderer Aufträge sind kein Eingriff dieses Tafelzweigs.
+  // Lokal bleibt der gemeinsame Vorfahr die Basis; im CI-Merge ist es main.
+  const coreBase = cp
+    .execFileSync('git', ['merge-base', ref || 'HEAD', 'origin/main'], {
+      cwd: root,
+      encoding: 'utf8',
+    })
+    .trim();
   for (const f of ['api/rechner-engine.php', 'apps-script/rechner-backend/Code.gs'])
-    assert.equal(read(f, ref), read(f, baseline));
+    assert.equal(read(f, ref), read(f, coreBase), f + ': keine eigene Rechenkernänderung');
 });
 test('Wolf-Bilddateien bytegleich', () => {
   for (const f of [
