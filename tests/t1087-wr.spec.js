@@ -57,7 +57,11 @@ async function screenshot(page, name, testInfo) {
         return img.decode().catch(() => {});
       })
     );
+    // Wizard-Schritte scrollen weich; feste Navigation und Seitenleiste brauchen
+    // für vergleichbare Gesamtaufnahmen dieselbe, abgeschlossene Scrollposition.
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   });
+  await page.waitForFunction(() => window.scrollY === 0);
   const folder = path.join(root, 'artifacts/tafel-sicht/wr', process.env.WR_REF ? 'rot' : 'gruen');
   fs.mkdirSync(folder, { recursive: true });
   const file = path.join(folder, name + '.png');
