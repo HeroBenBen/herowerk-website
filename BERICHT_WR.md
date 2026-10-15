@@ -23,7 +23,7 @@ Baufreigabe: genau `go` im Auftragschat. Baubasis: `40951542b4903adde7cc1e694a96
 - 74 API-, Rechenkern- und Fixture-Dateien bytegleich zur Baubasis; zusätzlich 18 öffentliche Antwortkörper aller action-Routen und zehn Förder-Paketfälle mit identischen lokalen Tabellen direkt bytegleich verglichen; keine Änderung an Preisen, Eigenanteilen, Förderbeträgen, Katalogbindung oder API.
 - Chromium und WebKit lokal durch die Sandbox beim Start blockiert. Chromium: `bootstrap_check_in … Permission denied (1100)`, WebKit beendet beim Start. Kein lokaler Sichtlauf behauptet. Leitstand übernimmt die lokale Sichtabnahme.
 - `tests/t1087-wr.spec.js` prüft Chromium/WebKit bei 375/1440 px: Geometrie, beide Reiter und sämtliche Datenblätter, Förderauswahl, Dimensionierung, beide Kostenvergleichsseiten; Basis/Bau mit identischen Antwortbytes. Screenshots und Messungen unter `artifacts/tafel-sicht/wr/`, im vorhandenen CI-Artefakt `tafel-sicht`.
-- CI am endgültigen Kopf: **noch ausstehend**. Dieser Arbeitsstand wird vor Abschluss um Lauf und Ergebnis ergänzt.
+- Verbindlicher CI-Nachweis am endgültigen Kopf: [Checks des Entwurfs-PR 151](https://github.com/HeroBenBen/herowerk-website/pull/151/checks). Maßgeblich ist der neueste Kopf mit allen Checks auf SUCCESS; abgebrochene Zwischenläufe gelten nicht als Abschluss. Der Auftrag wird erst bei vollständig grünem Kopf abgeschlossen.
 
 ## Dateiliste und Überschneidung
 
@@ -111,3 +111,12 @@ Die Original-Runde-5-Probe bestand anschließend in Lauf 38759975551 ebenfalls i
 Sichtkontrolle der ersten Feldaufnahmen: Vaillant-Gerät und Preis sind vollständig sichtbar. WebKit zählte jedoch den transparenten nativen Auswahltext als seitlichen Überstand (Gesamtaufnahme S 432 px, XXL 477 px statt 375 px; Wolf weiterhin 375 px). Deshalb wird ausschließlich dessen gemeinsame Feldfläche begrenzt; die umbrechende sichtbare Beschriftung passt weiterhin vollständig hinein. Eine zusätzliche Browser-Zusicherung verlangt nun auch für jede Vaillant-Auswahl eine Seitenbreite von höchstens 375 px. Keine globale Überlaufunterdrückung. Auswahlwechsel, Neuabruf und Fokus werden gesondert geprüft.
 
 Der latente Chiphelfer der Beraterseite verwendet die Anrede „Ihre Angabe“ statt „Deine Angabe“. Auch seine Textgrenze ist jetzt ausdrücklich abgesichert; unabhängige lokale Rot/Grün-Proben prüfen die Texthelfer beider Dateien einschließlich dieser nicht aufgerufenen Funktion. Die folgenden Abschlussläufe prüfen diese Nachbesserungen am Kopf erneut.
+
+## Abnahmeverweise
+
+- [Entwurfs-PR 151 mit aktuellem Kopf](https://github.com/HeroBenBen/herowerk-website/pull/151)
+- [CI-Checks genau dieses Kopfes](https://github.com/HeroBenBen/herowerk-website/pull/151/checks)
+- Browsernachweise: Artefakt `tafel-sicht`, Unterverzeichnis `wr/gruen` im zugehörigen Lauf. Dateien mit `basis` im Namen zeigen ausdrücklich die unveränderte Baubasis; die Verzeichnisbezeichnung allein bezeichnet keine bestandene Basisprüfung.
+- Lokaler Plan: `WR/PLAN_WR.md`. Lokale Prüfprotokolle, heruntergeladene CI-Aufnahmen und Analyse-Ausschnitte: `WR/pruef/`.
+
+Keine automatische Zusammenführung eingerichtet. Kein Deployment ausgeführt. Die lokale Sichtabnahme durch den Leitstand bleibt wegen der Browser-Sandbox bestehen; die CI liefert zusätzlich echte Chromium-/WebKit-Aufnahmen und DOM-Messungen.
