@@ -173,7 +173,14 @@ for (const width of [375, 1440]) {
         });
         expect(overflow).toBe(false);
         const file = path.join(out, brand + '-' + key + '.png');
-        await page.locator('#paDetail').screenshot({ path: file, animations: 'disabled' });
+        await page.locator('#paDetail').screenshot({
+          path: file,
+          animations: 'disabled',
+          // Feste Seitennavigation soll im Detailbeleg keine Tabellenzeile verdecken.
+          // Playwright entfernt diesen Stil unmittelbar nach der Aufnahme wieder.
+          style:
+            'nav[aria-label="Hauptnavigation"], .mobile-bottom-bar { visibility: hidden !important; }',
+        });
         await testInfo.attach(brand + '-' + key, { path: file, contentType: 'image/png' });
       }
     }

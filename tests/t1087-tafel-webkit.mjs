@@ -74,6 +74,13 @@ try {
             assert.ok(text.includes(prices.vaillant[i].eigen.toLocaleString('de-DE')));
           } else assert.match(text, /Auf Anfrage/);
           if (i) await card.click();
+          // Der Markenwechsel öffnet die erste Karte im nächsten Animationsframe.
+          // Erst die passende Geräteansicht abwarten, dann ihre Zeilen zählen.
+          const modell = await card.locator('.pa-modell').innerText();
+          await page.waitForFunction(
+            (value) => document.querySelector('#paSpecsSub')?.textContent.startsWith(value + ' · '),
+            modell
+          );
           assert.equal(await page.locator('#paSpecsTable tbody tr').count(), 11);
           const detail = await page.locator('#paSpecsTable').innerText();
           assert.match(detail, /SCOP/);
