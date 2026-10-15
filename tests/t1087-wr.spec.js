@@ -408,7 +408,7 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
             result[key + '-paketauswahl'] = await page.evaluate(() => {
               const select = document.getElementById('foerderWpTyp');
               return JSON.stringify(
-                select
+                select instanceof window.HTMLSelectElement
                   ? {
                       value: select.value,
                       options: Array.from(select.options, (option) => ({
