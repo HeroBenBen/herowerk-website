@@ -15,6 +15,7 @@ import { geraeteKatalogZeilen } from './fixtures/geraete-katalog-2026-08-14.mjs'
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const basis = '99a95ae9b386dd76763e60577b9cde6172c27598';
 const nachauftragBasis = 'e359ec7d28d462cd97ae6af78c4e262a40182d4d';
+const nachauftrag4Basis = 'd67c975a4c92ab2bc6951a1497e24f21f166506d';
 const nachauftrag3Basis = '5188c99c3005fb0a27d9482b924a8fba4c94fb3d';
 const nachauftrag2Basis = '2abe040f235b4fe50212518f599e0946b46da364';
 const fixture = JSON.parse(
@@ -51,8 +52,8 @@ function normalizedHTML(v) {
     },
     { decodeEntities: false }
   );
-  parser.end(decodeHTML(v));
-  return normalized(text);
+  parser.end(v);
+  return normalized(decodeHTML(text));
 }
 const errorContract = { error: true, message: 'calculator_temporarily_unavailable' };
 const quote = (s) => "'" + s.replaceAll('\\', '\\\\').replaceAll("'", "\\'") + "'";
@@ -60,6 +61,7 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 function clean(v) {
   if (typeof v === 'string') {
     assert.doesNotMatch(normalized(v), forbidden);
+    assert.doesNotMatch(normalized(decodeHTML(v)), forbidden);
     assert.doesNotMatch(normalizedHTML(v), forbidden);
   }
   if (Array.isArray(v)) v.forEach(clean);
@@ -68,6 +70,7 @@ function clean(v) {
       assert.notEqual(k, 'leistung_kw');
       assert(!k.toLowerCase().startsWith('puffer'), 'Öffentliches Pufferfeld: ' + k);
       assert.doesNotMatch(normalized(k), forbidden);
+      assert.doesNotMatch(normalized(decodeHTML(k)), forbidden);
       assert.doesNotMatch(normalizedHTML(k), forbidden);
       clean(x);
     }
@@ -179,18 +182,20 @@ async function start(mode) {
   await fs.mkdir(runtime, { recursive: true });
   for (const file of await fs.readdir(path.join(repo, 'api'))) {
     if (!file.endsWith('.php')) continue;
-    let source = ['basis', 'prior', 'prior2', 'prior3'].includes(mode)
+    let source = ['basis', 'prior', 'prior2', 'prior3', 'prior4'].includes(mode)
       ? execFileSync(
           'git',
           [
             'show',
-            (mode === 'prior3'
-              ? nachauftrag3Basis
-              : mode === 'prior2'
-                ? nachauftrag2Basis
-                : mode === 'prior'
-                  ? nachauftragBasis
-                  : basis) +
+            (mode === 'prior4'
+              ? nachauftrag4Basis
+              : mode === 'prior3'
+                ? nachauftrag3Basis
+                : mode === 'prior2'
+                  ? nachauftrag2Basis
+                  : mode === 'prior'
+                    ? nachauftragBasis
+                    : basis) +
               ':api/' +
               file,
           ],
@@ -213,6 +218,23 @@ async function start(mode) {
           'const RECHNER_PHP_ENGINE_ENABLED = true;',
           'const RECHNER_PHP_ENGINE_ENABLED = false;'
         );
+      if (mode.startsWith('fassung-sabotage-')) {
+        const index = Number(mode.at(-1));
+        const forms = [
+          '$text',
+          "html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8')",
+          "html_entity_decode(strip_tags($text), ENT_QUOTES | ENT_HTML5, 'UTF-8')",
+        ];
+        const begin = source.indexOf('    $prueftexte = ');
+        const end = source.indexOf(';', begin);
+        assert(begin > 0 && end > begin);
+        source =
+          source.slice(0, begin) +
+          '    $prueftexte = [' +
+          forms.filter((_, i) => i !== index).join(', ') +
+          ']' +
+          source.slice(end);
+      }
       if (mode === 'html-sabotage') {
         const oldSource = execFileSync('git', ['show', nachauftrag3Basis + ':api/rechner.php'], {
           cwd: repo,
@@ -888,6 +910,225 @@ try {
   ok(
     'Nachauftrag 3: ausschließlich HTML-Normalisierung ausgeschaltet, vier Lecks wieder rot; Klartextschutz erhalten'
   );
+
+  // Nachauftrag 4: jede Form und jedes Feld separat, auch bei mehreren Befunden.
+  const prior4 = await start('prior4');
+  const failures4 = [];
+  const checked4 = async (name, run) => {
+    try {
+      await run();
+    } catch (error) {
+      failures4.push({ name, error: error.message });
+    }
+  };
+  const newHTMLForms = ['Heizleistung &lt;12 kW bei A&minus;11/W55', '&lt;A&minus;11/W55&gt;'];
+  const witnesses = [
+    'A-11&#48;/W55',
+    'Heizleistung <12 kW bei A&minus;11/W55',
+    'A<span>-</span>11/W55',
+  ];
+  const allHTMLForms = [...newHTMLForms, ...htmlForms, ...witnesses.slice(0, 2)];
+  const previous4Test = execFileSync(
+    'git',
+    ['show', nachauftrag4Basis + ':tests/a11-oeffentliche-antworten.mjs'],
+    { cwd: repo, encoding: 'utf8' }
+  );
+  const old4Oracle =
+    previous4Test.slice(
+      previous4Test.indexOf('const forbidden ='),
+      previous4Test.indexOf('const errorContract =')
+    ) +
+    previous4Test.slice(
+      previous4Test.indexOf('function clean('),
+      previous4Test.indexOf('function withoutPower(')
+    );
+  assert.doesNotThrow(() =>
+    runInNewContext(old4Oracle + 'clean(payload);', {
+      assert,
+      Parser,
+      decodeHTML,
+      payload: { modell: newHTMLForms[1] },
+    })
+  );
+  for (const text of allHTMLForms) {
+    assert.throws(() => clean({ modell: text }), assert.AssertionError);
+    assert.throws(() => clean({ [text]: 12 }), assert.AssertionError);
+  }
+  ok(
+    'Nachauftrag 4: unabhängiges Orakel prüft drei Fassungen, alte Winkelklammerlücke nachgewiesen'
+  );
+  const export4 = async (name, result) => {
+    if (!process.env.A11_RESPONSE_DIR) return;
+    await fs.mkdir(process.env.A11_RESPONSE_DIR, { recursive: true });
+    await fs.writeFile(
+      path.join(process.env.A11_RESPONSE_DIR, 'na4-' + name + '.json'),
+      result.raw
+    );
+  };
+  for (const version of [2, 3]) {
+    const data = seal(snapshot(version));
+    await put(current, data);
+    await put(prior4, data);
+    for (const route of routes)
+      for (const action of actions)
+        for (const server of [current, googleProbe]) {
+          const send = async (payload) => {
+            if (server === current) return inject(server, payload, action, route);
+            await fs.writeFile(path.join(server.dir, 'upstream.json'), JSON.stringify(payload));
+            return request(server, { action }, { route });
+          };
+          const name = `${version}/${server === current ? 'PHP' : 'Google'}/${route}/${action}`;
+          const normal = await send(publicBase);
+          assert.equal(normal.status, 200);
+          for (const text of allHTMLForms) {
+            for (const field of ['modell', 'brutto', 'eigenanteil', 'zuschussGesamt', 'tafel'])
+              await checked4(`${name}/${text}/${field}`, async () =>
+                mustFail(await send({ ...publicBase, [field]: text }))
+              );
+            await checked4(`${name}/${text}/Feldname`, async () =>
+              mustFail(await send({ ...publicBase, [text]: 12 }))
+            );
+            await checked4(`${name}/${text}/Variante`, async () =>
+              mustFail(await send({ ...publicBase, varianten: [{ modell: text }] }))
+            );
+            for (const field of ['kw', 'hinweis', 'beschreibung'])
+              for (const value of [text, [text]])
+                await checked4(
+                  `${name}/${text}/${field}/${Array.isArray(value) ? 'Liste' : 'Text'}`,
+                  async () => {
+                    const result = await send({ ...publicBase, [field]: value });
+                    assert.equal(result.status, 200);
+                    assert.equal(result.raw, normal.raw);
+                    clean(result.value);
+                  }
+                );
+            await checked4(`${name}/${text}/Innenfelder`, async () => {
+              const result = await send({
+                ...publicBase,
+                puffer: { bezeichnung: text },
+                leistung_kw: text,
+              });
+              assert.equal(result.status, 200);
+              assert.equal(result.raw, normal.raw);
+            });
+          }
+          for (const text of [
+            'nat: -11',
+            'A-7/W35',
+            'A-110',
+            'nat: &minus;11',
+            'A&#45;7/W35',
+            'A&#x2D;110',
+            '&lt;nat: &minus;11&gt;',
+            '&lt;A&minus;7/W35&gt;',
+            '&lt;A&minus;110&gt;',
+            'Heizleistung &lt;12 kW bei A&minus;7/W35',
+          ])
+            await checked4(`${name}/Zulässig/${text}`, async () => {
+              const safe = {
+                wolf: [],
+                vaillant: [],
+                modell: text,
+                kw: text,
+                hinweis: text,
+                nat: -11,
+                [text]: 'zulässig',
+              };
+              const result = await send(safe);
+              assert.equal(result.status, 200);
+              assert.deepEqual(result.value, safe);
+              clean(result.value);
+            });
+        }
+    await fs.rm(path.join(current.dir, 'override.json'), { force: true });
+    const query = {
+      action: 'dimensionierung',
+      flaeche: '150',
+      baujahr: '1978-1994',
+      heizsystem: 'heizkoerper',
+      warmwasser: 'ja',
+      personen: '4',
+      plz: '00000',
+    };
+    for (const [index, text] of newHTMLForms.entries()) {
+      await checked4(`Katalogmodell/${version}/${index}`, async () => {
+        await put(prior4, data);
+        const normal = await request(prior4, query);
+        assert.equal(normal.status, 200);
+        const changed = structuredClone(data);
+        const row = changed.sheets['Geräte_Katalog'].find(
+          (row) => row[1] === normal.value.marken.vaillant.modell
+        );
+        assert(row);
+        row[1] += ' (' + text + ')';
+        const sealed = seal(changed);
+        await put(current, sealed);
+        await put(prior4, sealed);
+        const before = await request(prior4, query),
+          after = await request(current, query);
+        assert.equal(before.status, 200);
+        assert.throws(() => clean(before.value), assert.AssertionError);
+        await export4(`html-vorher-${version}-${index}`, before);
+        await export4(`html-nachher-${version}-${index}`, after);
+        mustFail(after);
+      });
+      await checked4(`Preisblatt/${version}/${index}`, async () => {
+        const changed = structuredClone(data);
+        const rows = changed.sheets.Preise_Wolf;
+        rows[1][rows[0].indexOf('kW')] = text;
+        const sealed = seal(changed);
+        await put(current, sealed);
+        await put(prior4, sealed);
+        const before = await request(prior4, { action: 'preise' }),
+          after = await request(current, { action: 'preise' });
+        assert.equal(before.status, 200);
+        assert.equal(after.status, 200);
+        assert.equal(before.value.wolf[0].kw, text);
+        const expected = structuredClone(before.value);
+        delete expected.wolf[0].kw;
+        assert.deepEqual(after.value, expected);
+        clean(after.value);
+      });
+    }
+    await put(current, data);
+    await put(prior4, data);
+    for (const action of actions)
+      await checked4(`Bytegleich/d67c975/${version}/${action}`, async () => {
+        const before = await request(prior4, { ...query, action }),
+          after = await request(current, { ...query, action });
+        assert.equal(before.status, 200);
+        assert.equal(after.status, 200);
+        assert.equal(after.raw, before.raw);
+        clean(after.value);
+        await export4(`vorher-${version}-${action || 'ohne'}`, before);
+        await export4(`nachher-${version}-${action || 'ohne'}`, after);
+      });
+  }
+  console.log('Nachauftrag 4 Befunde: ' + JSON.stringify(failures4));
+  assert.equal(
+    failures4.length,
+    0,
+    'Nachauftrag 4: drei Fassungen schließen kodierte Kleinerzeichen ein'
+  );
+  ok(
+    'Nachauftrag 4: HTML-Felder einzeln, Gegenfälle, direkte Katalog-/Preisblattproben und 22 bytegleiche Antworten zu d67c975'
+  );
+  for (const [index, text] of witnesses.entries()) {
+    const sabotaged = await start('fassung-sabotage-' + index);
+    await put(sabotaged, snapshot(2));
+    const leak = await inject(sabotaged, { modell: text });
+    assert.equal(leak.status, 200);
+    assert.throws(() => {
+      mustFail(leak);
+    }, assert.AssertionError);
+    assert.throws(() => clean(leak.value), assert.AssertionError);
+    mustFail(await inject(current, { modell: text }));
+    for (const [other, witness] of witnesses.entries())
+      if (other !== index) mustFail(await inject(sabotaged, { modell: witness }));
+    ok(
+      `Nachauftrag 4: Fassung ${index + 1} allein aus, Zeuge rot, beide übrigen Fassungen wirksam`
+    );
+  }
 
   const orderSabotage = await start('reihenfolge-sabotage');
   await put(orderSabotage, snapshot(2));

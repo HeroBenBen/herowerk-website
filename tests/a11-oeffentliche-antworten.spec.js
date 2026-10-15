@@ -383,3 +383,65 @@ for (const width of [375, 1280]) {
       );
   });
 }
+
+for (const width of [375, 1280]) {
+  test(`@smoke A11 Nachauftrag 4: kodierte Kleinerzeichen erreichen keine Gerätekarte, ${width}px`, async ({
+    page,
+  }, testInfo) => {
+    await page.setViewportSize({ width, height: 900 });
+    const previous = execFileSync(
+      'git',
+      ['show', 'd67c975a4c92ab2bc6951a1497e24f21f166506d:api/rechner.php'],
+      { cwd: repo, encoding: 'utf8' }
+    );
+    const previousFilter = previous.slice(
+      previous.indexOf('const RECHNER_INNENFELDER_SPERREN'),
+      previous.indexOf('$rawQuery =')
+    );
+    let response;
+    await page.route(/[?&]action=dimensionierung/, (route) =>
+      route.fulfill({ status: response.status, json: response.value })
+    );
+    const evidence = [];
+    for (const text of ['Heizleistung &lt;12 kW bei A&minus;11/W55', '&lt;A&minus;11/W55&gt;']) {
+      const input = JSON.parse(JSON.stringify(fixture.dimensionierung));
+      for (const device of [input.marken.vaillant, ...input.marken.vaillant.varianten])
+        device.modell += ' (' + text + ')';
+      const before = project(input, false, previousFilter),
+        after = project(input);
+      expect(before.status).toBe(200);
+      expect(after).toEqual({
+        status: 503,
+        value: { error: true, message: 'calculator_temporarily_unavailable' },
+      });
+      const capture = async (result) => {
+        response = result;
+        await page.goto('/dimensionierung.html');
+        await page.evaluate(
+          `document.querySelector('.wizard-step[data-step="8"] .wizard-options .wizard-option').classList.add('selected'); wizData.verbrauchKnown=false; wizCalculate()`
+        );
+        return {
+          title: await page.locator('#wizResultTitle').innerText(),
+          cards: await page.locator('#wizResultCards').innerText(),
+        };
+      };
+      const oldView = await capture(before),
+        newView = await capture(after);
+      expect(oldView.cards.replaceAll('−', '-')).toContain('A-11/W55');
+      expect(newView.title).toBe('Berechnung gerade nicht verfügbar');
+      expect(newView.cards).toBe(
+        'Berechnung gerade nicht verfügbar\n\nBitte Beratung anfragen. Wir melden uns mit einer individuellen Einschätzung.\n\nBeratung anfragen'
+      );
+      evidence.push({ eingabe: text, vorher: oldView, nachher: newView });
+    }
+    await testInfo.attach('HTML-Schreibweisen vorher und nachher', {
+      body: JSON.stringify(evidence, null, 2),
+      contentType: 'application/json',
+    });
+    if (process.env.A11_BROWSER_EVIDENCE_DIR)
+      fs.writeFileSync(
+        path.join(process.env.A11_BROWSER_EVIDENCE_DIR, `na4-html-${width}.json`),
+        JSON.stringify(evidence, null, 2)
+      );
+  });
+}

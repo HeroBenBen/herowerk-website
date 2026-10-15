@@ -420,7 +420,11 @@ function hw_oeffentliche_preistexte(array $antwort): array
 function rechner_a11_text(string $text): bool
 {
     // Nur Prüfkopien normalisieren; öffentliche Feldwerte bleiben unverändert.
-    $prueftexte = [$text, strip_tags(html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8'))];
+    $prueftexte = [
+        $text,
+        html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+        html_entity_decode(strip_tags($text), ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+    ];
     foreach ($prueftexte as $prueftext) {
         $treffer = preg_match('/A[\s\p{Z}]*[-\x{2212}\p{Pd}][\s\p{Z}]*11(?!\d)/iu', $prueftext);
         if ($treffer === false) {
