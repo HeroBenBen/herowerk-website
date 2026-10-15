@@ -14,6 +14,16 @@ const {
 } = require('./helpers/t1087-geraetetyp.cjs');
 const { internal } = require('./helpers/t1087-datenblatt.cjs');
 
+async function expectManufacturerTabs(page, minimum) {
+  await expect(page.locator('#manufacturerVaillant .manufacturer-name')).toHaveText(
+    'Vaillant aroTHERM'
+  );
+  await expect(page.locator('#manufacturerWolf .manufacturer-name')).toHaveText('Wolf CHA');
+  await expect(page.locator('#vaillantMinEigen')).toHaveText(minimum);
+}
+const minimumLabel = (rows) =>
+  'ab ' + Math.min(...rows.map((r) => r.eigen)).toLocaleString('de-DE') + ' € Eigenanteil*';
+
 for (const mode of ['marker', 'altvertrag', 'ausfall']) {
   test('@smoke Förderoptionen nur Gerätetyp und Preis: ' + mode, async ({ page }) => {
     let response = mode === 'marker' ? marked : mode === 'altvertrag' ? raw : null;
@@ -38,7 +48,7 @@ for (const mode of ['marker', 'altvertrag', 'ausfall']) {
   });
 
   test('@smoke Tafel mit Herstellerdaten und gebundener Identität: ' + mode, async ({ page }) => {
-    const response = mode === 'marker' ? marked : mode === 'altvertrag' ? raw : null;
+    let response = mode === 'marker' ? marked : mode === 'altvertrag' ? raw : null;
     await page.route(/[?&]action=preise/, (route) =>
       response
         ? route.fulfill({ json: response })
@@ -46,8 +56,17 @@ for (const mode of ['marker', 'altvertrag', 'ausfall']) {
     );
     await gotoWithConsentRejected(page, '/preise.html');
     await page.waitForLoadState('networkidle');
+    const minimum = response
+      ? minimumLabel(
+          mode === 'marker'
+            ? selected.vaillant
+            : keys.map((key) => raw.vaillant.filter((r) => r.klasse === key).at(-1))
+        )
+      : 'ab … dein Anteil*';
+    await expectManufacturerTabs(page, minimum);
     for (const brand of ['vaillant', 'wolf']) {
       await page.locator(brand === 'wolf' ? '#manufacturerWolf' : '#manufacturerVaillant').click();
+      await expectManufacturerTabs(page, minimum);
       const cards = page.locator('#paCards .pa-card');
       await expect(cards).toHaveCount(keys.length);
       for (const [index, key] of keys.entries()) {
@@ -86,6 +105,20 @@ for (const mode of ['marker', 'altvertrag', 'ausfall']) {
       }
       await expect(page.locator('.pa-kw')).toHaveCount(5);
     }
+    // Der bekannte Bestandsbefund bei Folgeabruffehlern wird hier nicht korrigiert.
+    response = null;
+    await page.evaluate(async () => {
+      await paLoadData();
+    });
+    await page.locator('#manufacturerVaillant').click();
+    await expectManufacturerTabs(page, minimum);
+    await expect(page.locator('#paCards')).toContainText('Auf Anfrage');
+    response = marked;
+    await page.evaluate(async () => {
+      await paLoadData();
+    });
+    await page.locator('#manufacturerVaillant').click();
+    await expectManufacturerTabs(page, minimumLabel(selected.vaillant));
   });
 }
 
@@ -100,6 +133,8 @@ test('@smoke Statische Förderoptionen ohne JavaScript nur Gerätetyp und Preis'
     const texts = await page.locator('#foerderWpTyp option').allTextContents();
     expect(texts).toEqual(Object.values(selected).flat().map(label));
     texts.forEach((text) => expect(text).not.toMatch(forbidden));
+    await page.goto('/preise.html');
+    await expectManufacturerTabs(page, 'ab … dein Anteil*');
   } finally {
     await context.close();
   }
@@ -182,6 +217,17 @@ for (const width of [375, 1440]) {
             'nav[aria-label="Hauptnavigation"], .mobile-bottom-bar { visibility: hidden !important; }',
         });
         await testInfo.attach(brand + '-' + key, { path: file, contentType: 'image/png' });
+        if (brand === 'vaillant' && (key === 's' || key === 'xl')) {
+          await expectManufacturerTabs(page, minimumLabel(selected.vaillant));
+          await page.evaluate(() => window.scrollTo(0, 0));
+          const full = path.join(out, 'seite-' + brand + '-' + key + '.png');
+          // Vollständige Seite einschließlich Reitern, Karten, Detail und realer Navigation.
+          await page.screenshot({ path: full, fullPage: true, animations: 'disabled' });
+          await testInfo.attach('seite-' + brand + '-' + key, {
+            path: full,
+            contentType: 'image/png',
+          });
+        }
       }
     }
   });
