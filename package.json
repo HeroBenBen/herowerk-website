@@ -20,7 +20,7 @@
     "verify:rechner-zaehlerdateien": "node tests/rechner-zaehlerdateien-loeschung.mjs",
     "verify:rechner-snapshot-apache": "node scripts/verify-rechner-snapshot-apache.mjs",
     "verify:dimensionierung": "node scripts/sync-dimensionierung-icons.mjs --check && node tests/dimensionierung-sanierung-regression.mjs && node tests/dimensionierung-fassung7-regression.mjs && node tests/rechner-review-blocker-regression.mjs && node tests/verbrauchspfad-vaillant-regression.mjs && node tests/geraeteauswahl-regression.mjs && node tests/t1198-katalog-datenschritt.mjs && php tests/geraete-katalog-struktur.php && node tests/website-mindestanteil-regression.mjs",
-    "verify:tafel": "node tests/t1087-tafel.cjs && node tests/t1087-nachauftrag.cjs && node tests/t1087-geraetetyp.cjs && node tests/t1087-datenblatt.cjs && node tests/t1087-herstellerreiter.cjs",
+    "verify:tafel": "node tests/t1087-tafel.cjs && node tests/t1087-nachauftrag.cjs && node tests/t1087-geraetetyp.cjs && node tests/t1087-datenblatt.cjs && node tests/t1087-herstellerreiter.cjs && node tests/t1087-jaz.cjs",
     "verify:tafel-webkit": "node tests/t1087-tafel-webkit.mjs",
     "verify:antragsdatum": "node tests/antragsdatum-und-installation-regression.mjs && node tests/rueckfall-antragsdatum-gleichlauf.mjs",
     "verify:foerder-einkommensstaffel": "node tests/foerder-einkommensstaffel-regression.mjs && node apps-script/rechner-backend/tests/foerderung_perioden/run_tests.js",

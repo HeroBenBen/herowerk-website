@@ -150,8 +150,8 @@ for (const [name, rows] of Object.entries({ marker: marked, altvertrag: raw, aus
         assert.equal(nodes.paSpecsSub.textContent, model(expected) + ' · ' + card.kw);
         assert.doesNotMatch(nodes.paSpecsTable.innerHTML, internal);
         if (expected.modell.includes('/7.1')) {
-          assert.equal(card.specs.length, 11);
-          assert.doesNotMatch(nodes.paSpecsTable.innerHTML, /JAZ/);
+          assert.equal(card.specs.length, 13);
+          assert.match(nodes.paSpecsTable.innerHTML, /JAZ Heizkörper¹/);
           assert.match(nodes.paSpecsTable.innerHTML, /SCOP/);
         }
       }

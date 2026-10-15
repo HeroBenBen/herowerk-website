@@ -1844,7 +1844,7 @@ const paDataFallbackVaillantPlus = [
       ['Effizienzklasse (35 / 55 °C)', 'A+++ / A+++'],
       ['ηs (35 / 55 °C)', '202 % / 151 %'],
       ['SCOP (35 / 55 °C)²', '5,12 / 3,85'],
-      ['JAZ Heizkörper¹', '4,05'],
+      ['JAZ Heizkörper¹', '4,21'],
       ['JAZ Fußbodenheizung¹', '4,80'],
       ['Abmessung (BxTxH)', '1.100 × 450 × 1.480 mm'],
       ['Hersteller', 'Vaillant Deutschland GmbH & Co. KG'],
@@ -1868,7 +1868,7 @@ const paDataFallbackVaillantPlus = [
       ['Effizienzklasse', 'A+++ (systemabhängig)'],
       ['ηs (35 / 55 °C)', '202 % / 151 % je Gerät'],
       ['SCOP (35 / 55 °C)²', '5,12 / 3,85 je Gerät'],
-      ['JAZ Heizkörper¹', '4,05 je Gerät; projektbezogen prüfen'],
+      ['JAZ Heizkörper¹', '4,21 je Gerät; projektbezogen prüfen'],
       ['JAZ Fußbodenheizung¹', '4,80 je Gerät; projektbezogen prüfen'],
       ['Schallleistung ErP außen', '50 dB(A) je Gerät'],
       ['Hersteller', 'Vaillant Deutschland GmbH & Co. KG'],
@@ -1877,7 +1877,7 @@ const paDataFallbackVaillantPlus = [
 ];
 
 // Herstellerdaten und Quellenkonflikte: docs/tafel-vaillant-quellen.md.
-// Optionale jaz-Werte werden erst nach gesonderter fachlicher Freigabe ergänzt.
+// Freigegebene JAZ-Beispiele: BWP-Rohantworten, docs/tafel-vaillant-quellen.md.
 const PA_PRO_TECHNIK = {
   'Vaillant VWL 55/7.1 A': {
     leistung: '4,84',
@@ -1888,6 +1888,7 @@ const PA_PRO_TECHNIK = {
     scop: '5,01 / 3,70',
     masse: '1.104 × 454 × 750 mm',
     img: 'vwl-pro-s-m.jpg',
+    jaz: { heizkoerper: '3,94', fussboden: '4,49' },
   },
   'Vaillant VWL 75/7.1 A': {
     leistung: '6,37',
@@ -1898,6 +1899,7 @@ const PA_PRO_TECHNIK = {
     scop: '4,87 / 3,62',
     masse: '1.104 × 454 × 750 mm',
     img: 'vwl-pro-s-m.jpg',
+    jaz: { heizkoerper: '3,86', fussboden: '4,40' },
   },
   'Vaillant VWL 115/7.1 A': {
     leistung: '11,12',
@@ -1908,6 +1910,7 @@ const PA_PRO_TECHNIK = {
     scop: '4,93 / 3,66',
     masse: '1.169 × 454 × 1.103 mm',
     img: 'vwl-pro-l.jpg',
+    jaz: { heizkoerper: '3,95', fussboden: '4,50' },
   },
 };
 
@@ -2051,6 +2054,12 @@ function paRenderCards() {
     .join('');
 }
 
+// BWP-Beispiele gelten nur für die belegten Geräte; Wolf und alte Plus-Geräte
+// behalten ihren ursprünglichen Fußtext auch nach einem Markenwechsel.
+const PA_VAILLANT_JAZ_FOOTNOTE =
+  '¹ JAZ = Jahresarbeitszahl. Beispielrechnung mit dem BWP-JAZ-Rechner nach VDI 4650 Blatt 1 für einen Altbau in Hannover. Heizkörper: Vorlauf/Rücklauf 55/45 °C; Fußbodenheizung: Vorlauf/Rücklauf 35/30 °C. Warmwasserbereitung durch die Wärmepumpe; einschließlich erforderlichem elektrischem Zusatzheizer. Individuelle Anlagenwerte können abweichen.';
+let paOriginalJazFootnote;
+
 // Detail-Panel aktualisieren
 function paUpdateDetail(d) {
   document.getElementById('paSpecsTitle').textContent = d.name;
@@ -2066,8 +2075,25 @@ function paUpdateDetail(d) {
     })
     .join('');
   const fn = document.getElementById('paJazFootnote');
-  if (fn) fn.style.display = hasJaz ? 'block' : 'none';
   const scopFn = document.getElementById('paScopFootnote');
+  const modelKey = paModelKey(d.modell);
+  const bwpJaz =
+    hasJaz &&
+    (Boolean(PA_PRO_TECHNIK[modelKey]) || /^(?:2× )?Vaillant VWL 125\/8\.1 A$/.test(modelKey));
+  if (fn) {
+    if (paOriginalJazFootnote === undefined) paOriginalJazFootnote = fn.innerHTML;
+    fn.innerHTML = bwpJaz
+      ? PA_VAILLANT_JAZ_FOOTNOTE.replace(
+          '¹ JAZ',
+          '<strong style="color:var(--green);font-size:12px;text-transform:uppercase;letter-spacing:0.3px;">¹ JAZ</strong>'
+        ) +
+        '<br>' +
+        (scopFn?.innerHTML || '')
+      : paOriginalJazFootnote;
+    fn.style.display = hasJaz ? 'block' : 'none';
+  }
+  const detail = document.getElementById('paDetail');
+  if (detail) detail.classList[bwpJaz ? 'add' : 'remove']('pa-jaz-bwp');
   if (scopFn) scopFn.style.display = hasScop && !hasJaz ? 'block' : 'none';
 
   const cta = document.getElementById('paDetailCta');

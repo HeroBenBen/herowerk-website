@@ -81,10 +81,11 @@ try {
             (value) => document.querySelector('#paSpecsSub')?.textContent.startsWith(value + ' · '),
             modell
           );
-          assert.equal(await page.locator('#paSpecsTable tbody tr').count(), 11);
+          assert.equal(await page.locator('#paSpecsTable tbody tr').count(), 13);
           const detail = await page.locator('#paSpecsTable').innerText();
           assert.match(detail, /SCOP/);
-          assert.doesNotMatch(detail, /JAZ|A-11/);
+          assert.match(detail, /JAZ Heizkörper¹/);
+          assert.doesNotMatch(detail, /A-11/);
           assert.equal(
             await page.locator('#paImg').getAttribute('src'),
             i < 2 ? 'vwl-pro-s-m.jpg' : 'vwl-pro-l.jpg'
@@ -95,7 +96,8 @@ try {
         );
         const specs = await page.locator('#paSpecsTable').innerText();
         assert.match(specs, /SCOP|A-7\/W35/);
-        assert.doesNotMatch(specs, /JAZ|A-11/);
+        assert.match(specs, /JAZ Fußbodenheizung¹/);
+        assert.doesNotMatch(specs, /A-11/);
       } else {
         // Den echten Abrufpfad einschließlich Retry vollständig abwarten.
         await page.evaluate(async () => {

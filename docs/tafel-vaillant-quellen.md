@@ -1,6 +1,6 @@
 # Preistafel: Quellen der aroTHERM-pro-Daten und Bildzuordnung
 
-Bauauftrag TAFEL, Anpassung 1, Freigabe im Chat am 15.10.2026. Herstellerdaten für Pro ergänzen; Wolf und Plus technisch exakt wie Git-Stand `7840681dd2c7eb88b3a53f85c7e2da92fab2c4dc` wiederherstellen. Kein Blattwrite und keine Änderung von Preisen, Eigenanteilen oder Gerätebindung. Die Förderauswahl bleibt ausschließlich Gerätetyp und Preis. Die Dimensionierungsanzeige bleibt unverändert.
+Bauauftrag TAFEL, Anpassung 1, Freigabe im Chat am 15.10.2026. Herstellerdaten für Pro ergänzen; Wolf und Plus technisch wie Git-Stand `7840681dd2c7eb88b3a53f85c7e2da92fab2c4dc` wiederherstellen. Nachauftrag JAZ ergänzt die unten belegten Vaillant-Beispielwerte und ihren gerätebezogenen Fußtext. Kein Blattwrite und keine Änderung von Preisen, Eigenanteilen oder Gerätebindung. Die Förderauswahl bleibt ausschließlich Gerätetyp und Preis. Die Dimensionierungsanzeige bleibt unverändert.
 
 ## Primärquellen
 
@@ -26,8 +26,8 @@ Alle Onlinequellen abgerufen am 15.10.2026. PDF-Seiten zählen ab der ersten Dat
 | Effizienzklasse 35 / 55 °C    | A+++ / A++                  | A+++ / A++                  | A+++ / A++                  | V-INFO S. 2, visuell gelesene Klassenpfeile; W55 zusätzlich V-ERP S. 1.                                                                                                                    |
 | ηs 35 / 55 °C                 | 198 % / 145 %               | 192 % / 142 %               | 194 % / 143 %               | W35: V-INFO S. 2 und V-WEB; W55: V-ERP S. 1 und V-WEB. Quellenkonflikt bei L unten dokumentiert.                                                                                           |
 | SCOP 35 / 55 °C               | 5,01 / 3,70                 | 4,87 / 3,62                 | 4,93 / 3,66                 | V-WEB, „Leistung und Wirkungsgrad“, Zeilen niedrige/mittlere Temperatur. Keine Umrechnung aus ηs.                                                                                          |
-| JAZ Heizkörper                | nicht anzeigen              | nicht anzeigen              | nicht anzeigen              | Anpassung 1: vorerst keine Werte und keine Zeile; später ausschließlich durch belegte Daten ergänzen.                                                                                      |
-| JAZ Fußbodenheizung           | nicht anzeigen              | nicht anzeigen              | nicht anzeigen              | Anpassung 1: dieselbe Ausnahme. Kein SCOP als JAZ, kein Platzhalter.                                                                                                                       |
+| JAZ Heizkörper                | 3,94                        | 3,86                        | 3,95                        | BWP-Rohantworten, Ergebnisfeld und Einzelquellen im Abschnitt „Freigegebene JAZ-Beispiele“.                                                                                                |
+| JAZ Fußbodenheizung           | 4,49                        | 4,40                        | 4,50                        | BWP-Rohantworten, Ergebnisfeld und Einzelquellen im Abschnitt „Freigegebene JAZ-Beispiele“.                                                                                                |
 | Abmessung B × T × H           | 1.104 × 454 × 750 mm        | 1.104 × 454 × 750 mm        | 1.169 × 454 × 1.103 mm      | V-INST S. 52; nur Reihenfolge der eindeutig benannten Maße umgestellt.                                                                                                                     |
 | Hersteller                    | Vaillant GmbH               | Vaillant GmbH               | Vaillant GmbH               | V-ERP S. 2, Herstelleranschrift. Die Vertriebsfirma in der bisherigen Plus-Zeile ist kein Anlass, die Herstellerangabe des Pro-Datenblatts zu überschreiben.                               |
 
@@ -38,15 +38,30 @@ Alle Onlinequellen abgerufen am 15.10.2026. PDF-Seiten zählen ab der ersten Dat
 - **L-Schall:** V-ERP S. 1 rundet auf **55 dB(A)**; V-INST S. 54 und V-INFO S. 2 nennen **54,8 dB(A)**. Geplant ist der präzise ErP-Schallwert aus der Anleitung, kein Schalldruck und kein Maximalbetrieb.
 - **JAZ:** Die bisherigen Plus-Werte stehen als Literale im Repo. Der Einführungscommit `211e940babdd01be29dcb1eacfd3cdaa921635a7` beschreibt „geeichte JAZ“ und eine korrigierte Klimabasis, enthält aber weder den zugehörigen Rechenlauf noch vollständige Eingangsparameter. Konkreter Befund: damaliges `js/site.js:1115` und `:1116` enthält **4,05 / 4,80** für das große Plus-Gerät; N übernimmt diese Werte. Repo-Suche nach JAZ, VDI und Quellen sowie Historie der Fußnote liefern keine reproduzierbare Geräteberechnung. Die JAZ-Eingabe im Kostenvergleich ist keine solche Methode. `produkte_HERO.json` enthält weitere feste Wolf-Werte und ebenfalls keinen Rechenweg.
 
-**Gemäß Anpassung 1 gesondert zu klären:** Die Pro-JAZ wird vom Leitstand dem Geschäftsführer vorgelegt. In diesem Bau keine JAZ-Werte recherchieren, berechnen, erfinden oder aus Plus-Geräten übernehmen. Die Pro-Daten erhalten optionale JAZ-Felder; ohne belegten Wert wird die zugehörige Zeile vollständig ausgelassen. Später müssen ausschließlich die Werte ergänzt werden können. Die dokumentierte Methodenlücke ist kein Abnahmehindernis im angepassten Umfang. Bestehende Wolf-/Plus-JAZ bleibt exakt wie N.
+## Freigegebene JAZ-Beispiele
 
-Fußtext für die Bestandsgeräte: Wortlaut aus N wiederherstellen und ausschließlich „ · −11 °C“ entfernen. Keine neue Formulierung, kein zusätzlicher Nachweisvorbehalt in der Kundenanzeige. Pro zeigt vorerst die SCOP-Erklärung; keine sichtbaren JAZ-Platzhalter und keine Behauptung eines bereits durchgeführten Pro-JAZ-Laufs. Die vorhandene JAZ-Erklärung und der Bestandsfußtext werden für Pro bei später tatsächlich ergänzten JAZ-Werten über die optionale Datendarstellung verfügbar.
+Nachauftrag JAZ, Freigabe `go` am 15.10.2026. Die bisherige Zurückstellung der Pro-JAZ ist damit beendet. Quelle: [BWP-JAZ-Rechner](https://www.waermepumpe.de/werkzeuge/jaz-rechner/), Abruf 15.10.2026; Ergebnisfeld **`jazTotalWithSupplementaryHeater`**. Die unveränderten Originalantworten sind als Prüfquellen im Repository gesichert. [Index mit Gerätezuordnung und Prüfsummen](../tests/fixtures/jaz-bwp/index.json). Jede verlinkte Zahl steht in Dateizeile 1 im genannten Ergebnisfeld.
+
+| Gerät         | Heizkörper                                           | Fußbodenheizung                                       |
+| ------------- | ---------------------------------------------------- | ----------------------------------------------------- |
+| VWL 55/7.1 A  | [3,94](../tests/fixtures/jaz-bwp/final-5082-hk.json) | [4,49](../tests/fixtures/jaz-bwp/final-5082-fbh.json) |
+| VWL 75/7.1 A  | [3,86](../tests/fixtures/jaz-bwp/final-5083-hk.json) | [4,40](../tests/fixtures/jaz-bwp/final-5083-fbh.json) |
+| VWL 115/7.1 A | [3,95](../tests/fixtures/jaz-bwp/final-5085-hk.json) | [4,50](../tests/fixtures/jaz-bwp/final-5085-fbh.json) |
+| VWL 125/8.1 A | [4,21](../tests/fixtures/jaz-bwp/final-5077-hk.json) | [4,80](../tests/fixtures/jaz-bwp/final-5077-fbh.json) |
+
+Die Zuordnung wurde selbst gegen `/Users/benjaminbendler/code/_t1087_s94/JAZ/WERTE_JAZ.json` und die dort referenzierten Originalantworten gemessen. Die Werte sind berechnete Beispiele für Raumheizung und Warmwasser einschließlich erforderlichem elektrischem Zusatzheizer, keine Herstellerdatenblattwerte und keine gemessenen Anlagenwerte. Keine Umrechnung aus SCOP und keine zusätzliche Rundung. Für die Kaskadenkarte bleibt es ausdrücklich beim Einzelgerätewert mit „je Gerät; projektbezogen prüfen“; keine daraus abgeleitete Kaskaden-JAZ.
+
+Der Kundenfußtext lautet:
+
+> ¹ JAZ = Jahresarbeitszahl. Beispielrechnung mit dem BWP-JAZ-Rechner nach VDI 4650 Blatt 1 für einen Altbau in Hannover. Heizkörper: Vorlauf/Rücklauf 55/45 °C; Fußbodenheizung: Vorlauf/Rücklauf 35/30 °C. Warmwasserbereitung durch die Wärmepumpe; einschließlich erforderlichem elektrischem Zusatzheizer. Individuelle Anlagenwerte können abweichen.
+
+Quellen für Norm und Annahmen: derselbe Wertesatz, Felder `standard`, `assumptions`, `values[].flow_c` und `values[].return_c`; freigegebener Wortlaut in `TAFEL/PLAN_TAFEL.md`, Abschnitt „Nachauftrag 2“. Die Website verlinkt kein internes Rechenprotokoll und nennt keine internen Auslegungsparameter. Die bestehende SCOP-Erklärung bleibt erhalten. Wolf und die alten Plus-Vorlagen anderer Gerätetypen behalten ihren ursprünglichen Fußtext; ihnen wird kein BWP-Nachweis aus diesen Läufen zugeschrieben.
 
 ## Implementierte Darstellung
 
-Die veröffentlichte Pdesignh-Zeile benennt W55 und mittleres Klima. Pro zeigt vorerst keine JAZ-Zeilen und ausschließlich die SCOP-Fußnote. Später genügen die belegten Stringwerte `jaz.heizkoerper` und `jaz.fussboden` im jeweiligen Eintrag von `PA_PRO_TECHNIK`, im Dezimalkommaformat. Die Zeilen und Fußnote erscheinen datenabhängig. Testwerte der Gegenprobe sind keine Produktwerte.
+Die Pro-JAZ wird ausschließlich als `jaz.heizkoerper` und `jaz.fussboden` im jeweiligen Eintrag von `PA_PRO_TECHNIK` ergänzt. Darstellung, Reihenfolge und Hervorhebung folgen dem bestehenden Renderer. Ohne Daten erscheint weiterhin keine leere JAZ-Zeile. Die Plus-Vorlagen desselben belegten Geräts erhalten den freigegebenen Heizkörperwert. Alle sonstigen Datenblattfelder und sämtliche Karten bleiben unverändert.
 
-Die Bestandsfußnote wird unverändert aus N übernommen, ausschließlich der interne Temperaturzusatz entfällt. Wolf-Karten, Tabellen und Bildausgabe sowie Plus-Karten und Tabellen werden mit identischen Eingaben byteweise gegen N geprüft. Der Preisabruf liefert keine öffentlich verwendeten Technikwerte; diese folgen ausschließlich dem gebundenen bekannten Modell.
+Der gerätebezogene Fußtext wird bei jedem Wechsel neu gewählt. Bei Wolf und den alten Plus-Geräten wird das ursprüngliche HTML unverändert wiederhergestellt. Die feste Höhenbegrenzung entfällt ausschließlich bei geöffneten Datenblättern mit dem neuen BWP-Fußtext, damit dieser auch mobil vollständig sichtbar bleibt. Wolf behält seine bisherige Höhenbegrenzung. Der Preisabruf liefert weiterhin keine öffentlich verwendeten Technikwerte.
 
 ## Bildquellen und Bearbeitung
 

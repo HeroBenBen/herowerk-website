@@ -13,6 +13,23 @@ const {
   label,
 } = require('./helpers/t1087-geraetetyp.cjs');
 const { internal } = require('./helpers/t1087-datenblatt.cjs');
+const { expectedJaz, footnote } = require('./helpers/t1087-jaz.cjs');
+
+async function expectJaz(page, model) {
+  const expected = expectedJaz(model);
+  if (!expected) {
+    await expect(page.locator('#paDetail')).not.toHaveClass(/pa-jaz-bwp/);
+    await expect(page.locator('#paJazFootnote')).not.toContainText('BWP-JAZ-Rechner');
+    return;
+  }
+  for (const [name, value] of expected) {
+    const row = page.locator('#paSpecsTable tbody tr').filter({ hasText: name });
+    await expect(row.locator('td').last()).toHaveText(value);
+  }
+  await expect(page.locator('#paJazFootnote')).toBeVisible();
+  const scop = await page.locator('#paScopFootnote').textContent();
+  await expect(page.locator('#paJazFootnote')).toHaveText(footnote + ' ' + scop);
+}
 
 async function expectManufacturerTabs(page, minimum) {
   await expect(page.locator('#manufacturerVaillant .manufacturer-name')).toHaveText(
@@ -87,11 +104,10 @@ for (const mode of ['marker', 'altvertrag', 'ausfall']) {
         await expect(page.locator('#paSpecsSub')).toHaveText(model(row) + ' · ' + kw);
         expect(await page.locator('#paSpecsTable').innerText()).not.toMatch(internal);
         if (row.modell.includes('/7.1')) {
-          await expect(page.locator('#paSpecsTable tbody tr')).toHaveCount(11);
+          await expect(page.locator('#paSpecsTable tbody tr')).toHaveCount(13);
           await expect(page.locator('#paSpecsTable')).toContainText('SCOP');
-          await expect(page.locator('#paSpecsTable')).not.toContainText('JAZ');
-          await expect(page.locator('#paJazFootnote')).toBeHidden();
-          await expect(page.locator('#paScopFootnote')).toBeVisible();
+          await expect(page.locator('#paSpecsTable')).toContainText('JAZ');
+          await expect(page.locator('#paScopFootnote')).toBeHidden();
           await expect(page.locator('#paImg')).toHaveAttribute(
             'src',
             index < 2 ? 'vwl-pro-s-m.jpg' : 'vwl-pro-l.jpg'
@@ -102,6 +118,7 @@ for (const mode of ['marker', 'altvertrag', 'ausfall']) {
           if (brand === 'vaillant')
             await expect(page.locator('#paImg')).toHaveAttribute('src', 'vwl-plus-l-xl.jpg');
         }
+        await expectJaz(page, row.modell);
       }
       await expect(page.locator('.pa-kw')).toHaveCount(5);
     }
@@ -202,6 +219,20 @@ for (const width of [375, 1440]) {
           ).toEqual([1280, 853]);
         }
         await expect(page.locator('#paDetail')).toHaveClass(/open/);
+        if (brand === 'vaillant') {
+          await expectJaz(
+            page,
+            await page.locator('#paCards .pa-card').nth(i).locator('.pa-modell').innerText()
+          );
+          const complete = await page.locator('#paJazFootnote').evaluate((el) => {
+            const detail = el.closest('#paDetail').getBoundingClientRect();
+            const foot = el.getBoundingClientRect();
+            return (
+              foot.bottom <= detail.bottom + 1 && foot.left >= 0 && foot.right <= window.innerWidth
+            );
+          });
+          expect(complete, 'JAZ-Fußnote vollständig innerhalb der Detailfläche').toBe(true);
+        }
         const overflow = await page.locator('#paSpecsTable').evaluate((el) => {
           const bounds = el.getBoundingClientRect();
           return bounds.right > window.innerWidth + 1 || bounds.left < -1;
@@ -217,7 +248,7 @@ for (const width of [375, 1440]) {
             'nav[aria-label="Hauptnavigation"], .mobile-bottom-bar { visibility: hidden !important; }',
         });
         await testInfo.attach(brand + '-' + key, { path: file, contentType: 'image/png' });
-        if (brand === 'vaillant' && (key === 's' || key === 'xl')) {
+        if (brand === 'vaillant') {
           await expectManufacturerTabs(page, minimumLabel(selected.vaillant));
           // Die mobile Kartenleiste kann noch die Position der vorherigen Marke haben.
           await page.locator('#paCards .pa-card').nth(i).scrollIntoViewIfNeeded();

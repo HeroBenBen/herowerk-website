@@ -55,6 +55,10 @@ function browser(ref = '', mutate = (s) => s) {
       'paImg',
     ].map((id) => [id, element()])
   );
+  const html = read('preise.html', ref);
+  for (const id of ['paJazFootnote', 'paScopFootnote'])
+    nodes[id].innerHTML =
+      html.match(new RegExp('<div id="' + id + '"[^>]*>([\\s\\S]*?)</div>'))?.[1] || '';
   const image = element();
   const ctx = vm.createContext({
     console: { info() {} },
@@ -101,6 +105,8 @@ function render(b, brand) {
         table: b.nodes.paSpecsTable.innerHTML,
         cta: b.nodes.paDetailCta.innerHTML,
         image: b.image.innerHTML,
+        jazFootnote: b.nodes.paJazFootnote.innerHTML,
+        jazDisplay: b.nodes.paJazFootnote.style.display,
       };
     }),
   };

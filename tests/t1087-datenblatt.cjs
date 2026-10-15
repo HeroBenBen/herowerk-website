@@ -21,6 +21,7 @@ const {
   label,
   selected,
 } = require('./helpers/t1087-geraetetyp.cjs');
+const { expectedJaz } = require('./helpers/t1087-jaz.cjs');
 const ref = process.argv.includes('--ref') ? process.argv[process.argv.indexOf('--ref') + 1] : '';
 const mutate = (s) => {
   if (process.argv.includes('--mutation-bild'))
@@ -63,7 +64,7 @@ const pro = [
     'vwl-pro-l.jpg',
   ],
 ];
-function expectedSpecs(p) {
+function expectedSpecs(p, model) {
   return [
     ['Heizleistung A-7/W35', `${p[0]} kW (COP ${p[1]})`],
     ['Heizleistung Pdesignh (W55, mittleres Klima)', p[2] + ' kW'],
@@ -74,6 +75,7 @@ function expectedSpecs(p) {
     ['Effizienzklasse (35 / 55 °C)', 'A+++ / A++'],
     ['ηs (35 / 55 °C)', p[4]],
     ['SCOP (35 / 55 °C)²', p[5]],
+    ...expectedJaz(model),
     ['Abmessung (BxTxH)', p[6]],
     ['Hersteller', 'Vaillant GmbH'],
   ];
@@ -105,16 +107,34 @@ for (const [mode, rows] of Object.entries(modes)) {
         );
         assert.doesNotMatch(d.sub + d.table, internal);
         if (isPro) {
-          assert.deepEqual(d.card.specs, expectedSpecs(pro[i]));
+          assert.deepEqual(d.card.specs, expectedSpecs(pro[i], d.card.modell));
           assert.equal(d.card.kw, 'A-7/W35: ' + pro[i][0] + ' kW');
           assert.equal(d.sub, d.card.modell + ' · ' + d.card.kw);
           assert.equal(d.card.img, pro[i][7]);
-          assert.doesNotMatch(d.table, /JAZ|offen|Platzhalter/);
+          assert.doesNotMatch(d.table, /offen|Platzhalter/);
           assert.match(d.table, /<strong>.*<\/strong>/);
         } else {
-          for (const field of ['title', 'sub', 'table', 'cta'])
+          const jazUpdate = brand === 'vaillant' && i >= 3;
+          for (const field of ['title', 'sub', 'cta'])
             assert.equal(d[field], old[field], field + ' bytegleich');
-          assert.deepEqual(d.card.specs, old.card.specs);
+          assert.equal(
+            d.table,
+            jazUpdate
+              ? old.table.replace(
+                  '<td>JAZ Heizkörper¹</td><td><strong>4,05',
+                  '<td>JAZ Heizkörper¹</td><td><strong>4,21'
+                )
+              : old.table
+          );
+          assert.deepEqual(
+            d.card.specs,
+            jazUpdate
+              ? old.card.specs.map(([name, value]) => [
+                  name,
+                  name === 'JAZ Heizkörper¹' ? value.replace('4,05', '4,21') : value,
+                ])
+              : old.card.specs
+          );
           if (brand === 'wolf') {
             assert.deepEqual(d.card, old.card);
             assert.equal(d.image, old.image, 'Wolf-Bild-HTML bytegleich');
@@ -210,14 +230,17 @@ test('Interne Werte aus Rohzeilen und manipulierten Darstellungsdaten werden nic
     b.nodes.foerderWpTyp.options.forEach((o) => assert.doesNotMatch(o.textContent, forbidden));
   }
 });
-test('Pro-JAZ später nur durch Daten ergänzen; aktuell ausschließlich SCOP-Fußnote', async () => {
+test('Pro-JAZ aus freigegebenen Daten; fehlende Werte bleiben vollständig ausgeblendet', async () => {
   const b = browser(ref, mutate);
   await load(b, marked);
   let d = render(b, 'vaillant').details[0];
-  assert.doesNotMatch(d.table, /JAZ/);
+  assert.deepEqual(
+    d.card.specs.filter(([name]) => name.startsWith('JAZ')),
+    expectedJaz(d.card.modell)
+  );
   b.ctx.paUpdateDetail(d.card);
-  assert.equal(b.nodes.paJazFootnote.style.display, 'none');
-  assert.equal(b.nodes.paScopFootnote.style.display, 'block');
+  assert.equal(b.nodes.paJazFootnote.style.display, 'block');
+  assert.equal(b.nodes.paScopFootnote.style.display, 'none');
   vm.runInContext(
     "PA_PRO_TECHNIK['Vaillant VWL 55/7.1 A'].jaz={heizkoerper:'3,01',fussboden:'4,02'}",
     b.ctx
