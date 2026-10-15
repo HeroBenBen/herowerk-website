@@ -1057,7 +1057,7 @@ function renderWizServerResult(data) {
       <div class="foerder-result" style="margin-bottom:16px;">
         <div style="font-size:13px;color:var(--g300);">Voraussichtlicher Stromverbrauch der Wärmepumpe</div>
         <div style="font-size:32px;font-weight:800;color:var(--white);">${Number(data.stromverbrauch_kwh || 0).toLocaleString('de-DE')} kWh im Jahr</div>
-        <p style="color:var(--g300);margin:8px 0 0;">${data.strom_hinweis || 'Warmwasser braucht eine höhere Temperatur und kostet deshalb mehr Strom je Kilowattstunde Wärme. Die Annahmen werden vor Ort genauer bestimmt.'}</p>
+        <p style="color:var(--g300);margin:8px 0 0;">${paEscapeHtml(data.strom_hinweis || 'Warmwasser braucht eine höhere Temperatur und kostet deshalb mehr Strom je Kilowattstunde Wärme. Die Annahmen werden vor Ort genauer bestimmt.')}</p>
       </div>
       <div class="wiz-result-grid">
         ${renderBrandCard('wolf', 'Wolf', data.marken?.wolf, data.bedarf)}
@@ -1119,8 +1119,8 @@ function renderBrandCard(key, label, brand, bedarf) {
         : '';
       return `<div class="wiz-variant">
       ${empfehlungsAbzeichen}
-      <div class="wiz-variant-series">${String(variante.baureihe || '')}</div>
-      <div class="wiz-variant-device">${geraet}</div>
+      <div class="wiz-variant-series">${paEscapeHtml(variante.baureihe || '')}</div>
+      <div class="wiz-variant-device">${paEscapeHtml(geraet)}</div>
       <div class="wiz-variant-meta"><span>Anzahl: ${Number(variante.anzahl) || 1}</span>${preis}</div>
     </div>`;
     })
@@ -1139,13 +1139,12 @@ function wizSelectMarke(key) {
 function modellZweizeilig(m) {
   var s = String(m == null ? '' : m).trim();
   var match = s.match(/^(\d+\s*[×x]\s*)?(Wolf|Vaillant)\s+(.+)$/);
-  if (!match) return s;
+  if (!match) return paEscapeHtml(s);
   return (
     '<span style="display:block;">' +
-    (match[1] || '') +
-    match[2] +
+    paEscapeHtml((match[1] || '') + match[2]) +
     '</span><span style="display:block;">' +
-    match[3] +
+    paEscapeHtml(match[3]) +
     '</span>'
   );
 }
@@ -1445,6 +1444,34 @@ function foerderFormatPackageOption(row) {
   return [identity.modell, brutto.toLocaleString('de-DE') + ' €'].filter(Boolean).join(' · ');
 }
 
+function foerderUpdatePackageLabel() {
+  const select = document.getElementById('foerderWpTyp');
+  if (!select) return;
+  let wrapper = select.closest('.foerder-package-field');
+  if (!wrapper) {
+    wrapper = document.createElement('div');
+    wrapper.className = 'foerder-package-field';
+    select.before(wrapper);
+    wrapper.appendChild(select);
+    const label = document.createElement('span');
+    label.className = 'foerder-package-label';
+    label.setAttribute('aria-hidden', 'true');
+    wrapper.appendChild(label);
+  }
+  const selected = select.selectedOptions[0];
+  wrapper.classList.toggle('is-vaillant', selected?.dataset.brand === 'vaillant');
+  const label = wrapper.querySelector('.foerder-package-label');
+  label.replaceChildren();
+  const text = selected?.textContent || '';
+  const split = text.lastIndexOf(' · ');
+  const model = document.createElement('span');
+  model.textContent = split < 0 ? text : text.slice(0, split);
+  const price = document.createElement('span');
+  price.className = 'foerder-package-price';
+  price.textContent = split < 0 ? '' : text.slice(split);
+  label.append(model, price);
+}
+
 function foerderRefreshPackageOptions() {
   const select = document.getElementById('foerderWpTyp');
   if (!select) return;
@@ -1472,6 +1499,7 @@ function foerderRefreshPackageOptions() {
     ? nextValue
     : 'wolf:m';
   foerderMarke = foerderGetSelectedPackage().marke;
+  foerderUpdatePackageLabel();
 }
 
 function foerderSelectPackage(brand, klasse) {
@@ -1481,6 +1509,7 @@ function foerderSelectPackage(brand, klasse) {
   const nextKlasse = PA_KLASSEN.includes(klasse) ? klasse : 'm';
   select.value = nextBrand + ':' + nextKlasse;
   foerderMarke = nextBrand;
+  foerderUpdatePackageLabel();
 }
 
 function paApplyBrand(brand) {
@@ -1554,16 +1583,24 @@ function paFormatEuro(value) {
 function paUpdateMinimum(brand) {
   const targetId = brand === 'vaillant' ? 'vaillantMinEigen' : 'wolfMinEigen';
   const target = document.getElementById(targetId);
-  if (!target || !paData.length) return;
+  if (!target) return;
   const min = paData
     .map((item) => item.eigen)
     .filter(paHasNumber)
     .sort((a, b) => a - b)[0];
-  if (paHasNumber(min)) target.textContent = 'ab ' + paFormatEuro(min) + ' Eigenanteil*';
+  target.textContent = paHasNumber(min)
+    ? 'ab ' + paFormatEuro(min) + ' Eigenanteil*'
+    : 'ab … dein Anteil*';
 }
 
 function paSelectManufacturer(manufacturer) {
   const selectedManufacturer = manufacturer === 'vaillant' ? 'vaillant' : 'wolf';
+  document
+    .getElementById('wolfPricePanel')
+    ?.setAttribute(
+      'aria-labelledby',
+      selectedManufacturer === 'vaillant' ? 'manufacturerVaillant' : 'manufacturerWolf'
+    );
   const detail = document.getElementById('paDetail');
   const cardsContainer = document.getElementById('paCards');
   document.querySelectorAll('.manufacturer-tab').forEach((tab) => {
@@ -1772,7 +1809,7 @@ const paDataFallbackVaillantPlus = [
       ['JAZ Heizkörper¹', '3,72'],
       ['JAZ Fußbodenheizung¹', '4,41'],
       ['Abmessung (BxTxH)', '1.100 × 450 × 765 mm'],
-      ['Hersteller', 'Vaillant Deutschland GmbH & Co. KG'],
+      ['Hersteller', 'Vaillant GmbH'],
     ],
   },
   {
@@ -1797,7 +1834,7 @@ const paDataFallbackVaillantPlus = [
       ['JAZ Heizkörper¹', '3,76'],
       ['JAZ Fußbodenheizung¹', '4,45'],
       ['Abmessung (BxTxH)', '1.100 × 450 × 965 mm'],
-      ['Hersteller', 'Vaillant Deutschland GmbH & Co. KG'],
+      ['Hersteller', 'Vaillant GmbH'],
     ],
   },
   {
@@ -1822,7 +1859,7 @@ const paDataFallbackVaillantPlus = [
       ['JAZ Heizkörper¹', '4,03'],
       ['JAZ Fußbodenheizung¹', '4,77'],
       ['Abmessung (BxTxH)', '1.100 × 450 × 1.480 mm'],
-      ['Hersteller', 'Vaillant Deutschland GmbH & Co. KG'],
+      ['Hersteller', 'Vaillant GmbH'],
     ],
   },
   {
@@ -1847,7 +1884,7 @@ const paDataFallbackVaillantPlus = [
       ['JAZ Heizkörper¹', '4,21'],
       ['JAZ Fußbodenheizung¹', '4,80'],
       ['Abmessung (BxTxH)', '1.100 × 450 × 1.480 mm'],
-      ['Hersteller', 'Vaillant Deutschland GmbH & Co. KG'],
+      ['Hersteller', 'Vaillant GmbH'],
     ],
   },
   {
@@ -1871,7 +1908,7 @@ const paDataFallbackVaillantPlus = [
       ['JAZ Heizkörper¹', '4,21 je Gerät; projektbezogen prüfen'],
       ['JAZ Fußbodenheizung¹', '4,80 je Gerät; projektbezogen prüfen'],
       ['Schallleistung ErP außen', '50 dB(A) je Gerät'],
-      ['Hersteller', 'Vaillant Deutschland GmbH & Co. KG'],
+      ['Hersteller', 'Vaillant GmbH'],
     ],
   },
 ];
@@ -1940,7 +1977,7 @@ function paProSpecs(pro) {
 }
 
 function paEscapeHtml(value) {
-  return String(value || '').replace(
+  return String(value ?? '').replace(
     /[&<>"']/g,
     (char) =>
       ({
@@ -2035,19 +2072,19 @@ function paRenderCards() {
         ? `<div style="color:var(--green);margin-bottom:8px;display:flex;justify-content:center;">${d.icon}</div>`
         : '';
       const labelHtml = d.label
-        ? `<div style="color:var(--g300);font-size:12px;font-weight:600;letter-spacing:0.3px;margin-bottom:4px;">${d.label}</div>`
+        ? `<div style="color:var(--g300);font-size:12px;font-weight:600;letter-spacing:0.3px;margin-bottom:4px;">${paEscapeHtml(d.label)}</div>`
         : '';
       const hausHtml = d.hausgroesse
-        ? `<div style="color:var(--g400);font-size:12px;margin-top:2px;">${d.hausgroesse}</div>`
+        ? `<div style="color:var(--g400);font-size:12px;margin-top:2px;">${paEscapeHtml(d.hausgroesse)}</div>`
         : '';
       return `
         <div class="pa-card pa-visible${defaultClass}" role="button" tabindex="0" onclick="paZoom(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();paZoom(${i});}" data-idx="${i}">
           ${iconHtml}
           ${labelHtml}
-          <h2>${d.name}</h2>
+          <h2>${paEscapeHtml(d.name)}</h2>
           ${hausHtml}
           <div class="pa-modell">${paEscapeHtml(d.modell)}</div>
-          <div class="pa-kw">${paDeviceIdentity(d).kw}</div>
+          <div class="pa-kw">${paEscapeHtml(paDeviceIdentity(d).kw)}</div>
           ${priceHtml}
         </div>`;
     })
@@ -2065,13 +2102,18 @@ function paUpdateDetail(d) {
   document.getElementById('paSpecsTitle').textContent = d.name;
   // Nur bekannte gerätebezogene Vorlagen, niemals Technik aus Preisantwort oder DOM.
   const identity = paDeviceIdentity(d);
-  document.getElementById('paSpecsSub').textContent = d.modell + ' · ' + identity.kw;
+  const vaillant = paModelKey(d.modell).includes('Vaillant');
+  const specText = (value) => {
+    const text = paEscapeHtml(value);
+    return vaillant ? text.replaceAll('A-7/W35', '<span class="pa-kennwert">A-7/W35</span>') : text;
+  };
+  document.getElementById('paSpecsSub').innerHTML = specText(d.modell + ' · ' + identity.kw);
   const hasJaz = identity.specs.some((s) => s[0].startsWith('JAZ'));
   const hasScop = identity.specs.some((s) => s[0].startsWith('SCOP'));
   document.getElementById('paSpecsTable').querySelector('tbody').innerHTML = identity.specs
     .map((s) => {
       const isHighlight = s[0].startsWith('JAZ') || s[0].startsWith('SCOP');
-      return `<tr${isHighlight ? ' style="background:rgba(183,217,0,0.08)"' : ''}><td>${s[0]}</td><td>${isHighlight ? '<strong>' + s[1] + '</strong>' : s[1]}</td></tr>`;
+      return `<tr${isHighlight ? ' style="background:rgba(183,217,0,0.08)"' : ''}><td>${specText(s[0])}</td><td>${isHighlight ? '<strong>' + paEscapeHtml(s[1]) + '</strong>' : paEscapeHtml(s[1])}</td></tr>`;
     })
     .join('');
   const fn = document.getElementById('paJazFootnote');
@@ -2117,14 +2159,14 @@ function paUpdateDetail(d) {
     cta.innerHTML = `
           <div class="pa-big-price">ab ${d.eigen.toLocaleString('de-DE')} €</div>
           <div class="pa-price-sub">${preSub}</div>
-          <div class="pa-info">${d.info}</div>
+          <div class="pa-info">${paEscapeHtml(d.info)}</div>
           ${contextHint}
           `;
   } else {
     cta.innerHTML = `
           <div style="color:var(--bernstein);font-size:26px;font-weight:700;font-family:'Barlow',sans-serif;">Individuelles Angebot</div>
           <div class="pa-price-sub">Förderung abhängig von Wohneinheiten</div>
-          <div class="pa-info">${d.info}</div>
+          <div class="pa-info">${paEscapeHtml(d.info)}</div>
           `;
   }
 }
@@ -2137,7 +2179,12 @@ function paPositionArrow(idx) {
   const cardRect = card.getBoundingClientRect();
   const containerRect = container.getBoundingClientRect();
   const left = cardRect.left - containerRect.left + cardRect.width / 2 - 10;
-  document.getElementById('paDetailArrow').style.left = left + 'px';
+  const detail = document.getElementById('paDetail');
+  const bounded =
+    window.matchMedia('(max-width: 600px)').matches && detail
+      ? Math.max(5, Math.min(left, detail.clientWidth - 25))
+      : left;
+  document.getElementById('paDetailArrow').style.left = bounded + 'px';
 }
 
 let paOpenIdx = -1;
@@ -2205,7 +2252,7 @@ function paZoom(idx) {
       return;
     }
     const imgPos = paData[idx].imgPos || 'center center';
-    imgContainer.innerHTML = `<img id="paImg" src="${imgSrc}" alt="${paEscapeHtml(paData[idx].imgAlt || paData[idx].modell)}" width="${paData[idx].imgWidth || 2500}" height="${paData[idx].imgHeight || 2500}" style="object-position:${imgPos};" loading="lazy" decoding="async" onerror="this.style.display='none'">`;
+    imgContainer.innerHTML = `<img id="paImg" src="${paEscapeHtml(imgSrc)}" alt="${paEscapeHtml(paData[idx].imgAlt || paData[idx].modell)}" width="${paEscapeHtml(paData[idx].imgWidth || 2500)}" height="${paEscapeHtml(paData[idx].imgHeight || 2500)}" style="object-position:${paEscapeHtml(imgPos)};" loading="lazy" decoding="async" onerror="this.style.display='none'">`;
     const img = document.getElementById('paImg');
     if (img) {
       img.style.animation = 'none';
@@ -2515,12 +2562,15 @@ function foerderAntragOptionen(data) {
     .join('|');
   if (soll !== ist) {
     const gewaehlt = select.value;
-    select.innerHTML = data.perioden
-      .map(
-        (p) =>
-          '<option value="' + p.key + '" data-ab="' + (p.ab || '') + '">' + p.label + '</option>'
-      )
-      .join('');
+    select.replaceChildren(
+      ...data.perioden.map((p) => {
+        const option = document.createElement('option');
+        option.value = p.key;
+        option.dataset.ab = p.ab || '';
+        option.textContent = p.label;
+        return option;
+      })
+    );
     select.value = data.perioden.some((p) => p.key === gewaehlt)
       ? gewaehlt
       : data.antragPeriode || data.aktivePeriode || data.perioden[0].key;
@@ -2584,17 +2634,17 @@ function hwTreppeAufbauen(treppe, aktivePeriode) {
       // ein fokussierbarer Nachfahre in einem Element mit Rolle ist der axe-Befund
       // nested-interactive, und axe-accessibility ist eine der Pflicht-Pruefungen.
       return (
-        `<div class="tr-col${aktiv}" role="button" tabindex="0" data-tr="${d.periode}" title="${d.label}" aria-label="Antragszeitraum ${d.label} waehlen: ${eur(d.betrag)}, ${d.quote} Prozent">` +
-        `<span class="tr-eur">${eur(d.betrag)}</span><span class="tr-pct">${d.quote} %${stern}</span>` +
+        `<div class="tr-col${aktiv}" role="button" tabindex="0" data-tr="${paEscapeHtml(d.periode)}" title="${paEscapeHtml(d.label)}" aria-label="Antragszeitraum ${paEscapeHtml(d.label)} waehlen: ${eur(d.betrag)}, ${paEscapeHtml(d.quote)} Prozent">` +
+        `<span class="tr-eur">${eur(d.betrag)}</span><span class="tr-pct">${paEscapeHtml(d.quote)} %${stern}</span>` +
         `<div class="tr-bar" style="height:${hoehe}px"></div>` +
-        `<span class="tr-lbl"><span>ab</span><span>${monat(d.periode)}</span></span></div>`
+        `<span class="tr-lbl"><span>ab</span><span>${paEscapeHtml(monat(d.periode))}</span></span></div>`
       );
     })
     .join('');
   const verlustSatz = naechste
-    ? `Wer bis ${zeitraumName(naechste.periode)} wartet, bekommt <strong>${eur(bezug.betrag - naechste.betrag)} weniger</strong> Zuschuss.` +
+    ? `Wer bis ${paEscapeHtml(zeitraumName(naechste.periode))} wartet, bekommt <strong>${eur(bezug.betrag - naechste.betrag)} weniger</strong> Zuschuss.` +
       (letzte !== naechste
-        ? ` Bis ${zeitraumName(letzte.periode)} sind es <strong>${eur(bezug.betrag - letzte.betrag)} weniger</strong>.`
+        ? ` Bis ${paEscapeHtml(zeitraumName(letzte.periode))} sind es <strong>${eur(bezug.betrag - letzte.betrag)} weniger</strong>.`
         : '')
     : 'Das ist der letzte Zeitraum, für den die Fördersätze feststehen.';
   // Der Fussnoten-Verweis steht EINMAL unter der Treppe, ausserhalb jedes Elements
@@ -2608,7 +2658,7 @@ function hwTreppeAufbauen(treppe, aktivePeriode) {
     '<div class="tr-titel">Deine Förderung nach Antragszeitraum</div>' +
     `<div class="tr-reihe">${spalten}</div>` +
     `<div class="tr-verlust">${verlustSatz}</div>` +
-    `<div class="tr-hint">Jedes Warten kostet Förderung: Im Antragszeitraum ${bezug.label} bekommst du ${eur(bezug.betrag)}.${sternHinweis}</div>`;
+    `<div class="tr-hint">Jedes Warten kostet Förderung: Im Antragszeitraum ${paEscapeHtml(bezug.label)} bekommst du ${eur(bezug.betrag)}.${sternHinweis}</div>`;
   hwTreppeBedienbarMachen(host);
 }
 
@@ -2768,7 +2818,9 @@ async function calculateFoerder() {
   let html = '';
   (data.bausteine || []).forEach((baustein) => {
     html +=
-      '<div class="breakdown-item"><span>' + baustein + '</span><span class="pct">✓</span></div>';
+      '<div class="breakdown-item"><span>' +
+      paEscapeHtml(baustein) +
+      '</span><span class="pct">✓</span></div>';
   });
   html +=
     '<div class="breakdown-item" style="border-top:1px solid rgba(255,255,255,0.15);padding-top:8px;margin-top:8px;"><span style="font-weight:700;color:var(--white);">KfW-Zuschuss gesamt</span><span class="pct" style="font-size:16px;">' +
@@ -2816,7 +2868,10 @@ document.getElementById('wohneinheiten')?.addEventListener('change', function ()
 document.getElementById('gemeinde')?.addEventListener('change', function () {
   calculateFoerder();
 });
-document.getElementById('foerderWpTyp')?.addEventListener('change', calculateFoerder);
+document.getElementById('foerderWpTyp')?.addEventListener('change', () => {
+  foerderUpdatePackageLabel();
+  calculateFoerder();
+});
 // Initialer Aufruf - nur wenn der Förderrechner auf dieser Seite vorhanden ist.
 // Die folgenden Funktionen lesen .value direkter Förderrechner-Elemente; auf
 // Seiten ohne Rechner (z. B. Startseite) würde der Top-Level-Aufruf sonst eine

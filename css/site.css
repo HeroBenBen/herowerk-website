@@ -7035,3 +7035,48 @@ samp {
   color: #1c2b36;
   border-color: #4f6000;
 }
+
+/* WR: Kennwert bleibt zeichengleich; nur seine Umbruchstelle entfällt. */
+.pa-kennwert {
+  white-space: nowrap;
+}
+.foerder-package-label {
+  display: none;
+}
+@media (max-width: 600px) {
+  .foerder-package-field.is-vaillant {
+    display: grid;
+    /* WebKit zählt den unsichtbaren nativen Auswahltext sonst als Seitenüberlauf. */
+    overflow: hidden;
+  }
+  .foerder-package-field.is-vaillant > select,
+  .foerder-package-field.is-vaillant > .foerder-package-label {
+    grid-area: 1 / 1;
+  }
+  .foerder-package-field.is-vaillant > select {
+    height: 100%;
+    /* Auch die wichtige Hellmodus-Eingabefarbe darf die zweite Textschicht nicht zeigen. */
+    color: transparent !important;
+  }
+  .foerder-package-field.is-vaillant > select option,
+  .foerder-package-field.is-vaillant > select optgroup {
+    color: var(--white);
+    background-color: var(--schiefer);
+  }
+  .foerder-package-field.is-vaillant > .foerder-package-label {
+    display: block;
+    min-width: 0;
+    padding: 12px 40px 12px 14px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--white);
+    pointer-events: none;
+  }
+  .foerder-package-price {
+    display: block;
+    white-space: nowrap;
+  }
+  .pa-detail.open {
+    max-height: none;
+  }
+}

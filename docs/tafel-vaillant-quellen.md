@@ -77,3 +77,12 @@ Je Original rein geometrischer Zuschnitt `(0, 0, 2126, 1417)` aus `2126 × 1535`
 | `vwl-pro-l.jpg`     | `aroTHERM pro - Printbilder/aroTHERM pro 11 kW freigestellt mit Blende_300 dpi.jpg` | Pro L                                                   | `b68e66e7425c86d0b1500aa4a62a11d136d41f0adb127473cb8bd27e97e60344` | `ce768c07866b89ef7acd206ee0ab6a825bb535e28dc5cde01f9713de8a8f24b1` |
 | `vwl-plus-s-m.jpg`  | `aroTHERM plus - Printbilder/aroTHERMplus_13x18_quer_300dpi1.jpg`                   | Plus S/M im Altvertrag                                  | `b1095473c62d4c1ba3b7bd8ca5e1eec7c987f10ce5238706c584481bdf09e2a7` | `8c3eaaf4bfbedd2c81f78e580213b329a73641d36f99466340226cf1d829ae46` |
 | `vwl-plus-l-xl.jpg` | `aroTHERM plus - Printbilder/aroTHERMplus_13x18_quer_300dpi7.jpg`                   | Plus L/XL/XXL, bei XXL Bild eines einzelnen Außengeräts | `7565155ccd5c16f896cb43b5e01590c7c7bf1155e2075e98d0008068ca198cc1` | `df3ac8c5159ccc444a66c5962dbf4b640c3e74744b99975d8ff30c0b4c0417c1` |
+
+## WR: Herstellerangabe der 8.1 (15.10.2026)
+
+Das Feld heißt „Hersteller“. Die fünf Plus-Vorlagen einschließlich Kaskade nennen deshalb wie die Pro-Geräte **Vaillant GmbH**. Der bisherige Text bezeichnet den Lieferanten.
+
+- VWL 105/8.1 A und VWL 125/8.1 A: [offizielle Installationsanleitung 8000035176_05](https://www.vaillant.de/api/download/product/de/installationsanleitung_arotherm-plus_1483575.pdf), PDF-Seite 152 von 152, unnummerierte Rückseite: „Publisher/manufacturer“, darunter „Vaillant GmbH“. Separat: „Supplier“, darunter „Vaillant Deutschland GmbH & Co.KG“. Die Kaskade besteht aus Geräten VWL 125/8.1 A und erhält dieselbe Herstellerangabe.
+- VWL 55/8.1 A und VWL 75/8.1 A: [Installationsanleitung 8000041775_03](https://www.vaillant.de/api/download/product/de/installationsanleitung_arotherm-plus_1483561.pdf), PDF-Seite 152 von 152: ebenfalls „Publisher/manufacturer“ / „Vaillant GmbH“. Dieser Beleg ist ein anderes Dokument als 8000035176_05 und deckt die kleineren Geräte ab.
+
+Textbeleg vollständig in der WR-Planung gelesen; keine aus einem fehlgeschlagenen PDF-Screenshot abgeleitete Sichtbehauptung. WR ändert keine technischen Kennwerte. Die mobile Höhenfreigabe wird gemäß WR-Punkt 3 auf alle geöffneten Datenblätter erweitert, einschließlich Wolf; dessen Fußtext bleibt unverändert.

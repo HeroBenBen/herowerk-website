@@ -1,3 +1,4 @@
+const { wrExpectedDetail } = require('./helpers/t1087-datenblatt.cjs');
 // Nachauftrag 3: identischer Rot-/Grünvergleich, nur die freigegebenen Pro-Texte.
 const assert = require('node:assert/strict');
 const { test } = require('node:test');
@@ -19,10 +20,14 @@ for (const [mode, rows] of Object.entries({
     for (const brand of ['wolf', 'vaillant', 'wolf', 'vaillant']) {
       const a = render(before, brand);
       const b = render(after, brand);
-      assert.equal(b.cardsHtml, a.cardsHtml, 'sämtliche Karten bytegleich');
+      assert.equal(
+        b.cardsHtml,
+        a.cardsHtml.replaceAll(' & ', ' &amp; '),
+        'sämtliche Karten bytegleich'
+      );
       assert.equal(b.details.length, a.details.length);
       b.details.forEach((d, i) => {
-        const expected = structuredClone(a.details[i]);
+        const expected = wrExpectedDetail(a.details[i]);
         if (/VWL (?:55|75|115)\/7\.1 A$/.test(d.card.modell)) {
           assert.deepEqual(expected.card.specs[2], ['Kältemittel', 'R290 (natürlich)']);
           assert.equal(expected.card.specs[1][0], 'Heizleistung Pdesignh (W55, mittleres Klima)');

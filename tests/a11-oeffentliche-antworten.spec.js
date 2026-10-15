@@ -365,7 +365,8 @@ for (const width of [375, 1280]) {
       };
       const oldView = await capture(before),
         newView = await capture(after);
-      expect(oldView.cards.replaceAll('−', '-')).toContain('A-11/W55: 12 kW');
+      // Alter API-Filter, aktueller Browser: WR setzt Antworttexte jetzt wörtlich ein.
+      expect(oldView.cards).toContain(text + ': 12 kW');
       expect(newView.title).toBe('Berechnung gerade nicht verfügbar');
       expect(newView.cards).toBe(
         'Berechnung gerade nicht verfügbar\n\nBitte Beratung anfragen. Wir melden uns mit einer individuellen Einschätzung.\n\nBeratung anfragen'
@@ -427,7 +428,8 @@ for (const width of [375, 1280]) {
       };
       const oldView = await capture(before),
         newView = await capture(after);
-      expect(oldView.cards.replaceAll('−', '-')).toContain('A-11/W55');
+      // Alter API-Filter, aktueller Browser: WR setzt Antworttexte jetzt wörtlich ein.
+      expect(oldView.cards).toContain(text);
       expect(newView.title).toBe('Berechnung gerade nicht verfügbar');
       expect(newView.cards).toBe(
         'Berechnung gerade nicht verfügbar\n\nBitte Beratung anfragen. Wir melden uns mit einer individuellen Einschätzung.\n\nBeratung anfragen'

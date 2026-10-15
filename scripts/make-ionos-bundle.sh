@@ -46,6 +46,7 @@ rsync -a \
   --exclude 'reports/' \
   --exclude 'artifacts/' \
   --exclude 'design-qa.md' \
+  --exclude 'BERICHT_WR.md' \
   --exclude 'test-results/' \
   --exclude 'playwright-report/' \
   --exclude 'scripts/' \
