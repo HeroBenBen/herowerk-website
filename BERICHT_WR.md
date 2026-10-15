@@ -19,7 +19,7 @@ Baufreigabe: genau `go` im Auftragschat. Baubasis: `40951542b4903adde7cc1e694a96
 ## Prüfstand
 
 - TAFEL-Vertragsprüfungen einschließlich Rot-/Grünvergleich WR lokal grün. Historische Erwartungen erlauben ausschließlich die freigegebenen Hersteller-/Kennwert-Markupänderungen und die gleich sichtbare Entity-Kodierung von `&`; Wolf-Fußtext und statische Förderauswahl bleiben bytegleich.
-- A11: 169 Prüfgruppen lokal grün, einschließlich der vollständigen Kernvergleiche. Keine Änderung am A11-Schutz oder seinen Prüfungen.
+- A11: 169 Prüfgruppen lokal grün, einschließlich der vollständigen Kernvergleiche. A11-API-Schutz und seine fachlichen Zusicherungen unverändert; zwei Browser-Erwartungen für Antworten des historischen Filters folgen ausdrücklich der neuen wörtlichen Textausgabe aus Punkt 7.
 - 74 API-, Rechenkern- und Fixture-Dateien bytegleich zur Baubasis; zusätzlich 18 öffentliche Antwortkörper aller action-Routen und zehn Förder-Paketfälle mit identischen lokalen Tabellen direkt bytegleich verglichen; keine Änderung an Preisen, Eigenanteilen, Förderbeträgen, Katalogbindung oder API.
 - Chromium und WebKit lokal durch die Sandbox beim Start blockiert. Chromium: `bootstrap_check_in … Permission denied (1100)`, WebKit beendet beim Start. Kein lokaler Sichtlauf behauptet. Leitstand übernimmt die lokale Sichtabnahme.
 - `tests/t1087-wr.spec.js` prüft Chromium/WebKit bei 375/1440 px: Geometrie, beide Reiter und sämtliche Datenblätter, Förderauswahl, Dimensionierung, beide Kostenvergleichsseiten; Basis/Bau mit identischen Antwortbytes. Screenshots und Messungen unter `artifacts/tafel-sicht/wr/`, im vorhandenen CI-Artefakt `tafel-sicht`.
@@ -29,7 +29,7 @@ Baufreigabe: genau `go` im Auftragschat. Baubasis: `40951542b4903adde7cc1e694a96
 
 Die Planung nannte 32 HTML-Kandidaten. Nachmessung: vier Treffer stehen nur in Kommentaren (`anfrage.html`, `datenschutz.html`, `impressum.html`, `stelle.html`) und laden die geänderten Assets nicht. Sie bleiben unverändert. Notwendig sind **56 Hashverweise in 28 HTML-Dateien**, damit der einjährige Asset-Cache die Korrekturen erhält. Davon ändern 26 ausschließlich Versionsverweise; die zwei Kostenvergleichsseiten schließen zusätzlich die geplanten Inline-Textsenken.
 
-Überschneidung mit den neun Dateien aus PR 150: ausschließlich `package.json`. WR ergänzt dort seine Prüfung in `verify:tafel`; `verify:a11` bleibt unverändert.
+Überschneidung mit den neun Dateien aus PR 150: `package.json` und `tests/a11-oeffentliche-antworten.spec.js`. WR ergänzt `verify:tafel` und passt zwei Browser-Erwartungen für historische API-Antworten an Punkt 7 an. Der aktuelle API-Schutz, seine Fehlerantworten und `verify:a11` bleiben unverändert.
 
 | Datei                                      | Zweck                                                                                             |
 | ------------------------------------------ | ------------------------------------------------------------------------------------------------- |
@@ -61,6 +61,7 @@ Die Planung nannte 32 HTML-Kandidaten. Nachmessung: vier Treffer stehen nur in K
 | `ratgeber.html`                            | Nur zwei Asset-Hashes                                                                             |
 | `rechner.html`                             | Nur zwei Asset-Hashes                                                                             |
 | `scripts/make-ionos-bundle.sh`             | Genau eine Ausschlusszeile für den internen Baunachweis                                           |
+| `tests/a11-oeffentliche-antworten.spec.js` | Zwei historische Browser-Erwartungen auf wörtliche Antworttexte umstellen; API-Verträge unverändert |
 | `tests/fixtures/t1087-wr-runde5.json`      | Unveränderter Original-Prüfbeleg aus A11 Runde 5                                                  |
 | `tests/helpers/t1087-datenblatt.cjs`       | Rot/Grün, Sichtvergleich beziehungsweise gezielte Bestands-Testanpassung                          |
 | `tests/t1087-beschriftung.cjs`             | Rot/Grün, Sichtvergleich beziehungsweise gezielte Bestands-Testanpassung                          |
@@ -78,7 +79,7 @@ Die Planung nannte 32 HTML-Kandidaten. Nachmessung: vier Treffer stehen nur in K
 | `wertsteigerung-waermepumpe.html`          | Nur zwei Asset-Hashes                                                                             |
 | `wp-kosten-hannover.html`                  | Nur zwei Asset-Hashes                                                                             |
 
-Gesamt: **44 Dateien**. Kein API-, Tabellen-, Preis- oder Workflow-Eingriff. Der Bündelwächter hatte den neuen internen `BERICHT_WR.md` im ersten CI-Lauf korrekt als unbekannte Laufzeit-Datei abgewiesen. Die konkrete Ausschlusszeile hält ihn aus dem öffentlichen Bündel heraus. Lokaler Bündelbau und Gleichheitsprüfung (124 Dateien) danach grün.
+Gesamt: **45 Dateien**. Kein API-, Tabellen-, Preis- oder Workflow-Eingriff. Der Bündelwächter hatte den neuen internen `BERICHT_WR.md` im ersten CI-Lauf korrekt als unbekannte Laufzeit-Datei abgewiesen. Die konkrete Ausschlusszeile hält ihn aus dem öffentlichen Bündel heraus. Lokaler Bündelbau und Gleichheitsprüfung (124 Dateien) danach grün.
 
 ## Abschlussinventar der Textsenken
 
@@ -100,7 +101,7 @@ AST-Nachmessung aller fünf Dateien in `js/`: 36 HTML-Zuweisungen, davon 34 in `
 
 Der tatsächlich durchgelassene Prüfer-Antwortkörper aus `A11/pruef/runde5/belege/kleiner-vergleich-markup-s3.json` liegt bytegleich als `tests/fixtures/t1087-wr-runde5.json` vor (SHA-256 `408d27e27b85bd9ea07d8d0ebe012418eff7ccd6876482268564c1f5c683563a`). Die Browserprobe spielt dieselben Bytes an Basis und Bau ein und prüft die unterschiedlichen Textausgaben und die Zahl eingefügter `span`-Knoten. Zusätzliche harmlose Anführungszeichen-/Attributfälle prüfen, dass kein `data-wr-injected`-Attribut entsteht.
 
-Die zusätzliche Fixture ist in der obigen Dateiliste enthalten; Überschneidung mit PR 150 unverändert ausschließlich `package.json`.
+Die zusätzliche Fixture ist in der obigen Dateiliste enthalten. Die abschließend gemessene PR-150-Schnittmenge steht oben und umfasst zwei Dateien.
 
 ## Erste gerenderte WR-Nachweise und Nachbesserung der Prüfung
 
@@ -120,3 +121,11 @@ Der latente Chiphelfer der Beraterseite verwendet die Anrede „Ihre Angabe“ s
 - Lokaler Plan: `WR/PLAN_WR.md`. Lokale Prüfprotokolle, heruntergeladene CI-Aufnahmen und Analyse-Ausschnitte: `WR/pruef/`.
 
 Keine automatische Zusammenführung eingerichtet. Kein Deployment ausgeführt. Die lokale Sichtabnahme durch den Leitstand bleibt wegen der Browser-Sandbox bestehen; die CI liefert zusätzlich echte Chromium-/WebKit-Aufnahmen und DOM-Messungen.
+
+## Abschlusskorrektur der Browserverträge
+
+Lauf 38766797325 bestand alle acht gezielten WR-Browsergruppen einschließlich WebKit-Seitenbreite sowie drei der vier vollständigen Regelfallvergleiche. Der vierte Vergleich zählte in WebKit bei 375 px die unsichtbaren nativen Optionslisten anders, sobald ihr Überlauf begrenzt war. Der Test vergleicht deshalb sämtliche Optionswerte und -texte sowie die ausgewählte Option separat vollständig und exakt; der übrige Seitenwortlaut wird ohne native Liste und ihre doppelte Textschicht verglichen. Kein Pakettext entfällt aus der Zusicherung.
+
+Vier vorhandene A11-Browserfälle erwarteten noch, dass Antworten eines historischen API-Filters im aktuellen Browser als HTML dekodiert werden. Genau diese Senke schließt Punkt 7. Zwei Erwartungszeilen (je 375/1280 px) prüfen nun den wörtlichen Eingabetext. Die bestehenden Zusicherungen für die aktuelle 503-Antwort und den neutralen Fehlerzustand bleiben unverändert. Keine API-Änderung und kein Abschwächen des A11-Filters. Dateiliste abschließend 45, Schnittmenge mit PR 150: `package.json` und `tests/a11-oeffentliche-antworten.spec.js`.
+
+Die heruntergeladenen Aufnahmen aus Lauf 38766797325 bestätigen die WebKit-Korrektur: Vaillant-XXL-Gesamtaufnahme exakt 375 px breit (ebenso Chromium), Gerätetyp und 85.604 € vollständig lesbar. In allen vier Browser-/Breitenkombinationen kein Panelüberlauf, alle Links innerhalb; mobil 327/327 px, Desktop 1100/1100 px. Artefakte lokal unter `WR/pruef/ci-ef087/`. Der identische Lauf am reinen Berichtskopf wurde nach dem bekannten Testvertragsbefund beendet; Abschlussnachweis bleibt der vollständig grüne neueste PR-Kopf.

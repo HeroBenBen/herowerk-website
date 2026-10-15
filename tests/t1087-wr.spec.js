@@ -399,14 +399,37 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
         async function capture(url, version) {
           const result = {};
           async function words(key) {
+            // WebKit zählt native Optionslisten bei begrenztem Überlauf anders in innerText.
+            // Deshalb Pakettexte vollständig separat vergleichen, Seitenworte ohne Doppelung.
+            result[key + '-paketauswahl'] = await page.evaluate(() => {
+              const select = document.getElementById('foerderWpTyp');
+              return JSON.stringify(
+                select
+                  ? {
+                      value: select.value,
+                      options: Array.from(select.options, (option) => ({
+                        value: option.value,
+                        text: option.textContent,
+                      })),
+                    }
+                  : null
+              );
+            });
             result[key] = await page.evaluate(() => {
               const overlay = document.querySelector('.foerder-package-label');
               const old = overlay?.getAttribute('style');
+              const select = document.getElementById('foerderWpTyp');
+              const oldSelect = select?.getAttribute('style');
               if (overlay) overlay.setAttribute('style', 'display:none');
+              if (select) select.setAttribute('style', 'display:none');
               const text = document.body.innerText.replace(/\s+/g, ' ').trim();
               if (overlay) {
                 if (old === null) overlay.removeAttribute('style');
                 else overlay.setAttribute('style', old);
+              }
+              if (select) {
+                if (oldSelect === null) select.removeAttribute('style');
+                else select.setAttribute('style', oldSelect);
               }
               return text;
             });
