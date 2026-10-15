@@ -339,7 +339,8 @@ if ($rate['limited'] && RECHNER_RATE_LIMIT_ENFORCED) {
  * gingen also nur deshalb hinaus, weil sie in der Antwort standen.
  *
  * NICHT gesperrt sind die Felder, welche die Seite anzeigt: bedarf, stromverbrauch_kwh,
- * modell, baureihe, anzahl, leistung_kw, brutto, eigenanteil, empfohlen, puffer, kaskade.
+ * modell, baureihe, anzahl, brutto, eigenanteil, empfohlen, puffer, kaskade.
+ * A11, 15.10.2026: leistung_kw wird nicht angezeigt und bleibt ausschließlich intern.
  */
 const RECHNER_INNENFELDER_SPERREN = true;
 
@@ -348,6 +349,8 @@ const RECHNER_INNENFELDER_SPERREN = true;
  * Diese Liste ist zugleich das Verzeichnis unserer Faehigkeiten an dieser Stelle.
  */
 const RECHNER_INNENFELDER = [
+    // Interne Geräteleistung am Auslegungspunkt, auch in sämtlichen Varianten.
+    'leistung_kw',
     // Aussentemperatur, ab der das Geraet taktet, also unter Teillast schaltet.
     // Freigabe wuerde erlauben, dem Kunden die Taktgrenze seines Geraets zu zeigen.
     'taktpunkt_c',
@@ -380,23 +383,141 @@ const RECHNER_INNENFELDER = [
     'hinweise',
 ];
 
+class RechnerOeffentlicheAntwortException extends RuntimeException
+{
+}
+
+/**
+ * Ausschließlich öffentliche Herstellerdaten, keine Änderung interner Preisanker.
+ * Vaillant aroTHERM pro: Produktinformation 07/26, S. 2; Anleitung 8000026880_02,
+ * S. 53, Heizleistung A-7/W35. Quellen und Vertrag: docs/a11-oeffentliche-antworten.md.
+ * Die Gerätebindung ist exakt und unabhängig von Klasse oder Reihenfolge.
+ *
+ * @return array<string,mixed>
+ */
+function hw_oeffentliche_preistexte(array $antwort): array
+{
+    $herstellerwerte = [
+        'Vaillant VWL 55/7.1 A' => '4,84 kW (A-7/W35)',
+        'Vaillant VWL 75/7.1 A' => '6,37 kW (A-7/W35)',
+        'Vaillant VWL 115/7.1 A' => '11,12 kW (A-7/W35)',
+    ];
+    foreach ($antwort['vaillant'] ?? [] as $index => $row) {
+        $modell = $row['modell'] ?? null;
+        if (is_string($modell) && isset($herstellerwerte[$modell])) {
+            if (array_key_exists('kw', $row) && !is_string($row['kw'])) {
+                throw new RechnerOeffentlicheAntwortException('public_response_invalid_power_text');
+            }
+            $antwort['vaillant'][$index]['kw'] = $herstellerwerte[$modell];
+        }
+    }
+    return $antwort;
+}
+
+/** Betriebspunkt statt pauschaler Sperre der Zahl minus elf (z. B. Ortsklima). */
+function rechner_a11_text(string $text): bool
+{
+    $treffer = preg_match('/\bA[\s\p{Z}]*[-\x{2212}\p{Pd}][\s\p{Z}]*11(?!\d)/iu', $text);
+    if ($treffer === false) {
+        throw new RechnerOeffentlicheAntwortException('public_response_invalid_text');
+    }
+    return $treffer === 1;
+}
+
+/** Nur reine Texte/Textlisten dürfen als Ganzes entfallen, keine eingebetteten Geräte. */
+function rechner_a11_textliste($wert): bool
+{
+    if (is_string($wert)) {
+        return true;
+    }
+    if (!is_array($wert) || !array_is_list($wert)) {
+        return false;
+    }
+    foreach ($wert as $inhalt) {
+        if (!rechner_a11_textliste($inhalt)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function rechner_a11_textliste_belastet($wert): bool
+{
+    if (is_string($wert)) {
+        return rechner_a11_text($wert);
+    }
+    foreach ($wert as $inhalt) {
+        if (rechner_a11_textliste_belastet($inhalt)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function rechner_oeffentliches_feld_protokollieren(string $pfad, string $grund): void
+{
+    // Kein Feldinhalt im Protokoll; JSON schützt auch vor Zeilenumbrüchen im Pfad.
+    error_log('HeroWerk Rechner: public_field_removed ' . json_encode([
+        'action' => $_GET['action'] ?? 'health', 'pfad' => $pfad, 'grund' => $grund,
+    ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR));
+}
+
+/**
+ * Anpassung 1: nicht tragende Texte einzeln entfernen, tragende Belastung ablehnen.
+ * Die kleine explizite Liste enthält die Hinweisfelder der öffentlichen Routen und
+ * eindeutige Beschreibungstexte. Unbekannte Feldbedeutungen werden nicht geraten.
+ */
+function rechner_a11_rest_bereinigen($wert, string $pfad = '$')
+{
+    if (is_string($wert) && rechner_a11_text($wert)) {
+        throw new RechnerOeffentlicheAntwortException('public_response_unsafe');
+    }
+    if (!is_array($wert)) {
+        return $wert;
+    }
+    $texte = ['kw', 'leistung_kw', 'hinweis', 'hinweise', 'beschreibung', 'beschreibungen',
+        'description', 'descriptions', 'strom_hinweis', 'antragHinweis', 'installHinweis'];
+    $antwort = [];
+    foreach ($wert as $feld => $inhalt) {
+        $feldpfad = $pfad . '[' . json_encode($feld, JSON_THROW_ON_ERROR) . ']';
+        if (is_string($feld) && rechner_a11_text($feld)) {
+            throw new RechnerOeffentlicheAntwortException('public_response_unsafe_key');
+        }
+        if (in_array($feld, $texte, true) && rechner_a11_textliste($inhalt)
+            && rechner_a11_textliste_belastet($inhalt)) {
+            rechner_oeffentliches_feld_protokollieren($feldpfad, 'a11_text');
+            continue;
+        }
+        // Auch unter einem Hinweisfeld bleiben belastete Modell-/Preisfelder ein Fehler.
+        $antwort[$feld] = rechner_a11_rest_bereinigen($inhalt, $feldpfad);
+    }
+    return $antwort;
+}
+
 /**
  * Nimmt die Innenfelder rekursiv aus der Antwort, ueber alle Marken und Varianten hinweg.
  * Beruehrt die Berechnung nicht, nur die Ausgabe.
  */
-function rechner_innenfelder_entfernen($wert)
+function rechner_innenfelder_entfernen($wert, string $pfad = '$')
 {
     if (!RECHNER_INNENFELDER_SPERREN) {
         return $wert;
     }
 
+    if ($pfad === '$') {
+        // Vor der Entfernung übergeordneter Innenfelder auf tragende Belastung prüfen.
+        $wert = rechner_a11_rest_bereinigen($wert);
+    }
     if (is_array($wert)) {
         $gefiltert = [];
         foreach ($wert as $schluessel => $inhalt) {
             if (is_string($schluessel) && in_array($schluessel, RECHNER_INNENFELDER, true)) {
+                if ($schluessel === 'leistung_kw') {
+                    rechner_oeffentliches_feld_protokollieren($pfad . '.leistung_kw', 'internal_power');
+                }
                 continue;
             }
-            $gefiltert[$schluessel] = rechner_innenfelder_entfernen($inhalt);
+            $gefiltert[$schluessel] = rechner_innenfelder_entfernen($inhalt, $pfad . '[' . json_encode($schluessel, JSON_THROW_ON_ERROR) . ']');
         }
 
         return $gefiltert;
@@ -408,8 +529,28 @@ function rechner_innenfelder_entfernen($wert)
 $rawQuery = (string) ($_SERVER['QUERY_STRING'] ?? '');
 if (!RECHNER_PHP_ENGINE_ENABLED) {
     try {
-        echo rechner_forward_google($rawQuery)['body'];
+        $result = json_decode(rechner_forward_google($rawQuery)['body'], true, 512, JSON_THROW_ON_ERROR);
+        if (!is_array($result) || array_is_list($result)) {
+            throw new RechnerOeffentlicheAntwortException('public_response_invalid_shape');
+        }
+        if (strtolower((string) ($_GET['action'] ?? 'health')) === 'preise') {
+            foreach (['wolf', 'vaillant'] as $marke) {
+                if (!isset($result[$marke]) || !is_array($result[$marke]) || !array_is_list($result[$marke])) {
+                    throw new RechnerOeffentlicheAntwortException('public_response_invalid_prices');
+                }
+                foreach ($result[$marke] as $zeile) {
+                    if (!is_array($zeile) || !isset($zeile['modell']) || !is_string($zeile['modell'])) {
+                        throw new RechnerOeffentlicheAntwortException('public_response_invalid_model');
+                    }
+                }
+            }
+            $result = hw_oeffentliche_preistexte($result);
+        }
+        $result = rechner_innenfelder_entfernen($result);
+        echo rechner_json_encode_verlustfrei($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
         exit;
+    } catch (RechnerOeffentlicheAntwortException | JsonException $error) {
+        rechner_fail(503, 'calculator_temporarily_unavailable');
     } catch (RechnerValuesException $error) {
         rechner_fail(502, $error->publicCode);
     }
@@ -439,10 +580,16 @@ try {
 $action = strtolower((string) ($_GET['action'] ?? 'health'));
 try {
     $result = hw_rechner_route($action, $_GET, $snapshot['sheets'], $snapshot['schemaVersion']);
+    if ($action === 'preise') {
+        $result = hw_oeffentliche_preistexte($result);
+    }
     $result = rechner_innenfelder_entfernen($result);
     $jsonFlags = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR;
     echo $snapshot['schemaVersion'] === 3 ? rechner_json_encode_verlustfrei($result, $jsonFlags)
         : json_encode($result, $jsonFlags);
+} catch (RechnerOeffentlicheAntwortException $error) {
+    error_log('HeroWerk Rechner: public_response_rejected');
+    rechner_fail(503, 'calculator_temporarily_unavailable');
 } catch (Throwable $error) {
     error_log('HeroWerk Rechner: calculation_failed action=' . $action . ' message=' . $error->getMessage());
     rechner_fail(500, 'calculator_temporarily_unavailable');

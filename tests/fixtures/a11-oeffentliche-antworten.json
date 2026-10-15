@@ -1,0 +1,198 @@
+{
+  "quelle": "Öffentliche GET-Antworten vom 15.10.2026, A11; keine privaten Rohdaten",
+  "preise": {
+    "wolf": [
+      {
+        "klasse": "s",
+        "modell": "Wolf CHA-07",
+        "kw": "5–7 kW",
+        "brutto": 30026,
+        "eigen": 7626,
+        "tafel": "ja"
+      },
+      {
+        "klasse": "m",
+        "modell": "Wolf CHA-10",
+        "kw": "9–12 kW",
+        "brutto": 35349,
+        "eigen": 12949,
+        "tafel": "ja"
+      },
+      {
+        "klasse": "l",
+        "modell": "Wolf CHA-16/20",
+        "kw": "14–16 kW",
+        "brutto": 41718,
+        "eigen": 19318,
+        "tafel": "ja"
+      },
+      {
+        "klasse": "xl",
+        "modell": "Wolf CHA-20/24",
+        "kw": "18–24 kW",
+        "brutto": 48815,
+        "eigen": 24789,
+        "tafel": "ja"
+      },
+      {
+        "klasse": "xxl",
+        "modell": "2× Wolf CHA-16",
+        "kw": "2× 16 kW (32 kW)",
+        "brutto": 89419,
+        "eigen": 55141,
+        "tafel": "ja"
+      }
+    ],
+    "vaillant": [
+      {
+        "klasse": "xl",
+        "modell": "Vaillant VWL 125/8.1 A",
+        "kw": "ca. 12,1 kW",
+        "brutto": 48865,
+        "eigen": 24819,
+        "tafel": "ja"
+      },
+      {
+        "klasse": "xxl",
+        "modell": "2× Vaillant VWL 125/8.1 A",
+        "kw": "ca. 24 kW (2 Geraete)",
+        "brutto": 85604,
+        "eigen": 52789,
+        "tafel": "ja"
+      },
+      {
+        "klasse": "s",
+        "modell": "Vaillant VWL 55/7.1 A",
+        "kw": "ca. 4,3 kW (A-11/W55)",
+        "brutto": 29944,
+        "eigen": 7544,
+        "tafel": "ja"
+      },
+      {
+        "klasse": "m",
+        "modell": "Vaillant VWL 75/7.1 A",
+        "kw": "ca. 5,8 kW (A-11/W55)",
+        "brutto": 34146,
+        "eigen": 11746,
+        "tafel": "ja"
+      },
+      {
+        "klasse": "l",
+        "modell": "Vaillant VWL 115/7.1 A",
+        "kw": "ca. 9,5 kW (A-11/W55)",
+        "brutto": 42864,
+        "eigen": 20464,
+        "tafel": "ja"
+      }
+    ]
+  },
+  "dimensionierung": {
+    "bedarf": 20.3,
+    "fuehrung": "heizung",
+    "stromverbrauch_kwh": 6563,
+    "strom_hinweis": "Geschätzt aus deinem Wärmebedarf. Wie viel Strom deine Wärmepumpe wirklich braucht, hängt an Gebäude, Vorlauftemperatur und Gerät und wird vor Ort genauer bestimmt. Warmwasser braucht dabei mehr Strom je Kilowattstunde Wärme als die Heizung.",
+    "marken": {
+      "wolf": {
+        "deckt": true,
+        "baureihe": "Wolf CHA",
+        "modell": "Wolf CHA-20/24",
+        "anzahl": 1,
+        "kaskade": false,
+        "leistung_kw": 17.9,
+        "puffer": null,
+        "brutto": 48815,
+        "empfohlen": true,
+        "eigenanteil": 24789,
+        "varianten": [
+          {
+            "deckt": true,
+            "baureihe": "Wolf CHA",
+            "modell": "Wolf CHA-20/24",
+            "anzahl": 1,
+            "kaskade": false,
+            "leistung_kw": 17.9,
+            "puffer": null,
+            "brutto": 48815,
+            "empfohlen": true,
+            "eigenanteil": 24789
+          }
+        ]
+      },
+      "vaillant": {
+        "deckt": true,
+        "baureihe": "aroTHERM perform 8.1",
+        "modell": "Vaillant VWL 205/8.1 A S2 Q",
+        "anzahl": 1,
+        "kaskade": false,
+        "leistung_kw": 16.4,
+        "puffer": {
+          "bezeichnung": "VPS 300/3-5",
+          "liter": 303,
+          "groessere_variante": "VPS 500/3-5, 491 l",
+          "ohne_puffer_moeglich": false
+        },
+        "brutto": null,
+        "empfohlen": true,
+        "eigenanteil": null,
+        "varianten": [
+          {
+            "deckt": true,
+            "baureihe": "aroTHERM perform 8.1",
+            "modell": "Vaillant VWL 205/8.1 A S2 Q",
+            "anzahl": 1,
+            "kaskade": false,
+            "leistung_kw": 16.4,
+            "puffer": {
+              "bezeichnung": "VPS 300/3-5",
+              "liter": 303,
+              "groessere_variante": "VPS 500/3-5, 491 l",
+              "ohne_puffer_moeglich": false
+            },
+            "brutto": null,
+            "empfohlen": true,
+            "eigenanteil": null
+          },
+          {
+            "deckt": true,
+            "baureihe": "aroTHERM pro 7.1",
+            "modell": "2× Vaillant VWL 115/7.1 A (Kaskade)",
+            "anzahl": 2,
+            "kaskade": true,
+            "leistung_kw": 18.9,
+            "puffer": {
+              "bezeichnung": "VPS R 100/1 M",
+              "liter": 101,
+              "groessere_variante": "VPS R 200/1 B, 202 l",
+              "ohne_puffer_moeglich": false
+            },
+            "brutto": null,
+            "empfohlen": false,
+            "eigenanteil": null
+          },
+          {
+            "deckt": true,
+            "baureihe": "aroTHERM plus 8.1",
+            "modell": "2× Vaillant VWL 105/8.1 A (Kaskade)",
+            "anzahl": 2,
+            "kaskade": true,
+            "leistung_kw": 20,
+            "puffer": {
+              "bezeichnung": "VPS R 100/1 M",
+              "liter": 101,
+              "groessere_variante": "VPS R 200/1 B, 202 l",
+              "ohne_puffer_moeglich": false
+            },
+            "brutto": null,
+            "empfohlen": false,
+            "eigenanteil": null
+          }
+        ]
+      }
+    }
+  },
+  "herstellerwerte": {
+    "Vaillant VWL 55/7.1 A": "4,84 kW (A-7/W35)",
+    "Vaillant VWL 75/7.1 A": "6,37 kW (A-7/W35)",
+    "Vaillant VWL 115/7.1 A": "11,12 kW (A-7/W35)"
+  }
+}

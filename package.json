@@ -33,7 +33,8 @@
     "verify:buendel-kommentare": "node scripts/verify-bundle-comments.mjs",
     "verify:buendel-gleichheit": "node scripts/verify-bundle-equality.mjs",
     "verify:buendel-kommentare-schaerfe": "node tests/buendel-kommentare-schaerfe.mjs",
-    "verify:rechner-snapshot-integritaet": "php tests/rechner-snapshot-integritaet.php && php tests/rechner-snapshot-integration.php && php tests/rechner-snapshot-meldung.php && node tests/rechner-snapshot-wege.mjs && node tests/rechner-snapshot-rotnachweise.mjs && python3 tests/rechner-snapshot-ergebnisse.py && python3 tests/rechner-snapshot-ergebnisse-rotnachweise.py && python3 tests/rechner-snapshot-nachauftrag2.py && python3 tests/rechner-snapshot-nachauftrag2-rotnachweise.py && python3 tests/rechner-snapshot-nachauftrag3.py && python3 tests/rechner-snapshot-nachauftrag3-rotnachweise.py && python3 tests/rechner-snapshot-nachauftrag4.py && python3 tests/rechner-snapshot-nachauftrag4-rotnachweise.py"
+    "verify:rechner-snapshot-integritaet": "php tests/rechner-snapshot-integritaet.php && php tests/rechner-snapshot-integration.php && php tests/rechner-snapshot-meldung.php && node tests/rechner-snapshot-wege.mjs && node tests/rechner-snapshot-rotnachweise.mjs && python3 tests/rechner-snapshot-ergebnisse.py && python3 tests/rechner-snapshot-ergebnisse-rotnachweise.py && python3 tests/rechner-snapshot-nachauftrag2.py && python3 tests/rechner-snapshot-nachauftrag2-rotnachweise.py && python3 tests/rechner-snapshot-nachauftrag3.py && python3 tests/rechner-snapshot-nachauftrag3-rotnachweise.py && python3 tests/rechner-snapshot-nachauftrag4.py && python3 tests/rechner-snapshot-nachauftrag4-rotnachweise.py",
+    "verify:a11": "node tests/a11-oeffentliche-antworten.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",
