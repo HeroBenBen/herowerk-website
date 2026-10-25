@@ -71,7 +71,12 @@ function defineVisualTests(theme) {
   for (const [name, url] of PAGES) {
     test(`@visual ${name} ${theme}`, async ({ page }) => {
       await page.emulateMedia({ reducedMotion: 'reduce' });
-      await page.goto(`${url}?theme=${theme}`);
+      const response = await page.goto(`${url}?theme=${theme}`);
+      if (!response || !response.ok()) {
+        throw new Error(
+          `Bildprüfung abgebrochen: Seite ${url}, Thema ${theme}, Status ${response ? response.status() : 'keine Antwort'}. Erwartet wird eine HTTP-Antwort mit Status 200 bis 299.`
+        );
+      }
       await page.waitForLoadState('networkidle');
       await loadFullPageBeforeScreenshot(page);
       // 2026-07-30: Ohne Endung schreibt Playwright Dateien ohne .png, dadurch bleibt der PNG-Wachtposten dauerhaft aus.
