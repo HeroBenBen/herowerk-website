@@ -376,19 +376,16 @@ jobs:
       - run: node scripts/hubspot-schema-check.js
         # Validiert Webhook-Payload gegen schemas/hubspot-property-schema.json
 
-  # Job 9: Bildprüfung mit Wachtposten, bis zur ersten Grundlinie absichtlich rot.
-  # Ohne PNG bricht visual-shared.js ab; ein grüner Lauf ohne Messung ist verboten.
-  # Erstbefüllung: /baseline-update am Antrag setzen. Der Erzeugungsjob schreibt
-  # genau 16 PNG in den Antragszweig. Das Kennzeichen erzeugt noch keine Sichtfreigabe.
-  # Erst danach in einer eigenen Einbuchung Job-ID und Anzeigenamen umbenennen;
-  # deren Push startet den echten Messlauf (Bot-Einbuchungen lösen keine CI aus).
+  # Job 9: Bildprüfung gegen die Grundlinie in baseline/visual/.
+  # Die 16 PNG wurden am 26.10.2026 durch den Erzeugungsjob erzeugt (Lauf 396).
+  # Der Job misst echt und schlägt bei einer Abweichung über 5 % der Pixel rot.
+  # Eine neue Grundlinie entsteht nur über das Kennzeichen /baseline-update.
   # Zusammenführen bedeutet Sichtfreigabe der Bilder durch den Geschäftsführer.
-  # Niemals ohne diese Bilder zusammenführen. Die Bildprüfung bleibt ausdrücklich
-  # außerhalb der Pflichtprüfungen im Branch-Schutz.
-  visual-regression-inaktiv:
+  # Die Bildprüfung bleibt außerhalb der Pflichtprüfungen im Branch-Schutz.
+  visual-regression:
     # Beim Kennzeichen-Ereignis erzeugt der separate Job erst die Grundlinie.
     if: github.event.action != 'labeled'
-    name: visual-regression (inaktiv, keine ratifizierte Baseline)
+    name: visual-regression
     runs-on: ubuntu-latest
     needs: [lint]
     strategy:
