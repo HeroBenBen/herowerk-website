@@ -377,7 +377,7 @@ jobs:
         # Validiert Webhook-Payload gegen schemas/hubspot-property-schema.json
 
   # Job 9: Bildprüfung gegen die Grundlinie in baseline/visual/.
-  # Die 16 PNG wurden am 26.10.2026 durch den Erzeugungsjob erzeugt (Lauf 396).
+  # Die 16 PNG wurden am 25.10.2026 durch den Erzeugungsjob erzeugt (Lauf 396).
   # Der Job misst echt und schlägt bei einer Abweichung über 5 % der Pixel rot.
   # Eine neue Grundlinie entsteht nur über das Kennzeichen /baseline-update.
   # Zusammenführen bedeutet Sichtfreigabe der Bilder durch den Geschäftsführer.
