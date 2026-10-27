@@ -1,0 +1,679 @@
+{
+  "freigabe": "GF 27.10.2026 09:01, 1a, Nachtrag 13",
+  "hinweis": "website.json hat gemeinsame Website-Antworten, keine getrennten F1-F10-Antworten. Die zehn Angebotsfälle referenzieren dieselben sechs Wege.",
+  "stichtag": "2026-10-19",
+  "archiv": "/private/tmp/t1245-fortsetzung/website-archiviert-vor-erzeugung.json",
+  "altSha256": "a8e47d56f02b642736b7153d7a1908ed8999abea8e0acf013ad6106038aebd88",
+  "vergleich": [
+    {
+      "fall": "F1",
+      "weg": "dimensionierung",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F1",
+      "weg": "foerderung",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F1",
+      "weg": "preise",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F1",
+      "weg": "kostenvergleich",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": true,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F1",
+      "weg": "kv_bootstrap",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": true,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F1",
+      "weg": "fv_plaetze",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F2",
+      "weg": "dimensionierung",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F2",
+      "weg": "foerderung",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F2",
+      "weg": "preise",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F2",
+      "weg": "kostenvergleich",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": true,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F2",
+      "weg": "kv_bootstrap",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": true,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F2",
+      "weg": "fv_plaetze",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F3",
+      "weg": "dimensionierung",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F3",
+      "weg": "foerderung",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F3",
+      "weg": "preise",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F3",
+      "weg": "kostenvergleich",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": true,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F3",
+      "weg": "kv_bootstrap",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": true,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F3",
+      "weg": "fv_plaetze",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F4",
+      "weg": "dimensionierung",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F4",
+      "weg": "foerderung",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F4",
+      "weg": "preise",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F4",
+      "weg": "kostenvergleich",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": true,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F4",
+      "weg": "kv_bootstrap",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": true,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F4",
+      "weg": "fv_plaetze",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F5",
+      "weg": "dimensionierung",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F5",
+      "weg": "foerderung",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F5",
+      "weg": "preise",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F5",
+      "weg": "kostenvergleich",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": true,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F5",
+      "weg": "kv_bootstrap",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": true,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F5",
+      "weg": "fv_plaetze",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F6",
+      "weg": "dimensionierung",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F6",
+      "weg": "foerderung",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F6",
+      "weg": "preise",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F6",
+      "weg": "kostenvergleich",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": true,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F6",
+      "weg": "kv_bootstrap",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": true,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F6",
+      "weg": "fv_plaetze",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F7",
+      "weg": "dimensionierung",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F7",
+      "weg": "foerderung",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F7",
+      "weg": "preise",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F7",
+      "weg": "kostenvergleich",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": true,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F7",
+      "weg": "kv_bootstrap",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": true,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F7",
+      "weg": "fv_plaetze",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F8",
+      "weg": "dimensionierung",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F8",
+      "weg": "foerderung",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F8",
+      "weg": "preise",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F8",
+      "weg": "kostenvergleich",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": true,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F8",
+      "weg": "kv_bootstrap",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": true,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F8",
+      "weg": "fv_plaetze",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F9",
+      "weg": "dimensionierung",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F9",
+      "weg": "foerderung",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F9",
+      "weg": "preise",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F9",
+      "weg": "kostenvergleich",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": true,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F9",
+      "weg": "kv_bootstrap",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": true,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F9",
+      "weg": "fv_plaetze",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F10",
+      "weg": "dimensionierung",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F10",
+      "weg": "foerderung",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F10",
+      "weg": "preise",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F10",
+      "weg": "kostenvergleich",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": true,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F10",
+      "weg": "kv_bootstrap",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": true,
+      "parameterUnveraendert": true
+    },
+    {
+      "fall": "F10",
+      "weg": "fv_plaetze",
+      "gemeinsameWebsiteAntwort": true,
+      "geaendert": false,
+      "parameterUnveraendert": true
+    }
+  ],
+  "zerlegung": [
+    {
+      "fall": "F1",
+      "alt": 45389.09790698547,
+      "neu": 56647.235583073416,
+      "delta": 11258.137676087943,
+      "posten": {
+        "arbeitszahl": 514.559922452223,
+        "grundpreis": 5007.600000000001,
+        "schornsteinfeger": 780,
+        "modul1": 3124.3999999999987,
+        "wartung": 2000,
+        "solaranlage": 0,
+        "bio": -168.42224636426545,
+        "netzentgelt": 0,
+        "wpZaehler": 0,
+        "warmwasser": 0,
+        "startjahr": 0,
+        "foerderung": 0
+      },
+      "summe": 11258.137676087958,
+      "rest": -1.4551915228366852e-11
+    },
+    {
+      "fall": "F2",
+      "alt": 45389.09790698547,
+      "neu": 56647.235583073416,
+      "delta": 11258.137676087943,
+      "posten": {
+        "arbeitszahl": 514.559922452223,
+        "grundpreis": 5007.600000000001,
+        "schornsteinfeger": 780,
+        "modul1": 3124.3999999999987,
+        "wartung": 2000,
+        "solaranlage": 0,
+        "bio": -168.42224636426545,
+        "netzentgelt": 0,
+        "wpZaehler": 0,
+        "warmwasser": 0,
+        "startjahr": 0,
+        "foerderung": 0
+      },
+      "summe": 11258.137676087958,
+      "rest": -1.4551915228366852e-11
+    },
+    {
+      "fall": "F3",
+      "alt": 45389.09790698547,
+      "neu": 56647.235583073416,
+      "delta": 11258.137676087943,
+      "posten": {
+        "arbeitszahl": 514.559922452223,
+        "grundpreis": 5007.600000000001,
+        "schornsteinfeger": 780,
+        "modul1": 3124.3999999999987,
+        "wartung": 2000,
+        "solaranlage": 0,
+        "bio": -168.42224636426545,
+        "netzentgelt": 0,
+        "wpZaehler": 0,
+        "warmwasser": 0,
+        "startjahr": 0,
+        "foerderung": 0
+      },
+      "summe": 11258.137676087958,
+      "rest": -1.4551915228366852e-11
+    },
+    {
+      "fall": "F4",
+      "alt": 45389.09790698547,
+      "neu": 56647.235583073416,
+      "delta": 11258.137676087943,
+      "posten": {
+        "arbeitszahl": 514.559922452223,
+        "grundpreis": 5007.600000000001,
+        "schornsteinfeger": 780,
+        "modul1": 3124.3999999999987,
+        "wartung": 2000,
+        "solaranlage": 0,
+        "bio": -168.42224636426545,
+        "netzentgelt": 0,
+        "wpZaehler": 0,
+        "warmwasser": 0,
+        "startjahr": 0,
+        "foerderung": 0
+      },
+      "summe": 11258.137676087958,
+      "rest": -1.4551915228366852e-11
+    },
+    {
+      "fall": "F5",
+      "alt": 45389.09790698547,
+      "neu": 56647.235583073416,
+      "delta": 11258.137676087943,
+      "posten": {
+        "arbeitszahl": 514.559922452223,
+        "grundpreis": 5007.600000000001,
+        "schornsteinfeger": 780,
+        "modul1": 3124.3999999999987,
+        "wartung": 2000,
+        "solaranlage": 0,
+        "bio": -168.42224636426545,
+        "netzentgelt": 0,
+        "wpZaehler": 0,
+        "warmwasser": 0,
+        "startjahr": 0,
+        "foerderung": 0
+      },
+      "summe": 11258.137676087958,
+      "rest": -1.4551915228366852e-11
+    },
+    {
+      "fall": "F6",
+      "alt": 45389.09790698547,
+      "neu": 56647.235583073416,
+      "delta": 11258.137676087943,
+      "posten": {
+        "arbeitszahl": 514.559922452223,
+        "grundpreis": 5007.600000000001,
+        "schornsteinfeger": 780,
+        "modul1": 3124.3999999999987,
+        "wartung": 2000,
+        "solaranlage": 0,
+        "bio": -168.42224636426545,
+        "netzentgelt": 0,
+        "wpZaehler": 0,
+        "warmwasser": 0,
+        "startjahr": 0,
+        "foerderung": 0
+      },
+      "summe": 11258.137676087958,
+      "rest": -1.4551915228366852e-11
+    },
+    {
+      "fall": "F7",
+      "alt": 45389.09790698547,
+      "neu": 56647.235583073416,
+      "delta": 11258.137676087943,
+      "posten": {
+        "arbeitszahl": 514.559922452223,
+        "grundpreis": 5007.600000000001,
+        "schornsteinfeger": 780,
+        "modul1": 3124.3999999999987,
+        "wartung": 2000,
+        "solaranlage": 0,
+        "bio": -168.42224636426545,
+        "netzentgelt": 0,
+        "wpZaehler": 0,
+        "warmwasser": 0,
+        "startjahr": 0,
+        "foerderung": 0
+      },
+      "summe": 11258.137676087958,
+      "rest": -1.4551915228366852e-11
+    },
+    {
+      "fall": "F8",
+      "alt": 45389.09790698547,
+      "neu": 56647.235583073416,
+      "delta": 11258.137676087943,
+      "posten": {
+        "arbeitszahl": 514.559922452223,
+        "grundpreis": 5007.600000000001,
+        "schornsteinfeger": 780,
+        "modul1": 3124.3999999999987,
+        "wartung": 2000,
+        "solaranlage": 0,
+        "bio": -168.42224636426545,
+        "netzentgelt": 0,
+        "wpZaehler": 0,
+        "warmwasser": 0,
+        "startjahr": 0,
+        "foerderung": 0
+      },
+      "summe": 11258.137676087958,
+      "rest": -1.4551915228366852e-11
+    },
+    {
+      "fall": "F9",
+      "alt": 45389.09790698547,
+      "neu": 56647.235583073416,
+      "delta": 11258.137676087943,
+      "posten": {
+        "arbeitszahl": 514.559922452223,
+        "grundpreis": 5007.600000000001,
+        "schornsteinfeger": 780,
+        "modul1": 3124.3999999999987,
+        "wartung": 2000,
+        "solaranlage": 0,
+        "bio": -168.42224636426545,
+        "netzentgelt": 0,
+        "wpZaehler": 0,
+        "warmwasser": 0,
+        "startjahr": 0,
+        "foerderung": 0
+      },
+      "summe": 11258.137676087958,
+      "rest": -1.4551915228366852e-11
+    },
+    {
+      "fall": "F10",
+      "alt": 45389.09790698547,
+      "neu": 56647.235583073416,
+      "delta": 11258.137676087943,
+      "posten": {
+        "arbeitszahl": 514.559922452223,
+        "grundpreis": 5007.600000000001,
+        "schornsteinfeger": 780,
+        "modul1": 3124.3999999999987,
+        "wartung": 2000,
+        "solaranlage": 0,
+        "bio": -168.42224636426545,
+        "netzentgelt": 0,
+        "wpZaehler": 0,
+        "warmwasser": 0,
+        "startjahr": 0,
+        "foerderung": 0
+      },
+      "summe": 11258.137676087958,
+      "rest": -1.4551915228366852e-11
+    }
+  ],
+  "bootstrapNeueSchluessel": [
+    {
+      "key": "jaz",
+      "zweck": "Quelle und angebotene Heizsysteme der unveränderlichen Tabellen-JAZ"
+    },
+    {
+      "key": "bioHinweis",
+      "zweck": "Transparenter Hinweis auf vollständige Migration der alten Bio-Treppe"
+    },
+    {
+      "key": "netzentgeltBereit",
+      "zweck": "Anzeige, ob eine belegte Jahresreihe vorhanden ist"
+    }
+  ],
+  "neuSha256": "c192e2d1ce46fd4cd1db6cc6af863d1d4e2768d05e28e8e7924c7251b48a7c2e",
+  "schutzpruefung": {
+    "test/gold/soll.json": "08d0247334c86eb06a8189378da33896af8b64574f75ced145a4465c8aa3b7f2",
+    "test/fach/gold.test.js": "723b1ec4f2ea9823f856fbc644efc3d9b578d6d1de23270a6a41f0d1c4190984",
+    "datenDateien": 5,
+    "datenDateiHashes": {
+      "Artikelstamm.json": "43839e3f480c3240268d333db7e05751aab8653871e6af9c3bda06aead887170",
+      "Stueckliste_Matrix.json": "6699c3d7ab416057b00e3645d56c538f645a6edf164f635bcb1d05c30799c9a9",
+      "Engine_Daten.json": "a0cbc5a421f9fdb7edf2587207ec6342fd41a10afd961b989795e76ac1df2012",
+      "stand.json": "547ddb3b8cbf238959bb1db4eee37c93df5be52d290821b922fb581f92c2ac3a",
+      "Konfigurator_Tabelle.json": "743818c9856ff2ba489bb95be2abd6ff19d1cd110b79f4c7dff67c805573ae55"
+    },
+    "kernSha256": "2997a8c6b78d24daa77cc6ad14c9e6b7547a71db70eb1c7765789424f5283a30"
+  }
+}

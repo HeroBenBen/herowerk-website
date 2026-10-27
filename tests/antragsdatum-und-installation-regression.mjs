@@ -62,6 +62,7 @@ vm.runInContext(fs.readFileSync('apps-script/rechner-backend/kv_engine.gs', 'utf
 vm.runInContext(fs.readFileSync('apps-script/rechner-backend/Code.gs', 'utf8'), appsScript);
 
 const SHEETS = {
+  KV_JAZ: [['Gerät','Heizsystem','Wert','Quelle','Abrufdatum','Randbedingungen','Aliase','Kaskade'], ...appsScript.KV_JAZ_ROWS_()],
   Förder_Parameter: [['schluessel', 'wert'], ...appsScript.FOERDER_ROWS_()],
   Dimensionierung: [['schluessel', 'wert'], ...appsScript.DIMENSION_ROWS_()],
   KV_Parameter: [['schluessel', 'wert'], ...appsScript.KV_PARAMETER_ROWS_()],

@@ -34,7 +34,9 @@
     "verify:buendel-gleichheit": "node scripts/verify-bundle-equality.mjs",
     "verify:buendel-kommentare-schaerfe": "node tests/buendel-kommentare-schaerfe.mjs",
     "verify:rechner-snapshot-integritaet": "php tests/rechner-snapshot-integritaet.php && php tests/rechner-snapshot-integration.php && php tests/rechner-snapshot-meldung.php && node tests/rechner-snapshot-wege.mjs && node tests/rechner-snapshot-rotnachweise.mjs && python3 tests/rechner-snapshot-ergebnisse.py && python3 tests/rechner-snapshot-ergebnisse-rotnachweise.py && python3 tests/rechner-snapshot-nachauftrag2.py && python3 tests/rechner-snapshot-nachauftrag2-rotnachweise.py && python3 tests/rechner-snapshot-nachauftrag3.py && python3 tests/rechner-snapshot-nachauftrag3-rotnachweise.py && python3 tests/rechner-snapshot-nachauftrag4.py && python3 tests/rechner-snapshot-nachauftrag4-rotnachweise.py",
-    "verify:a11": "node tests/a11-oeffentliche-antworten.mjs"
+    "verify:a11": "node tests/a11-oeffentliche-antworten.mjs",
+    "verify:kv-nutzen": "node scripts/generate-kv-jaz.mjs --check && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/t1245-kv-website-dom.mjs",
+    "verify:kv-browser": "node tests/t1245-kv-website.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",

@@ -137,7 +137,7 @@ function render(b, brand) {
 }
 // Ausschließlich WR-Freigaben 2 und 6 in historischen Vergleichserwartungen.
 function wrExpectedDetail(detail) {
-  const out = structuredClone(detail);
+  const out = require('./t1087-jaz.cjs').expectedDetail(detail);
   if (!out.card.modell.includes('Vaillant')) return out;
   out.card.specs = out.card.specs.map(([name, value]) => [
     name,

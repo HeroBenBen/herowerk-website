@@ -16,11 +16,13 @@ im Code ist der **Fallback und Seed**, nicht die Quelle der Wahrheit: sobald die
 Tabs stehen, gewinnt das Sheet (ADR-04: Rechenlogik im Apps Script, Werte im
 privaten Sheet).
 
-**Alle Seed-Werte unten sind orakel-identisch** (Ausnahme: die Alt-Zeile, die
-durch 33 Förderfälle inklusive 600er Alt-Matrix abgesichert ist). Der
-Äquivalenz-Beweis (tests/kv_equivalence/PROTOKOLL.md) gilt genau
-für diese Werte. Wer hier etwas ändert, ändert das Ergebnis: erst
-Änderungsprotokoll, dann Sheet (R9).
+**Stand T1245, 27.10.2026:** Die Kostenparameter folgen den GF-Festlegungen
+und dem vierstufigen Gesetzespfad; sie sind nicht mehr orakel-identisch.
+Die Förderperioden bleiben unverändert. Der historische Äquivalenz-Beweis
+(`tests/kv_equivalence/PROTOKOLL.md`) gilt für den früheren Stand.
+Verbindliche neue Parameter, Migration und Veröffentlichungsfolge stehen im
+Abschnitt „T1245“ am Ende. Die längeren Codebeispiele aus O-5 dokumentieren
+die frühere Verdrahtung; ausführbare Wahrheit sind `Code.gs` und `kv_engine.gs`.
 
 ## 1. Tab `KV_Parameter`
 
@@ -43,20 +45,22 @@ Datumsformatierung ein `Date` statt der Zahl.
 | `kum_cap_pct` | 0.6 | Anteil | BEG-Kumulierungsgrenze bei weiteren öffentlichen Mitteln | Orakel Z.225, Kanon 1.3 |
 | `co2f_gas` | 0.182 | kg/kWh | CO₂-Faktor Gas, brennwertbezogen (Hs, Abrechnungs-kWh) | Orakel Z.148, UBA |
 | `co2f_oel` | 0.266 | kg/kWh | CO₂-Faktor Heizöl | Orakel Z.148, UBA |
-| `bio_stufe_1_jahr` | 2029 | Jahr | Biotreppe Stufe 1 ab | Orakel Z.151, GEG §71(9) |
-| `bio_stufe_1_anteil` | 0.15 | Anteil | Biotreppe Stufe 1 | Orakel Z.151, GEG §71(9) |
-| `bio_stufe_2_jahr` | 2035 | Jahr | Biotreppe Stufe 2 ab | Orakel Z.151, GMG-Eckpunkte Feb. 2026 |
-| `bio_stufe_2_anteil` | 0.30 | Anteil | Biotreppe Stufe 2 | Orakel Z.151 |
-| `bio_stufe_3_jahr` | 2040 | Jahr | Biotreppe Stufe 3 ab | Orakel Z.151 |
-| `bio_stufe_3_anteil` | 0.60 | Anteil | Biotreppe Stufe 3 | Orakel Z.151, Öko-Institut März 2026 |
+| `bio_stufe_1_jahr` | 2029 | Jahr | Bio-Treppe Stufe 1 | GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226 |
+| `bio_stufe_1_anteil` | 0.10 | Anteil | Bio-Treppe Stufe 1 | GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226 |
+| `bio_stufe_2_jahr` | 2030 | Jahr | Bio-Treppe Stufe 2 | GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226 |
+| `bio_stufe_2_anteil` | 0.15 | Anteil | Bio-Treppe Stufe 2 | GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226 |
+| `bio_stufe_3_jahr` | 2035 | Jahr | Bio-Treppe Stufe 3 | GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226 |
+| `bio_stufe_3_anteil` | 0.30 | Anteil | Bio-Treppe Stufe 3 | GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226 |
+| `bio_stufe_4_jahr` | 2040 | Jahr | Bio-Treppe Stufe 4 | GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226 |
+| `bio_stufe_4_anteil` | 0.60 | Anteil | Bio-Treppe Stufe 4 | GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226 |
 | `eta_neu_gas` | 0.95 | Anteil | Nutzungsgrad neuer Gas-Brennwertkessel | Orakel Z.236 |
 | `eta_neu_oel` | 0.93 | Anteil | Nutzungsgrad neuer Öl-Brennwertkessel | Orakel Z.236 |
 | `strommix_start_jahr` | 2026 | Jahr | Strommix-Pfad Startjahr | Orakel Z.158, UBA/Agora |
 | `strommix_start_g` | 350 | g/kWh | Strommix Startwert (konservativ) | Orakel Z.158, UBA |
 | `strommix_end_jahr` | 2040 | Jahr | Strommix-Pfad Endjahr, danach konstant | Orakel Z.158, Agora |
 | `strommix_end_g` | 100 | g/kWh | Strommix Endwert | Orakel Z.158, Agora |
-| `wartung_wp` | 350 | Euro/Jahr | Wartungskosten Wärmepumpe | Orakel Z.271 |
-| `wartung_fossil` | 250 | Euro/Jahr | Wartungskosten fossile Heizung | Orakel Z.257 |
+| `wartung_wp` | 250 | Euro/Jahr | Gemeinsame Wartungskosten | GF 27.07.2026, Punkt 3 |
+| `wartung_fossil` | 250 | Euro/Jahr | Gemeinsame Wartungskosten | GF 27.07.2026, Punkt 3 |
 | `start_jahr` | 2026 | Jahr | Jahr 1 der Betrachtung | Orakel Z.243 |
 | `co2_ziel_schritte` | 19 | Anzahl | Schritte bis zum CO₂-Zieljahr 2045 (Index 0 = 2026) | Orakel Z.240 |
 | `kred_lz_default` | 10 | Jahre | Kredit-Laufzeit, wenn Finanzierung AUS ist | Orakel Z.178 |
@@ -185,7 +189,7 @@ function KV_PARAMETER_ROWS_() {
     ['strommix_start_g', 350, 'g/kWh', 'Strommix Startwert (konservativ)', 'Orakel Z.158, UBA'],
     ['strommix_end_jahr', 2040, 'Jahr', 'Strommix-Pfad Endjahr, danach konstant', 'Orakel Z.158, Agora'],
     ['strommix_end_g', 100, 'g/kWh', 'Strommix Endwert', 'Orakel Z.158, Agora'],
-    ['wartung_wp', 350, 'Euro/Jahr', 'Wartungskosten Wärmepumpe', 'Orakel Z.271'],
+    ['wartung_wp', 250, 'Euro/Jahr', 'Wartungskosten Wärmepumpe', 'Orakel Z.271'],
     ['wartung_fossil', 250, 'Euro/Jahr', 'Wartungskosten fossile Heizung', 'Orakel Z.257'],
     ['start_jahr', 2026, 'Jahr', 'Jahr 1 der Betrachtung', 'Orakel Z.243'],
     ['co2_ziel_schritte', 19, 'Anzahl', 'Schritte bis CO₂-Zieljahr 2045 (Index 0 = 2026)', 'Orakel Z.240'],
@@ -366,3 +370,46 @@ Der vollständige Kontrollwert-Satz steht in `tests/kv_equivalence/PROTOKOLL.md`
   WE-Eingabe; der Port modelliert den selbstgenutzten Einzelfall. Entscheidung
   des Controllers nötig (Empfehlung: Beschränkung auf selbstgenutztes EZFH
   belassen und in der Annahmen-Box benennen).
+
+## T1245: Tabellenstand und Übergang
+
+`node scripts/generate-kv-jaz.mjs` liest ausschließlich das gespeicherte Original
+`data/kv-jaz-portfolio.json`. Auswahl: `jazTotalWithSupplementaryHeater`, Satz A Heizkörper
+55/45 und Satz B Fußbodenheizung 35/28. Der Generator erzeugt 30 Originalzeilen (15 Datensätze,
+13 Verkaufsgeräte) und 18 ausdrücklich gekennzeichnete Kaskadenzeilen. Er pflegt Seed, PHP-Abbild
+und bestehende JAZ-Zellen der Preistafel; Preise und andere Herstellerwerte bleiben unverändert.
+`--check` prüft ohne Schreibzugriff. Die Kopie des Konfigurator-Kerns wird über
+`--konfigurator=<Pfad>` mitgeführt beziehungsweise geprüft.
+
+`KV_JAZ`: Spalten A Gerät (stabile BWP-ID beziehungsweise explizite Kaskaden-ID), B Heizsystem,
+C Wert, D Quelle, E Abrufdatum, F Randbedingungen als JSON, G ausdrücklich erlaubte Aliase als JSON,
+H Kaskade J/N. Keine unscharfe Geräteerkennung. Fehlende/ungültige Werte sperren; das Portfolio-Minimum
+verlangt die vollständige Tabelle für das Heizsystem. Ohne neues Live-Blatt bleibt der exakt aus
+obigem Original erzeugte gebündelte Tabellenstand nutzbar und im Ergebnis sichtbar gekennzeichnet.
+
+`KV_Parameter`, Spalte B nach Schlüssel:
+`grundpreis_gas=250.38`, `schornsteinfeger=39`, `modul14a_vorteil=156.22`, `pv_anteil=30`,
+`pv_kosten=7`, `wartung_wp=250`, `wartung_fossil=250`, `co2_ziel_jahr=2045`.
+Warmwasser übernimmt `ww_abzug_kwh_pro_person_jahr` aus Dimensionierung, Vorgabe 700.
+`jaz_tabellenstand=2026-10-26` markiert die Veröffentlichung; dann muss KV_JAZ vorhanden sein.
+Vorbereitete Schreibfunktionen `kvSetupJaz` und `kvSetupSheets` werden in diesem Bau niemals ausgeführt.
+Bei der späteren Auslieferung zuerst KV_JAZ bereitstellen, dann den Parameterstand veröffentlichen.
+
+Vier Bio-Stufen als vollständiger Satz: `bio_stufe_1_jahr/_anteil=2029/0.10`,
+`bio_stufe_2_jahr/_anteil=2030/0.15`, `bio_stufe_3_jahr/_anteil=2035/0.30`,
+`bio_stufe_4_jahr/_anteil=2040/0.60`. Quelle jeder Zeile:
+„GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226“. `bio_aufpreis=2.5`, BDEW Januar 2026,
+Preisannahme. Der erkannte alte vollständige Dreistand wird atomar ersetzt; kein Anhängen
+an alte Stufen, keine stille Teilmigration. Cache `kvparams:t1245:v2`, Konfigurator-Quellcache
+für diesen Parameterblock `KV_Parameter+KV_FoerderPerioden:t1245`.
+
+Netzentgeltblock: `netzentgelt_basisjahr` leer, `netzentgelt_einheit` exakt
+`ct/kWh Aufschlag gegenüber heute`, `netzentgelt_jahreswerte=[]`, `netzentgelt_quelle` leer,
+`netzentgelt_abrufdatum` leer. Jahreswerte sind JSON-Objekte `{jahr,wert}`: Basiswert 0, keine
+Doppeljahre; für jedes berechnete Gasjahr muss ein Wert vorhanden sein. Nur der Anstieg über heute
+wird zusätzlich angesetzt, ohne Bio-Multiplikator auf Netzkosten. Einschalten ohne belegte Reihe
+sperrt. Kein Prognosewert für eingeschalteten Pfad wird in Schritt 1 behauptet.
+
+Snapshots unterstützen KV_JAZ gezielt als optionales letztes Blatt nach den bisherigen Blättern.
+Alte Schema-1/2/3-Abzüge bleiben gültig; andere Zusatzblätter oder eine veränderte Reihenfolge
+werden weiterhin abgewiesen. Keine Änderung am Angebotsvertrag oder an Druckdaten.

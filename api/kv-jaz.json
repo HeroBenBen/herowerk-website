@@ -1,0 +1,1042 @@
+[
+  {
+    "geraet": "5535",
+    "heizsystem": "heizkoerper",
+    "wert": 4.3,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha07-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:52:42.322492+00:00",
+    "alias": [
+      "Wolf CHA-07/400V",
+      "Wolf CHA-07"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 7
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5535",
+    "heizsystem": "fbh",
+    "wert": 4.98,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha07-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:52:56.841036+00:00",
+    "alias": [
+      "Wolf CHA-07/400V",
+      "Wolf CHA-07"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 7
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5536",
+    "heizsystem": "heizkoerper",
+    "wert": 4.37,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha10-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:53:01.354268+00:00",
+    "alias": [
+      "Wolf CHA-10/400V",
+      "Wolf CHA-10"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 10
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5536",
+    "heizsystem": "fbh",
+    "wert": 5.08,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha10-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:53:15.467071+00:00",
+    "alias": [
+      "Wolf CHA-10/400V",
+      "Wolf CHA-10"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 10
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5540",
+    "heizsystem": "heizkoerper",
+    "wert": 4.42,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha1620-e9-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:53:21.711331+00:00",
+    "alias": [
+      "Wolf CHA-16/20 mit Heizstab (CS-e9-C2)",
+      "Wolf CHA-16/20"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 16
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5540",
+    "heizsystem": "fbh",
+    "wert": 5.11,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha1620-e9-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:53:36.179320+00:00",
+    "alias": [
+      "Wolf CHA-16/20 mit Heizstab (CS-e9-C2)",
+      "Wolf CHA-16/20"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 16
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5539",
+    "heizsystem": "heizkoerper",
+    "wert": 4.42,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha1620-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:53:40.716481+00:00",
+    "alias": [
+      "Wolf CHA-16/20 ohne Heizstab (CS-C2)"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 16
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5539",
+    "heizsystem": "fbh",
+    "wert": 5.11,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha1620-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:53:54.346775+00:00",
+    "alias": [
+      "Wolf CHA-16/20 ohne Heizstab (CS-C2)"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 16
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5558",
+    "heizsystem": "heizkoerper",
+    "wert": 4.34,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha2024-e9-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:53:58.913774+00:00",
+    "alias": [
+      "Wolf CHA-20/24 mit Heizstab (CS-e9-D2)",
+      "Wolf CHA-20/24"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 20
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5558",
+    "heizsystem": "fbh",
+    "wert": 5.03,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha2024-e9-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:54:13.002790+00:00",
+    "alias": [
+      "Wolf CHA-20/24 mit Heizstab (CS-e9-D2)",
+      "Wolf CHA-20/24"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 20
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5559",
+    "heizsystem": "heizkoerper",
+    "wert": 4.34,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha2024-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:54:17.600629+00:00",
+    "alias": [
+      "Wolf CHA-20/24 ohne Heizstab (CS-D2)"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 20
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5559",
+    "heizsystem": "fbh",
+    "wert": 5.03,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha2024-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:54:31.533734+00:00",
+    "alias": [
+      "Wolf CHA-20/24 ohne Heizstab (CS-D2)"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 20
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5080",
+    "heizsystem": "heizkoerper",
+    "wert": 3.88,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl35-81-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:54:36.260376+00:00",
+    "alias": [
+      "Vaillant aroTHERM plus VWL 35/8.1 A 230V",
+      "Vaillant VWL 35/8.1 A",
+      "Vaillant aroTHERM plus VWL 35/8.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 3
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5080",
+    "heizsystem": "fbh",
+    "wert": 4.49,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl35-81-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:54:50.064033+00:00",
+    "alias": [
+      "Vaillant aroTHERM plus VWL 35/8.1 A 230V",
+      "Vaillant VWL 35/8.1 A",
+      "Vaillant aroTHERM plus VWL 35/8.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 3
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5081",
+    "heizsystem": "heizkoerper",
+    "wert": 3.86,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl55-81-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:54:54.629091+00:00",
+    "alias": [
+      "Vaillant aroTHERM plus VWL 55/8.1 A 230V",
+      "Vaillant VWL 55/8.1 A",
+      "Vaillant aroTHERM plus VWL 55/8.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 5
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5081",
+    "heizsystem": "fbh",
+    "wert": 4.47,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl55-81-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:55:10.192588+00:00",
+    "alias": [
+      "Vaillant aroTHERM plus VWL 55/8.1 A 230V",
+      "Vaillant VWL 55/8.1 A",
+      "Vaillant aroTHERM plus VWL 55/8.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 5
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5078",
+    "heizsystem": "heizkoerper",
+    "wert": 3.9,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl75-81-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:55:14.949227+00:00",
+    "alias": [
+      "Vaillant aroTHERM plus VWL 75/8.1 A 230V",
+      "Vaillant VWL 75/8.1 A",
+      "Vaillant aroTHERM plus VWL 75/8.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 7
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5078",
+    "heizsystem": "fbh",
+    "wert": 4.51,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl75-81-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:55:30.884345+00:00",
+    "alias": [
+      "Vaillant aroTHERM plus VWL 75/8.1 A 230V",
+      "Vaillant VWL 75/8.1 A",
+      "Vaillant aroTHERM plus VWL 75/8.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 7
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5079",
+    "heizsystem": "heizkoerper",
+    "wert": 4.18,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl105-81-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:55:40.137148+00:00",
+    "alias": [
+      "Vaillant aroTHERM plus VWL 105/8.1 A 400V",
+      "Vaillant VWL 105/8.1 A",
+      "Vaillant aroTHERM plus VWL 105/8.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 10
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5079",
+    "heizsystem": "fbh",
+    "wert": 4.83,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl105-81-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:55:54.295390+00:00",
+    "alias": [
+      "Vaillant aroTHERM plus VWL 105/8.1 A 400V",
+      "Vaillant VWL 105/8.1 A",
+      "Vaillant aroTHERM plus VWL 105/8.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 10
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5077",
+    "heizsystem": "heizkoerper",
+    "wert": 4.21,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl125-81-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:55:58.988822+00:00",
+    "alias": [
+      "Vaillant aroTHERM plus VWL 125/8.1 A 400V",
+      "Vaillant VWL 125/8.1 A",
+      "Vaillant aroTHERM plus VWL 125/8.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 12
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5077",
+    "heizsystem": "fbh",
+    "wert": 4.87,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl125-81-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:56:14.589132+00:00",
+    "alias": [
+      "Vaillant aroTHERM plus VWL 125/8.1 A 400V",
+      "Vaillant VWL 125/8.1 A",
+      "Vaillant aroTHERM plus VWL 125/8.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 12
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5082",
+    "heizsystem": "heizkoerper",
+    "wert": 3.94,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl55-71-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:56:19.393112+00:00",
+    "alias": [
+      "Vaillant aroTHERM pro VWL 55/7.1 A 230V",
+      "Vaillant VWL 55/7.1 A",
+      "Vaillant aroTHERM pro VWL 55/7.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 5
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5082",
+    "heizsystem": "fbh",
+    "wert": 4.56,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl55-71-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:56:34.569053+00:00",
+    "alias": [
+      "Vaillant aroTHERM pro VWL 55/7.1 A 230V",
+      "Vaillant VWL 55/7.1 A",
+      "Vaillant aroTHERM pro VWL 55/7.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 5
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5083",
+    "heizsystem": "heizkoerper",
+    "wert": 3.86,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl75-71-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:56:39.168445+00:00",
+    "alias": [
+      "Vaillant aroTHERM pro VWL 75/7.1 A 230V",
+      "Vaillant VWL 75/7.1 A",
+      "Vaillant aroTHERM pro VWL 75/7.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 7
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5083",
+    "heizsystem": "fbh",
+    "wert": 4.47,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl75-71-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:56:53.485421+00:00",
+    "alias": [
+      "Vaillant aroTHERM pro VWL 75/7.1 A 230V",
+      "Vaillant VWL 75/7.1 A",
+      "Vaillant aroTHERM pro VWL 75/7.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 7
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5085",
+    "heizsystem": "heizkoerper",
+    "wert": 3.95,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl115-71-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:56:58.061418+00:00",
+    "alias": [
+      "Vaillant aroTHERM pro VWL 115/7.1 A 400V",
+      "Vaillant VWL 115/7.1 A",
+      "Vaillant aroTHERM pro VWL 115/7.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 11
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5085",
+    "heizsystem": "fbh",
+    "wert": 4.57,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl115-71-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:57:12.583875+00:00",
+    "alias": [
+      "Vaillant aroTHERM pro VWL 115/7.1 A 400V",
+      "Vaillant VWL 115/7.1 A",
+      "Vaillant aroTHERM pro VWL 115/7.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 11
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5084",
+    "heizsystem": "heizkoerper",
+    "wert": 4.42,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl205-81-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:57:17.194542+00:00",
+    "alias": [
+      "Vaillant aroTHERM perform VWL 205/8.1 A S2 Q",
+      "Vaillant VWL 205/8.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 20
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "5084",
+    "heizsystem": "fbh",
+    "wert": 5.11,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl205-81-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:57:31.672241+00:00",
+    "alias": [
+      "Vaillant aroTHERM perform VWL 205/8.1 A S2 Q",
+      "Vaillant VWL 205/8.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 20
+    },
+    "kaskade": false
+  },
+  {
+    "geraet": "2x:5540",
+    "heizsystem": "heizkoerper",
+    "wert": 4.42,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha1620-e9-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:53:21.711331+00:00",
+    "alias": [
+      "2× Wolf CHA-16/20",
+      "2× Wolf CHA-16/20 (Kaskade)",
+      "2x Wolf CHA-16/20",
+      "2× Wolf CHA-16"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 16
+    },
+    "kaskade": true
+  },
+  {
+    "geraet": "2x:5540",
+    "heizsystem": "fbh",
+    "wert": 5.11,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha1620-e9-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:53:36.179320+00:00",
+    "alias": [
+      "2× Wolf CHA-16/20",
+      "2× Wolf CHA-16/20 (Kaskade)",
+      "2x Wolf CHA-16/20",
+      "2× Wolf CHA-16"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 16
+    },
+    "kaskade": true
+  },
+  {
+    "geraet": "2x:5078",
+    "heizsystem": "heizkoerper",
+    "wert": 3.9,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl75-81-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:55:14.949227+00:00",
+    "alias": [
+      "2× Vaillant VWL 75/8.1 A",
+      "2× Vaillant VWL 75/8.1 A (Kaskade)",
+      "2x Vaillant VWL 75/8.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 7
+    },
+    "kaskade": true
+  },
+  {
+    "geraet": "2x:5078",
+    "heizsystem": "fbh",
+    "wert": 4.51,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl75-81-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:55:30.884345+00:00",
+    "alias": [
+      "2× Vaillant VWL 75/8.1 A",
+      "2× Vaillant VWL 75/8.1 A (Kaskade)",
+      "2x Vaillant VWL 75/8.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 7
+    },
+    "kaskade": true
+  },
+  {
+    "geraet": "2x:5079",
+    "heizsystem": "heizkoerper",
+    "wert": 4.18,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl105-81-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:55:40.137148+00:00",
+    "alias": [
+      "2× Vaillant VWL 105/8.1 A",
+      "2× Vaillant VWL 105/8.1 A (Kaskade)",
+      "2x Vaillant VWL 105/8.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 10
+    },
+    "kaskade": true
+  },
+  {
+    "geraet": "2x:5079",
+    "heizsystem": "fbh",
+    "wert": 4.83,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl105-81-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:55:54.295390+00:00",
+    "alias": [
+      "2× Vaillant VWL 105/8.1 A",
+      "2× Vaillant VWL 105/8.1 A (Kaskade)",
+      "2x Vaillant VWL 105/8.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 10
+    },
+    "kaskade": true
+  },
+  {
+    "geraet": "3x:5079",
+    "heizsystem": "heizkoerper",
+    "wert": 4.18,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl105-81-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:55:40.137148+00:00",
+    "alias": [
+      "3× Vaillant VWL 105/8.1 A",
+      "3× Vaillant VWL 105/8.1 A (Kaskade)",
+      "3x Vaillant VWL 105/8.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 10
+    },
+    "kaskade": true
+  },
+  {
+    "geraet": "3x:5079",
+    "heizsystem": "fbh",
+    "wert": 4.83,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl105-81-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:55:54.295390+00:00",
+    "alias": [
+      "3× Vaillant VWL 105/8.1 A",
+      "3× Vaillant VWL 105/8.1 A (Kaskade)",
+      "3x Vaillant VWL 105/8.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 10
+    },
+    "kaskade": true
+  },
+  {
+    "geraet": "2x:5077",
+    "heizsystem": "heizkoerper",
+    "wert": 4.21,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl125-81-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:55:58.988822+00:00",
+    "alias": [
+      "2× Vaillant VWL 125/8.1 A",
+      "2× Vaillant VWL 125/8.1 A (Kaskade)",
+      "2x Vaillant VWL 125/8.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 12
+    },
+    "kaskade": true
+  },
+  {
+    "geraet": "2x:5077",
+    "heizsystem": "fbh",
+    "wert": 4.87,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl125-81-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:56:14.589132+00:00",
+    "alias": [
+      "2× Vaillant VWL 125/8.1 A",
+      "2× Vaillant VWL 125/8.1 A (Kaskade)",
+      "2x Vaillant VWL 125/8.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 12
+    },
+    "kaskade": true
+  },
+  {
+    "geraet": "2x:5083",
+    "heizsystem": "heizkoerper",
+    "wert": 3.86,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl75-71-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:56:39.168445+00:00",
+    "alias": [
+      "2× Vaillant VWL 75/7.1 A",
+      "2× Vaillant VWL 75/7.1 A (Kaskade)",
+      "2x Vaillant VWL 75/7.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 7
+    },
+    "kaskade": true
+  },
+  {
+    "geraet": "2x:5083",
+    "heizsystem": "fbh",
+    "wert": 4.47,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl75-71-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:56:53.485421+00:00",
+    "alias": [
+      "2× Vaillant VWL 75/7.1 A",
+      "2× Vaillant VWL 75/7.1 A (Kaskade)",
+      "2x Vaillant VWL 75/7.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 7
+    },
+    "kaskade": true
+  },
+  {
+    "geraet": "2x:5085",
+    "heizsystem": "heizkoerper",
+    "wert": 3.95,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl115-71-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:56:58.061418+00:00",
+    "alias": [
+      "2× Vaillant VWL 115/7.1 A",
+      "2× Vaillant VWL 115/7.1 A (Kaskade)",
+      "2x Vaillant VWL 115/7.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 11
+    },
+    "kaskade": true
+  },
+  {
+    "geraet": "2x:5085",
+    "heizsystem": "fbh",
+    "wert": 4.57,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl115-71-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:57:12.583875+00:00",
+    "alias": [
+      "2× Vaillant VWL 115/7.1 A",
+      "2× Vaillant VWL 115/7.1 A (Kaskade)",
+      "2x Vaillant VWL 115/7.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 11
+    },
+    "kaskade": true
+  },
+  {
+    "geraet": "3x:5085",
+    "heizsystem": "heizkoerper",
+    "wert": 3.95,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl115-71-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:56:58.061418+00:00",
+    "alias": [
+      "3× Vaillant VWL 115/7.1 A",
+      "3× Vaillant VWL 115/7.1 A (Kaskade)",
+      "3x Vaillant VWL 115/7.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 11
+    },
+    "kaskade": true
+  },
+  {
+    "geraet": "3x:5085",
+    "heizsystem": "fbh",
+    "wert": 4.57,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl115-71-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:57:12.583875+00:00",
+    "alias": [
+      "3× Vaillant VWL 115/7.1 A",
+      "3× Vaillant VWL 115/7.1 A (Kaskade)",
+      "3x Vaillant VWL 115/7.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 11
+    },
+    "kaskade": true
+  },
+  {
+    "geraet": "4x:5085",
+    "heizsystem": "heizkoerper",
+    "wert": 3.95,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl115-71-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:56:58.061418+00:00",
+    "alias": [
+      "4× Vaillant VWL 115/7.1 A",
+      "4× Vaillant VWL 115/7.1 A (Kaskade)",
+      "4x Vaillant VWL 115/7.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 11
+    },
+    "kaskade": true
+  },
+  {
+    "geraet": "4x:5085",
+    "heizsystem": "fbh",
+    "wert": 4.57,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl115-71-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:57:12.583875+00:00",
+    "alias": [
+      "4× Vaillant VWL 115/7.1 A",
+      "4× Vaillant VWL 115/7.1 A (Kaskade)",
+      "4x Vaillant VWL 115/7.1 A"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 11
+    },
+    "kaskade": true
+  }
+]

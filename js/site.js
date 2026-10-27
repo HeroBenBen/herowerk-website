@@ -1668,8 +1668,8 @@ const paDataFallback = [
       ['Schallleistung ErP', '52 dB(A)'],
       ['Effizienzklasse', 'A+++ (35 °C) · A++ (55 °C)'],
       ['SCOP (35 / 55 °C)²', '4,92 / 3,77'],
-      ['JAZ Heizkörper¹', '3,96'],
-      ['JAZ Fußbodenheizung¹', '4,92'],
+      ['JAZ Heizkörper¹', '4,30'],
+      ['JAZ Fußbodenheizung¹', '4,98'],
       ['Abmessung außen (BxHxT)', '1.286 × 979 × 562 mm'],
       ['Hersteller', 'WOLF GmbH'],
     ],
@@ -1695,8 +1695,8 @@ const paDataFallback = [
       ['Schallleistung ErP', '53 dB(A)'],
       ['Effizienzklasse', 'A+++ (35 °C) · A++ (55 °C)'],
       ['SCOP (35 / 55 °C)²', '4,86 / 3,60'],
-      ['JAZ Heizkörper¹', '4,10'],
-      ['JAZ Fußbodenheizung¹', '5,09'],
+      ['JAZ Heizkörper¹', '4,37'],
+      ['JAZ Fußbodenheizung¹', '5,08'],
       ['Abmessung außen (BxHxT)', '1.286 × 979 × 562 mm'],
       ['Hersteller', 'WOLF GmbH'],
     ],
@@ -1722,8 +1722,8 @@ const paDataFallback = [
       ['Schallleistung ErP', '52 dB(A)'],
       ['Effizienzklasse', 'A+++ (35 °C) · A+++ (55 °C)'],
       ['SCOP (35 / 55 °C)²', '5,46 / 3,92'],
-      ['JAZ Heizkörper¹', '4,04'],
-      ['JAZ Fußbodenheizung¹', '5,03'],
+      ['JAZ Heizkörper¹', '4,42'],
+      ['JAZ Fußbodenheizung¹', '5,11'],
       ['Abmessung außen (BxHxT)', '1.700 × 1.300 × 756 mm'],
       ['Hersteller', 'WOLF GmbH'],
     ],
@@ -1749,8 +1749,8 @@ const paDataFallback = [
       ['Schallleistung ErP', '53 dB(A)'],
       ['Effizienzklasse', 'A+++ (35 °C) · A+++ (55 °C)'],
       ['SCOP (35 / 55 °C)²', '5,20 / 3,88'],
-      ['JAZ Heizkörper¹', '3,99'],
-      ['JAZ Fußbodenheizung¹', '4,96'],
+      ['JAZ Heizkörper¹', '4,34'],
+      ['JAZ Fußbodenheizung¹', '5,03'],
       ['Abmessung außen (BxHxT)', '1.700 × 1.300 × 756 mm'],
       ['Hersteller', 'WOLF GmbH'],
     ],
@@ -1778,8 +1778,8 @@ const paDataFallback = [
       ['Kaskadierung', 'bis 5 Außengeräte / max. 100 kW'],
       ['Effizienzklasse', 'A+++ (systemabhängig)'],
       ['SCOP (35 / 55 °C)²', '5,46 / 3,92 je Gerät'],
-      ['JAZ Heizkörper¹', '4,04 je Gerät; projektbezogen prüfen'],
-      ['JAZ Fußbodenheizung¹', '5,03 je Gerät; projektbezogen prüfen'],
+      ['JAZ Heizkörper¹', '4,42 je Gerät; projektbezogen prüfen'],
+      ['JAZ Fußbodenheizung¹', '5,11 je Gerät; projektbezogen prüfen'],
       ['Schallleistung ErP', '52 dB(A) je Gerät'],
       ['Hersteller', 'WOLF GmbH'],
     ],
@@ -1806,8 +1806,8 @@ const paDataFallbackVaillantPlus = [
       ['Effizienzklasse (35 / 55 °C)', 'A+++ / A++'],
       ['ηs (35 / 55 °C)', '190 % / 143 %'],
       ['SCOP (35 / 55 °C)²', '4,83 / 3,64'],
-      ['JAZ Heizkörper¹', '3,72'],
-      ['JAZ Fußbodenheizung¹', '4,41'],
+      ['JAZ Heizkörper¹', '3,86'],
+      ['JAZ Fußbodenheizung¹', '4,47'],
       ['Abmessung (BxTxH)', '1.100 × 450 × 765 mm'],
       ['Hersteller', 'Vaillant GmbH'],
     ],
@@ -1831,8 +1831,8 @@ const paDataFallbackVaillantPlus = [
       ['Effizienzklasse (35 / 55 °C)', 'A+++ / A++'],
       ['ηs (35 / 55 °C)', '196 % / 142 %'],
       ['SCOP (35 / 55 °C)²', '4,98 / 3,62'],
-      ['JAZ Heizkörper¹', '3,76'],
-      ['JAZ Fußbodenheizung¹', '4,45'],
+      ['JAZ Heizkörper¹', '3,90'],
+      ['JAZ Fußbodenheizung¹', '4,51'],
       ['Abmessung (BxTxH)', '1.100 × 450 × 965 mm'],
       ['Hersteller', 'Vaillant GmbH'],
     ],
@@ -1856,8 +1856,8 @@ const paDataFallbackVaillantPlus = [
       ['Effizienzklasse (35 / 55 °C)', 'A+++ / A+++'],
       ['ηs (35 / 55 °C)', '202 % / 151 %'],
       ['SCOP (35 / 55 °C)²', '5,13 / 3,86'],
-      ['JAZ Heizkörper¹', '4,03'],
-      ['JAZ Fußbodenheizung¹', '4,77'],
+      ['JAZ Heizkörper¹', '4,18'],
+      ['JAZ Fußbodenheizung¹', '4,83'],
       ['Abmessung (BxTxH)', '1.100 × 450 × 1.480 mm'],
       ['Hersteller', 'Vaillant GmbH'],
     ],
@@ -1882,7 +1882,7 @@ const paDataFallbackVaillantPlus = [
       ['ηs (35 / 55 °C)', '202 % / 151 %'],
       ['SCOP (35 / 55 °C)²', '5,12 / 3,85'],
       ['JAZ Heizkörper¹', '4,21'],
-      ['JAZ Fußbodenheizung¹', '4,80'],
+      ['JAZ Fußbodenheizung¹', '4,87'],
       ['Abmessung (BxTxH)', '1.100 × 450 × 1.480 mm'],
       ['Hersteller', 'Vaillant GmbH'],
     ],
@@ -1906,7 +1906,7 @@ const paDataFallbackVaillantPlus = [
       ['ηs (35 / 55 °C)', '202 % / 151 % je Gerät'],
       ['SCOP (35 / 55 °C)²', '5,12 / 3,85 je Gerät'],
       ['JAZ Heizkörper¹', '4,21 je Gerät; projektbezogen prüfen'],
-      ['JAZ Fußbodenheizung¹', '4,80 je Gerät; projektbezogen prüfen'],
+      ['JAZ Fußbodenheizung¹', '4,87 je Gerät; projektbezogen prüfen'],
       ['Schallleistung ErP außen', '50 dB(A) je Gerät'],
       ['Hersteller', 'Vaillant GmbH'],
     ],
@@ -1925,7 +1925,7 @@ const PA_PRO_TECHNIK = {
     scop: '5,01 / 3,70',
     masse: '1.104 × 454 × 750 mm',
     img: 'vwl-pro-s-m.jpg',
-    jaz: { heizkoerper: '3,94', fussboden: '4,49' },
+    jaz: { heizkoerper: '3,94', fussboden: '4,56' },
   },
   'Vaillant VWL 75/7.1 A': {
     leistung: '6,37',
@@ -1936,7 +1936,7 @@ const PA_PRO_TECHNIK = {
     scop: '4,87 / 3,62',
     masse: '1.104 × 454 × 750 mm',
     img: 'vwl-pro-s-m.jpg',
-    jaz: { heizkoerper: '3,86', fussboden: '4,40' },
+    jaz: { heizkoerper: '3,86', fussboden: '4,47' },
   },
   'Vaillant VWL 115/7.1 A': {
     leistung: '11,12',
@@ -1947,7 +1947,7 @@ const PA_PRO_TECHNIK = {
     scop: '4,93 / 3,66',
     masse: '1.169 × 454 × 1.103 mm',
     img: 'vwl-pro-l.jpg',
-    jaz: { heizkoerper: '3,95', fussboden: '4,50' },
+    jaz: { heizkoerper: '3,95', fussboden: '4,57' },
   },
 };
 
@@ -2091,10 +2091,14 @@ function paRenderCards() {
     .join('');
 }
 
+// BEGIN PA_JAZ_GENERATED
+const PA_JAZ_GRUNDLAGEN = {"Wolf CHA-07/400V":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":false},"Wolf CHA-07":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":false},"Wolf CHA-10/400V":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":false},"Wolf CHA-10":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":false},"Wolf CHA-16/20 mit Heizstab (CS-e9-C2)":{"gesamtlast":16,"abrufdatum":"2026-10-26","kaskade":false},"Wolf CHA-16/20":{"gesamtlast":16,"abrufdatum":"2026-10-26","kaskade":false},"Wolf CHA-16/20 ohne Heizstab (CS-C2)":{"gesamtlast":16,"abrufdatum":"2026-10-26","kaskade":false},"Wolf CHA-20/24 mit Heizstab (CS-e9-D2)":{"gesamtlast":20,"abrufdatum":"2026-10-26","kaskade":false},"Wolf CHA-20/24":{"gesamtlast":20,"abrufdatum":"2026-10-26","kaskade":false},"Wolf CHA-20/24 ohne Heizstab (CS-D2)":{"gesamtlast":20,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM plus VWL 35/8.1 A 230V":{"gesamtlast":3,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant VWL 35/8.1 A":{"gesamtlast":3,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM plus VWL 35/8.1 A":{"gesamtlast":3,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM plus VWL 55/8.1 A 230V":{"gesamtlast":5,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant VWL 55/8.1 A":{"gesamtlast":5,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM plus VWL 55/8.1 A":{"gesamtlast":5,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM plus VWL 75/8.1 A 230V":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant VWL 75/8.1 A":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM plus VWL 75/8.1 A":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM plus VWL 105/8.1 A 400V":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant VWL 105/8.1 A":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM plus VWL 105/8.1 A":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM plus VWL 125/8.1 A 400V":{"gesamtlast":12,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant VWL 125/8.1 A":{"gesamtlast":12,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM plus VWL 125/8.1 A":{"gesamtlast":12,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM pro VWL 55/7.1 A 230V":{"gesamtlast":5,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant VWL 55/7.1 A":{"gesamtlast":5,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM pro VWL 55/7.1 A":{"gesamtlast":5,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM pro VWL 75/7.1 A 230V":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant VWL 75/7.1 A":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM pro VWL 75/7.1 A":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM pro VWL 115/7.1 A 400V":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant VWL 115/7.1 A":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM pro VWL 115/7.1 A":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM perform VWL 205/8.1 A S2 Q":{"gesamtlast":20,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant VWL 205/8.1 A":{"gesamtlast":20,"abrufdatum":"2026-10-26","kaskade":false},"2× Wolf CHA-16/20":{"gesamtlast":16,"abrufdatum":"2026-10-26","kaskade":true},"2× Wolf CHA-16/20 (Kaskade)":{"gesamtlast":16,"abrufdatum":"2026-10-26","kaskade":true},"2x Wolf CHA-16/20":{"gesamtlast":16,"abrufdatum":"2026-10-26","kaskade":true},"2× Wolf CHA-16":{"gesamtlast":16,"abrufdatum":"2026-10-26","kaskade":true},"2× Vaillant VWL 75/8.1 A":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":true},"2× Vaillant VWL 75/8.1 A (Kaskade)":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":true},"2x Vaillant VWL 75/8.1 A":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":true},"2× Vaillant VWL 105/8.1 A":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":true},"2× Vaillant VWL 105/8.1 A (Kaskade)":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":true},"2x Vaillant VWL 105/8.1 A":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":true},"3× Vaillant VWL 105/8.1 A":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":true},"3× Vaillant VWL 105/8.1 A (Kaskade)":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":true},"3x Vaillant VWL 105/8.1 A":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":true},"2× Vaillant VWL 125/8.1 A":{"gesamtlast":12,"abrufdatum":"2026-10-26","kaskade":true},"2× Vaillant VWL 125/8.1 A (Kaskade)":{"gesamtlast":12,"abrufdatum":"2026-10-26","kaskade":true},"2x Vaillant VWL 125/8.1 A":{"gesamtlast":12,"abrufdatum":"2026-10-26","kaskade":true},"2× Vaillant VWL 75/7.1 A":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":true},"2× Vaillant VWL 75/7.1 A (Kaskade)":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":true},"2x Vaillant VWL 75/7.1 A":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":true},"2× Vaillant VWL 115/7.1 A":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":true},"2× Vaillant VWL 115/7.1 A (Kaskade)":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":true},"2x Vaillant VWL 115/7.1 A":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":true},"3× Vaillant VWL 115/7.1 A":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":true},"3× Vaillant VWL 115/7.1 A (Kaskade)":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":true},"3x Vaillant VWL 115/7.1 A":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":true},"4× Vaillant VWL 115/7.1 A":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":true},"4× Vaillant VWL 115/7.1 A (Kaskade)":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":true},"4x Vaillant VWL 115/7.1 A":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":true}};
+// END PA_JAZ_GENERATED
+
 // BWP-Beispiele gelten nur für die belegten Geräte; Wolf und alte Plus-Geräte
 // behalten ihren ursprünglichen Fußtext auch nach einem Markenwechsel.
 const PA_VAILLANT_JAZ_FOOTNOTE =
-  '¹ JAZ = Jahresarbeitszahl. Beispielrechnung mit dem BWP-JAZ-Rechner nach VDI 4650 Blatt 1 für einen Altbau in Hannover. Heizkörper: Vorlauf/Rücklauf 55/45 °C; Fußbodenheizung: Vorlauf/Rücklauf 35/30 °C. Warmwasserbereitung durch die Wärmepumpe; einschließlich erforderlichem elektrischem Zusatzheizer. Individuelle Anlagenwerte können abweichen.';
+  '¹ JAZ = Jahresarbeitszahl. Beispielrechnung mit dem BWP-JAZ-Rechner nach VDI 4650 Blatt 1 für einen Altbau in Hannover. Heizkörper: Vorlauf/Rücklauf 55/45 °C; Fußbodenheizung: Vorlauf/Rücklauf 35/28 °C. Warmwasseranteil 18 %, Speicher 50 °C; einschließlich erforderlichem elektrischem Zusatzheizer. Individuelle Anlagenwerte können abweichen.';
 let paOriginalJazFootnote;
 
 // Detail-Panel aktualisieren
@@ -2119,9 +2123,8 @@ function paUpdateDetail(d) {
   const fn = document.getElementById('paJazFootnote');
   const scopFn = document.getElementById('paScopFootnote');
   const modelKey = paModelKey(d.modell);
-  const bwpJaz =
-    hasJaz &&
-    (Boolean(PA_PRO_TECHNIK[modelKey]) || /^(?:2× )?Vaillant VWL 125\/8\.1 A$/.test(modelKey));
+  const grundlage = PA_JAZ_GRUNDLAGEN[modelKey];
+  const bwpJaz = hasJaz && Boolean(grundlage);
   if (fn) {
     if (paOriginalJazFootnote === undefined) paOriginalJazFootnote = fn.innerHTML;
     fn.innerHTML = bwpJaz
@@ -2129,6 +2132,8 @@ function paUpdateDetail(d) {
           '¹ JAZ',
           '<strong style="color:var(--green);font-size:12px;text-transform:uppercase;letter-spacing:0.3px;">¹ JAZ</strong>'
         ) +
+        ' Angenommene Gesamtlast '+grundlage.gesamtlast+' kW. Abruf '+grundlage.abrufdatum+'.'+
+        (grundlage.kaskade?' Kaskade: Wert des Einzelgeräts als Annahme.':'')+
         '<br>' +
         (scopFn?.innerHTML || '')
       : paOriginalJazFootnote;

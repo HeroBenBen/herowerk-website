@@ -1194,7 +1194,9 @@ function foerderPeriodenAusKv_(params) {
 function kostenvergleich_(p) {
   const f = getAllParameters_().foerder;
   const params = foerderParamsMitRueckfall_(kvGetParams_(), f, foerderRueckfallLogger_());
+  kvJazParameterLaden_(params);
   const inputs = kvMapRequest_(p, params);
+  if(!kvBool_(inputs.warmwasserBisherZentral,true)&&kvBool_(inputs.warmwasserKuenftigZentral,true)){var d=readKv_(SpreadsheetApp.openById(SHEET_ID),'Dimensionierung');params.wwKwhProPerson=kvNum_(d.ww_abzug_kwh_pro_person_jahr,700);}
   if (String(p.bedarfModus || '') === 'schaetzung') {
     const geb = kvEnum_(p.geb, ['efh', 'dhh', 'rh', 'zfh', 'mfh'], '');
     const bj = kvEnum_(p.bj, ['vor1978', '1978-1994', '1995-2010', 'nach2010'], '');
@@ -1223,7 +1225,9 @@ function kostenvergleich_(p) {
 
 function kvBootstrap_(p) {
   const params = kvGetParams_();
+  kvJazParameterLaden_(params);
   const out = kvBootstrapPayload(params);
+  out.defaults.startJahr=Number(Utilities.formatDate(new Date(),'Europe/Berlin','yyyy-MM-dd').slice(0,4));
   // Nur Zeitraeume, die noch beantragbar sind: ein abgelaufener Zeitraum in der Auswahl waere ein
   // Versprechen auf eine Foerderung, die es nicht mehr gibt (Klemmung nach unten auf heute, T617).
   const waehlbar = foerderPeriodenWaehlbar_(params).map(function (eintrag) { return eintrag.key; });
@@ -1246,7 +1250,7 @@ function kvMapRequest_(p, params) {
   const periodeReq = String(p.fHalbjahr || '').trim();
   const periode = periodenKeys.indexOf(periodeReq) >= 0 ? periodeReq : periodeServer;
 
-  return {
+  return Object.assign({
     _periodeAutomatik: periodenKeys.indexOf(periodeReq) < 0,
     modus: kvEnum_(p.modus, ['kunde', 'berater'], d.modus),
     heizart: kvEnum_(p.heizart, ['gas', 'oel'], d.heizart),
@@ -1287,7 +1291,7 @@ function kvMapRequest_(p, params) {
     dynTarifTog: kvBool_(p.dynTarifTog, d.dynTarifTog),
     dynAnteil: kvNum_(p.dynAnteil, d.dynAnteil),
     dynSpread: kvNum_(p.dynSpread, d.dynSpread)
-  };
+  }, kvNutzenRequest(p,params,Number(Utilities.formatDate(new Date(),'Europe/Berlin','yyyy-MM-dd').slice(0,4))));
 }
 
 function kvNum_(v, fallback) {
@@ -1311,7 +1315,7 @@ function kvEnum_(v, erlaubt, fallback) {
 
 function kvGetParams_() {
   const cache = CacheService.getScriptCache();
-  const cached = cache.get('kvparams:v1');
+  const cached = cache.get('kvparams:t1245:v3');
   if (cached) return JSON.parse(cached);
   const ss = SpreadsheetApp.openById(SHEET_ID);
   const shP = ss.getSheetByName('KV_Parameter');
@@ -1356,11 +1360,7 @@ function kvGetParams_() {
     proKlimaMax: kvNum_(kv.proklima_max, 1500),
     kumCapPct: kvNum_(kv.kum_cap_pct, 0.6),
     co2f: { gas: kvNum_(kv.co2f_gas, 0.182), oel: kvNum_(kv.co2f_oel, 0.266) },
-    bioStufen: [
-      { y: kvNum_(kv.bio_stufe_1_jahr, 2029), p: kvNum_(kv.bio_stufe_1_anteil, 0.15) },
-      { y: kvNum_(kv.bio_stufe_2_jahr, 2035), p: kvNum_(kv.bio_stufe_2_anteil, 0.30) },
-      { y: kvNum_(kv.bio_stufe_3_jahr, 2040), p: kvNum_(kv.bio_stufe_3_anteil, 0.60) }
-    ],
+    bioStufen: KV_PARAMS_SEED.bioStufen,
     etaNeu: { gas: kvNum_(kv.eta_neu_gas, 0.95), oel: kvNum_(kv.eta_neu_oel, 0.93) },
     strommix: {
       startY: kvNum_(kv.strommix_start_jahr, 2026), startG: kvNum_(kv.strommix_start_g, 350),
@@ -1410,15 +1410,34 @@ function kvGetParams_() {
       quelle: KV_SCHAETZUNG.quelle
     }
   };
-  cache.put('kvparams:v1', JSON.stringify(p), CACHE_TTL_SECONDS);
+  p.nutzenRoh=kv;
+  p.jazLive=String(kv.jaz_tabellenstand||'')==='2026-10-26';
+  cache.put('kvparams:t1245:v3', JSON.stringify(p), CACHE_TTL_SECONDS);
   return p;
+}
+
+
+// Der JAZ-Datenweg betrifft nur Kostenvergleich/Bootstrap, keine Angebotsabläufe.
+function kvJazParameterLaden_(params) {
+  // Nur Kostenvergleich/Bootstrap validieren Bio- und Netzparameter. Förderung liest sie nicht.
+  if(params.nutzenRoh)Object.assign(params,kvNutzenParameter(params.nutzenRoh));
+  var sh=null;if(params.jazLive){var ss=SpreadsheetApp.openById(SHEET_ID);sh=ss.getSheetByName('KV_JAZ');if(!sh)throw new Error('KV_JAZ wurde als veröffentlicht markiert, fehlt aber.');}
+  params.jazTabelle=sh?kvJazAusZeilen(sh.getDataRange().getValues()):KV_JAZ_SEED;
+  params.jazTabellenstand=sh?'KV_JAZ':'Gebündelter Tabellenstand 26.10.2026';
+
+}
+// Nur vorbereitete Auslieferungsfunktion; im Bau niemals aufrufen.
+function kvSetupJaz() {
+  var ss=SpreadsheetApp.openById(SHEET_ID),sh=ss.getSheetByName('KV_JAZ')||ss.insertSheet('KV_JAZ');
+  var rows=[['Gerät','Heizsystem','Wert','Quelle','Abrufdatum','Randbedingungen','Aliase','Kaskade']].concat(KV_JAZ_ROWS_());
+  sh.clear();sh.getRange(1,1,rows.length,8).setValues(rows);sh.setFrozenRows(1);
 }
 
 function kvSetupSheets() {
   const ss = SpreadsheetApp.openById(SHEET_ID);
   writeKeyValueDoc_(ss, 'KV_Parameter', KV_PARAMETER_ROWS_());
   kvWriteFoerderPerioden_(ss, 'KV_FoerderPerioden', KV_PERIODEN_ROWS_());
-  CacheService.getScriptCache().remove('kvparams:v1');
+  CacheService.getScriptCache().remove('kvparams:t1245:v3');
 }
 
 function kvWriteFoerderPerioden_(ss, name, rows) {
@@ -1435,6 +1454,27 @@ function kvWriteFoerderPerioden_(ss, name, rows) {
 
 function KV_PARAMETER_ROWS_() {
   return [
+    ['bio_stufe_1_jahr', 2029, 'Jahr', 'Bio-Treppe Stufe 1', 'GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226'],
+    ['bio_stufe_1_anteil', 0.1, 'Anteil', 'Bio-Treppe Stufe 1', 'GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226'],
+    ['bio_stufe_2_jahr', 2030, 'Jahr', 'Bio-Treppe Stufe 2', 'GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226'],
+    ['bio_stufe_2_anteil', 0.15, 'Anteil', 'Bio-Treppe Stufe 2', 'GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226'],
+    ['bio_stufe_3_jahr', 2035, 'Jahr', 'Bio-Treppe Stufe 3', 'GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226'],
+    ['bio_stufe_3_anteil', 0.3, 'Anteil', 'Bio-Treppe Stufe 3', 'GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226'],
+    ['bio_stufe_4_jahr', 2040, 'Jahr', 'Bio-Treppe Stufe 4', 'GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226'],
+    ['bio_stufe_4_anteil', 0.6, 'Anteil', 'Bio-Treppe Stufe 4', 'GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226'],
+    ['jaz_tabellenstand','2026-10-26','Datum','Veröffentlichter KV_JAZ-Tabellenstand','WERTE_JAZ_PORTFOLIO.json, maschineller Import'],
+    ['grundpreis_gas',250.38,'Euro/Jahr','Gas-Grundpreis','enercity BasisGas, 01.01.2026'],
+    ['schornsteinfeger',39,'Euro/Jahr','Schornsteinfeger fossil','GF 27.07.2026, KÜO'],
+    ['modul14a_vorteil',156.22,'Euro/Jahr','Modul 1 ohne eigenen WP-Zähler','enercity Netz, 2026'],
+    ['pv_anteil',30,'Prozent','Anteil WP-Strom aus PV','GF 26.10.2026'],
+    ['pv_kosten',7,'ct/kWh','PV-Strom, ohne Steigerung','GF 26.10.2026'],
+    ['co2_ziel_jahr',2045,'Jahr','Kalenderfestes CO₂-Zieljahr','Steuerung T1245, Anpassung 1'],
+    ['netzentgelt_basisjahr','','Jahr','Basisjahr des Gas-Netzentgeltaufschlags','Steuerung liefert belegte Reihe nach'],
+    ['netzentgelt_einheit','ct/kWh Aufschlag gegenüber heute','Text','Nur Anstieg über heutigen Gaspreis','GF 27.07.2026'],
+    ['netzentgelt_jahreswerte','[]','JSON','Jahreswerte: [{jahr,wert}], Basiswert 0','Noch keine belegte Jahresreihe'],
+    ['netzentgelt_quelle','','Text','Quelle der Jahresreihe','Fraunhofer IFAM, Nachweis noch offen'],
+    ['netzentgelt_abrufdatum','','ISO-Datum','Abruf der Jahresreihe','Noch kein Abruf'],
+    ['bio_aufpreis',2.5,'Faktor','Preisannahme Biobrennstoff, keine Rechtsfolge','BDEW Januar 2026'],
     ['grund_pct_eu', 30, 'Prozent', 'Grundförderung mit EU-Wertschöpfung', 'Orakel Z.107, KfW 458'],
     ['grund_pct_nicht_eu', 15, 'Prozent', 'Grundförderung ohne EU-Wertschöpfung ab 2027', 'Orakel Z.107, KfW-PM BEG-Reform'],
     ['proklima_aktiv', 'N', 'J/N', 'Globaler produktiver Kill-Switch; interne Engine-Referenz bleibt erhalten', 'GF-Decision 15.07.2026, Kanon 1.3'],
@@ -1443,19 +1483,13 @@ function KV_PARAMETER_ROWS_() {
     ['kum_cap_pct', 0.6, 'Anteil', 'BEG-Kumulierungsgrenze', 'Orakel Z.225, Kanon 1.3'],
     ['co2f_gas', 0.182, 'kg/kWh', 'CO₂-Faktor Gas, brennwertbezogen', 'Orakel Z.148, UBA'],
     ['co2f_oel', 0.266, 'kg/kWh', 'CO₂-Faktor Heizöl', 'Orakel Z.148, UBA'],
-    ['bio_stufe_1_jahr', 2029, 'Jahr', 'Biotreppe Stufe 1 ab', 'Orakel Z.151, GEG §71(9)'],
-    ['bio_stufe_1_anteil', 0.15, 'Anteil', 'Biotreppe Stufe 1', 'Orakel Z.151, GEG §71(9)'],
-    ['bio_stufe_2_jahr', 2035, 'Jahr', 'Biotreppe Stufe 2 ab', 'Orakel Z.151, GMG-Eckpunkte Februar 2026'],
-    ['bio_stufe_2_anteil', 0.30, 'Anteil', 'Biotreppe Stufe 2', 'Orakel Z.151'],
-    ['bio_stufe_3_jahr', 2040, 'Jahr', 'Biotreppe Stufe 3 ab', 'Orakel Z.151'],
-    ['bio_stufe_3_anteil', 0.60, 'Anteil', 'Biotreppe Stufe 3', 'Orakel Z.151, Öko-Institut März 2026'],
     ['eta_neu_gas', 0.95, 'Anteil', 'Nutzungsgrad neuer Gas-Brennwertkessel', 'Orakel Z.236'],
     ['eta_neu_oel', 0.93, 'Anteil', 'Nutzungsgrad neuer Öl-Brennwertkessel', 'Orakel Z.236'],
     ['strommix_start_jahr', 2026, 'Jahr', 'Strommix-Pfad Startjahr', 'Orakel Z.158, UBA/Agora'],
     ['strommix_start_g', 350, 'g/kWh', 'Strommix Startwert', 'Orakel Z.158, UBA'],
     ['strommix_end_jahr', 2040, 'Jahr', 'Strommix-Pfad Endjahr', 'Orakel Z.158, Agora'],
     ['strommix_end_g', 100, 'g/kWh', 'Strommix Endwert', 'Orakel Z.158, Agora'],
-    ['wartung_wp', 350, 'Euro/Jahr', 'Wartungskosten Wärmepumpe', 'Orakel Z.271'],
+    ['wartung_wp', 250, 'Euro/Jahr', 'Wartungskosten Wärmepumpe', 'Orakel Z.271'],
     ['wartung_fossil', 250, 'Euro/Jahr', 'Wartungskosten fossile Heizung', 'Orakel Z.257'],
     ['start_jahr', 2026, 'Jahr', 'Jahr 1 der Betrachtung', 'Orakel Z.243'],
     ['co2_ziel_schritte', 19, 'Anzahl', 'Schritte bis zum CO₂-Zieljahr 2045', 'Orakel Z.240'],
@@ -1934,6 +1968,8 @@ function werteSnapshot_() {
     sheets[name] = sh.getDataRange().getValues();
   });
 
+  const jazSheet=ss.getSheetByName('KV_JAZ');
+  if(jazSheet)sheets.KV_JAZ=jazSheet.getDataRange().getValues();
   const serialized = JSON.stringify({ service: 'werte_snapshot', schemaVersion: 2, sheets: sheets });
   werteSnapshotCacheWrite_(serialized);
   return JSON.parse(serialized);

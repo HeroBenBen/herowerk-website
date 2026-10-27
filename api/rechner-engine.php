@@ -617,6 +617,98 @@ function hw_klima(array $query, array $sheets): array
 }
 
 /** @return array<string,mixed> */
+/** T1245: Parameter und Eingaben werden auch bei direktem Kernaufruf geprüft. */
+function hw_kv_bio_stand(array $stufen): array
+{
+    $neu=[['y'=>2029,'p'=>0.10],['y'=>2030,'p'=>0.15],['y'=>2035,'p'=>0.30],['y'=>2040,'p'=>0.60]];
+    $alt=[['y'=>2029,'p'=>0.15],['y'=>2035,'p'=>0.30],['y'=>2040,'p'=>0.60]];
+    if ($stufen==$neu) return ['stufen'=>$neu,'hinweis'=>null];
+    if ($stufen==$alt) return ['stufen'=>$neu,'hinweis'=>'Altes Bio-Sheet erkannt; vollständig auf GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226 umgestellt.'];
+    throw new RuntimeException('Bio-Parameter unvollständig oder widersprüchlich. Erforderlich: 2029/10 %, 2030/15 %, 2035/30 %, 2040/60 %.');
+}
+// BEGIN KV_JAZ_PHP_GENERATED
+function hw_kv_jaz_seed(): array { return json_decode(<<<'KV_JAZ_JSON'
+[{"geraet":"5535","heizsystem":"heizkoerper","wert":4.3,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha07-A-hk/response.json","abrufdatum":"2026-10-26T12:52:42.322492+00:00","alias":["Wolf CHA-07/400V","Wolf CHA-07"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":7},"kaskade":false},{"geraet":"5535","heizsystem":"fbh","wert":4.98,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha07-B-fbh/response.json","abrufdatum":"2026-10-26T12:52:56.841036+00:00","alias":["Wolf CHA-07/400V","Wolf CHA-07"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":7},"kaskade":false},{"geraet":"5536","heizsystem":"heizkoerper","wert":4.37,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha10-A-hk/response.json","abrufdatum":"2026-10-26T12:53:01.354268+00:00","alias":["Wolf CHA-10/400V","Wolf CHA-10"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":10},"kaskade":false},{"geraet":"5536","heizsystem":"fbh","wert":5.08,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha10-B-fbh/response.json","abrufdatum":"2026-10-26T12:53:15.467071+00:00","alias":["Wolf CHA-10/400V","Wolf CHA-10"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":10},"kaskade":false},{"geraet":"5540","heizsystem":"heizkoerper","wert":4.42,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha1620-e9-A-hk/response.json","abrufdatum":"2026-10-26T12:53:21.711331+00:00","alias":["Wolf CHA-16/20 mit Heizstab (CS-e9-C2)","Wolf CHA-16/20"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":16},"kaskade":false},{"geraet":"5540","heizsystem":"fbh","wert":5.11,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha1620-e9-B-fbh/response.json","abrufdatum":"2026-10-26T12:53:36.179320+00:00","alias":["Wolf CHA-16/20 mit Heizstab (CS-e9-C2)","Wolf CHA-16/20"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":16},"kaskade":false},{"geraet":"5539","heizsystem":"heizkoerper","wert":4.42,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha1620-A-hk/response.json","abrufdatum":"2026-10-26T12:53:40.716481+00:00","alias":["Wolf CHA-16/20 ohne Heizstab (CS-C2)"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":16},"kaskade":false},{"geraet":"5539","heizsystem":"fbh","wert":5.11,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha1620-B-fbh/response.json","abrufdatum":"2026-10-26T12:53:54.346775+00:00","alias":["Wolf CHA-16/20 ohne Heizstab (CS-C2)"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":16},"kaskade":false},{"geraet":"5558","heizsystem":"heizkoerper","wert":4.34,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha2024-e9-A-hk/response.json","abrufdatum":"2026-10-26T12:53:58.913774+00:00","alias":["Wolf CHA-20/24 mit Heizstab (CS-e9-D2)","Wolf CHA-20/24"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":20},"kaskade":false},{"geraet":"5558","heizsystem":"fbh","wert":5.03,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha2024-e9-B-fbh/response.json","abrufdatum":"2026-10-26T12:54:13.002790+00:00","alias":["Wolf CHA-20/24 mit Heizstab (CS-e9-D2)","Wolf CHA-20/24"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":20},"kaskade":false},{"geraet":"5559","heizsystem":"heizkoerper","wert":4.34,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha2024-A-hk/response.json","abrufdatum":"2026-10-26T12:54:17.600629+00:00","alias":["Wolf CHA-20/24 ohne Heizstab (CS-D2)"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":20},"kaskade":false},{"geraet":"5559","heizsystem":"fbh","wert":5.03,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha2024-B-fbh/response.json","abrufdatum":"2026-10-26T12:54:31.533734+00:00","alias":["Wolf CHA-20/24 ohne Heizstab (CS-D2)"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":20},"kaskade":false},{"geraet":"5080","heizsystem":"heizkoerper","wert":3.88,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl35-81-A-hk/response.json","abrufdatum":"2026-10-26T12:54:36.260376+00:00","alias":["Vaillant aroTHERM plus VWL 35/8.1 A 230V","Vaillant VWL 35/8.1 A","Vaillant aroTHERM plus VWL 35/8.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":3},"kaskade":false},{"geraet":"5080","heizsystem":"fbh","wert":4.49,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl35-81-B-fbh/response.json","abrufdatum":"2026-10-26T12:54:50.064033+00:00","alias":["Vaillant aroTHERM plus VWL 35/8.1 A 230V","Vaillant VWL 35/8.1 A","Vaillant aroTHERM plus VWL 35/8.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":3},"kaskade":false},{"geraet":"5081","heizsystem":"heizkoerper","wert":3.86,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl55-81-A-hk/response.json","abrufdatum":"2026-10-26T12:54:54.629091+00:00","alias":["Vaillant aroTHERM plus VWL 55/8.1 A 230V","Vaillant VWL 55/8.1 A","Vaillant aroTHERM plus VWL 55/8.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":5},"kaskade":false},{"geraet":"5081","heizsystem":"fbh","wert":4.47,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl55-81-B-fbh/response.json","abrufdatum":"2026-10-26T12:55:10.192588+00:00","alias":["Vaillant aroTHERM plus VWL 55/8.1 A 230V","Vaillant VWL 55/8.1 A","Vaillant aroTHERM plus VWL 55/8.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":5},"kaskade":false},{"geraet":"5078","heizsystem":"heizkoerper","wert":3.9,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl75-81-A-hk/response.json","abrufdatum":"2026-10-26T12:55:14.949227+00:00","alias":["Vaillant aroTHERM plus VWL 75/8.1 A 230V","Vaillant VWL 75/8.1 A","Vaillant aroTHERM plus VWL 75/8.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":7},"kaskade":false},{"geraet":"5078","heizsystem":"fbh","wert":4.51,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl75-81-B-fbh/response.json","abrufdatum":"2026-10-26T12:55:30.884345+00:00","alias":["Vaillant aroTHERM plus VWL 75/8.1 A 230V","Vaillant VWL 75/8.1 A","Vaillant aroTHERM plus VWL 75/8.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":7},"kaskade":false},{"geraet":"5079","heizsystem":"heizkoerper","wert":4.18,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl105-81-A-hk/response.json","abrufdatum":"2026-10-26T12:55:40.137148+00:00","alias":["Vaillant aroTHERM plus VWL 105/8.1 A 400V","Vaillant VWL 105/8.1 A","Vaillant aroTHERM plus VWL 105/8.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":10},"kaskade":false},{"geraet":"5079","heizsystem":"fbh","wert":4.83,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl105-81-B-fbh/response.json","abrufdatum":"2026-10-26T12:55:54.295390+00:00","alias":["Vaillant aroTHERM plus VWL 105/8.1 A 400V","Vaillant VWL 105/8.1 A","Vaillant aroTHERM plus VWL 105/8.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":10},"kaskade":false},{"geraet":"5077","heizsystem":"heizkoerper","wert":4.21,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl125-81-A-hk/response.json","abrufdatum":"2026-10-26T12:55:58.988822+00:00","alias":["Vaillant aroTHERM plus VWL 125/8.1 A 400V","Vaillant VWL 125/8.1 A","Vaillant aroTHERM plus VWL 125/8.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":12},"kaskade":false},{"geraet":"5077","heizsystem":"fbh","wert":4.87,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl125-81-B-fbh/response.json","abrufdatum":"2026-10-26T12:56:14.589132+00:00","alias":["Vaillant aroTHERM plus VWL 125/8.1 A 400V","Vaillant VWL 125/8.1 A","Vaillant aroTHERM plus VWL 125/8.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":12},"kaskade":false},{"geraet":"5082","heizsystem":"heizkoerper","wert":3.94,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl55-71-A-hk/response.json","abrufdatum":"2026-10-26T12:56:19.393112+00:00","alias":["Vaillant aroTHERM pro VWL 55/7.1 A 230V","Vaillant VWL 55/7.1 A","Vaillant aroTHERM pro VWL 55/7.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":5},"kaskade":false},{"geraet":"5082","heizsystem":"fbh","wert":4.56,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl55-71-B-fbh/response.json","abrufdatum":"2026-10-26T12:56:34.569053+00:00","alias":["Vaillant aroTHERM pro VWL 55/7.1 A 230V","Vaillant VWL 55/7.1 A","Vaillant aroTHERM pro VWL 55/7.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":5},"kaskade":false},{"geraet":"5083","heizsystem":"heizkoerper","wert":3.86,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl75-71-A-hk/response.json","abrufdatum":"2026-10-26T12:56:39.168445+00:00","alias":["Vaillant aroTHERM pro VWL 75/7.1 A 230V","Vaillant VWL 75/7.1 A","Vaillant aroTHERM pro VWL 75/7.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":7},"kaskade":false},{"geraet":"5083","heizsystem":"fbh","wert":4.47,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl75-71-B-fbh/response.json","abrufdatum":"2026-10-26T12:56:53.485421+00:00","alias":["Vaillant aroTHERM pro VWL 75/7.1 A 230V","Vaillant VWL 75/7.1 A","Vaillant aroTHERM pro VWL 75/7.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":7},"kaskade":false},{"geraet":"5085","heizsystem":"heizkoerper","wert":3.95,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl115-71-A-hk/response.json","abrufdatum":"2026-10-26T12:56:58.061418+00:00","alias":["Vaillant aroTHERM pro VWL 115/7.1 A 400V","Vaillant VWL 115/7.1 A","Vaillant aroTHERM pro VWL 115/7.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":11},"kaskade":false},{"geraet":"5085","heizsystem":"fbh","wert":4.57,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl115-71-B-fbh/response.json","abrufdatum":"2026-10-26T12:57:12.583875+00:00","alias":["Vaillant aroTHERM pro VWL 115/7.1 A 400V","Vaillant VWL 115/7.1 A","Vaillant aroTHERM pro VWL 115/7.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":11},"kaskade":false},{"geraet":"5084","heizsystem":"heizkoerper","wert":4.42,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl205-81-A-hk/response.json","abrufdatum":"2026-10-26T12:57:17.194542+00:00","alias":["Vaillant aroTHERM perform VWL 205/8.1 A S2 Q","Vaillant VWL 205/8.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":20},"kaskade":false},{"geraet":"5084","heizsystem":"fbh","wert":5.11,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl205-81-B-fbh/response.json","abrufdatum":"2026-10-26T12:57:31.672241+00:00","alias":["Vaillant aroTHERM perform VWL 205/8.1 A S2 Q","Vaillant VWL 205/8.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":20},"kaskade":false},{"geraet":"2x:5540","heizsystem":"heizkoerper","wert":4.42,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha1620-e9-A-hk/response.json","abrufdatum":"2026-10-26T12:53:21.711331+00:00","alias":["2× Wolf CHA-16/20","2× Wolf CHA-16/20 (Kaskade)","2x Wolf CHA-16/20","2× Wolf CHA-16"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":16},"kaskade":true},{"geraet":"2x:5540","heizsystem":"fbh","wert":5.11,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha1620-e9-B-fbh/response.json","abrufdatum":"2026-10-26T12:53:36.179320+00:00","alias":["2× Wolf CHA-16/20","2× Wolf CHA-16/20 (Kaskade)","2x Wolf CHA-16/20","2× Wolf CHA-16"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":16},"kaskade":true},{"geraet":"2x:5078","heizsystem":"heizkoerper","wert":3.9,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl75-81-A-hk/response.json","abrufdatum":"2026-10-26T12:55:14.949227+00:00","alias":["2× Vaillant VWL 75/8.1 A","2× Vaillant VWL 75/8.1 A (Kaskade)","2x Vaillant VWL 75/8.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":7},"kaskade":true},{"geraet":"2x:5078","heizsystem":"fbh","wert":4.51,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl75-81-B-fbh/response.json","abrufdatum":"2026-10-26T12:55:30.884345+00:00","alias":["2× Vaillant VWL 75/8.1 A","2× Vaillant VWL 75/8.1 A (Kaskade)","2x Vaillant VWL 75/8.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":7},"kaskade":true},{"geraet":"2x:5079","heizsystem":"heizkoerper","wert":4.18,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl105-81-A-hk/response.json","abrufdatum":"2026-10-26T12:55:40.137148+00:00","alias":["2× Vaillant VWL 105/8.1 A","2× Vaillant VWL 105/8.1 A (Kaskade)","2x Vaillant VWL 105/8.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":10},"kaskade":true},{"geraet":"2x:5079","heizsystem":"fbh","wert":4.83,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl105-81-B-fbh/response.json","abrufdatum":"2026-10-26T12:55:54.295390+00:00","alias":["2× Vaillant VWL 105/8.1 A","2× Vaillant VWL 105/8.1 A (Kaskade)","2x Vaillant VWL 105/8.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":10},"kaskade":true},{"geraet":"3x:5079","heizsystem":"heizkoerper","wert":4.18,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl105-81-A-hk/response.json","abrufdatum":"2026-10-26T12:55:40.137148+00:00","alias":["3× Vaillant VWL 105/8.1 A","3× Vaillant VWL 105/8.1 A (Kaskade)","3x Vaillant VWL 105/8.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":10},"kaskade":true},{"geraet":"3x:5079","heizsystem":"fbh","wert":4.83,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl105-81-B-fbh/response.json","abrufdatum":"2026-10-26T12:55:54.295390+00:00","alias":["3× Vaillant VWL 105/8.1 A","3× Vaillant VWL 105/8.1 A (Kaskade)","3x Vaillant VWL 105/8.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":10},"kaskade":true},{"geraet":"2x:5077","heizsystem":"heizkoerper","wert":4.21,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl125-81-A-hk/response.json","abrufdatum":"2026-10-26T12:55:58.988822+00:00","alias":["2× Vaillant VWL 125/8.1 A","2× Vaillant VWL 125/8.1 A (Kaskade)","2x Vaillant VWL 125/8.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":12},"kaskade":true},{"geraet":"2x:5077","heizsystem":"fbh","wert":4.87,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl125-81-B-fbh/response.json","abrufdatum":"2026-10-26T12:56:14.589132+00:00","alias":["2× Vaillant VWL 125/8.1 A","2× Vaillant VWL 125/8.1 A (Kaskade)","2x Vaillant VWL 125/8.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":12},"kaskade":true},{"geraet":"2x:5083","heizsystem":"heizkoerper","wert":3.86,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl75-71-A-hk/response.json","abrufdatum":"2026-10-26T12:56:39.168445+00:00","alias":["2× Vaillant VWL 75/7.1 A","2× Vaillant VWL 75/7.1 A (Kaskade)","2x Vaillant VWL 75/7.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":7},"kaskade":true},{"geraet":"2x:5083","heizsystem":"fbh","wert":4.47,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl75-71-B-fbh/response.json","abrufdatum":"2026-10-26T12:56:53.485421+00:00","alias":["2× Vaillant VWL 75/7.1 A","2× Vaillant VWL 75/7.1 A (Kaskade)","2x Vaillant VWL 75/7.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":7},"kaskade":true},{"geraet":"2x:5085","heizsystem":"heizkoerper","wert":3.95,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl115-71-A-hk/response.json","abrufdatum":"2026-10-26T12:56:58.061418+00:00","alias":["2× Vaillant VWL 115/7.1 A","2× Vaillant VWL 115/7.1 A (Kaskade)","2x Vaillant VWL 115/7.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":11},"kaskade":true},{"geraet":"2x:5085","heizsystem":"fbh","wert":4.57,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl115-71-B-fbh/response.json","abrufdatum":"2026-10-26T12:57:12.583875+00:00","alias":["2× Vaillant VWL 115/7.1 A","2× Vaillant VWL 115/7.1 A (Kaskade)","2x Vaillant VWL 115/7.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":11},"kaskade":true},{"geraet":"3x:5085","heizsystem":"heizkoerper","wert":3.95,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl115-71-A-hk/response.json","abrufdatum":"2026-10-26T12:56:58.061418+00:00","alias":["3× Vaillant VWL 115/7.1 A","3× Vaillant VWL 115/7.1 A (Kaskade)","3x Vaillant VWL 115/7.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":11},"kaskade":true},{"geraet":"3x:5085","heizsystem":"fbh","wert":4.57,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl115-71-B-fbh/response.json","abrufdatum":"2026-10-26T12:57:12.583875+00:00","alias":["3× Vaillant VWL 115/7.1 A","3× Vaillant VWL 115/7.1 A (Kaskade)","3x Vaillant VWL 115/7.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":11},"kaskade":true},{"geraet":"4x:5085","heizsystem":"heizkoerper","wert":3.95,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl115-71-A-hk/response.json","abrufdatum":"2026-10-26T12:56:58.061418+00:00","alias":["4× Vaillant VWL 115/7.1 A","4× Vaillant VWL 115/7.1 A (Kaskade)","4x Vaillant VWL 115/7.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":55,"ruecklauf":45,"warmwasserAnteil":18,"speicher":50,"gesamtlast":11},"kaskade":true},{"geraet":"4x:5085","heizsystem":"fbh","wert":4.57,"quelle":"BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/vwl115-71-B-fbh/response.json","abrufdatum":"2026-10-26T12:57:12.583875+00:00","alias":["4× Vaillant VWL 115/7.1 A","4× Vaillant VWL 115/7.1 A (Kaskade)","4x Vaillant VWL 115/7.1 A"],"randbedingungen":{"standort":"Hannover, PLZ 30159","norm":"VDI 4650 Blatt 1: 2024-02","vorlauf":35,"ruecklauf":28,"warmwasserAnteil":18,"speicher":50,"gesamtlast":11},"kaskade":true}]
+KV_JAZ_JSON, true, 512, JSON_THROW_ON_ERROR); }
+// END KV_JAZ_PHP_GENERATED
+function hw_kv_jaz_aus_zeilen(array $rows): array
+{
+    if (($rows[0]??null)!==['Gerät','Heizsystem','Wert','Quelle','Abrufdatum','Randbedingungen','Aliase','Kaskade']) throw new RuntimeException('KV_JAZ: Tabellenkopf ungültig.');
+    $result=[];
+    foreach(array_slice($rows,1) as $r) {if(empty($r[0]))continue;
+        $bed=json_decode($r[5]??'',true,512,JSON_THROW_ON_ERROR);$ali=json_decode($r[6]??'[]',true,512,JSON_THROW_ON_ERROR);
+        $wert=(float)str_replace(',','.',(string)($r[2]??''));
+        if(!in_array($r[1],['fbh','heizkoerper'],true)||$wert<=0||empty($r[3])||empty($r[4])||!$bed||!is_array($ali))throw new RuntimeException('KV_JAZ: Zeile ungültig.');
+        $result[]=['geraet'=>(string)$r[0],'heizsystem'=>$r[1],'wert'=>$wert,'quelle'=>$r[3],'abrufdatum'=>$r[4],'randbedingungen'=>$bed,'alias'=>$ali,'kaskade'=>in_array($r[7]??false,[true,'J'],true)];
+    }return $result;
+}
+function hw_kv_jaz_auswahl(array $i,array $tabelle): array
+{
+    if(!$tabelle)throw new RuntimeException('Arbeitszahltabelle KV_JAZ fehlt oder ist leer.');
+    $seen=[];
+    foreach($tabelle as $row){$key=$row['geraet'].':'.$row['heizsystem'];$b=$row['randbedingungen']??[];
+        if(isset($seen[$key])||empty($b['standort'])||empty($b['norm'])||!is_numeric($b['gesamtlast']??null)||$b['gesamtlast']<=0||!is_numeric($b['vorlauf']??null)||!is_numeric($b['ruecklauf']??null)||!is_numeric($b['warmwasserAnteil']??null)||!is_numeric($b['speicher']??null)||!is_numeric($row['wert']??null)||!is_finite((float)$row['wert'])||$row['wert']<=0||empty($row['quelle'])||empty($row['abrufdatum']))throw new RuntimeException('Ungültige oder doppelte Zeile in KV_JAZ.');$seen[$key]=true;
+    }
+    if(!$i['geraet'])foreach(hw_kv_jaz_seed()as$row){if(!$row['kaskade']&&$row['heizsystem']===$i['heizsystem']&&!isset($seen[$row['geraet'].':'.$row['heizsystem']]))throw new RuntimeException('KV_JAZ ist für das Portfolio-Minimum unvollständig.');}
+    $aus=array_values(array_filter($tabelle,static fn($r)=>$r['heizsystem']===$i['heizsystem']&&(!$i['geraet']||(string)$r['geraet']===$i['geraet']||in_array($i['geraet'],$r['alias']??[],true))));
+    if(!$aus)throw new RuntimeException('Für das Gerät und Heizsystem fehlt eine belegte Arbeitszahl. Berechnung gesperrt.');
+    $r=$aus[0];foreach($aus as $x){if(!is_numeric($x['wert'])||$x['wert']<=0||!$x['quelle']||!$x['abrufdatum'])throw new RuntimeException('Ungültige Zeile in KV_JAZ.');if($x['wert']<$r['wert'])$r=$x;}
+    if($i['geraet']&&count($aus)!==1)throw new RuntimeException('Gerätezuordnung in KV_JAZ ist nicht eindeutig.');
+    return ['wert'=>(float)$r['wert'],'geraet'=>$r['geraet'],'heizsystem'=>$i['heizsystem'],'quelle'=>$r['quelle'],'abrufdatum'=>$r['abrufdatum'],'randbedingungen'=>$r['randbedingungen'],'annahme'=>!$i['geraet']?'Portfolio-Minimum; Gerät noch nicht gewählt.':(!empty($r['kaskade'])?'Kaskade: Arbeitszahl des Einzelgeräts als Annahme.':null),'heizsystemAnnahme'=>$i['heizsystemAnnahme']];
+}
+function hw_kv_nutzen_eingaben(array $raw): array
+{
+    $i=array_replace(hw_kv_defaults(),$raw);
+    $zahl=static function($name,$min,$max,$leer)use(&$i){$v=$i[$name]??null;if($v===null||$v===''){if($leer)return null;throw new RuntimeException('Bitte '.$name.' angeben.');}$v=is_string($v)?str_replace(',','.',$v):$v;if(!is_numeric($v)||!is_finite((float)$v)||$v<$min||$v>$max)throw new RuntimeException('Ungültiger Wert für '.$name.'.');return 0+$v;};
+    foreach(['pvTog','wpZaehler','netzentgeltTog','warmwasserBisherZentral','warmwasserKuenftigZentral']as$k)$i[$k]=hw_kv_bool($i[$k],false);
+    $i['heizsystemAnnahme']=empty($raw['heizsystem']);$i['heizsystem']=(string)($i['heizsystem']?:'heizkoerper');
+    if($i['heizsystem']==='gemischt')$i['heizsystem']='heizkoerper';if(in_array($i['heizsystem'],['fussboden','fussbodenheizung'],true))$i['heizsystem']='fbh';
+    if(!in_array($i['heizsystem'],['fbh','heizkoerper'],true))throw new RuntimeException('Ungültiges Heizsystem.');
+    if(!in_array($i['heizart'],['gas','oel'],true)||!in_array($i['vglBrennstoff'],['gas','oel'],true))throw new RuntimeException('Kostenvergleich nur für Gas und Öl.');
+    $i['geraet']=trim((string)$i['geraet']);$i['modul14a']=(string)($i['modul14a']?:'modul1');
+    if(!in_array($i['modul14a'],['modul1','modul2','kein'],true))throw new RuntimeException('Ungültiges Modul nach Paragraf 14a.');
+    $i['pvAnteil']=$zahl('pvAnteil',0,100,false);$i['pvKosten']=$zahl('pvKosten',0,1000,false);$i['grundpreisGas']=$zahl('grundpreisGas',0,100000,false);
+    $i['foerderBetragExtern']=$zahl('foerderBetragExtern',0,$i['invWP'],true);$i['wpArbeitspreis']=$zahl('wpArbeitspreis',0,1000,!$i['wpZaehler']);$i['wpGrundpreis']=$zahl('wpGrundpreis',0,100000,!$i['wpZaehler']);
+    if($i['modul14a']==='modul2'&&!$i['wpZaehler'])throw new RuntimeException('Modul 2 erfordert einen eigenen Wärmepumpenzähler und dessen Tarif.');
+    $i['startJahr']=$zahl('startJahr',1900,2200,true);if($i['startJahr']!==null&&floor($i['startJahr'])!=$i['startJahr'])throw new RuntimeException('Startjahr muss ganzzahlig sein.');
+    $i['personen']=$zahl('personen',0,1000,true);if(!$i['warmwasserBisherZentral']&&$i['warmwasserKuenftigZentral']&&!($i['personen']>0))throw new RuntimeException('Bitte die Personenzahl für den Warmwasserwechsel angeben.');
+    if(!($i['bedarf']>0)||!($i['eta']>0&&$i['eta']<=100)||!($i['laufzeit']>=1&&$i['laufzeit']<=100&&$i['laufzeit']==floor($i['laufzeit'])))throw new RuntimeException('Verbrauch, Nutzungsgrad oder Laufzeit ungültig.');
+    return $i;
+}
+function hw_kv_netzentgelt_pruefen(array $n,bool $an): void
+{
+    if(!$an)return;
+    if(!is_array($n['jahreswerte']??null)||!$n['jahreswerte'])throw new RuntimeException('Netzentgeltpfad eingeschaltet, aber keine belegte Jahresreihe hinterlegt. Bitte ausschalten.');
+    if(!is_numeric($n['basisjahr'])||floor($n['basisjahr'])!=$n['basisjahr']||$n['einheit']!=='ct/kWh Aufschlag gegenüber heute'||!$n['quelle']||!$n['abrufdatum'])throw new RuntimeException('Netzentgeltpfad: Basisjahr, Einheit, Quelle oder Abrufdatum fehlen.');
+    $gesehen=[];$basis=false;foreach($n['jahreswerte']as$r){if(!is_int($r['jahr'])||!is_numeric($r['wert'])||!is_finite((float)$r['wert'])||$r['wert']<0||isset($gesehen[$r['jahr']]))throw new RuntimeException('Netzentgeltpfad enthält ungültige oder doppelte Jahreswerte.');$gesehen[$r['jahr']]=true;if($r['jahr']==$n['basisjahr']&&$r['wert']==0)$basis=true;}
+    if(!$basis)throw new RuntimeException('Netzentgeltpfad muss im Basisjahr mit Aufschlag 0 beginnen.');
+}
+function hw_kv_nutzen_parameter(array $kv): array
+{
+    $n=static function($k,$d)use($kv){$v=$kv[$k]??null;if($v===null||$v==='')return$d;$v=str_replace(',','.',(string)$v);if(!is_numeric($v))throw new RuntimeException('Ungültiger Parameter '.$k);return 0+$v;};
+    $st=[];$vorhanden=false;for($j=1;$j<=4;$j++){if(array_key_exists('bio_stufe_'.$j.'_jahr',$kv)||array_key_exists('bio_stufe_'.$j.'_anteil',$kv)){$vorhanden=true;$st[]=['y'=>$n('bio_stufe_'.$j.'_jahr',NAN),'p'=>$n('bio_stufe_'.$j.'_anteil',NAN)];}}
+    $b=hw_kv_bio_stand($vorhanden?$st:[['y'=>2029,'p'=>.10],['y'=>2030,'p'=>.15],['y'=>2035,'p'=>.30],['y'=>2040,'p'=>.60]]);
+    $reihe=json_decode((string)($kv['netzentgelt_jahreswerte']??'[]'),true,512,JSON_THROW_ON_ERROR);
+    return ['bioStufen'=>$b['stufen'],'bioHinweis'=>$b['hinweis'],'wartungWp'=>$n('wartung_fossil',250),'wartungFossil'=>$n('wartung_fossil',250),'grundpreisGas'=>$n('grundpreis_gas',250.38),'schornsteinfeger'=>$n('schornsteinfeger',39),'modul14aVorteil'=>$n('modul14a_vorteil',156.22),'pvAnteil'=>$n('pv_anteil',30),'pvKosten'=>$n('pv_kosten',7),'wwKwhProPerson'=>$n('ww_abzug_kwh_pro_person_jahr',700),'co2ZielJahr'=>$n('co2_ziel_jahr',2045),'netzentgelt'=>['basisjahr'=>$n('netzentgelt_basisjahr',null),'einheit'=>(string)($kv['netzentgelt_einheit']??'ct/kWh Aufschlag gegenüber heute'),'jahreswerte'=>$reihe,'quelle'=>(string)($kv['netzentgelt_quelle']??''),'abrufdatum'=>(string)($kv['netzentgelt_abrufdatum']??'')]];
+}
+function hw_kv_jahreskosten(int $j,string $fuel,array $i,array $p,array $s,float $fossilDelta,float $stromDelta): array
+{
+    $cY=$s['startY']+$j-1;$neu=(bool)$i['neuFossilTog'];$bio=$neu&&(bool)$i['bioTog'];$bA=$bio?hw_kv_bio_anteil($cY,$p):0;
+    $preis=$fuel==='gas'?$i['gaspreis']:$i['oelpreis'];$stg=($fuel==='gas'?$i['gasStg']:$i['oelStg'])/100;
+    $vb=$neu?$s['nutzwaerme']/$p['etaNeu'][$fuel]:$i['bedarf'];$bp=$preis*pow(1+$stg+$fossilDelta,$j-1);$ep=$bp*(1+$bA*(($bio?$i['bioAufpreis']:1)-1));
+    $fossilK=$vb*$ep/100;$co2Preis=$s['zielSchritte']<=0||$j-1>=$s['zielSchritte']?$i['co2Pfad']:$i['co2preis']+($i['co2Pfad']-$i['co2preis'])*($j-1)/$s['zielSchritte'];
+    $co2Basis=$vb*$p['co2f'][$fuel]/1000*($co2Preis-$i['co2preis']);$co2St=$co2Basis*(1-$bA);$grundpreisGas=$fuel==='gas'&&$i['heizart']==='gas'?$i['grundpreisGas']:0;$netzentgelt=0;
+    if($i['netzentgeltTog']&&$fuel==='gas'){$treffer=array_values(array_filter($p['netzentgelt']['jahreswerte'],static fn($r)=>$r['jahr']===$cY));if(count($treffer)!==1)throw new RuntimeException('Netzentgeltpfad: Jahreswert für '.$cY.' fehlt.');$netzentgelt=$vb*$treffer[0]['wert']/100;}
+    $wwStromK=($neu?0:$s['wwZuschlag'])*$i['strompreis']*pow(1+$i['stromEntw']/100+$stromDelta,$j-1)/100;
+    $fossilW=$p['wartungFossil'];$fossilG=$fossilK+$co2St+$fossilW+$grundpreisGas+$p['schornsteinfeger']+$netzentgelt+$wwStromK;
+    $stromPJ=($i['wpZaehler']?$i['wpArbeitspreis']:$i['strompreis'])*pow(1+$i['stromEntw']/100+$stromDelta,$j-1);
+    $pvAnteil=$i['pvTog']?$i['pvAnteil']/100:0;$pvStrom=$s['wpStrom']*$pvAnteil;$netzStrom=$s['wpStrom']-$pvStrom;
+    $wpStromK=$s['wpStrom']*$stromPJ/100;$pvKosten=$pvStrom*$i['pvKosten']/100;$pvSav=$pvStrom*$stromPJ/100-$pvKosten;
+    $dynSav=$i['dynTarifTog']?$netzStrom*$i['dynAnteil']/100*$i['dynSpread']/100:0;$wpGrundpreis=$i['wpZaehler']?$i['wpGrundpreis']:0;
+    $modul14a=!$i['wpZaehler']&&$i['modul14a']==='modul1'?$p['modul14aVorteil']:0;$wpW=$p['wartungFossil'];$wpGes=$wpStromK+$wpW-$pvSav-$dynSav+$wpGrundpreis-$modul14a;
+    return ['j'=>$j,'cY'=>$cY,'fossilBP'=>$bp,'fossilEP'=>$ep,'bioP'=>$bA*100,'fossilK'=>$fossilK,'co2St'=>$co2St,'fossilW'=>$fossilW,'fossilG'=>$fossilG,'wpStromK'=>$wpStromK,'pvSav'=>$pvSav,'dynSav'=>$dynSav,'wpW'=>$wpW,'wpGes'=>$wpGes,'grundpreisGas'=>$grundpreisGas,'schornsteinfeger'=>$p['schornsteinfeger'],'netzentgelt'=>$netzentgelt,'wwStromK'=>$wwStromK,'wpGrundpreis'=>$wpGrundpreis,'modul14a'=>$modul14a,'pvStrom'=>$pvStrom,'pvKosten'=>$pvKosten,'netzStrom'=>$netzStrom,'netzStromK'=>$netzStrom*$stromPJ/100,'bioAufschlag'=>$fossilK-$vb*$bp/100,'bioCo2Entlastung'=>$co2Basis-$co2St,'bioNetto'=>$fossilK-$vb*$bp/100+$co2St-$co2Basis,'co2Preis'=>$co2Preis];
+}
+
 function hw_kv_defaults(): array
 {
     return [
@@ -630,7 +722,9 @@ function hw_kv_defaults(): array
         'fEinkSlider' => 60000, 'fKind' => false, 'proklimaTog' => false,
         'fEffizienz' => false, 'finanzTog' => false, 'kredLZ' => 10, 'kredZins' => 0.98,
         'immoTog' => false, 'hausW' => 350000, 'immoP' => 7,
-        'dynTarifTog' => false, 'dynAnteil' => 40, 'dynSpread' => 10, 'modus' => 'kunde',
+        'dynTarifTog' => false, 'dynAnteil' => 40, 'dynSpread' => 10,
+        'heizsystem'=>null,'geraet'=>'','startJahr'=>null,'pvTog'=>false,'pvAnteil'=>30,'pvKosten'=>7,'foerderBetragExtern'=>null,'grundpreisGas'=>250.38,'wpZaehler'=>false,'wpArbeitspreis'=>null,'wpGrundpreis'=>null,'netzentgeltTog'=>false,'modul14a'=>'modul1','warmwasserBisherZentral'=>true,'warmwasserKuenftigZentral'=>true,'personen'=>null,
+        'modus' => 'kunde',
     ];
 }
 
@@ -734,7 +828,7 @@ function hw_kv_get_params(array $sheets): array
     ];
     $schaetzung['einheitFaktor'] = hw_kv_num($kv['wz_unit_faktor'] ?? null, 10);
 
-    return [
+    $p = [
         'perioden' => $perioden,
         'periodenReihenfolge' => $reihenfolge,
         'grundPctEu' => hw_kv_num($kv['grund_pct_eu'] ?? null, 30),
@@ -747,11 +841,7 @@ function hw_kv_get_params(array $sheets): array
             'gas' => hw_kv_num($kv['co2f_gas'] ?? null, 0.182),
             'oel' => hw_kv_num($kv['co2f_oel'] ?? null, 0.266),
         ],
-        'bioStufen' => [
-            ['y' => hw_kv_num($kv['bio_stufe_1_jahr'] ?? null, 2029), 'p' => hw_kv_num($kv['bio_stufe_1_anteil'] ?? null, 0.15)],
-            ['y' => hw_kv_num($kv['bio_stufe_2_jahr'] ?? null, 2035), 'p' => hw_kv_num($kv['bio_stufe_2_anteil'] ?? null, 0.30)],
-            ['y' => hw_kv_num($kv['bio_stufe_3_jahr'] ?? null, 2040), 'p' => hw_kv_num($kv['bio_stufe_3_anteil'] ?? null, 0.60)],
-        ],
+        'bioStufen' => hw_kv_nutzen_parameter([])['bioStufen'],
         'etaNeu' => [
             'gas' => hw_kv_num($kv['eta_neu_gas'] ?? null, 0.95),
             'oel' => hw_kv_num($kv['eta_neu_oel'] ?? null, 0.93),
@@ -783,6 +873,22 @@ function hw_kv_get_params(array $sheets): array
         'co2BaumKg' => hw_kv_num($kv['co2_baum_kg'] ?? null, 12.5),
         'schaetzung' => $schaetzung,
     ];
+    $p['nutzenRoh']=$kv;
+    return $p;
+}
+
+// Ausschließlich Kostenvergleich und Bootstrap: Förderung bleibt von Kostentabellen unabhängig.
+function hw_kv_kostenparameter(array $sheets): array
+{
+    $p=hw_kv_get_params($sheets);
+    $kv=$p['nutzenRoh'];
+    $p=array_replace($p,hw_kv_nutzen_parameter($kv));
+    $p['jazLive']=($kv['jaz_tabellenstand']??'')==='2026-10-26';
+    if(array_key_exists('KV_JAZ',$sheets)){$p['jazTabelle']=hw_kv_jaz_aus_zeilen($sheets['KV_JAZ']);$p['jazTabellenstand']='KV_JAZ';}
+    else {$p['jazTabellenstand']='Gebündelter Tabellenstand 26.10.2026';}
+    $dim=isset($sheets['Dimensionierung'])?hw_read_kv($sheets,'Dimensionierung'):[];
+    if(isset($dim['ww_abzug_kwh_pro_person_jahr']))$p['wwKwhProPerson']=hw_kv_num($dim['ww_abzug_kwh_pro_person_jahr'],700);
+    return $p;
 }
 
 function hw_grenze_interp(float|int $a11, float|int $a10, float|int $nat): float|int
@@ -1983,7 +2089,7 @@ function hw_kv_map_request(array $query, array $params): array
     $periodenKeys = array_keys($params['perioden']);
     $periodeReq = trim(hw_query_string($query, 'fHalbjahr'));
     $periodeValid = in_array($periodeReq, $periodenKeys, true);
-    return [
+    $mapped = [
         '_periodeAutomatik' => !$periodeValid,
         'modus' => hw_kv_enum($query['modus'] ?? null, ['kunde', 'berater'], $defaults['modus']),
         'heizart' => hw_kv_enum($query['heizart'] ?? null, ['gas', 'oel'], $defaults['heizart']),
@@ -2025,6 +2131,12 @@ function hw_kv_map_request(array $query, array $params): array
         'dynAnteil' => hw_kv_num($query['dynAnteil'] ?? null, $defaults['dynAnteil']),
         'dynSpread' => hw_kv_num($query['dynSpread'] ?? null, $defaults['dynSpread']),
     ];
+    foreach(['heizsystem','geraet','pvTog','pvAnteil','pvKosten','foerderBetragExtern','grundpreisGas','wpZaehler','wpArbeitspreis','wpGrundpreis','netzentgeltTog','modul14a','warmwasserBisherZentral','warmwasserKuenftigZentral','personen'] as $k) {
+        if(array_key_exists($k,$query))$mapped[$k]=$query[$k];
+    }
+    $mapped['grundpreisGas']=$query['grundpreisGas']??$params['grundpreisGas'];$mapped['pvAnteil']=$query['pvAnteil']??$params['pvAnteil'];$mapped['pvKosten']=$query['pvKosten']??$params['pvKosten'];
+    $mapped['startJahr']=isset($query['startJahr'])&&$query['startJahr']!==''?$query['startJahr']:(int)(new DateTimeImmutable('now',new DateTimeZone('Europe/Berlin')))->format('Y');
+    return $mapped;
 }
 
 function hw_kv_schaetze_bedarf(string $geb, string $bj, string $san, float|int $flaeche, array $params): ?float
@@ -2098,7 +2210,7 @@ function hw_kv_foerder(array $inputs, array $params): array
 /** @return array<string,mixed> */
 function hw_kv_bootstrap(array $sheets): array
 {
-    $params = hw_kv_get_params($sheets);
+    $params = hw_kv_kostenparameter($sheets);
     // Nur Zeitraeume, die noch beantragbar sind: ein abgelaufener Zeitraum in der Auswahl waere
     // ein Versprechen auf eine Foerderung, die es nicht mehr gibt (Klemmung nach unten auf heute).
     $perioden = [];
@@ -2108,10 +2220,13 @@ function hw_kv_bootstrap(array $sheets): array
     $defaults = hw_kv_defaults();
     unset($defaults['proklimaTog'], $defaults['fEffizienz'], $defaults['modus']);
     $defaults['kredZins'] = $params['kredZins358Eff'];
+    $defaults['grundpreisGas']=$params['grundpreisGas'];$defaults['pvAnteil']=$params['pvAnteil'];$defaults['pvKosten']=$params['pvKosten'];$defaults['startJahr']=(int)(new DateTimeImmutable('now',new DateTimeZone('Europe/Berlin')))->format('Y');
     $eta = hw_eta_matrix();
     unset($eta['textEigen']);
     return [
         'service' => 'kv_bootstrap',
+        'jaz'=>['quelle'=>'BWP-JAZ-Rechner nach VDI 4650 Blatt 1:2024-02','heizsysteme'=>['heizkoerper','fbh']],
+        'bioHinweis'=>$params['bioHinweis']??null,'netzentgeltBereit'=>!empty($params['netzentgelt']['jahreswerte']),
         'perioden' => $perioden,
         'defaults' => $defaults,
         'kredit' => [
@@ -2160,13 +2275,18 @@ function hw_fv_plaetze(array $sheets): array
 /** @return array<string,mixed> */
 function hw_kv_calculate(array $inputs, array $params): array
 {
+    $params=array_replace(hw_kv_nutzen_parameter([]),$params);
+    if(!empty($params['jazLive'])&&!array_key_exists('jazTabelle',$params))throw new RuntimeException('KV_JAZ wurde als veröffentlicht markiert, fehlt aber.');
+    $bioStand=hw_kv_bio_stand($params['bioStufen']);$params['bioStufen']=$bioStand['stufen'];
+    $inputs=hw_kv_nutzen_eingaben($inputs);$jazInfo=hw_kv_jaz_auswahl($inputs,$params['jazTabelle']??hw_kv_jaz_seed());$inputs['jaz']=$jazInfo['wert'];
+    hw_kv_netzentgelt_pruefen($params['netzentgelt'],$inputs['netzentgeltTog']);
     $heizart = $inputs['heizart'];
     $bedarf = $inputs['bedarf'];
     $eta = $inputs['eta'] / 100;
     $investWp = $inputs['invWP'];
     $jaz = $inputs['jaz'];
     $laufzeit = $inputs['laufzeit'];
-    $bioOn = (bool) $inputs['bioTog'];
+    $bioOn = (bool) $inputs['bioTog'] && (bool) $inputs['neuFossilTog'];
     $bioFak = $bioOn ? $inputs['bioAufpreis'] : 1;
     $dynTarifOn = (bool) $inputs['dynTarifTog'];
     $dynAnteil = $dynTarifOn ? $inputs['dynAnteil'] : 0;
@@ -2205,15 +2325,20 @@ function hw_kv_calculate(array $inputs, array $params): array
     if ($pkWp > 0) {
         $totalFoerd = max($fBetrag, min($totalFoerd, $kumCap));
     }
+    $extern=$inputs['foerderBetragExtern']!==null;
+    if($extern){$totalFoerd=$inputs['foerderBetragExtern'];$fBetrag=$totalFoerd;$pkWp=0;}
     $nettoInvest = max(0, $investWp - $totalFoerd);
     $fossilInvest = $vglFuel === 'gas' ? $gasInvest : $oelInvest;
     $mehrInvest = $nettoInvest - $fossilInvest;
-    $wpStrom = $bedarf * $eta / $jaz;
-    $fossilVerbrauch = $neuFossilOn ? $bedarf * $eta / $params['etaNeu'][$vglFuel] : $bedarf;
+    $wwZuschlag=!$inputs['warmwasserBisherZentral']&&$inputs['warmwasserKuenftigZentral']?$inputs['personen']*$params['wwKwhProPerson']:0;
+    $nutzwaerme=$bedarf*$eta+$wwZuschlag;
+    $wpStrom = $nutzwaerme / $jaz;
+    $fossilVerbrauch = $neuFossilOn ? $nutzwaerme / $params['etaNeu'][$vglFuel] : $bedarf;
     $co2Fac = $params['co2f'][$vglFuel];
     $co2Tpj = $fossilVerbrauch * $co2Fac / 1000;
-    $startY = $params['startY'];
-    $zielSchritte = $params['co2ZielSchritte'];
+    $startY = $inputs['startJahr']??$params['startY'];
+    $zielSchritte = max(0,$params['co2ZielJahr']-$startY);
+    $rechenSystem=['startY'=>$startY,'zielSchritte'=>$zielSchritte,'nutzwaerme'=>$nutzwaerme,'wpStrom'=>$wpStrom,'wwZuschlag'=>$wwZuschlag];
     $co2Pj = static fn (float|int $step): float|int => $step >= $zielSchritte
         ? $co2Ziel
         : $co2P0 + ($co2Ziel - $co2P0) * $step / $zielSchritte;
@@ -2226,73 +2351,24 @@ function hw_kv_calculate(array $inputs, array $params): array
     $co2SavedMix = 0;
     $co2FossilSum = 0;
     for ($yearIndex = 1; $yearIndex <= $laufzeit; $yearIndex++) {
-        $calendarYear = $startY + $yearIndex - 1;
-        $fossilBp = $fossilP0 * pow(1 + $fossilStg, $yearIndex - 1);
-        $fossilEp = $fossilBp;
-        if ($bioOn) {
-            $bioShare = hw_kv_bio_anteil($calendarYear, $params);
-            $fossilEp = $fossilBp * (1 + $bioShare * ($bioFak - 1));
-        }
-        $fossilK = $fossilVerbrauch * $fossilEp / 100;
-        $bioShareYear = $bioOn ? hw_kv_bio_anteil($calendarYear, $params) : 0;
-        $co2St = $co2Tpj * (1 - $bioShareYear) * ($co2Pj($yearIndex - 1) - $co2P0);
-        $fossilW = $params['wartungFossil'];
-        $fossilG = $fossilK + $co2St + $fossilW;
-        $cumFossil += $fossilG;
-        $co2FossilSum += $co2Tpj * (1 - $bioShareYear);
-        $co2SavedMix += $co2Tpj * (1 - $bioShareYear) - $wpStrom * hw_kv_mix_g($calendarYear, $params) / 1e6;
-        $stromPj = $stromP0 * pow(1 + $stromE, $yearIndex - 1);
-        $wpStromK = $wpStrom * $stromPj / 100;
-        $wpW = $params['wartungWp'];
-        $dynSav = $dynTarifOn ? $wpStrom * ($dynAnteil / 100) * ($dynSpread / 100) : 0;
-        $wpGes = $wpStromK + $wpW - $dynSav;
-        $cumWpKosten += $wpGes;
-        $yearSaving = $fossilG - $wpGes;
-        $cumSav += $yearSaving;
-        $mehrK = $fossilG - $wpGes;
-        $cumMehr += $mehrK;
-        $data[] = [
-            'j' => $yearIndex, 'cY' => $calendarYear,
-            'fossilBP' => $fossilBp, 'fossilEP' => $fossilEp,
-            'bioP' => $bioOn ? hw_kv_bio_anteil($calendarYear, $params) * 100 : 0,
-            'fossilK' => $fossilK, 'co2St' => $co2St, 'fossilW' => $fossilW, 'fossilG' => $fossilG,
-            'wpStromK' => $wpStromK, 'pvSav' => 0, 'dynSav' => $dynSav, 'wpW' => $wpW, 'wpGes' => $wpGes,
-            'mehrK' => $mehrK, 'cumMehr' => $cumMehr, 'jSav' => $yearSaving, 'cumSav' => $cumSav,
-            'cumFossil' => $cumFossil, 'cumWPKosten' => $cumWpKosten,
-        ];
+        $d=hw_kv_jahreskosten($yearIndex,$vglFuel,$inputs,$params,$rechenSystem,0,0);
+        $cumSav+=$d['fossilG']-$d['wpGes'];$cumFossil+=$d['fossilG'];$cumWpKosten+=$d['wpGes'];$cumMehr=$cumSav;
+        $co2FossilSum+=$co2Tpj*(1-$d['bioP']/100);$co2SavedMix+=$co2Tpj*(1-$d['bioP']/100)-$wpStrom*hw_kv_mix_g($d['cY'],$params)/1e6;
+        $d['jSav']=$d['fossilG']-$d['wpGes'];$d['mehrK']=$d['jSav'];$d['cumSav']=$cumSav;$d['cumMehr']=$cumMehr;$d['cumFossil']=$cumFossil;$d['cumWPKosten']=$cumWpKosten;
+        $data[]=$d;
     }
     $last = $data[count($data) - 1];
     $investDelta = $neuFossilOn ? $mehrInvest : $nettoInvest;
-    $breakEven = null;
+    $breakEven = $investDelta<=0?0:null;
     foreach ($data as $row) {
-        if ($row['cumSav'] >= max(0, $investDelta)) {
+        if ($breakEven===null && $row['cumSav'] >= $investDelta) {
             $breakEven = $row['j'];
             break;
         }
     }
-    $breakEvenSofort = $neuFossilOn && $investDelta <= 0;
+    $breakEvenSofort = $investDelta <= 0;
 
-    $fossilOpSum = static function (string $fuel) use (
-        $neuFossilOn, $bedarf, $eta, $params, $gasP0, $oelP0, $gasStgV, $oelStgV,
-        $bioOn, $bioFak, $co2Pj, $co2P0, $startY, $laufzeit
-    ): float|int {
-        $verbrauch = $neuFossilOn ? $bedarf * $eta / $params['etaNeu'][$fuel] : $bedarf;
-        $price = $fuel === 'gas' ? $gasP0 : $oelP0;
-        $steigerung = $fuel === 'gas' ? $gasStgV : $oelStgV;
-        $co2Factor = $params['co2f'][$fuel];
-        $co2PerYear = $verbrauch * $co2Factor / 1000;
-        $sum = 0;
-        for ($index = 1; $index <= $laufzeit; $index++) {
-            $year = $startY + $index - 1;
-            $basePrice = $price * pow(1 + $steigerung, $index - 1);
-            $bioShare = $bioOn ? hw_kv_bio_anteil($year, $params) : 0;
-            $effectivePrice = $basePrice * (1 + $bioShare * ($bioFak - 1));
-            $cost = $verbrauch * $effectivePrice / 100;
-            $co2 = $co2PerYear * (1 - $bioShare) * ($co2Pj($index - 1) - $co2P0);
-            $sum += $cost + $co2 + $params['wartungFossil'];
-        }
-        return $sum;
-    };
+    $fossilOpSum=static function(string $fuel)use($laufzeit,$vglFuel,$inputs,$params,$rechenSystem){$sum=0;for($j=1;$j<=$laufzeit;$j++)$sum+=hw_kv_jahreskosten($j,$fuel,$inputs,$params,$rechenSystem,0,0)['fossilG'];return $sum;};
     $opGas = $fossilOpSum('gas');
     $opOel = $fossilOpSum('oel');
     $opWp = $last['cumWPKosten'];
@@ -2329,27 +2405,7 @@ function hw_kv_calculate(array $inputs, array $params): array
     $fluege = hw_js_round($co2Total / $params['co2FlugT']);
     $baeume = hw_js_round($co2Total * 1000 / $params['co2BaumKg']);
 
-    $runScenario = static function (float|int $gasDelta, float|int $stromDelta) use (
-        $laufzeit, $fossilP0, $fossilStg, $bioOn, $bioFak, $startY, $params,
-        $fossilVerbrauch, $co2Tpj, $co2Pj, $co2P0, $stromP0, $stromE,
-        $wpStrom, $dynTarifOn, $dynAnteil, $dynSpread, $investDelta
-    ): array {
-        $saving = 0;
-        for ($index = 1; $index <= $laufzeit; $index++) {
-            $fossilBase = $fossilP0 * pow(1 + $fossilStg + $gasDelta, $index - 1);
-            $bioShare = $bioOn ? hw_kv_bio_anteil($startY + $index - 1, $params) : 0;
-            $fossilEffective = $fossilBase * (1 + $bioShare * ($bioFak - 1));
-            $fossilCost = $fossilVerbrauch * $fossilEffective / 100;
-            $co2 = $co2Tpj * (1 - $bioShare) * ($co2Pj($index - 1) - $co2P0);
-            $fossilTotal = $fossilCost + $co2 + $params['wartungFossil'];
-            $strom = $stromP0 * pow(1 + $stromE + $stromDelta, $index - 1);
-            $wpStromCost = $wpStrom * $strom / 100;
-            $dynamicSaving = $dynTarifOn ? $wpStrom * ($dynAnteil / 100) * ($dynSpread / 100) : 0;
-            $wpTotal = $wpStromCost + $params['wartungWp'] - $dynamicSaving;
-            $saving += $fossilTotal - $wpTotal;
-        }
-        return ['wpNG' => $saving - $investDelta];
-    };
+    $runScenario=static function(float $gasDelta,float $stromDelta)use($laufzeit,$vglFuel,$inputs,$params,$rechenSystem,$investDelta){$sum=0;for($j=1;$j<=$laufzeit;$j++){$d=hw_kv_jahreskosten($j,$vglFuel,$inputs,$params,$rechenSystem,$gasDelta,$stromDelta);$sum+=$d['fossilG']-$d['wpGes'];}return ['wpNG'=>$sum-$investDelta];};
     $sBest = $runScenario($params['sensi']['best']['fossil'], $params['sensi']['best']['strom']);
     $sBase = $runScenario($params['sensi']['base']['fossil'], $params['sensi']['base']['strom']);
     $sWorst = $runScenario($params['sensi']['worst']['fossil'], $params['sensi']['worst']['strom']);
@@ -2366,7 +2422,7 @@ function hw_kv_calculate(array $inputs, array $params): array
             'betrag' => hw_js_round($basisStep * $step['q'] / 100),
         ];
     }
-    $anzeigeBetrag = hw_js_round($fBasis * $fInfo['q'] / 100);
+    $anzeigeBetrag = $extern?$totalFoerd:hw_js_round($fBasis * $fInfo['q'] / 100);
     $pkOn = (bool) $inputs['proklimaTog'];
     $liveZuschuss = $pkWp > 0
         ? max($anzeigeBetrag, min($anzeigeBetrag + $pkWp, hw_js_round($params['kumCapPct'] * $investWp)))
@@ -2380,6 +2436,7 @@ function hw_kv_calculate(array $inputs, array $params): array
         'service' => 'kostenvergleich',
         'inputsEcho' => $inputs,
         'foerder' => [
+            'extern'=>$extern,
             'periode' => $fInfo['periode'], 'label' => $fInfo['label'],
             'euDifferenzierung' => $fInfo['eu'],
             'grundPct' => $fInfo['grundPct'], 'grund' => $fInfo['g'],
@@ -2410,7 +2467,8 @@ function hw_kv_calculate(array $inputs, array $params): array
             'heizLabel' => $vglFuel === 'gas' ? 'Gas' : 'Öl',
             'heizLabelBestand' => $heizart === 'gas' ? 'Gas' : 'Öl',
             'wpStrom' => $wpStrom, 'fossilVerbrauch' => $fossilVerbrauch,
-            'nutzwaerme' => $bedarf * $eta, 'etaProzent' => $inputs['eta'],
+            'jazInfo'=>$jazInfo,'jazTabellenstand'=>$params['jazTabellenstand']??'Gebündelter Tabellenstand 26.10.2026','wwZuschlag'=>$wwZuschlag,'startJahr'=>$startY,
+            'nutzwaerme' => $nutzwaerme, 'etaProzent' => $inputs['eta'],
             'jaz' => $jaz, 'laufzeit' => $laufzeit,
             'neuFossilOn' => $neuFossilOn, 'bioOn' => $bioOn, 'bioFak' => $bioFak,
         ],
@@ -2448,7 +2506,7 @@ function hw_kv_calculate(array $inputs, array $params): array
         'immo' => ['aktiv' => $immoOn, 'hausWert' => $hausW, 'prozent' => $immoP * 100, 'wertzuwachs' => $immoWert],
         'dynTarif' => [
             'aktiv' => $dynTarifOn, 'anteil' => $dynAnteil, 'spread' => $dynSpread,
-            'ersparnisProJahr' => hw_js_round($wpStrom * ($dynAnteil / 100) * ($dynSpread / 100)),
+            'ersparnisProJahr' => hw_js_round($data[0]['dynSav']),
         ],
         'co2' => [
             'gesamt' => $co2Total, 'oeko' => $co2Oeko, 'proJahr' => $co2ProJahr,
@@ -2461,20 +2519,23 @@ function hw_kv_calculate(array $inputs, array $params): array
             'worstFossilStg' => ($fossilStg + $params['sensi']['worst']['fossil']) * 100,
             'worstStromStg' => ($stromE + $params['sensi']['worst']['strom']) * 100,
         ],
+        'posten'=>array_combine(['grundpreisGas','schornsteinfeger','netzentgelt','modul14a','wpGrundpreis','pvSav','bioAufschlag','bioCo2Entlastung','bioNetto','wwStromK'],array_map(static fn($k)=>array_sum(array_column($data,$k)),['grundpreisGas','schornsteinfeger','netzentgelt','modul14a','wpGrundpreis','pvSav','bioAufschlag','bioCo2Entlastung','bioNetto','wwStromK'])),
+        'quellen'=>['bio'=>'GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226','bioPreis'=>'BDEW Januar 2026; Preisannahme, kein Gesetz','bioHinweis'=>$params['bioHinweis']??$bioStand['hinweis'],'netzentgelt'=>$params['netzentgelt']['quelle'],'netzentgeltAbrufdatum'=>$params['netzentgelt']['abrufdatum'],'modul14a'=>'enercity Netz, Preisblatt 2026; außerhalb des Netzgebiets Annahme'],
         'annahmen' => [
             'bedarf' => $bedarf, 'fossilP0' => $fossilP0, 'fossilStgProzent' => $fossilStg * 100,
-            'stromP0' => $stromP0, 'stromEProzent' => $stromE * 100,
-            'co2P0' => $co2P0, 'co2Ziel' => $co2Ziel,
+            'stromP0' => $inputs['wpZaehler']?$inputs['wpArbeitspreis']:$stromP0, 'stromEProzent' => $stromE * 100,
+            'co2P0' => $co2P0, 'co2Ziel' => $co2Ziel, 'co2ZielJahr'=>$params['co2ZielJahr'],
             'etaNeuGas' => $params['etaNeu']['gas'] * 100,
             'etaNeuOel' => $params['etaNeu']['oel'] * 100,
-            'wartungWp' => $params['wartungWp'], 'wartungFossil' => $params['wartungFossil'],
+            'wartungWp' => $params['wartungFossil'], 'wartungFossil' => $params['wartungFossil'],
         ],
         'jahre' => $data,
         'charts' => [
             'labels' => array_map(static fn (array $row): string => hw_js_string($row['cY']), $data),
             'vermoegen' => array_map(static fn (array $row): int => hw_js_round($row['cumSav'] - $investDelta), $data),
             'nullLinie' => array_fill(0, count($data), 0),
-            'sparEnergieCo2' => array_map(static fn (array $row): float|int => $fossilVerbrauch * $row['fossilBP'] / 100 + $row['co2St'] - $row['wpStromK'], $data),
+            'sparEnergieCo2' => array_map(static fn (array $row): float|int => $fossilVerbrauch * $row['fossilBP'] / 100 + $row['co2St'] + $row['bioCo2Entlastung'] - $row['wpStromK'], $data),
+            'grundpreisGas'=>array_column($data,'grundpreisGas'),'schornsteinfeger'=>array_column($data,'schornsteinfeger'),'netzentgelt'=>array_column($data,'netzentgelt'),'modul14a'=>array_column($data,'modul14a'),'wpGrundpreis'=>array_map(static fn($d)=>-$d['wpGrundpreis'],$data),'pv'=>array_column($data,'pvSav'),'warmwasser'=>array_column($data,'wwStromK'),'bioNetto'=>array_column($data,'bioNetto'),
             'sparDyn' => array_map(static fn (array $row): float|int => $row['dynSav'], $data),
             'bioAufschlag' => array_map(static fn (array $row): float|int => $row['fossilK'] - $fossilVerbrauch * $row['fossilBP'] / 100, $data),
             'wartungDelta' => array_map(static fn (array $row): float|int => -($row['wpW'] - $row['fossilW']), $data),
@@ -2490,7 +2551,7 @@ function hw_kostenvergleich(array $query, array $sheets): array
 {
     $f = hw_read_kv($sheets, 'Förder_Parameter');
     $params = hw_foerder_params_mit_rueckfall(
-        hw_kv_get_params($sheets),
+        hw_kv_kostenparameter($sheets),
         $f,
         hw_foerder_rueckfall_logger()
     );
