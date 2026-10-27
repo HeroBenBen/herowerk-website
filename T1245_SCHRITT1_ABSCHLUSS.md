@@ -1412,3 +1412,1095 @@ Geändert in diesem Nachlauf, ausschließlich Website:
 - `T1245_SCHRITT1_ABSCHLUSS.md` (dieser Abschnitt)
 
 Keine Engine-, Konfigurator-, Workflow-, Erwartungs-, Fixture-, Paket-/Lock-, Produkt- oder HTML-Datei geändert. Kein `git add`, kein `git commit`, kein `git switch`, kein Push oder Pull Request. Die Steuerung kann nach unabhängiger Prüfung die Nachbesserung einbuchen und den Linux-Workflow erneut starten. Die lokalen Umgebungsblocker sind offen ausgewiesen; es wird keine vollständig grüne CI behauptet.
+
+## Nachbesserung Browsertests
+
+### Ergebnis und Grenze der lokalen Abnahme
+
+**Anpassung 8 vom 27.10.2026 umgesetzt; Browser-Abnahme offen.** Ausgangspunkt: Website-Zweig `codex/t1245-kern-nutzen`, Kopf `3b3a988`, vor diesem Nachlauf sauber. Keine Einbuchung. Die beiden Testdateien und dieser Bericht sind die einzigen Änderungen.
+
+`npm run lint`, `npx tsc --noEmit`, `npm run verify:tafel` und `npm run verify:kv-nutzen` sind grün. Die vollständigen Smoke-Läufe wurden ohne Filter auf einzelne Dateien sowohl mit Chromium als auch mit WebKit ausgeführt. Der lokale Server darf in dieser Sandbox keinen Port binden; Chromium scheitert an der MachPort-Berechtigung, WebKit startet nicht erfolgreich. Deshalb wird keine grüne Browser-Abnahme behauptet. Die Steuerung muss die beiden vollständigen Browserläufe außerhalb dieser Sandbox nachmessen.
+
+Die Archivkopien der zwei Testdateien und des bisherigen Berichts liegen unter `/private/tmp/t1245-browser8/`. Der vollständige Testdiff liegt dort als `testzeilen-alt-neu.diff`; die benannten Ersetzungen je Modell als `jaz-alt-neu.json`. Keine gemeinsam genutzte Vault-Datei geändert. Cockpit T1245 steht bereits auf `in_arbeit` unter der beauftragenden Sitzung „Konfigurator und Angebot 541“; dessen Fortführung bleibt bei der Steuerung.
+
+### Was die Teständerungen erlauben
+
+1. **Gerätetyp-Test:** Der bestehende vollständige `toHaveText`-Vergleich bleibt bestehen. Statt der unvollständigen gemeinsamen Fußnote wird `expectedFootnote(model)` verwendet. Diese unabhängige Erwartung liest die freigegebene BWP-Quelldatei und umfasst 55/45, 35/28, Warmwasseranteil 18 %, Speicher 50 °C, die geräteabhängige Gesamtlast, Abrufdatum und gegebenenfalls den Kaskadenhinweis. Für das Gerät VWL 75/7.1 A sind es 7 kW; andere Geräte behalten ihre belegte eigene Last. Die bestehende exakte HTML-Zusicherung in `tests/t1087-beschriftung.cjs` bleibt unverändert.
+2. **WR-Preistafel:** Die Ersetzungen heißen ausdrücklich `JAZ-Beschriftung <Modell>: <Zeile>` und `JAZ-Fußnote <Modell>`. Alte Texte werden mit dem vorhandenen Renderer aus dem eingefrorenen Basisstand `40951542b4903adde7cc1e694a96fa81a41a7197` und denselben Preisantworten erzeugt; neue Texte stammen aus der unabhängigen BWP-Erwartung. Je Ersetzung wird genau ein Vorkommen des vollständigen Alttexts verlangt. Nur die zehn Schlüssel `preise-wolf-0..4` und `preise-vaillant-0..4` erhalten diese Ersetzungen. Anschließend gilt weiterhin der exakte vollständige Seitentextvergleich einschließlich der bereits bestehenden Hersteller-Ausnahme. Keine neue Ersetzung auf Förder-, Auslegungs- oder Kostenvergleichstexte angewandt.
+3. **Zehn Wiederholungen Schritt 5:** Genau vier neue Klappen sind erlaubt: eine „Einzelposten der Hochrechnung“, eine „Stromzähler und Photovoltaik“ und zwei „Hintergrund zu Neue Wärmepumpe“ mit verschiedenen Inhalts-IDs. Die Ausnahme verlangt die exakten Titel, die konkrete Inhaltszuordnung und jeweils `open: false`. Nach Herausnahme dieser vier eindeutig zugeordneten neuen Listeneinträge müssen sämtliche alten Klappen in Reihenfolge, Text und Zustand exakt gleich sein. Für den Seitentext werden ausschließlich diese vier neuen Elemente beim Lesen vorübergehend verborgen; alle ursprünglichen Stilattribute werden in `finally` wiederhergestellt. Der restliche `body.innerText` wird vollständig und exakt verglichen. Keine weitere gleich benannte Klappe wird pauschal herausgefiltert.
+
+### Warum „Hintergrund zu Neue Wärmepumpe“ zweimal erscheint
+
+**Zwei verschiedene Erläuterungen, keine doppelte Verpackung desselben Inhalts.** `#jazGrundlagen` erklärt die JAZ-Randbedingungen; `#netzentgeltHinweis` erklärt Quelle und fehlende Jahresreihe. Beide stehen unter dem Kartenkopf „Neue Wärmepumpe“. `mobileSummaryFor()` übernimmt diesen Kartenkopf als Standardtitel. `prepareMobileExplanations()` erstellt für jeden langen Absatz eine eigene Klappe und verhindert durch `el.closest('details')` eine zweite Verpackung desselben Absatzes. Deshalb keine Änderung am Seitencode.
+
+Zusätzlich wurden die beiden unveränderten Originalfunktionen aus der Seite in einer DOM-Gegenprobe ausgeführt. Bei synthetischen Zeilenhöhen entstehen genau die beiden getrennten Inhaltsknoten; ein zweiter Aufruf erzeugt keine weitere Klappe. Dies belegt die Zuordnung und den Wiederholungsschutz, ersetzt aber keine Sichtprüfung im Browser.
+
+### Alt/Neu der Testzeilen
+
+Vollständiger Diff gegen den vorgefundenen Kopf, einschließlich aller neu hinzugefügten Hilfsfunktionen. Damit ist keine geänderte Testzeile ausgelassen:
+
+```diff
+diff --git a/tests/t1087-geraetetyp.spec.js b/tests/t1087-geraetetyp.spec.js
+index 57a9903..da142a2 100644
+--- a/tests/t1087-geraetetyp.spec.js
++++ b/tests/t1087-geraetetyp.spec.js
+@@ -13,7 +13,7 @@ const {
+   label,
+ } = require('./helpers/t1087-geraetetyp.cjs');
+ const { internal } = require('./helpers/t1087-datenblatt.cjs');
+-const { expectedJaz, footnote } = require('./helpers/t1087-jaz.cjs');
++const { expectedJaz, expectedFootnote } = require('./helpers/t1087-jaz.cjs');
+
+ async function expectJaz(page, model) {
+   const expected = expectedJaz(model);
+@@ -28,7 +28,7 @@ async function expectJaz(page, model) {
+   }
+   await expect(page.locator('#paJazFootnote')).toBeVisible();
+   const scop = await page.locator('#paScopFootnote').textContent();
+-  await expect(page.locator('#paJazFootnote')).toHaveText(footnote + ' ' + scop);
++  await expect(page.locator('#paJazFootnote')).toHaveText(expectedFootnote(model) + ' ' + scop);
+ }
+
+ async function expectManufacturerTabs(page, minimum) {
+diff --git a/tests/t1087-wr.spec.js b/tests/t1087-wr.spec.js
+index a16969a..26a6490 100644
+--- a/tests/t1087-wr.spec.js
++++ b/tests/t1087-wr.spec.js
+@@ -4,6 +4,112 @@ const { test, expect, chromium, webkit } = require('@playwright/test');
+ const fs = require('node:fs');
+ const path = require('node:path');
+ const { base, root, responses, serve } = require('./t1087-wr.cjs');
++const {
++  browser: priceBrowser,
++  load: loadPrices,
++  render: renderPrices,
++} = require('./helpers/t1087-datenblatt.cjs');
++const { expectedJaz, expectedFootnote, plain } = require('./helpers/t1087-jaz.cjs');
++
++// GF-Freigabe T1245, Anpassung 8: nur benannte JAZ-Texte der Preistafel.
++// Alttexte aus der eingefrorenen Basis, neue Erwartung aus der BWP-Quelldatei;
++// kein Wort der gebauten Seite fließt in diese Erwartung ein.
++async function t1245PriceReplacements() {
++  const before = priceBrowser(base);
++  await loadPrices(before, responses().preise);
++  const replacements = {};
++  for (const brand of ['wolf', 'vaillant']) {
++    renderPrices(before, brand).details.forEach((detail, i) => {
++      const model = detail.card.modell;
++      const jaz = expectedJaz(model);
++      if (!jaz) return;
++      replacements['preise-' + brand + '-' + i] = [
++        ...jaz.map(([label, value]) => ({
++          name: 'JAZ-Beschriftung ' + model + ': ' + label,
++          before: label + ' ' + detail.card.specs.find(([name]) => name === label)[1],
++          after: label + ' ' + value,
++        })),
++        {
++          name: 'JAZ-Fußnote ' + model,
++          before: plain(detail.jazFootnote),
++          after: expectedFootnote(model) + ' ' + plain(before.nodes.paScopFootnote.innerHTML),
++        },
++      ];
++    });
++  }
++  return replacements;
++}
++function t1245PriceWords(value, replacements) {
++  for (const replacement of replacements) {
++    expect(value.split(replacement.before).length, replacement.name + ': genau ein Alttext').toBe(
++      2
++    );
++    value = value.replace(replacement.before, replacement.after);
++  }
++  return value;
++}
++
++// Zwei verschiedene Erläuterungen im selben Abschnitt erhalten mobil denselben
++// Standardtitel: JAZ-Randbedingungen und Gas-Netzentgeltquelle. Die Inhalts-IDs
++// begrenzen die Ausnahme; eine weitere gleich benannte Klappe bleibt rot.
++async function t1245StepFiveCapture(page, details) {
++  const added = await page.evaluate(() => {
++    const nodes = Array.from(document.querySelectorAll('details'));
++    const additions = [];
++    for (const [index, el] of nodes.entries()) {
++      let section = '';
++      if (el.parentElement.id === 'pathSummary') section = 'einzelposten';
++      else if (el.parentElement.id === 'wzWpCard') {
++        if (el.querySelector(':scope > .inhalt > #jazGrundlagen')) section = 'jaz';
++        else if (el.querySelector(':scope > .inhalt > #netzentgeltHinweis'))
++          section = 'netzentgelt';
++        else if (el.querySelector('#wpZaehler') && el.querySelector('#pvTog')) section = 'strom';
++      }
++      if (section)
++        additions.push({
++          index,
++          section,
++          summary: el.querySelector(':scope > summary').textContent,
++          open: el.open,
++        });
++    }
++    const styles = additions.map(({ index }) => ({
++      el: nodes[index],
++      style: nodes[index].getAttribute('style'),
++    }));
++    try {
++      // Nur der Text genau dieser neuen Klappen darf im Bau hinzukommen.
++      for (const { el } of styles) el.setAttribute('style', 'display:none!important');
++      return { additions, text: document.body.innerText };
++    } finally {
++      for (const { el, style } of styles) {
++        if (style === null) el.removeAttribute('style');
++        else el.setAttribute('style', style);
++      }
++    }
++  });
++  return { details, ...added };
++}
++function expectT1245StepFive(before, after) {
++  expect(before.additions, 'Basis enthält keine T1245-Klappen').toEqual([]);
++  expect(
++    after.additions
++      .map(({ section, summary, open }) => ({ section, summary, open }))
++      .sort((a, b) => a.section.localeCompare(b.section)),
++    'Genau vier neue, geschlossene Klappen mit zugeordnetem Inhalt'
++  ).toEqual([
++    { section: 'einzelposten', summary: 'Einzelposten der Hochrechnung', open: false },
++    { section: 'jaz', summary: 'Hintergrund zu Neue Wärmepumpe', open: false },
++    { section: 'netzentgelt', summary: 'Hintergrund zu Neue Wärmepumpe', open: false },
++    { section: 'strom', summary: 'Stromzähler und Photovoltaik', open: false },
++  ]);
++  const addedIndexes = new Set(after.additions.map(({ index }) => index));
++  expect(
++    after.details.filter((_, index) => !addedIndexes.has(index)),
++    'Alle alten Klappen: Reihenfolge, Text und Zustand unverändert'
++  ).toEqual(before.details);
++  expect(after.text, 'Seitentext außerhalb der vier neuen Klappen exakt gleich').toBe(before.text);
++}
+ const payloads = [
+   'A&#45;11',
+   'A<span>-</span>11',
+@@ -498,6 +604,7 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
+         const baselineServer = await serve(base);
+         const { browser, page, state, errors } = await setup(type, width);
+         const label = name + '-' + width;
++        const jazReplacements = await t1245PriceReplacements();
+         async function capture(url, version) {
+           const result = {};
+           async function words(key) {
+@@ -708,11 +815,14 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
+         try {
+           const before = await capture(baselineServer.url, 'basis');
+           const after = await capture(server.url, 'bau');
+-          // Einzige freigegebene Wortlautdifferenz im Regelfall: Hersteller statt Lieferant.
++          // Freigegeben: Herstellername sowie die benannten JAZ-Fußnoten und -Beschriftungen.
+           for (const [key, value] of Object.entries(before)) {
+             if (typeof value === 'string')
+               expect(after[key], key).toBe(
+-                value.replaceAll('Vaillant Deutschland GmbH & Co. KG', 'Vaillant GmbH')
++                t1245PriceWords(value, jazReplacements[key] || []).replaceAll(
++                  'Vaillant Deutschland GmbH & Co. KG',
++                  'Vaillant GmbH'
++                )
+               );
+           }
+           await page.goto(baselineServer.url + '/preise.html');
+@@ -900,12 +1010,11 @@ for (let repetition = 1; repetition <= 10; repetition++) {
+             await expect(
+               page.locator('summary').filter({ hasText: 'So entsteht dein Ergebnis' })
+             ).toBeVisible();
+-            captures.push({ details, text: await page.locator('body').innerText() });
++            captures.push(await t1245StepFiveCapture(page, details));
+           } else await page.locator('#wzNext').click();
+         }
+       }
+-      expect(captures[1].details).toEqual(captures[0].details);
+-      expect(captures[1].text).toBe(captures[0].text);
++      expectT1245StepFive(captures[0], captures[1]);
+       expect(errors).toEqual([]);
+     } finally {
+       await browser.close();
+```
+
+Die benannten JAZ-Beschriftungen ergeben für die Preisattrappe folgende exakten Änderungen; unveränderte Heizkörperwerte bleiben ausdrücklich unverändert:
+
+| Modell                                  | Heizkörper Alt → Neu                                                        | Fußbodenheizung Alt → Neu                                                   |
+| --------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Wolf CHA-07                             | 3,96 → 4,30                                                                 | 4,92 → 4,98                                                                 |
+| Wolf CHA-10                             | 4,10 → 4,37                                                                 | 5,09 → 5,08                                                                 |
+| Wolf CHA-16/20                          | 4,04 → 4,42                                                                 | 5,03 → 5,11                                                                 |
+| Wolf CHA-20/24                          | 3,99 → 4,34                                                                 | 4,96 → 5,03                                                                 |
+| 2× Wolf CHA-16                          | 4,04 je Gerät; projektbezogen prüfen → 4,42 je Gerät; projektbezogen prüfen | 5,03 je Gerät; projektbezogen prüfen → 5,11 je Gerät; projektbezogen prüfen |
+| Vaillant aroTHERM pro VWL 55/7.1 A      | 3,94 → 3,94                                                                 | 4,49 → 4,56                                                                 |
+| Vaillant aroTHERM pro VWL 75/7.1 A      | 3,86 → 3,86                                                                 | 4,40 → 4,47                                                                 |
+| Vaillant aroTHERM pro VWL 115/7.1 A     | 3,95 → 3,95                                                                 | 4,50 → 4,57                                                                 |
+| Vaillant aroTHERM plus VWL 125/8.1 A    | 4,21 → 4,21                                                                 | 4,80 → 4,87                                                                 |
+| 2× Vaillant aroTHERM plus VWL 125/8.1 A | 4,21 je Gerät; projektbezogen prüfen → 4,21 je Gerät; projektbezogen prüfen | 4,80 je Gerät; projektbezogen prüfen → 4,87 je Gerät; projektbezogen prüfen |
+
+Die vollständigen alten und neuen Fußnoten je Modell stehen in `/private/tmp/t1245-browser8/jaz-alt-neu.json`. Gemeinsamer neuer Text bis zum gerätespezifischen Zusatz:
+
+```text
+¹ JAZ = Jahresarbeitszahl. Beispielrechnung mit dem BWP-JAZ-Rechner nach VDI 4650 Blatt 1 für einen Altbau in Hannover. Heizkörper: Vorlauf/Rücklauf 55/45 °C; Fußbodenheizung: Vorlauf/Rücklauf 35/28 °C. Warmwasseranteil 18 %, Speicher 50 °C; einschließlich erforderlichem elektrischem Zusatzheizer. Individuelle Anlagenwerte können abweichen. Angenommene Gesamtlast 7 kW. Abruf 2026-10-26. ² SCOP = Seasonal Coefficient of Performance. Norm-Effizienz nach EN 14825, marktüblicher Herstellervergleich.
+```
+
+Bei anderen Modellen werden ausschließlich die belegte Last und gegebenenfalls „Kaskade: Wert des Einzelgeräts als Annahme.“ eingesetzt, wie im vorhandenen unabhängigen Erwartungshelfer. Das Abrufdatum ist 2026-10-26. Quelle: `data/kv-jaz-portfolio.json`, ausgewertet durch `tests/helpers/t1087-jaz.cjs`.
+
+### Befehle und Ausgaben
+
+Arbeitsverzeichnis für alle Projektbefehle: `/Users/benjaminbendler/code/herowerk-website-rechenkern-t1245`.
+
+```bash
+npx prettier --write tests/t1087-geraetetyp.spec.js tests/t1087-wr.spec.js T1245_SCHRITT1_ABSCHLUSS.md
+npm run lint
+npx tsc --noEmit
+npm run verify:tafel
+npm run verify:kv-nutzen
+```
+
+Lint, Exit 0:
+
+```text
+> lint
+> eslint . && prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+```
+
+TypeScript, Exit 0: keine Ausgabe. Vollständige Ausgaben: `/private/tmp/t1245-browser8/lint.log` und `tsc.log`.
+
+`verify:tafel`, Exit 0: alle acht Teilprogramme grün; darunter die unveränderte exakte HTML-Zusicherung. Auszug:
+
+```text
+{"basis":"Arbeitsbaum","bestanden":11,"fehlgeschlagen":0}
+{"ref":"Arbeitsbaum","bestanden":15,"fehlgeschlagen":0}
+{"ref":"Arbeitsbaum","bestanden":5,"fehlgeschlagen":0}
+{"ref":"Arbeitsbaum","bestanden":6,"fehlgeschlagen":0}
+ℹ tests 4
+ℹ pass 4
+ℹ fail 0
+WR: 18 öffentliche Antwortkörper aller action-Routen bytegleich (identische lokale Tabellen; keine entfernten/normalisierten Felder).
+P7: Basis ROT / Bau GRÜN (DOM/Funktion; Geometrie zusätzlich im Browser)
+```
+
+Vollständige Ausgabe: `/private/tmp/t1245-browser8/tafel.log`.
+
+`verify:kv-nutzen`, Exit 0:
+
+```text
+> verify:kv-nutzen
+> node scripts/generate-kv-jaz.mjs --check && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/t1245-kv-website-dom.mjs
+
+KV_JAZ: 48 Zeilen, 30 Originalwerte; PHP, JS und Preistafel geprüft
+GRÜN T1245: Referenzen, Summen, Spanne, alle Geräte und Randfälle
+GRÜN PHP/JS: 625 feste Fälle, 30 Geräte-/Heizsystempaare plus Kaskaden und Fehler; größtes Float-Delta 0
+GRÜN T1245 Parameter: Seed, vier Bio-Stufen, Alt-/Teilstand, Cachewechsel, Startjahr 2027 und JAZ-Sperren in JS/PHP
+GRÜN H2 Website: ungültige Bio-/Netz-/JAZ-Daten sperren nur Kostenvergleich/Bootstrap; Förderung und Perioden exakt gleich, keine Rückfallwarnung in GS/PHP
+GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme
+```
+
+Vollständige Ausgabe: `/private/tmp/t1245-browser8/kv-nutzen.log`.
+
+Originalfunktionen und gezielte Rot-Gegenproben, jeweils Exit 0:
+
+```bash
+node /private/tmp/t1245-browser8/gegenproben.cjs
+node /private/tmp/t1245-browser8/mobile-klappen.cjs
+```
+
+```text
+PASS 10 Modelle: JAZ-Texte exakt, übrige Tabellenworte gleich; zusätzlicher Text bleibt rot.
+PASS Rot-Gegenprobe: neue Klappe offen
+PASS Rot-Gegenprobe: alte Klappe offen
+PASS Rot-Gegenprobe: alter Text geändert
+PASS Rot-Gegenprobe: alte Reihenfolge verändert
+PASS Rot-Gegenprobe: fünfte neue Klappe
+PASS Rot-Gegenprobe: neue Klappe fehlt
+PASS Rot-Gegenprobe: doppelte Inhaltszuordnung
+PASS Rot-Gegenprobe: fremder Seitentext
+PASS Inhalts-IDs trennen beide Hintergrundklappen; nur deren Text verborgen; ursprüngliche Stile wiederhergestellt.
+PASS Originalfunktionen: zwei getrennte Inhalte #jazGrundlagen und #netzentgeltHinweis; identischer Standardtitel aus dem gemeinsamen Kartenkopf.
+PASS Zweiter Aufruf: unverändert zwei Klappen, keine doppelte Verpackung desselben Inhalts.
+Hinweis: synthetische Zeilenhöhen im DOM-Modell; kein Ersatz für einen gestarteten Browser.
+
+```
+
+Browserläufe, jeweils Exit 1; keine `skip`-, Wiederholungs- oder Toleranzkonfiguration geändert:
+
+```bash
+php -S 127.0.0.1:8080 -t .
+npx playwright test --grep @smoke
+npx playwright test --grep @smoke --browser=webkit
+```
+
+Serverstart, Exit 1:
+
+```text
+Failed to listen on 127.0.0.1:8080 (reason: Operation not permitted)
+```
+
+Chromium und WebKit: jeweils vollständige Erfassung von 109 Fällen, Ergebnis `85 failed`, `23 did not run`, `1 passed`. Die 23 nicht ausgeführten Fälle folgen dem fehlgeschlagenen gemeinsamen Aufbau der unveränderten WR-Testdatei; kein Fall wurde im Code ausgenommen. Charakteristische Startfehler:
+
+```text
+Chromium: bootstrap_check_in ... MachPortRendezvousServer ... Permission denied (1100)
+WR-Server: Error: listen EPERM: operation not permitted 127.0.0.1
+WebKit: browserType.launch: Target page, context or browser has been closed
+WebKit: sandbox_extension_issue_file_to_process failed ... Playwright.app: 3 (No such process)
+WebKit: Abort trap: 6; exitCode=134
+```
+
+**WebKit startet in dieser Umgebung nicht.** Vollständige Ausgaben: `/private/tmp/t1245-browser8/smoke-chromium.log` und `smoke-webkit.log`. Diese Umgebungsausgaben sind keine bestätigte Ausführung der geänderten Browser-Zusicherungen.
+
+### Weiterhin strenge Grenze des WR-Regelfalls
+
+Der WR-Regelfall erfasst nach der Preistafel auch die Kostenvergleichsseite in allen Schritten. Dort wurden im ursprünglichen Bau ebenfalls sichtbare Texte außerhalb der vier neuen Klappen geändert: etwa „Jahresarbeitszahl (JAZ)“ entfällt; „Heizkörper oder Fußbodenheizung?“, „Gas-Grundpreis in Euro pro Jahr“ und „Startjahr der Hochrechnung“ sind hinzugekommen. Ein lokaler Quellvergleich gegen dieselbe eingefrorene Basis bestätigt diese Unterschiede. Die Kostenvergleichsschlüssel erhalten hier ausdrücklich **keine** zusätzlichen Textersetzungen, weil Anpassung 8 die erlaubten Ersetzungen im WR-Regelfall auf die JAZ-Fußnote und JAZ-Beschriftungen der Preisseite begrenzt und alle übrigen Unterschiede rot bleiben sollen. Das ist ein zusätzlicher Prüfpunkt für den nächsten echten Browserlauf; eine vollständig grüne Ausführung kann aus den hier gesperrten Browserläufen nicht abgeleitet werden. Beleg: `/private/tmp/t1245-browser8/abgrenzung.txt`, Basis-/Bau-HTML im unverändert strengen Aufnahmeweg der WR-Prüfung.
+
+### Engine-Gleichheit und Dateiliste
+
+```bash
+cmp apps-script/rechner-backend/kv_engine.gs /Users/benjaminbendler/code/herowerk-konfigurator/kv_engine.js
+shasum -a 256 apps-script/rechner-backend/kv_engine.gs /Users/benjaminbendler/code/herowerk-konfigurator/kv_engine.js
+```
+
+`cmp`: Exit 0, keine Ausgabe. Beide SHA-256:
+
+```text
+2997a8c6b78d24daa77cc6ad14c9e6b7547a71db70eb1c7765789424f5283a30
+```
+
+Geänderte Dateien, ausschließlich Website:
+
+- `tests/t1087-geraetetyp.spec.js`
+- `tests/t1087-wr.spec.js`
+- `T1245_SCHRITT1_ABSCHLUSS.md`
+
+Vorgeschlagene Einbuchungsnachricht Website: `test: T1245-Browservergleiche auf freigegebene JAZ-Texte und neue Klappen begrenzen`.
+
+Konfigurator: keine geänderten Dateien und keine vorgeschlagene zusätzliche Einbuchung für diesen Nachlauf. Engine, Rechenwerte, HTML, Assets, Parameter, Golddateien und Workflow-Konfiguration nicht angefasst. Nichts eingebucht, hochgeladen oder ausgeliefert.
+
+Vorschlag für den Eintrag der Steuerung im Änderungsverzeichnis, ohne eigene Kennungsvergabe: „Konfigurator und Angebot 541, Vorgang T1245, Codex Nachlauf 8: Browser-Erwartungen auf die freigegebenen JAZ-Texte und genau vier neue geschlossene Klappen begrenzt; Alt/Neu und Rot-Gegenproben im Abschlussbericht. Lint, TypeScript, Tafel und Nutzen grün; Browserstarts durch Sandbox gesperrt, weitere Seitentextunterschiede zur Nachmessung dokumentiert. Archiv /private/tmp/t1245-browser8; keine Einbuchung.“
+
+### Anpassung 9: Regelfall und dritte JAZ-Hintergrundklappe
+
+**Bauauftrag umgesetzt; vier verlangte lokale Prüfungen grün.** Die Browserläufe übernimmt wie beauftragt die Steuerung. Ihre mitgeteilte Messung des vorigen Stands lautete 20 grün, 14 rot; diese Zahlen sind keine lokale Messung dieses Nachlaufs. Keine neue Browser-Abnahme behauptet und keine lokale Browsersperre umgangen.
+
+**Berichtigung zur Anpassung 8:** Die damalige Abschnittserkennung war unvollständig. Neben `#jazGrundlagen` und `#netzentgeltHinweis` wird auch `#jazWert` mobil eingeklappt. Damit sind es drei verschiedene Absätze unter demselben Kartenkopf „Neue Wärmepumpe“, nicht zwei. Der zusätzliche Absatz lautet in der verwendeten synthetischen Antwort:
+
+```text
+Aus 1 kWh Strom macht sie 3,86 kWh Wärme. Portfolio-Minimum; Gerät noch nicht gewählt. Heizkörper als Annahme, bitte Heizsystem wählen.
+```
+
+Quelle: `kostenvergleich-waermepumpe.html`, `kvRender()` mit Ziel `#jazWert`; Werte aus `responses().kostenvergleich.system` in `tests/t1087-wr.cjs`. Dieser Absatz ist nach Bauplan Schritt 1, Website, Arbeitszahl und Festlegung 3 beauftragt: Tabellenwert statt frei änderbarem Regler, Herkunft und fehlende Gerätewahl sichtbar. Keine doppelte Verpackung und kein unbestellter Inhalt; deshalb keine Änderung am Seitencode. Der neue Abschnittsschlüssel heißt ausdrücklich `jazwert`. Die bisherigen Nachweise, dass derselbe Absatz bei erneutem Aufruf nicht nochmals verpackt wird, bleiben gültig; die damalige künstliche Annahme eines kurzen `#jazWert` reichte zur Erfassung des tatsächlichen Browserfalls nicht aus.
+
+#### Gemeinsame Prüfung statt JSON-Zeichenkettenvergleich
+
+`tests/t1087-wr.spec.js` verwendet für Regelfall und Wiederholungen dieselbe Aufnahme und dieselben Zusicherungen:
+
+- **Öffentliche Seite am Start und in Schritt 1:** genau `einzelposten` und `strom` zusätzlich, beide geschlossen.
+- **Öffentliche Seite mobil nach Besuch von Schritt 2, einschließlich Ergebnis:** genau `einzelposten`, `jaz`, `jazwert`, `netzentgelt`, `strom`, jeweils einmal, mit exaktem Titel und `open: false`.
+- **Öffentliche Seite bei 1440 Pixeln:** genau die zwei statischen neuen Klappen; keine automatisch erzeugten mobilen Klappen.
+- **Beraterseite:** keine dieser Ausnahmen.
+
+Die Zuordnung erfolgt über Elternknoten und konkrete Inhalts-IDs, niemals allein über den wiederholten Titel. Nach Abzug genau der erwarteten neuen Einträge werden alle alten Einträge weiterhin als vollständige Objekte in ursprünglicher Reihenfolge verglichen: ID, Text und Zustand. Jede zusätzliche unbekannte Klappe, fehlende neue Klappe, doppelte Inhaltszuordnung, geänderte alte Reihenfolge oder ein geänderter Zustand bleibt rot.
+
+Im Ergebnisteil öffnet der Test weiterhin alle **alten** Ergebnisdetails. Die neue Klappe unter `#pathSummary` wird vom Öffnen ausgenommen und ausdrücklich auf geschlossen geprüft. Das ist eine Anpassung des Test-Handgriffs an die neue geschlossene Klappe; keine alte Öffnungszusicherung entfällt.
+
+Für `-results` bleibt der vollständige `textContent`-Vergleich erhalten. Weil `textContent` auch geschlossene Inhalte enthält, entfernt die Aufnahme die benannten neuen Detailknoten ausschließlich aus einer DOM-Kopie. Beträge, Beschriftungen und Inhalte sämtlicher alter Details werden vollständig weiterverglichen; das Original-DOM bleibt dabei unangetastet. Der Ganzseitenvergleich verwendet wie zuvor `innerText` und seine bisherige Leerraumnormalisierung; für die zehn Wiederholungen bleibt der rohe, nicht normalisierte `innerText`-Vergleich erhalten.
+
+#### Bereits beauftragte sichtbare Eingaben separat exakt gesichert
+
+Der Regelfall erfasst außerdem die tatsächlich angezeigte Karte in Schritt 2. Die im vorigen Bericht genannten zusätzlichen Textunterschiede sind darin jetzt ausdrücklich auf die beauftragten Änderungen begrenzt:
+
+- Heizsystemfrage einschließlich aller drei Optionen;
+- „Gas-Grundpreis in Euro pro Jahr“;
+- „Startjahr der Hochrechnung“;
+- „Zusätzlichen Gas-Netzentgeltpfad berücksichtigen“;
+- vollständiger JAZ-Wert-/Annahmetext aus der festen synthetischen Antwort.
+
+Diese Texte werden separat exakt zugesichert. Für den Vergleich der übrigen Karte werden nur diese konkret identifizierten neuen Felder vorübergehend verborgen und ausschließlich an der Stelle des entfernten JAZ-Reglers dessen alter Text eingesetzt. Der alte Text wird aus den unverändert verwendeten Bootstrap-Antworten bestimmt: `Jahresarbeitszahl (JAZ) 3,8`. Er stammt **nicht** aus dem neuen Ergebniswert 3,86. Investition, Betrachtungszeitraum und alle übrigen alten Texte bleiben im Ganzseitenvergleich. Die neuen JAZ-Randbedingungen und die Netzentgeltquellenerklärung werden nur über ihre konkreten IDs behandelt, auch auf dem Desktop ohne mobile Klappe. Alle temporären Knoten und Stiländerungen werden wieder entfernt beziehungsweise exakt wiederhergestellt.
+
+Der beauftragte Bio-Rechtshinweis im sichtbaren Neuanlagenvergleich hat eine eigene vollständige Alt/Neu-Ersetzung, nur auf der öffentlichen Kostenvergleichsseite:
+
+```text
+Alt: Hinweis: In Kommunen mit beschlossener Wärmeplanung (Großstädte wie Hannover) ist der Einbau einer neuen reinen Gas-/Ölheizung nach GEG §71 nur noch eingeschränkt bzw. mit steigendem EE-Anteil zulässig. Der Rechner rechnet zugunsten der fossilen Variante nur mit der Biotreppe.
+Neu: Für den Neuanlagenvergleich berücksichtigt der Rechner die Bio-Beimischpflicht nach GModG § 43 Abs. 1. Die Rechnung ist eine Prognose auf Basis der ausgewiesenen Annahmen.
+```
+
+Keine pauschale Ausnahme für den gesamten WP-Abschnitt, keine zusätzliche Normalisierung alter Inhalte, keine geänderten Toleranzen, `skip` oder `retries`. Preistafel- und Gerätetyp-Erwartungen aus Anpassung 8 bleiben unverändert.
+
+#### Alt/Neu aller in Anpassung 9 geänderten Testzeilen
+
+Referenz für diesen Diff ist die zu Beginn dieses Nachlaufs archivierte Arbeitsdatei aus Anpassung 8, nicht der ältere Git-Kopf. Archiv: `/private/tmp/t1245-browser9/t1087-wr.spec.js`; vorheriger Bericht daneben; die von der Steuerung hinterlassenen Browserartefakte sind unter `/private/tmp/t1245-browser9/controller-test-results/` gesichert.
+
+```diff
+--- /private/tmp/t1245-browser9/t1087-wr.spec.js	2026-10-27 15:34:06
++++ tests/t1087-wr.spec.js	2026-10-27 15:35:37
+@@ -49,67 +49,166 @@
+   return value;
+ }
+
+-// Zwei verschiedene Erläuterungen im selben Abschnitt erhalten mobil denselben
+-// Standardtitel: JAZ-Randbedingungen und Gas-Netzentgeltquelle. Die Inhalts-IDs
+-// begrenzen die Ausnahme; eine weitere gleich benannte Klappe bleibt rot.
+-async function t1245StepFiveCapture(page, details) {
+-  const added = await page.evaluate(() => {
+-    const nodes = Array.from(document.querySelectorAll('details'));
+-    const additions = [];
+-    for (const [index, el] of nodes.entries()) {
+-      let section = '';
+-      if (el.parentElement.id === 'pathSummary') section = 'einzelposten';
+-      else if (el.parentElement.id === 'wzWpCard') {
+-        if (el.querySelector(':scope > .inhalt > #jazGrundlagen')) section = 'jaz';
+-        else if (el.querySelector(':scope > .inhalt > #netzentgeltHinweis'))
+-          section = 'netzentgelt';
+-        else if (el.querySelector('#wpZaehler') && el.querySelector('#pvTog')) section = 'strom';
++// T1245: ausschließlich diese neuen Klappen, über Inhalt und Elternknoten
++// zugeordnet. Drei verschiedene JAZ-/Netzabsätze teilen denselben Kartentitel.
++const T1245_COST_SUMMARIES = {
++  einzelposten: 'Einzelposten der Hochrechnung',
++  jaz: 'Hintergrund zu Neue Wärmepumpe',
++  jazwert: 'Hintergrund zu Neue Wärmepumpe',
++  netzentgelt: 'Hintergrund zu Neue Wärmepumpe',
++  strom: 'Stromzähler und Photovoltaik',
++};
++function t1245CostSections(key, width) {
++  if (key.startsWith('docs/')) return [];
++  return width <= 760 && !/-(?:start|schritt-1)-klappzustaende$/.test(key)
++    ? ['einzelposten', 'jaz', 'jazwert', 'netzentgelt', 'strom']
++    : ['einzelposten', 'strom'];
++}
++async function t1245CostCapture(page, details, options) {
++  const payload = responses();
++  const response = payload.kostenvergleich;
++  const captured = await page.evaluate(
++    (options) => {
++      function section(el) {
++        if (el.parentElement.id === 'pathSummary') return 'einzelposten';
++        if (el.parentElement.id !== 'wzWpCard') return '';
++        if (el.querySelector(':scope > .inhalt > #jazGrundlagen')) return 'jaz';
++        if (el.querySelector(':scope > .inhalt > #jazWert')) return 'jazwert';
++        if (el.querySelector(':scope > .inhalt > #netzentgeltHinweis')) return 'netzentgelt';
++        if (el.querySelector('#wpZaehler') && el.querySelector('#pvTog')) return 'strom';
++        return '';
+       }
+-      if (section)
+-        additions.push({
+-          index,
+-          section,
+-          summary: el.querySelector(':scope > summary').textContent,
+-          open: el.open,
++      const nodes = Array.from(document.querySelectorAll('details'));
++      const additions = nodes.flatMap((el, index) => {
++        const name = section(el);
++        return name
++          ? [
++              {
++                index,
++                section: name,
++                summary: el.querySelector(':scope > summary').textContent,
++                open: el.open,
++              },
++            ]
++          : [];
++      });
++      const root = /** @type {HTMLElement} */ (document.querySelector(options.root));
++      if (options.textContent) {
++        // textContent umfasst auch geschlossene Inhalte. Nur genau die neuen
++        // Elemente aus einer Kopie entfernen; das Original bleibt unangetastet.
++        const clone = /** @type {HTMLElement} */ (root.cloneNode(true));
++        clone.querySelectorAll('details').forEach((el) => {
++          if (section(el)) el.remove();
+         });
+-    }
+-    const styles = additions.map(({ index }) => ({
+-      el: nodes[index],
+-      style: nodes[index].getAttribute('style'),
+-    }));
+-    try {
+-      // Nur der Text genau dieser neuen Klappen darf im Bau hinzukommen.
+-      for (const { el } of styles) el.setAttribute('style', 'display:none!important');
+-      return { additions, text: document.body.innerText };
+-    } finally {
+-      for (const { el, style } of styles) {
+-        if (style === null) el.removeAttribute('style');
+-        else el.setAttribute('style', style);
++        return { additions, text: clone.textContent, inputs: [] };
+       }
++      /** @type {Set<HTMLElement>} */
++      const hidden = new Set(additions.map(({ index }) => nodes[index]));
++      const inputs = [];
++      let legacyJaz = null;
++      if (options.newInputs) {
++        // Die beauftragten neuen Eingaben werden separat exakt zugesichert.
++        // Für den alten Ganzseitenvergleich ersetzen sie nur den entfernten
++        // JAZ-Regler; Investition, Laufzeit und alle anderen alten Texte bleiben.
++        for (const [id, selector] of [
++          ['heizsystem', '.selg'],
++          ['grundpreisGas', '.sg'],
++          ['startJahr', '.sg'],
++          ['netzentgeltTog', '.tg'],
++        ]) {
++          const el = document.getElementById(id).closest(selector);
++          inputs.push({ id, text: el.textContent.replace(/\s+/g, ' ').trim() });
++          hidden.add(/** @type {HTMLElement} */ (el));
++        }
++        inputs.push({ id: 'jazWert', text: document.getElementById('jazWert').textContent });
++        for (const id of ['jazWert', 'jazGrundlagen', 'netzentgeltHinweis'])
++          hidden.add(document.getElementById(id));
++        legacyJaz = document.createElement('div');
++        legacyJaz.textContent = options.legacyJaz;
++        const heating = document.getElementById('heizsystem').closest('.selg');
++        heating.before(legacyJaz);
++      }
++      if (options.packages) {
++        for (const selector of ['.foerder-package-label', '#foerderWpTyp']) {
++          const el = document.querySelector(selector);
++          if (el) hidden.add(/** @type {HTMLElement} */ (el));
++        }
++      }
++      const styles = Array.from(hidden, (el) => ({ el, style: el.getAttribute('style') }));
++      try {
++        for (const { el } of styles) el.setAttribute('style', 'display:none!important');
++        let text = root.innerText;
++        if (options.normalize) text = text.replace(/\s+/g, ' ').trim();
++        return { additions, text, inputs };
++      } finally {
++        legacyJaz?.remove();
++        for (const { el, style } of styles) {
++          if (style === null) el.removeAttribute('style');
++          else el.setAttribute('style', style);
++        }
++      }
++    },
++    {
++      ...options,
++      legacyJaz:
++        'Jahresarbeitszahl (JAZ) ' + payload.kv_bootstrap.defaults.jaz.toFixed(1).replace('.', ','),
+     }
+-  });
+-  return { details, ...added };
++  );
++  if (options.newInputs) {
++    const ji = response.system.jazInfo;
++    expect(captured.inputs, 'Neue Heizsystem-/Fixkosteneingaben und JAZ-Annahme exakt').toEqual([
++      {
++        id: 'heizsystem',
++        text: 'Heizkörper oder Fußbodenheizung? Bitte wählenHeizkörper oder gemischte AnlageNur Fußbodenheizung',
++      },
++      { id: 'grundpreisGas', text: 'Gas-Grundpreis in Euro pro Jahr' },
++      { id: 'startJahr', text: 'Startjahr der Hochrechnung' },
++      { id: 'netzentgeltTog', text: 'Zusätzlichen Gas-Netzentgeltpfad berücksichtigen' },
++      {
++        id: 'jazWert',
++        text:
++          'Aus 1 kWh Strom macht sie ' +
++          response.system.jaz.toFixed(2).replace('.', ',') +
++          ' kWh Wärme. ' +
++          ji.annahme +
++          (ji.heizsystemAnnahme ? ' Heizkörper als Annahme, bitte Heizsystem wählen.' : ''),
++      },
++    ]);
++  }
++  return { details, ...captured };
+ }
+-function expectT1245StepFive(before, after) {
++function t1245CostWords(before) {
++  // Genau der beschlossene Gesetzeshinweis im sichtbaren Neuanlagenvergleich.
++  return before.replace(
++    'Hinweis: In Kommunen mit beschlossener Wärmeplanung (Großstädte wie Hannover) ist der Einbau einer neuen reinen Gas-/Ölheizung nach GEG §71 nur noch eingeschränkt bzw. mit steigendem EE-Anteil zulässig. Der Rechner rechnet zugunsten der fossilen Variante nur mit der Biotreppe.',
++    'Für den Neuanlagenvergleich berücksichtigt der Rechner die Bio-Beimischpflicht nach GModG § 43 Abs. 1. Die Rechnung ist eine Prognose auf Basis der ausgewiesenen Annahmen.'
++  );
++}
++function expectT1245Cost(before, after, sections, legalHint = false) {
+   expect(before.additions, 'Basis enthält keine T1245-Klappen').toEqual([]);
+   expect(
+     after.additions
+       .map(({ section, summary, open }) => ({ section, summary, open }))
+       .sort((a, b) => a.section.localeCompare(b.section)),
+-    'Genau vier neue, geschlossene Klappen mit zugeordnetem Inhalt'
+-  ).toEqual([
+-    { section: 'einzelposten', summary: 'Einzelposten der Hochrechnung', open: false },
+-    { section: 'jaz', summary: 'Hintergrund zu Neue Wärmepumpe', open: false },
+-    { section: 'netzentgelt', summary: 'Hintergrund zu Neue Wärmepumpe', open: false },
+-    { section: 'strom', summary: 'Stromzähler und Photovoltaik', open: false },
+-  ]);
+-  const addedIndexes = new Set(after.additions.map(({ index }) => index));
++    'Genau die benannten neuen Klappen, jeweils geschlossen und eindeutig zugeordnet'
++  ).toEqual(
++    sections.map((section) => ({ section, summary: T1245_COST_SUMMARIES[section], open: false }))
++  );
++  const indexes = new Set(after.additions.map(({ index }) => index));
+   expect(
+-    after.details.filter((_, index) => !addedIndexes.has(index)),
++    after.details.filter((_, index) => !indexes.has(index)),
+     'Alle alten Klappen: Reihenfolge, Text und Zustand unverändert'
+   ).toEqual(before.details);
+-  expect(after.text, 'Seitentext außerhalb der vier neuen Klappen exakt gleich').toBe(before.text);
++  expect(after.text, 'Übriger Seiten-/Ergebnistext exakt gleich').toBe(
++    legalHint ? t1245CostWords(before.text) : before.text
++  );
+ }
++async function t1245StepFiveCapture(page, details, build) {
++  return t1245CostCapture(page, details, { root: 'body', newInputs: build });
++}
++function expectT1245StepFive(before, after) {
++  expectT1245Cost(before, after, ['einzelposten', 'jaz', 'jazwert', 'netzentgelt', 'strom']);
++}
+ const payloads = [
+   'A&#45;11',
+   'A<span>-</span>11',
+@@ -608,8 +707,16 @@
+         async function capture(url, version) {
+           const result = {};
+           async function words(key) {
+-            if (key.includes('kostenvergleich'))
+-              result[key + '-klappzustaende'] = JSON.stringify(await settleCostComparison(page));
++            if (key.includes('kostenvergleich')) {
++              const snapshot = await t1245CostCapture(page, await settleCostComparison(page), {
++                root: 'body',
++                normalize: true,
++                packages: true,
++                newInputs: version === 'bau' && !key.startsWith('docs/'),
++              });
++              result[key + '-klappzustaende'] = snapshot;
++              result[key] = snapshot.text;
++            }
+             // WebKit zählt native Optionslisten bei begrenztem Überlauf anders in innerText.
+             // Deshalb Pakettexte vollständig separat vergleichen, Seitenworte ohne Doppelung.
+             result[key + '-paketauswahl'] = await page.evaluate(() => {
+@@ -626,24 +733,25 @@
+                   : null
+               );
+             });
+-            result[key] = await page.evaluate(() => {
+-              const overlay = document.querySelector('.foerder-package-label');
+-              const old = overlay?.getAttribute('style');
+-              const select = document.getElementById('foerderWpTyp');
+-              const oldSelect = select?.getAttribute('style');
+-              if (overlay) overlay.setAttribute('style', 'display:none');
+-              if (select) select.setAttribute('style', 'display:none');
+-              const text = document.body.innerText.replace(/\s+/g, ' ').trim();
+-              if (overlay) {
+-                if (old === null) overlay.removeAttribute('style');
+-                else overlay.setAttribute('style', old);
+-              }
+-              if (select) {
+-                if (oldSelect === null) select.removeAttribute('style');
+-                else select.setAttribute('style', oldSelect);
+-              }
+-              return text;
+-            });
++            if (!key.includes('kostenvergleich'))
++              result[key] = await page.evaluate(() => {
++                const overlay = document.querySelector('.foerder-package-label');
++                const old = overlay?.getAttribute('style');
++                const select = document.getElementById('foerderWpTyp');
++                const oldSelect = select?.getAttribute('style');
++                if (overlay) overlay.setAttribute('style', 'display:none');
++                if (select) select.setAttribute('style', 'display:none');
++                const text = document.body.innerText.replace(/\s+/g, ' ').trim();
++                if (overlay) {
++                  if (old === null) overlay.removeAttribute('style');
++                  else overlay.setAttribute('style', old);
++                }
++                if (select) {
++                  if (oldSelect === null) select.removeAttribute('style');
++                  else select.setAttribute('style', oldSelect);
++                }
++                return text;
++              });
+           }
+           await page.goto(url + '/preise.html');
+           await page.evaluate('paLoadData()');
+@@ -795,19 +903,21 @@
+             await page.evaluate('calculate({showResults:true,scroll:false})');
+             await settleCostComparison(page);
+             await page.evaluate(() =>
+-              document
+-                .querySelectorAll('#results details')
+-                .forEach((el) => el.setAttribute('open', ''))
++              document.querySelectorAll('#results details').forEach((el) => {
++                if (el.parentElement.id !== 'pathSummary') el.setAttribute('open', '');
++              })
+             );
+             await page.waitForFunction(() =>
+               Array.from(document.getElementById('results').querySelectorAll('details')).every(
+-                (el) => el.open
++                (el) => (el.parentElement.id === 'pathSummary' ? !el.open : el.open)
+               )
+             );
+-            result[file + '-results-klappzustaende'] = JSON.stringify(
+-              await settleCostComparison(page)
+-            );
+-            result[file + '-results'] = await page.locator('#results').textContent();
++            const snapshot = await t1245CostCapture(page, await settleCostComparison(page), {
++              root: '#results',
++              textContent: true,
++            });
++            result[file + '-results-klappzustaende'] = snapshot;
++            result[file + '-results'] = snapshot.text;
+             await screenshot(page, label + '-' + version + '-' + path.basename(file), testInfo);
+           }
+           return result;
+@@ -817,12 +927,21 @@
+           const after = await capture(server.url, 'bau');
+           // Freigegeben: Herstellername sowie die benannten JAZ-Fußnoten und -Beschriftungen.
+           for (const [key, value] of Object.entries(before)) {
+-            if (typeof value === 'string')
++            if (key.endsWith('-klappzustaende')) {
++              expectT1245Cost(
++                value,
++                after[key],
++                t1245CostSections(key, width),
++                !key.startsWith('docs/')
++              );
++            } else if (typeof value === 'string')
+               expect(after[key], key).toBe(
+-                t1245PriceWords(value, jazReplacements[key] || []).replaceAll(
+-                  'Vaillant Deutschland GmbH & Co. KG',
+-                  'Vaillant GmbH'
+-                )
++                t1245PriceWords(
++                  key.startsWith('kostenvergleich-waermepumpe.html')
++                    ? t1245CostWords(value)
++                    : value,
++                  jazReplacements[key] || []
++                ).replaceAll('Vaillant Deutschland GmbH & Co. KG', 'Vaillant GmbH')
+               );
+           }
+           await page.goto(baselineServer.url + '/preise.html');
+@@ -1010,7 +1129,7 @@
+             await expect(
+               page.locator('summary').filter({ hasText: 'So entsteht dein Ergebnis' })
+             ).toBeVisible();
+-            captures.push(await t1245StepFiveCapture(page, details));
++            captures.push(await t1245StepFiveCapture(page, details, url === server.url));
+           } else await page.locator('#wzNext').click();
+         }
+       }
+```
+
+Derselbe vollständige Diff liegt als `/private/tmp/t1245-browser9/testzeilen-alt-neu.diff` vor.
+
+#### Prüfungen und Ausgaben der Anpassung 9
+
+Arbeitsverzeichnis: `/Users/benjaminbendler/code/herowerk-website-rechenkern-t1245`.
+
+```bash
+npm run lint
+npx tsc --noEmit
+npm run verify:tafel
+npm run verify:kv-nutzen
+```
+
+Alle vier Befehle Exit 0. Lint:
+
+```text
+> lint
+> eslint . && prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+```
+
+TypeScript: keine Ausgabe. `verify:tafel`: alle acht Teilprogramme grün, einschließlich der unveränderten exakten HTML-Zusicherung. Auszug:
+
+```text
+{"basis":"Arbeitsbaum","bestanden":11,"fehlgeschlagen":0}
+{"ref":"Arbeitsbaum","bestanden":15,"fehlgeschlagen":0}
+{"ref":"Arbeitsbaum","bestanden":5,"fehlgeschlagen":0}
+{"ref":"Arbeitsbaum","bestanden":6,"fehlgeschlagen":0}
+ℹ tests 4
+ℹ pass 4
+ℹ fail 0
+WR: 18 öffentliche Antwortkörper aller action-Routen bytegleich (identische lokale Tabellen; keine entfernten/normalisierten Felder).
+P7: Basis ROT / Bau GRÜN (DOM/Funktion; Geometrie zusätzlich im Browser)
+```
+
+`verify:kv-nutzen`:
+
+```text
+> verify:kv-nutzen
+> node scripts/generate-kv-jaz.mjs --check && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/t1245-kv-website-dom.mjs
+
+KV_JAZ: 48 Zeilen, 30 Originalwerte; PHP, JS und Preistafel geprüft
+GRÜN T1245: Referenzen, Summen, Spanne, alle Geräte und Randfälle
+GRÜN PHP/JS: 625 feste Fälle, 30 Geräte-/Heizsystempaare plus Kaskaden und Fehler; größtes Float-Delta 0
+GRÜN T1245 Parameter: Seed, vier Bio-Stufen, Alt-/Teilstand, Cachewechsel, Startjahr 2027 und JAZ-Sperren in JS/PHP
+GRÜN H2 Website: ungültige Bio-/Netz-/JAZ-Daten sperren nur Kostenvergleich/Bootstrap; Förderung und Perioden exakt gleich, keine Rückfallwarnung in GS/PHP
+GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme
+```
+
+Vollständige Ausgaben: `/private/tmp/t1245-browser9/lint.log`, `tsc.log`, `tafel.log`, `kv-nutzen.log`.
+
+Zusätzliche gezielte Gegenproben, Exit 0:
+
+```bash
+node /private/tmp/t1245-browser9/gegenproben.cjs
+```
+
+```text
+PASS Regelfall: 14 Zustände (375/1440, Start, Schritte 1–5, Ergebnis) und Berater ohne Ausnahme.
+PASS Rot-Gegenprobe: neue Klappe offen
+PASS Rot-Gegenprobe: fremde Klappe
+PASS Rot-Gegenprobe: fehlende neue Klappe
+PASS Rot-Gegenprobe: doppelte Inhaltszuordnung
+PASS Rot-Gegenprobe: alte Reihenfolge
+PASS Rot-Gegenprobe: alter Titel
+PASS Rot-Gegenprobe: alter Zustand
+PASS Rot-Gegenprobe: fremder Seitentext
+PASS Echter HTML-Ausschnitt: neue Eingaben separat exakt, JAZ-Reglerersatz aus Bootstrap 3,8; übriger Kartentext gleich.
+PASS Ergebnisse: nur neue Detailknoten aus Kopie entfernt; alter Betrag und alter geschlossener Inhalt exakt; Original-DOM unverändert.
+PASS Schritt 5: fünf geschlossene Klappen, darunter #jazWert; übriger Text exakt, DOM vollständig wiederhergestellt.
+PASS Rot-Gegenprobe: fremder Text in neuer Fixkosteneingabe bleibt rot.
+
+```
+
+Diese Probe ruft die tatsächlich geänderten Funktionen aus der Testdatei auf. Sie prüft 14 Kombinationen aus Breite und Aufnahmeschritt, die unveränderte Beraterseite, die Negativfälle sowie die DOM-Behandlung anhand echter HTML-Ausschnitte des eingefrorenen Altstands und des Baus. Sie prüft auch die Unverändertheit des Original-DOM nach Ergebnisaufnahme und die Wiederherstellung nach Ganzseitenaufnahme. Das DOM-Modell ist ausdrücklich kein Layout- oder Browserersatz. Der nächste Browserlauf der Steuerung ist die fachlich maßgebliche Nachmessung der vier Regelfälle und zehn Wiederholungen.
+
+```bash
+cmp apps-script/rechner-backend/kv_engine.gs /Users/benjaminbendler/code/herowerk-konfigurator/kv_engine.js
+git diff --check
+git diff --exit-code HEAD -- api apps-script js kostenvergleich-waermepumpe.html
+```
+
+Jeweils Exit 0, keine Ausgabe. Kerne weiterhin bytegleich, SHA-256 auf beiden Seiten:
+
+```text
+2997a8c6b78d24daa77cc6ad14c9e6b7547a71db70eb1c7765789424f5283a30
+```
+
+#### Dateiliste und Einbuchungsvorschlag der Anpassung 9
+
+In diesem Nachlauf geändert, nur Website:
+
+- `tests/t1087-wr.spec.js`
+- `T1245_SCHRITT1_ABSCHLUSS.md`
+
+`tests/t1087-geraetetyp.spec.js` bleibt auf dem bereits abgenommenen, noch nicht eingebuchten Stand aus Anpassung 8; in Anpassung 9 nicht erneut geändert. Damit umfasst die gesamte noch offene Website-Dateiliste aus Anpassung 8 und 9 weiterhin genau diese drei Dateien.
+
+Vorgeschlagene Einbuchungsnachricht Website für beide Browser-Nachläufe: `test: T1245-Browservergleiche auf beauftragte JAZ-Inhalte und geschlossene Zusatzklappen begrenzen`.
+
+Konfigurator: keine Änderungen und keine zusätzliche Einbuchung. Produktseite, Engine, Rechenwerte, Assets, Parameter, Golddateien und Workflow-Konfiguration unverändert. Kein `git add`, `git commit`, `git switch`, Push oder Live-Zugang.
+
+Vorschlag für das Änderungsverzeichnis der Steuerung, ohne eigene Kennungsvergabe: „Konfigurator und Angebot 541, Vorgang T1245, Codex Nachlauf 9: Unvollständige Klappenerkennung um #jazWert ergänzt; Regelfall und Wiederholungen verwenden dieselben begrenzten Ausnahmen mit vollständigem Altvergleich. Ergebnistexte über DOM-Kopie, neue Klappen bleiben geschlossen, neue Eingabetexte separat exakt geprüft. Lint, TypeScript, Tafel und Nutzen grün; Browser-Nachmessung durch Steuerung. Archiv /private/tmp/t1245-browser9; nichts eingebucht.“
+
+### Anpassung 10: Sachlicher Hinweis an der Heizsystemfrage
+
+**Umgesetzt; Asset-Versionierung sowie alle vier verlangten lokalen Prüfungen grün.** Die Steuerung meldete für den vorigen Stand 18 grün und 16 rot; dieses mitgeteilte Browserergebnis ist nicht das Ergebnis dieses Nachlaufs. Der beauftragte WebKit-Test „WR 7 Antworttexte webkit“ und dessen Zugriffsverhalten wurden nicht geändert. Neue Browserläufe bleiben bei der Steuerung.
+
+#### Ursache und Änderung im Seitencode
+
+`addChips()` hängt an die Beschriftungen der Felder aus `WZ_TRACK_IDS` einen Hinweis. Ohne eigenen Eintrag lieferte `marketLabel('heizsystem')` den allgemeinen Text „Marktannahme“. Das passte nicht zur beschlossenen Heizkörper-Annahme bei fehlender Heizsystemwahl.
+
+**Genau ein neuer Eintrag** in `WZ_MARKET_LABELS`:
+
+```js
+heizsystem: 'Annahme: Heizkörper';
+```
+
+Der bestehende Wechsel auf „Deine Angabe“ nach eigener Auswahl bleibt unverändert und wurde mit der echten Funktion `updateChips()` geprüft. Keine Änderung an `WZ_TRACK_IDS`, Vorgabewerten oder Rechenwegen.
+
+#### Prüfung sämtlicher weiterer neuer Eingaben
+
+Die Gegenprobe bestimmt die neuen Eingaben durch den Vergleich von `KV_INPUT_IDS` im eingefrorenen Altstand mit dem Bau. Sie führt die echten Funktionen `marketLabel()`, `addChips()` und `updateChips()` aus der jeweiligen Seite auf echten HTML-Ausschnitten aus, statt die Chip-Erzeugung wie zuvor auszulassen.
+
+| Neue Eingabe     | In WZ_TRACK_IDS | Tatsächlich erzeugter Hinweis              |
+| ---------------- | --------------- | ------------------------------------------ |
+| `pvTog`          | nein            | keiner                                     |
+| `pvAnteil`       | nein            | keiner                                     |
+| `pvKosten`       | nein            | keiner                                     |
+| `startJahr`      | nein            | keiner                                     |
+| `grundpreisGas`  | nein            | keiner                                     |
+| `wpZaehler`      | nein            | keiner                                     |
+| `wpArbeitspreis` | nein            | keiner                                     |
+| `wpGrundpreis`   | nein            | keiner                                     |
+| `modul14a`       | nein            | keiner                                     |
+| `netzentgeltTog` | nein            | keiner                                     |
+| `heizsystem`     | ja              | Annahme: Heizkörper                        |
+| `geraet`         | ja              | keiner, verborgen ohne Beschriftungsgruppe |
+
+Damit erhalten Zähler- und Photovoltaikschalter keinen falschen Marktwert-Hinweis. Auch `startJahr`, Tarife, PV-Anteile und Netzentgelt-Schalter haben aktuell keinen automatisch erzeugten Chip. `geraet` steht zwar in der Liste, ist aber verborgen und hat keine umgebende `.sg`, `.selg` oder `.tg`; `addChips()` überspringt es. Deshalb sind dort keine weiteren Einträge nötig. Für den Gas-Grundpreis wäre die allgemeine Einordnung als Marktwert sachlich passend; aktuell wird auch dort kein Chip erzeugt. Keine neue Chip- oder Tracking-Funktion eingeführt.
+
+Die exakte Test-Erwartung lautet nun entsprechend dem tatsächlich erzeugten Beschriftungstext:
+
+```text
+Heizkörper oder Fußbodenheizung?Annahme: Heizkörper Bitte wählenHeizkörper oder gemischte AnlageNur Fußbodenheizung
+```
+
+#### Historischer JAZ-Chip im Ganzseitenvergleich
+
+Die jetzt tatsächlich ausgeführte Chip-Initialisierung zeigte außerdem: Der eingefrorene alte JAZ-Regler besitzt selbst den damaligen Chip „Marktannahme“. Die temporäre Ersatzdarstellung in der Testaufnahme muss ihn vollständig enthalten. Sie verwendet deshalb dieselbe Gruppen-/Label-/Span-Struktur samt altem Chip, damit auch die Trennstellen von `innerText` erhalten bleiben. Der Wert stammt weiter ausschließlich aus der festen Bootstrap-Antwort, 3,8. Diese Darstellung existiert nur während der Testaufnahme und wird anschließend vollständig entfernt. Keine zusätzliche Textausnahme, kein gelockerter Vergleich und kein solcher Chip im ausgelieferten neuen JAZ-Abschnitt.
+
+#### Alt/Neu aller Änderungen dieses Nachlaufs
+
+Archiv vor Anpassung 10: `/private/tmp/t1245-browser10/`, einschließlich Seite, Test und vorherigem Bericht. Zusätzlich wurden die HTML-/CSS-Dateien vor dem Versionierungslauf unter `version-vorher/` archiviert.
+
+```diff
+--- /private/tmp/t1245-browser10/kostenvergleich-waermepumpe.html	2026-10-27 15:53:42
++++ kostenvergleich-waermepumpe.html	2026-10-27 15:53:42
+@@ -1969,7 +1969,7 @@
+     ['input','change'].forEach(t=>document.addEventListener(t,e=>{const id=e.target&&e.target.id;if(WZ_FOERDER_IDS.includes(id)){renderFoerderAufbau();renderLiveFoerder();}}));
+     ['input','change'].forEach(t=>document.addEventListener(t,e=>{if(KV_STATE.applyingBootstrap)return;const id=e.target&&e.target.id;if(id==='fEinkSlider'&&KV_STATE.bootstrap&&KV_STATE.bootstrap.kredit){applyKreditZinsvorgabe(KV_STATE.bootstrap.kredit);renderKreditHinweise(KV_STATE.bootstrap.kredit);}}));
+   }
+-  const WZ_MARKET_LABELS={invWP:'Richtwert HeroWerk-Einstiegsangebot',vglBrennstoff:'Vorbelegt nach deiner Heizungsart',kredZins:'Rechenannahme'};
++  const WZ_MARKET_LABELS={invWP:'Richtwert HeroWerk-Einstiegsangebot',vglBrennstoff:'Vorbelegt nach deiner Heizungsart',kredZins:'Rechenannahme',heizsystem:'Annahme: Heizkörper'};
+   function marketLabel(id){return WZ_MARKET_LABELS[id]||'Marktannahme';}
+   function chipFor(id){return `<span class="wz-chip ${WZ.touched.has(id)?'own':'market'}">${kvText(WZ.touched.has(id)?'Deine Angabe':marketLabel(id))}</span>`;}
+   function addChips(){
+--- /private/tmp/t1245-browser10/t1087-wr.spec.js	2026-10-27 15:53:42
++++ tests/t1087-wr.spec.js	2026-10-27 15:53:43
+@@ -124,7 +124,13 @@
+         for (const id of ['jazWert', 'jazGrundlagen', 'netzentgeltHinweis'])
+           hidden.add(document.getElementById(id));
+         legacyJaz = document.createElement('div');
+-        legacyJaz.textContent = options.legacyJaz;
++        legacyJaz.className = 'sg';
++        // Historischer Regler einschließlich seines damals erzeugten Chips.
++        // Gleiche Label-/Span-Struktur erhält auch die innerText-Trennstellen.
++        legacyJaz.innerHTML =
++          '<label>Jahresarbeitszahl (JAZ) <span class="v">' +
++          options.legacyJaz +
++          '</span><span class="wz-chip market">Marktannahme</span></label>';
+         const heating = document.getElementById('heizsystem').closest('.selg');
+         heating.before(legacyJaz);
+       }
+@@ -150,8 +156,7 @@
+     },
+     {
+       ...options,
+-      legacyJaz:
+-        'Jahresarbeitszahl (JAZ) ' + payload.kv_bootstrap.defaults.jaz.toFixed(1).replace('.', ','),
++      legacyJaz: payload.kv_bootstrap.defaults.jaz.toFixed(1).replace('.', ','),
+     }
+   );
+   if (options.newInputs) {
+@@ -159,7 +164,7 @@
+     expect(captured.inputs, 'Neue Heizsystem-/Fixkosteneingaben und JAZ-Annahme exakt').toEqual([
+       {
+         id: 'heizsystem',
+-        text: 'Heizkörper oder Fußbodenheizung? Bitte wählenHeizkörper oder gemischte AnlageNur Fußbodenheizung',
++        text: 'Heizkörper oder Fußbodenheizung?Annahme: Heizkörper Bitte wählenHeizkörper oder gemischte AnlageNur Fußbodenheizung',
+       },
+       { id: 'grundpreisGas', text: 'Gas-Grundpreis in Euro pro Jahr' },
+       { id: 'startJahr', text: 'Startjahr der Hochrechnung' },
+```
+
+Vollständiger Diff zusätzlich: `/private/tmp/t1245-browser10/alt-neu.diff`.
+
+#### Versionierung, Prüfungen und Ausgaben
+
+Die Seite trägt lokale Asset-Verweise. Deshalb wurde das vorhandene Skript unverändert ausgeführt:
+
+```bash
+scripts/version-assets.sh
+```
+
+Exit 0:
+
+```text
+Asset-Versionierung: 357 Assets, 33 Seiten,
+  0 Referenz(en) in 0 Seiten-Treffern aktualisiert.
+  Notbremse: 0 unversionierte lokale Referenzen.
+```
+
+Es war keine Änderung der Asset-Verweise nötig: Geändert wurde nur der eingebettete Seitencode; die eingebundenen Asset-Dateien blieben unverändert. Keine manuelle Änderung an Versionsmarken.
+
+Anschließend:
+
+```bash
+npm run lint
+npx tsc --noEmit
+npm run verify:tafel
+npm run verify:kv-nutzen
+```
+
+Alle vier Befehle Exit 0. Lint:
+
+```text
+> lint
+> eslint . && prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+```
+
+TypeScript: keine Ausgabe. `verify:tafel`: alle acht Teilprogramme grün, einschließlich der exakten HTML-Zusicherung. Auszug:
+
+```text
+{"basis":"Arbeitsbaum","bestanden":11,"fehlgeschlagen":0}
+{"ref":"Arbeitsbaum","bestanden":15,"fehlgeschlagen":0}
+{"ref":"Arbeitsbaum","bestanden":5,"fehlgeschlagen":0}
+{"ref":"Arbeitsbaum","bestanden":6,"fehlgeschlagen":0}
+ℹ tests 4
+ℹ pass 4
+ℹ fail 0
+WR: 18 öffentliche Antwortkörper aller action-Routen bytegleich (identische lokale Tabellen; keine entfernten/normalisierten Felder).
+P7: Basis ROT / Bau GRÜN (DOM/Funktion; Geometrie zusätzlich im Browser)
+```
+
+`verify:kv-nutzen`:
+
+```text
+> verify:kv-nutzen
+> node scripts/generate-kv-jaz.mjs --check && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/t1245-kv-website-dom.mjs
+
+KV_JAZ: 48 Zeilen, 30 Originalwerte; PHP, JS und Preistafel geprüft
+GRÜN T1245: Referenzen, Summen, Spanne, alle Geräte und Randfälle
+GRÜN PHP/JS: 625 feste Fälle, 30 Geräte-/Heizsystempaare plus Kaskaden und Fehler; größtes Float-Delta 0
+GRÜN T1245 Parameter: Seed, vier Bio-Stufen, Alt-/Teilstand, Cachewechsel, Startjahr 2027 und JAZ-Sperren in JS/PHP
+GRÜN H2 Website: ungültige Bio-/Netz-/JAZ-Daten sperren nur Kostenvergleich/Bootstrap; Förderung und Perioden exakt gleich, keine Rückfallwarnung in GS/PHP
+GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme
+```
+
+Vollständige Ausgaben unter `/private/tmp/t1245-browser10/`: `assets.log`, `lint.log`, `tsc.log`, `tafel.log`, `kv-nutzen.log`.
+
+Zusätzliche Gegenprobe, Exit 0:
+
+```bash
+node /private/tmp/t1245-browser10/gegenproben.cjs
+```
+
+```text
+PASS Regelfall: 14 Zustände (375/1440, Start, Schritte 1–5, Ergebnis) und Berater ohne Ausnahme.
+PASS Rot-Gegenprobe: neue Klappe offen
+PASS Rot-Gegenprobe: fremde Klappe
+PASS Rot-Gegenprobe: fehlende neue Klappe
+PASS Rot-Gegenprobe: doppelte Inhaltszuordnung
+PASS Rot-Gegenprobe: alte Reihenfolge
+PASS Rot-Gegenprobe: alter Titel
+PASS Rot-Gegenprobe: alter Zustand
+PASS Rot-Gegenprobe: fremder Seitentext
+PASS Reales addChips/updateChips: Heizsystem erhält Annahme: Heizkörper; alle übrigen neuen Parameter ohne Marktchip.
+PASS Nach eigener Wahl: unverändert Deine Angabe.
+PASS Echter HTML-Ausschnitt samt tatsächlichem addChips: neue Eingaben exakt; historischer JAZ-Regler einschließlich Marktannahme vollständig gleich.
+PASS Ergebnisse: nur neue Detailknoten aus Kopie entfernt; alter Betrag und alter geschlossener Inhalt exakt; Original-DOM unverändert.
+PASS Schritt 5: fünf geschlossene Klappen, darunter #jazWert; übriger Text exakt, DOM vollständig wiederhergestellt.
+PASS Rot-Gegenprobe: fremder Text in neuer Fixkosteneingabe bleibt rot.
+
+```
+
+Die erweiterte DOM-Probe enthält nun ausdrücklich die echten Chip-Funktionen aus der Seite. Sie prüft die neuen Hinweise einschließlich des Zustands nach eigener Wahl, den historischen JAZ-Chip, unveränderte Ergebnisinhalte und die Wiederherstellung des DOM. Sie bleibt ein DOM-Modell ohne Browser-Layout und ersetzt die Browser-Nachmessung der Steuerung nicht. Die maschinelle Liste der neuen Eingaben mit tatsächlich erzeugtem Chip steht in `chip-audit.json` im selben Archivordner.
+
+```bash
+cmp apps-script/rechner-backend/kv_engine.gs /Users/benjaminbendler/code/herowerk-konfigurator/kv_engine.js
+git diff --check
+git diff --exit-code HEAD -- api apps-script js
+```
+
+Jeweils Exit 0, keine Ausgabe: Kerne bytegleich; Engine, API und eingebundene JS-Dateien unverändert.
+
+#### Dateiliste und Einbuchungsvorschlag der Anpassung 10
+
+In diesem Nachlauf geändert, ausschließlich Website:
+
+- `kostenvergleich-waermepumpe.html`
+- `tests/t1087-wr.spec.js`
+- `T1245_SCHRITT1_ABSCHLUSS.md`
+
+Die vollständige noch nicht eingebuchte Dateiliste einschließlich Anpassung 8 und 9 enthält zusätzlich `tests/t1087-geraetetyp.spec.js`, das in diesem Nachlauf unverändert blieb. Insgesamt weiterhin nur diese vier Dateien. Keine Änderung am Konfigurator.
+
+Vorgeschlagene Einbuchungsnachricht Website für die offenen Browser-Nachläufe: `fix: T1245-Heizsystemhinweis berichtigen und Browservergleiche exakt abgrenzen`.
+
+Konfigurator: keine zusätzlichen Änderungen und keine zusätzliche Einbuchung. Keine Änderung an „WR 7 Antworttexte webkit“, Toleranzen, Wiederholungs- oder Auslieferungskonfiguration. Keine Einbuchung, kein Upload, kein Live-Zugriff.
+
+Vorschlag für das Änderungsverzeichnis der Steuerung: „Konfigurator und Angebot 541, Vorgang T1245, Codex Nachlauf 10: Heizsystem-Chip sachlich auf Annahme: Heizkörper gesetzt; alle neuen Eingaben auf falsche Markthinweise geprüft. Exakte Test-Erwartung und historische JAZ-Chip-Darstellung berichtigt; echte Chip-Initialisierung in der DOM-Gegenprobe. Asset-Versionierung ohne nötige Verweisänderung; Lint, TypeScript, Tafel und Nutzen grün. Archiv /private/tmp/t1245-browser10; nichts eingebucht.“

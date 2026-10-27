@@ -1969,7 +1969,7 @@ kvLoadBootstrap();
     ['input','change'].forEach(t=>document.addEventListener(t,e=>{const id=e.target&&e.target.id;if(WZ_FOERDER_IDS.includes(id)){renderFoerderAufbau();renderLiveFoerder();}}));
     ['input','change'].forEach(t=>document.addEventListener(t,e=>{if(KV_STATE.applyingBootstrap)return;const id=e.target&&e.target.id;if(id==='fEinkSlider'&&KV_STATE.bootstrap&&KV_STATE.bootstrap.kredit){applyKreditZinsvorgabe(KV_STATE.bootstrap.kredit);renderKreditHinweise(KV_STATE.bootstrap.kredit);}}));
   }
-  const WZ_MARKET_LABELS={invWP:'Richtwert HeroWerk-Einstiegsangebot',vglBrennstoff:'Vorbelegt nach deiner Heizungsart',kredZins:'Rechenannahme'};
+  const WZ_MARKET_LABELS={invWP:'Richtwert HeroWerk-Einstiegsangebot',vglBrennstoff:'Vorbelegt nach deiner Heizungsart',kredZins:'Rechenannahme',heizsystem:'Annahme: Heizkörper'};
   function marketLabel(id){return WZ_MARKET_LABELS[id]||'Marktannahme';}
   function chipFor(id){return `<span class="wz-chip ${WZ.touched.has(id)?'own':'market'}">${kvText(WZ.touched.has(id)?'Deine Angabe':marketLabel(id))}</span>`;}
   function addChips(){
