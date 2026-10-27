@@ -1,6 +1,6 @@
 ---
 typ: agent-draft
-tldr: "T1245 Schritt 1 gebaut. Konfigurator 275/275 und Goldsatz grün, PHP/JS 625 Fälle Delta 0. Gesamtabnahme wegen Browser-Sandbox und sauberem Versionsstand offen. Keine Einbuchung oder Auslieferung."
+tldr: 'T1245 Schritt 1 gebaut. Konfigurator 275/275 und Goldsatz grün, PHP/JS 625 Fälle Delta 0. Gesamtabnahme wegen Browser-Sandbox und sauberem Versionsstand offen. Keine Einbuchung oder Auslieferung.'
 datum: 2026-10-27
 status: wartet_abnahme
 quelle: agent
@@ -35,22 +35,21 @@ Vor-Schreib-Archiv des Codes: `/private/tmp/t1245-original/herowerk-website-rech
 
 Neue Helfer: `kvBioStand`, `kvNutzenEingaben`, `kvJazAuswahl`, `kvNetzentgeltPruefen`, `kvNutzenParameter`, `kvJazAusZeilen`, `KV_JAZ_ROWS_`, `kvNutzenRequest` und PHP-Gegenstücke. `Code.gs`/`Code.js`: `kvMapRequest_`, `kvGetParams_`/direkter Leser, `kvJazParameterLaden_`, `KV_PARAMETER_ROWS_`, vorbereitete JAZ-Seedfunktion und gezielte Cache-Fassung. Kein Seed wurde gegen ein Live-Sheet ausgeführt.
 
-
-| Eingabe | Vorgabe / Verhalten |
-|---|---|
-| heizsystem | Ohne Angabe Heizkörper, im Ergebnis als Annahme gekennzeichnet; fbh, heizkoerper; gemischt wird Heizkörper. |
-| geraet | Leer: vollständiges Portfolio-Minimum je Heizsystem, Heizkörper 3,86 / FBH 4,47. Bekannter Gerätealias/BWP-ID: Tabellenwert. Unbekannt oder ohne belegten Wert: gesperrt. |
-| jaz (alt) | Weiter angenommen, aber nicht als frei wählbarer Kostenwert verwendet. Tabellen-JAZ gewinnt. |
-| pvTog / pvAnteil / pvKosten | aus / 30 Prozent / 7 ct/kWh; PV-Kosten bleiben nominal konstant. Dynamischer Tarif wirkt auf den restlichen Netzstrom. |
-| foerderBetragExtern | leer/null: bisherige Förderrechnung. 0: ausdrücklich kein Zuschuss; Betrag wird in Nettoinvestition und allen Folgesummen verwendet. |
-| startJahr | Abrufjahr Europe/Berlin im Parameterleser; Kern selbst ohne Uhr. Explizites 2027 wird übernommen. CO₂-Ziel bleibt kalenderfest 2045. |
-| grundpreisGas | 250,38 Euro/Jahr; ausschließlich wenn heutiger Energieträger und betrachteter Brennstoff Gas sind, bei Öl nie. |
-| wpZaehler / wpArbeitspreis / wpGrundpreis | aus / leer / leer. Bei eigenem Zähler Arbeitspreis und Grundpreis verpflichtend, Grundpreis 0 ist gültig; dieser Tarif ersetzt Haushaltsstrom. |
-| modul14a | modul1. Vorteil 156,22 Euro/Jahr nur ohne eigenen WP-Zähler und nur Modul 1. Modul 2 setzt eigenen Zähler voraus. |
-| netzentgeltTog | aus; eingeschaltet ohne vollständige belegte Jahresreihe: klare Sperrmeldung, kein Ersatzwert. |
+| Eingabe                                                        | Vorgabe / Verhalten                                                                                                                                                                                                                                          |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| heizsystem                                                     | Ohne Angabe Heizkörper, im Ergebnis als Annahme gekennzeichnet; fbh, heizkoerper; gemischt wird Heizkörper.                                                                                                                                                  |
+| geraet                                                         | Leer: vollständiges Portfolio-Minimum je Heizsystem, Heizkörper 3,86 / FBH 4,47. Bekannter Gerätealias/BWP-ID: Tabellenwert. Unbekannt oder ohne belegten Wert: gesperrt.                                                                                    |
+| jaz (alt)                                                      | Weiter angenommen, aber nicht als frei wählbarer Kostenwert verwendet. Tabellen-JAZ gewinnt.                                                                                                                                                                 |
+| pvTog / pvAnteil / pvKosten                                    | aus / 30 Prozent / 7 ct/kWh; PV-Kosten bleiben nominal konstant. Dynamischer Tarif wirkt auf den restlichen Netzstrom.                                                                                                                                       |
+| foerderBetragExtern                                            | leer/null: bisherige Förderrechnung. 0: ausdrücklich kein Zuschuss; Betrag wird in Nettoinvestition und allen Folgesummen verwendet.                                                                                                                         |
+| startJahr                                                      | Abrufjahr Europe/Berlin im Parameterleser; Kern selbst ohne Uhr. Explizites 2027 wird übernommen. CO₂-Ziel bleibt kalenderfest 2045.                                                                                                                         |
+| grundpreisGas                                                  | 250,38 Euro/Jahr; ausschließlich wenn heutiger Energieträger und betrachteter Brennstoff Gas sind, bei Öl nie.                                                                                                                                               |
+| wpZaehler / wpArbeitspreis / wpGrundpreis                      | aus / leer / leer. Bei eigenem Zähler Arbeitspreis und Grundpreis verpflichtend, Grundpreis 0 ist gültig; dieser Tarif ersetzt Haushaltsstrom.                                                                                                               |
+| modul14a                                                       | modul1. Vorteil 156,22 Euro/Jahr nur ohne eigenen WP-Zähler und nur Modul 1. Modul 2 setzt eigenen Zähler voraus.                                                                                                                                            |
+| netzentgeltTog                                                 | aus; eingeschaltet ohne vollständige belegte Jahresreihe: klare Sperrmeldung, kein Ersatzwert.                                                                                                                                                               |
 | warmwasserBisherZentral / warmwasserKuenftigZentral / personen | true / true / leer. Wechsel nein → ja verlangt Personen: Personen × Parameter 700 kWh Nutzwärme für WP und heutiger Boilerstrom im Bestand. Beim neuen Kessel ist Warmwasser bereits im Brennstoffbedarf enthalten und wird nicht doppelt als Strom addiert. |
-| wartung_fossil / wartung_wp | Gemeinsame 250 Euro/Jahr auf beiden Seiten. Ein alter wartung_wp-Wert 350 erzeugt keinen einseitigen Aufschlag mehr. |
-| schornsteinfeger | 39 Euro/Jahr fossil; eigenständiger Ergebnisposten. |
+| wartung_fossil / wartung_wp                                    | Gemeinsame 250 Euro/Jahr auf beiden Seiten. Ein alter wartung_wp-Wert 350 erzeugt keinen einseitigen Aufschlag mehr.                                                                                                                                         |
+| schornsteinfeger                                               | 39 Euro/Jahr fossil; eigenständiger Ergebnisposten.                                                                                                                                                                                                          |
 
 Fixkosten sind nominal konstant. Die Quellen für Modul 1 und Netzpfad laufen im Ergebnis mit. Nicht-Amortisation ist `null`, sofortige Amortisation bei Mehrpreis ≤ 0 ist Jahr 0 und ausdrücklich gekennzeichnet.
 
@@ -80,42 +79,42 @@ Fixposten, PV, Bio und Netzpfad erscheinen einzeln in Ergebnis und Diagrammreihe
 
 Synthetischer Planfall: Startjahr 2026, Gas 18.000 kWh, eta 80 %, Gas 11,5 ct/kWh, Strom 30 ct/kWh, Investition 34.500 Euro, Zuschuss 12.880 Euro, VWL 75/8.1 / BWP 5078 Heizkörper JAZ 3,90, Grundpreis 250,38 Euro, Netzpfad aus. Quelle Ist: `tests/t1245-kv-nutzen.mjs`, finale Rohwerte `/private/tmp/t1245-fortsetzung/referenz-final.json`.
 
-| Größe | Ist | Soll | Ergebnis |
-|---|---|---|---|
-| WP-Strom kWh/Jahr | 3.692 (roh 3692.3076923076924) | 3.692 | grün |
-| Stufe 1 fossil erstes Jahr Euro | 2.609 (roh 2609.38) | 2.609 | grün |
-| WP erstes Jahr mit PV Euro | 947 (roh 946.7030769230769) | 947 | grün |
-| Stufe 1 PV: Jahr / Vorteil Euro | 11 / 27.077 | 11 / 27.077 | grün |
-| Stufe 1 ohne PV: Jahr / Vorteil Euro | 12 / 20.944 | 12 / 20.944 | grün |
-| Stufe 2 Mehrpreis Euro | 9.620 | 9.620 | grün |
-| Stufe 2 PV: Jahr / Vorteil Euro | 6 / 49.301 | 6 / 49.301 | grün |
-| Stufe 2 ohne PV: Jahr / Vorteil Euro | 7 / 43.167 | 7 / 43.167 | grün |
-| Bio-Netto Euro | 19.581 (roh 19581.483724475525) | 19.581 | grün |
+| Größe                                | Ist                             | Soll        | Ergebnis |
+| ------------------------------------ | ------------------------------- | ----------- | -------- |
+| WP-Strom kWh/Jahr                    | 3.692 (roh 3692.3076923076924)  | 3.692       | grün     |
+| Stufe 1 fossil erstes Jahr Euro      | 2.609 (roh 2609.38)             | 2.609       | grün     |
+| WP erstes Jahr mit PV Euro           | 947 (roh 946.7030769230769)     | 947         | grün     |
+| Stufe 1 PV: Jahr / Vorteil Euro      | 11 / 27.077                     | 11 / 27.077 | grün     |
+| Stufe 1 ohne PV: Jahr / Vorteil Euro | 12 / 20.944                     | 12 / 20.944 | grün     |
+| Stufe 2 Mehrpreis Euro               | 9.620                           | 9.620       | grün     |
+| Stufe 2 PV: Jahr / Vorteil Euro      | 6 / 49.301                      | 6 / 49.301  | grün     |
+| Stufe 2 ohne PV: Jahr / Vorteil Euro | 7 / 43.167                      | 7 / 43.167  | grün     |
+| Bio-Netto Euro                       | 19.581 (roh 19581.483724475525) | 19.581      | grün     |
 
 Bio wird aus dem Rohposten gerundet. Die Differenz zweier gerundeter Gesamtsummen ist dafür ausdrücklich nicht die Rechengrundlage. Rohvorteile:
 
-| Stufe | PV | Rohvorteil Euro |
-|---|---|---|
-| 1 | an | 27077.13630207273 |
-| 1 | aus | 20943.73308004073 |
-| 2 | an | 49300.88719664644 |
-| 2 | aus | 43167.483974614435 |
+| Stufe | PV  | Rohvorteil Euro    |
+| ----- | --- | ------------------ |
+| 1     | an  | 27077.13630207273  |
+| 1     | aus | 20943.73308004073  |
+| 2     | an  | 49300.88719664644  |
+| 2     | aus | 43167.483974614435 |
 
 ## Gewollte Abweichungen gegenüber dem alten Kern
 
 Archivierter Kern gegen Bau, Plan-Referenzfall, PV an, bisherige JAZ 3,8 versus Gerätewert 3,9. Quelle `/private/tmp/t1245-differenzen.json`; Beiträge werden ungerundet summiert.
 
-| Posten Euro | Stufe 1 roh | Stufe 2 roh |
-|---|---|---|
-| Altwert | 9357.682864882718 | 31717.976036291613 |
-| Arbeitszahl 3,8 → 3,9 | 674.050215158004 | 674.0502151580004 |
-| Gas-Grundpreis | 5007.600000000001 | 5007.600000000001 |
-| Schornsteinfeger | 780 | 780 |
-| Modul 1 | 3124.3999999999987 | 3124.3999999999987 |
-| Wartung gleich 250 | 2000 | 2000 |
-| PV 30 % zu 7 ct | 6133.403222032003 | 6133.403222032003 |
+| Posten Euro            | Stufe 1 roh           | Stufe 2 roh         |
+| ---------------------- | --------------------- | ------------------- |
+| Altwert                | 9357.682864882718     | 31717.976036291613  |
+| Arbeitszahl 3,8 → 3,9  | 674.050215158004      | 674.0502151580004   |
+| Gas-Grundpreis         | 5007.600000000001     | 5007.600000000001   |
+| Schornsteinfeger       | 780                   | 780                 |
+| Modul 1                | 3124.3999999999987    | 3124.3999999999987  |
+| Wartung gleich 250     | 2000                  | 2000                |
+| PV 30 % zu 7 ct        | 6133.403222032003     | 6133.403222032003   |
 | Bio-Treppe vier Stufen | 3.637978807091713e-12 | -136.54227683517456 |
-| Neuer Vorteil | 27077.13630207273 | 49300.88719664644 |
+| Neuer Vorteil          | 27077.13630207273     | 49300.88719664644   |
 
 Der Bio-Beitrag der Stufe 1 beträgt fachlich 0; der gespeicherte Rest 0,000000000003638 Euro entsteht aus den binären Additionen. Netzpfad, WP-Zähler, Warmwasserwechsel, Startjahr und externe Förderung sind in diesem Referenzfall neutral. Alte Aufrufe bleiben syntaktisch gültig, verwenden aber absichtlich die neuen Fixkosten und die nicht frei veränderbare Tabellen-JAZ; Altaufrufe ohne Heizsystem verwenden ausdrücklich Heizkörper-Minimum 3,86. Die gesetzliche Treppe ist die weitere beschlossene Fachänderung im Neuanlagenvergleich.
 
@@ -139,26 +138,26 @@ Das Werkzeug archiviert vor dem Schreiben exklusiv mit `wx` und verweigert ein s
 Die tatsächliche Datenstruktur von `website.json` enthält sechs gemeinsame Website-Antworten, keine separaten Antwortsätze pro F1–F10. Alle zehn Angebotsfälle referenzieren dieselben Website-Wege. Die folgende Tabelle macht diese Zuordnung ausdrücklich und erfindet keine zehn verschiedenen Web-Eingaben. „gleich“ bedeutet bytegleiche Antwort und unveränderte Parameter; nur die zwei freigegebenen Antwortstrings wurden neu erzeugt.
 
 | Fall | dimensionierung | foerderung | preise | kostenvergleich | kv_bootstrap | fv_plaetze |
-|---|---|---|---|---|---|---|
-| F1 | gleich | gleich | gleich | neu | neu | gleich |
-| F2 | gleich | gleich | gleich | neu | neu | gleich |
-| F3 | gleich | gleich | gleich | neu | neu | gleich |
-| F4 | gleich | gleich | gleich | neu | neu | gleich |
-| F5 | gleich | gleich | gleich | neu | neu | gleich |
-| F6 | gleich | gleich | gleich | neu | neu | gleich |
-| F7 | gleich | gleich | gleich | neu | neu | gleich |
-| F8 | gleich | gleich | gleich | neu | neu | gleich |
-| F9 | gleich | gleich | gleich | neu | neu | gleich |
-| F10 | gleich | gleich | gleich | neu | neu | gleich |
+| ---- | --------------- | ---------- | ------ | --------------- | ------------ | ---------- |
+| F1   | gleich          | gleich     | gleich | neu             | neu          | gleich     |
+| F2   | gleich          | gleich     | gleich | neu             | neu          | gleich     |
+| F3   | gleich          | gleich     | gleich | neu             | neu          | gleich     |
+| F4   | gleich          | gleich     | gleich | neu             | neu          | gleich     |
+| F5   | gleich          | gleich     | gleich | neu             | neu          | gleich     |
+| F6   | gleich          | gleich     | gleich | neu             | neu          | gleich     |
+| F7   | gleich          | gleich     | gleich | neu             | neu          | gleich     |
+| F8   | gleich          | gleich     | gleich | neu             | neu          | gleich     |
+| F9   | gleich          | gleich     | gleich | neu             | neu          | gleich     |
+| F10  | gleich          | gleich     | gleich | neu             | neu          | gleich     |
 
-| Schutz / Artefakt | SHA-256 / Ergebnis |
-|---|---|
-| website.json vorher | a8e47d56f02b642736b7153d7a1908ed8999abea8e0acf013ad6106038aebd88 |
-| website.json nachher | c192e2d1ce46fd4cd1db6cc6af863d1d4e2768d05e28e8e7924c7251b48a7c2e |
-| test/gold/soll.json | 08d0247334c86eb06a8189378da33896af8b64574f75ced145a4465c8aa3b7f2 |
-| test/fach/gold.test.js | 723b1ec4f2ea9823f856fbc644efc3d9b578d6d1de23270a6a41f0d1c4190984 |
-| Eingefrorene Datendateien | 5 Dateien: Namensmenge und alle Bytes unverändert |
-| Kerne bytegleich | 2997a8c6b78d24daa77cc6ad14c9e6b7547a71db70eb1c7765789424f5283a30 |
+| Schutz / Artefakt         | SHA-256 / Ergebnis                                               |
+| ------------------------- | ---------------------------------------------------------------- |
+| website.json vorher       | a8e47d56f02b642736b7153d7a1908ed8999abea8e0acf013ad6106038aebd88 |
+| website.json nachher      | c192e2d1ce46fd4cd1db6cc6af863d1d4e2768d05e28e8e7924c7251b48a7c2e |
+| test/gold/soll.json       | 08d0247334c86eb06a8189378da33896af8b64574f75ced145a4465c8aa3b7f2 |
+| test/fach/gold.test.js    | 723b1ec4f2ea9823f856fbc644efc3d9b578d6d1de23270a6a41f0d1c4190984 |
+| Eingefrorene Datendateien | 5 Dateien: Namensmenge und alle Bytes unverändert                |
+| Kerne bytegleich          | 2997a8c6b78d24daa77cc6ad14c9e6b7547a71db70eb1c7765789424f5283a30 |
 
 Kontrolle nach dem abschließenden Bau: geschützte Dateien gegen ihre Vor-Schreib-Kopien verglichen; Daten-Dateinamen und SHA-256 vollständig verglichen; aktuelle Goldsatz-Datei entspricht dem im Erzeugungsbeleg gespeicherten Nachher-Hash. `soll.json`, `gold.test.js` und Datenordner wurden nicht bearbeitet.
 
@@ -166,62 +165,62 @@ Kontrolle nach dem abschließenden Bau: geschützte Dateien gegen ihre Vor-Schre
 
 Das Werkzeug reproduziert zunächst die gespeicherte alte Kostenantwort mit dem archivierten Kern. Dann isoliert es JAZ und Bio mit dem alten Kern und addiert die im neuen Jahreskostenlauf ausgewiesenen Fixposten. Reihenfolge wie Referenzzerlegung; keine Differenz gerundeter Summen. Alle Zahlen unten sind rohe Eurobeträge. Wegen der gemeinsamen Website-Antwort ist die Rechnung für F1–F10 dieselbe; die Angebotsfälle selbst werden im unveränderten Angebots-Goldsatz separat geprüft.
 
-| Fall | Alt | Neu | Differenz | Summe Beiträge | Rest |
-|---|---|---|---|---|---|
-| F1 | 45389.09790698547 | 56647.235583073416 | 11258.137676087943 | 11258.137676087958 | -1.4551915228366852e-11 |
-| F2 | 45389.09790698547 | 56647.235583073416 | 11258.137676087943 | 11258.137676087958 | -1.4551915228366852e-11 |
-| F3 | 45389.09790698547 | 56647.235583073416 | 11258.137676087943 | 11258.137676087958 | -1.4551915228366852e-11 |
-| F4 | 45389.09790698547 | 56647.235583073416 | 11258.137676087943 | 11258.137676087958 | -1.4551915228366852e-11 |
-| F5 | 45389.09790698547 | 56647.235583073416 | 11258.137676087943 | 11258.137676087958 | -1.4551915228366852e-11 |
-| F6 | 45389.09790698547 | 56647.235583073416 | 11258.137676087943 | 11258.137676087958 | -1.4551915228366852e-11 |
-| F7 | 45389.09790698547 | 56647.235583073416 | 11258.137676087943 | 11258.137676087958 | -1.4551915228366852e-11 |
-| F8 | 45389.09790698547 | 56647.235583073416 | 11258.137676087943 | 11258.137676087958 | -1.4551915228366852e-11 |
-| F9 | 45389.09790698547 | 56647.235583073416 | 11258.137676087943 | 11258.137676087958 | -1.4551915228366852e-11 |
-| F10 | 45389.09790698547 | 56647.235583073416 | 11258.137676087943 | 11258.137676087958 | -1.4551915228366852e-11 |
+| Fall | Alt               | Neu                | Differenz          | Summe Beiträge     | Rest                    |
+| ---- | ----------------- | ------------------ | ------------------ | ------------------ | ----------------------- |
+| F1   | 45389.09790698547 | 56647.235583073416 | 11258.137676087943 | 11258.137676087958 | -1.4551915228366852e-11 |
+| F2   | 45389.09790698547 | 56647.235583073416 | 11258.137676087943 | 11258.137676087958 | -1.4551915228366852e-11 |
+| F3   | 45389.09790698547 | 56647.235583073416 | 11258.137676087943 | 11258.137676087958 | -1.4551915228366852e-11 |
+| F4   | 45389.09790698547 | 56647.235583073416 | 11258.137676087943 | 11258.137676087958 | -1.4551915228366852e-11 |
+| F5   | 45389.09790698547 | 56647.235583073416 | 11258.137676087943 | 11258.137676087958 | -1.4551915228366852e-11 |
+| F6   | 45389.09790698547 | 56647.235583073416 | 11258.137676087943 | 11258.137676087958 | -1.4551915228366852e-11 |
+| F7   | 45389.09790698547 | 56647.235583073416 | 11258.137676087943 | 11258.137676087958 | -1.4551915228366852e-11 |
+| F8   | 45389.09790698547 | 56647.235583073416 | 11258.137676087943 | 11258.137676087958 | -1.4551915228366852e-11 |
+| F9   | 45389.09790698547 | 56647.235583073416 | 11258.137676087943 | 11258.137676087958 | -1.4551915228366852e-11 |
+| F10  | 45389.09790698547 | 56647.235583073416 | 11258.137676087943 | 11258.137676087958 | -1.4551915228366852e-11 |
 
-| Fall | arbeitszahl | grundpreis | schornsteinfeger | modul1 | wartung | solaranlage | bio | netzentgelt | wpZaehler | warmwasser | startjahr | foerderung |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| F1 | 514.559922452223 | 5007.600000000001 | 780 | 3124.3999999999987 | 2000 | 0 | -168.42224636426545 | 0 | 0 | 0 | 0 | 0 |
-| F2 | 514.559922452223 | 5007.600000000001 | 780 | 3124.3999999999987 | 2000 | 0 | -168.42224636426545 | 0 | 0 | 0 | 0 | 0 |
-| F3 | 514.559922452223 | 5007.600000000001 | 780 | 3124.3999999999987 | 2000 | 0 | -168.42224636426545 | 0 | 0 | 0 | 0 | 0 |
-| F4 | 514.559922452223 | 5007.600000000001 | 780 | 3124.3999999999987 | 2000 | 0 | -168.42224636426545 | 0 | 0 | 0 | 0 | 0 |
-| F5 | 514.559922452223 | 5007.600000000001 | 780 | 3124.3999999999987 | 2000 | 0 | -168.42224636426545 | 0 | 0 | 0 | 0 | 0 |
-| F6 | 514.559922452223 | 5007.600000000001 | 780 | 3124.3999999999987 | 2000 | 0 | -168.42224636426545 | 0 | 0 | 0 | 0 | 0 |
-| F7 | 514.559922452223 | 5007.600000000001 | 780 | 3124.3999999999987 | 2000 | 0 | -168.42224636426545 | 0 | 0 | 0 | 0 | 0 |
-| F8 | 514.559922452223 | 5007.600000000001 | 780 | 3124.3999999999987 | 2000 | 0 | -168.42224636426545 | 0 | 0 | 0 | 0 | 0 |
-| F9 | 514.559922452223 | 5007.600000000001 | 780 | 3124.3999999999987 | 2000 | 0 | -168.42224636426545 | 0 | 0 | 0 | 0 | 0 |
-| F10 | 514.559922452223 | 5007.600000000001 | 780 | 3124.3999999999987 | 2000 | 0 | -168.42224636426545 | 0 | 0 | 0 | 0 | 0 |
+| Fall | arbeitszahl      | grundpreis        | schornsteinfeger | modul1             | wartung | solaranlage | bio                 | netzentgelt | wpZaehler | warmwasser | startjahr | foerderung |
+| ---- | ---------------- | ----------------- | ---------------- | ------------------ | ------- | ----------- | ------------------- | ----------- | --------- | ---------- | --------- | ---------- |
+| F1   | 514.559922452223 | 5007.600000000001 | 780              | 3124.3999999999987 | 2000    | 0           | -168.42224636426545 | 0           | 0         | 0          | 0         | 0          |
+| F2   | 514.559922452223 | 5007.600000000001 | 780              | 3124.3999999999987 | 2000    | 0           | -168.42224636426545 | 0           | 0         | 0          | 0         | 0          |
+| F3   | 514.559922452223 | 5007.600000000001 | 780              | 3124.3999999999987 | 2000    | 0           | -168.42224636426545 | 0           | 0         | 0          | 0         | 0          |
+| F4   | 514.559922452223 | 5007.600000000001 | 780              | 3124.3999999999987 | 2000    | 0           | -168.42224636426545 | 0           | 0         | 0          | 0         | 0          |
+| F5   | 514.559922452223 | 5007.600000000001 | 780              | 3124.3999999999987 | 2000    | 0           | -168.42224636426545 | 0           | 0         | 0          | 0         | 0          |
+| F6   | 514.559922452223 | 5007.600000000001 | 780              | 3124.3999999999987 | 2000    | 0           | -168.42224636426545 | 0           | 0         | 0          | 0         | 0          |
+| F7   | 514.559922452223 | 5007.600000000001 | 780              | 3124.3999999999987 | 2000    | 0           | -168.42224636426545 | 0           | 0         | 0          | 0         | 0          |
+| F8   | 514.559922452223 | 5007.600000000001 | 780              | 3124.3999999999987 | 2000    | 0           | -168.42224636426545 | 0           | 0         | 0          | 0         | 0          |
+| F9   | 514.559922452223 | 5007.600000000001 | 780              | 3124.3999999999987 | 2000    | 0           | -168.42224636426545 | 0           | 0         | 0          | 0         | 0          |
+| F10  | 514.559922452223 | 5007.600000000001 | 780              | 3124.3999999999987 | 2000    | 0           | -168.42224636426545 | 0           | 0         | 0          | 0         | 0          |
 
 Rest je Fall: −0,000000000014552 Euro, damit deutlich unter 0,01 Euro. Gerundet: 45.389,10 → 56.647,24 Euro, Differenz +11.258,14 Euro. Der reine Bio-Treppenbeitrag ist im Goldfall −168,42224636426545 Euro; er ist wegen anderer Eingaben nicht identisch mit der Bio-Korrektur des separaten Planfalls.
 
 Neue Bootstrap-Schlüssel einzeln:
 
-| Schlüssel | Zweck |
-|---|---|
-| jaz | Quelle und angebotene Heizsysteme der unveränderlichen Tabellen-JAZ |
-| bioHinweis | Transparenter Hinweis auf vollständige Migration der alten Bio-Treppe |
-| netzentgeltBereit | Anzeige, ob eine belegte Jahresreihe vorhanden ist |
+| Schlüssel         | Zweck                                                                 |
+| ----------------- | --------------------------------------------------------------------- |
+| jaz               | Quelle und angebotene Heizsysteme der unveränderlichen Tabellen-JAZ   |
+| bioHinweis        | Transparenter Hinweis auf vollständige Migration der alten Bio-Treppe |
+| netzentgeltBereit | Anzeige, ob eine belegte Jahresreihe vorhanden ist                    |
 
 ## Erlaubter Testnachzug und Ursachenbehebung
 
 Keine Preis- oder Angebots-Erwartung, kein eingefrorenes Datenset und keine Goldsatz-Toleranz geändert. Alte JAZ-Rohbelege und deren Hashes bleiben erhalten. Die aktuellen Preistafel-Erwartungen werden direkt aus der freigegebenen BWP-Rohquelle hergeleitet, unabhängig vom Anzeige-Generator.
 
-* Datumsformat `yyyy`: Jahresauslese verwendet das im Bestandsvertrag unterstützte `yyyy-MM-dd` und entnimmt dessen erste vier Zeichen. Der strenge Datums-Fake wurde nicht gelockert. Die synthetischen KV-Tabellen enthalten nun die veröffentlichte JAZ-Tabelle passend zum Parameter-Marker.
-* `missing_tab_Dimensionierung`: ein Förderaufruf lädt keine ausschließlich für Kostenvergleich/Warmwasser erforderliche Tabelle. JAZ wird für Kostenvergleich/Bootstrap gezielt gelesen. Bestehende Fördertests behalten ihre Erwartungen.
-* PHP-Warnung/ungültiges JSON in `verify:tafel`: der generierte PHP-JAZ-Block ist autark und benötigt keine unkopierte Zusatzdatei in historischen Test-Serververzeichnissen. Warnungen werden nicht unterdrückt. Historische API-Hüllen bleiben gegen ihre alten Antworten geprüft; nur Kostenvergleich und Bootstrap verwenden beim Hüllenvergleich den fachlich freigegebenen aktuellen Kern. Die neuen Zahlen werden separat durch Referenzen, PHP/JS-Gleichlauf und Goldsatz geprüft.
-* Frühere pauschale „kein Rechenkern geändert“-Erwartungen des Tafelbaus gelten für diesen ausdrücklich beauftragten Kernbau nicht mehr. Geschützte Preis-/Förderfunktionen und alle anderen API-Wege werden weiter exakt geprüft. Keine numerische Toleranz angehoben; kein Assertions-Ausdruck durch ein pauschales Bestehen ersetzt.
+- Datumsformat `yyyy`: Jahresauslese verwendet das im Bestandsvertrag unterstützte `yyyy-MM-dd` und entnimmt dessen erste vier Zeichen. Der strenge Datums-Fake wurde nicht gelockert. Die synthetischen KV-Tabellen enthalten nun die veröffentlichte JAZ-Tabelle passend zum Parameter-Marker.
+- `missing_tab_Dimensionierung`: ein Förderaufruf lädt keine ausschließlich für Kostenvergleich/Warmwasser erforderliche Tabelle. JAZ wird für Kostenvergleich/Bootstrap gezielt gelesen. Bestehende Fördertests behalten ihre Erwartungen.
+- PHP-Warnung/ungültiges JSON in `verify:tafel`: der generierte PHP-JAZ-Block ist autark und benötigt keine unkopierte Zusatzdatei in historischen Test-Serververzeichnissen. Warnungen werden nicht unterdrückt. Historische API-Hüllen bleiben gegen ihre alten Antworten geprüft; nur Kostenvergleich und Bootstrap verwenden beim Hüllenvergleich den fachlich freigegebenen aktuellen Kern. Die neuen Zahlen werden separat durch Referenzen, PHP/JS-Gleichlauf und Goldsatz geprüft.
+- Frühere pauschale „kein Rechenkern geändert“-Erwartungen des Tafelbaus gelten für diesen ausdrücklich beauftragten Kernbau nicht mehr. Geschützte Preis-/Förderfunktionen und alle anderen API-Wege werden weiter exakt geprüft. Keine numerische Toleranz angehoben; kein Assertions-Ausdruck durch ein pauschales Bestehen ersetzt.
 
 ### JAZ-Werte der bisherigen Produktdatei, Alt → Neu
 
-| Gerät | Erwartung | Alt | Neu |
-|---|---|---|---|
-| Wolf CHA-07 | JAZ Heizkörper¹ | 3,96 | 4,30 |
-| Wolf CHA-07 | JAZ Fußbodenheizung¹ | 4,92 | 4,98 |
-| Wolf CHA-10 | JAZ Heizkörper¹ | 4,10 | 4,37 |
-| Wolf CHA-10 | JAZ Fußbodenheizung¹ | 5,09 | 5,08 |
-| Wolf CHA-16/20 | JAZ Heizkörper¹ | 4,04 | 4,42 |
+| Gerät          | Erwartung            | Alt  | Neu  |
+| -------------- | -------------------- | ---- | ---- |
+| Wolf CHA-07    | JAZ Heizkörper¹      | 3,96 | 4,30 |
+| Wolf CHA-07    | JAZ Fußbodenheizung¹ | 4,92 | 4,98 |
+| Wolf CHA-10    | JAZ Heizkörper¹      | 4,10 | 4,37 |
+| Wolf CHA-10    | JAZ Fußbodenheizung¹ | 5,09 | 5,08 |
+| Wolf CHA-16/20 | JAZ Heizkörper¹      | 4,04 | 4,42 |
 | Wolf CHA-16/20 | JAZ Fußbodenheizung¹ | 5,03 | 5,11 |
-| Wolf CHA-20/24 | JAZ Heizkörper¹ | 3,99 | 4,34 |
+| Wolf CHA-20/24 | JAZ Heizkörper¹      | 3,99 | 4,34 |
 | Wolf CHA-20/24 | JAZ Fußbodenheizung¹ | 4,96 | 5,03 |
 
 FBH-Anzeige/Randbedingung überall 35/30 → 35/28; auch Vaillant-JAZ, Lastannahmen und Abrufdatum werden maschinell nach Quelldatei geprüft. Bio-Seed 2029/0,15 · 2035/0,30 · 2040/0,60 → 2029/0,10 · 2030/0,15 · 2035/0,30 · 2040/0,60. Die genaue alte und neue Zeile jeder bearbeiteten bestehenden Testdatei folgt hier als vollständiger Diff ohne Kontext. `@@` enthält die ursprüngliche und neue Zeilennummer. Die zwei Gold-Antwortzeilen sind wegen ihrer Länge durch vollständiges Vorher-Archiv, Nachher-Datei und Belege 1/2 dokumentiert.
@@ -537,35 +536,35 @@ Asset-Versionierung aktuell: 79 Assets, 33 Seiten, 0 Abweichungen.
 
 Alle 27 `verify:`-Einträge des aktuellen `package.json` sind im folgenden Register erfasst. Vollständige Ausgaben liegen an den genannten lokalen Logpfaden; das finale maschinelle Register ist `/private/tmp/t1245-fortsetzung/verify-ergebnisse-final.json`. Historisch rote Zwischenläufe bleiben erhalten, sind aber nicht die hier ausgewiesenen Nachläufe.
 
-| Befehl | Status | Ausgabeauszug | Vollständige Ausgabe |
-|---|---|---|---|
-| npm run verify:einheitenknopf | Sandbox blockiert Browserstart | Browserstart vor fachlicher Prüfung gesperrt | /private/tmp/t1245-fortsetzung/verify-einheitenknopf.log |
-| npm run verify:website-gates | grün | >>> SAUBER, geprüft wurde: Rechenlogik und Testlisten. | /private/tmp/t1245-fortsetzung/verify-website-gates.log |
-| npm run verify:assets | grün | Asset-Versionierung aktuell: 79 Assets, 33 Seiten, 0 Abweichungen. | /private/tmp/t1245-fortsetzung/assets.log |
-| npm run verify:version | Wächter sperrt uneingebuchten Arbeitsbaum | FEHLER: Arbeitsbaum ist nicht sauber. Kein Stempel für einen schmutzigen Stand. | /private/tmp/t1245-fortsetzung/version.log |
-| npm run verify:consent | grün | Consent-Integration OK: 31 öffentliche Stammseiten mit Wächter, keine ungeschützte Einbindung, 1 CSP-Quelle (.htaccess). | /private/tmp/t1245-fortsetzung/verify-consent.log |
-| npm run verify:wp-analytics | grün | 10 Ereignisaufrufe geprüft, alle Parameter entsprechen der geschlossenen Positivliste. | /private/tmp/t1245-fortsetzung/verify-wp-analytics.log |
-| npm run verify:raster | Sandbox blockiert Browserstart | Browserstart vor fachlicher Prüfung gesperrt | /private/tmp/t1245-fortsetzung/verify-raster.log |
-| npm run verify:mobile | Sandbox blockiert Browserstart | Browserstart vor fachlicher Prüfung gesperrt | /private/tmp/t1245-fortsetzung/verify-mobile.log |
-| npm run verify:rechner-snapshot-nachlauf | grün | PASS Snapshot-Schema: v1 bleibt lesbar, v2 enthält zehn Tabellen. | /private/tmp/t1245-fortsetzung/verify-rechner-snapshot-nachlauf.log |
-| npm run verify:schnittstelle-innenfelder | grün | 7 von 7 Pruefungen gruen. | /private/tmp/t1245-fortsetzung/verify-schnittstelle-innenfelder.log |
-| npm run verify:rechner-zaehlerdateien | grün | 14 von 14 Prüfungen grün. | /private/tmp/t1245-fortsetzung/verify-rechner-zaehlerdateien.log |
-| npm run verify:rechner-snapshot-apache | grün | ERGEBNIS: GRÜN, drei öffentliche Seiten erreichbar und Zeitplan-Skript gesperrt. | /private/tmp/t1245-fortsetzung/apache.log |
-| npm run verify:dimensionierung | grün | PASS Website-Mindestdeckung: beide Kerne, Treiber website_mindestanteil, Rueckfall 0,80 | /private/tmp/t1245-fortsetzung/verify-dimensionierung.log |
-| npm run verify:tafel | grün | Preistafel: alle acht Teilprogramme grün | /private/tmp/t1245-fortsetzung/tafel.log |
-| npm run verify:tafel-webkit | Sandbox blockiert Browserstart | Browserstart vor fachlicher Prüfung gesperrt | /private/tmp/t1245-fortsetzung/verify-tafel-webkit.log |
-| npm run verify:antragsdatum | grün | Alle 19 Faelle laufen gleich. | /private/tmp/t1245-fortsetzung/verify-antragsdatum.log |
-| npm run verify:foerder-einkommensstaffel | grün | ERGEBNIS: 38/38 PASS, Delta exakt 0. | /private/tmp/t1245-fortsetzung/verify-foerder-einkommensstaffel.log |
-| npm run verify:seo | grün | Strukturdaten aktuell: 19 Seiten mit Auto-Block, 55 Knoten, 31 Seiten geprueft, 0 Abweichungen. | /private/tmp/t1245-fortsetzung/verify-seo.log |
-| npm run verify:bausteine | grün | Bausteine aktuell: 12 Pfadzeilen, 12 Fakt-Saetze, 41 Begriffe, 34 gepruefte Zahlen auf 12 Seiten, 0 Abweichungen. | /private/tmp/t1245-fortsetzung/verify-bausteine.log |
-| npm run verify:stelle-live | nicht ausgeführt: Live-Aufruf im Auftrag verboten | Kein Live-Aufruf; ausdrücklich verboten | – |
-| npm run verify:buendel-kommentare -- /private/tmp/t1245-buendel-komponenten | grün | Buendel-Gleichheitspruefung: GRUEN, 124 Dateien verglichen. | /private/tmp/t1245-fortsetzung/buendel-komponenten.log |
-| npm run verify:buendel-gleichheit -- . /private/tmp/t1245-buendel-komponenten | grün | Buendel-Gleichheitspruefung: GRUEN, 124 Dateien verglichen. | /private/tmp/t1245-fortsetzung/buendel-komponenten.log |
-| npm run verify:buendel-kommentare-schaerfe | grün | Schärfeprüfung: GRÜN, 67 Fälle bestanden. | /private/tmp/t1245-fortsetzung/verify-buendel-kommentare-schaerfe.log |
-| npm run verify:rechner-snapshot-integritaet | grün | PASS Mutation kanonische Identität | /private/tmp/t1245-fortsetzung/verify-rechner-snapshot-integritaet.log |
-| npm run verify:a11 | grün | A11 GRÜN: 169 Prüfgruppen einschließlich vollständiger Kernvergleiche. | /private/tmp/t1245-fortsetzung/a11.log |
-| npm run verify:kv-nutzen | grün | GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme | /private/tmp/t1245-fortsetzung/kv-nutzen.log |
-| npm run verify:kv-browser | Sandbox blockiert Browserstart | Browserstart vor fachlicher Prüfung gesperrt | /private/tmp/t1245-fortsetzung/browser.log |
+| Befehl                                                                        | Status                                            | Ausgabeauszug                                                                                                                       | Vollständige Ausgabe                                                   |
+| ----------------------------------------------------------------------------- | ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| npm run verify:einheitenknopf                                                 | Sandbox blockiert Browserstart                    | Browserstart vor fachlicher Prüfung gesperrt                                                                                        | /private/tmp/t1245-fortsetzung/verify-einheitenknopf.log               |
+| npm run verify:website-gates                                                  | grün                                              | >>> SAUBER, geprüft wurde: Rechenlogik und Testlisten.                                                                              | /private/tmp/t1245-fortsetzung/verify-website-gates.log                |
+| npm run verify:assets                                                         | grün                                              | Asset-Versionierung aktuell: 79 Assets, 33 Seiten, 0 Abweichungen.                                                                  | /private/tmp/t1245-fortsetzung/assets.log                              |
+| npm run verify:version                                                        | Wächter sperrt uneingebuchten Arbeitsbaum         | FEHLER: Arbeitsbaum ist nicht sauber. Kein Stempel für einen schmutzigen Stand.                                                     | /private/tmp/t1245-fortsetzung/version.log                             |
+| npm run verify:consent                                                        | grün                                              | Consent-Integration OK: 31 öffentliche Stammseiten mit Wächter, keine ungeschützte Einbindung, 1 CSP-Quelle (.htaccess).            | /private/tmp/t1245-fortsetzung/verify-consent.log                      |
+| npm run verify:wp-analytics                                                   | grün                                              | 10 Ereignisaufrufe geprüft, alle Parameter entsprechen der geschlossenen Positivliste.                                              | /private/tmp/t1245-fortsetzung/verify-wp-analytics.log                 |
+| npm run verify:raster                                                         | Sandbox blockiert Browserstart                    | Browserstart vor fachlicher Prüfung gesperrt                                                                                        | /private/tmp/t1245-fortsetzung/verify-raster.log                       |
+| npm run verify:mobile                                                         | Sandbox blockiert Browserstart                    | Browserstart vor fachlicher Prüfung gesperrt                                                                                        | /private/tmp/t1245-fortsetzung/verify-mobile.log                       |
+| npm run verify:rechner-snapshot-nachlauf                                      | grün                                              | PASS Snapshot-Schema: v1 bleibt lesbar, v2 enthält zehn Tabellen.                                                                   | /private/tmp/t1245-fortsetzung/verify-rechner-snapshot-nachlauf.log    |
+| npm run verify:schnittstelle-innenfelder                                      | grün                                              | 7 von 7 Pruefungen gruen.                                                                                                           | /private/tmp/t1245-fortsetzung/verify-schnittstelle-innenfelder.log    |
+| npm run verify:rechner-zaehlerdateien                                         | grün                                              | 14 von 14 Prüfungen grün.                                                                                                           | /private/tmp/t1245-fortsetzung/verify-rechner-zaehlerdateien.log       |
+| npm run verify:rechner-snapshot-apache                                        | grün                                              | ERGEBNIS: GRÜN, drei öffentliche Seiten erreichbar und Zeitplan-Skript gesperrt.                                                    | /private/tmp/t1245-fortsetzung/apache.log                              |
+| npm run verify:dimensionierung                                                | grün                                              | PASS Website-Mindestdeckung: beide Kerne, Treiber website_mindestanteil, Rueckfall 0,80                                             | /private/tmp/t1245-fortsetzung/verify-dimensionierung.log              |
+| npm run verify:tafel                                                          | grün                                              | Preistafel: alle acht Teilprogramme grün                                                                                            | /private/tmp/t1245-fortsetzung/tafel.log                               |
+| npm run verify:tafel-webkit                                                   | Sandbox blockiert Browserstart                    | Browserstart vor fachlicher Prüfung gesperrt                                                                                        | /private/tmp/t1245-fortsetzung/verify-tafel-webkit.log                 |
+| npm run verify:antragsdatum                                                   | grün                                              | Alle 19 Faelle laufen gleich.                                                                                                       | /private/tmp/t1245-fortsetzung/verify-antragsdatum.log                 |
+| npm run verify:foerder-einkommensstaffel                                      | grün                                              | ERGEBNIS: 38/38 PASS, Delta exakt 0.                                                                                                | /private/tmp/t1245-fortsetzung/verify-foerder-einkommensstaffel.log    |
+| npm run verify:seo                                                            | grün                                              | Strukturdaten aktuell: 19 Seiten mit Auto-Block, 55 Knoten, 31 Seiten geprueft, 0 Abweichungen.                                     | /private/tmp/t1245-fortsetzung/verify-seo.log                          |
+| npm run verify:bausteine                                                      | grün                                              | Bausteine aktuell: 12 Pfadzeilen, 12 Fakt-Saetze, 41 Begriffe, 34 gepruefte Zahlen auf 12 Seiten, 0 Abweichungen.                   | /private/tmp/t1245-fortsetzung/verify-bausteine.log                    |
+| npm run verify:stelle-live                                                    | nicht ausgeführt: Live-Aufruf im Auftrag verboten | Kein Live-Aufruf; ausdrücklich verboten                                                                                             | –                                                                      |
+| npm run verify:buendel-kommentare -- /private/tmp/t1245-buendel-komponenten   | grün                                              | Buendel-Gleichheitspruefung: GRUEN, 124 Dateien verglichen.                                                                         | /private/tmp/t1245-fortsetzung/buendel-komponenten.log                 |
+| npm run verify:buendel-gleichheit -- . /private/tmp/t1245-buendel-komponenten | grün                                              | Buendel-Gleichheitspruefung: GRUEN, 124 Dateien verglichen.                                                                         | /private/tmp/t1245-fortsetzung/buendel-komponenten.log                 |
+| npm run verify:buendel-kommentare-schaerfe                                    | grün                                              | Schärfeprüfung: GRÜN, 67 Fälle bestanden.                                                                                           | /private/tmp/t1245-fortsetzung/verify-buendel-kommentare-schaerfe.log  |
+| npm run verify:rechner-snapshot-integritaet                                   | grün                                              | PASS Mutation kanonische Identität                                                                                                  | /private/tmp/t1245-fortsetzung/verify-rechner-snapshot-integritaet.log |
+| npm run verify:a11                                                            | grün                                              | A11 GRÜN: 169 Prüfgruppen einschließlich vollständiger Kernvergleiche.                                                              | /private/tmp/t1245-fortsetzung/a11.log                                 |
+| npm run verify:kv-nutzen                                                      | grün                                              | GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme | /private/tmp/t1245-fortsetzung/kv-nutzen.log                           |
+| npm run verify:kv-browser                                                     | Sandbox blockiert Browserstart                    | Browserstart vor fachlicher Prüfung gesperrt                                                                                        | /private/tmp/t1245-fortsetzung/browser.log                             |
 
 ### Lokale Bündelkomponenten und Versionssperre
 
@@ -700,7 +699,6 @@ Keine geteilte Vault-Datei wurde direkt geschrieben. Sie liegt außerhalb der Sc
 
 Offene fachliche Fragen: keine. Die belegte echte Netzentgelt-Jahresreihe ist bewusst ein Folgeschritt der Steuerung; der leere Pfad sperrt bei Aktivierung. Inbetriebnahmeprotokoll und Verbrauchsableitung ohne Vorverbrauch gehören zu den benannten Folgeaufgaben.
 
-
 ## Nachbesserung Prüfer
 
 Stand nach Anpassung 5 und anschließendem `go`, 27.10.2026. Dieser Abschnitt dokumentiert den aktuellen Nachlauf; die vorherigen Messungen und Test-Diffs oben dokumentieren den Bau vor dem frischen Prüfer. Maßstab: `/private/tmp/t1245-pruefer/BERICHT.md`, S1 und H2. Ausschließlich diese beiden Nachbesserungen gebaut. Keine Einbuchung und keine Auslieferung.
@@ -815,10 +813,10 @@ Vollständige Ausgabe: `/private/tmp/t1245-nachbesserung5/kv-nutzen.log`.
 
 Geschützte Dateien nach dem vollständigen Lauf gegen die Vor-Schreib-Kopien verglichen:
 
-| Datei | SHA-256, unverändert |
-|---|---|
+| Datei                    | SHA-256, unverändert                                               |
+| ------------------------ | ------------------------------------------------------------------ |
 | `test/gold/website.json` | `c192e2d1ce46fd4cd1db6cc6af863d1d4e2768d05e28e8e7924c7251b48a7c2e` |
-| `test/gold/soll.json` | `08d0247334c86eb06a8189378da33896af8b64574f75ced145a4465c8aa3b7f2` |
+| `test/gold/soll.json`    | `08d0247334c86eb06a8189378da33896af8b64574f75ced145a4465c8aa3b7f2` |
 | `test/fach/gold.test.js` | `723b1ec4f2ea9823f856fbc644efc3d9b578d6d1de23270a6a41f0d1c4190984` |
 
 Auch die Namensmenge und Bytes aller fünf eingefrorenen Datendateien bleiben unverändert. JS-/GS-Kerne bytegleich und unverändert: `2997a8c6b78d24daa77cc6ad14c9e6b7547a71db70eb1c7765789424f5283a30`. Keine neue Goldsatz-Erzeugung, keine Änderung an `website.json` oder `soll.json`, kein Hash-Nachzug im Öltanktest.

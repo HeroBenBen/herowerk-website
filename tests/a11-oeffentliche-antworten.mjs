@@ -175,7 +175,7 @@ function seal(s) {
   );
 }
 async function start(mode) {
-  const apiStand=mode.replace(/-kv$/,'');
+  const apiStand = mode.replace(/-kv$/, '');
   const dir = path.join(root, mode),
     api = path.join(dir, 'website/api'),
     runtime = path.join(dir, 'rechner-runtime');
@@ -204,7 +204,8 @@ async function start(mode) {
         )
       : await fs.readFile(path.join(repo, 'api', file), 'utf8');
     // T1245: historische A11-Hülle, neuer freigegebener Kostenkern. Die Byteprüfung bleibt exakt.
-    if(mode.endsWith('-kv')&&file==='rechner-engine.php')source=await fs.readFile(path.join(repo,'api',file),'utf8');
+    if (mode.endsWith('-kv') && file === 'rechner-engine.php')
+      source = await fs.readFile(path.join(repo, 'api', file), 'utf8');
     if (file === 'rechner-values.php') {
       // Kein echter Transport, auch nicht beim Nachlauf eines absichtlich alten Abzugs.
       const start = source.indexOf('function rechner_curl_get('),
@@ -376,7 +377,7 @@ function mustFail(r) {
 try {
   const current = await start('current'),
     old = await start('basis');
-  const oldKv=await start('basis-kv');
+  const oldKv = await start('basis-kv');
   const actions = [
     'preise',
     'dimensionierung',
@@ -500,7 +501,10 @@ try {
           heizsystem: 'heizkoerper',
         };
         const a = await request(current, query),
-          b = await request(['kostenvergleich','kv_bootstrap'].includes(action)?priorKv:prior, query);
+          b = await request(
+            ['kostenvergleich', 'kv_bootstrap'].includes(action) ? priorKv : prior,
+            query
+          );
         assert.equal(a.status, b.status);
         // Keine Rundung und keine Umsortierung im Vergleich.
         assert.equal(a.raw, withoutPowerRaw(b.raw));
@@ -720,7 +724,10 @@ try {
     for (const action of actions)
       await checked2(`Bytegleich/2abe040/${version}/${action}`, async () => {
         const a = await request(current, { ...query, action }),
-          b = await request(['kostenvergleich','kv_bootstrap'].includes(action)?prior2Kv:prior2, { ...query, action });
+          b = await request(
+            ['kostenvergleich', 'kv_bootstrap'].includes(action) ? prior2Kv : prior2,
+            { ...query, action }
+          );
         assert.equal(a.status, 200);
         assert.equal(a.raw, b.raw);
         if (process.env.A11_RESPONSE_DIR) {
@@ -869,7 +876,7 @@ try {
       await checked3(`Katalogmodell/${version}/${index}`, async () => {
         await put(current, data);
         await put(prior3, data);
-    await put(prior3Kv, data);
+        await put(prior3Kv, data);
         const normal = await request(prior3, query);
         assert.equal(normal.status, 200);
         const changed = structuredClone(data);
@@ -894,7 +901,10 @@ try {
     await put(prior3Kv, data);
     for (const action of actions)
       await checked3(`Bytegleich/5188c99/${version}/${action}`, async () => {
-        const before = await request(['kostenvergleich','kv_bootstrap'].includes(action)?prior3Kv:prior3, { ...query, action }),
+        const before = await request(
+            ['kostenvergleich', 'kv_bootstrap'].includes(action) ? prior3Kv : prior3,
+            { ...query, action }
+          ),
           after = await request(current, { ...query, action });
         assert.equal(before.status, 200);
         assert.equal(after.status, 200);
@@ -1069,7 +1079,7 @@ try {
     for (const [index, text] of newHTMLForms.entries()) {
       await checked4(`Katalogmodell/${version}/${index}`, async () => {
         await put(prior4, data);
-    await put(prior4Kv, data);
+        await put(prior4Kv, data);
         const normal = await request(prior4, query);
         assert.equal(normal.status, 200);
         const changed = structuredClone(data);
@@ -1112,7 +1122,10 @@ try {
     await put(prior4Kv, data);
     for (const action of actions)
       await checked4(`Bytegleich/d67c975/${version}/${action}`, async () => {
-        const before = await request(['kostenvergleich','kv_bootstrap'].includes(action)?prior4Kv:prior4, { ...query, action }),
+        const before = await request(
+            ['kostenvergleich', 'kv_bootstrap'].includes(action) ? prior4Kv : prior4,
+            { ...query, action }
+          ),
           after = await request(current, { ...query, action });
         assert.equal(before.status, 200);
         assert.equal(after.status, 200);
@@ -1176,7 +1189,10 @@ try {
         plz: '00000',
         preis: '29944',
       };
-      const [a, b] = await Promise.all([request(current, q), request(['kostenvergleich','kv_bootstrap'].includes(action)?oldKv:old, q)]);
+      const [a, b] = await Promise.all([
+        request(current, q),
+        request(['kostenvergleich', 'kv_bootstrap'].includes(action) ? oldKv : old, q),
+      ]);
       assert.equal(a.status, 200, JSON.stringify(a));
       assert.equal(b.status, 200, JSON.stringify(b));
       clean(a.value);

@@ -160,9 +160,22 @@ test('Dimensionierungsanzeige unverändert; keine Rechenkernänderung aus dem Ta
   assert.equal(block(read('js/site.js', ref)), block(read('js/site.js', baseline)));
   // T1245 ändert den Kostenkern, nicht die Dimensionierungs- und Förderformeln.
   // Die betroffenen Routen bleiben gegen ihren historischen Stand gesichert.
-  for (const [file,names] of Object.entries({'api/rechner-engine.php':['hw_foerder_calc','hw_get_prices','hw_preise'], 'apps-script/rechner-backend/Code.gs':['foerderCalc_','getPrices_','preise_']})) {
-    const body=(source,name)=>{const at=source.indexOf('function '+name+'('); assert.ok(at>=0,name);const end=source.indexOf('\nfunction ',at+1);return source.slice(at,end<0?source.length:end).trim();};
-    for(const name of names)assert.equal(body(read(file,ref),name),body(read(file,'origin/main'),name),name+' unverändert');
+  for (const [file, names] of Object.entries({
+    'api/rechner-engine.php': ['hw_foerder_calc', 'hw_get_prices', 'hw_preise'],
+    'apps-script/rechner-backend/Code.gs': ['foerderCalc_', 'getPrices_', 'preise_'],
+  })) {
+    const body = (source, name) => {
+      const at = source.indexOf('function ' + name + '(');
+      assert.ok(at >= 0, name);
+      const end = source.indexOf('\nfunction ', at + 1);
+      return source.slice(at, end < 0 ? source.length : end).trim();
+    };
+    for (const name of names)
+      assert.equal(
+        body(read(file, ref), name),
+        body(read(file, 'origin/main'), name),
+        name + ' unverändert'
+      );
   }
 });
 test('Wolf-Bilddateien bytegleich', () => {

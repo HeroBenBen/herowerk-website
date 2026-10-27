@@ -6,7 +6,13 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { browser, load, render, read, root, internal } = require('./helpers/t1087-datenblatt.cjs');
 const { raw, marked } = require('./helpers/t1087-geraetetyp.cjs');
-const { index, expectedJaz, footnote, expectedFootnote, plain } = require('./helpers/t1087-jaz.cjs');
+const {
+  index,
+  expectedJaz,
+  footnote,
+  expectedFootnote,
+  plain,
+} = require('./helpers/t1087-jaz.cjs');
 const baseline = 'b4e5df1b8385cf32c94e7af42735882579961604';
 const ref = process.argv.includes('--ref') ? process.argv[process.argv.indexOf('--ref') + 1] : '';
 const cases = [];

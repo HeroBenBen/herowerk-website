@@ -111,8 +111,15 @@ function unchanged() {
   // T1245 hat diese sechs Kostenkern-/Parameterdateien ausdrücklich abgelöst.
   // Preis-/Förderformeln bleiben gesondert unverändert; neue Kostenwerte sind im
   // festen T1245-Gleichlauf und den Referenzfällen gesichert.
-  const t1245=new Set(['api/rechner-engine.php','api/rechner-values.php','apps-script/rechner-backend/Code.gs','apps-script/rechner-backend/kv_engine.gs','apps-script/rechner-backend/kv_contract.md','apps-script/rechner-backend/kv_sheet_spec.md']);
-  for (const file of files.filter(f=>!t1245.has(f)))
+  const t1245 = new Set([
+    'api/rechner-engine.php',
+    'api/rechner-values.php',
+    'apps-script/rechner-backend/Code.gs',
+    'apps-script/rechner-backend/kv_engine.gs',
+    'apps-script/rechner-backend/kv_contract.md',
+    'apps-script/rechner-backend/kv_sheet_spec.md',
+  ]);
+  for (const file of files.filter((f) => !t1245.has(f)))
     assert.deepEqual(
       fs.readFileSync(path.join(root, file)),
       cp.execFileSync('git', ['show', base + ':' + file], {
@@ -296,7 +303,12 @@ async function apiBytes() {
       return r;
     }),
   ];
-  const oldKv=path.join(dir,'api-kv');fs.cpSync(old,oldKv,{recursive:true});fs.copyFileSync(path.join(root,'api/rechner-engine.php'),path.join(oldKv,'rechner-engine.php'));
+  const oldKv = path.join(dir, 'api-kv');
+  fs.cpSync(old, oldKv, { recursive: true });
+  fs.copyFileSync(
+    path.join(root, 'api/rechner-engine.php'),
+    path.join(oldKv, 'rechner-engine.php')
+  );
   const program = `date_default_timezone_set('Europe/Berlin'); require $argv[1].'/rechner-values.php'; require $argv[1].'/rechner-engine.php'; $source=file_get_contents($argv[1].'/rechner.php'); $start=strpos($source,'const RECHNER_INNENFELDER_SPERREN'); $end=strpos($source,'$rawQuery ='); eval(substr($source,$start,$end-$start)); $in=json_decode(stream_get_contents(STDIN),true); $out=hw_rechner_route($in['action'],$in['query'],$in['sheets'],2); if($in['action']==='preise')$out=hw_oeffentliche_preistexte($out); $out=rechner_innenfelder_entfernen($out); echo json_encode($out,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_THROW_ON_ERROR);`;
   let count = 0;
   try {
@@ -331,7 +343,7 @@ async function apiBytes() {
       const input = JSON.stringify({ ...sample, sheets });
       const run = (api) =>
         cp.execFileSync('php', ['-r', program, api], { input, stdio: ['pipe', 'pipe', 'pipe'] });
-      const before = run(['kostenvergleich','kv_bootstrap'].includes(sample.action)?oldKv:old),
+      const before = run(['kostenvergleich', 'kv_bootstrap'].includes(sample.action) ? oldKv : old),
         after = run(path.join(root, 'api'));
       assert.deepEqual(after, before, 'API-Antwortbytes ' + JSON.stringify(sample));
       assert(

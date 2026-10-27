@@ -2092,7 +2092,172 @@ function paRenderCards() {
 }
 
 // BEGIN PA_JAZ_GENERATED
-const PA_JAZ_GRUNDLAGEN = {"Wolf CHA-07/400V":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":false},"Wolf CHA-07":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":false},"Wolf CHA-10/400V":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":false},"Wolf CHA-10":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":false},"Wolf CHA-16/20 mit Heizstab (CS-e9-C2)":{"gesamtlast":16,"abrufdatum":"2026-10-26","kaskade":false},"Wolf CHA-16/20":{"gesamtlast":16,"abrufdatum":"2026-10-26","kaskade":false},"Wolf CHA-16/20 ohne Heizstab (CS-C2)":{"gesamtlast":16,"abrufdatum":"2026-10-26","kaskade":false},"Wolf CHA-20/24 mit Heizstab (CS-e9-D2)":{"gesamtlast":20,"abrufdatum":"2026-10-26","kaskade":false},"Wolf CHA-20/24":{"gesamtlast":20,"abrufdatum":"2026-10-26","kaskade":false},"Wolf CHA-20/24 ohne Heizstab (CS-D2)":{"gesamtlast":20,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM plus VWL 35/8.1 A 230V":{"gesamtlast":3,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant VWL 35/8.1 A":{"gesamtlast":3,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM plus VWL 35/8.1 A":{"gesamtlast":3,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM plus VWL 55/8.1 A 230V":{"gesamtlast":5,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant VWL 55/8.1 A":{"gesamtlast":5,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM plus VWL 55/8.1 A":{"gesamtlast":5,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM plus VWL 75/8.1 A 230V":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant VWL 75/8.1 A":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM plus VWL 75/8.1 A":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM plus VWL 105/8.1 A 400V":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant VWL 105/8.1 A":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM plus VWL 105/8.1 A":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM plus VWL 125/8.1 A 400V":{"gesamtlast":12,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant VWL 125/8.1 A":{"gesamtlast":12,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM plus VWL 125/8.1 A":{"gesamtlast":12,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM pro VWL 55/7.1 A 230V":{"gesamtlast":5,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant VWL 55/7.1 A":{"gesamtlast":5,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM pro VWL 55/7.1 A":{"gesamtlast":5,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM pro VWL 75/7.1 A 230V":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant VWL 75/7.1 A":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM pro VWL 75/7.1 A":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM pro VWL 115/7.1 A 400V":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant VWL 115/7.1 A":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM pro VWL 115/7.1 A":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant aroTHERM perform VWL 205/8.1 A S2 Q":{"gesamtlast":20,"abrufdatum":"2026-10-26","kaskade":false},"Vaillant VWL 205/8.1 A":{"gesamtlast":20,"abrufdatum":"2026-10-26","kaskade":false},"2× Wolf CHA-16/20":{"gesamtlast":16,"abrufdatum":"2026-10-26","kaskade":true},"2× Wolf CHA-16/20 (Kaskade)":{"gesamtlast":16,"abrufdatum":"2026-10-26","kaskade":true},"2x Wolf CHA-16/20":{"gesamtlast":16,"abrufdatum":"2026-10-26","kaskade":true},"2× Wolf CHA-16":{"gesamtlast":16,"abrufdatum":"2026-10-26","kaskade":true},"2× Vaillant VWL 75/8.1 A":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":true},"2× Vaillant VWL 75/8.1 A (Kaskade)":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":true},"2x Vaillant VWL 75/8.1 A":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":true},"2× Vaillant VWL 105/8.1 A":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":true},"2× Vaillant VWL 105/8.1 A (Kaskade)":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":true},"2x Vaillant VWL 105/8.1 A":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":true},"3× Vaillant VWL 105/8.1 A":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":true},"3× Vaillant VWL 105/8.1 A (Kaskade)":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":true},"3x Vaillant VWL 105/8.1 A":{"gesamtlast":10,"abrufdatum":"2026-10-26","kaskade":true},"2× Vaillant VWL 125/8.1 A":{"gesamtlast":12,"abrufdatum":"2026-10-26","kaskade":true},"2× Vaillant VWL 125/8.1 A (Kaskade)":{"gesamtlast":12,"abrufdatum":"2026-10-26","kaskade":true},"2x Vaillant VWL 125/8.1 A":{"gesamtlast":12,"abrufdatum":"2026-10-26","kaskade":true},"2× Vaillant VWL 75/7.1 A":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":true},"2× Vaillant VWL 75/7.1 A (Kaskade)":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":true},"2x Vaillant VWL 75/7.1 A":{"gesamtlast":7,"abrufdatum":"2026-10-26","kaskade":true},"2× Vaillant VWL 115/7.1 A":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":true},"2× Vaillant VWL 115/7.1 A (Kaskade)":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":true},"2x Vaillant VWL 115/7.1 A":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":true},"3× Vaillant VWL 115/7.1 A":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":true},"3× Vaillant VWL 115/7.1 A (Kaskade)":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":true},"3x Vaillant VWL 115/7.1 A":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":true},"4× Vaillant VWL 115/7.1 A":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":true},"4× Vaillant VWL 115/7.1 A (Kaskade)":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":true},"4x Vaillant VWL 115/7.1 A":{"gesamtlast":11,"abrufdatum":"2026-10-26","kaskade":true}};
+const PA_JAZ_GRUNDLAGEN = {
+  'Wolf CHA-07/400V': { gesamtlast: 7, abrufdatum: '2026-10-26', kaskade: false },
+  'Wolf CHA-07': { gesamtlast: 7, abrufdatum: '2026-10-26', kaskade: false },
+  'Wolf CHA-10/400V': { gesamtlast: 10, abrufdatum: '2026-10-26', kaskade: false },
+  'Wolf CHA-10': { gesamtlast: 10, abrufdatum: '2026-10-26', kaskade: false },
+  'Wolf CHA-16/20 mit Heizstab (CS-e9-C2)': {
+    gesamtlast: 16,
+    abrufdatum: '2026-10-26',
+    kaskade: false,
+  },
+  'Wolf CHA-16/20': { gesamtlast: 16, abrufdatum: '2026-10-26', kaskade: false },
+  'Wolf CHA-16/20 ohne Heizstab (CS-C2)': {
+    gesamtlast: 16,
+    abrufdatum: '2026-10-26',
+    kaskade: false,
+  },
+  'Wolf CHA-20/24 mit Heizstab (CS-e9-D2)': {
+    gesamtlast: 20,
+    abrufdatum: '2026-10-26',
+    kaskade: false,
+  },
+  'Wolf CHA-20/24': { gesamtlast: 20, abrufdatum: '2026-10-26', kaskade: false },
+  'Wolf CHA-20/24 ohne Heizstab (CS-D2)': {
+    gesamtlast: 20,
+    abrufdatum: '2026-10-26',
+    kaskade: false,
+  },
+  'Vaillant aroTHERM plus VWL 35/8.1 A 230V': {
+    gesamtlast: 3,
+    abrufdatum: '2026-10-26',
+    kaskade: false,
+  },
+  'Vaillant VWL 35/8.1 A': { gesamtlast: 3, abrufdatum: '2026-10-26', kaskade: false },
+  'Vaillant aroTHERM plus VWL 35/8.1 A': {
+    gesamtlast: 3,
+    abrufdatum: '2026-10-26',
+    kaskade: false,
+  },
+  'Vaillant aroTHERM plus VWL 55/8.1 A 230V': {
+    gesamtlast: 5,
+    abrufdatum: '2026-10-26',
+    kaskade: false,
+  },
+  'Vaillant VWL 55/8.1 A': { gesamtlast: 5, abrufdatum: '2026-10-26', kaskade: false },
+  'Vaillant aroTHERM plus VWL 55/8.1 A': {
+    gesamtlast: 5,
+    abrufdatum: '2026-10-26',
+    kaskade: false,
+  },
+  'Vaillant aroTHERM plus VWL 75/8.1 A 230V': {
+    gesamtlast: 7,
+    abrufdatum: '2026-10-26',
+    kaskade: false,
+  },
+  'Vaillant VWL 75/8.1 A': { gesamtlast: 7, abrufdatum: '2026-10-26', kaskade: false },
+  'Vaillant aroTHERM plus VWL 75/8.1 A': {
+    gesamtlast: 7,
+    abrufdatum: '2026-10-26',
+    kaskade: false,
+  },
+  'Vaillant aroTHERM plus VWL 105/8.1 A 400V': {
+    gesamtlast: 10,
+    abrufdatum: '2026-10-26',
+    kaskade: false,
+  },
+  'Vaillant VWL 105/8.1 A': { gesamtlast: 10, abrufdatum: '2026-10-26', kaskade: false },
+  'Vaillant aroTHERM plus VWL 105/8.1 A': {
+    gesamtlast: 10,
+    abrufdatum: '2026-10-26',
+    kaskade: false,
+  },
+  'Vaillant aroTHERM plus VWL 125/8.1 A 400V': {
+    gesamtlast: 12,
+    abrufdatum: '2026-10-26',
+    kaskade: false,
+  },
+  'Vaillant VWL 125/8.1 A': { gesamtlast: 12, abrufdatum: '2026-10-26', kaskade: false },
+  'Vaillant aroTHERM plus VWL 125/8.1 A': {
+    gesamtlast: 12,
+    abrufdatum: '2026-10-26',
+    kaskade: false,
+  },
+  'Vaillant aroTHERM pro VWL 55/7.1 A 230V': {
+    gesamtlast: 5,
+    abrufdatum: '2026-10-26',
+    kaskade: false,
+  },
+  'Vaillant VWL 55/7.1 A': { gesamtlast: 5, abrufdatum: '2026-10-26', kaskade: false },
+  'Vaillant aroTHERM pro VWL 55/7.1 A': { gesamtlast: 5, abrufdatum: '2026-10-26', kaskade: false },
+  'Vaillant aroTHERM pro VWL 75/7.1 A 230V': {
+    gesamtlast: 7,
+    abrufdatum: '2026-10-26',
+    kaskade: false,
+  },
+  'Vaillant VWL 75/7.1 A': { gesamtlast: 7, abrufdatum: '2026-10-26', kaskade: false },
+  'Vaillant aroTHERM pro VWL 75/7.1 A': { gesamtlast: 7, abrufdatum: '2026-10-26', kaskade: false },
+  'Vaillant aroTHERM pro VWL 115/7.1 A 400V': {
+    gesamtlast: 11,
+    abrufdatum: '2026-10-26',
+    kaskade: false,
+  },
+  'Vaillant VWL 115/7.1 A': { gesamtlast: 11, abrufdatum: '2026-10-26', kaskade: false },
+  'Vaillant aroTHERM pro VWL 115/7.1 A': {
+    gesamtlast: 11,
+    abrufdatum: '2026-10-26',
+    kaskade: false,
+  },
+  'Vaillant aroTHERM perform VWL 205/8.1 A S2 Q': {
+    gesamtlast: 20,
+    abrufdatum: '2026-10-26',
+    kaskade: false,
+  },
+  'Vaillant VWL 205/8.1 A': { gesamtlast: 20, abrufdatum: '2026-10-26', kaskade: false },
+  '2× Wolf CHA-16/20': { gesamtlast: 16, abrufdatum: '2026-10-26', kaskade: true },
+  '2× Wolf CHA-16/20 (Kaskade)': { gesamtlast: 16, abrufdatum: '2026-10-26', kaskade: true },
+  '2x Wolf CHA-16/20': { gesamtlast: 16, abrufdatum: '2026-10-26', kaskade: true },
+  '2× Wolf CHA-16': { gesamtlast: 16, abrufdatum: '2026-10-26', kaskade: true },
+  '2× Vaillant VWL 75/8.1 A': { gesamtlast: 7, abrufdatum: '2026-10-26', kaskade: true },
+  '2× Vaillant VWL 75/8.1 A (Kaskade)': { gesamtlast: 7, abrufdatum: '2026-10-26', kaskade: true },
+  '2x Vaillant VWL 75/8.1 A': { gesamtlast: 7, abrufdatum: '2026-10-26', kaskade: true },
+  '2× Vaillant VWL 105/8.1 A': { gesamtlast: 10, abrufdatum: '2026-10-26', kaskade: true },
+  '2× Vaillant VWL 105/8.1 A (Kaskade)': {
+    gesamtlast: 10,
+    abrufdatum: '2026-10-26',
+    kaskade: true,
+  },
+  '2x Vaillant VWL 105/8.1 A': { gesamtlast: 10, abrufdatum: '2026-10-26', kaskade: true },
+  '3× Vaillant VWL 105/8.1 A': { gesamtlast: 10, abrufdatum: '2026-10-26', kaskade: true },
+  '3× Vaillant VWL 105/8.1 A (Kaskade)': {
+    gesamtlast: 10,
+    abrufdatum: '2026-10-26',
+    kaskade: true,
+  },
+  '3x Vaillant VWL 105/8.1 A': { gesamtlast: 10, abrufdatum: '2026-10-26', kaskade: true },
+  '2× Vaillant VWL 125/8.1 A': { gesamtlast: 12, abrufdatum: '2026-10-26', kaskade: true },
+  '2× Vaillant VWL 125/8.1 A (Kaskade)': {
+    gesamtlast: 12,
+    abrufdatum: '2026-10-26',
+    kaskade: true,
+  },
+  '2x Vaillant VWL 125/8.1 A': { gesamtlast: 12, abrufdatum: '2026-10-26', kaskade: true },
+  '2× Vaillant VWL 75/7.1 A': { gesamtlast: 7, abrufdatum: '2026-10-26', kaskade: true },
+  '2× Vaillant VWL 75/7.1 A (Kaskade)': { gesamtlast: 7, abrufdatum: '2026-10-26', kaskade: true },
+  '2x Vaillant VWL 75/7.1 A': { gesamtlast: 7, abrufdatum: '2026-10-26', kaskade: true },
+  '2× Vaillant VWL 115/7.1 A': { gesamtlast: 11, abrufdatum: '2026-10-26', kaskade: true },
+  '2× Vaillant VWL 115/7.1 A (Kaskade)': {
+    gesamtlast: 11,
+    abrufdatum: '2026-10-26',
+    kaskade: true,
+  },
+  '2x Vaillant VWL 115/7.1 A': { gesamtlast: 11, abrufdatum: '2026-10-26', kaskade: true },
+  '3× Vaillant VWL 115/7.1 A': { gesamtlast: 11, abrufdatum: '2026-10-26', kaskade: true },
+  '3× Vaillant VWL 115/7.1 A (Kaskade)': {
+    gesamtlast: 11,
+    abrufdatum: '2026-10-26',
+    kaskade: true,
+  },
+  '3x Vaillant VWL 115/7.1 A': { gesamtlast: 11, abrufdatum: '2026-10-26', kaskade: true },
+  '4× Vaillant VWL 115/7.1 A': { gesamtlast: 11, abrufdatum: '2026-10-26', kaskade: true },
+  '4× Vaillant VWL 115/7.1 A (Kaskade)': {
+    gesamtlast: 11,
+    abrufdatum: '2026-10-26',
+    kaskade: true,
+  },
+  '4x Vaillant VWL 115/7.1 A': { gesamtlast: 11, abrufdatum: '2026-10-26', kaskade: true },
+};
 // END PA_JAZ_GENERATED
 
 // BWP-Beispiele gelten nur für die belegten Geräte; Wolf und alte Plus-Geräte
@@ -2132,8 +2297,12 @@ function paUpdateDetail(d) {
           '¹ JAZ',
           '<strong style="color:var(--green);font-size:12px;text-transform:uppercase;letter-spacing:0.3px;">¹ JAZ</strong>'
         ) +
-        ' Angenommene Gesamtlast '+grundlage.gesamtlast+' kW. Abruf '+grundlage.abrufdatum+'.'+
-        (grundlage.kaskade?' Kaskade: Wert des Einzelgeräts als Annahme.':'')+
+        ' Angenommene Gesamtlast ' +
+        grundlage.gesamtlast +
+        ' kW. Abruf ' +
+        grundlage.abrufdatum +
+        '.' +
+        (grundlage.kaskade ? ' Kaskade: Wert des Einzelgeräts als Annahme.' : '') +
         '<br>' +
         (scopFn?.innerHTML || '')
       : paOriginalJazFootnote;
