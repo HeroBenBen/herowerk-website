@@ -2825,3 +2825,56 @@ Geändert, nur Website:
 Vorgeschlagene Einbuchungsnachricht: `fix: v1-Vertrag der Kostenvergleich-Anfrage wiederherstellen`.
 
 Leser, Tests, Rechenkerne und Asset-Verweise bleiben unverändert. Nichts eingebucht.
+
+### Anpassung 16
+
+Nur der letzte Fehlerschritt des Tests `O4 Writer: jeder Anfrage-CTA schreibt ausschließlich das v1-Contract-Schema` in `tests/kv-thin-client.spec.js` wurde geändert. Nach `/__fail-on` und `calculate({ showResults: true, scroll: false })` wird weiterhin genau ein Anfrage-Link im Fehlerkasten verlangt. Vor dessen Klick wird nun ausdrücklich `'{"stale":true}'` unter `hero_kv_lead` gespeichert. Nach dem Klick muss der Schlüssel fehlen (`null`), und `#results` darf die Klasse `visible` nicht tragen. `/__fail-off` bleibt unverändert.
+
+Der bisherige Aufruf des Erfolgshelfers an diesem Fehler-Link verlangte einen gültigen v1-Datensatz trotz gelöschtem `KV_STATE.last`. Er wird durch die feste Prüfung ersetzt, dass weder neue noch veraltete Rechenergebnisse weitergegeben werden. Die Schema-Prüfungen der erfolgreichen CTA-Pfade bleiben unverändert.
+
+Alt/Neu des letzten Schritts:
+
+```diff
+   await expect(page.locator('#kvStatus a[href="/anfrage.html"]')).toHaveCount(1);
+-  await expectWriterPayload(page.locator('#kvStatus a[href="/anfrage.html"]'));
++  await page.evaluate(() => sessionStorage.setItem('hero_kv_lead', '{"stale":true}'));
++  await page
++    .locator('#kvStatus a[href="/anfrage.html"]')
++    .evaluate((link) => /** @type {HTMLAnchorElement} */ (link).click());
++  expect(await page.evaluate(() => sessionStorage.getItem('hero_kv_lead'))).toBeNull();
++  await expect(page.locator('#results')).not.toHaveClass(/visible/);
+   await fetch(`${baseURL}/__fail-off`);
+```
+
+#### Prüfungen
+
+```text
+npm run lint
+
+> lint
+> eslint . && prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+
+Exit 0
+```
+
+```text
+npx tsc --noEmit
+
+Exit 0, keine Ausgabe
+```
+
+Vollständige Ausgaben: `/private/tmp/t1245-browser16/lint.log` und `/private/tmp/t1245-browser16/tsc.log`. Der vorherige Teststand ist unter `/private/tmp/t1245-browser16/kv-thin-client.vorher.spec.js` archiviert. Kein lokaler Browserlauf; die Browser-Abnahme erfolgt durch den Serverlauf.
+
+#### Dateiliste und Einbuchungsvorschlag
+
+Geändert, nur Website:
+
+- `tests/kv-thin-client.spec.js`
+- `T1245_SCHRITT1_ABSCHLUSS.md`
+
+Vorgeschlagene Einbuchungsnachricht: `test: Anfrage ohne Rechenergebnis verwirft veraltete Vorbefüllung`.
+
+Keine Produktänderung, keine Änderung an anderen Tests. Nichts eingebucht.

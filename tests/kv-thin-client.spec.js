@@ -886,7 +886,12 @@ test('O4 Writer: jeder Anfrage-CTA schreibt ausschließlich das v1-Contract-Sche
   await fetch(`${baseURL}/__fail-on`);
   await page.evaluate(() => calculate({ showResults: true, scroll: false }));
   await expect(page.locator('#kvStatus a[href="/anfrage.html"]')).toHaveCount(1);
-  await expectWriterPayload(page.locator('#kvStatus a[href="/anfrage.html"]'));
+  await page.evaluate(() => sessionStorage.setItem('hero_kv_lead', '{"stale":true}'));
+  await page
+    .locator('#kvStatus a[href="/anfrage.html"]')
+    .evaluate((link) => /** @type {HTMLAnchorElement} */ (link).click());
+  expect(await page.evaluate(() => sessionStorage.getItem('hero_kv_lead'))).toBeNull();
+  await expect(page.locator('#results')).not.toHaveClass(/visible/);
   await fetch(`${baseURL}/__fail-off`);
 });
 
