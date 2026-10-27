@@ -2761,3 +2761,67 @@ Geändert, nur Website:
 Vorgeschlagene Einbuchungsnachricht: `test: T1245-Thin-Client-Erwartungen als feste Literale prüfen`.
 
 Keine Änderung an Kern, Produktcode, Konfigurator, Goldsatz oder den beiden anderen Browser-Testdateien. Nichts eingebucht.
+
+### Anpassung 15
+
+`buildLeadHandoff()` in `kostenvergleich-waermepumpe.html` wurde auf den unveränderten v1-Vertrag aus `origin/main` zurückgesetzt. Der zusätzliche Hauptschlüssel `rechengrundlagen` entfällt. `ergebnis` enthält wieder ausschließlich `{eigenanteil,zuschuss,quote}`; die nicht beauftragten Schlüssel `vorteil`, `breakEven` und `posten` entfallen. Damit erzeugt der Writer keine dieser vom unveränderten `exactKeys`-Leser abgelehnten Schema-Erweiterungen mehr.
+
+Alt/Neu der beiden betroffenen Zeilen:
+
+```diff
+-      rechengrundlagen:{heizsystem:response.system.jazInfo.heizsystem,geraet:response.inputsEcho.geraet,jaz:response.system.jaz,startJahr:response.system.startJahr,grundpreisGas:response.inputsEcho.grundpreisGas,wpZaehler:response.inputsEcho.wpZaehler,netzentgeltTog:response.inputsEcho.netzentgeltTog,pvTog:response.inputsEcho.pvTog},
+-      ergebnis:{eigenanteil,zuschuss,quote,vorteil:response.ergebnis.wpNG,breakEven:response.ergebnis.breakEven,posten:response.posten}
++      ergebnis:{eigenanteil,zuschuss,quote}
+```
+
+#### Abgleich mit dem Hauptzweig
+
+Verglichen mit dem lokal vorhandenen `origin/main` auf `945916dc1138203854bda714879f182a734f8fa6`, ohne Netzaufruf:
+
+```bash
+git diff origin/main -- kostenvergleich-waermepumpe.html
+git show origin/main:kostenvergleich-waermepumpe.html
+```
+
+Der vollständige Seitendiff ist unter `/private/tmp/t1245-browser15/diff-origin-main.patch` archiviert. Er enthält weiterhin die übrigen beauftragten Änderungen von Schritt 1, aber keine Änderung an `buildLeadHandoff()`. Zusätzlich wurden die vollständigen Funktionsabschnitte vor `writeLeadHandoff()` als Bytes extrahiert und exakt verglichen:
+
+```text
+buildLeadHandoff(): bytegleich, 1346 Byte
+SHA-256 beidseitig: 5b82e0dccfc7c7823aaa143753f98407bd4d4b44e0dcc94c9876c949e79e8fec
+Funktionsdiff origin/main gegen Arbeitsbaum: leer
+```
+
+Die Funktionsdateien und der Vergleichsnachweis liegen unter `/private/tmp/t1245-browser15/` (`buildLeadHandoff.vorher.js`, `buildLeadHandoff.origin-main.js`, `buildLeadHandoff.nachher.js`, `funktionsvergleich.log`). Eine zusätzliche Prüfung bestätigt, dass außerhalb der beiden oben dokumentierten Zeilen kein Byte der HTML-Datei verändert wurde.
+
+#### Prüfungen
+
+```text
+npm run lint
+
+> lint
+> eslint . && prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+
+Exit 0
+```
+
+```text
+npx tsc --noEmit
+
+Exit 0, keine Ausgabe
+```
+
+Vollständige Ausgaben: `/private/tmp/t1245-browser15/lint.log` und `/private/tmp/t1245-browser15/tsc.log`. Kein lokaler Browserlauf; der O4-Serverlauf wird durch die statischen Prüfungen nicht ersetzt.
+
+#### Dateiliste und Einbuchungsvorschlag
+
+Geändert, nur Website:
+
+- `kostenvergleich-waermepumpe.html`
+- `T1245_SCHRITT1_ABSCHLUSS.md`
+
+Vorgeschlagene Einbuchungsnachricht: `fix: v1-Vertrag der Kostenvergleich-Anfrage wiederherstellen`.
+
+Leser, Tests, Rechenkerne und Asset-Verweise bleiben unverändert. Nichts eingebucht.

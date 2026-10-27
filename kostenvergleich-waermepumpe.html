@@ -1431,8 +1431,7 @@ kvLoadBootstrap();
       gebaeude:estimated?{geb:WZ.step1.geb,bj:WZ.step1.bj,san:WZ.step1.san,flaeche:finiteNumber(WZ.step1.flaeche)}:null,
       kessel:{rohr:WZ.step1.rohr||null,kbj:WZ.step1.kbj||null,altgas:WZ.step1.altgas||null},
       zeitraum:f.periode,
-      rechengrundlagen:{heizsystem:response.system.jazInfo.heizsystem,geraet:response.inputsEcho.geraet,jaz:response.system.jaz,startJahr:response.system.startJahr,grundpreisGas:response.inputsEcho.grundpreisGas,wpZaehler:response.inputsEcho.wpZaehler,netzentgeltTog:response.inputsEcho.netzentgeltTog,pvTog:response.inputsEcho.pvTog},
-      ergebnis:{eigenanteil,zuschuss,quote,vorteil:response.ergebnis.wpNG,breakEven:response.ergebnis.breakEven,posten:response.posten}
+      ergebnis:{eigenanteil,zuschuss,quote}
     };
   }
   function writeLeadHandoff(){
