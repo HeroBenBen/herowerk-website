@@ -44,6 +44,7 @@ name: HeroWerk CI (Hard-Gates + ausgewiesene Berichte)
 on:
   pull_request:
     branches: [main, production]
+    types: [opened, synchronize, reopened, labeled]
     # production: der Release-PR von main nach production (T4-2) durchlaeuft dieselbe Kette
 
 # Least-Privilege-Token (T1-6b-Followup O2): expliziter Block ersetzt die Defaults.
@@ -375,20 +376,16 @@ jobs:
       - run: node scripts/hubspot-schema-check.js
         # Validiert Webhook-Payload gegen schemas/hubspot-property-schema.json
 
-  # Job 9: Visual-Regression, INAKTIV, misst derzeit nichts (festgestellt 29.07.2026)
-  #
-  # Der Job war in den letzten 20 ausgefuehrten Laeufen 20 mal gruen. Gemessen hat er
-  # dabei nichts: baseline/visual/ enthaelt ausser .gitkeep keine einzige PNG, und
-  # tests/visual/visual-shared.js ruft deshalb in JEDEM Testfall test.skip() auf. Ein
-  # gruener Haken ohne Messung ist gefaehrlicher als ein roter, weil er Sicherheit
-  # vortaeuscht. Der Job behaelt seine Verdrahtung, heisst aber jetzt so, wie er sich
-  # verhaelt, und darf ausdruecklich NICHT als Pflichtpruefung in den Branch-Schutz.
-  #
-  # RUECKWEG: Benjamin setzt an einem PR das Label /baseline-update, der Lauf legt die
-  # ersten ratifizierten Screenshots in baseline/visual/ ab. Ab der ersten PNG laufen
-  # die Faelle echt, dann Namen und diesen Kommentar zuruecknehmen.
-  visual-regression-inaktiv:
-    name: visual-regression (inaktiv, keine ratifizierte Baseline)
+  # Job 9: Bildprüfung gegen die Grundlinie in baseline/visual/.
+  # Die 16 PNG wurden am 25.10.2026 durch den Erzeugungsjob erzeugt (Lauf 396).
+  # Der Job misst echt und schlägt bei einer Abweichung über 5 % der Pixel rot.
+  # Eine neue Grundlinie entsteht nur über das Kennzeichen /baseline-update.
+  # Zusammenführen bedeutet Sichtfreigabe der Bilder durch den Geschäftsführer.
+  # Die Bildprüfung bleibt außerhalb der Pflichtprüfungen im Branch-Schutz.
+  visual-regression:
+    # Beim Kennzeichen-Ereignis erzeugt der separate Job erst die Grundlinie.
+    if: github.event.action != 'labeled'
+    name: visual-regression
     runs-on: ubuntu-latest
     needs: [lint]
     strategy:
@@ -402,7 +399,90 @@ jobs:
       - env: { PREVIEW_URL: '${{ env.PRUEFSERVER_URL }}' }
         run: npx playwright test --grep "@visual" -- --theme=${{ matrix.theme }}
         # Toleranz: 5% Pixel-Diff. Baseline-Update via /baseline-update-Label am PR
-        # (Benjamin setzt Label, Github-Action akzeptiert dann den neuen Screenshot)
+        # (Erzeugung durch den Bot; Sichtfreigabe erst beim Zusammenführen durch den GF)
+
+  # T100: Nur das Setzen dieses Kennzeichens erzeugt Bilder, kein späterer Push.
+  visual-baseline-update:
+    name: visual-baseline-update
+    if: github.event.action == 'labeled' && github.event.label.name == '/baseline-update'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: visual-baseline-update-${{ github.event.pull_request.number }}
+      cancel-in-progress: false
+    env:
+      PR_HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+      PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+    steps:
+      - name: Schreibziel absichern
+        run: |
+          if [ "$PR_HEAD_REPO" != "$GITHUB_REPOSITORY" ]; then
+            echo "::error::Bildgrundlinien können mit GITHUB_TOKEN nur im eigenen Repository eingebucht werden."
+            exit 1
+          fi
+          case "$PR_HEAD_REF" in
+            main|production|'')
+              echo "::error::Grundlinien dürfen nur in einen Antragszweig geschrieben werden."
+              exit 1
+              ;;
+          esac
+      - uses: actions/checkout@v5
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+      - uses: actions/setup-node@v5
+        with: { node-version: '20' }
+      - run: npm ci
+      - run: npx playwright install --with-deps
+      - name: Prüfserver starten
+        run: scripts/start-pruefserver.sh
+      - name: Grundlinie für beide Themen erzeugen
+        env:
+          BASELINE_UPDATE: '1'
+          PREVIEW_URL: ${{ env.PRUEFSERVER_URL }}
+        run: |
+          npx playwright test --grep "@visual" --update-snapshots -- --theme=dark
+          npx playwright test --grep "@visual" --update-snapshots -- --theme=light
+      - name: Genau 16 PNG und keine fremden Einträge prüfen
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const pages = ['home', 'preise', 'dimensionierung', 'foerderung', 'prozess', 'ratgeber', 'kontakt', 'anfrage'];
+          const expected = new Set(pages.flatMap((page) => ['dark', 'light'].map((theme) => `${page}-${theme}.png`)));
+          const entries = fs.readdirSync('baseline/visual', { withFileTypes: true });
+          const actual = entries.filter((entry) => entry.name !== '.gitkeep');
+          const valid = actual.length === 16 && actual.every((entry) => entry.isFile() && expected.has(entry.name));
+          const keep = entries.find((entry) => entry.name === '.gitkeep');
+          if (!valid || (keep && !keep.isFile())) {
+            console.error('Grundlinie ungültig: genau 16 erwartete PNG und ausschließlich optional .gitkeep sind erlaubt.');
+            process.exit(1);
+          }
+          console.log('Grundlinie geprüft: 16 PNG (8 Seiten × 2 Themen), keine fremden Einträge.');
+          NODE
+      - uses: actions/upload-artifact@v4
+        with:
+          name: visual-baseline-${{ github.run_number }}-${{ github.run_attempt }}
+          path: baseline/visual/*.png
+          if-no-files-found: error
+      - name: Nur Bilder in den Antragszweig einbuchen
+        run: |
+          REMOTE_HEAD="$(git ls-remote --exit-code origin "refs/heads/$PR_HEAD_REF" | cut -f1)"
+          if [ "$REMOTE_HEAD" != "$(git rev-parse HEAD)" ]; then
+            echo "::error::Antragszweig wurde während der Bilderzeugung geändert. Kennzeichen entfernen und erneut setzen."
+            exit 1
+          fi
+          git add -- baseline/visual/*.png
+          if git diff --cached --quiet; then
+            echo "Grundlinie unverändert; keine leere Einbuchung."
+            exit 0
+          fi
+          git -c user.name='github-actions[bot]' \
+            -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+            commit -m "T100: Bildgrundlinie aktualisieren (Lauf ${GITHUB_RUN_NUMBER})"
+          git push origin "HEAD:refs/heads/$PR_HEAD_REF"
+          # GITHUB_TOKEN löst keinen Folgelauf aus. Erst die spätere Umbenennung
+          # durch eine eigene Einbuchung startet den echten Bildvergleich.
 
   # Job 10: SEO-Basics-Check
   # needs zeigte bis 29.07.2026 auf lighthouse. Weil lighthouse nie gruen wurde, ist
