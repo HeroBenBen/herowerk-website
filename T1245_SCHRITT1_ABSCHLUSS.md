@@ -1068,3 +1068,347 @@ Konfigurator:
 Die bereits vorgefundenen lokalen Prüferartefakte `reports/2026-10-27_Mobile-Verifikation_HERO.md` und `reports/2026-10-27_Raster-Befund_HERO.md` wurden in dieser Nachbesserung nicht angefasst und sind nicht Teil des Einbuchungsvorschlags. Keine fremden lokalen Änderungen entfernt.
 
 Offene fachliche Fragen aus Anpassung 5: keine. Keine weitere Angebotsabweichung festgestellt. Nichts vorgemerkt oder eingebucht.
+
+## Nachbesserung Serverlauf
+
+Anpassung 7, nach `go`, 27.10.2026. Basis Website `245c66c`, Antrag #153, gemeldeter Linux-Lauf 40484121087. **Die Ursache ist bestätigt und in beiden betroffenen Testhelfern behoben. Engine-Code, Erwartungen und Zusicherungen wurden nicht geändert.** Keine Einbuchung, kein Hochladen und kein Live-Aufruf.
+
+Die lokal angeforderten Workflow-Schritte wurden vollständig inventarisiert und soweit ohne Netz/Live-Zugang zulässig angestoßen. Der lokale Gesamtlauf ist **nicht vollständig grün**: die aktuelle Sandbox sperrt bereits `listen`/`connect` auf `127.0.0.1` sowie Browserstarts. Bündel/Version sperren den absichtlich nicht eingebuchten Arbeitsbaum. Außerdem bleibt im lokalen PHP 8.5.7 Intl/Normalizer auch mit `-n` aktiv, was die absichtlich ohne NFC laufende Gegenprobe korrekt rot macht. Diese Umgebungsbedingungen wurden nicht durch Änderungen an Tests oder Versionswächtern umgangen. Die eigene Linux-Nachmessung bleibt dem Serverlauf nach Einbuchung durch die Steuerung vorbehalten.
+
+### Ursache: einzelnes Argument zu groß
+
+Messung der tatsächlichen UTF-8-Bytes, nicht der JavaScript-Zeichenzahl:
+
+| Messgröße                                        | Bytes  |
+| ------------------------------------------------ | ------ |
+| Engine vor T1245, 945916d                        | 123874 |
+| Engine im Serverlauf, 245c66c                    | 161817 |
+| Neues Argument einschließlich abschließendem NUL | 161818 |
+| Im Auftrag genannte Linux-Grenze MAX_ARG_STRLEN  | 131072 |
+| Überschreitung                                   | 30746  |
+
+`tests/t1087-tafel.cjs` reichte die gesamte Engine als ein einzelnes `$argv[1]` an `php -r` weiter. Derselbe Fehler bestand in `tests/t1087-nachauftrag.cjs`, auch für dessen historische Referenzstände. Ein fehlgeschlagener Prozessstart liefert bei Node `status: null`; dadurch schlug die unveränderte Zusicherung `status === 0` mit `null !== 0` fehl. Die gemessene Argumentlänge bestätigt den beschriebenen E2BIG-Mechanismus auf Linux. Der bisherige Aufruf war lokal auf macOS unter dessen anderen Grenzen ausführbar; daraus folgte keine Linux-Tauglichkeit.
+
+Vor-Schreib-Archiv: `/private/tmp/t1245-serverlauf7/vorher/`, 415 versionierte Dateien, mit SHA-256 in `sha-vorher.json`. Messdaten: `ursache.json` im selben Ordner.
+
+### Änderung und gewählter Schutz
+
+Neuer gemeinsamer Helfer `tests/helpers/php-engine.cjs`, Funktion `runPhpEngine`: Engine und Startprogramm werden in ein eigenes temporäres Verzeichnis geschrieben. Gestartet wird ausschließlich `php <runner.php> <rechner-engine.php>`. Das Startprogramm lädt die Engine mit `require $argv[1]`. Aufräumen erfolgt in `finally`, auch bei einem Startfehler. Synthetische Sheet-Daten laufen unverändert über Standard-Eingabe.
+
+Die zwei bisherigen PHP-Helfer in `t1087-tafel.cjs` und `t1087-nachauftrag.cjs` verwenden diesen Dateilader. Historische Referenzen werden weiterhin mit derselben vorhandenen `read`-Funktion gelesen; deren Inhalt wird als temporäre Engine-Datei ausgeführt. Die Wahl von Code-Stand, Eingaben, Ausgaben und Fehlerfällen bleibt erhalten.
+
+Gewählt wurde **nur die größenunabhängige Konstruktion der betroffenen Hilfsfunktionen**, kein zusätzlicher allgemeiner Argumentwächter. Weder Engine-Quelltext noch ein wachsendes Startprogramm können in diesen beiden Helfern künftig als großes Kommandozeilenargument landen. Nur zwei kurze Dateipfade werden übergeben.
+
+Einmaliger lokaler Nachweis, keine zusätzliche Dauertestsuite: In einer Speicherkopie wurden ausschließlich Kommentare an Engine und Startprogramm angehängt. Der reale Kindprozess wurde mitprotokolliert; argv musste aus genau zwei bestehenden Dateipfaden bestehen:
+
+```text
+GRÜN: Engine 461822 Bytes, Startprogramm 150033 Bytes; argv nur zwei Dateipfade mit 81 / 89 Bytes einschließlich NUL; PHP Exit 0.
+```
+
+Unabhängiger Syntaxbaumvergleich der bestehenden assert-Aufrufe gegen das Vor-Schreib-Archiv:
+
+```text
+GRÜN tests/t1087-tafel.cjs: alle 30 assert-Aufrufe unverändert.
+GRÜN tests/t1087-nachauftrag.cjs: alle 20 assert-Aufrufe unverändert.
+```
+
+Keine Zusicherung entfernt oder gelockert, keine Erwartung nachgezogen, keine numerische Toleranz verändert. Die geprüften Engine-, Apps-Script-, JAZ- und Produktdateien sind bytegleich zum Vor-Schreib-Archiv. JS-/GS-Kerne bleiben untereinander bytegleich, SHA-256 `2997a8c6b78d24daa77cc6ad14c9e6b7547a71db70eb1c7765789424f5283a30`.
+
+### Weitere Fundstellen geprüft
+
+| Datei / Gruppe                                                                  | Befund und Maßnahme                                                                                                                                                                                                                         |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| tests/t1087-tafel.cjs                                                           | Vollständiger Quelltext als argv: auf gemeinsamen Dateilader umgestellt.                                                                                                                                                                    |
+| tests/t1087-nachauftrag.cjs                                                     | Zweite vollständige Quelltextübergabe als argv: ebenfalls umgestellt, einschließlich --ref.                                                                                                                                                 |
+| tests/zwei-geraete-grenze-regression.mjs                                        | Schreibt die gegebenenfalls veränderte Engine bereits in eine temporäre PHP-Datei und lädt sie per require. Kein großer Engine-Argumentwert; unverändert.                                                                                   |
+| tests/geraeteauswahl-regression.mjs                                             | Kurzes Startprogramm lädt api/rechner-engine.php per require; Prüfdaten über stdin. Unverändert.                                                                                                                                            |
+| tests/rechner-review-blocker-regression.mjs                                     | Alle PHP-Aufrufe laden per require einen Pfad; gelesener Engine-Text dient nur lokalen Quellenprüfungen. Unverändert.                                                                                                                       |
+| tests/website-mindestanteil-regression.mjs                                      | Reine Quellenprüfung im Node-Prozess, kein Kindprozess mit Engine-Argument. Unverändert.                                                                                                                                                    |
+| scripts/generate-kv-jaz.mjs                                                     | Liest/schreibt die Engine lokal; kein Kindprozess, dem der Engine-Quelltext übergeben wird. Unverändert.                                                                                                                                    |
+| Weitere JS/CJS/MJS-, PHP-, Python- und Shell-Fundstellen in tests/ und scripts/ | Prozessaufrufe, require/file_get_contents, Source-Interpolation und JSON.stringify untersucht. Übrige PHP-Helfer verwenden bereits Pfade, kleine Startprogramme oder Daten über stdin; keine weitere vollständige Engine-Übergabe gefunden. |
+
+Zusätzlich gezielt ausgeführt: `npm run verify:dimensionierung` (enthält Geräteauswahl, Review-Blocker und Website-Mindestanteil), `node tests/zwei-geraete-grenze-regression.mjs` sowie `npm run verify:kv-nutzen`. Alle drei grün; PHP/JS weiterhin 625 feste Fälle mit größtem Float-Delta 0.
+
+### Workflow-Inventar und Ausführung
+
+Beide Dateien unter `.github/workflows/` gelesen. Erfasst: **60 `run:`-Vorkommen mit 42 unterschiedlichen Befehlen**. Gleichlautende Befehle wurden einmal ausgeführt und den wiederholten Vorkommen zugeordnet. Die Visual-Matrix wurde für dunkel und hell getrennt angestoßen. `uses:`-Aktionen sind keine lokalen `run:`-Schritte; es wurden keine GitHub-Dienste oder externen Uploads aufgerufen.
+
+`npm ci` lief erfolgreich mit `npm_config_offline=true`, ohne Netzabruf. Vorhandene Browser wurden verwendet; die beiden Installationsbefehle benötigen Netz und wurden ausgelassen. Der produktive `@live`-Test und der Sentry-Upload sind ausdrücklich ausgeschlossen. Der Release-Guard wurde ohne Secret und mit temporärem `GITHUB_OUTPUT` ausgeführt: `ready=false`. HTTP-Ziele wurden ausschließlich auf `http://127.0.0.1:8080` gesetzt. Der vorhandene Prüfserver-Aufruf bricht bereits am sauberen Versionsstand ab und startet deshalb keinen Docker-Container.
+
+Maschinell vollständig: `/private/tmp/t1245-serverlauf7/workflow-run-inventar.json` und `workflow-run-ergebnisse.json`. Jedes Vorkommen folgt hier mit Ergebnis; lange Lead-only-/Guard-Blöcke sind durch ihren unverändert ausgeführten Namen bezeichnet.
+
+| Workflow / Job / Schritt            | Befehl                                                                                                          | Ergebnis                                                                           | Ausgabe                                                  |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| release.yml/sentry-sourcemaps #1    | Release-Guard ohne Secret                                                                                       | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/release-guard.log         |
+| release.yml/sentry-sourcemaps #4    | npm ci                                                                                                          | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/npm-ci.log                |
+| release.yml/sentry-sourcemaps #5    | npx sentry-cli sourcemaps upload --org herowerk --project herowerk-website .                                    | Upload mit Netz/Secret, vom Auftrag ausgeschlossen; Guard ohne Secret ready=false. | –                                                        |
+| ci.yml/lint #4                      | npm ci                                                                                                          | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/npm-ci.log                |
+| ci.yml/lint #5                      | npm run lint                                                                                                    | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/lint.log                  |
+| ci.yml/lint #6                      | npx tsc --noEmit                                                                                                | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/tsc.log                   |
+| ci.yml/lint #7                      | npm run verify:website-gates                                                                                    | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/website-gates.log         |
+| ci.yml/lint #8                      | npm run verify:tafel                                                                                            | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/tafel.log                 |
+| ci.yml/lint #9                      | npm run verify:a11                                                                                              | Umgebung sperrt Localhost/Browser (EPERM beziehungsweise Browserstart)             | /private/tmp/t1245-serverlauf7/a11.log                   |
+| ci.yml/lint #10                     | npm run verify:rechner-snapshot-nachlauf                                                                        | Umgebung sperrt Localhost/Browser (EPERM beziehungsweise Browserstart)             | /private/tmp/t1245-serverlauf7/snapshot-nachlauf.log     |
+| ci.yml/lint #11                     | npm run verify:rechner-snapshot-integritaet                                                                     | Umgebung sperrt Localhost/Browser (EPERM beziehungsweise Browserstart)             | /private/tmp/t1245-serverlauf7/snapshot-integritaet.log  |
+| ci.yml/lint #12                     | php -n tests/rechner-snapshot-integritaet.php --ohne-nfc                                                        | ROT: Intl/Normalizer auch bei php -n vorhanden (lokales PHP 8.5.7)                 | /private/tmp/t1245-serverlauf7/snapshot-ohne-nfc.log     |
+| ci.yml/lint #13                     | npm run verify:rechner-zaehlerdateien                                                                           | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/zaehlerdateien.log        |
+| ci.yml/lint #14                     | npm run verify:assets                                                                                           | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/assets.log                |
+| ci.yml/lint #15                     | scripts/make-ionos-bundle.sh /tmp/bundle-pruefung                                                               | gesperrt: sauberer Versionsstand bzw. erfolgreiches Bündel fehlt                   | /private/tmp/t1245-serverlauf7/buendel.log               |
+| ci.yml/lint #16                     | scripts/stamp-version.sh --check /tmp/bundle-pruefung                                                           | gesperrt: sauberer Versionsstand bzw. erfolgreiches Bündel fehlt                   | /private/tmp/t1245-serverlauf7/version-check.log         |
+| ci.yml/lint #17                     | npm run verify:buendel-kommentare -- /tmp/bundle-pruefung                                                       | gesperrt: sauberer Versionsstand bzw. erfolgreiches Bündel fehlt                   | /private/tmp/t1245-serverlauf7/buendel-kommentare.log    |
+| ci.yml/lint #18                     | npm run verify:buendel-gleichheit -- . /tmp/bundle-pruefung                                                     | gesperrt: sauberer Versionsstand bzw. erfolgreiches Bündel fehlt                   | /private/tmp/t1245-serverlauf7/buendel-gleichheit.log    |
+| ci.yml/lint #19                     | npm run verify:buendel-kommentare-schaerfe                                                                      | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/buendel-schaerfe.log      |
+| ci.yml/lint #20                     | scripts/stamp-version.sh --selbsttest                                                                           | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/version-selbsttest.log    |
+| ci.yml/lint #21                     | npm run verify:consent                                                                                          | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/consent.log               |
+| ci.yml/lint #22                     | npx playwright install --with-deps chromium                                                                     | Benötigt Netz/Installation; vorhandene Browser für die lokalen Versuche verwendet. | –                                                        |
+| ci.yml/lint #23                     | npm run verify:raster                                                                                           | Umgebung sperrt Localhost/Browser (EPERM beziehungsweise Browserstart)             | /private/tmp/t1245-serverlauf7/raster.log                |
+| ci.yml/lint #24                     | npm run verify:mobile                                                                                           | Umgebung sperrt Localhost/Browser (EPERM beziehungsweise Browserstart)             | /private/tmp/t1245-serverlauf7/mobile.log                |
+| ci.yml/lint #25                     | npm run verify:seo                                                                                              | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/seo.log                   |
+| ci.yml/lint #26                     | npm run verify:bausteine                                                                                        | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/bausteine.log             |
+| ci.yml/lint #27                     | npm run verify:antragsdatum                                                                                     | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/antragsdatum.log          |
+| ci.yml/lighthouse-bericht #3        | npm ci                                                                                                          | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/npm-ci.log                |
+| ci.yml/lighthouse-bericht #4        | scripts/start-pruefserver.sh                                                                                    | gesperrt: sauberer Versionsstand bzw. erfolgreiches Bündel fehlt                   | /private/tmp/t1245-serverlauf7/pruefserver.log           |
+| ci.yml/playwright-smoke #3          | npm ci                                                                                                          | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/npm-ci.log                |
+| ci.yml/playwright-smoke #4          | npx playwright install --with-deps                                                                              | Benötigt Netz/Installation; vorhandene Browser für die lokalen Versuche verwendet. | –                                                        |
+| ci.yml/playwright-smoke #5          | scripts/start-pruefserver.sh                                                                                    | gesperrt: sauberer Versionsstand bzw. erfolgreiches Bündel fehlt                   | /private/tmp/t1245-serverlauf7/pruefserver.log           |
+| ci.yml/playwright-smoke #6          | npx playwright test --grep "@smoke"                                                                             | Umgebung sperrt Localhost/Browser (EPERM beziehungsweise Browserstart)             | /private/tmp/t1245-serverlauf7/smoke.log                 |
+| ci.yml/playwright-smoke #8          | npm run verify:tafel-webkit                                                                                     | Umgebung sperrt Localhost/Browser (EPERM beziehungsweise Browserstart)             | /private/tmp/t1245-serverlauf7/tafel-webkit.log          |
+| ci.yml/playwright-smoke #9          | npx playwright test tests/kv-thin-client.spec.js tests/kv-lead-reader.spec.js tests/wp-wave1-acceptance.spec.js | Umgebung sperrt Localhost/Browser (EPERM beziehungsweise Browserstart)             | /private/tmp/t1245-serverlauf7/thin-client-lead-wave.log |
+| ci.yml/playwright-smoke #10         | npm run verify:einheitenknopf                                                                                   | Umgebung sperrt Localhost/Browser (EPERM beziehungsweise Browserstart)             | /private/tmp/t1245-serverlauf7/einheitenknopf.log        |
+| ci.yml/axe-accessibility #2         | npm ci                                                                                                          | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/npm-ci.log                |
+| ci.yml/axe-accessibility #3         | npx playwright install --with-deps                                                                              | Benötigt Netz/Installation; vorhandene Browser für die lokalen Versuche verwendet. | –                                                        |
+| ci.yml/axe-accessibility #4         | scripts/start-pruefserver.sh                                                                                    | gesperrt: sauberer Versionsstand bzw. erfolgreiches Bündel fehlt                   | /private/tmp/t1245-serverlauf7/pruefserver.log           |
+| ci.yml/axe-accessibility #5         | npm run test:a11y                                                                                               | Umgebung sperrt Localhost/Browser (EPERM beziehungsweise Browserstart)             | /private/tmp/t1245-serverlauf7/a11y.log                  |
+| ci.yml/consent-live-bericht #3      | npm ci                                                                                                          | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/npm-ci.log                |
+| ci.yml/consent-live-bericht #4      | npx playwright install --with-deps chromium                                                                     | Benötigt Netz/Installation; vorhandene Browser für die lokalen Versuche verwendet. | –                                                        |
+| ci.yml/consent-live-bericht #5      | npx playwright test --grep "@live"                                                                              | Produktiver Live-Aufruf verboten.                                                  | –                                                        |
+| ci.yml/content-fidelity #2          | node scripts/content-fidelity-check.js                                                                          | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/content-fidelity.log      |
+| ci.yml/csp-headers #3               | npm ci                                                                                                          | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/npm-ci.log                |
+| ci.yml/csp-headers #4               | scripts/start-pruefserver.sh                                                                                    | gesperrt: sauberer Versionsstand bzw. erfolgreiches Bündel fehlt                   | /private/tmp/t1245-serverlauf7/pruefserver.log           |
+| ci.yml/csp-headers #5               | node scripts/header-check.js ${{ env.PRUEFSERVER_URL }}                                                         | Umgebung sperrt Localhost/Browser (EPERM beziehungsweise Browserstart)             | /private/tmp/t1245-serverlauf7/header.log                |
+| ci.yml/csp-headers #6               | npm run verify:rechner-snapshot-apache                                                                          | Umgebung sperrt Localhost/Browser (EPERM beziehungsweise Browserstart)             | /private/tmp/t1245-serverlauf7/snapshot-apache.log       |
+| ci.yml/hubspot-mapping #2           | node scripts/hubspot-schema-check.js                                                                            | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/hubspot-schema.log        |
+| ci.yml/visual-regression-inaktiv #2 | npm ci                                                                                                          | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/npm-ci.log                |
+| ci.yml/visual-regression-inaktiv #3 | npx playwright install --with-deps                                                                              | Benötigt Netz/Installation; vorhandene Browser für die lokalen Versuche verwendet. | –                                                        |
+| ci.yml/visual-regression-inaktiv #4 | scripts/start-pruefserver.sh                                                                                    | gesperrt: sauberer Versionsstand bzw. erfolgreiches Bündel fehlt                   | /private/tmp/t1245-serverlauf7/pruefserver.log           |
+| ci.yml/visual-regression-inaktiv #5 | npx playwright test --grep "@visual" -- --theme=${{ matrix.theme }}                                             | Umgebung sperrt Localhost/Browser (EPERM beziehungsweise Browserstart)             | /private/tmp/t1245-serverlauf7/visual-dark.log           |
+| ci.yml/seo-basics #3                | npm ci                                                                                                          | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/npm-ci.log                |
+| ci.yml/seo-basics #4                | scripts/start-pruefserver.sh                                                                                    | gesperrt: sauberer Versionsstand bzw. erfolgreiches Bündel fehlt                   | /private/tmp/t1245-serverlauf7/pruefserver.log           |
+| ci.yml/seo-basics #5                | node scripts/seo-basics-check.js ${{ env.PRUEFSERVER_URL }}                                                     | Umgebung sperrt Localhost/Browser (EPERM beziehungsweise Browserstart)             | /private/tmp/t1245-serverlauf7/seo-basics.log            |
+| ci.yml/schema-validation #3         | npm ci                                                                                                          | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/npm-ci.log                |
+| ci.yml/schema-validation #4         | scripts/start-pruefserver.sh                                                                                    | gesperrt: sauberer Versionsstand bzw. erfolgreiches Bündel fehlt                   | /private/tmp/t1245-serverlauf7/pruefserver.log           |
+| ci.yml/schema-validation #5         | node scripts/rich-results-check.js ${{ env.PRUEFSERVER_URL }}                                                   | Umgebung sperrt Localhost/Browser (EPERM beziehungsweise Browserstart)             | /private/tmp/t1245-serverlauf7/rich-results.log          |
+| ci.yml/lead-only-gate #2            | Lead-only-Negativ-Gate, unveränderter YAML-Block                                                                | grün, Exit 0                                                                       | /private/tmp/t1245-serverlauf7/lead-only.log             |
+
+### Zentrale Ausgaben und verbleibende Umgebungsgrenzen
+
+**Offline-Abhängigkeiten**
+
+```bash
+npm_config_offline=true npm ci
+```
+
+```text
+added 119 packages, and audited 120 packages in 868ms
+
+32 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+```
+
+Vollständige Ausgabe: `/private/tmp/t1245-serverlauf7/npm-ci.log`.
+
+**Lint**
+
+```bash
+npm run lint
+```
+
+```text
+
+> lint
+> eslint . && prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+```
+
+Vollständige Ausgabe: `/private/tmp/t1245-serverlauf7/lint.log`.
+
+**TypeScript**
+
+```bash
+npx tsc --noEmit
+```
+
+```text
+Exit 0, keine Ausgabe.
+```
+
+Vollständige Ausgabe: `/private/tmp/t1245-serverlauf7/tsc.log`.
+
+**Preistafel einschließlich der neun PHP-Fälle**
+
+```bash
+npm run verify:tafel
+```
+
+```text
+Exit 0; alle acht Teilprogramme grün.
+PASS PHP ohne tafel: letzter Treffer und vollständige Preisantwort
+PASS PHP hw_get_prices: markierte mittlere Zeile
+PASS PHP hw_preise: Paar, Identität und Marker
+PASS PHP Rohleser: alle Modellzeilen für Dimensionierung
+PASS PHP weist Markerfehler ab: leer
+PASS PHP weist Markerfehler ab: doppelt
+PASS PHP weist Markerfehler ab: preislos
+PASS PHP weist Markerfehler ab: ungueltig
+PASS PHP bis Tafel F7 ungültig ""
+PASS PHP bis Tafel F7 ungültig "   "
+PASS PHP bis Tafel F7 ungültig null
+PASS PHP bis Tafel F7 ungültig "kein Preis"
+PASS PHP bis Tafel F7 ungültig "123abc"
+PASS PHP bis Tafel F7 ungültig true
+PASS PHP ohne Marker exakter Altvertrag A7=" S "
+PASS PHP ohne Marker exakter Altvertrag A7="S"
+PASS PHP ohne Marker exakter Altvertrag A7="s"
+```
+
+Vollständige Ausgabe: `/private/tmp/t1245-serverlauf7/tafel.log`.
+
+**Nutzen-Kern**
+
+```bash
+npm run verify:kv-nutzen
+```
+
+```text
+KV_JAZ: 48 Zeilen, 30 Originalwerte; PHP, JS und Preistafel geprüft
+GRÜN T1245: Referenzen, Summen, Spanne, alle Geräte und Randfälle
+GRÜN PHP/JS: 625 feste Fälle, 30 Geräte-/Heizsystempaare plus Kaskaden und Fehler; größtes Float-Delta 0
+GRÜN T1245 Parameter: Seed, vier Bio-Stufen, Alt-/Teilstand, Cachewechsel, Startjahr 2027 und JAZ-Sperren in JS/PHP
+GRÜN H2 Website: ungültige Bio-/Netz-/JAZ-Daten sperren nur Kostenvergleich/Bootstrap; Förderung und Perioden exakt gleich, keine Rückfallwarnung in GS/PHP
+GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme
+```
+
+Vollständige Ausgabe: `/private/tmp/t1245-serverlauf7/kv-nutzen.log`.
+
+**A11**
+
+```bash
+npm run verify:a11
+```
+
+```text
+Error: listen EPERM: operation not permitted 127.0.0.1
+Exit 1; lokale HTTP-Server in der Sandbox gesperrt.
+```
+
+Vollständige Ausgabe: `/private/tmp/t1245-serverlauf7/a11.log`.
+
+**Assets**
+
+```bash
+npm run verify:assets
+```
+
+```text
+
+> verify:assets
+> scripts/version-assets.sh --check
+
+Asset-Versionierung aktuell: 79 Assets, 33 Seiten, 0 Abweichungen.
+```
+
+Vollständige Ausgabe: `/private/tmp/t1245-serverlauf7/assets.log`.
+
+**Content-Fidelity**
+
+```bash
+node scripts/content-fidelity-check.js
+```
+
+```text
+Content-Fidelity-Check OK (9 Seite(n), Schwelle 30%).
+```
+
+Vollständige Ausgabe: `/private/tmp/t1245-serverlauf7/content-fidelity.log`.
+
+**HubSpot-Schema**
+
+```bash
+node scripts/hubspot-schema-check.js
+```
+
+```text
+HubSpot-Schema-Check OK (24 Properties geprüft).
+```
+
+Vollständige Ausgabe: `/private/tmp/t1245-serverlauf7/hubspot-schema.log`.
+
+**Lead-only**
+
+```bash
+bash /private/tmp/t1245-serverlauf7/lead-only.sh
+```
+
+```text
+Lead-only-Negativ-Gate: OK
+```
+
+Vollständige Ausgabe: `/private/tmp/t1245-serverlauf7/lead-only.log`.
+
+**Snapshot-/HTTP-Prüfungen und Browser:** `verify:a11`, die Node-Teile der Snapshot-Läufe sowie Header-, Apache-, SEO-Basics- und Rich-Results-Prüfung treffen auf `listen EPERM` beziehungsweise `connect EPERM 127.0.0.1:8080`. Browser melden zusätzlich `bootstrap_check_in ... Permission denied (1100)` oder `browserType.launch: Target page, context or browser has been closed`. Diese Läufe sind nicht als bestanden gewertet. Eine vorhandene reine Prüfung kann innerhalb eines Browser-Pakets grün sein; daraus folgt keine bestandene Browser-Abnahme.
+
+**NFC-Gegenprobe:** Die unveränderte Prüfung mit `php -n ... --ohne-nfc` verlangt ausdrücklich einen tatsächlich fehlenden Normalizer. Die lokale PHP-Umgebung liefert:
+
+```text
+PHP 8.5.7; intl=an; Normalizer=vorhanden
+```
+
+Die Prüfung bleibt deshalb lokal rot. Im Workflow ist PHP 8.1 mit Intl als Erweiterung eingerichtet; dieses Installationsmodell wurde lokal nicht nachgestellt. Kein Entfernen der Zusicherung und keine Änderung am PHP-Kern.
+
+**Bündel und Versionsprüfung:** Der vollständige Originalweg wurde ausgeführt:
+
+```bash
+scripts/make-ionos-bundle.sh /tmp/bundle-pruefung
+scripts/stamp-version.sh --check /tmp/bundle-pruefung
+npm run verify:buendel-kommentare -- /tmp/bundle-pruefung
+npm run verify:buendel-gleichheit -- . /tmp/bundle-pruefung
+scripts/start-pruefserver.sh
+```
+
+```text
+FEHLER: Arbeitsbaum ist nicht sauber. Kein Stempel für einen schmutzigen Stand.
+Unvollständiges Bündel nach Fehler entfernt: /tmp/bundle-pruefung
+```
+
+Der nachfolgende Check findet folgerichtig kein vollständig gestempeltes Bündel. Der Wächter blieb unverändert. Ohne erlaubte Einbuchung ist dieser Gesamt-Versionslauf nicht grün zu machen. `scripts/stamp-version.sh --selbsttest` ist separat grün: richtige Attrappe erkannt, fehlender Stempel korrekt rot.
+
+Die Bündelkomponenten wurden zusätzlich auf einer lokalen **ungestempelten** Kopie mit exakt den Ausschlüssen des unveränderten Bündelskripts geprüft. Keine Auslieferung und kein Ersatz für die gesperrte Versionsprüfung:
+
+```bash
+node scripts/remove-bundle-comments.mjs /private/tmp/t1245-serverlauf7/buendel-komponenten
+scripts/version-assets.sh /private/tmp/t1245-serverlauf7/buendel-komponenten
+npm run verify:buendel-kommentare -- /private/tmp/t1245-serverlauf7/buendel-komponenten
+npm run verify:buendel-gleichheit -- . /private/tmp/t1245-serverlauf7/buendel-komponenten
+```
+
+```text
+Buendel-Kommentarpruefung: GRUEN.
+Buendel-Gleichheitspruefung: GRUEN, 124 Dateien verglichen.
+```
+
+Vollständige Ausgabe: `/private/tmp/t1245-serverlauf7/buendel-komponenten.log`.
+
+### Dateiliste, unverändert gelassene Bereiche
+
+Geändert in diesem Nachlauf, ausschließlich Website:
+
+- `tests/t1087-tafel.cjs`
+- `tests/t1087-nachauftrag.cjs`
+- `tests/helpers/php-engine.cjs` (neu)
+- `T1245_SCHRITT1_ABSCHLUSS.md` (dieser Abschnitt)
+
+Keine Engine-, Konfigurator-, Workflow-, Erwartungs-, Fixture-, Paket-/Lock-, Produkt- oder HTML-Datei geändert. Kein `git add`, kein `git commit`, kein `git switch`, kein Push oder Pull Request. Die Steuerung kann nach unabhängiger Prüfung die Nachbesserung einbuchen und den Linux-Workflow erneut starten. Die lokalen Umgebungsblocker sind offen ausgewiesen; es wird keine vollständig grüne CI behauptet.

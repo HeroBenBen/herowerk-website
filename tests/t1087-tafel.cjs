@@ -4,6 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const cp = require('node:child_process');
+const { runPhpEngine } = require('./helpers/php-engine.cjs');
 const root = path.resolve(__dirname, '..');
 const website = fs.existsSync(path.join(root, 'api/rechner-engine.php'));
 const basis = process.argv.includes('--basis');
@@ -78,8 +79,8 @@ function gas(sheets) {
   return ctx;
 }
 function php(sheets, action) {
-  const script = `eval(substr($argv[1],5)); $s=json_decode(stream_get_contents(STDIN),true); try { $v=${action}; echo json_encode(['ok'=>true,'value'=>$v]); } catch (Throwable $e) { echo json_encode(['ok'=>false,'error'=>$e->getMessage()]); }`;
-  const r = cp.spawnSync('php', ['-r', script, read('api/rechner-engine.php')], {
+  const script = `require $argv[1]; $s=json_decode(stream_get_contents(STDIN),true); try { $v=${action}; echo json_encode(['ok'=>true,'value'=>$v]); } catch (Throwable $e) { echo json_encode(['ok'=>false,'error'=>$e->getMessage()]); }`;
+  const r = runPhpEngine(read('api/rechner-engine.php'), script, {
     input: JSON.stringify(sheets),
     encoding: 'utf8',
     maxBuffer: 4e6,
