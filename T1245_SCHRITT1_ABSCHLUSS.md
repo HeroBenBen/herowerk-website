@@ -2504,3 +2504,260 @@ Vorgeschlagene Einbuchungsnachricht Website für die offenen Browser-Nachläufe:
 Konfigurator: keine zusätzlichen Änderungen und keine zusätzliche Einbuchung. Keine Änderung an „WR 7 Antworttexte webkit“, Toleranzen, Wiederholungs- oder Auslieferungskonfiguration. Keine Einbuchung, kein Upload, kein Live-Zugriff.
 
 Vorschlag für das Änderungsverzeichnis der Steuerung: „Konfigurator und Angebot 541, Vorgang T1245, Codex Nachlauf 10: Heizsystem-Chip sachlich auf Annahme: Heizkörper gesetzt; alle neuen Eingaben auf falsche Markthinweise geprüft. Exakte Test-Erwartung und historische JAZ-Chip-Darstellung berichtigt; echte Chip-Initialisierung in der DOM-Gegenprobe. Asset-Versionierung ohne nötige Verweisänderung; Lint, TypeScript, Tafel und Nutzen grün. Archiv /private/tmp/t1245-browser10; nichts eingebucht.“
+
+### Anpassung 13: Nachgelagerte Thin-Client-Prüfungen und Kernnachrechnung
+
+**Erwartungen fachlich vollständig hergeleitet und angepasst; lokale Browser-Abnahme durch Sandbox gesperrt.** Ausgangspunkt: sauberer Website-Zweig auf `0269f63`. Keine Kern- oder Produktänderung. Die Kernnachrechnung und Lint/TypeScript sind grün. Der vollständig angeforderte Playwright-Befehl wurde ausgeführt, ist aber wegen `listen EPERM: operation not permitted 127.0.0.1` bereits beim Aufbau der drei lokalen Testserver rot. Es werden keine erfolgreich durchlaufenen Browserfälle oder eine grüne Gesamt-Abnahme behauptet.
+
+#### Dieselben Eingaben, alter und neuer JS- und PHP-Kern
+
+Die Nachrechnung verwendet den archivierten Stand vor Schritt 1, Website `945916d`, und den aktuellen, unveränderten Kern auf `0269f63`. Der neue JS-Lauf lädt ausdrücklich `kv_engine.js` aus dem Konfigurator; dessen Bytes wurden gegen `apps-script/rechner-backend/kv_engine.gs` verglichen. Der alte JS-Kern wird archiviert aus Git gelesen. Beide PHP-Versionen werden über den vorhandenen Dateipfad-Helfer `tests/helpers/php-engine.cjs` geladen, niemals als langes Kommandozeilenargument.
+
+Grundzustand des Tests: Gas, 20.000 kWh/Jahr, Wirkungsgrad 85 %, Investition 30.000 €, neue Gasheizung 12.000 €, Gaspreis 12 ct/kWh, Strompreis 32 ct/kWh, 20 Jahre ab 2026, Förderzeitraum `h2-2026`, kein proKlima, keine PV, kein zusätzlicher Netzentgeltpfad, kein eigener WP-Zähler, Modul 1, Warmwasser bisher und künftig zentral. Alle übrigen Eingaben entsprechen `KV_DEFAULTS`, wie im Testserver `mapInputs()`. Die Schalterzustände und Änderungen werden in neun Varianten separat nachgerechnet: Grundzustand, Finanzierung mit Zins 0/9/0,7 %, hohe Investition 65.000 €, niedrige Investition 12.000 €, Weiterbetrieb des Bestands sowie die beiden Kreditratenfälle mit 0,7/3,5 %.
+
+Wichtig beim Weiterbetrieb: `toggleNeuFossil()` im Berater setzt zugleich `bioTog=false`. Diese tatsächliche Bedienfolge wurde nachgebildet; es wird dort kein unzutreffender Zustand mit weiter eingeschalteter Bio-Beimischung unterstellt.
+
+```bash
+node /private/tmp/t1245-browser13/nachrechnung.cjs
+```
+
+```text
+GRÜN: 9 Zustände, kompletter JS/PHP-Gleichlauf alt und neu, maximales Rohwertdelta 0
+```
+
+Der Vergleich umfasst die vollständigen Antwortobjekte, nicht nur ausgewählte Zahlen. Jeder Jahreskostenlauf und alle drei Kostenpfade wurden außerdem aus dem alten Kern plus genau den beauftragten Änderungen aufgebaut. Es blieb kein fachlich unerklärter Posten. Vollständige Eingaben, alte/neue Werte, Beiträge und Reste: `/private/tmp/t1245-browser13/nachrechnung.json`; ausführbare Nachrechnung und Ausgabe daneben als `nachrechnung.cjs` und `nachrechnung.log`.
+
+#### Jede geänderte Erwartung: alt, neu und Ursache
+
+- **Amortisation Jahr 6 → Jahr 4:** Die beauftragten Jahreskosteneffekte bringen die kumulierte Betriebsersparnis im neuen Lauf nach Jahr 3 auf 3.749,8603921174636 €, nach Jahr 4 auf 5.471,360094389147 €; erst dann ist die unveränderte Mehrinvestition von 5.120 € erreicht.
+- **Hauptvorteil in Rechenweg, Sensitivitätsbasis und `ergebnis.wpNG`, 45.389 € → 56.647 €:** JAZ, Fixkosten, Modul 1, Wartungsangleich und korrigierte Bio-Treppe erhöhen ihn roh von 45.389,09790698547 € auf 56.647,235583073416 €; die vollständige Zerlegung folgt unten.
+- **Drei-Wege-Vorteil 45.389 € → 53.737 €:** Der Gas-Grundpreis macht Öl zur günstigsten fossilen Alternative, weshalb der unveränderte Drei-Wege-Algorithmus jetzt 105.321,52233007387 € Öl-Gesamtkosten minus 51.584,39508864081 € WP-Gesamtkosten vergleicht, statt den Hauptwert gegen die gewählte Gasheizung zu übernehmen.
+- **Monatlicher Vorteil bei 65.000 € Investition und 0,7 % Zins, −295 €/Mo. → −248 €/Mo.:** Dieselben beauftragten Betriebskosteneffekte verbessern den ungerundeten Monatswert von −294,9531834411355 € auf −247,63213989963924 €, bei unveränderter Kreditrate.
+- **Monatlicher Cashflow beim Weiterbetrieb, −377 €/Mo. → −330 €/Mo.:** Die beauftragten Betriebskosteneffekte verbessern den Rohwert von −377,470533790848 € auf −330,14949024935174 €, ebenfalls ohne Änderung der Kreditrate.
+
+Die von der Steuerung genannte **„Einsparung 20 J.“ 61.767 €** ist die Betriebsersparnis vor Abzug der Mehrinvestition: alt 50.509,09790698547 €, neu 61.767,235583073416 €; nach unverändertem Abzug von 5.120 € entsteht der Hauptvorteil von 56.647,235583073416 €. Diese beiden Anzeigen dürfen nicht gleichgesetzt werden.
+
+Unverändert und deshalb nicht nachgezogen: **17.120 € Eigenanteil**, **5.120 € Mehrinvestition**, **12.880 € Zuschuss**, **−5.520 € Mehrinvestition im 12.000-€-Fall**, sowie die Kreditraten **147,75984088488815 € bei 0,7 %** und **169,29260509477797 € bei 3,5 %**. Förderung, Investitionsdifferenz und Annuitätenformel wurden durch Schritt 1 nicht geändert. Die unveränderten Reader-Fixtures mit 17.120/12.880 € und Quote 46 sowie die Zins-Erwartungen in `wp-wave1-acceptance.spec.js` sind damit weiterhin passend.
+
+#### Vollständige Zerlegung des Hauptvorteils
+
+Aus dem archivierten Kern werden zunächst nur JAZ, dann die Bio-Stufen und dann die gemeinsame Wartung geändert. Die im neuen Jahreslauf gesondert ausgewiesenen Fixposten werden anschließend addiert. Ungerundete Beiträge:
+
+| Beitrag zum Hauptvorteil über 20 Jahre |     Rohwert in Euro |
+| -------------------------------------- | ------------------: |
+| Arbeitszahl 3,80 → 3,86                |    514.559922452223 |
+| Gas-Grundpreis                         |   5007.600000000001 |
+| Schornsteinfeger                       |                 780 |
+| Modul 1                                |  3124.3999999999987 |
+| Gemeinsame Wartung                     |                2000 |
+| Gesetzliche Bio-Treppe                 | -168.42224636426545 |
+| Warmwasser                             |                   0 |
+| Photovoltaik                           |                   0 |
+| Zusätzlicher Netzentgeltpfad           |                   0 |
+| Eigener WP-Zähler                      |                   0 |
+
+Die Summe beträgt 11.258,137676087958 € gegenüber der Rohwertdifferenz von 11.258,137676087943 €. Das Restglied der Gleitkomma-Additionsreihenfolge beträgt −0,000000000014551915228366852 €, deutlich unter 1 Cent; die vollständigen PHP- und JS-Antworten sind numerisch identisch. Die Jahreskosten wurden zusätzlich je Jahr separat rekonstruiert und mit dem neuen Kern verglichen.
+
+Warmwasser wirkt in diesen Testfällen mit **0 €**, weil kein Wechsel der Warmwasserbereitung eingestellt ist; es wird keine Wirkung erfunden. PV, zusätzlicher Netzentgeltpfad und eigener WP-Zähler sind aus und wirken ebenfalls mit 0 €.
+
+Für die Monatswerte ist der Zugewinn im ersten Betriebsjahr 567,8525224979549 € beziehungsweise 47,32104354149624 €/Monat. Die Bio-Treppe beginnt erst später und trägt im ersten Betriebsjahr 0 € dazu bei. Die Kreditraten sind im alten und neuen Kern exakt gleich.
+
+Im Drei-Wege-Vergleich wurden zusätzlich die gesamten Kosten jedes Brennstoffpfads separat gegen den aus dem alten Kern rekonstruierten Pfad geprüft. Neue Gas-Gesamtkosten: 108.231,63067171424 €; neue Öl-Gesamtkosten: 105.321,52233007387 €. Die günstigere Öl-Alternative liegt 2.910,1083416403714 € unter Gas; genau deshalb ist der Drei-Wege-Vorteil geringer als der Hauptvorteil gegen Gas. Dies ist eine beauftragte Folge des Gas-Grundpreises und der übrigen ausgewiesenen Kostenbestandteile, keine geänderte Vergleichsformel.
+
+#### Teständerungen
+
+Nur die veralteten Erwartungen in `tests/kv-thin-client.spec.js` wurden angepasst. Die Erwartungswerte werden dort aus einem eigenen Kernaufruf mit den jeweils festen Testeingaben abgeleitet; sie werden weder von der angezeigten Seite abgelesen noch als neue Euro-Literale eingetragen. Der Drei-Wege-Wert verwendet ausdrücklich `dreiWege.vorteil`, die übrigen Vorteilsprüfungen `ergebnis.wpNG`. Die Testserver und sämtliche sonstigen Zusicherungen bleiben unverändert, einschließlich der unveränderten Förder-, Vorzeichen-, Schalter-, Retry-, Mobil-, Handoff- und Nullzinsprüfungen. Keine Toleranz geändert, kein `skip`, keine Änderung des seriellen Ablaufs.
+
+```diff
+diff --git a/tests/kv-thin-client.spec.js b/tests/kv-thin-client.spec.js
+index 624ea2d..3bba182 100644
+--- a/tests/kv-thin-client.spec.js
++++ b/tests/kv-thin-client.spec.js
+@@ -356,6 +356,14 @@ test('O3 Contract: Source, Bootstrap und serverseitige Periodeneigenschaft', asy
+ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry', async ({
+   page,
+ }) => {
++  const expectedAt = (overrides = {}) =>
++    engine.kvCalculate(
++      { ...engine.KV_DEFAULTS, fHalbjahr: 'h2-2026', proklimaTog: false, ...overrides },
++      engine.KV_PARAMS_SEED
++    );
++  const expected = expectedAt();
++  const euro = (value) => Math.round(value).toLocaleString('de-DE') + ' €';
++  const monthly = (value) => (value >= 0 ? '+' : '−') + Math.abs(Math.round(value)) + ' €/Mo.';
+   await installLocalConsent(page);
+   const dark = collectErrors(page);
+
+@@ -379,17 +387,19 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
+   await expect(page.locator('#results')).toHaveClass(/visible/);
+   await expect(page.locator('#pathSummary')).toContainText('17.120 €');
+   await expect(page.locator('#pathSummary')).toContainText('5.120 €');
+-  await expect(page.locator('#kpiGrid')).toContainText('Jahr 6');
+-  await expect(page.locator('#pathSummary')).toContainText('45.389 €');
+-  await expect(page.locator('#dreiWegeBox')).toContainText('45.389 €');
++  await expect(page.locator('#kpiGrid')).toContainText('Jahr ' + expected.ergebnis.breakEven);
++  await expect(page.locator('#pathSummary')).toContainText(euro(expected.ergebnis.wpNG));
++  await expect(page.locator('#dreiWegeBox')).toContainText(euro(expected.dreiWege.vorteil));
+   await expect(page.locator('#dreiWegeBox .mobile-kv-list')).toBeVisible();
+   await expectOneMobileYearDeck(page);
+   await expectNoMobileChartOverflow(page);
+   await expect(
+     page.getByRole('region', { name: /horizontal scrollbar|waagerecht rollbar/ })
+   ).toHaveCount(0);
+-  await expect(page.locator('#sensiBox')).toContainText('45.389 €');
+-  expect(await page.evaluate(() => Math.round(KV_STATE.last.ergebnis.wpNG))).toBe(45389);
++  await expect(page.locator('#sensiBox')).toContainText(euro(expected.ergebnis.wpNG));
++  expect(await page.evaluate(() => Math.round(KV_STATE.last.ergebnis.wpNG))).toBe(
++    Math.round(expected.ergebnis.wpNG)
++  );
+   expect(await page.locator('#kpiGrid .ml').allTextContents()).toEqual([
+     'Anschaffung nach Förderung',
+     'Mehrpreis gegenüber neuer Gasheizung',
+@@ -489,7 +499,12 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
+       .locator('#kpiGrid .ml', { hasText: 'Monatl. Vorteil (finanziert)' })
+       .locator('..')
+       .locator('.mv')
+-  ).toHaveText('−295 €/Mo.');
++  ).toHaveText(
++    monthly(
++      expectedAt({ finanzTog: true, immoTog: true, kredZins: 0.7, invWP: 65000 }).finanzierung
++        .monVorteil
++    )
++  );
+   await rangeFromStart(page, 'invWP', 8);
+   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.inputsEcho.invWP === 12000);
+   await expect(
+@@ -513,7 +528,18 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
+       .locator('#kpiGrid .ml', { hasText: 'Monatl. Cashflow (1. J.)' })
+       .locator('..')
+       .locator('.mv')
+-  ).toHaveText('−377 €/Mo.');
++  ).toHaveText(
++    monthly(
++      expectedAt({
++        finanzTog: true,
++        immoTog: true,
++        kredZins: 0.7,
++        invWP: 65000,
++        neuFossilTog: false,
++        bioTog: false,
++      }).finanzierung.monDiff
++    )
++  );
+
+   await clickTab(page, 'Finanzierung');
+   await clickToggle(page, 'finanzTog', false);
+```
+
+`tests/kv-lead-reader.spec.js` und `tests/wp-wave1-acceptance.spec.js` benötigen keine geänderte Erwartung und bleiben bytegleich zum Ausgangsstand. Die drei Testdateien wurden vor der Änderung unter `/private/tmp/t1245-browser13/` archiviert.
+
+#### Prüfungen und noch offene Browser-Abnahme
+
+```bash
+npx playwright test tests/kv-thin-client.spec.js tests/kv-lead-reader.spec.js tests/wp-wave1-acceptance.spec.js
+```
+
+Die Sammlung enthält **25 Tests in drei Dateien**, ohne `PREVIEW_URL`. Der vollständige Befehl wurde lokal ausgeführt. Ergebnis:
+
+```text
+Error: listen EPERM: operation not permitted 127.0.0.1
+3 failed
+22 did not run
+```
+
+Alle drei Dateien scheitern bereits beim Start ihres eigenen HTTP-Servers. Die nachfolgenden seriellen Fälle, einschließlich der zuvor nicht erreichten Folgefälle, sind damit lokal nicht ausgeführt; es wird kein grüner Lauf dieser Fälle behauptet. Der vorab ausgeführte direkte lokale Bindetest liefert denselben Fehler. Diese Sperre kann weder durch andere Erwartungswerte noch durch Änderung von Tests korrekt behoben werden. Die Browser-Nachmessung braucht eine Umgebung mit erlaubtem lokalem Port-Binding, wie die Umgebung der Steuerung. Vollständige Ausgabe: `/private/tmp/t1245-browser13/browser.log`; vollständige Sammlung: `testliste.log` im selben Ordner.
+
+```bash
+npm run lint
+npx tsc --noEmit
+```
+
+Beide Exit 0. Lint:
+
+```text
+> lint
+> eslint . && prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+```
+
+TypeScript: keine Ausgabe. Vollständige Ausgaben: `/private/tmp/t1245-browser13/lint.log` und `tsc.log`. Beide Prüfungen wurden nach der endgültigen Drei-Wege-Erwartung erneut auf dem finalen Stand ausgeführt. Die tatsächlich im Test ausgewerteten neuen Erwartungsausdrücke sind zusätzlich unter `/private/tmp/t1245-browser13/erwartungen.log` protokolliert.
+
+#### Dateiliste und Einbuchungsvorschlag
+
+Geändert, nur Website:
+
+- `tests/kv-thin-client.spec.js`
+- `T1245_SCHRITT1_ABSCHLUSS.md`
+
+Vorgeschlagene Einbuchungsnachricht: `test: T1245-Thin-Client-Erwartungen aus dem Kostenkern ableiten`.
+
+Kein Angebot, Kern, Parameter, Produktcode, Workflow oder Golden-Snapshot geändert. Konfigurator nur gelesen; `kv_engine.js` bleibt bytegleich zum Website-Kern. Keine Einbuchung, kein Upload, kein Live-Zugriff. Die fachliche Herleitung ist abgeschlossen; die vollständige Browser-Abnahme bleibt wegen der dokumentierten lokalen Serversperre offen.
+
+### Anpassung 14
+
+Die in Anpassung 13 eingeführten Helfer `expectedAt`, `expected`, `euro` und `monthly` wurden vollständig aus `tests/kv-thin-client.spec.js` entfernt. Die sieben geänderten Erwartungen sind jetzt feste Literale, unabhängig von einer Berechnung der Sollwerte zur Testlaufzeit. Jede dieser Erwartungen trägt den Kommentar `T1245, Kern 0269f63, Herleitung T1245_SCHRITT1_ABSCHLUSS.md Anpassung 13`. Die vorhandene Kernnutzung für die simulierten Antworten bleibt erhalten.
+
+| Prüfung                                                           | Anpassung 13                                       | Anpassung 14: festes Literal |
+| ----------------------------------------------------------------- | -------------------------------------------------- | ---------------------------- |
+| `#kpiGrid`, Amortisation                                          | `'Jahr ' + expected.ergebnis.breakEven`            | `'Jahr 4'`                   |
+| `#pathSummary`, Vorteil                                           | `euro(expected.ergebnis.wpNG)`                     | `'56.647 €'`                 |
+| `#sensiBox`, Grundszenario                                        | `euro(expected.ergebnis.wpNG)`                     | `'56.647 €'`                 |
+| Gerundetes `KV_STATE.last.ergebnis.wpNG`                          | `Math.round(expected.ergebnis.wpNG)`               | `56647`                      |
+| `#dreiWegeBox`, Vorteil                                           | `euro(expected.dreiWege.vorteil)`                  | `'53.737 €'`                 |
+| Monatlicher Vorteil, finanziert, Investition 65.000 €, Zins 0,7 % | `monthly(expectedAt(...).finanzierung.monVorteil)` | `'−248 €/Mo.'`               |
+| Monatlicher Cashflow im ersten Jahr, Weiterbetrieb                | `monthly(expectedAt(...).finanzierung.monDiff)`    | `'−330 €/Mo.'`               |
+
+Unveränderte Literale, darunter `17.120 €`, `5.120 €` und `−5.520 €`, bleiben unverändert. Keine Zusicherung, Toleranz, Wiederholungseinstellung oder Testausführung wurde entfernt oder gelockert.
+
+Der Gas-Grundpreis von 250,38 € im Jahr belastet nur die Gasheizung; dadurch ist die neue Ölheizung über 20 Jahre mit 105.322 € um 2.910 € günstiger als die neue Gasheizung mit 108.232 €, und der Drei-Wege-Vergleich misst die Wärmepumpe immer gegen die günstigste fossile Alternative.
+
+#### Temporärer Falschwert und Prüfungen
+
+Genau ein Literal wurde vorübergehend von `'Jahr 4'` auf `'Jahr 5'` gesetzt. Mit diesem Falschwert liefen:
+
+```text
+node --check tests/kv-thin-client.spec.js
+Exit 0, keine Ausgabe
+
+npx eslint tests/kv-thin-client.spec.js
+Exit 0, keine Ausgabe
+```
+
+Anschließend wurde die Datei vollständig auf den korrekten Stand mit `'Jahr 4'` zurückgesetzt; die Wiederherstellung wurde gegen den gespeicherten vollständigen Dateiinhalt geprüft. Die Falschwert-Datei und die beiden Ausgaben liegen unter `/private/tmp/t1245-browser14/` (`kv-thin-client.falschwert.spec.js`, `falschwert-node-check.log`, `falschwert-eslint.log`).
+
+Diese statischen Prüfungen erkennen einen fachlich falschen Erwartungswert nicht. Ein roter Browservergleich ist damit nicht nachgewiesen. Entsprechend der Anweisung wurde in Anpassung 14 kein lokaler Browserlauf versucht; der Browser-Rot-Nachweis und die Browser-Abnahme bleiben dem Serverlauf vorbehalten.
+
+Prüfungen nach Wiederherstellung des korrekten Literals und auf dem endgültigen Dateistand:
+
+```text
+npm run lint
+
+> lint
+> eslint . && prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+
+Exit 0
+```
+
+```text
+npx tsc --noEmit
+
+Exit 0, keine Ausgabe
+```
+
+Vollständige Ausgaben: `/private/tmp/t1245-browser14/lint.log` und `/private/tmp/t1245-browser14/tsc.log`.
+
+#### Dateiliste und Einbuchungsvorschlag
+
+Geändert, nur Website:
+
+- `tests/kv-thin-client.spec.js`
+- `T1245_SCHRITT1_ABSCHLUSS.md`
+
+Vorgeschlagene Einbuchungsnachricht: `test: T1245-Thin-Client-Erwartungen als feste Literale prüfen`.
+
+Keine Änderung an Kern, Produktcode, Konfigurator, Goldsatz oder den beiden anderen Browser-Testdateien. Nichts eingebucht.
