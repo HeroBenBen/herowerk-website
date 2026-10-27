@@ -4,6 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const cp = require('node:child_process');
+const { runPhpEngine } = require('./helpers/php-engine.cjs');
 const root = path.resolve(__dirname, '..');
 const website = fs.existsSync(path.join(root, 'api/rechner-engine.php'));
 const ref = process.argv.includes('--ref') ? process.argv[process.argv.indexOf('--ref') + 1] : null;
@@ -45,8 +46,8 @@ function gas(sheets, revision = ref) {
   return ctx;
 }
 function php(sheets, action, revision = ref) {
-  const script = `eval(substr($argv[1],5)); $s=json_decode(stream_get_contents(STDIN),true); echo json_encode(${action}, JSON_THROW_ON_ERROR);`;
-  const r = cp.spawnSync('php', ['-r', script, read('api/rechner-engine.php', revision)], {
+  const script = `require $argv[1]; $s=json_decode(stream_get_contents(STDIN),true); echo json_encode(${action}, JSON_THROW_ON_ERROR);`;
+  const r = runPhpEngine(read('api/rechner-engine.php', revision), script, {
     input: JSON.stringify(sheets),
     encoding: 'utf8',
   });

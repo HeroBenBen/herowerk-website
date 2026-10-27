@@ -379,17 +379,22 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
   await expect(page.locator('#results')).toHaveClass(/visible/);
   await expect(page.locator('#pathSummary')).toContainText('17.120 €');
   await expect(page.locator('#pathSummary')).toContainText('5.120 €');
-  await expect(page.locator('#kpiGrid')).toContainText('Jahr 6');
-  await expect(page.locator('#pathSummary')).toContainText('45.389 €');
-  await expect(page.locator('#dreiWegeBox')).toContainText('45.389 €');
+  // T1245, Kern 0269f63, Herleitung T1245_SCHRITT1_ABSCHLUSS.md Anpassung 13
+  await expect(page.locator('#kpiGrid')).toContainText('Jahr 4');
+  // T1245, Kern 0269f63, Herleitung T1245_SCHRITT1_ABSCHLUSS.md Anpassung 13
+  await expect(page.locator('#pathSummary')).toContainText('56.647 €');
+  // T1245, Kern 0269f63, Herleitung T1245_SCHRITT1_ABSCHLUSS.md Anpassung 13
+  await expect(page.locator('#dreiWegeBox')).toContainText('53.737 €');
   await expect(page.locator('#dreiWegeBox .mobile-kv-list')).toBeVisible();
   await expectOneMobileYearDeck(page);
   await expectNoMobileChartOverflow(page);
   await expect(
     page.getByRole('region', { name: /horizontal scrollbar|waagerecht rollbar/ })
   ).toHaveCount(0);
-  await expect(page.locator('#sensiBox')).toContainText('45.389 €');
-  expect(await page.evaluate(() => Math.round(KV_STATE.last.ergebnis.wpNG))).toBe(45389);
+  // T1245, Kern 0269f63, Herleitung T1245_SCHRITT1_ABSCHLUSS.md Anpassung 13
+  await expect(page.locator('#sensiBox')).toContainText('56.647 €');
+  // T1245, Kern 0269f63, Herleitung T1245_SCHRITT1_ABSCHLUSS.md Anpassung 13
+  expect(await page.evaluate(() => Math.round(KV_STATE.last.ergebnis.wpNG))).toBe(56647);
   expect(await page.locator('#kpiGrid .ml').allTextContents()).toEqual([
     'Anschaffung nach Förderung',
     'Mehrpreis gegenüber neuer Gasheizung',
@@ -484,12 +489,13 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
   await clickTab(page, 'Ihre Situation');
   await rangeToEnd(page, 'invWP');
   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.inputsEcho.invWP === 65000);
+  // T1245, Kern 0269f63, Herleitung T1245_SCHRITT1_ABSCHLUSS.md Anpassung 13
   await expect(
     page
       .locator('#kpiGrid .ml', { hasText: 'Monatl. Vorteil (finanziert)' })
       .locator('..')
       .locator('.mv')
-  ).toHaveText('−295 €/Mo.');
+  ).toHaveText('−248 €/Mo.');
   await rangeFromStart(page, 'invWP', 8);
   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.inputsEcho.invWP === 12000);
   await expect(
@@ -508,12 +514,13 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
   await expect(page.locator('#pathSummary')).not.toContainText('Anschaffung Neue Gasheizung');
   await expect(page.locator('#pathSummary')).not.toContainText('Echter Mehrpreis');
   await expect(page.locator('#kpiGrid .ml', { hasText: 'Mehrpreis gegenüber' })).toHaveCount(0);
+  // T1245, Kern 0269f63, Herleitung T1245_SCHRITT1_ABSCHLUSS.md Anpassung 13
   await expect(
     page
       .locator('#kpiGrid .ml', { hasText: 'Monatl. Cashflow (1. J.)' })
       .locator('..')
       .locator('.mv')
-  ).toHaveText('−377 €/Mo.');
+  ).toHaveText('−330 €/Mo.');
 
   await clickTab(page, 'Finanzierung');
   await clickToggle(page, 'finanzTog', false);
@@ -879,7 +886,12 @@ test('O4 Writer: jeder Anfrage-CTA schreibt ausschließlich das v1-Contract-Sche
   await fetch(`${baseURL}/__fail-on`);
   await page.evaluate(() => calculate({ showResults: true, scroll: false }));
   await expect(page.locator('#kvStatus a[href="/anfrage.html"]')).toHaveCount(1);
-  await expectWriterPayload(page.locator('#kvStatus a[href="/anfrage.html"]'));
+  await page.evaluate(() => sessionStorage.setItem('hero_kv_lead', '{"stale":true}'));
+  await page
+    .locator('#kvStatus a[href="/anfrage.html"]')
+    .evaluate((link) => /** @type {HTMLAnchorElement} */ (link).click());
+  expect(await page.evaluate(() => sessionStorage.getItem('hero_kv_lead'))).toBeNull();
+  await expect(page.locator('#results')).not.toHaveClass(/visible/);
   await fetch(`${baseURL}/__fail-off`);
 });
 

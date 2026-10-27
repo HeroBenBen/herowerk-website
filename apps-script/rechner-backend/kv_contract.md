@@ -35,7 +35,7 @@ Ausnahmen (im Orakel selbst gerundet) sind je Feld markiert mit `[gerundet: …]
 | `bedarf` | number | `20000` | Brennstoff-Jahresverbrauch in **kWh** (5000–80000, Schritt 500). Einheiten-Umrechnung (m³/Liter × 10) macht der Client VOR dem Request (siehe 3.4); der Server rechnet nur kWh. |
 | `eta` | number | `85` | Kessel-Nutzungsgrad in Prozent (65–98). Defaults je Kessel-Karten-Antwort siehe Bootstrap `etaMatrix`. |
 | `invWP` | number | `30000` | WP-Investition brutto € (8000–65000) |
-| `jaz` | number | `3.8` | Jahresarbeitszahl (2.5–5.0) |
+| `jaz` | number | historisch `3.8` | Seit T1245 ignoriert; Arbeitszahl aus `KV_JAZ`, siehe Abschnitt T1245. |
 | `laufzeit` | int | `20` | Betrachtungszeitraum Jahre (5–25) |
 
 ### 1.3 Vergleich (Wizard Schritt 2)
@@ -59,8 +59,8 @@ Ausnahmen (im Orakel selbst gerundet) sind je Feld markiert mit `[gerundet: …]
 | `stromEntw` | number | `1.5` | %/Jahr (-0.5/1.5/3.0) |
 | `co2preis` | number | `55` | €/t heute (25–80) |
 | `co2Pfad` | number | `250` | €/t Ziel 2045 (150/250/300) |
-| `bioTog` | bool | `1` | Bio-Beimischungs-Treppe (GEG §71(9)) einrechnen |
-| `bioAufpreis` | number | `2.5` | Bio-Aufpreisfaktor × fossil (2.0/2.5/3.0) |
+| `bioTog` | bool | `1` | Bio-Treppe nach GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226, ausschließlich im Neuanlagenvergleich |
+| `bioAufpreis` | number | `2.5` | Bio-Aufpreisfaktor × fossil (2.0/2.5/3.0), Preisannahme BDEW Januar 2026 |
 
 ### 1.5 Förderung (Wizard Schritt 3 + Berater-Tab Förderung)
 
@@ -501,3 +501,46 @@ Pfade auseinander. Genau dafür sind beide Felder da.
    kein statischer Default).
 6. Ergänzt: Abschnitt 2.1 (Render-Regeln), 2.2 (PV/Speicher bewusst nicht portiert),
    2.3 (Hero-Zweige inkl. der `pf()`-Alt-Semantik).
+
+## T1245: Nutzen-Rechenkern, freigegebener Stand 27.10.2026
+
+Der PHP-Kern und `kv_engine.gs` verwenden dieselbe Jahreskostenfunktion für Hauptreihe,
+Sensitivität und Drei-Wege-Vergleich. `sensi.basis` entspricht exakt `ergebnis.wpNG`.
+Die JS-Kopie im Konfigurator bleibt bytegleich. Der Kern liest keine Uhr; die beiden
+Request-Wrapper übergeben das Abrufjahr (Europe/Berlin) als `startJahr`. Direkte interne
+Aufrufe übergeben ein Startjahr oder benutzen `params.startY` des aufrufenden Kontexts.
+CO₂-Zieljahr ist kalenderfest 2045; der Preis im Startjahr ist der eingegebene heutige Preis.
+
+Neue Eingaben:
+
+| Schlüssel | Einheit / Vorgabe | Regel |
+|---|---|---|
+| `heizsystem` | `heizkoerper`, `fbh`; fehlend Heizkörper-Annahme | `gemischt` wird Heizkörper; `fussboden`/`fussbodenheizung` sind FBH-Aliase |
+| `geraet` | BWP-ID oder hinterlegter Gerätealias, leer | Leer verwendet das vollständige Portfolio-Minimum, derzeit 3,86 / 4,47. Unbekanntes Gerät sperrt. Kaskade verwendet den belegten Einzelgerätewert und trägt einen Hinweis. Ein altes `jaz`-Argument überschreibt die Tabelle nicht. |
+| `pvTog`, `pvAnteil`, `pvKosten` | aus, 30 %, 7 ct/kWh | Nur Netzstrom steigt im Preis. PV-Strompreis bleibt konstant. Dynamischer Tarif vergünstigt ausschließlich den verbleibenden Netzbezug. |
+| `foerderBetragExtern` | Euro, `null` | Leer verwendet die interne Förderung. Explizit 0 ersetzt sie durch 0; kein zusätzliches proKlima. Zulässiger Bereich 0 bis Investition. `foerder.extern` kennzeichnet den Ersatz. Interne Förderquoten/Treppen bleiben als interne Vergleichsinformation erhalten. |
+| `startJahr` | ganzzahliges Kalenderjahr, Wrapper: Abrufjahr | Kein Einfluss auf Förderantragsperiode oder Installationsbeginn. |
+| `grundpreisGas` | 250,38 Euro/Jahr | Nur bei heutigem Gas und Gas-Vergleichspfad, bei Öl nie. |
+| `wpZaehler`, `wpArbeitspreis`, `wpGrundpreis` | aus, leer, leer | Bei eigenem Zähler sind Arbeitspreis (ct/kWh) und Jahresgrundpreis erforderlich. Ein echter Grundpreis 0 ist zulässig. |
+| `modul14a` | `modul1` | `modul2` verlangt eigenen WP-Zähler/Tarif; `kein` schaltet den Modul-1-Vorteil ab. Modul 1 ohne eigenen Zähler: 156,22 Euro/Jahr, enercity-Netz-Annahme. |
+| `netzentgeltTog` | aus | Ohne vollständige belegte Jahresreihe sperrt Einschalten. Kein Ersatzwert und keine Interpolation. |
+| `warmwasserBisherZentral`, `warmwasserKuenftigZentral`, `personen` | ja, ja, leer | Nur nein → ja erzeugt Personen × `wwKwhProPerson` (700 kWh). Bestand: bisheriger Haushaltsstrom zusätzlich. Neuer Kessel: dieser Bedarf ist im Brennstoff enthalten, kein doppelter Boilerstrom. Wärmepumpe: zusätzliche Nutzwärme. |
+
+Wartung beträgt auf beiden Seiten 250 Euro/Jahr, Schornsteinfeger fossil zusätzlich 39 Euro.
+Verbrauch, Nutzungsgrad und Laufzeit bleiben Eingaben. Eine Hochrechnung ohne Verbrauch gehört
+nicht zu diesem Schritt. Gemischte Heizkreise sind vom Konfigurator in Schritt 3 entsprechend
+`Konf_40_Geraet.js` zuzuordnen; neue Konfigurator-Abläufe entstehen hier nicht.
+
+Ergebnis: `jahre[]` enthält jeden Einzelposten ungerundet. `posten` summiert Gas-Grundpreis,
+Schornsteinfeger, Gas-Netzentgeltpfad, Modul 1, WP-Grundpreis, PV-Vorteil, Bio-Bruttoaufschlag,
+Bio-CO₂-Entlastung, Bio-Nettoeffekt und bisherigen Warmwasserstrom. `charts` enthält dieselben
+Reihen mit Vorzeichen als Vorteilsbeitrag. `quellen` führt Gesetz und Preisannahme getrennt.
+`system.jazInfo` nennt Quelle, Abrufdatum, angenommene Gesamtlast und Temperaturen; `jazTabellenstand`
+kennzeichnet einen gebündelten Tabellenstand ausdrücklich. Sofortige Amortisation ist Jahr 0,
+keine Amortisation in der Laufzeit ist `null`. Summen bleiben nominal, Finanzierung separat.
+
+Bio gilt ausschließlich im Neuanlagenvergleich. Gesetzliche Stufen: 2029/10 %, 2030/15 %,
+2035/30 %, 2040/60 %. Ein exakt erkannter Altstand 2029/15 %, 2035/30 %, 2040/60 % wird vollständig
+migriert und sichtbar gekennzeichnet. Teilstände und unbekannte Treppen sperren. Faktor 2,5 ist
+BDEW-Preisannahme Januar 2026, keine Rechtsfolge. Der gerundete Bio-Nettoeffekt im Referenzfall
+ist 19.581 Euro; es wird der ungerundete Rohwert gerundet, keine Differenz gerundeter Summen.

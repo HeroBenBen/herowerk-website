@@ -763,15 +763,31 @@
         <h3>Neue Wärmepumpe</h3>
         <div class="sg"><label>Investitionskosten Wärmepumpe (brutto) <span class="v" id="vInvWP">30.000 €</span></label>
           <input type="range" id="invWP" min="8000" max="65000" step="500" value="30000"></div>
-        <div class="sg"><label>Jahresarbeitszahl (JAZ) <span class="v" id="vJAZ">3,8</span></label>
-          <input type="range" id="jaz" min="2.5" max="5.0" step="0.1" value="3.8"></div>
+        <div class="selg"><label for="heizsystem">Heizkörper oder Fußbodenheizung?</label>
+          <select id="heizsystem"><option value="">Bitte wählen</option><option value="heizkoerper">Heizkörper oder gemischte Anlage</option><option value="fbh">Nur Fußbodenheizung</option></select></div>
+        <input type="hidden" id="geraet" value="">
+        <p id="jazWert" role="status">Die Arbeitszahl wird aus der belegten Gerätetabelle bestimmt.</p>
+        <p class="d" id="jazGrundlagen"></p>
+        <div class="sg"><label for="grundpreisGas">Gas-Grundpreis in Euro pro Jahr</label><input type="number" id="grundpreisGas" min="0" step="0.01" value="250.38"></div>
+        <div class="sg"><label for="startJahr">Startjahr der Hochrechnung</label><input type="number" id="startJahr" min="1900" max="2200" step="1"></div>
+        <details class="klapp"><summary>Stromzähler und Photovoltaik</summary><div class="inhalt">
+          <div class="tg"><label><input type="checkbox" id="wpZaehler"> Eigener Wärmepumpenzähler</label></div>
+          <div class="sg"><label for="wpArbeitspreis">WP-Tarif: Arbeitspreis in ct/kWh (bei eigenem Zähler erforderlich)</label><input type="number" id="wpArbeitspreis" min="0" step="0.01"></div>
+          <div class="sg"><label for="wpGrundpreis">WP-Tarif: Grundpreis in Euro/Jahr (bei eigenem Zähler erforderlich)</label><input type="number" id="wpGrundpreis" min="0" step="0.01"></div>
+          <div class="selg"><label for="modul14a">Netzentgeltregelung nach Paragraf 14a</label><select id="modul14a"><option value="modul1">Modul 1</option><option value="modul2">Modul 2 mit eigenem Zähler</option><option value="kein">Kein Modul-1-Vorteil</option></select></div>
+          <div class="tg"><label><input type="checkbox" id="pvTog"> Photovoltaik für die Wärmepumpe berücksichtigen</label></div>
+          <div class="sg"><label for="pvAnteil">Anteil des WP-Stroms aus Photovoltaik in Prozent</label><input type="number" id="pvAnteil" min="0" max="100" step="1" value="30"></div>
+          <div class="sg"><label for="pvKosten">PV-Stromkosten in ct/kWh, ohne Preissteigerung</label><input type="number" id="pvKosten" min="0" step="0.01" value="7"></div>
+        </div></details>
+        <div class="tg"><label><input type="checkbox" id="netzentgeltTog"> Zusätzlichen Gas-Netzentgeltpfad berücksichtigen</label></div>
+        <p class="d" id="netzentgeltHinweis">Geplante Quellenreihe: Fraunhofer IFAM. Noch keine belegten Jahreswerte hinterlegt. Einschalten sperrt die Rechnung, bis eine belegte Reihe vorliegt. Berücksichtigt wird nur der Anstieg gegenüber heute.</p>
         <div class="sg"><label>Betrachtungszeitraum <span class="v" id="vLaufzeit">20 Jahre</span></label>
           <input type="range" id="laufzeit" min="5" max="25" step="1" value="20"></div>
       </div>
     </div>
     <div class="card hl" id="wzCompareCard">
       <h3>Der ehrliche Vergleich: Wenn deine Heizung jetzt ausfällt <span class="ii" data-tooltip="Richtwerte inkl. Einbau (Verbraucherzentrale/co2online, marktabhängig): neue Gas-Brennwertheizung ca. 8.000 bis 15.000 €, neue Ölheizung ca. 12.000 bis 20.000 €. Diese Anschaffung würde ohnehin anfallen und bekommt keine Förderung.">i</span></h3>
-      <div class="ib" data-mobile-summary="Warum vergleichen wir mit einer neuen Heizung?" style="margin-bottom:16px"><span class="d">Die meisten Eigentümer stehen nicht vor der Wahl „Wärmepumpe oder nichts", sondern <strong>„neue Heizung ODER neue Wärmepumpe"</strong>. Auch eine neue Gas- oder Ölheizung kostet Anschaffung und Einbau, bekommt aber keine Förderung und trägt steigende CO₂- und Biotreppe-Kosten. Deshalb zählt die <strong>Mehrinvestition</strong>, nicht der volle Wärmepumpen-Preis. Hinweis: In Kommunen mit beschlossener Wärmeplanung (Großstädte wie Hannover) ist der Einbau einer neuen reinen Gas-/Ölheizung nach GEG §71 nur noch eingeschränkt bzw. mit steigendem EE-Anteil zulässig. Der Rechner rechnet zugunsten der fossilen Variante nur mit der Biotreppe.</span></div>
+      <div class="ib" data-mobile-summary="Warum vergleichen wir mit einer neuen Heizung?" style="margin-bottom:16px"><span class="d">Die meisten Eigentümer stehen nicht vor der Wahl „Wärmepumpe oder nichts", sondern <strong>„neue Heizung ODER neue Wärmepumpe"</strong>. Auch eine neue Gas- oder Ölheizung kostet Anschaffung und Einbau, bekommt aber keine Förderung und trägt steigende CO₂- und Biotreppe-Kosten. Deshalb zählt die <strong>Mehrinvestition</strong>, nicht der volle Wärmepumpen-Preis. Für den Neuanlagenvergleich berücksichtigt der Rechner die Bio-Beimischpflicht nach GModG § 43 Abs. 1. Die Rechnung ist eine Prognose auf Basis der ausgewiesenen Annahmen.</span></div>
       <div class="tg"><label class="tog"><input type="checkbox" id="neuFossilTog" checked onchange="toggleNeuFossil()"><span class="sl"></span></label>
         <div class="tl">Neue fossile Anlage als realistischen Vergleich einrechnen<small>Vergleicht Investition + Folgekosten: neue Ölheizung gegen neue Gasheizung gegen neue Wärmepumpe. (Aktiviert zugleich die Biotreppe, da die Alternative eine neue Öl- oder Gasheizung wäre.)</small></div></div>
       <div id="neuFossilOpt">
@@ -829,19 +845,19 @@
       </div>
     </div>
     <div class="card">
-      <h3>GMG-Biotreppe <span class="ii" data-tooltip="Pflichtquoten: GEG §71 Abs. 9; GMG-Eckpunkte Feb. 2026 (Entwurf, nicht beschlossen). Preis-Aufschlag Bio-Brennstoffe (2 bis 3x): BDEW-Gaspreisanalyse Jan. 2026 + ZfK-Auswertung.">i</span></h3>
+      <h3>Bio-Beimischpflicht <span class="ii" data-tooltip="GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226: 10 % ab 2029, 15 % ab 2030, 30 % ab 2035, 60 % ab 2040. Mehrpreisfaktor 2,5: BDEW Januar 2026, Preisannahme, keine Rechtsfolge.">i</span></h3>
       <div class="tg"><label class="tog"><input type="checkbox" id="bioTog" checked onchange="toggleBio()"><span class="sl"></span></label>
-        <div class="tl">Biotreppe einrechnen<small>Aktivieren, wenn deine Alternative ein neuer Gas-/Ölkessel ist: Für neu eingebaute Kessel gilt ab 2029 die Pflicht-Beimischung (GEG §71 Abs. 9 / GMG-Entwurf). Ein Altkessel muss im Betrachtungszeitraum realistischerweise ohnehin ersetzt werden.</small></div></div>
+        <div class="tl">Biotreppe einrechnen<small>Aktivieren, wenn deine Alternative ein neuer Gas-/Ölkessel ist: Für den Vergleich mit einem neuen Gas- oder Ölkessel gilt die Beimischpflicht nach GModG § 43 Abs. 1. Beim Weiterbetrieb deiner bestehenden Heizung setzt der Kern diesen Aufschlag nicht an.</small></div></div>
       <div id="bioOpt" style="display:block">
         <div class="ib" style="margin-bottom:14px">
-          <strong>Gesetzliche Pflichtquoten (GEG §71 Abs. 9):</strong> 2029: 15 % · 2035: 30 % · 2040: 60 %<br>
-          <span class="d">Der GMG-Entwurf (Feb. 2026) sieht ggf. niedrigere Startwerte vor (10 % ab 2029). Wir rechnen mit der aktuell geltenden GEG-Obergrenze.</span><br><br>
+          <strong>GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226:</strong> 2029: 10 % · 2030: 15 % · 2035: 30 % · 2040: 60 %<br>
+          <span class="d">Gesetzlich festgelegt sind die Beimischanteile. Der Mehrpreisfaktor 2,5 ist eine Verbandsangabe (BDEW Januar 2026), keine gesetzliche Preisvorgabe.</span><br><br>
           <strong>Preis-Aufschlag Bio-Brennstoff:</strong><br>
-          <span class="d">Biogas-Tarife kosten laut ZfK/BDEW ca. 2 bis 4 ct/kWh mehr als Erdgas (~23 % Aufschlag bei 10 % Beimischung). Bei höheren Quoten steigt der Aufschlag überproportional, da die verfügbaren Biomethan-Mengen begrenzt sind.</span><br><br>
-          <strong>Langfrist-Prognose (Öko-Institut, März 2026):</strong><br>
-          <span class="d">Gasheizung: von heute ~11 ct/kWh → ~15 ct/kWh (2029) → über 25 ct/kWh (2040). Treiber: steigende Netzentgelte + CO₂-Preis + wachsender Biomethan-Anteil.</span><br><br>
+          <span class="d">Die Preisannahme 2,5 bedeutet: Der Bio-Anteil kostet das 2,5-Fache des fossilen Anteils. Bei 10 % Beimischung ergibt das 15 % Aufschlag auf den Brennstoffpreis, vor der getrennten CO₂-Berechnung.</span><br><br>
+          <strong>Getrennte Preisbestandteile:</strong><br>
+          <span class="d">Bio-Mehrpreis und zusätzlicher CO₂-Preis werden getrennt ausgewiesen. Ein zusätzlicher Gas-Netzentgeltpfad wirkt nur bei eingeschaltetem Schalter und hinterlegter belegter Jahresreihe.</span><br><br>
           <strong style="color:var(--hero-accent);">Quellen:</strong><br>
-          <span class="d">① GEG §71 Abs. 9 (Bundesgesetzblatt 2024) · ② GMG-Eckpunktepapier BMWSB (Feb. 2026) · ③ Öko-Institut: „Gebäudemodernisierungsgesetz: steigende Heizkosten erwartet" (März 2026) · ④ BDEW-Gaspreisanalyse (Jan. 2026) · ⑤ ZfK: „Biogas-Tarife meist deutlich teurer als Erdgas"</span>
+          <span class="d">Gesetzliche Anteile: GModG § 43 Abs. 1, BGBl. 2026 I Nr. 226 · Preisannahme: BDEW Januar 2026.</span>
         </div>
         <div class="selg"><label>Bio-Aufpreisfaktor</label>
           <select id="bioAufpreis"><option value="2.0">Konservativ: 2,0×</option><option value="2.5" selected>Mittel: 2,5×</option><option value="3.0">Hoch: 3,0×</option></select></div>
@@ -1012,7 +1028,6 @@ const SL=[
   {id:'invWP',vid:'vInvWP',f:v=>Number(v).toLocaleString('de-DE')+' €'},
   {id:'gasInvest',vid:'vGasInv',f:v=>Number(v).toLocaleString('de-DE')+' €'},
   {id:'oelInvest',vid:'vOelInv',f:v=>Number(v).toLocaleString('de-DE')+' €'},
-  {id:'jaz',vid:'vJAZ',f:v=>Number(v).toFixed(1).replace('.',',')},
   {id:'laufzeit',vid:'vLaufzeit',f:v=>v+' Jahre'},
   {id:'gaspreis',vid:'vGas',f:v=>Number(v).toFixed(1).replace('.',',')+' ct/kWh'},
   {id:'oelpreis',vid:'vOel',f:v=>Number(v).toFixed(1).replace('.',',')+' ct/kWh'},
@@ -1067,7 +1082,7 @@ syncVglUI();
 // ===== THIN CLIENT: API-ZUSTAND, LIVE-BERECHNUNG, RENDERING =====
 const KV_API='/api/rechner';
 const KV_STATE={bootstrap:null,last:null,seq:0,controller:null,timer:null,loadingTimer:null,lastParams:null,applyingBootstrap:false};
-const KV_INPUT_IDS=['heizart','bedarf','eta','invWP','jaz','laufzeit','neuFossilTog','vglBrennstoff','gasInvest','oelInvest','gaspreis','gasStg','oelpreis','oelStg','strompreis','stromEntw','co2preis','co2Pfad','bioTog','bioAufpreis','fHalbjahr','fGrund','fEU','fKlima','fAlt20','fEinkSlider','fKind','finanzTog','kredLZ','kredZins','immoTog','hausW','immoP','dynTarifTog','dynAnteil','dynSpread'];
+const KV_INPUT_IDS=['pvTog','pvAnteil','pvKosten','startJahr','grundpreisGas','wpZaehler','wpArbeitspreis','wpGrundpreis','modul14a','netzentgeltTog','heizart','bedarf','eta','invWP','heizsystem','geraet','laufzeit','neuFossilTog','vglBrennstoff','gasInvest','oelInvest','gaspreis','gasStg','oelpreis','oelStg','strompreis','stromEntw','co2preis','co2Pfad','bioTog','bioAufpreis','fHalbjahr','fGrund','fEU','fKlima','fAlt20','fEinkSlider','fKind','finanzTog','kredLZ','kredZins','immoTog','hausW','immoP','dynTarifTog','dynAnteil','dynSpread'];
 function eur(v){return Math.round(Number(v)||0).toLocaleString('de-DE')+' €';}
 function eurSigned(v){const n=Number(v)||0;return n>0?eur(n):'−'+eur(Math.abs(n));}
 function fix(v,n){return Number(v||0).toFixed(n).replace('.',',');}
@@ -1174,7 +1189,7 @@ function kvSetStatus(kind,message){
   host.removeAttribute('role');host.removeAttribute('aria-live');
   if(kind==='idle'||kind==='loading'){host.innerHTML='';return;}
   host.setAttribute('role','status');host.setAttribute('aria-live','polite');
-  host.innerHTML='<div class="ib" style="border-color:var(--hero-red)"><strong>Die Berechnung ist gerade nicht erreichbar.</strong><br><span class="d">Deine Eingaben bleiben erhalten. Versuche es erneut oder lass dich persönlich beraten.</span><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button type="button" class="wz-link-btn" id="kvRetry">Erneut versuchen</button><a class="wz-link-btn" href="https://www.herowerk.de/anfrage.html">Beratung anfragen</a></div></div>';
+  host.innerHTML='<div class="ib" style="border-color:var(--hero-red)"><strong>Die Berechnung ist gerade nicht verfügbar.</strong><br><span class="d">'+kvText(message||'Bitte Eingaben prüfen oder später erneut versuchen.')+' Deine Eingaben bleiben erhalten. Versuche es erneut oder lass dich persönlich beraten.</span><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button type="button" class="wz-link-btn" id="kvRetry">Erneut versuchen</button><a class="wz-link-btn" href="https://www.herowerk.de/anfrage.html">Beratung anfragen</a></div></div>';
   document.getElementById('kvRetry').addEventListener('click',()=>calculate({showResults:true,scroll:true}));
 }
 function kvReadInputs(extra){
@@ -1182,7 +1197,7 @@ function kvReadInputs(extra){
   // Die oeffentliche Seite sendet und kennt nur noch den Kundenmodus; die
   // Berater-Fassung lebt als interne Kopie unter docs/intern/ (nie im Upload-Paket).
   const q=new URLSearchParams({action:'kostenvergleich',origin:'https://herowerk.de',modus:'kunde'});
-  KV_INPUT_IDS.forEach(id=>{const el=document.getElementById(id);if(!el)return;q.set(id,el.type==='checkbox'?(el.checked?'1':'0'):el.value);});
+  KV_INPUT_IDS.forEach(id=>{const el=document.getElementById(id);if(!el)return;if(el.type!=='checkbox'&&el.value==='')return;q.set(id,el.type==='checkbox'?(el.checked?'1':'0'):el.value);});
   Object.entries(extra||{}).forEach(([key,value])=>{if(value!==undefined&&value!==null&&value!=='')q.set(key,String(value));});
   return q;
 }
@@ -1208,7 +1223,8 @@ function kvApplyBootstrap(data){
   KV_STATE.bootstrap=data;
   KV_STATE.applyingBootstrap=true;
   try{
-    Object.entries(data.defaults||{}).forEach(([id,value])=>{const el=document.getElementById(id);if(!el)return;if(el.type==='checkbox')el.checked=!!value;else el.value=value;el.dispatchEvent(new Event('input',{bubbles:true}));});
+    Object.entries(data.defaults||{}).forEach(([id,value])=>{if((id==='geraet'||id==='heizsystem')&&document.getElementById(id)?.value)return;const el=document.getElementById(id);if(!el)return;if(el.type==='checkbox')el.checked=!!value;else el.value=value;el.dispatchEvent(new Event('input',{bubbles:true}));});
+    if(data.netzentgeltBereit)document.getElementById('netzentgeltHinweis').textContent='Belegter Gas-Netzentgeltpfad verfügbar; Quelle und Abrufdatum stehen bei den Einzelposten. Nur der Anstieg gegenüber heute wird angesetzt.';
     if(typeof window.WZ_AFTER_KV_BOOTSTRAP==='function')window.WZ_AFTER_KV_BOOTSTRAP(data);
   }
   finally{KV_STATE.applyingBootstrap=false;}
@@ -1275,6 +1291,10 @@ let cM=null,cB=null,cH=null;
 function kvRender(data,showResults){
   KV_STATE.last=data;const f=data.foerder,i=data.invest,s=data.system,e=data.ergebnis,d=data.dreiWege,fin=data.finanzierung;
   const periodSelect=document.getElementById('fHalbjahr'),activeOption=periodSelect&&Array.from(periodSelect.options).find(option=>option.value===f.periode);if(activeOption&&activeOption.textContent==='Aktuell gültiger Antragszeitraum')activeOption.textContent=f.label;
+  const ji=s.jazInfo, rb=ji.randbedingungen;
+  if(data.quellen.netzentgelt)document.getElementById('netzentgeltHinweis').textContent='Quelle: '+data.quellen.netzentgelt+', Abruf '+data.quellen.netzentgeltAbrufdatum+'. Nur der Anstieg gegenüber heute wird zusätzlich angesetzt.';
+  document.getElementById('jazWert').textContent='Aus 1 kWh Strom macht sie '+fix(s.jaz,2)+' kWh Wärme. '+(ji.annahme||'Gerätewert aus KV_JAZ.')+(ji.heizsystemAnnahme?' Heizkörper als Annahme, bitte Heizsystem wählen.':'');
+  document.getElementById('jazGrundlagen').textContent='BWP-JAZ-Rechner nach VDI 4650 Blatt 1:2024-02; '+rb.standort+'; Vorlauf/Rücklauf '+rb.vorlauf+'/'+rb.ruecklauf+' °C; Warmwasser '+rb.warmwasserAnteil+' %; Speicher '+rb.speicher+' °C; angenommene Gesamtlast '+rb.gesamtlast+' kW. Einschließlich Zusatzheizer. Die Prognose setzt diese Temperaturen bei Inbetriebnahme voraus. '+s.jazTabellenstand+'. Abruf '+ji.abrufdatum;
   const foerderNote=f.quote===80?'<sup><a href="#foerder-80-hinweis" style="color:inherit;text-decoration:underline;">*</a></sup>':'';
   document.getElementById('vFEink').textContent=Number(f.zvE).toLocaleString('de-DE')+' €';document.getElementById('fEinkAnr').textContent=Number(f.anrechenbar).toLocaleString('de-DE')+' €';document.getElementById('fEinkBonusLbl').textContent='+'+f.einkommen+' %';document.getElementById('fGrundPct').textContent=f.grundPct+' %';document.getElementById('fKlimaPct').textContent=f.klimaPct+' %';document.getElementById('fQuote').innerHTML=kvText(f.quote)+' %'+foerderNote+(f.gekappt?' (gekappt)':'');document.getElementById('fGrenzeLbl').textContent=eur(f.grenze);document.getElementById('fBasis').textContent=eur(f.basis);document.getElementById('fBetrag').textContent=eur(f.anzeigeBetrag);document.getElementById('fNetto').textContent=eur(f.netto);document.getElementById('fBadges').innerHTML=[{n:'Grund '+f.grundPct+'%',a:f.grund>0},{n:'Klima '+f.klimaPct+'%',a:f.klima>0},{n:'Einkommen '+f.einkommen+'%',a:f.einkommen>0}].map(x=>`<span class="fb ${x.a?'a':'i'}">${kvText(x.n)}</span>`).join('');
   renderFoerderTreppe();
@@ -1285,7 +1305,10 @@ function kvRender(data,showResults){
   path.push(kvLine('Ersparte Betriebs- und CO₂-Kosten über '+s.laufzeit+' Jahre',eur(e.cumSav)));
   path.push(kvLine('Dein Vorteil (Barzahlung)',eur(e.wpNG)));
   if(fin.aktiv){path.push(kvLine('Zinsdifferenz über '+fin.kredLZ+' Jahre',(fin.zinsDelta>=0?'−':'+')+eur(Math.abs(fin.zinsDelta))));path.push(kvLine('Dein Vorteil (finanziert)',eur(e.wpNGFinanziert)));}
-  document.getElementById('pathSummary').innerHTML='<h3>Dein Rechenweg</h3>'+path.join('');
+  document.getElementById('pathSummary').innerHTML='<h3>Dein Rechenweg</h3>'+path.join('')+
+    '<details class="klapp"><summary>Einzelposten der Hochrechnung</summary><div class="inhalt">'+
+    [['Gas-Grundpreis',data.posten.grundpreisGas],['Schornsteinfeger',data.posten.schornsteinfeger],['Gas-Netzentgeltpfad',data.posten.netzentgelt],['Modul-1-Vorteil',data.posten.modul14a],['WP-Zählergrundpreis',data.posten.wpGrundpreis],['Photovoltaik-Vorteil',data.posten.pvSav],['Bio-Mehrkosten einschließlich CO₂-Entlastung',data.posten.bioNetto],['Bisheriger Warmwasserstrom',data.posten.wwStromK]].map(p=>kvLine(p[0]+' über '+s.laufzeit+' Jahre',eur(p[1]))).join('')+
+    '<p>'+kvText(data.quellen.bio)+'; '+kvText(data.quellen.bioPreis)+'. '+kvText(data.quellen.bioHinweis||'')+'</p><p>'+kvText(data.quellen.modul14a)+'</p><p>Gas-Netzentgeltpfad: '+kvText(data.quellen.netzentgelt||'keine Jahresreihe hinterlegt')+' '+kvText(data.quellen.netzentgeltAbrufdatum)+'</p></div></details>';
 
   const cards=[];
   cards.push(kvCard('Anschaffung nach Förderung',eur(i.netto),'Brutto '+eur(i.brutto)+' · Förderung '+eur(f.totalFoerderung),'neu'));
@@ -1307,7 +1330,7 @@ function kvRender(data,showResults){
   if(d.aktiv){const rows=[['Neue Ölheizung',d.oel],['Neue Gasheizung',d.gas],['Wärmepumpe',d.wp]];const mobileRows=[['Wärmepumpe',d.wp,'is-wp'],['Neue Gasheizung',d.gas,''],['Neue Ölheizung',d.oel,'']];const result=d.vorteil>=0?'Über '+s.laufzeit+' Jahre '+eur(d.vorteil)+' günstiger'+(i.mehrInvest>0?' · Mehrinvestition '+eur(i.mehrInvest):''):eur(-d.vorteil)+' unter der Wärmepumpe';dreiBox.innerHTML=`<h3>Gesamtkosten über ${kvText(s.laufzeit)} Jahre</h3><table class="bt desktop-kv-table"><thead><tr><th>Weg</th><th class="r">Anschaffung</th><th class="r">Betrieb ${kvText(s.laufzeit)} J.</th><th class="r">Gesamt ${kvText(s.laufzeit)} J.</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${kvText(r[0])}</td><td class="r">${eur(r[1].invest)}</td><td class="r">${eur(r[1].betrieb)}</td><td class="r">${eur(r[1].gesamt)}</td></tr>`).join('')}</tbody></table><div class="mobile-kv-list">${mobileRows.map(r=>{const lines=[[r[1]===d.wp?'Anschaffung nach Förderung':'Anschaffung',eur(r[1].invest)],['Betrieb '+s.laufzeit+' J.',eur(r[1].betrieb)]];if(r[1]!==d.wp)lines.push(['Mehrkosten gegenüber Wärmepumpe','+'+eur(r[1].gesamt-d.wp.gesamt),'neg']);return kvMobileCard(r[0],eur(r[1].gesamt),lines,r[2]);}).join('')}</div><div class="ib"><strong>${kvText(result)}</strong></div>`;}
 
   const labels=data.charts.labels;const css=getComputedStyle(document.documentElement);const tick=(css.getPropertyValue('--hero-muted')||'#ccc').trim();const grid=(css.getPropertyValue('--hero-separator')||'#333').trim();const opts={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:tick}}},scales:{x:{ticks:{color:tick},grid:{color:grid}},y:{ticks:{color:tick},grid:{color:grid}}}};
-  const breakDatasets=[{label:'Energie und CO₂',data:data.charts.sparEnergieCo2,backgroundColor:'rgba(183,217,0,.7)'},{label:'Dynamischer Tarif',data:data.charts.sparDyn,backgroundColor:'rgba(30,136,229,.7)'},{label:'Bio-Aufschlag',data:data.charts.bioAufschlag,backgroundColor:'rgba(229,57,53,.6)'},{label:'Wartungsdifferenz',data:data.charts.wartungDelta,backgroundColor:'rgba(158,158,158,.5)'}];
+  const breakDatasets=[{label:'Energie und CO₂',data:data.charts.sparEnergieCo2,backgroundColor:'rgba(183,217,0,.7)'},{label:'Dynamischer Tarif',data:data.charts.sparDyn,backgroundColor:'rgba(30,136,229,.7)'},{label:'Bio-Aufschlag',data:data.charts.bioNetto,backgroundColor:'rgba(229,57,53,.6)'},{label:'Wartungsdifferenz',data:data.charts.wartungDelta,backgroundColor:'rgba(158,158,158,.5)'},...['grundpreisGas','schornsteinfeger','netzentgelt','modul14a','wpGrundpreis','pv','warmwasser'].map((key,index)=>({label:['Gas-Grundpreis','Schornsteinfeger','Gas-Netzentgeltpfad','Modul-1-Vorteil','WP-Grundpreis','Photovoltaik','Warmwasserstrom'][index],data:data.charts[key]}))];
   if(!s.bioOn)breakDatasets.splice(2,1);if(!data.dynTarif.aktiv)breakDatasets.splice(1,1);
   /* Textalternative zu den Diagrammen (WCAG 1.1.1). Die Tabelle wird aus
      GENAU denselben Datenreihen erzeugt, die auch das Diagramm zeichnet,
@@ -1346,19 +1369,22 @@ function kvRender(data,showResults){
 async function calculate(options){
   const opts=options||{};const seq=++KV_STATE.seq;if(KV_STATE.controller)KV_STATE.controller.abort();const controller=new AbortController();KV_STATE.controller=controller;const extra={};if(window.WZ_BRIDGE&&window.WZ_BRIDGE.bedarfModus==='schaetzung')Object.assign(extra,window.WZ_BRIDGE);const params=kvReadInputs(extra);KV_STATE.lastParams=params.toString();kvSetStatus('loading');document.getElementById('results').setAttribute('aria-busy','true');g9StartLoading();
   try{const data=await kvFetch(params,controller.signal);if(seq!==KV_STATE.seq)return null;if(data.service!=='kostenvergleich')throw new Error('Ungültige Rechner-Antwort');kvRender(data,!!opts.showResults);kvSetStatus('idle');if(opts.scroll)document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});return data;}
-  catch(err){if(err.name!=='AbortError'&&seq===KV_STATE.seq)kvSetStatus('error',err.message);return null;}
+  catch(err){if(err.name!=='AbortError'&&seq===KV_STATE.seq){KV_STATE.last=null;document.getElementById('results').classList.remove('visible');kvSetStatus('error',err.message);}return null;}
   finally{if(seq===KV_STATE.seq){document.getElementById('results').removeAttribute('aria-busy');g9StopLoading();}}
 }
 document.addEventListener('input',e=>{if(e.target&&KV_INPUT_IDS.includes(e.target.id))scheduleKvCalculation(350);});
 document.addEventListener('change',e=>{if(e.target&&KV_INPUT_IDS.includes(e.target.id))scheduleKvCalculation(0);});
 document.addEventListener('focusout',e=>{if(e.target&&KV_INPUT_IDS.includes(e.target.id))scheduleKvCalculation(0);});
+// Ein empfohlenes Gerät aus dem Website-Assistenten bleibt an die Tabellen-JAZ gebunden.
+const kvEmpfehlung=new URLSearchParams(window.location.search);
+for(const id of ['geraet','heizsystem'])if(kvEmpfehlung.has(id))document.getElementById(id).value=kvEmpfehlung.get(id);
 kvLoadBootstrap();
 
 // ===== WIZARD-LAYER =====
 (function(){
   const CTA_URL='/anfrage.html';
   const WZ_LABELS=['1 deine Heizung','2 dein Vergleich','3 deine Förderung','4 Finanzierung','5 dein Ergebnis'];
-  const WZ_TRACK_IDS=['heizart','bedarf','eta','invWP','jaz','laufzeit','neuFossilTog','gasInvest','oelInvest','vglBrennstoff','fHalbjahr','fGrund','fEU','fKlima','fAlt20','fEinkSlider','fKind','finanzTog','kredLZ','kredZins'];
+  const WZ_TRACK_IDS=['heizart','bedarf','eta','invWP','heizsystem','geraet','laufzeit','neuFossilTog','gasInvest','oelInvest','vglBrennstoff','fHalbjahr','fGrund','fEU','fKlima','fAlt20','fEinkSlider','fKind','finanzTog','kredLZ','kredZins'];
   const WZ={current:0,maxVisited:0,touched:new Set(),programmatic:false,incomeOpted:false,resultsBuilt:false,resultTracked:false,estSeq:0,estNachlaufTimer:null,estNachlauf:0,estWartenGesamt:0,estDirty:false,estEntprellTimer:null,estNotaus:null,step1:{heizart:null,bedarf:null,bedarfSource:null,altgas:null,vmode:null,unit:'kwh',unitTouched:false,geb:null,bj:null,san:null,flaeche:140,rohr:null,kbj:null}};
   const $=id=>document.getElementById(id);
   const q=(root,sel)=>root?root.querySelector(sel):null;
@@ -1942,7 +1968,7 @@ kvLoadBootstrap();
     ['input','change'].forEach(t=>document.addEventListener(t,e=>{const id=e.target&&e.target.id;if(WZ_FOERDER_IDS.includes(id)){renderFoerderAufbau();renderLiveFoerder();}}));
     ['input','change'].forEach(t=>document.addEventListener(t,e=>{if(KV_STATE.applyingBootstrap)return;const id=e.target&&e.target.id;if(id==='fEinkSlider'&&KV_STATE.bootstrap&&KV_STATE.bootstrap.kredit){applyKreditZinsvorgabe(KV_STATE.bootstrap.kredit);renderKreditHinweise(KV_STATE.bootstrap.kredit);}}));
   }
-  const WZ_MARKET_LABELS={invWP:'Richtwert HeroWerk-Einstiegsangebot',vglBrennstoff:'Vorbelegt nach deiner Heizungsart',kredZins:'Rechenannahme'};
+  const WZ_MARKET_LABELS={invWP:'Richtwert HeroWerk-Einstiegsangebot',vglBrennstoff:'Vorbelegt nach deiner Heizungsart',kredZins:'Rechenannahme',heizsystem:'Annahme: Heizkörper'};
   function marketLabel(id){return WZ_MARKET_LABELS[id]||'Marktannahme';}
   function chipFor(id){return `<span class="wz-chip ${WZ.touched.has(id)?'own':'market'}">${kvText(WZ.touched.has(id)?'Deine Angabe':marketLabel(id))}</span>`;}
   function addChips(){
@@ -2073,6 +2099,6 @@ if(window.Chart&&Chart.register){Chart.register({id:'wzAmortMark',afterDraw(char
 </script>
 <div id="g9-kopfbalken" role="status"><span id="g9-kopfbalken-ansage" class="visually-hidden"></span></div>
 <div id="g9-kopftext" aria-hidden="true"></div>
-<script src="js/site.js?v=4a1a215753" defer></script>
+<script src="js/site.js?v=960caa9b4e" defer></script>
 </body>
 </html>

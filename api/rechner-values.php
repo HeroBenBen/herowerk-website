@@ -162,7 +162,8 @@ function rechner_validate_snapshot(string $body): array
         if (($snapshot['service'] ?? null) !== 'werte_snapshot'
             || !in_array($schemaVersion, [1, 2, 3], true)
             || !is_array($snapshot['sheets'] ?? null)
-            || array_keys($snapshot['sheets']) !== rechner_snapshot_sheet_names($schemaVersion)) {
+            || (array_keys($snapshot['sheets']) !== rechner_snapshot_sheet_names($schemaVersion)
+                && array_keys($snapshot['sheets']) !== array_merge(rechner_snapshot_sheet_names($schemaVersion), ['KV_JAZ']))) {
             throw new RechnerValuesException('snapshot_schema_invalid');
         }
 

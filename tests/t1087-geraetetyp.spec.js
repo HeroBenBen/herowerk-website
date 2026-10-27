@@ -13,7 +13,7 @@ const {
   label,
 } = require('./helpers/t1087-geraetetyp.cjs');
 const { internal } = require('./helpers/t1087-datenblatt.cjs');
-const { expectedJaz, footnote } = require('./helpers/t1087-jaz.cjs');
+const { expectedJaz, expectedFootnote } = require('./helpers/t1087-jaz.cjs');
 
 async function expectJaz(page, model) {
   const expected = expectedJaz(model);
@@ -28,7 +28,7 @@ async function expectJaz(page, model) {
   }
   await expect(page.locator('#paJazFootnote')).toBeVisible();
   const scop = await page.locator('#paScopFootnote').textContent();
-  await expect(page.locator('#paJazFootnote')).toHaveText(footnote + ' ' + scop);
+  await expect(page.locator('#paJazFootnote')).toHaveText(expectedFootnote(model) + ' ' + scop);
 }
 
 async function expectManufacturerTabs(page, minimum) {

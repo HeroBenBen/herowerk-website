@@ -47,6 +47,9 @@ rsync -a \
   --exclude 'artifacts/' \
   --exclude 'design-qa.md' \
   --exclude 'BERICHT_WR.md' \
+  --exclude 'T1245_SCHRITT1_ABSCHLUSS.md' \
+  --exclude 'data/kv-jaz-portfolio.json' \
+  --exclude 'api/kv-jaz.json' \
   --exclude 'test-results/' \
   --exclude 'playwright-report/' \
   --exclude 'scripts/' \

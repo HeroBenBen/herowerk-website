@@ -4,6 +4,292 @@ const { test, expect, chromium, webkit } = require('@playwright/test');
 const fs = require('node:fs');
 const path = require('node:path');
 const { base, root, responses, serve } = require('./t1087-wr.cjs');
+const {
+  browser: priceBrowser,
+  load: loadPrices,
+  render: renderPrices,
+} = require('./helpers/t1087-datenblatt.cjs');
+const { expectedJaz, expectedFootnote, plain } = require('./helpers/t1087-jaz.cjs');
+
+// GF-Freigabe T1245, Anpassung 8: nur benannte JAZ-Texte der Preistafel.
+// Alttexte aus der eingefrorenen Basis, neue Erwartung aus der BWP-Quelldatei;
+// kein Wort der gebauten Seite fließt in diese Erwartung ein.
+async function t1245PriceReplacements() {
+  const before = priceBrowser(base);
+  await loadPrices(before, responses().preise);
+  const replacements = {};
+  for (const brand of ['wolf', 'vaillant']) {
+    renderPrices(before, brand).details.forEach((detail, i) => {
+      const model = detail.card.modell;
+      const jaz = expectedJaz(model);
+      if (!jaz) return;
+      replacements['preise-' + brand + '-' + i] = [
+        ...jaz.map(([label, value]) => ({
+          name: 'JAZ-Beschriftung ' + model + ': ' + label,
+          before: label + ' ' + detail.card.specs.find(([name]) => name === label)[1],
+          after: label + ' ' + value,
+        })),
+        {
+          name: 'JAZ-Fußnote ' + model,
+          before: plain(detail.jazFootnote),
+          after: expectedFootnote(model) + ' ' + plain(before.nodes.paScopFootnote.innerHTML),
+        },
+      ];
+    });
+  }
+  return replacements;
+}
+function t1245PriceWords(value, replacements) {
+  for (const replacement of replacements) {
+    expect(value.split(replacement.before).length, replacement.name + ': genau ein Alttext').toBe(
+      2
+    );
+    value = value.replace(replacement.before, replacement.after);
+  }
+  return value;
+}
+
+// T1245: ausschließlich diese neuen Klappen, über Inhalt und Elternknoten
+// zugeordnet. Drei verschiedene JAZ-/Netzabsätze teilen denselben Kartentitel.
+const T1245_COST_SUMMARIES = {
+  einzelposten: 'Einzelposten der Hochrechnung',
+  jaz: 'Hintergrund zu Neue Wärmepumpe',
+  jazwert: 'Hintergrund zu Neue Wärmepumpe',
+  netzentgelt: 'Hintergrund zu Neue Wärmepumpe',
+  strom: 'Stromzähler und Photovoltaik',
+};
+function t1245CostSections(key, width) {
+  if (key.startsWith('docs/')) return [];
+  return width <= 760 && !/-(?:start|schritt-1)-klappzustaende$/.test(key)
+    ? ['einzelposten', 'jaz', 'jazwert', 'netzentgelt', 'strom']
+    : ['einzelposten', 'strom'];
+}
+async function t1245CostCapture(page, details, options) {
+  const payload = responses();
+  const response = payload.kostenvergleich;
+  const captured = await page.evaluate(
+    (options) => {
+      function section(el) {
+        if (el.parentElement.id === 'pathSummary') return 'einzelposten';
+        if (el.parentElement.id !== 'wzWpCard') return '';
+        if (el.querySelector(':scope > .inhalt > #jazGrundlagen')) return 'jaz';
+        if (el.querySelector(':scope > .inhalt > #jazWert')) return 'jazwert';
+        if (el.querySelector(':scope > .inhalt > #netzentgeltHinweis')) return 'netzentgelt';
+        if (el.querySelector('#wpZaehler') && el.querySelector('#pvTog')) return 'strom';
+        return '';
+      }
+      const nodes = Array.from(document.querySelectorAll('details'));
+      const additions = nodes.flatMap((el, index) => {
+        const name = section(el);
+        return name
+          ? [
+              {
+                index,
+                section: name,
+                summary: el.querySelector(':scope > summary').textContent,
+                open: el.open,
+              },
+            ]
+          : [];
+      });
+      const root = /** @type {HTMLElement} */ (document.querySelector(options.root));
+      if (options.textContent) {
+        // textContent umfasst auch geschlossene Inhalte. Nur genau die neuen
+        // Elemente aus einer Kopie entfernen; das Original bleibt unangetastet.
+        const clone = /** @type {HTMLElement} */ (root.cloneNode(true));
+        clone.querySelectorAll('details').forEach((el) => {
+          if (section(el)) el.remove();
+        });
+        return { additions, text: clone.textContent, inputs: [] };
+      }
+      /** @type {Set<HTMLElement>} */
+      const hidden = new Set(additions.map(({ index }) => nodes[index]));
+      const inputs = [];
+      let legacyJaz = null;
+      if (options.newInputs) {
+        // Die beauftragten neuen Eingaben werden separat exakt zugesichert.
+        // Für den alten Ganzseitenvergleich ersetzen sie nur den entfernten
+        // JAZ-Regler; Investition, Laufzeit und alle anderen alten Texte bleiben.
+        for (const [id, selector] of [
+          ['heizsystem', '.selg'],
+          ['grundpreisGas', '.sg'],
+          ['startJahr', '.sg'],
+          ['netzentgeltTog', '.tg'],
+        ]) {
+          const el = document.getElementById(id).closest(selector);
+          inputs.push({ id, text: el.textContent.replace(/\s+/g, ' ').trim() });
+          hidden.add(/** @type {HTMLElement} */ (el));
+        }
+        inputs.push({ id: 'jazWert', text: document.getElementById('jazWert').textContent });
+        for (const id of ['jazWert', 'jazGrundlagen', 'netzentgeltHinweis'])
+          hidden.add(document.getElementById(id));
+        legacyJaz = document.createElement('div');
+        legacyJaz.className = 'sg';
+        // Historischer Regler einschließlich seines damals erzeugten Chips.
+        // Gleiche Label-/Span-Struktur erhält auch die innerText-Trennstellen.
+        legacyJaz.innerHTML =
+          '<label>Jahresarbeitszahl (JAZ) <span class="v">' +
+          options.legacyJaz +
+          '</span><span class="wz-chip market">Marktannahme</span></label>';
+        const heating = document.getElementById('heizsystem').closest('.selg');
+        heating.before(legacyJaz);
+      }
+      if (options.packages) {
+        for (const selector of ['.foerder-package-label', '#foerderWpTyp']) {
+          const el = document.querySelector(selector);
+          if (el) hidden.add(/** @type {HTMLElement} */ (el));
+        }
+      }
+      const styles = Array.from(hidden, (el) => ({ el, style: el.getAttribute('style') }));
+      try {
+        for (const { el } of styles) el.setAttribute('style', 'display:none!important');
+        let text = root.innerText;
+        if (options.normalize) text = text.replace(/\s+/g, ' ').trim();
+        return { additions, text, inputs };
+      } finally {
+        legacyJaz?.remove();
+        for (const { el, style } of styles) {
+          if (style === null) el.removeAttribute('style');
+          else el.setAttribute('style', style);
+        }
+      }
+    },
+    {
+      ...options,
+      legacyJaz: payload.kv_bootstrap.defaults.jaz.toFixed(1).replace('.', ','),
+    }
+  );
+  if (options.newInputs) {
+    const ji = response.system.jazInfo;
+    expect(captured.inputs, 'Neue Heizsystem-/Fixkosteneingaben und JAZ-Annahme exakt').toEqual([
+      {
+        id: 'heizsystem',
+        text: 'Heizkörper oder Fußbodenheizung?Annahme: Heizkörper Bitte wählenHeizkörper oder gemischte AnlageNur Fußbodenheizung',
+      },
+      { id: 'grundpreisGas', text: 'Gas-Grundpreis in Euro pro Jahr' },
+      { id: 'startJahr', text: 'Startjahr der Hochrechnung' },
+      { id: 'netzentgeltTog', text: 'Zusätzlichen Gas-Netzentgeltpfad berücksichtigen' },
+      {
+        id: 'jazWert',
+        text:
+          'Aus 1 kWh Strom macht sie ' +
+          response.system.jaz.toFixed(2).replace('.', ',') +
+          ' kWh Wärme. ' +
+          ji.annahme +
+          (ji.heizsystemAnnahme ? ' Heizkörper als Annahme, bitte Heizsystem wählen.' : ''),
+      },
+    ]);
+  }
+  return { details, ...captured };
+}
+function t1245CostWords(before) {
+  // Genau der beschlossene Gesetzeshinweis im sichtbaren Neuanlagenvergleich.
+  return before.replace(
+    'Hinweis: In Kommunen mit beschlossener Wärmeplanung (Großstädte wie Hannover) ist der Einbau einer neuen reinen Gas-/Ölheizung nach GEG §71 nur noch eingeschränkt bzw. mit steigendem EE-Anteil zulässig. Der Rechner rechnet zugunsten der fossilen Variante nur mit der Biotreppe.',
+    'Für den Neuanlagenvergleich berücksichtigt der Rechner die Bio-Beimischpflicht nach GModG § 43 Abs. 1. Die Rechnung ist eine Prognose auf Basis der ausgewiesenen Annahmen.'
+  );
+}
+// T1245, Anpassung 11: genau eine zusätzliche Heizsystem-Annahme.
+// Eigene Angaben und jeder andere Textbestandteil bleiben exakt gleich.
+function t1245OneMoreMarketAssumption(before, after) {
+  const sentence = /\b(0|[1-9]\d*) eigene Angaben, (0|[1-9]\d*) marktübliche Annahmen\./g;
+  const oldMatches = [...before.matchAll(sentence)];
+  const newMatches = [...after.matchAll(sentence)];
+  if (oldMatches.length !== 1 || newMatches.length !== 1) return before;
+  const old = oldMatches[0],
+    next = newMatches[0];
+  const n = Number(old[2]),
+    m = Number(next[2]);
+  if (old[1] !== next[1] || !Number.isSafeInteger(n) || !Number.isSafeInteger(m) || m !== n + 1)
+    return before;
+  return before.replace(old[0], old[1] + ' eigene Angaben, ' + (n + 1) + ' marktübliche Annahmen.');
+}
+// T1245, Anpassung 12: nur der neue Bestandteile-Block im Regelfall.
+function t1245WithoutBreakdown(text) {
+  const start = 'Jährliche Ersparnis nach Bestandteilen als Tabelle anzeigen';
+  const end = 'Was kostet Heizen pro Jahr?';
+  expect(text.split(start).length, 'Genau ein Anfang des Bestandteile-Blocks').toBe(2);
+  expect(text.split(end).length, 'Genau ein nachfolgender Heizkosten-Block').toBe(2);
+  const begin = text.indexOf(start),
+    next = text.indexOf(end);
+  expect(next, 'Bestandteile-Block steht vor den Heizkosten').toBeGreaterThan(begin);
+  return text.slice(0, begin) + text.slice(next);
+}
+async function t1245BreakdownCapture(page) {
+  return page.locator('#cBreakDaten').evaluateAll((blocks) =>
+    blocks.map((block) => ({
+      tables: block.querySelectorAll('table').length,
+      captions: Array.from(block.querySelectorAll('table caption'), (el) => el.textContent),
+      headers: Array.from(block.querySelectorAll('table thead th'), (el) => el.textContent),
+      rows: Array.from(block.querySelectorAll('table tbody tr'), (row) =>
+        Array.from(row.children, (cell) => cell.textContent)
+      ),
+      total: Array.from(
+        block.querySelectorAll(':scope > .mobile-year-answer > span'),
+        (el) => el.textContent
+      ),
+    }))
+  );
+}
+function expectT1245Breakdown(before, after) {
+  expect(before, 'Basis: genau ein Bestandteile-Block').toHaveLength(1);
+  expect(after, 'Bau: genau ein Bestandteile-Block').toHaveLength(1);
+  expect(before[0].tables, 'Basis: genau eine Tabelle').toBe(1);
+  expect(after[0].tables, 'Bau: genau eine Tabelle').toBe(1);
+  expect(after[0].captions).toEqual([
+    'Jährliche Ersparnis nach Bestandteilen, Werte je Jahr in Euro',
+  ]);
+  // Zehn Bestandteile-Spalten zusätzlich zur separat bezeichneten Jahres-Spalte.
+  expect(after[0].headers).toEqual([
+    'Jahr',
+    'Energie und CO₂',
+    'Bio-Aufschlag',
+    'Wartungsdifferenz',
+    'Gas-Grundpreis',
+    'Schornsteinfeger',
+    'Gas-Netzentgeltpfad',
+    'Modul-1-Vorteil',
+    'WP-Grundpreis',
+    'Photovoltaik',
+    'Warmwasserstrom',
+  ]);
+  expect(after[0].rows, 'Genau 20 Jahreszeilen').toHaveLength(20);
+  expect(after[0].rows.map((row) => row[0])).toEqual(
+    Array.from({ length: 20 }, (_, i) => String(2026 + i))
+  );
+  for (const row of after[0].rows)
+    expect(row, 'Jahr plus zehn Bestandteile je Zeile').toHaveLength(11);
+  expect(before[0].total, 'Basis: genau eine Gesamtersparnis-Zeile').toHaveLength(1);
+  expect(after[0].total, 'Gesamtersparnis-Zeile unverändert').toEqual(before[0].total);
+}
+function expectT1245Cost(before, after, sections, legalHint = false) {
+  expect(before.additions, 'Basis enthält keine T1245-Klappen').toEqual([]);
+  expect(
+    after.additions
+      .map(({ section, summary, open }) => ({ section, summary, open }))
+      .sort((a, b) => a.section.localeCompare(b.section)),
+    'Genau die benannten neuen Klappen, jeweils geschlossen und eindeutig zugeordnet'
+  ).toEqual(
+    sections.map((section) => ({ section, summary: T1245_COST_SUMMARIES[section], open: false }))
+  );
+  const indexes = new Set(after.additions.map(({ index }) => index));
+  expect(
+    after.details.filter((_, index) => !indexes.has(index)),
+    'Alle alten Klappen: Reihenfolge, Text und Zustand unverändert'
+  ).toEqual(before.details);
+  const expectedText = legalHint ? t1245CostWords(before.text) : before.text;
+  expect(after.text, 'Übriger Seiten-/Ergebnistext exakt gleich').toBe(
+    sections.includes('strom')
+      ? t1245OneMoreMarketAssumption(expectedText, after.text)
+      : expectedText
+  );
+}
+async function t1245StepFiveCapture(page, details, build) {
+  return t1245CostCapture(page, details, { root: 'body', newInputs: build });
+}
+function expectT1245StepFive(before, after) {
+  expectT1245Cost(before, after, ['einzelposten', 'jaz', 'jazwert', 'netzentgelt', 'strom']);
+}
 const payloads = [
   'A&#45;11',
   'A<span>-</span>11',
@@ -498,11 +784,20 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
         const baselineServer = await serve(base);
         const { browser, page, state, errors } = await setup(type, width);
         const label = name + '-' + width;
+        const jazReplacements = await t1245PriceReplacements();
         async function capture(url, version) {
           const result = {};
           async function words(key) {
-            if (key.includes('kostenvergleich'))
-              result[key + '-klappzustaende'] = JSON.stringify(await settleCostComparison(page));
+            if (key.includes('kostenvergleich')) {
+              const snapshot = await t1245CostCapture(page, await settleCostComparison(page), {
+                root: 'body',
+                normalize: true,
+                packages: true,
+                newInputs: version === 'bau' && !key.startsWith('docs/'),
+              });
+              result[key + '-klappzustaende'] = snapshot;
+              result[key] = snapshot.text;
+            }
             // WebKit zählt native Optionslisten bei begrenztem Überlauf anders in innerText.
             // Deshalb Pakettexte vollständig separat vergleichen, Seitenworte ohne Doppelung.
             result[key + '-paketauswahl'] = await page.evaluate(() => {
@@ -519,24 +814,25 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
                   : null
               );
             });
-            result[key] = await page.evaluate(() => {
-              const overlay = document.querySelector('.foerder-package-label');
-              const old = overlay?.getAttribute('style');
-              const select = document.getElementById('foerderWpTyp');
-              const oldSelect = select?.getAttribute('style');
-              if (overlay) overlay.setAttribute('style', 'display:none');
-              if (select) select.setAttribute('style', 'display:none');
-              const text = document.body.innerText.replace(/\s+/g, ' ').trim();
-              if (overlay) {
-                if (old === null) overlay.removeAttribute('style');
-                else overlay.setAttribute('style', old);
-              }
-              if (select) {
-                if (oldSelect === null) select.removeAttribute('style');
-                else select.setAttribute('style', oldSelect);
-              }
-              return text;
-            });
+            if (!key.includes('kostenvergleich'))
+              result[key] = await page.evaluate(() => {
+                const overlay = document.querySelector('.foerder-package-label');
+                const old = overlay?.getAttribute('style');
+                const select = document.getElementById('foerderWpTyp');
+                const oldSelect = select?.getAttribute('style');
+                if (overlay) overlay.setAttribute('style', 'display:none');
+                if (select) select.setAttribute('style', 'display:none');
+                const text = document.body.innerText.replace(/\s+/g, ' ').trim();
+                if (overlay) {
+                  if (old === null) overlay.removeAttribute('style');
+                  else overlay.setAttribute('style', old);
+                }
+                if (select) {
+                  if (oldSelect === null) select.removeAttribute('style');
+                  else select.setAttribute('style', oldSelect);
+                }
+                return text;
+              });
           }
           await page.goto(url + '/preise.html');
           await page.evaluate('paLoadData()');
@@ -688,19 +984,25 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
             await page.evaluate('calculate({showResults:true,scroll:false})');
             await settleCostComparison(page);
             await page.evaluate(() =>
-              document
-                .querySelectorAll('#results details')
-                .forEach((el) => el.setAttribute('open', ''))
+              document.querySelectorAll('#results details').forEach((el) => {
+                if (el.parentElement.id !== 'pathSummary') el.setAttribute('open', '');
+              })
             );
             await page.waitForFunction(() =>
               Array.from(document.getElementById('results').querySelectorAll('details')).every(
-                (el) => el.open
+                (el) => (el.parentElement.id === 'pathSummary' ? !el.open : el.open)
               )
             );
-            result[file + '-results-klappzustaende'] = JSON.stringify(
-              await settleCostComparison(page)
-            );
-            result[file + '-results'] = await page.locator('#results').textContent();
+            const snapshot = await t1245CostCapture(page, await settleCostComparison(page), {
+              root: '#results',
+              textContent: true,
+            });
+            if (!file.startsWith('docs/')) {
+              result[file + '-bestandteile'] = await t1245BreakdownCapture(page);
+              snapshot.text = t1245WithoutBreakdown(snapshot.text);
+            }
+            result[file + '-results-klappzustaende'] = snapshot;
+            result[file + '-results'] = snapshot.text;
             await screenshot(page, label + '-' + version + '-' + path.basename(file), testInfo);
           }
           return result;
@@ -708,11 +1010,25 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
         try {
           const before = await capture(baselineServer.url, 'basis');
           const after = await capture(server.url, 'bau');
-          // Einzige freigegebene Wortlautdifferenz im Regelfall: Hersteller statt Lieferant.
+          // Freigegeben: Herstellername sowie die benannten JAZ-Fußnoten und -Beschriftungen.
           for (const [key, value] of Object.entries(before)) {
-            if (typeof value === 'string')
+            if (key.endsWith('-klappzustaende')) {
+              expectT1245Cost(
+                value,
+                after[key],
+                t1245CostSections(key, width),
+                !key.startsWith('docs/')
+              );
+            } else if (key.endsWith('-bestandteile')) {
+              expectT1245Breakdown(value, after[key]);
+            } else if (typeof value === 'string')
               expect(after[key], key).toBe(
-                value.replaceAll('Vaillant Deutschland GmbH & Co. KG', 'Vaillant GmbH')
+                t1245PriceWords(
+                  key.startsWith('kostenvergleich-waermepumpe.html')
+                    ? t1245OneMoreMarketAssumption(t1245CostWords(value), after[key])
+                    : value,
+                  jazReplacements[key] || []
+                ).replaceAll('Vaillant Deutschland GmbH & Co. KG', 'Vaillant GmbH')
               );
           }
           await page.goto(baselineServer.url + '/preise.html');
@@ -900,12 +1216,11 @@ for (let repetition = 1; repetition <= 10; repetition++) {
             await expect(
               page.locator('summary').filter({ hasText: 'So entsteht dein Ergebnis' })
             ).toBeVisible();
-            captures.push({ details, text: await page.locator('body').innerText() });
+            captures.push(await t1245StepFiveCapture(page, details, url === server.url));
           } else await page.locator('#wzNext').click();
         }
       }
-      expect(captures[1].details).toEqual(captures[0].details);
-      expect(captures[1].text).toBe(captures[0].text);
+      expectT1245StepFive(captures[0], captures[1]);
       expect(errors).toEqual([]);
     } finally {
       await browser.close();

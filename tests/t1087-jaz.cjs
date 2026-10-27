@@ -6,7 +6,13 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { browser, load, render, read, root, internal } = require('./helpers/t1087-datenblatt.cjs');
 const { raw, marked } = require('./helpers/t1087-geraetetyp.cjs');
-const { index, expectedJaz, footnote, plain } = require('./helpers/t1087-jaz.cjs');
+const {
+  index,
+  expectedJaz,
+  footnote,
+  expectedFootnote,
+  plain,
+} = require('./helpers/t1087-jaz.cjs');
 const baseline = 'b4e5df1b8385cf32c94e7af42735882579961604';
 const ref = process.argv.includes('--ref') ? process.argv[process.argv.indexOf('--ref') + 1] : '';
 const cases = [];
@@ -42,7 +48,7 @@ for (const [mode, rows] of Object.entries({
       b.details.forEach((d, i) => {
         const old = wrExpectedDetail(a.details[i]),
           expected = expectedJaz(d.card.modell);
-        if (brand === 'wolf' || !expected) {
+        if (!expected) {
           assert.deepEqual(d, old, 'Wolf und alte Plus-Geräte vollständig bytegleich');
           return;
         }
@@ -74,11 +80,11 @@ for (const [mode, rows] of Object.entries({
           );
         assert.equal(d.jazDisplay, 'block');
         const scop = plain(before.nodes.paScopFootnote.innerHTML);
-        assert.equal(plain(d.jazFootnote), footnote + ' ' + scop);
+        assert.equal(plain(d.jazFootnote), expectedFootnote(d.card.modell) + ' ' + scop);
         assert.doesNotMatch(d.sub + d.table + d.jazFootnote, internal);
         assert.doesNotMatch(
           d.jazFootnote,
-          /Heizlast|Auslegungsleistung|Rechenprotokoll|Betriebsart|monovalent|bivalent|\bkW\b/i
+          /Heizlast|Auslegungsleistung|Rechenprotokoll|Betriebsart|monovalent|bivalent/i
         );
       });
     }

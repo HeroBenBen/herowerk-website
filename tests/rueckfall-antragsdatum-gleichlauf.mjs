@@ -85,6 +85,10 @@ const PREISE_WOLF = [
   ['l', 'CHA-16', 'gross', 16, 41718, 0, 0],
 ];
 const BLAETTER = {
+  KV_JAZ: [
+    ['Gerät', 'Heizsystem', 'Wert', 'Quelle', 'Abrufdatum', 'Randbedingungen', 'Aliase', 'Kaskade'],
+    ...saatKontext.KV_JAZ_ROWS_(),
+  ],
   Förder_Parameter: [['schluessel', 'wert'], ...saatKontext.FOERDER_ROWS_()],
   Dimensionierung: [['schluessel', 'wert'], ...saatKontext.DIMENSION_ROWS_()],
   KV_Parameter: [['schluessel', 'wert'], ...saatKontext.KV_PARAMETER_ROWS_()],
