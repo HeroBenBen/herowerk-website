@@ -26,9 +26,27 @@ async function expectJaz(page, model) {
     const row = page.locator('#paSpecsTable tbody tr').filter({ hasText: name });
     await expect(row.locator('td').last()).toHaveText(value);
   }
-  await expect(page.locator('#paJazFootnote')).toBeVisible();
+  // Erklärung zu JAZ und SCOP steht in einer Klappe (GF 07.11.2026). Geschlossene Klappen
+  // täuschen Sichtbarkeitsprüfungen: Text und Quelle deshalb zu UND offen prüfen.
+  const klappe = page.locator('#paEffizienzKlappe');
+  const summary = klappe.locator('summary');
+  await expect(summary).toBeVisible();
+  await expect(summary).toHaveText('Was bedeuten JAZ und SCOP?');
+  await expect(klappe).not.toHaveAttribute('open', '');
   const scop = await page.locator('#paScopFootnote').textContent();
-  await expect(page.locator('#paJazFootnote')).toHaveText(expectedFootnote(model) + ' ' + scop);
+  const soll = expectedFootnote(model) + ' ' + scop;
+  await expect(page.locator('#paJazFootnote')).toBeHidden();
+  await expect(page.locator('#paJazFootnote')).toHaveText(soll);
+  await expect(page.locator('#paJazFootnote')).toContainText('VDI 4650');
+  await summary.click();
+  await expect(klappe).toHaveAttribute('open', '');
+  await expect(page.locator('#paJazFootnote')).toBeVisible();
+  await expect(page.locator('#paJazFootnote')).toHaveText(soll);
+  expect(await page.locator('#paJazFootnote').innerText()).toContain('VDI 4650');
+  // Wieder zuklappen, damit jede Karte im Ausgangszustand geprüft wird; eine von Anfang an
+  // offene Klappe fällt so oben bei not.toHaveAttribute('open') auf.
+  await summary.click();
+  await expect(klappe).not.toHaveAttribute('open', '');
 }
 
 async function expectManufacturerTabs(page, minimum) {
@@ -114,7 +132,7 @@ for (const mode of ['marker', 'altvertrag', 'ausfall']) {
           );
         } else {
           await expect(page.locator('#paSpecsTable')).toContainText('JAZ');
-          await expect(page.locator('#paJazFootnote')).toBeVisible();
+          await expect(page.locator('#paEffizienzKlappe > summary')).toBeVisible();
           if (brand === 'vaillant')
             await expect(page.locator('#paImg')).toHaveAttribute('src', 'vwl-plus-l-xl.jpg');
         }
@@ -234,6 +252,9 @@ for (const width of [375, 1440]) {
             page,
             await page.locator('#paCards .pa-card').nth(i).locator('.pa-modell').innerText()
           );
+          // Lage nur bei geöffneter Klappe messbar; zugeklappt hätte die Fußnote kein Rechteck.
+          await page.locator('#paEffizienzKlappe summary').click();
+          await expect(page.locator('#paJazFootnote')).toBeVisible();
           const complete = await page.locator('#paJazFootnote').evaluate((el) => {
             const detail = el.closest('#paDetail').getBoundingClientRect();
             const foot = el.getBoundingClientRect();
@@ -242,6 +263,7 @@ for (const width of [375, 1440]) {
             );
           });
           expect(complete, 'JAZ-Fußnote vollständig innerhalb der Detailfläche').toBe(true);
+          await page.locator('#paEffizienzKlappe summary').click();
         }
         const overflow = await page.locator('#paSpecsTable').evaluate((el) => {
           const bounds = el.getBoundingClientRect();
