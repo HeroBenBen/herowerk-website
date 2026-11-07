@@ -86,7 +86,7 @@ const sourceHashes = Object.fromEntries(
     'kostenvergleich-waermepumpe.html',
     'api/rechner.php',
     'api/rechner-kv-adapter.php',
-    'data/kv-marktwerte.php',
+    'api/kv-marktwerte.php',
     'tests/t1247-kostenvergleich.mjs',
     'tests/t1245-kv-website-dom.mjs',
     'reports/t1247/browser-und-bilder.mjs',

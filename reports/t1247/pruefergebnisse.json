@@ -9,7 +9,7 @@
     "kostenvergleich-waermepumpe.html": "2b9f2c3145977b16f76f78084ac17330efe2177c3ecef7c350099919c95dec0a",
     "api/rechner.php": "f8103de3f33fe1481a933cd80ff297752cab9d9f439b6ce3d895ed151bcf7aac",
     "api/rechner-kv-adapter.php": "3fa7eb93ef404de1472a6ac000649f9b7e336a3f221ebb5e46362eccb3cadbc0",
-    "data/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
+    "api/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
     "tests/t1247-kostenvergleich.mjs": "782fcc07d597fb9c0c7cee6feebffcff0aebf7cbc607f17e169a4c3e85c853f7",
     "tests/t1245-kv-website-dom.mjs": "6f2ffd3295aa41db2f531a33a1510bdb2fbe6d0bf687f885832cc8d9d3eb39c8",
     "reports/t1247/browser-und-bilder.mjs": "2273a8511a47357ca82e37eb2405f04230f82f4538df3fddcb2b3a58b7d2044d"
@@ -247,7 +247,7 @@
         "kostenvergleich-waermepumpe.html": "fa58acab63f7690bc333c4bf1fdf56a74f583c3c35671f42fa0c0a8ecda0a128",
         "api/rechner.php": "f8103de3f33fe1481a933cd80ff297752cab9d9f439b6ce3d895ed151bcf7aac",
         "api/rechner-kv-adapter.php": "8feb500b100ecef1baeed4fedb009e211b1e6182335ca2180988e04c9b41b5ef",
-        "data/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2"
+        "api/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2"
       },
       "results": [
         {
@@ -408,7 +408,7 @@
         "kostenvergleich-waermepumpe.html": "1155811a36ecaa7c601610e1761d3dde22571014b9fb4adeeb32bae938a3aa60",
         "api/rechner.php": "f8103de3f33fe1481a933cd80ff297752cab9d9f439b6ce3d895ed151bcf7aac",
         "api/rechner-kv-adapter.php": "8feb500b100ecef1baeed4fedb009e211b1e6182335ca2180988e04c9b41b5ef",
-        "data/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
+        "api/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
         "tests/t1247-kostenvergleich.mjs": "c876ff038de1c4af49188ac4dc888d14f613c406ffb97e9f9889cf79f5ff39c2",
         "tests/t1245-kv-website-dom.mjs": "b0d773ac779bd7bd474ef56bc07d635c19d860c2494b4ceed12cf1404ca0b61a",
         "reports/t1247/browser-und-bilder.mjs": "2e3039102b148073ff9dbbee66aa40084c4373ade275567c401e4129d97b7e9d"
@@ -572,7 +572,7 @@
         "kostenvergleich-waermepumpe.html": "a31f8dc9941269a536845f6c8189fba6b3b52b82d89ba3fe1437ea1cda0d5236",
         "api/rechner.php": "f8103de3f33fe1481a933cd80ff297752cab9d9f439b6ce3d895ed151bcf7aac",
         "api/rechner-kv-adapter.php": "8feb500b100ecef1baeed4fedb009e211b1e6182335ca2180988e04c9b41b5ef",
-        "data/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
+        "api/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
         "tests/t1247-kostenvergleich.mjs": "c876ff038de1c4af49188ac4dc888d14f613c406ffb97e9f9889cf79f5ff39c2",
         "tests/t1245-kv-website-dom.mjs": "b0d773ac779bd7bd474ef56bc07d635c19d860c2494b4ceed12cf1404ca0b61a",
         "reports/t1247/browser-und-bilder.mjs": "097451f79555e5364442c2318d0f0b9b3c7a4a4a5f7fea23b94c2deb8acaab87"
@@ -736,7 +736,7 @@
         "kostenvergleich-waermepumpe.html": "d1624064d8065a8b6475e178f72759c922519bc0562a13f408dfd81fe120bfb7",
         "api/rechner.php": "f8103de3f33fe1481a933cd80ff297752cab9d9f439b6ce3d895ed151bcf7aac",
         "api/rechner-kv-adapter.php": "aabbb9c713503efcc8947a2a683de52de838b295fa12f651c7099c15734d279b",
-        "data/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
+        "api/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
         "tests/t1247-kostenvergleich.mjs": "5aa4c56e8808a41b2f16199ddc3ab56adb090721547c7d6109940c021478e064",
         "tests/t1245-kv-website-dom.mjs": "aed0844cdeb2aaf20f20ba266700742a752a9c6f2ab33d4161d311f85e1b64f2",
         "reports/t1247/browser-und-bilder.mjs": "7e269e8d60343a9514ca9e4d661c12812bfc0254ede3cfdcbde71dff90ef1d24"
@@ -920,7 +920,7 @@
         "kostenvergleich-waermepumpe.html": "d1624064d8065a8b6475e178f72759c922519bc0562a13f408dfd81fe120bfb7",
         "api/rechner.php": "f8103de3f33fe1481a933cd80ff297752cab9d9f439b6ce3d895ed151bcf7aac",
         "api/rechner-kv-adapter.php": "aabbb9c713503efcc8947a2a683de52de838b295fa12f651c7099c15734d279b",
-        "data/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
+        "api/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
         "tests/t1247-kostenvergleich.mjs": "62734841e6ceab3cf013baaf7e99faf12166b6cadb7067e6c698e767303328e5",
         "tests/t1245-kv-website-dom.mjs": "aed0844cdeb2aaf20f20ba266700742a752a9c6f2ab33d4161d311f85e1b64f2",
         "reports/t1247/browser-und-bilder.mjs": "7e269e8d60343a9514ca9e4d661c12812bfc0254ede3cfdcbde71dff90ef1d24"
@@ -1104,7 +1104,7 @@
         "kostenvergleich-waermepumpe.html": "d1624064d8065a8b6475e178f72759c922519bc0562a13f408dfd81fe120bfb7",
         "api/rechner.php": "f8103de3f33fe1481a933cd80ff297752cab9d9f439b6ce3d895ed151bcf7aac",
         "api/rechner-kv-adapter.php": "aabbb9c713503efcc8947a2a683de52de838b295fa12f651c7099c15734d279b",
-        "data/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
+        "api/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
         "tests/t1247-kostenvergleich.mjs": "7cdce7ada595b19d460032bd9ed2153a9aa8eacf442c1edbe37859e5754b6089",
         "tests/t1245-kv-website-dom.mjs": "aed0844cdeb2aaf20f20ba266700742a752a9c6f2ab33d4161d311f85e1b64f2",
         "reports/t1247/browser-und-bilder.mjs": "7e269e8d60343a9514ca9e4d661c12812bfc0254ede3cfdcbde71dff90ef1d24"
@@ -1288,7 +1288,7 @@
         "kostenvergleich-waermepumpe.html": "aceda1a3078ca0941b2a72f2e124f5c4ca75f4c8a5a57def3ddc80ffa9310947",
         "api/rechner.php": "f8103de3f33fe1481a933cd80ff297752cab9d9f439b6ce3d895ed151bcf7aac",
         "api/rechner-kv-adapter.php": "656d5983210b6a3f4b6d611236a979aa08bf424312e4e51d2afa56681976b05c",
-        "data/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
+        "api/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
         "tests/t1247-kostenvergleich.mjs": "e26b4a57cfe089d85842729bfd9862c0c18fc49dcc7f4b51cf37f152b7318331",
         "tests/t1245-kv-website-dom.mjs": "aed0844cdeb2aaf20f20ba266700742a752a9c6f2ab33d4161d311f85e1b64f2",
         "reports/t1247/browser-und-bilder.mjs": "b47f430f5db7aa46e31a0092af531e71a84351fcd18fc4b3af6597f596d89bc9"
@@ -1472,7 +1472,7 @@
         "kostenvergleich-waermepumpe.html": "aceda1a3078ca0941b2a72f2e124f5c4ca75f4c8a5a57def3ddc80ffa9310947",
         "api/rechner.php": "f8103de3f33fe1481a933cd80ff297752cab9d9f439b6ce3d895ed151bcf7aac",
         "api/rechner-kv-adapter.php": "656d5983210b6a3f4b6d611236a979aa08bf424312e4e51d2afa56681976b05c",
-        "data/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
+        "api/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
         "tests/t1247-kostenvergleich.mjs": "e26b4a57cfe089d85842729bfd9862c0c18fc49dcc7f4b51cf37f152b7318331",
         "tests/t1245-kv-website-dom.mjs": "aed0844cdeb2aaf20f20ba266700742a752a9c6f2ab33d4161d311f85e1b64f2",
         "reports/t1247/browser-und-bilder.mjs": "8e99bce26664b8415ebbafa9e76af573be1e31b0874a655571d0fd24375e9869"
@@ -1656,7 +1656,7 @@
         "kostenvergleich-waermepumpe.html": "31815700a030cc68a6fadc98f887872fd2c4cdb986a17c1dd2550b2248c13694",
         "api/rechner.php": "f8103de3f33fe1481a933cd80ff297752cab9d9f439b6ce3d895ed151bcf7aac",
         "api/rechner-kv-adapter.php": "54acc3bbbf0d2f7f637723df1e5d9a443e6c7ecb459b65fe65cae6cd2c16fbc3",
-        "data/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
+        "api/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
         "tests/t1247-kostenvergleich.mjs": "02211a0240128f295474e190d852b7c4cf4ccb4d919c5496e9c912e6981329f7",
         "tests/t1245-kv-website-dom.mjs": "aed0844cdeb2aaf20f20ba266700742a752a9c6f2ab33d4161d311f85e1b64f2",
         "reports/t1247/browser-und-bilder.mjs": "b96fcbaabfe63df55d7314ed7514ab59ddebc8853d890b48f7875b89f4718939"
@@ -1855,7 +1855,7 @@
         "kostenvergleich-waermepumpe.html": "31815700a030cc68a6fadc98f887872fd2c4cdb986a17c1dd2550b2248c13694",
         "api/rechner.php": "f8103de3f33fe1481a933cd80ff297752cab9d9f439b6ce3d895ed151bcf7aac",
         "api/rechner-kv-adapter.php": "54acc3bbbf0d2f7f637723df1e5d9a443e6c7ecb459b65fe65cae6cd2c16fbc3",
-        "data/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
+        "api/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
         "tests/t1247-kostenvergleich.mjs": "7915048089d99bfea1560c80f3aee4d3c95fcc1232e7bad75d0b45fc07ef2507",
         "tests/t1245-kv-website-dom.mjs": "aed0844cdeb2aaf20f20ba266700742a752a9c6f2ab33d4161d311f85e1b64f2",
         "reports/t1247/browser-und-bilder.mjs": "b96fcbaabfe63df55d7314ed7514ab59ddebc8853d890b48f7875b89f4718939"
@@ -2054,7 +2054,7 @@
         "kostenvergleich-waermepumpe.html": "31815700a030cc68a6fadc98f887872fd2c4cdb986a17c1dd2550b2248c13694",
         "api/rechner.php": "f8103de3f33fe1481a933cd80ff297752cab9d9f439b6ce3d895ed151bcf7aac",
         "api/rechner-kv-adapter.php": "54acc3bbbf0d2f7f637723df1e5d9a443e6c7ecb459b65fe65cae6cd2c16fbc3",
-        "data/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
+        "api/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
         "tests/t1247-kostenvergleich.mjs": "7915048089d99bfea1560c80f3aee4d3c95fcc1232e7bad75d0b45fc07ef2507",
         "tests/t1245-kv-website-dom.mjs": "aed0844cdeb2aaf20f20ba266700742a752a9c6f2ab33d4161d311f85e1b64f2",
         "reports/t1247/browser-und-bilder.mjs": "5098362bafb534070bcc4098ffd93c393f678f4569e070e00d829ba0a3969cc6"
@@ -2253,7 +2253,7 @@
         "kostenvergleich-waermepumpe.html": "31815700a030cc68a6fadc98f887872fd2c4cdb986a17c1dd2550b2248c13694",
         "api/rechner.php": "f8103de3f33fe1481a933cd80ff297752cab9d9f439b6ce3d895ed151bcf7aac",
         "api/rechner-kv-adapter.php": "54acc3bbbf0d2f7f637723df1e5d9a443e6c7ecb459b65fe65cae6cd2c16fbc3",
-        "data/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
+        "api/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
         "tests/t1247-kostenvergleich.mjs": "7915048089d99bfea1560c80f3aee4d3c95fcc1232e7bad75d0b45fc07ef2507",
         "tests/t1245-kv-website-dom.mjs": "aed0844cdeb2aaf20f20ba266700742a752a9c6f2ab33d4161d311f85e1b64f2",
         "reports/t1247/browser-und-bilder.mjs": "3977ceaa1c9823fb10d3ecb9b6ee7bef8916accd9b63723e2cf3bf703dd3dbe7"
@@ -2452,7 +2452,7 @@
         "kostenvergleich-waermepumpe.html": "acc31d27222b21ef8e1607d32765f47703290fb93075add4a2de08eb078b5d61",
         "api/rechner.php": "f8103de3f33fe1481a933cd80ff297752cab9d9f439b6ce3d895ed151bcf7aac",
         "api/rechner-kv-adapter.php": "3fa7eb93ef404de1472a6ac000649f9b7e336a3f221ebb5e46362eccb3cadbc0",
-        "data/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
+        "api/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
         "tests/t1247-kostenvergleich.mjs": "e3d5de6a75a3c24eb2a5b48ffcbdb32a24e290674807a56167f856ff4ee12332",
         "tests/t1245-kv-website-dom.mjs": "aed0844cdeb2aaf20f20ba266700742a752a9c6f2ab33d4161d311f85e1b64f2",
         "reports/t1247/browser-und-bilder.mjs": "2e33087a58c50a54c31e7d67e996b468cb6b4dd5cd06a3ad9fd04dc51fe52907"
@@ -2661,7 +2661,7 @@
         "kostenvergleich-waermepumpe.html": "acc31d27222b21ef8e1607d32765f47703290fb93075add4a2de08eb078b5d61",
         "api/rechner.php": "f8103de3f33fe1481a933cd80ff297752cab9d9f439b6ce3d895ed151bcf7aac",
         "api/rechner-kv-adapter.php": "3fa7eb93ef404de1472a6ac000649f9b7e336a3f221ebb5e46362eccb3cadbc0",
-        "data/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
+        "api/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
         "tests/t1247-kostenvergleich.mjs": "e3d5de6a75a3c24eb2a5b48ffcbdb32a24e290674807a56167f856ff4ee12332",
         "tests/t1245-kv-website-dom.mjs": "aed0844cdeb2aaf20f20ba266700742a752a9c6f2ab33d4161d311f85e1b64f2",
         "reports/t1247/browser-und-bilder.mjs": "35eec98fa29f9d68ddf1ab1642e799a399c27e17ad32f4413117386a571b8fc3"
@@ -2870,7 +2870,7 @@
         "kostenvergleich-waermepumpe.html": "512ad6238b37cc6f3a70ddf85ffd3e01b90496f4e3dcc347d0bbefae0f4f368d",
         "api/rechner.php": "f8103de3f33fe1481a933cd80ff297752cab9d9f439b6ce3d895ed151bcf7aac",
         "api/rechner-kv-adapter.php": "3fa7eb93ef404de1472a6ac000649f9b7e336a3f221ebb5e46362eccb3cadbc0",
-        "data/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
+        "api/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
         "tests/t1247-kostenvergleich.mjs": "557eed5d55034b90e283faa26671c652ed8952890e2d657d72541a0b5e28c666",
         "tests/t1245-kv-website-dom.mjs": "6f2ffd3295aa41db2f531a33a1510bdb2fbe6d0bf687f885832cc8d9d3eb39c8",
         "reports/t1247/browser-und-bilder.mjs": "51d0c1aa47337fd393a12d20a7ae9da61b7b37ed6501f3f7ef5a6159f5eeada6"
@@ -3099,7 +3099,7 @@
         "kostenvergleich-waermepumpe.html": "a4229a053f64ac2f60339db7e18afc40529e333cf2b38a1443b620d6b62c08b1",
         "api/rechner.php": "f8103de3f33fe1481a933cd80ff297752cab9d9f439b6ce3d895ed151bcf7aac",
         "api/rechner-kv-adapter.php": "3fa7eb93ef404de1472a6ac000649f9b7e336a3f221ebb5e46362eccb3cadbc0",
-        "data/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
+        "api/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
         "tests/t1247-kostenvergleich.mjs": "a2cbd3f04380d0aec3593d31e818860c763c01a18581824db92b1831db2e2850",
         "tests/t1245-kv-website-dom.mjs": "6f2ffd3295aa41db2f531a33a1510bdb2fbe6d0bf687f885832cc8d9d3eb39c8",
         "reports/t1247/browser-und-bilder.mjs": "51d0c1aa47337fd393a12d20a7ae9da61b7b37ed6501f3f7ef5a6159f5eeada6"
@@ -3328,7 +3328,7 @@
         "kostenvergleich-waermepumpe.html": "a4229a053f64ac2f60339db7e18afc40529e333cf2b38a1443b620d6b62c08b1",
         "api/rechner.php": "f8103de3f33fe1481a933cd80ff297752cab9d9f439b6ce3d895ed151bcf7aac",
         "api/rechner-kv-adapter.php": "3fa7eb93ef404de1472a6ac000649f9b7e336a3f221ebb5e46362eccb3cadbc0",
-        "data/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
+        "api/kv-marktwerte.php": "84b105f2bd7178670748148fba3724f6737d68f43effdfbdd8a579488f8b27f2",
         "tests/t1247-kostenvergleich.mjs": "f5db76fba632de3cd4095a43f025c7be34935da0fb001a13ac084e051727f210",
         "tests/t1245-kv-website-dom.mjs": "6f2ffd3295aa41db2f531a33a1510bdb2fbe6d0bf687f885832cc8d9d3eb39c8",
         "reports/t1247/browser-und-bilder.mjs": "51d0c1aa47337fd393a12d20a7ae9da61b7b37ed6501f3f7ef5a6159f5eeada6"
