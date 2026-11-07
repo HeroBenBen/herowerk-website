@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 function hw_kv_marktwerte(?array $liste = null): array
 {
-    $liste ??= require __DIR__ . '/../data/kv-marktwerte.php';
+    $liste ??= require __DIR__ . '/kv-marktwerte.php';
     $out = [];
     foreach ($liste as $feld => $eintrag) {
         if (!is_array($eintrag) || !isset($eintrag['wert']) || !is_numeric($eintrag['wert'])

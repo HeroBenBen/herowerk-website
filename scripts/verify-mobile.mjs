@@ -197,15 +197,28 @@ async function bewerteRechnerJahrestabellen(page, seite, breite, modus) {
       modus,
       `mobile-year-details Zaehler falsch: details ${messung.detailDecks}, div ${messung.mobileContainer}`
     );
-  if (messung.mainRows !== 20 || messung.breakCards !== 20 || messung.heatCards !== 20)
+  // T1247: Das Hauptdiagramm zeigt die aufsummierten Kosten beider Heizungen ab Jahr 0
+  // (zwei Reihen, 21 Jahreskarten Jahr 0 bis 20) statt der einreihigen Ersparnis mit
+  // 20 Balkenzeilen. Erwartet wird daher genau dieser Aufbau, keine Balkenzeile mehr.
+  if (
+    messung.mainRows !== 0 ||
+    messung.mainCards !== 21 ||
+    messung.breakCards !== 20 ||
+    messung.heatCards !== 20
+  )
     melde(
       3,
       seite,
       breite,
       modus,
-      `Jahreszeilen falsch: Balken ${messung.mainRows}, Karten ${messung.breakCards}/${messung.heatCards}`
+      `Jahreszeilen falsch: Balken ${messung.mainRows}, Karten ${messung.mainCards}/${messung.breakCards}/${messung.heatCards}`
     );
-  if (messung.summaryTexte.some((text) => text !== 'Alle 20 Jahre im Detail'))
+  const SUMMARY_SOLL = [
+    'Jahr 0 bis 20 im Detail',
+    'Alle 20 Jahre im Detail',
+    'Alle 20 Jahre im Detail',
+  ];
+  if (messung.summaryTexte.some((text, index) => text !== SUMMARY_SOLL[index]))
     melde(
       3,
       seite,

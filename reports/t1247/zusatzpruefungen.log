@@ -6,8 +6,8 @@ php -l api/rechner-kv-adapter.php
 No syntax errors detected in api/rechner-kv-adapter.php
 EXIT 0
 
-php -l data/kv-marktwerte.php
-No syntax errors detected in data/kv-marktwerte.php
+php -l api/kv-marktwerte.php
+No syntax errors detected in api/kv-marktwerte.php
 EXIT 0
 
 php -l tests/t1247-kv-runner.php

@@ -113,10 +113,10 @@ async function buildFixture(root, upstreamUrl, fatalMode = '') {
   await fs.mkdir(apiDirectory, { recursive: true });
   await fs.mkdir(runtimeDirectory, { recursive: true });
 
-  await fs.copyFile(
-    path.join(sourceRoot, 'api', 'rechner-engine.php'),
-    path.join(apiDirectory, 'rechner-engine.php')
-  );
+  // Die vollständigen Abhängigkeiten des öffentlichen Einstiegs mitnehmen.
+  for (const file of ['rechner-engine.php', 'rechner-kv-adapter.php', 'kv-marktwerte.php']) {
+    await fs.copyFile(path.join(sourceRoot, 'api', file), path.join(apiDirectory, file));
+  }
 
   await copySnapshotModules(sourceRoot, apiDirectory, runtimeDirectory, upstreamUrl);
 

@@ -118,7 +118,12 @@ async function buildFixture(root, upstreamUrl, removeSapiGuard = false) {
   await fs.mkdir(apiDirectory, { recursive: true });
   await fs.mkdir(runtimeDirectory, { recursive: true });
 
-  for (const file of ['rechner-engine.php', 'rechner.php']) {
+  for (const file of [
+    'rechner-engine.php',
+    'rechner-kv-adapter.php',
+    'kv-marktwerte.php',
+    'rechner.php',
+  ]) {
     await fs.copyFile(path.join(repoRoot, 'api', file), path.join(apiDirectory, file));
   }
 
