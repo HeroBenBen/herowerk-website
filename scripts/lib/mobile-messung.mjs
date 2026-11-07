@@ -1,6 +1,8 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
+import { spawnSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
 
 const hier = path.dirname(fileURLToPath(import.meta.url));
 export const wurzel = path.resolve(process.env.MOBILE_ROOT || path.join(hier, '..', '..'));
@@ -42,6 +44,21 @@ export async function klemmeEinwilligungAb(page) {
   await page.route('**://*.consentmanager.net/**', anbieterAbweisen);
 }
 
+const ADAPTER = path.join(wurzel, 'api/rechner-kv-adapter.php');
+function adapterPhp(funktion, argument) {
+  const code =
+    '$a = json_decode(stream_get_contents(STDIN), true, 512, JSON_THROW_ON_ERROR);' +
+    'require $argv[1]; $f = $argv[2];' +
+    'echo json_encode($a === null ? $f() : $f($a), JSON_THROW_ON_ERROR | JSON_PRESERVE_ZERO_FRACTION);';
+  const lauf = spawnSync('php', ['-r', code, '--', ADAPTER, funktion], {
+    input: JSON.stringify(argument ?? null),
+    encoding: 'utf8',
+    maxBuffer: 15e6,
+  });
+  if (lauf.status !== 0) throw new Error('Adapter-Attrappe ' + funktion + ': ' + lauf.stderr);
+  return JSON.parse(lauf.stdout);
+}
+
 export async function installRechnerApi(page) {
   await page.route('**/api/rechner**', async (route) => {
     const url = new URL(route.request().url());
@@ -53,6 +70,14 @@ export async function installRechnerApi(page) {
       payload.aktivePeriode = 'alt';
     } else if (action === 'kostenvergleich') {
       payload = engine.kvCalculate(mapRechnerInputs(url.searchParams), engine.KV_PARAMS_SEED);
+    }
+    // T1247: Die ausgelieferte Schnittstelle ergaenzt fuer kvAnsicht=nutzen Felder aus
+    // api/rechner-kv-adapter.php (hw_kv_adapter_route). Die Attrappe ruft dieselben
+    // PHP-Funktionen auf, statt sie nachzubauen; fehlt der Adapter, bleibt sie beim alten Stand.
+    if (url.searchParams.get('kvAnsicht') === 'nutzen' && status === 200 && existsSync(ADAPTER)) {
+      if (action === 'kv_bootstrap') payload.marktwerte = adapterPhp('hw_kv_marktwerte');
+      if (action === 'kostenvergleich')
+        payload.nutzenKosten = adapterPhp('hw_kv_nutzen_projektion', payload);
     } else if (action === 'preise') {
       payload = { wolf: [], vaillant: [] };
     } else {
@@ -67,7 +92,13 @@ export async function installRechnerApi(page) {
   });
 }
 
+// Erste Ergebniszahl der Ergebnisanzeige. Seit T1247 (Angleich an das Angebotsblatt
+// "Ihr Nutzen") traegt die Anzeige keine .wz-big mehr, sondern drei Karten im
+// .kv-nutzen-grid; die erste Zahl in Dokumentreihenfolge ist der erste .vv- oder .mv-Wert.
+export const ERSTE_ERGEBNISZAHL_WAHL = '#wzHero .kv-nutzen-grid .vv, #wzHero .kv-nutzen-grid .mv';
+
 export const BROWSER_MESSUNG = String.raw`(() => {
+  const ERSTE_ERGEBNISZAHL = ${JSON.stringify(ERSTE_ERGEBNISZAHL_WAHL)};
   const TOLERANZ = 1;
   const beschreibeElement = (element) => {
     const box = element.getBoundingClientRect();
@@ -161,7 +192,7 @@ export const BROWSER_MESSUNG = String.raw`(() => {
       : window.innerHeight;
     const ziel =
       nummer === 5
-        ? document.querySelector('#wzHero .wz-big')
+        ? document.querySelector(ERSTE_ERGEBNISZAHL)
         : [
             ...document.querySelectorAll(
               '#wzStepBody button.wz-choice,#wzStepBody .wz-optcard,#wzStepBody label.tog,#wzStepBody input:not([type=hidden]),#wzStepBody select,#wzStepBody textarea'
@@ -237,6 +268,7 @@ export const BROWSER_MESSUNG = String.raw`(() => {
       detailDecks: document.querySelectorAll('details.mobile-year-details').length,
       mobileContainer: document.querySelectorAll('div.mobile-year-details').length,
       mainRows: document.querySelectorAll('#cMainDaten .year-bar-row').length,
+      mainCards: document.querySelectorAll('#cMainDaten .mobile-year-card').length,
       breakCards: document.querySelectorAll('#cBreakDaten .mobile-year-card').length,
       heatCards: document.querySelectorAll('#cHeatDaten .mobile-year-card').length,
       summaryTexte: ids.map((id) => {
@@ -298,7 +330,7 @@ export async function bedieneRechner(page, { bisSchritt = 5, beiSchritt } = {}) 
   await erreicht(4);
   if (bisSchritt <= 4) return;
   await page.locator('#wzNext').click();
-  await page.waitForFunction(() => document.querySelector('#wzHero .wz-big'));
+  await page.waitForFunction((wahl) => document.querySelector(wahl), ERSTE_ERGEBNISZAHL_WAHL);
   await erreicht(5);
 }
 

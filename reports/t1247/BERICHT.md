@@ -6,13 +6,13 @@
 
 Geändert: `kostenvergleich-waermepumpe.html`, `api/rechner.php`, `apps-script/rechner-backend/kv_contract.md`, `package.json`, `tests/kv-thin-client.spec.js`, `tests/t1245-kv-website.mjs`.
 
-Neu: `api/rechner-kv-adapter.php`, `data/kv-marktwerte.php`, `tests/t1247-kostenvergleich.mjs`, `tests/t1247-kv-fixture.mjs`, `tests/t1247-kv-runner.php` sowie die Berichte, Protokolle und beiden ausführbaren Prüfscripte in diesem Ordner. Die vorhandenen Entwurfsdateien sind unverändert und werden nicht in die Kundenseite eingebunden.
+Neu: `api/rechner-kv-adapter.php`, `api/kv-marktwerte.php`, `tests/t1247-kostenvergleich.mjs`, `tests/t1247-kv-fixture.mjs`, `tests/t1247-kv-runner.php` sowie die Berichte, Protokolle und beiden ausführbaren Prüfscripte in diesem Ordner. Die vorhandenen Entwurfsdateien sind unverändert und werden nicht in die Kundenseite eingebunden.
 
 ## Ergebnis
 
 - Führend stehen Heizkosten im ersten Jahr, „Bezahlt gemacht nach“ bzw. „Bezahlt gemacht: sofort“ und „Vorteil nach … Jahren“ mit Spanne. Negative Jahresergebnisse heißen „Du zahlst … mehr“. Vergleichsbasis und „nominal, ohne Finanzierungskosten“ sind ausdrücklich benannt. Die beiden Kostenlinien beginnen mit der Investition in Jahr 0. Finanzierung, CO₂, Tabellen und Energie-/Extraschalter bleiben über die Rechengrundlagen erreichbar. Laufzeit weiterhin 5 bis 25 Jahre, Vorgabe 20. Quelle: [Nutzen-Renderer](../../kostenvergleich-waermepumpe.html#L2113), [Adapter](../../api/rechner-kv-adapter.php#L82).
 - Euro-Jahresrechnung wird serverseitig ohne Regler-Rundung normalisiert. Die heutige Heizungsart führt auch bei abweichender Vergleichsheizung. Beispiel Gas: 2.650,38 Euro bei 12 ct/kWh und 250,38 Euro Grundpreis ergeben 20.000 kWh. Beispiel Öl: 2.200 Euro bei 1,10 Euro/Liter und dem vorhandenen Faktor 10 ergeben 20.000 kWh. Preise und Ableitung werden zurückgegeben. Quelle: `tests/t1247-kostenvergleich.mjs`, Prüfgruppen 1 bis 9, [gruen_neu.log](gruen_neu.log).
-- Die 6 belegten Referenzen stehen ausschließlich in `data/kv-marktwerte.php`. Gas 12,72 ct/kWh, Öl 1,72 Euro/Liter, Haushaltsstrom 32,93 ct/kWh, Gas-Grundpreis 250,38 Euro/Jahr, WP-Tarif 24,23 ct/kWh und WP-Grundpreis 70,27 Euro/Jahr. Werte wirken nur per Klick. Vorbelegungen des Kerns bleiben unverändert. Quelle, Einheit und Stand erscheinen am Knopf. Ein vollständiger Prüf-Eintrag schaltet den Knopf ohne Codeänderung frei, jede der 4 fehlenden Pflichtangaben sperrt ihn im Serverdatensatz. Quelle: [Marktwertliste](../../data/kv-marktwerte.php), Prüfgruppen 10 und 11.
+- Die 6 belegten Referenzen stehen ausschließlich in `api/kv-marktwerte.php`. Gas 12,72 ct/kWh, Öl 1,72 Euro/Liter, Haushaltsstrom 32,93 ct/kWh, Gas-Grundpreis 250,38 Euro/Jahr, WP-Tarif 24,23 ct/kWh und WP-Grundpreis 70,27 Euro/Jahr. Werte wirken nur per Klick. Vorbelegungen des Kerns bleiben unverändert. Quelle, Einheit und Stand erscheinen am Knopf. Ein vollständiger Prüf-Eintrag schaltet den Knopf ohne Codeänderung frei, jede der 4 fehlenden Pflichtangaben sperrt ihn im Serverdatensatz. Quelle: [Marktwertliste](../../api/kv-marktwerte.php), Prüfgruppen 10 und 11.
 - Anfrage bleibt v1 und überträgt ausschließlich den serverseitigen kWh-Wert samt `own`/`market`. Euro und Ableitung werden nicht als Verbrauch oder Zusatzfelder an CRM übergeben. Quelle: `buildLeadHandoff`, `kostenvergleich-waermepumpe.html:1450`, Prüfgruppe 22.
 
 ## Bereichsprüfungen und Rot-Nachweis
@@ -25,33 +25,33 @@ Zusätzlich erfolgreich: `tests/t1245-kv-website-dom.mjs`, `tests/t1245-kv-nutze
 
 Nachweise: [Altprotokoll](rot_alt.log), [Neuprotokoll](gruen_neu.log), [Ergebnisdatei mit SHA-256 des Baustands](pruefergebnisse.json). Weitere 11 Syntax-/Diffprüfungen grün: [Protokoll](zusatzpruefungen.log). `scripts/version-assets.sh` lief in einer isolierten Kopie der betroffenen Seite und ihrer Assets, um `.rot-alt/` und geschützte Seiten nicht anzufassen: 68 Assets, 0 veraltete Referenzen, keine Fingerabdruckänderung nötig. [Assetprotokoll](asset-fingerabdruecke.log).
 
-| Prüfung | Alt 6fdf74e | Neu |
-|---|---|---|
-| Euro Gas: 2.650,38 Euro ergeben 20.000 kWh | rot | grün |
-| Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh | rot | grün |
-| Preisänderung im Euro-Modus ohne 500-kWh-Rundung | rot | grün |
-| Euro-Verbrauch bleibt ungerundet | rot | grün |
-| Gas-Grundpreis 0 bleibt gültig | rot | grün |
-| Heutige Heizungsart führt trotz anderer Vergleichsheizung | rot | grün |
-| Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig | rot | grün |
-| Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors | rot | grün |
-| 13 ungültige Euro-Eingaben sperren mit Klartext | rot | grün |
-| 6 belegte Marktwerte, Defaults unverändert | rot | grün |
-| Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben | rot | grün |
-| Marktherkunft nur bei tatsächlich verwendetem Marktwert | rot | grün |
-| Kostenlinien ab Jahr 0 einschließlich Investition | rot | grün |
-| Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch | grün | grün |
-| Alte Berater-Anfragen bleiben vollständig bitgleich | grün | grün |
-| Euro und Literpreis führen in denselben unveränderten Kern | grün | grün |
-| Adapter ist an der öffentlichen Ausgabestelle eingebunden | rot | grün |
-| Schutzgrenzen exakt auf 6fdf74e | grün | grün |
-| Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung | rot | grün |
-| Amortisation Jahr 0 heißt Bezahlt gemacht: sofort | rot | grün |
-| Spätes Bootstrap überschreibt keine eigenen Preise | rot | grün |
-| Anfrage v1 überträgt nur serverseitige kWh mit Herkunft | rot | grün |
-| Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung | rot | grün |
-| Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder | rot | grün |
-| Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück | rot | grün |
+| Prüfung                                                                      | Alt 6fdf74e | Neu  |
+| ---------------------------------------------------------------------------- | ----------- | ---- |
+| Euro Gas: 2.650,38 Euro ergeben 20.000 kWh                                   | rot         | grün |
+| Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh                      | rot         | grün |
+| Preisänderung im Euro-Modus ohne 500-kWh-Rundung                             | rot         | grün |
+| Euro-Verbrauch bleibt ungerundet                                             | rot         | grün |
+| Gas-Grundpreis 0 bleibt gültig                                               | rot         | grün |
+| Heutige Heizungsart führt trotz anderer Vergleichsheizung                    | rot         | grün |
+| Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig                             | rot         | grün |
+| Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors | rot         | grün |
+| 13 ungültige Euro-Eingaben sperren mit Klartext                              | rot         | grün |
+| 6 belegte Marktwerte, Defaults unverändert                                   | rot         | grün |
+| Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben           | rot         | grün |
+| Marktherkunft nur bei tatsächlich verwendetem Marktwert                      | rot         | grün |
+| Kostenlinien ab Jahr 0 einschließlich Investition                            | rot         | grün |
+| Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch     | grün        | grün |
+| Alte Berater-Anfragen bleiben vollständig bitgleich                          | grün        | grün |
+| Euro und Literpreis führen in denselben unveränderten Kern                   | grün        | grün |
+| Adapter ist an der öffentlichen Ausgabestelle eingebunden                    | rot         | grün |
+| Schutzgrenzen exakt auf 6fdf74e                                              | grün        | grün |
+| Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung          | rot         | grün |
+| Amortisation Jahr 0 heißt Bezahlt gemacht: sofort                            | rot         | grün |
+| Spätes Bootstrap überschreibt keine eigenen Preise                           | rot         | grün |
+| Anfrage v1 überträgt nur serverseitige kWh mit Herkunft                      | rot         | grün |
+| Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung              | rot         | grün |
+| Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder           | rot         | grün |
+| Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück           | rot         | grün |
 
 ## Browser und Bildschirmfotos durch die Steuerung (Auftrag 5)
 
@@ -111,7 +111,6 @@ In Auftrag 5 geänderte Dateien: `kostenvergleich-waermepumpe.html`, `api/rechne
 
 Offen: echter Lauf der 30 Browserfälle, Erzeugung und Sichtprüfung der 12 Bilder sowie erneute gezielte bestehende Browserprüfungen. Bis dahin nicht freigegeben. Schutzgrenzen gegen 6fdf74e grün; Kern, KV_DEFAULTS, Apps-Script-Kerndateien und Amortisationsseite unberührt. Kein Git-Schreibbefehl, Push, Server oder Auslieferung.
 
-
 ## Fortschreibung: Auftrag 6, zweite Nachbesserung
 
 1. **Moduswechsel:** `kostenvergleich-waermepumpe.html:1249` und `:1432` vergleichen bei `change`/`focusout` die vollständigen aktuellen Anfrageparameter einschließlich Brücke und Preisherkunft mit der fertigen Rechnung. Unveränderte Eingaben lösen keine zweite Rechnung aus. Ursache im bisherigen Ereignisablauf: Nach dem fertig berechneten Gaspreis verließ der Fokus das Preisfeld; beide Ereignisse riefen ohne Prüfung `scheduleKvCalculation(0)` auf. Der Scheduler entwertete das Ergebnis und `WZ_KV_PENDING` ersetzte die lange Herleitung durch den kurzen Ladehinweis. Dadurch konnte sich der darunterliegende Wechselknopf zwischen Drücken und Loslassen verschieben und sein `click` ausbleiben. Die Euro-Brücke blieb dann unverändert, weil `wzSetMode` gar nicht erreicht wurde. Das Entwerten und Verkürzen ist mit den echten registrierten Handlern und dem echten Scheduler auf dem gesicherten Auftrag-5-Stand reproduziert; den konkreten Zeigerablauf muss die Steuerung im Browser bestätigen. Neue Browserprüfung 1c (`browser-und-bilder.mjs:141`) prüft echten Fokuswechsel, unveränderte Herleitung, Knopfposition und ausbleibende Zusatzanfrage; 1a und 1b bleiben erhalten. Geänderte Werte rechnen weiterhin neu.
@@ -127,7 +126,6 @@ In Auftrag 6 geändert: `kostenvergleich-waermepumpe.html`, `api/rechner-kv-adap
 
 Schutzgrenzen gegen 6fdf74e weiterhin grün. Kern, KV_DEFAULTS und `amortisation-waermepumpe.html` unverändert. `.git` ausschließlich gelesen. Kein Commit, Push, Server oder Auslieferung.
 
-
 ## Fortschreibung Auftrag 7: dritte Nachbesserung, 07.11.2026
 
 1. **Tausenderpunkt und Jahreskosten-Eingabe behoben:** `kostenvergleich-waermepumpe.html:1124` liest `2.650,38`, `2650,38`, `2650.38` und `2650` eindeutig. Punkte gruppieren Tausender; ausschließlich ein einzelner Punkt mit genau zwei Nachkommastellen ohne Komma gilt auch als Dezimalpunkt. `2.650` ist deshalb 2.650 Euro. Komma erlaubt eine oder zwei Centstellen. Falsche Gruppierung, gemischte Trennzeichen, Punkt mit nur einer Nachkommastelle und wissenschaftliche Schreibweise sperren. `kostenvergleich-waermepumpe.html:1131` formatiert Jahreskosten mit Tausenderpunkten und zwei Centstellen, etwa `2.650,38`; Preisfelder behalten ihre bisherige Dezimallogik. Rohtext bleibt bei ungültiger Eingabe erhalten; nur der normalisierte Betrag geht über die Euro-Brücke an den Server (`:1583`, `:1981`). Dessen Klartext nennt gültige Formate (`api/rechner-kv-adapter.php:30`). Das falsche Soll in `tests/t1247-kostenvergleich.mjs:302` und `reports/t1247/browser-und-bilder.mjs:192` ist korrigiert. Zusätzliche Prüfungen ab `tests/t1247-kostenvergleich.mjs:306` und Browserfälle ab `reports/t1247/browser-und-bilder.mjs:199` decken gültige Schreibweisen, wiederholte Formatierung, API-Betrag, Sperre und Korrektur ab.
@@ -142,7 +140,6 @@ Schutzgrenzen gegen 6fdf74e weiterhin grün. Kern, KV_DEFAULTS und `amortisation
 
 Kern, KV_DEFAULTS und `amortisation-waermepumpe.html` unberührt. `.git` ausschließlich gelesen; gleicher Zweig. Kein Commit, Push, Server oder Auslieferung.
 
-
 ## Fortschreibung Auftrag 8: Browserfall 1c, 07.11.2026
 
 **Ursache aus dem Quelltext: (b), Messartefakt der Fensterkoordinate.** Der bisherige Fall verglich `boundingBox().y` vor/nach `button.focus()` (bisher `browser-und-bilder.mjs:146–152`; Fokus jetzt `:178`). Das vorherige `scrollIntoViewIfNeeded()` (`:174`) verhindert weiteres Fokus-Scrollen nicht; `css/site.css:11` aktiviert sanftes Scrollen. Der bisherige Lauf erfasste `scrollY` nicht, deshalb ist sein konkreter 2-px-Scrollanteil nachträglich nicht messbar. Für (a) findet sich im geprüften Fokuspfad kein Auslöser: `kostenvergleich-waermepumpe.html:1256–1260` beendet unveränderte change/focusout-Eingaben ohne Neuberechnung; `:1440` formatiert lediglich den Feldwert. Rahmen bleiben 1 px (`:205`, `:666`), der 2-px-Fokusring liegt als Outline außerhalb der Box (`:206`); der Herkunftschip bleibt bei „Deine Angabe“ (`:1589–1592`, `:2120–2122`). Die Produktseite ist bytegleich zum Auftragsbeginn.
@@ -152,7 +149,6 @@ Kern, KV_DEFAULTS und `amortisation-waermepumpe.html` unberührt. `.git` ausschl
 **Prüfstand:** `node reports/t1247/pruefen.mjs`: **36 grün / 0 rot**; Altstand **4 Kontrollen grün / 32 fachlich rot**. Alle **6** ausgewählten Prüfscripte grün, darunter **625** PHP/JS-Paritätsfälle (Float-Delta **0**) und **7/7** Schnittstellenprüfungen. Isolierte Ausführung der unveränderten Original-Messfunktionen mit kontrollierten Geometriedaten: **6 grün / 0 rot** (unverändert; 2 px Scrollen; Rot-Nachweise für 1 px Dokumentverschiebung, 1 px Elementhöhe trotz stabiler Knopfposition, 1 px Knopfhöhe und entferntes Element). Das ist kein Browsernachweis. Syntax beider Prüfscripte, Diff und **6/6** Fingerabdrücke der Produktseite samt geschützten Dateien grün. Nachweise: `gruen_neu.log`, `rot_alt.log`, `pruefergebnisse.json`, `zusatzpruefungen.log`.
 
 Erneuter Browserlauf bleibt bei der Steuerung; `browser.log`, `browser-ergebnisse.json` und die Bilder bleiben unverändert. Die vom Auftrag gemeldeten 38 Browserfälle und 10/10 Bestandsfälle werden hier nicht als eigener neuer Lauf ausgegeben. Testregel [20261106m]: kein voller Testlauf; `npm test` ohne Zusatz und `playwright test` ohne Dateiauswahl sind verboten. Kein Git-Schreibbefehl, Push, Server oder Auslieferung. Geändert: Browserprüfscript, Bereichsprüfscript (Auftrags-/Browserstatus), Bericht, Einbuchungshinweis und vier Bereichs-/Zusatznachweise.
-
 
 ## Fortschreibung Auftrag 9: Zwei Sichtbefunde, 07.11.2026
 
@@ -167,19 +163,18 @@ Erneuter Browserlauf bleibt bei der Steuerung; `browser.log`, `browser-ergebniss
 
 Testregel [20261106m] wörtlich: kein voller Testlauf; `npm test` ohne Zusatz und `playwright test` ohne Dateiauswahl sind verboten. Kern, KV_DEFAULTS und `amortisation-waermepumpe.html` unberührt. `.git` ausschließlich gelesen. Kein Push, keine Auslieferung, kein Server.
 
-
 ## Fortschreibung Auftrag 11: Mehrpreis an sämtlichen Ausgabeorten, 07.11.2026
 
 **Änderung:** Eine gemeinsame Textfunktion `kostenvergleich-waermepumpe.html:1134` rundet den Investitionsunterschied zuerst auf volle Euro (wie die bestehende Euro-Anzeige mit `Math.round`). Positiv: „Mehrpreis gegenüber der neuen Gas-/Ölheizung: X €.“ Negativ: „Die Wärmepumpe ist nach Förderung X € günstiger als die neue Gas-/Ölheizung.“ Gerundet null: „Wärmepumpe und neue Gas-/Ölheizung kosten nach Förderung gleich viel.“ Betrag und Vorzeichen bleiben im Rechenkern unverändert.
 
 Alle Fundstellen des ausgegebenen Anschaffungsunterschieds:
 
-| Datei:Zeile | Ausgabe | Änderung |
-| --- | --- | --- |
-| `kostenvergleich-waermepumpe.html:1367` | Rechenweg in erreichbaren Details | Gemeinsamer Text statt „Echter Mehrpreis“ mit vorzeichenbehaftetem Betrag. |
-| `kostenvergleich-waermepumpe.html:1379` | Detailkarte | „Anschaffungsvergleich“, Betrag absolut; gemeinsamer Erklärungstext, Gleichstand neutral. |
+| Datei:Zeile                             | Ausgabe                                                | Änderung                                                                                                                                                  |
+| --------------------------------------- | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `kostenvergleich-waermepumpe.html:1367` | Rechenweg in erreichbaren Details                      | Gemeinsamer Text statt „Echter Mehrpreis“ mit vorzeichenbehaftetem Betrag.                                                                                |
+| `kostenvergleich-waermepumpe.html:1379` | Detailkarte                                            | „Anschaffungsvergleich“, Betrag absolut; gemeinsamer Erklärungstext, Gleichstand neutral.                                                                 |
 | `kostenvergleich-waermepumpe.html:1394` | Hinweis an Gesamtkostentabelle und mobiler Kostenliste | Gemeinsamer Text für alle drei Fälle statt zusätzlichem positiven „Mehrinvestition“-Fragment. Anschaffungs- und Betriebskostenzellen bleiben unverändert. |
-| `kostenvergleich-waermepumpe.html:2160` | Hauptkarte | Gemeinsamer Text mit tatsächlicher Vergleichsheizung; bei gerundet null entscheidet laut Folgesatz der laufende Betrieb. |
+| `kostenvergleich-waermepumpe.html:2160` | Hauptkarte                                             | Gemeinsamer Text mit tatsächlicher Vergleichsheizung; bei gerundet null entscheidet laut Folgesatz der laufende Betrieb.                                  |
 
 Ergänzend: `kostenvergleich-waermepumpe.html:1381` nennt den zeitlichen Ausgleich bei Barzahlung ohne pauschale „Ab Tag 1 günstiger“-Behauptung. `:1140` unterdrückt negative Null im Vorzeichenformat der mobilen Diagramm-Tabellen (`:1160`). Diagrammlinien und sonstige Jahrestabellen enthalten keinen gesonderten Mehrpreis; sie zeigen weiterhin die unveränderten Kostenreihen. Bio-Mehrpreisfaktor/-Aufschlag (`:883`, `:889`, `:893`) betrifft Brennstoffkosten und bleibt unverändert.
 
@@ -191,15 +186,14 @@ Geändert (14 Dateien): `kostenvergleich-waermepumpe.html`, `tests/t1247-kostenv
 
 Testregel [20261106m] wörtlich: kein voller Testlauf; `npm test` ohne Zusatz und `playwright test` ohne Dateiauswahl sind verboten. `.git` ausschließlich gelesen; kein Commit, Push, Server oder Auslieferung. Kerndateien, KV_DEFAULTS und `amortisation-waermepumpe.html` unberührt.
 
-
 ## Fortschreibung Auftrag 12: Browserfall 11 und Gesamtkostenvorzeichen, 07.11.2026
 
-| Punkt | Ursache und Änderung | Datei:Zeile |
-| --- | --- | --- |
-| Gas-Szenarien | Reglergrenzen im Quelltext bestätigt: WP 8.000–65.000 €, Gas 6.000–20.000 €, Öl 9.000–28.000 €, jeweils Schritt 500 € (`kostenvergleich-waermepumpe.html:806`, `:838`, `:840`). Die Abweichung entsteht durch die Fördervoraussetzung: Der Gas-Wizard setzt ohne Altersangabe `fAlt20=false` (`:2041`), Öl erhält den Bonus. Am echten PHP-Adapter exakt reproduziert: netto 21.600 € ergibt 9.600 / 4.100 € Mehrpreis; netto 17.500 € im Nullszenario ergibt 4.000 €. Jetzt Gas ausdrücklich „mindestens 20 Jahre“ wählen; WP auf 30.000 bzw. 25.000 € setzen. Tastenzahl aus DOM-Minimum/-Maximum/-Schritt ableiten, Erreichbarkeit und tatsächlichen Reglerwert prüfen. Brutto, fossile Investition, Altersbonus und Ist-Mehrpreis werden vor Textprüfungen kontrolliert. Alle 6 korrigierten PHP-Szenarien ergeben 5.120 / −380 / 0 €. | `reports/t1247/browser-und-bilder.mjs:91`, `:284` |
-| Öl-Fehlalarm | Das alte Teilmuster `0 € günstiger` trifft die Endziffer von `380 € günstiger`. Neue Wortgrenze und Ausschluss vorangehender Ziffer/Tausenderpunkt. Originalmuster isoliert geprüft: 4 gültige Beträge akzeptiert, 4 falsche Texte abgewiesen. | `reports/t1247/browser-und-bilder.mjs:105`, `:310` |
-| Handyliste | Festes „+“ vor einer negativen Differenz erzeugte `+−X €` bzw. `+-X €`. Jetzt positiver Betrag mit „Günstiger als Wärmepumpe“, „Teurer als Wärmepumpe“ oder neutralem Gleichstand; passende Farbklasse. Erst auf Anzeige-Euro runden, keine negative Null. | `kostenvergleich-waermepumpe.html:1402` |
-| Ergebnissatz | Negativer Vorteil wurde richtungslos als „unter der Wärmepumpe“ beschrieben. Jetzt „Über N Jahre X € teurer/günstiger als die neue Gas-/Ölheizung“, bei gerundet null Gleichstand. Benannt wird die tatsächlich günstigste fossile Gesamtkostenalternative, auch wenn sie von der gewählten Vergleichsheizung abweicht. | `kostenvergleich-waermepumpe.html:1397` |
+| Punkt         | Ursache und Änderung                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Datei:Zeile                                        |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------- |
+| Gas-Szenarien | Reglergrenzen im Quelltext bestätigt: WP 8.000–65.000 €, Gas 6.000–20.000 €, Öl 9.000–28.000 €, jeweils Schritt 500 € (`kostenvergleich-waermepumpe.html:806`, `:838`, `:840`). Die Abweichung entsteht durch die Fördervoraussetzung: Der Gas-Wizard setzt ohne Altersangabe `fAlt20=false` (`:2041`), Öl erhält den Bonus. Am echten PHP-Adapter exakt reproduziert: netto 21.600 € ergibt 9.600 / 4.100 € Mehrpreis; netto 17.500 € im Nullszenario ergibt 4.000 €. Jetzt Gas ausdrücklich „mindestens 20 Jahre“ wählen; WP auf 30.000 bzw. 25.000 € setzen. Tastenzahl aus DOM-Minimum/-Maximum/-Schritt ableiten, Erreichbarkeit und tatsächlichen Reglerwert prüfen. Brutto, fossile Investition, Altersbonus und Ist-Mehrpreis werden vor Textprüfungen kontrolliert. Alle 6 korrigierten PHP-Szenarien ergeben 5.120 / −380 / 0 €. | `reports/t1247/browser-und-bilder.mjs:91`, `:284`  |
+| Öl-Fehlalarm  | Das alte Teilmuster `0 € günstiger` trifft die Endziffer von `380 € günstiger`. Neue Wortgrenze und Ausschluss vorangehender Ziffer/Tausenderpunkt. Originalmuster isoliert geprüft: 4 gültige Beträge akzeptiert, 4 falsche Texte abgewiesen.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | `reports/t1247/browser-und-bilder.mjs:105`, `:310` |
+| Handyliste    | Festes „+“ vor einer negativen Differenz erzeugte `+−X €` bzw. `+-X €`. Jetzt positiver Betrag mit „Günstiger als Wärmepumpe“, „Teurer als Wärmepumpe“ oder neutralem Gleichstand; passende Farbklasse. Erst auf Anzeige-Euro runden, keine negative Null.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | `kostenvergleich-waermepumpe.html:1402`            |
+| Ergebnissatz  | Negativer Vorteil wurde richtungslos als „unter der Wärmepumpe“ beschrieben. Jetzt „Über N Jahre X € teurer/günstiger als die neue Gas-/Ölheizung“, bei gerundet null Gleichstand. Benannt wird die tatsächlich günstigste fossile Gesamtkostenalternative, auch wenn sie von der gewählten Vergleichsheizung abweicht.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | `kostenvergleich-waermepumpe.html:1397`            |
 
 **Bereich grün:** `node reports/t1247/pruefen.mjs`: **44 grün / 0 rot**. Identische Prüfungen auf Altbasis `6fdf74e`: **4 Kontrollen grün / 40 fachlich rot**. Gesicherter Auftrag-11-Stand vor Produktänderung: **42 grün / 2 rot**, genau die beiden neuen Produktwächter. Neue Prüfungen `tests/t1247-kostenvergleich.mjs:415` und `:438`: beide fossilen Alternativen, positive/negative/Null-Differenz, ±0,49/±0,50 €, korrekte Farbklasse und ein echter PHP-Downside. Alle **6** ausgewählten Prüfscripte grün, darunter **625** PHP/JS-Paritätsfälle (Float-Delta **0**) und **7/7** Schnittstellenprüfungen. **5** Syntax-/Diffprüfungen grün. Fünf geschützte Dateien sowie Adapter bytegleich; Jahreskosten-/Anzeige-/Mehrpreisfunktionen unverändert. Nachweise: `gruen_neu.log`, `rot_alt.log`, `pruefergebnisse.json`, `zusatzpruefungen.log`.
 

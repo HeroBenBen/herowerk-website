@@ -296,6 +296,17 @@ const payloads = [
   'Heizleistung <12 kW bei A<span>&minus;</span>11/W55',
 ];
 let server;
+// T1247 (Antrag 155): Die T1245-Beweise "Regelfall" und "Nachauftrag 1 WebKit 375 Schritt 5"
+// vergleichen die Kostenvergleichsseite Wort für Wort mit dem T1087-Stand und lassen nur die
+// T1245-Änderungen zu. T1247 hat die Seite beabsichtigt umgebaut (Entscheid [20261027r],
+// Zusammenführung ee21ed5). Diese beiden Beweise laufen deshalb gegen ihren historischen
+// Nachher-Stand, die Zusammenführung von T1245 (aa73846), nach dem Muster von A11 in e534522.
+// Der aktuelle Stand der Seite wird im Kurzprüfungslauf von reports/t1247/browser-und-bilder.mjs
+// geprüft. WR_REF (rote Browserbasis) hat Vorrang; T1245_NACHHER dient nur der Gegenprobe.
+const T1245_NACHHER = process.env.T1245_NACHHER || 'aa73846399d58f2bfe6afdb9118002d6d921e0bc';
+async function serveT1245Nachher() {
+  return process.env.WR_REF ? { url: server.url, close: async () => {} } : serve(T1245_NACHHER);
+}
 test.beforeAll(async () => {
   server = await serve(process.env.WR_REF || '');
 });
@@ -782,6 +793,7 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
       async ({}, testInfo) => {
         test.setTimeout(240000);
         const baselineServer = await serve(base);
+        const nachherServer = await serveT1245Nachher();
         const { browser, page, state, errors } = await setup(type, width);
         const label = name + '-' + width;
         const jazReplacements = await t1245PriceReplacements();
@@ -1009,7 +1021,7 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
         }
         try {
           const before = await capture(baselineServer.url, 'basis');
-          const after = await capture(server.url, 'bau');
+          const after = await capture(nachherServer.url, 'bau');
           // Freigegeben: Herstellername sowie die benannten JAZ-Fußnoten und -Beschriftungen.
           for (const [key, value] of Object.entries(before)) {
             if (key.endsWith('-klappzustaende')) {
@@ -1068,6 +1080,7 @@ for (const [name, type] of Object.entries({ chromium, webkit }))
         } finally {
           await browser.close();
           await baselineServer.close();
+          await nachherServer.close();
         }
       }
     );
@@ -1198,10 +1211,11 @@ for (let repetition = 1; repetition <= 10; repetition++) {
   test('@smoke WR Nachauftrag 1 WebKit 375 Schritt 5 Wiederholung ' + repetition, async () => {
     test.setTimeout(90000);
     const beforeServer = await serve(nachauftragBase);
+    const nachherServer = await serveT1245Nachher();
     const { browser, page, errors } = await setup(webkit, 375);
     const captures = [];
     try {
-      for (const url of [beforeServer.url, server.url]) {
+      for (const url of [beforeServer.url, nachherServer.url]) {
         await page.goto(url + '/kostenvergleich-waermepumpe.html');
         await page.waitForFunction('typeof KV_STATE!=="undefined"&&KV_STATE.last');
         await page.locator('[data-wz-heizart="gas"]').click();
@@ -1216,7 +1230,7 @@ for (let repetition = 1; repetition <= 10; repetition++) {
             await expect(
               page.locator('summary').filter({ hasText: 'So entsteht dein Ergebnis' })
             ).toBeVisible();
-            captures.push(await t1245StepFiveCapture(page, details, url === server.url));
+            captures.push(await t1245StepFiveCapture(page, details, url === nachherServer.url));
           } else await page.locator('#wzNext').click();
         }
       }
@@ -1225,6 +1239,7 @@ for (let repetition = 1; repetition <= 10; repetition++) {
     } finally {
       await browser.close();
       await beforeServer.close();
+      await nachherServer.close();
     }
   });
 }

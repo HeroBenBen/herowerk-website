@@ -2311,6 +2311,9 @@ function paUpdateDetail(d) {
   const detail = document.getElementById('paDetail');
   if (detail) detail.classList[bwpJaz ? 'add' : 'remove']('pa-jaz-bwp');
   if (scopFn) scopFn.style.display = hasScop && !hasJaz ? 'block' : 'none';
+  // Erklärung zu JAZ und SCOP zugeklappt; ohne Kennwert entfällt die Klappe ganz.
+  const klappe = document.getElementById('paEffizienzKlappe');
+  if (klappe) klappe.hidden = !hasJaz && !hasScop;
 
   const cta = document.getElementById('paDetailCta');
   if (paHasNumber(d.eigen)) {

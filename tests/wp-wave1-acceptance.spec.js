@@ -230,7 +230,14 @@ test('Stand-Datum wird ausschließlich aus dem Bootstrap formatiert', async ({ p
 test('Zinswerte und alte Zinsbegriffe stehen nicht im ausgelieferten Client', () => {
   const source = fs.readFileSync(path.join(root, 'kostenvergleich-waermepumpe.html'), 'utf8');
   expect(source).not.toMatch(/0\.98|4\.10|4,10|0,98|90000|24\.07\.2026|2026-07-24/);
-  expect(source).not.toMatch(/kondition[a-zäöüß]*|nominal|sollzins/i);
+  // T1247 (Antrag 155, GO Task-Orchestrator 07.11.2026): Das Kundenwort "nominal" bedeutet
+  // seit ee21ed5 "nicht inflationsbereinigt" ("Nominal, ohne Finanzierungskosten"). Verboten
+  // bleiben die Kreditbegriffe; Zweck: keine Kreditkonditionen im ausgelieferten Client.
+  // "Effektivzins" bleibt erlaubt: der Kredithinweis mit diesem Wort kam mit 7959bc7, demselben
+  // Einbuchen wie dieses Verbot, und war nie verboten.
+  expect(source).not.toMatch(
+    /kondition[a-zäöüß]*|nominalzins[a-zäöüß]*|nominaler\s+zins|sollzins[a-zäöüß]*/i
+  );
   expect((source.match(/Rechenannahme/g) || []).length).toBeGreaterThanOrEqual(3);
 });
 
@@ -256,8 +263,10 @@ for (const viewport of [
       if (viewport.name === 'mobil') await expect(introHeading).toBeHidden();
       else await expect(introHeading).toBeVisible();
       await expect(page.locator('section[aria-labelledby="rechner-einleitung"]')).toBeVisible();
+      // T1247 (ee21ed5): Die Einleitung teilt die Aussage in zwei Saetze; beide Teile bleiben Pflicht.
+      await expect(page.locator('.page-head .lead')).toContainText('über 20 Jahre');
       await expect(page.locator('.page-head .lead')).toContainText(
-        'über 20 Jahre, den Zeitraum kannst du selbst anpassen'
+        'Den Zeitraum kannst du selbst anpassen.'
       );
       await expect(page.locator('.page-head .lead')).not.toContainText('bis zu 25 Jahre');
       const deliveredScripts = (await page.locator('script').allTextContents()).join('\n');

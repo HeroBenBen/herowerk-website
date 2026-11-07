@@ -17,7 +17,7 @@ Geändert:
 
 Neu:
 - api/rechner-kv-adapter.php
-- data/kv-marktwerte.php
+- api/kv-marktwerte.php
 - tests/t1247-kostenvergleich.mjs
 - tests/t1247-kv-fixture.mjs
 - tests/t1247-kv-runner.php

@@ -250,6 +250,7 @@ test('Pro-JAZ aus freigegebenen Daten; fehlende Werte bleiben vollständig ausge
   b.ctx.paUpdateDetail(d.card);
   assert.equal(b.nodes.paJazFootnote.style.display, 'block');
   assert.equal(b.nodes.paScopFootnote.style.display, 'none');
+  assert.equal(b.nodes.paEffizienzKlappe.hidden, false, 'Klappe da, sobald JAZ angezeigt wird');
   vm.runInContext(
     "PA_PRO_TECHNIK['Vaillant VWL 55/7.1 A'].jaz={heizkoerper:'3,01',fussboden:'4,02'}",
     b.ctx
@@ -262,6 +263,18 @@ test('Pro-JAZ aus freigegebenen Daten; fehlende Werte bleiben vollständig ausge
   assert.equal(b.nodes.paScopFootnote.style.display, 'none');
   vm.runInContext("delete PA_PRO_TECHNIK['Vaillant VWL 55/7.1 A'].jaz", b.ctx);
   assert.doesNotMatch(render(b, 'vaillant').details[0].table, /JAZ/);
+  b.ctx.paUpdateDetail({ modell: 'Vaillant unbekannt', name: 'Unbekannt' });
+  assert.equal(b.nodes.paEffizienzKlappe.hidden, true, 'ohne JAZ und SCOP keine leere Klappe');
+});
+test('Erklärung zu JAZ und SCOP steht zugeklappt in einer Klappe, Kennwerte bleiben offen', () => {
+  const html = read('preise.html', ref);
+  const klappe = html.match(/<details id="paEffizienzKlappe"[^>]*>([\s\S]*?)<\/details>/);
+  assert.ok(klappe, 'Klappe vorhanden');
+  assert.doesNotMatch(klappe[0].slice(0, klappe[0].indexOf('>')), /\sopen\b/, 'zugeklappt');
+  assert.match(klappe[1], /<summary>\s*Was bedeuten JAZ und SCOP\?\s*<\/summary>/);
+  assert.match(klappe[1], /id="paJazFootnote"/);
+  assert.match(klappe[1], /id="paScopFootnote"/);
+  assert.doesNotMatch(klappe[1], /id="paSpecsTable"/, 'Kennwerttabelle außerhalb der Klappe');
 });
 test('Unbekannte Geräte erben weder fremde Technik noch fremdes Bild', () => {
   const b = browser(ref, mutate);
