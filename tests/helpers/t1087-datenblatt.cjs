@@ -75,6 +75,7 @@ function browser(ref = '', mutate = (s) => s) {
       'paDetailCta',
       'paJazFootnote',
       'paScopFootnote',
+      'paEffizienzKlappe',
       'paDetail',
       'paImg',
     ].map((id) => [id, element()])

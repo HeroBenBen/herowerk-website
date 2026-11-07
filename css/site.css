@@ -3309,6 +3309,35 @@ section {
 .pa-detail.open.pa-jaz-bwp {
   max-height: none;
 }
+/* Erklärung zu JAZ und SCOP: zugeklappt, Kennwerte bleiben in der Tabelle sichtbar. */
+.pa-effizienz-klappe {
+  margin-top: 8px;
+}
+.pa-effizienz-klappe > summary {
+  cursor: pointer;
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--g400);
+}
+.pa-effizienz-klappe > summary::-webkit-details-marker {
+  display: none;
+}
+.pa-effizienz-klappe > summary::after {
+  content: '▾';
+  color: var(--green);
+}
+.pa-effizienz-klappe[open] > summary::after {
+  content: '▴';
+}
+.pa-effizienz-klappe > summary:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
 .pa-detail-inner {
   background: var(--schiefer);
   border-radius: 16px;
