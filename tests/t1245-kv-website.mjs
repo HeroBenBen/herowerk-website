@@ -34,7 +34,15 @@ try {
           else i[key] = v;
         }
         try {
-          return route.fulfill({ json: plain(k.kvCalculate(i, k.KV_PARAMS_SEED)) });
+          const result = plain(k.kvCalculate(i, k.KV_PARAMS_SEED));
+          const fossil = result.system.neuFossilOn ? result.invest.fossilInvest : 0;
+          result.nutzenKosten = {
+            labels: [0, ...result.jahre.map(j => j.j)],
+            fossil: [fossil, ...result.jahre.map(j => fossil + j.cumFossil)],
+            wp: [result.invest.netto, ...result.jahre.map(j => result.invest.netto + j.cumWPKosten)],
+            breakEven: result.ergebnis.breakEven,
+          };
+          return route.fulfill({ json: result });
         } catch (e) {
           return route.fulfill({ json: { error: true, message: e.message } });
         }

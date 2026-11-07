@@ -1,0 +1,3687 @@
+{
+  "stand": "T1247 Auftrag 12",
+  "auswahl": "alle T1247-Fälle",
+  "zeit": "2026-11-07T13:34:49.778Z",
+  "green": 55,
+  "red": 0,
+  "images": [
+    "reports/t1247/bilder/gas-verbrauch-light-375.png",
+    "reports/t1247/bilder/gas-ergebnis-light-375.png",
+    "reports/t1247/bilder/gas-verbrauch-light-1280.png",
+    "reports/t1247/bilder/gas-ergebnis-light-1280.png",
+    "reports/t1247/bilder/gas-verbrauch-dark-375.png",
+    "reports/t1247/bilder/gas-ergebnis-dark-375.png",
+    "reports/t1247/bilder/oel-verbrauch-light-375.png",
+    "reports/t1247/bilder/oel-ergebnis-light-375.png",
+    "reports/t1247/bilder/oel-verbrauch-light-1280.png",
+    "reports/t1247/bilder/oel-ergebnis-light-1280.png",
+    "reports/t1247/bilder/oel-verbrauch-dark-375.png",
+    "reports/t1247/bilder/oel-ergebnis-dark-375.png"
+  ],
+  "sourceHashes": {
+    "kostenvergleich-waermepumpe.html": "2b9f2c3145977b16f76f78084ac17330efe2177c3ecef7c350099919c95dec0a",
+    "api/rechner-kv-adapter.php": "3fa7eb93ef404de1472a6ac000649f9b7e336a3f221ebb5e46362eccb3cadbc0",
+    "reports/t1247/browser-und-bilder.mjs": "2273a8511a47357ca82e37eb2405f04230f82f4538df3fddcb2b3a58b7d2044d"
+  },
+  "rows": [
+    {
+      "name": "1a Rechnung zu Verbrauch: Brücke null und neue Tastatureingabe führt",
+      "status": "grün"
+    },
+    {
+      "name": "1b Späte Euro-Antwort reaktiviert den Rechnungsmodus nicht",
+      "status": "grün"
+    },
+    {
+      "name": "1c Fokuswechsel nach fertiger Euro-Rechnung lässt Herleitung und Knopf stabil",
+      "status": "grün"
+    },
+    {
+      "name": "Z5 Nutzen-Karten trennen Bezeichnung, Betrag und Spanne im Textinhalt",
+      "status": "grün"
+    },
+    {
+      "name": "9a Dezimalfelder nach Laden und Marktwertklick deutsch, Komma und Punkt rechnen gleich",
+      "status": "grün"
+    },
+    {
+      "name": "9a Jahreskosten: vier gültige Eingaben, Tausenderpunkt und eindeutige API-Zahl",
+      "status": "grün"
+    },
+    {
+      "name": "9a Jahreskosten: unklare Schreibweisen sperren mit Klartext und bleiben bearbeitbar",
+      "status": "grün"
+    },
+    {
+      "name": "Ergebnis Öl: nach Förderung 380 € günstiger, kein negativer Mehrpreis",
+      "status": "grün"
+    },
+    {
+      "name": "11 Mehrpreis gas / 5120 € / 375 px, Hauptkarte und offene Details",
+      "status": "grün"
+    },
+    {
+      "name": "11 Mehrpreis gas / -380 € / 375 px, Hauptkarte und offene Details",
+      "status": "grün"
+    },
+    {
+      "name": "11 Mehrpreis gas / 0 € / 375 px, Hauptkarte und offene Details",
+      "status": "grün"
+    },
+    {
+      "name": "11 Mehrpreis oel / 5120 € / 375 px, Hauptkarte und offene Details",
+      "status": "grün"
+    },
+    {
+      "name": "11 Mehrpreis oel / -380 € / 375 px, Hauptkarte und offene Details",
+      "status": "grün"
+    },
+    {
+      "name": "11 Mehrpreis oel / 0 € / 375 px, Hauptkarte und offene Details",
+      "status": "grün"
+    },
+    {
+      "name": "11 Mehrpreis gas / 5120 € / 1280 px, Hauptkarte und offene Details",
+      "status": "grün"
+    },
+    {
+      "name": "11 Mehrpreis gas / -380 € / 1280 px, Hauptkarte und offene Details",
+      "status": "grün"
+    },
+    {
+      "name": "11 Mehrpreis gas / 0 € / 1280 px, Hauptkarte und offene Details",
+      "status": "grün"
+    },
+    {
+      "name": "11 Mehrpreis oel / 5120 € / 1280 px, Hauptkarte und offene Details",
+      "status": "grün"
+    },
+    {
+      "name": "11 Mehrpreis oel / -380 € / 1280 px, Hauptkarte und offene Details",
+      "status": "grün"
+    },
+    {
+      "name": "11 Mehrpreis oel / 0 € / 1280 px, Hauptkarte und offene Details",
+      "status": "grün"
+    },
+    {
+      "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: gas",
+      "status": "grün"
+    },
+    {
+      "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: oel",
+      "status": "grün"
+    },
+    {
+      "name": "2 Handy-Klapptexte ohne doppeltes Alle",
+      "status": "grün"
+    },
+    {
+      "name": "3a Ölpreis leeren, Gas wählen: verborgener Ölpreis sperrt nicht",
+      "status": "grün"
+    },
+    {
+      "name": "3b Gaspreis/Grundpreis leeren, Öl wählen: verborgene Gasfelder sperren nicht",
+      "status": "grün"
+    },
+    {
+      "name": "3c Abweichende Vergleichsheizung: verwendeter Ölpreis sichtbar und Pflicht",
+      "status": "grün"
+    },
+    {
+      "name": "4 Geld und Mengen deutsch, Finanzierung Neuanlage",
+      "status": "grün"
+    },
+    {
+      "name": "4 Geld und Mengen deutsch, Finanzierung Bestand",
+      "status": "grün"
+    },
+    {
+      "name": "5 Euro-Seitenleiste nutzt inputsEcho.bedarf: 15 ct ergeben 16.000 kWh",
+      "status": "grün"
+    },
+    {
+      "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Neuanlage",
+      "status": "grün"
+    },
+    {
+      "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Bestand",
+      "status": "grün"
+    },
+    {
+      "name": "7 Prüf-Eintrag: vollständig, sichtbarer bedienbarer Knopf",
+      "status": "grün"
+    },
+    {
+      "name": "7 Prüf-Eintrag: wert fehlt, kein Knopf",
+      "status": "grün"
+    },
+    {
+      "name": "7 Prüf-Eintrag: einheit fehlt, kein Knopf",
+      "status": "grün"
+    },
+    {
+      "name": "7 Prüf-Eintrag: quelle fehlt, kein Knopf",
+      "status": "grün"
+    },
+    {
+      "name": "7 Prüf-Eintrag: stand fehlt, kein Knopf",
+      "status": "grün"
+    },
+    {
+      "name": "7 Spätes Bootstrap nach echter Tastatureingabe erhält Preise und Herkunft",
+      "status": "grün"
+    },
+    {
+      "name": "Ungültige Euro-Preise sperren Ergebnis und Weiter",
+      "status": "grün"
+    },
+    {
+      "name": "A9 Preisherkunft Gas: je Preis benannt, Marktquelle und Stand nach Übernahme",
+      "status": "grün"
+    },
+    {
+      "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 375 px light",
+      "status": "grün"
+    },
+    {
+      "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 375 px dark",
+      "status": "grün"
+    },
+    {
+      "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 1280 px light",
+      "status": "grün"
+    },
+    {
+      "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 1280 px dark",
+      "status": "grün"
+    },
+    {
+      "name": "Bild Verbrauch gas-light-375",
+      "status": "grün"
+    },
+    {
+      "name": "Bild Ergebnis und Vertragskontrollen gas-light-375",
+      "status": "grün"
+    },
+    {
+      "name": "Bild Verbrauch gas-light-1280",
+      "status": "grün"
+    },
+    {
+      "name": "Bild Ergebnis und Vertragskontrollen gas-light-1280",
+      "status": "grün"
+    },
+    {
+      "name": "Bild Verbrauch gas-dark-375",
+      "status": "grün"
+    },
+    {
+      "name": "Bild Ergebnis und Vertragskontrollen gas-dark-375",
+      "status": "grün"
+    },
+    {
+      "name": "Bild Verbrauch oel-light-375",
+      "status": "grün"
+    },
+    {
+      "name": "Bild Ergebnis und Vertragskontrollen oel-light-375",
+      "status": "grün"
+    },
+    {
+      "name": "Bild Verbrauch oel-light-1280",
+      "status": "grün"
+    },
+    {
+      "name": "Bild Ergebnis und Vertragskontrollen oel-light-1280",
+      "status": "grün"
+    },
+    {
+      "name": "Bild Verbrauch oel-dark-375",
+      "status": "grün"
+    },
+    {
+      "name": "Bild Ergebnis und Vertragskontrollen oel-dark-375",
+      "status": "grün"
+    }
+  ],
+  "history": [
+    {
+      "stand": "T1247 Baustand auf 6fdf74e",
+      "zeit": "2026-11-07T10:34:29.316Z",
+      "rows": [
+        {
+          "name": "Verzögertes Bootstrap erhält Eigenangabe und grüne Herkunft",
+          "status": "grün"
+        },
+        {
+          "name": "Marktwert auf Klick, manuelles Überschreiben, Live-Preisänderung im Euro-Modus",
+          "status": "grün"
+        },
+        {
+          "name": "Ungültiger Arbeitspreis sperrt Rechnung und Weiter",
+          "status": "grün"
+        },
+        {
+          "name": "Expected values to be strictly equal:\n+ actual - expected\n\n+ {\n+   bedarfModus: 'jahreskosten',\n+   jahreskosten: '2650.38'\n+ }\n- null\n",
+          "status": "rot"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 5",
+      "zeit": "2026-11-07T10:48:03.673Z",
+      "green": 0,
+      "red": 1,
+      "images": [],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "1155811a36ecaa7c601610e1761d3dde22571014b9fb4adeeb32bae938a3aa60",
+        "api/rechner-kv-adapter.php": "8feb500b100ecef1baeed4fedb009e211b1e6182335ca2180988e04c9b41b5ef",
+        "reports/t1247/browser-und-bilder.mjs": "299a6b85da84060e7038cc59c8ef86797f92dc22c15e81a4cbcc9088683b25ae"
+      },
+      "rows": [
+        {
+          "name": "Browser-Prüfaufbau",
+          "status": "rot",
+          "fehler": "browserType.launch: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /Users/benjaminbendler/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/fsj259rj7cngdt79dg4zkt2c0000gn/T/playwright_chromiumdev_profile-HCOrCP --remote-debugging-pipe --no-startup-window\n<launched> pid=4284\n[pid=4284][err] [1107/114803.664589:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9\n[pid=4284][err] [1107/114803.666972:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.\n[pid=4284][err] [1107/114803.667893:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.4284: Permission denied (1100)\nCall log:\n\u001b[2m  - <launching> /Users/benjaminbendler/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/fsj259rj7cngdt79dg4zkt2c0000gn/T/playwright_chromiumdev_profile-HCOrCP --remote-debugging-pipe --no-startup-window\u001b[22m\n\u001b[2m  - <launched> pid=4284\u001b[22m\n\u001b[2m  - [pid=4284][err] [1107/114803.664589:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9\u001b[22m\n\u001b[2m  - [pid=4284][err] [1107/114803.666972:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.\u001b[22m\n\u001b[2m  - [pid=4284][err] [1107/114803.667893:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.4284: Permission denied (1100)\u001b[22m\n\u001b[2m  - [pid=4284] <gracefully close start>\u001b[22m\n\u001b[2m  - [pid=4284] <kill>\u001b[22m\n\u001b[2m  - [pid=4284] <will force kill>\u001b[22m\n\u001b[2m  - [pid=4284] exception while trying to kill process: Error: kill EPERM\u001b[22m\n\u001b[2m  - [pid=4284] <process did exit: exitCode=null, signal=SIGTRAP>\u001b[22m\n\u001b[2m  - [pid=4284] starting temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=4284] finished temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=4284] <gracefully close end>\u001b[22m\n\n    at /Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:111:28"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 5",
+      "zeit": "2026-11-07T10:53:35.192Z",
+      "green": 29,
+      "red": 1,
+      "images": [
+        "reports/t1247/bilder/gas-verbrauch-light-375.png",
+        "reports/t1247/bilder/gas-ergebnis-light-375.png",
+        "reports/t1247/bilder/gas-verbrauch-light-1280.png",
+        "reports/t1247/bilder/gas-ergebnis-light-1280.png",
+        "reports/t1247/bilder/gas-verbrauch-dark-375.png",
+        "reports/t1247/bilder/gas-ergebnis-dark-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-375.png",
+        "reports/t1247/bilder/oel-ergebnis-light-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-1280.png",
+        "reports/t1247/bilder/oel-ergebnis-light-1280.png",
+        "reports/t1247/bilder/oel-verbrauch-dark-375.png",
+        "reports/t1247/bilder/oel-ergebnis-dark-375.png"
+      ],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "a31f8dc9941269a536845f6c8189fba6b3b52b82d89ba3fe1437ea1cda0d5236",
+        "api/rechner-kv-adapter.php": "8feb500b100ecef1baeed4fedb009e211b1e6182335ca2180988e04c9b41b5ef",
+        "reports/t1247/browser-und-bilder.mjs": "097451f79555e5364442c2318d0f0b9b3c7a4a4a5f7fea23b94c2deb8acaab87"
+      },
+      "rows": [
+        {
+          "name": "1a Rechnung zu Verbrauch: Brücke null und neue Tastatureingabe führt",
+          "status": "rot",
+          "fehler": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ {\n+   bedarfModus: 'jahreskosten',\n+   jahreskosten: '2650.38'\n+ }\n- null\n\n    at file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:117:12\n    at async check (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:62:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:112:3"
+        },
+        {
+          "name": "1b Späte Euro-Antwort reaktiviert den Rechnungsmodus nicht",
+          "status": "grün"
+        },
+        {
+          "name": "2 Handy-Klapptexte ohne doppeltes Alle",
+          "status": "grün"
+        },
+        {
+          "name": "3a Ölpreis leeren, Gas wählen: verborgener Ölpreis sperrt nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3b Gaspreis/Grundpreis leeren, Öl wählen: verborgene Gasfelder sperren nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3c Abweichende Vergleichsheizung: verwendeter Ölpreis sichtbar und Pflicht",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "5 Euro-Seitenleiste nutzt inputsEcho.bedarf: 15 ct ergeben 16.000 kWh",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: vollständig, sichtbarer bedienbarer Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: wert fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: einheit fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: quelle fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: stand fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Spätes Bootstrap nach echter Tastatureingabe erhält Preise und Herkunft",
+          "status": "grün"
+        },
+        {
+          "name": "Ungültige Euro-Preise sperren Ergebnis und Weiter",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-dark-375",
+          "status": "grün"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 6",
+      "zeit": "2026-11-07T11:01:15.293Z",
+      "green": 0,
+      "red": 1,
+      "images": [],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "d1624064d8065a8b6475e178f72759c922519bc0562a13f408dfd81fe120bfb7",
+        "api/rechner-kv-adapter.php": "aabbb9c713503efcc8947a2a683de52de838b295fa12f651c7099c15734d279b",
+        "reports/t1247/browser-und-bilder.mjs": "b47f430f5db7aa46e31a0092af531e71a84351fcd18fc4b3af6597f596d89bc9"
+      },
+      "rows": [
+        {
+          "name": "Browser-Prüfaufbau",
+          "status": "rot",
+          "fehler": "browserType.launch: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /Users/benjaminbendler/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/fsj259rj7cngdt79dg4zkt2c0000gn/T/playwright_chromiumdev_profile-Z9Kzcn --remote-debugging-pipe --no-startup-window\n<launched> pid=45767\n[pid=45767][err] [1107/120115.286241:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9\n[pid=45767][err] [1107/120115.287976:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.\n[pid=45767][err] [1107/120115.288938:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.45767: Permission denied (1100)\nCall log:\n\u001b[2m  - <launching> /Users/benjaminbendler/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/fsj259rj7cngdt79dg4zkt2c0000gn/T/playwright_chromiumdev_profile-Z9Kzcn --remote-debugging-pipe --no-startup-window\u001b[22m\n\u001b[2m  - <launched> pid=45767\u001b[22m\n\u001b[2m  - [pid=45767][err] [1107/120115.286241:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9\u001b[22m\n\u001b[2m  - [pid=45767][err] [1107/120115.287976:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.\u001b[22m\n\u001b[2m  - [pid=45767][err] [1107/120115.288938:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.45767: Permission denied (1100)\u001b[22m\n\u001b[2m  - [pid=45767] <gracefully close start>\u001b[22m\n\u001b[2m  - [pid=45767] <kill>\u001b[22m\n\u001b[2m  - [pid=45767] <will force kill>\u001b[22m\n\u001b[2m  - [pid=45767] exception while trying to kill process: Error: kill EPERM\u001b[22m\n\u001b[2m  - [pid=45767] <process did exit: exitCode=null, signal=SIGTRAP>\u001b[22m\n\u001b[2m  - [pid=45767] starting temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=45767] finished temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=45767] <gracefully close end>\u001b[22m\n\n    at /Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:111:28"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 6",
+      "zeit": "2026-11-07T11:03:23.414Z",
+      "green": 0,
+      "red": 1,
+      "images": [],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "aceda1a3078ca0941b2a72f2e124f5c4ca75f4c8a5a57def3ddc80ffa9310947",
+        "api/rechner-kv-adapter.php": "656d5983210b6a3f4b6d611236a979aa08bf424312e4e51d2afa56681976b05c",
+        "reports/t1247/browser-und-bilder.mjs": "8e99bce26664b8415ebbafa9e76af573be1e31b0874a655571d0fd24375e9869"
+      },
+      "rows": [
+        {
+          "name": "Browser-Prüfaufbau",
+          "status": "rot",
+          "fehler": "browserType.launch: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /Users/benjaminbendler/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/fsj259rj7cngdt79dg4zkt2c0000gn/T/playwright_chromiumdev_profile-Kg87Yk --remote-debugging-pipe --no-startup-window\n<launched> pid=60680\n[pid=60680][err] [1107/120323.406245:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9\n[pid=60680][err] [1107/120323.408004:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.\n[pid=60680][err] [1107/120323.408837:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.60680: Permission denied (1100)\nCall log:\n\u001b[2m  - <launching> /Users/benjaminbendler/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/fsj259rj7cngdt79dg4zkt2c0000gn/T/playwright_chromiumdev_profile-Kg87Yk --remote-debugging-pipe --no-startup-window\u001b[22m\n\u001b[2m  - <launched> pid=60680\u001b[22m\n\u001b[2m  - [pid=60680][err] [1107/120323.406245:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9\u001b[22m\n\u001b[2m  - [pid=60680][err] [1107/120323.408004:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.\u001b[22m\n\u001b[2m  - [pid=60680][err] [1107/120323.408837:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.60680: Permission denied (1100)\u001b[22m\n\u001b[2m  - [pid=60680] <gracefully close start>\u001b[22m\n\u001b[2m  - [pid=60680] <kill>\u001b[22m\n\u001b[2m  - [pid=60680] <will force kill>\u001b[22m\n\u001b[2m  - [pid=60680] exception while trying to kill process: Error: kill EPERM\u001b[22m\n\u001b[2m  - [pid=60680] <process did exit: exitCode=null, signal=SIGTRAP>\u001b[22m\n\u001b[2m  - [pid=60680] starting temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=60680] finished temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=60680] <gracefully close end>\u001b[22m\n\n    at /Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:111:28"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 6",
+      "zeit": "2026-11-07T11:06:18.406Z",
+      "green": 35,
+      "red": 0,
+      "images": [
+        "reports/t1247/bilder/gas-verbrauch-light-375.png",
+        "reports/t1247/bilder/gas-ergebnis-light-375.png",
+        "reports/t1247/bilder/gas-verbrauch-light-1280.png",
+        "reports/t1247/bilder/gas-ergebnis-light-1280.png",
+        "reports/t1247/bilder/gas-verbrauch-dark-375.png",
+        "reports/t1247/bilder/gas-ergebnis-dark-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-375.png",
+        "reports/t1247/bilder/oel-ergebnis-light-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-1280.png",
+        "reports/t1247/bilder/oel-ergebnis-light-1280.png",
+        "reports/t1247/bilder/oel-verbrauch-dark-375.png",
+        "reports/t1247/bilder/oel-ergebnis-dark-375.png"
+      ],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "aceda1a3078ca0941b2a72f2e124f5c4ca75f4c8a5a57def3ddc80ffa9310947",
+        "api/rechner-kv-adapter.php": "656d5983210b6a3f4b6d611236a979aa08bf424312e4e51d2afa56681976b05c",
+        "reports/t1247/browser-und-bilder.mjs": "8e99bce26664b8415ebbafa9e76af573be1e31b0874a655571d0fd24375e9869"
+      },
+      "rows": [
+        {
+          "name": "1a Rechnung zu Verbrauch: Brücke null und neue Tastatureingabe führt",
+          "status": "grün"
+        },
+        {
+          "name": "1b Späte Euro-Antwort reaktiviert den Rechnungsmodus nicht",
+          "status": "grün"
+        },
+        {
+          "name": "1c Fokuswechsel nach fertiger Euro-Rechnung lässt Herleitung und Knopf stabil",
+          "status": "grün"
+        },
+        {
+          "name": "Z5 Nutzen-Karten trennen Bezeichnung, Betrag und Spanne im Textinhalt",
+          "status": "grün"
+        },
+        {
+          "name": "9a Dezimalfelder nach Laden und Marktwertklick deutsch, Komma und Punkt rechnen gleich",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: gas",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: oel",
+          "status": "grün"
+        },
+        {
+          "name": "2 Handy-Klapptexte ohne doppeltes Alle",
+          "status": "grün"
+        },
+        {
+          "name": "3a Ölpreis leeren, Gas wählen: verborgener Ölpreis sperrt nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3b Gaspreis/Grundpreis leeren, Öl wählen: verborgene Gasfelder sperren nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3c Abweichende Vergleichsheizung: verwendeter Ölpreis sichtbar und Pflicht",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "5 Euro-Seitenleiste nutzt inputsEcho.bedarf: 15 ct ergeben 16.000 kWh",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: vollständig, sichtbarer bedienbarer Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: wert fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: einheit fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: quelle fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: stand fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Spätes Bootstrap nach echter Tastatureingabe erhält Preise und Herkunft",
+          "status": "grün"
+        },
+        {
+          "name": "Ungültige Euro-Preise sperren Ergebnis und Weiter",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-dark-375",
+          "status": "grün"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 7",
+      "zeit": "2026-11-07T11:18:46.230Z",
+      "green": 0,
+      "red": 1,
+      "images": [],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "31815700a030cc68a6fadc98f887872fd2c4cdb986a17c1dd2550b2248c13694",
+        "api/rechner-kv-adapter.php": "54acc3bbbf0d2f7f637723df1e5d9a443e6c7ecb459b65fe65cae6cd2c16fbc3",
+        "reports/t1247/browser-und-bilder.mjs": "b96fcbaabfe63df55d7314ed7514ab59ddebc8853d890b48f7875b89f4718939"
+      },
+      "rows": [
+        {
+          "name": "Browser-Prüfaufbau",
+          "status": "rot",
+          "fehler": "browserType.launch: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /Users/benjaminbendler/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/fsj259rj7cngdt79dg4zkt2c0000gn/T/playwright_chromiumdev_profile-NqXCHc --remote-debugging-pipe --no-startup-window\n<launched> pid=34559\n[pid=34559][err] [1107/121845.928490:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9\n[pid=34559][err] [1107/121846.180896:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.\n[pid=34559][err] [1107/121846.212846:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.34559: Permission denied (1100)\nCall log:\n\u001b[2m  - <launching> /Users/benjaminbendler/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/fsj259rj7cngdt79dg4zkt2c0000gn/T/playwright_chromiumdev_profile-NqXCHc --remote-debugging-pipe --no-startup-window\u001b[22m\n\u001b[2m  - <launched> pid=34559\u001b[22m\n\u001b[2m  - [pid=34559][err] [1107/121845.928490:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9\u001b[22m\n\u001b[2m  - [pid=34559][err] [1107/121846.180896:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.\u001b[22m\n\u001b[2m  - [pid=34559][err] [1107/121846.212846:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.34559: Permission denied (1100)\u001b[22m\n\u001b[2m  - [pid=34559] <gracefully close start>\u001b[22m\n\u001b[2m  - [pid=34559] <kill>\u001b[22m\n\u001b[2m  - [pid=34559] <will force kill>\u001b[22m\n\u001b[2m  - [pid=34559] exception while trying to kill process: Error: kill EPERM\u001b[22m\n\u001b[2m  - [pid=34559] <process did exit: exitCode=null, signal=SIGTRAP>\u001b[22m\n\u001b[2m  - [pid=34559] starting temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=34559] finished temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=34559] <gracefully close end>\u001b[22m\n\n    at /Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:111:28"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 7",
+      "zeit": "2026-11-07T11:24:15.834Z",
+      "green": 37,
+      "red": 1,
+      "images": [
+        "reports/t1247/bilder/gas-verbrauch-light-375.png",
+        "reports/t1247/bilder/gas-ergebnis-light-375.png",
+        "reports/t1247/bilder/gas-verbrauch-light-1280.png",
+        "reports/t1247/bilder/gas-ergebnis-light-1280.png",
+        "reports/t1247/bilder/gas-verbrauch-dark-375.png",
+        "reports/t1247/bilder/gas-ergebnis-dark-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-375.png",
+        "reports/t1247/bilder/oel-ergebnis-light-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-1280.png",
+        "reports/t1247/bilder/oel-ergebnis-light-1280.png",
+        "reports/t1247/bilder/oel-verbrauch-dark-375.png",
+        "reports/t1247/bilder/oel-ergebnis-dark-375.png"
+      ],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "31815700a030cc68a6fadc98f887872fd2c4cdb986a17c1dd2550b2248c13694",
+        "api/rechner-kv-adapter.php": "54acc3bbbf0d2f7f637723df1e5d9a443e6c7ecb459b65fe65cae6cd2c16fbc3",
+        "reports/t1247/browser-und-bilder.mjs": "b96fcbaabfe63df55d7314ed7514ab59ddebc8853d890b48f7875b89f4718939"
+      },
+      "rows": [
+        {
+          "name": "1a Rechnung zu Verbrauch: Brücke null und neue Tastatureingabe führt",
+          "status": "grün"
+        },
+        {
+          "name": "1b Späte Euro-Antwort reaktiviert den Rechnungsmodus nicht",
+          "status": "grün"
+        },
+        {
+          "name": "1c Fokuswechsel nach fertiger Euro-Rechnung lässt Herleitung und Knopf stabil",
+          "status": "rot",
+          "fehler": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 66.296875\n- 68.296875\n\n    at file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:152:12\n    at async check (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:62:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:141:3"
+        },
+        {
+          "name": "Z5 Nutzen-Karten trennen Bezeichnung, Betrag und Spanne im Textinhalt",
+          "status": "grün"
+        },
+        {
+          "name": "9a Dezimalfelder nach Laden und Marktwertklick deutsch, Komma und Punkt rechnen gleich",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: vier gültige Eingaben, Tausenderpunkt und eindeutige API-Zahl",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: unklare Schreibweisen sperren mit Klartext und bleiben bearbeitbar",
+          "status": "grün"
+        },
+        {
+          "name": "Ergebnis Öl: nach Förderung 380 € günstiger, kein negativer Mehrpreis",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: gas",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: oel",
+          "status": "grün"
+        },
+        {
+          "name": "2 Handy-Klapptexte ohne doppeltes Alle",
+          "status": "grün"
+        },
+        {
+          "name": "3a Ölpreis leeren, Gas wählen: verborgener Ölpreis sperrt nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3b Gaspreis/Grundpreis leeren, Öl wählen: verborgene Gasfelder sperren nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3c Abweichende Vergleichsheizung: verwendeter Ölpreis sichtbar und Pflicht",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "5 Euro-Seitenleiste nutzt inputsEcho.bedarf: 15 ct ergeben 16.000 kWh",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: vollständig, sichtbarer bedienbarer Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: wert fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: einheit fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: quelle fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: stand fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Spätes Bootstrap nach echter Tastatureingabe erhält Preise und Herkunft",
+          "status": "grün"
+        },
+        {
+          "name": "Ungültige Euro-Preise sperren Ergebnis und Weiter",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-dark-375",
+          "status": "grün"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 7",
+      "zeit": "2026-11-07T11:27:54.281Z",
+      "green": 38,
+      "red": 0,
+      "images": [
+        "reports/t1247/bilder/gas-verbrauch-light-375.png",
+        "reports/t1247/bilder/gas-ergebnis-light-375.png",
+        "reports/t1247/bilder/gas-verbrauch-light-1280.png",
+        "reports/t1247/bilder/gas-ergebnis-light-1280.png",
+        "reports/t1247/bilder/gas-verbrauch-dark-375.png",
+        "reports/t1247/bilder/gas-ergebnis-dark-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-375.png",
+        "reports/t1247/bilder/oel-ergebnis-light-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-1280.png",
+        "reports/t1247/bilder/oel-ergebnis-light-1280.png",
+        "reports/t1247/bilder/oel-verbrauch-dark-375.png",
+        "reports/t1247/bilder/oel-ergebnis-dark-375.png"
+      ],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "31815700a030cc68a6fadc98f887872fd2c4cdb986a17c1dd2550b2248c13694",
+        "api/rechner-kv-adapter.php": "54acc3bbbf0d2f7f637723df1e5d9a443e6c7ecb459b65fe65cae6cd2c16fbc3",
+        "reports/t1247/browser-und-bilder.mjs": "b96fcbaabfe63df55d7314ed7514ab59ddebc8853d890b48f7875b89f4718939"
+      },
+      "rows": [
+        {
+          "name": "1a Rechnung zu Verbrauch: Brücke null und neue Tastatureingabe führt",
+          "status": "grün"
+        },
+        {
+          "name": "1b Späte Euro-Antwort reaktiviert den Rechnungsmodus nicht",
+          "status": "grün"
+        },
+        {
+          "name": "1c Fokuswechsel nach fertiger Euro-Rechnung lässt Herleitung und Knopf stabil",
+          "status": "grün"
+        },
+        {
+          "name": "Z5 Nutzen-Karten trennen Bezeichnung, Betrag und Spanne im Textinhalt",
+          "status": "grün"
+        },
+        {
+          "name": "9a Dezimalfelder nach Laden und Marktwertklick deutsch, Komma und Punkt rechnen gleich",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: vier gültige Eingaben, Tausenderpunkt und eindeutige API-Zahl",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: unklare Schreibweisen sperren mit Klartext und bleiben bearbeitbar",
+          "status": "grün"
+        },
+        {
+          "name": "Ergebnis Öl: nach Förderung 380 € günstiger, kein negativer Mehrpreis",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: gas",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: oel",
+          "status": "grün"
+        },
+        {
+          "name": "2 Handy-Klapptexte ohne doppeltes Alle",
+          "status": "grün"
+        },
+        {
+          "name": "3a Ölpreis leeren, Gas wählen: verborgener Ölpreis sperrt nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3b Gaspreis/Grundpreis leeren, Öl wählen: verborgene Gasfelder sperren nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3c Abweichende Vergleichsheizung: verwendeter Ölpreis sichtbar und Pflicht",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "5 Euro-Seitenleiste nutzt inputsEcho.bedarf: 15 ct ergeben 16.000 kWh",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: vollständig, sichtbarer bedienbarer Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: wert fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: einheit fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: quelle fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: stand fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Spätes Bootstrap nach echter Tastatureingabe erhält Preise und Herkunft",
+          "status": "grün"
+        },
+        {
+          "name": "Ungültige Euro-Preise sperren Ergebnis und Weiter",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-dark-375",
+          "status": "grün"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 7",
+      "zeit": "2026-11-07T11:30:30.171Z",
+      "green": 37,
+      "red": 1,
+      "images": [
+        "reports/t1247/bilder/gas-verbrauch-light-375.png",
+        "reports/t1247/bilder/gas-ergebnis-light-375.png",
+        "reports/t1247/bilder/gas-verbrauch-light-1280.png",
+        "reports/t1247/bilder/gas-ergebnis-light-1280.png",
+        "reports/t1247/bilder/gas-verbrauch-dark-375.png",
+        "reports/t1247/bilder/gas-ergebnis-dark-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-375.png",
+        "reports/t1247/bilder/oel-ergebnis-light-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-1280.png",
+        "reports/t1247/bilder/oel-ergebnis-light-1280.png",
+        "reports/t1247/bilder/oel-verbrauch-dark-375.png",
+        "reports/t1247/bilder/oel-ergebnis-dark-375.png"
+      ],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "31815700a030cc68a6fadc98f887872fd2c4cdb986a17c1dd2550b2248c13694",
+        "api/rechner-kv-adapter.php": "54acc3bbbf0d2f7f637723df1e5d9a443e6c7ecb459b65fe65cae6cd2c16fbc3",
+        "reports/t1247/browser-und-bilder.mjs": "b96fcbaabfe63df55d7314ed7514ab59ddebc8853d890b48f7875b89f4718939"
+      },
+      "rows": [
+        {
+          "name": "1a Rechnung zu Verbrauch: Brücke null und neue Tastatureingabe führt",
+          "status": "grün"
+        },
+        {
+          "name": "1b Späte Euro-Antwort reaktiviert den Rechnungsmodus nicht",
+          "status": "grün"
+        },
+        {
+          "name": "1c Fokuswechsel nach fertiger Euro-Rechnung lässt Herleitung und Knopf stabil",
+          "status": "rot",
+          "fehler": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 64.296875\n- 65.296875\n\n    at file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:152:12\n    at async check (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:62:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:141:3"
+        },
+        {
+          "name": "Z5 Nutzen-Karten trennen Bezeichnung, Betrag und Spanne im Textinhalt",
+          "status": "grün"
+        },
+        {
+          "name": "9a Dezimalfelder nach Laden und Marktwertklick deutsch, Komma und Punkt rechnen gleich",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: vier gültige Eingaben, Tausenderpunkt und eindeutige API-Zahl",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: unklare Schreibweisen sperren mit Klartext und bleiben bearbeitbar",
+          "status": "grün"
+        },
+        {
+          "name": "Ergebnis Öl: nach Förderung 380 € günstiger, kein negativer Mehrpreis",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: gas",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: oel",
+          "status": "grün"
+        },
+        {
+          "name": "2 Handy-Klapptexte ohne doppeltes Alle",
+          "status": "grün"
+        },
+        {
+          "name": "3a Ölpreis leeren, Gas wählen: verborgener Ölpreis sperrt nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3b Gaspreis/Grundpreis leeren, Öl wählen: verborgene Gasfelder sperren nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3c Abweichende Vergleichsheizung: verwendeter Ölpreis sichtbar und Pflicht",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "5 Euro-Seitenleiste nutzt inputsEcho.bedarf: 15 ct ergeben 16.000 kWh",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: vollständig, sichtbarer bedienbarer Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: wert fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: einheit fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: quelle fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: stand fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Spätes Bootstrap nach echter Tastatureingabe erhält Preise und Herkunft",
+          "status": "grün"
+        },
+        {
+          "name": "Ungültige Euro-Preise sperren Ergebnis und Weiter",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-dark-375",
+          "status": "grün"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 8",
+      "zeit": "2026-11-07T11:43:43.433Z",
+      "green": 38,
+      "red": 0,
+      "images": [
+        "reports/t1247/bilder/gas-verbrauch-light-375.png",
+        "reports/t1247/bilder/gas-ergebnis-light-375.png",
+        "reports/t1247/bilder/gas-verbrauch-light-1280.png",
+        "reports/t1247/bilder/gas-ergebnis-light-1280.png",
+        "reports/t1247/bilder/gas-verbrauch-dark-375.png",
+        "reports/t1247/bilder/gas-ergebnis-dark-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-375.png",
+        "reports/t1247/bilder/oel-ergebnis-light-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-1280.png",
+        "reports/t1247/bilder/oel-ergebnis-light-1280.png",
+        "reports/t1247/bilder/oel-verbrauch-dark-375.png",
+        "reports/t1247/bilder/oel-ergebnis-dark-375.png"
+      ],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "31815700a030cc68a6fadc98f887872fd2c4cdb986a17c1dd2550b2248c13694",
+        "api/rechner-kv-adapter.php": "54acc3bbbf0d2f7f637723df1e5d9a443e6c7ecb459b65fe65cae6cd2c16fbc3",
+        "reports/t1247/browser-und-bilder.mjs": "3977ceaa1c9823fb10d3ecb9b6ee7bef8916accd9b63723e2cf3bf703dd3dbe7"
+      },
+      "rows": [
+        {
+          "name": "1a Rechnung zu Verbrauch: Brücke null und neue Tastatureingabe führt",
+          "status": "grün"
+        },
+        {
+          "name": "1b Späte Euro-Antwort reaktiviert den Rechnungsmodus nicht",
+          "status": "grün"
+        },
+        {
+          "name": "1c Fokuswechsel nach fertiger Euro-Rechnung lässt Herleitung und Knopf stabil",
+          "status": "grün"
+        },
+        {
+          "name": "Z5 Nutzen-Karten trennen Bezeichnung, Betrag und Spanne im Textinhalt",
+          "status": "grün"
+        },
+        {
+          "name": "9a Dezimalfelder nach Laden und Marktwertklick deutsch, Komma und Punkt rechnen gleich",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: vier gültige Eingaben, Tausenderpunkt und eindeutige API-Zahl",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: unklare Schreibweisen sperren mit Klartext und bleiben bearbeitbar",
+          "status": "grün"
+        },
+        {
+          "name": "Ergebnis Öl: nach Förderung 380 € günstiger, kein negativer Mehrpreis",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: gas",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: oel",
+          "status": "grün"
+        },
+        {
+          "name": "2 Handy-Klapptexte ohne doppeltes Alle",
+          "status": "grün"
+        },
+        {
+          "name": "3a Ölpreis leeren, Gas wählen: verborgener Ölpreis sperrt nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3b Gaspreis/Grundpreis leeren, Öl wählen: verborgene Gasfelder sperren nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3c Abweichende Vergleichsheizung: verwendeter Ölpreis sichtbar und Pflicht",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "5 Euro-Seitenleiste nutzt inputsEcho.bedarf: 15 ct ergeben 16.000 kWh",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: vollständig, sichtbarer bedienbarer Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: wert fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: einheit fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: quelle fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: stand fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Spätes Bootstrap nach echter Tastatureingabe erhält Preise und Herkunft",
+          "status": "grün"
+        },
+        {
+          "name": "Ungültige Euro-Preise sperren Ergebnis und Weiter",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-dark-375",
+          "status": "grün"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 8",
+      "zeit": "2026-11-07T11:46:13.547Z",
+      "green": 38,
+      "red": 0,
+      "images": [
+        "reports/t1247/bilder/gas-verbrauch-light-375.png",
+        "reports/t1247/bilder/gas-ergebnis-light-375.png",
+        "reports/t1247/bilder/gas-verbrauch-light-1280.png",
+        "reports/t1247/bilder/gas-ergebnis-light-1280.png",
+        "reports/t1247/bilder/gas-verbrauch-dark-375.png",
+        "reports/t1247/bilder/gas-ergebnis-dark-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-375.png",
+        "reports/t1247/bilder/oel-ergebnis-light-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-1280.png",
+        "reports/t1247/bilder/oel-ergebnis-light-1280.png",
+        "reports/t1247/bilder/oel-verbrauch-dark-375.png",
+        "reports/t1247/bilder/oel-ergebnis-dark-375.png"
+      ],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "31815700a030cc68a6fadc98f887872fd2c4cdb986a17c1dd2550b2248c13694",
+        "api/rechner-kv-adapter.php": "54acc3bbbf0d2f7f637723df1e5d9a443e6c7ecb459b65fe65cae6cd2c16fbc3",
+        "reports/t1247/browser-und-bilder.mjs": "3977ceaa1c9823fb10d3ecb9b6ee7bef8916accd9b63723e2cf3bf703dd3dbe7"
+      },
+      "rows": [
+        {
+          "name": "1a Rechnung zu Verbrauch: Brücke null und neue Tastatureingabe führt",
+          "status": "grün"
+        },
+        {
+          "name": "1b Späte Euro-Antwort reaktiviert den Rechnungsmodus nicht",
+          "status": "grün"
+        },
+        {
+          "name": "1c Fokuswechsel nach fertiger Euro-Rechnung lässt Herleitung und Knopf stabil",
+          "status": "grün"
+        },
+        {
+          "name": "Z5 Nutzen-Karten trennen Bezeichnung, Betrag und Spanne im Textinhalt",
+          "status": "grün"
+        },
+        {
+          "name": "9a Dezimalfelder nach Laden und Marktwertklick deutsch, Komma und Punkt rechnen gleich",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: vier gültige Eingaben, Tausenderpunkt und eindeutige API-Zahl",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: unklare Schreibweisen sperren mit Klartext und bleiben bearbeitbar",
+          "status": "grün"
+        },
+        {
+          "name": "Ergebnis Öl: nach Förderung 380 € günstiger, kein negativer Mehrpreis",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: gas",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: oel",
+          "status": "grün"
+        },
+        {
+          "name": "2 Handy-Klapptexte ohne doppeltes Alle",
+          "status": "grün"
+        },
+        {
+          "name": "3a Ölpreis leeren, Gas wählen: verborgener Ölpreis sperrt nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3b Gaspreis/Grundpreis leeren, Öl wählen: verborgene Gasfelder sperren nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3c Abweichende Vergleichsheizung: verwendeter Ölpreis sichtbar und Pflicht",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "5 Euro-Seitenleiste nutzt inputsEcho.bedarf: 15 ct ergeben 16.000 kWh",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: vollständig, sichtbarer bedienbarer Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: wert fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: einheit fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: quelle fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: stand fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Spätes Bootstrap nach echter Tastatureingabe erhält Preise und Herkunft",
+          "status": "grün"
+        },
+        {
+          "name": "Ungültige Euro-Preise sperren Ergebnis und Weiter",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-dark-375",
+          "status": "grün"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 8",
+      "zeit": "2026-11-07T11:48:32.139Z",
+      "green": 38,
+      "red": 0,
+      "images": [
+        "reports/t1247/bilder/gas-verbrauch-light-375.png",
+        "reports/t1247/bilder/gas-ergebnis-light-375.png",
+        "reports/t1247/bilder/gas-verbrauch-light-1280.png",
+        "reports/t1247/bilder/gas-ergebnis-light-1280.png",
+        "reports/t1247/bilder/gas-verbrauch-dark-375.png",
+        "reports/t1247/bilder/gas-ergebnis-dark-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-375.png",
+        "reports/t1247/bilder/oel-ergebnis-light-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-1280.png",
+        "reports/t1247/bilder/oel-ergebnis-light-1280.png",
+        "reports/t1247/bilder/oel-verbrauch-dark-375.png",
+        "reports/t1247/bilder/oel-ergebnis-dark-375.png"
+      ],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "31815700a030cc68a6fadc98f887872fd2c4cdb986a17c1dd2550b2248c13694",
+        "api/rechner-kv-adapter.php": "54acc3bbbf0d2f7f637723df1e5d9a443e6c7ecb459b65fe65cae6cd2c16fbc3",
+        "reports/t1247/browser-und-bilder.mjs": "3977ceaa1c9823fb10d3ecb9b6ee7bef8916accd9b63723e2cf3bf703dd3dbe7"
+      },
+      "rows": [
+        {
+          "name": "1a Rechnung zu Verbrauch: Brücke null und neue Tastatureingabe führt",
+          "status": "grün"
+        },
+        {
+          "name": "1b Späte Euro-Antwort reaktiviert den Rechnungsmodus nicht",
+          "status": "grün"
+        },
+        {
+          "name": "1c Fokuswechsel nach fertiger Euro-Rechnung lässt Herleitung und Knopf stabil",
+          "status": "grün"
+        },
+        {
+          "name": "Z5 Nutzen-Karten trennen Bezeichnung, Betrag und Spanne im Textinhalt",
+          "status": "grün"
+        },
+        {
+          "name": "9a Dezimalfelder nach Laden und Marktwertklick deutsch, Komma und Punkt rechnen gleich",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: vier gültige Eingaben, Tausenderpunkt und eindeutige API-Zahl",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: unklare Schreibweisen sperren mit Klartext und bleiben bearbeitbar",
+          "status": "grün"
+        },
+        {
+          "name": "Ergebnis Öl: nach Förderung 380 € günstiger, kein negativer Mehrpreis",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: gas",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: oel",
+          "status": "grün"
+        },
+        {
+          "name": "2 Handy-Klapptexte ohne doppeltes Alle",
+          "status": "grün"
+        },
+        {
+          "name": "3a Ölpreis leeren, Gas wählen: verborgener Ölpreis sperrt nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3b Gaspreis/Grundpreis leeren, Öl wählen: verborgene Gasfelder sperren nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3c Abweichende Vergleichsheizung: verwendeter Ölpreis sichtbar und Pflicht",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "5 Euro-Seitenleiste nutzt inputsEcho.bedarf: 15 ct ergeben 16.000 kWh",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: vollständig, sichtbarer bedienbarer Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: wert fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: einheit fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: quelle fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: stand fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Spätes Bootstrap nach echter Tastatureingabe erhält Preise und Herkunft",
+          "status": "grün"
+        },
+        {
+          "name": "Ungültige Euro-Preise sperren Ergebnis und Weiter",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-dark-375",
+          "status": "grün"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 9",
+      "zeit": "2026-11-07T11:57:02.014Z",
+      "green": 43,
+      "red": 0,
+      "images": [
+        "reports/t1247/bilder/gas-verbrauch-light-375.png",
+        "reports/t1247/bilder/gas-ergebnis-light-375.png",
+        "reports/t1247/bilder/gas-verbrauch-light-1280.png",
+        "reports/t1247/bilder/gas-ergebnis-light-1280.png",
+        "reports/t1247/bilder/gas-verbrauch-dark-375.png",
+        "reports/t1247/bilder/gas-ergebnis-dark-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-375.png",
+        "reports/t1247/bilder/oel-ergebnis-light-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-1280.png",
+        "reports/t1247/bilder/oel-ergebnis-light-1280.png",
+        "reports/t1247/bilder/oel-verbrauch-dark-375.png",
+        "reports/t1247/bilder/oel-ergebnis-dark-375.png"
+      ],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "acc31d27222b21ef8e1607d32765f47703290fb93075add4a2de08eb078b5d61",
+        "api/rechner-kv-adapter.php": "3fa7eb93ef404de1472a6ac000649f9b7e336a3f221ebb5e46362eccb3cadbc0",
+        "reports/t1247/browser-und-bilder.mjs": "35eec98fa29f9d68ddf1ab1642e799a399c27e17ad32f4413117386a571b8fc3"
+      },
+      "rows": [
+        {
+          "name": "1a Rechnung zu Verbrauch: Brücke null und neue Tastatureingabe führt",
+          "status": "grün"
+        },
+        {
+          "name": "1b Späte Euro-Antwort reaktiviert den Rechnungsmodus nicht",
+          "status": "grün"
+        },
+        {
+          "name": "1c Fokuswechsel nach fertiger Euro-Rechnung lässt Herleitung und Knopf stabil",
+          "status": "grün"
+        },
+        {
+          "name": "Z5 Nutzen-Karten trennen Bezeichnung, Betrag und Spanne im Textinhalt",
+          "status": "grün"
+        },
+        {
+          "name": "9a Dezimalfelder nach Laden und Marktwertklick deutsch, Komma und Punkt rechnen gleich",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: vier gültige Eingaben, Tausenderpunkt und eindeutige API-Zahl",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: unklare Schreibweisen sperren mit Klartext und bleiben bearbeitbar",
+          "status": "grün"
+        },
+        {
+          "name": "Ergebnis Öl: nach Förderung 380 € günstiger, kein negativer Mehrpreis",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: gas",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: oel",
+          "status": "grün"
+        },
+        {
+          "name": "2 Handy-Klapptexte ohne doppeltes Alle",
+          "status": "grün"
+        },
+        {
+          "name": "3a Ölpreis leeren, Gas wählen: verborgener Ölpreis sperrt nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3b Gaspreis/Grundpreis leeren, Öl wählen: verborgene Gasfelder sperren nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3c Abweichende Vergleichsheizung: verwendeter Ölpreis sichtbar und Pflicht",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "5 Euro-Seitenleiste nutzt inputsEcho.bedarf: 15 ct ergeben 16.000 kWh",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: vollständig, sichtbarer bedienbarer Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: wert fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: einheit fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: quelle fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: stand fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Spätes Bootstrap nach echter Tastatureingabe erhält Preise und Herkunft",
+          "status": "grün"
+        },
+        {
+          "name": "Ungültige Euro-Preise sperren Ergebnis und Weiter",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Preisherkunft Gas: je Preis benannt, Marktquelle und Stand nach Übernahme",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 375 px light",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 375 px dark",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 1280 px light",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 1280 px dark",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-dark-375",
+          "status": "grün"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 9",
+      "zeit": "2026-11-07T11:59:36.441Z",
+      "green": 43,
+      "red": 0,
+      "images": [
+        "reports/t1247/bilder/gas-verbrauch-light-375.png",
+        "reports/t1247/bilder/gas-ergebnis-light-375.png",
+        "reports/t1247/bilder/gas-verbrauch-light-1280.png",
+        "reports/t1247/bilder/gas-ergebnis-light-1280.png",
+        "reports/t1247/bilder/gas-verbrauch-dark-375.png",
+        "reports/t1247/bilder/gas-ergebnis-dark-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-375.png",
+        "reports/t1247/bilder/oel-ergebnis-light-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-1280.png",
+        "reports/t1247/bilder/oel-ergebnis-light-1280.png",
+        "reports/t1247/bilder/oel-verbrauch-dark-375.png",
+        "reports/t1247/bilder/oel-ergebnis-dark-375.png"
+      ],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "acc31d27222b21ef8e1607d32765f47703290fb93075add4a2de08eb078b5d61",
+        "api/rechner-kv-adapter.php": "3fa7eb93ef404de1472a6ac000649f9b7e336a3f221ebb5e46362eccb3cadbc0",
+        "reports/t1247/browser-und-bilder.mjs": "35eec98fa29f9d68ddf1ab1642e799a399c27e17ad32f4413117386a571b8fc3"
+      },
+      "rows": [
+        {
+          "name": "1a Rechnung zu Verbrauch: Brücke null und neue Tastatureingabe führt",
+          "status": "grün"
+        },
+        {
+          "name": "1b Späte Euro-Antwort reaktiviert den Rechnungsmodus nicht",
+          "status": "grün"
+        },
+        {
+          "name": "1c Fokuswechsel nach fertiger Euro-Rechnung lässt Herleitung und Knopf stabil",
+          "status": "grün"
+        },
+        {
+          "name": "Z5 Nutzen-Karten trennen Bezeichnung, Betrag und Spanne im Textinhalt",
+          "status": "grün"
+        },
+        {
+          "name": "9a Dezimalfelder nach Laden und Marktwertklick deutsch, Komma und Punkt rechnen gleich",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: vier gültige Eingaben, Tausenderpunkt und eindeutige API-Zahl",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: unklare Schreibweisen sperren mit Klartext und bleiben bearbeitbar",
+          "status": "grün"
+        },
+        {
+          "name": "Ergebnis Öl: nach Förderung 380 € günstiger, kein negativer Mehrpreis",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: gas",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: oel",
+          "status": "grün"
+        },
+        {
+          "name": "2 Handy-Klapptexte ohne doppeltes Alle",
+          "status": "grün"
+        },
+        {
+          "name": "3a Ölpreis leeren, Gas wählen: verborgener Ölpreis sperrt nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3b Gaspreis/Grundpreis leeren, Öl wählen: verborgene Gasfelder sperren nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3c Abweichende Vergleichsheizung: verwendeter Ölpreis sichtbar und Pflicht",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "5 Euro-Seitenleiste nutzt inputsEcho.bedarf: 15 ct ergeben 16.000 kWh",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: vollständig, sichtbarer bedienbarer Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: wert fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: einheit fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: quelle fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: stand fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Spätes Bootstrap nach echter Tastatureingabe erhält Preise und Herkunft",
+          "status": "grün"
+        },
+        {
+          "name": "Ungültige Euro-Preise sperren Ergebnis und Weiter",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Preisherkunft Gas: je Preis benannt, Marktquelle und Stand nach Übernahme",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 375 px light",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 375 px dark",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 1280 px light",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 1280 px dark",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-dark-375",
+          "status": "grün"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 11",
+      "auswahl": "12 Mehrpreisfälle",
+      "zeit": "2026-11-07T12:11:32.083Z",
+      "green": 0,
+      "red": 1,
+      "images": [],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "512ad6238b37cc6f3a70ddf85ffd3e01b90496f4e3dcc347d0bbefae0f4f368d",
+        "api/rechner-kv-adapter.php": "3fa7eb93ef404de1472a6ac000649f9b7e336a3f221ebb5e46362eccb3cadbc0",
+        "reports/t1247/browser-und-bilder.mjs": "51d0c1aa47337fd393a12d20a7ae9da61b7b37ed6501f3f7ef5a6159f5eeada6"
+      },
+      "rows": [
+        {
+          "name": "Browser-Prüfaufbau",
+          "status": "rot",
+          "fehler": "browserType.launch: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /Users/benjaminbendler/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/fsj259rj7cngdt79dg4zkt2c0000gn/T/playwright_chromiumdev_profile-m2efNf --remote-debugging-pipe --no-startup-window\n<launched> pid=62762\n[pid=62762][err] [1107/131132.065657:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9\n[pid=62762][err] [1107/131132.071398:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.\n[pid=62762][err] [1107/131132.073222:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.62762: Permission denied (1100)\nCall log:\n\u001b[2m  - <launching> /Users/benjaminbendler/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/fsj259rj7cngdt79dg4zkt2c0000gn/T/playwright_chromiumdev_profile-m2efNf --remote-debugging-pipe --no-startup-window\u001b[22m\n\u001b[2m  - <launched> pid=62762\u001b[22m\n\u001b[2m  - [pid=62762][err] [1107/131132.065657:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9\u001b[22m\n\u001b[2m  - [pid=62762][err] [1107/131132.071398:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.\u001b[22m\n\u001b[2m  - [pid=62762][err] [1107/131132.073222:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.62762: Permission denied (1100)\u001b[22m\n\u001b[2m  - [pid=62762] <gracefully close start>\u001b[22m\n\u001b[2m  - [pid=62762] <kill>\u001b[22m\n\u001b[2m  - [pid=62762] <will force kill>\u001b[22m\n\u001b[2m  - [pid=62762] exception while trying to kill process: Error: kill EPERM\u001b[22m\n\u001b[2m  - [pid=62762] <process did exit: exitCode=null, signal=SIGTRAP>\u001b[22m\n\u001b[2m  - [pid=62762] starting temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=62762] finished temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=62762] <gracefully close end>\u001b[22m\n\n    at /Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:142:28"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 11",
+      "auswahl": "alle T1247-Fälle",
+      "zeit": "2026-11-07T12:17:39.525Z",
+      "green": 47,
+      "red": 8,
+      "images": [
+        "reports/t1247/bilder/gas-verbrauch-light-375.png",
+        "reports/t1247/bilder/gas-ergebnis-light-375.png",
+        "reports/t1247/bilder/gas-verbrauch-light-1280.png",
+        "reports/t1247/bilder/gas-ergebnis-light-1280.png",
+        "reports/t1247/bilder/gas-verbrauch-dark-375.png",
+        "reports/t1247/bilder/gas-ergebnis-dark-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-375.png",
+        "reports/t1247/bilder/oel-ergebnis-light-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-1280.png",
+        "reports/t1247/bilder/oel-ergebnis-light-1280.png",
+        "reports/t1247/bilder/oel-verbrauch-dark-375.png",
+        "reports/t1247/bilder/oel-ergebnis-dark-375.png"
+      ],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "a4229a053f64ac2f60339db7e18afc40529e333cf2b38a1443b620d6b62c08b1",
+        "api/rechner-kv-adapter.php": "3fa7eb93ef404de1472a6ac000649f9b7e336a3f221ebb5e46362eccb3cadbc0",
+        "reports/t1247/browser-und-bilder.mjs": "51d0c1aa47337fd393a12d20a7ae9da61b7b37ed6501f3f7ef5a6159f5eeada6"
+      },
+      "rows": [
+        {
+          "name": "1a Rechnung zu Verbrauch: Brücke null und neue Tastatureingabe führt",
+          "status": "grün"
+        },
+        {
+          "name": "1b Späte Euro-Antwort reaktiviert den Rechnungsmodus nicht",
+          "status": "grün"
+        },
+        {
+          "name": "1c Fokuswechsel nach fertiger Euro-Rechnung lässt Herleitung und Knopf stabil",
+          "status": "grün"
+        },
+        {
+          "name": "Z5 Nutzen-Karten trennen Bezeichnung, Betrag und Spanne im Textinhalt",
+          "status": "grün"
+        },
+        {
+          "name": "9a Dezimalfelder nach Laden und Marktwertklick deutsch, Komma und Punkt rechnen gleich",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: vier gültige Eingaben, Tausenderpunkt und eindeutige API-Zahl",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: unklare Schreibweisen sperren mit Klartext und bleiben bearbeitbar",
+          "status": "grün"
+        },
+        {
+          "name": "Ergebnis Öl: nach Förderung 380 € günstiger, kein negativer Mehrpreis",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / 5120 € / 375 px, Hauptkarte und offene Details",
+          "status": "rot",
+          "fehler": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n9600 !== 5120\n\n    at check.width.width (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:279:14)\n    at async check (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:267:5"
+        },
+        {
+          "name": "11 Mehrpreis gas / -380 € / 375 px, Hauptkarte und offene Details",
+          "status": "rot",
+          "fehler": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n4100 !== -380\n\n    at check.width.width (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:279:14)\n    at async check (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:267:5"
+        },
+        {
+          "name": "11 Mehrpreis gas / 0 € / 375 px, Hauptkarte und offene Details",
+          "status": "rot",
+          "fehler": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n4000 !== 0\n\n    at check.width.width (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:279:14)\n    at async check (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:267:5"
+        },
+        {
+          "name": "11 Mehrpreis oel / 5120 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / -380 € / 375 px, Hauptkarte und offene Details",
+          "status": "rot",
+          "fehler": "AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /Mehrpreis[^.]*[-−]\\s*\\d|[-−]0 €|0 € günstiger|schon in der Anschaffung günstiger/. Input:\n\n'DEIN RECHENWEG\\n' +\n  'Anschaffung Wärmepumpe (nach Förderung)\\n' +\n  '17.120 €\\n' +\n  'Anschaffung Neue Ölheizung\\n' +\n  '17.500 €\\n' +\n  'Die Wärmepumpe ist nach Förderung 380 € günstiger als die neue Ölheizung.\\n' +\n  'Betriebskosten Wärmepumpe über 20 Jahre\\n' +\n  '34.464 €\\n' +\n  'Ersparte Betriebs- und CO₂-Kosten über 20 Jahre\\n' +\n  '53.357 €\\n' +\n  'Dein Vorteil (Barzahlung)\\n' +\n  '53.737 €\\n' +\n  'Einzelposten der Hochrechnung'\n\n    at check.width.width (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:290:16)\n    at async check (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:267:5"
+        },
+        {
+          "name": "11 Mehrpreis oel / 0 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / 5120 € / 1280 px, Hauptkarte und offene Details",
+          "status": "rot",
+          "fehler": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n9600 !== 5120\n\n    at check.width.width (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:279:14)\n    at async check (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:267:5"
+        },
+        {
+          "name": "11 Mehrpreis gas / -380 € / 1280 px, Hauptkarte und offene Details",
+          "status": "rot",
+          "fehler": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n4100 !== -380\n\n    at check.width.width (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:279:14)\n    at async check (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:267:5"
+        },
+        {
+          "name": "11 Mehrpreis gas / 0 € / 1280 px, Hauptkarte und offene Details",
+          "status": "rot",
+          "fehler": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n4000 !== 0\n\n    at check.width.width (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:279:14)\n    at async check (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:267:5"
+        },
+        {
+          "name": "11 Mehrpreis oel / 5120 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / -380 € / 1280 px, Hauptkarte und offene Details",
+          "status": "rot",
+          "fehler": "AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /Mehrpreis[^.]*[-−]\\s*\\d|[-−]0 €|0 € günstiger|schon in der Anschaffung günstiger/. Input:\n\n'DEIN RECHENWEG\\n' +\n  'Anschaffung Wärmepumpe (nach Förderung)\\n' +\n  '17.120 €\\n' +\n  'Anschaffung Neue Ölheizung\\n' +\n  '17.500 €\\n' +\n  'Die Wärmepumpe ist nach Förderung 380 € günstiger als die neue Ölheizung.\\n' +\n  'Betriebskosten Wärmepumpe über 20 Jahre\\n' +\n  '34.464 €\\n' +\n  'Ersparte Betriebs- und CO₂-Kosten über 20 Jahre\\n' +\n  '53.357 €\\n' +\n  'Dein Vorteil (Barzahlung)\\n' +\n  '53.737 €\\n' +\n  'Einzelposten der Hochrechnung'\n\n    at check.width.width (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:290:16)\n    at async check (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:267:5"
+        },
+        {
+          "name": "11 Mehrpreis oel / 0 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: gas",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: oel",
+          "status": "grün"
+        },
+        {
+          "name": "2 Handy-Klapptexte ohne doppeltes Alle",
+          "status": "grün"
+        },
+        {
+          "name": "3a Ölpreis leeren, Gas wählen: verborgener Ölpreis sperrt nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3b Gaspreis/Grundpreis leeren, Öl wählen: verborgene Gasfelder sperren nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3c Abweichende Vergleichsheizung: verwendeter Ölpreis sichtbar und Pflicht",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "5 Euro-Seitenleiste nutzt inputsEcho.bedarf: 15 ct ergeben 16.000 kWh",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: vollständig, sichtbarer bedienbarer Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: wert fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: einheit fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: quelle fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: stand fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Spätes Bootstrap nach echter Tastatureingabe erhält Preise und Herkunft",
+          "status": "grün"
+        },
+        {
+          "name": "Ungültige Euro-Preise sperren Ergebnis und Weiter",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Preisherkunft Gas: je Preis benannt, Marktquelle und Stand nach Übernahme",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 375 px light",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 375 px dark",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 1280 px light",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 1280 px dark",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-dark-375",
+          "status": "grün"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 11",
+      "auswahl": "alle T1247-Fälle",
+      "zeit": "2026-11-07T12:20:54.426Z",
+      "green": 47,
+      "red": 8,
+      "images": [
+        "reports/t1247/bilder/gas-verbrauch-light-375.png",
+        "reports/t1247/bilder/gas-ergebnis-light-375.png",
+        "reports/t1247/bilder/gas-verbrauch-light-1280.png",
+        "reports/t1247/bilder/gas-ergebnis-light-1280.png",
+        "reports/t1247/bilder/gas-verbrauch-dark-375.png",
+        "reports/t1247/bilder/gas-ergebnis-dark-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-375.png",
+        "reports/t1247/bilder/oel-ergebnis-light-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-1280.png",
+        "reports/t1247/bilder/oel-ergebnis-light-1280.png",
+        "reports/t1247/bilder/oel-verbrauch-dark-375.png",
+        "reports/t1247/bilder/oel-ergebnis-dark-375.png"
+      ],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "a4229a053f64ac2f60339db7e18afc40529e333cf2b38a1443b620d6b62c08b1",
+        "api/rechner-kv-adapter.php": "3fa7eb93ef404de1472a6ac000649f9b7e336a3f221ebb5e46362eccb3cadbc0",
+        "reports/t1247/browser-und-bilder.mjs": "51d0c1aa47337fd393a12d20a7ae9da61b7b37ed6501f3f7ef5a6159f5eeada6"
+      },
+      "rows": [
+        {
+          "name": "1a Rechnung zu Verbrauch: Brücke null und neue Tastatureingabe führt",
+          "status": "grün"
+        },
+        {
+          "name": "1b Späte Euro-Antwort reaktiviert den Rechnungsmodus nicht",
+          "status": "grün"
+        },
+        {
+          "name": "1c Fokuswechsel nach fertiger Euro-Rechnung lässt Herleitung und Knopf stabil",
+          "status": "grün"
+        },
+        {
+          "name": "Z5 Nutzen-Karten trennen Bezeichnung, Betrag und Spanne im Textinhalt",
+          "status": "grün"
+        },
+        {
+          "name": "9a Dezimalfelder nach Laden und Marktwertklick deutsch, Komma und Punkt rechnen gleich",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: vier gültige Eingaben, Tausenderpunkt und eindeutige API-Zahl",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: unklare Schreibweisen sperren mit Klartext und bleiben bearbeitbar",
+          "status": "grün"
+        },
+        {
+          "name": "Ergebnis Öl: nach Förderung 380 € günstiger, kein negativer Mehrpreis",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / 5120 € / 375 px, Hauptkarte und offene Details",
+          "status": "rot",
+          "fehler": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n9600 !== 5120\n\n    at check.width.width (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:279:14)\n    at async check (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:267:5"
+        },
+        {
+          "name": "11 Mehrpreis gas / -380 € / 375 px, Hauptkarte und offene Details",
+          "status": "rot",
+          "fehler": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n4100 !== -380\n\n    at check.width.width (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:279:14)\n    at async check (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:267:5"
+        },
+        {
+          "name": "11 Mehrpreis gas / 0 € / 375 px, Hauptkarte und offene Details",
+          "status": "rot",
+          "fehler": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n4000 !== 0\n\n    at check.width.width (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:279:14)\n    at async check (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:267:5"
+        },
+        {
+          "name": "11 Mehrpreis oel / 5120 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / -380 € / 375 px, Hauptkarte und offene Details",
+          "status": "rot",
+          "fehler": "AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /Mehrpreis[^.]*[-−]\\s*\\d|[-−]0 €|0 € günstiger|schon in der Anschaffung günstiger/. Input:\n\n'DEIN RECHENWEG\\n' +\n  'Anschaffung Wärmepumpe (nach Förderung)\\n' +\n  '17.120 €\\n' +\n  'Anschaffung Neue Ölheizung\\n' +\n  '17.500 €\\n' +\n  'Die Wärmepumpe ist nach Förderung 380 € günstiger als die neue Ölheizung.\\n' +\n  'Betriebskosten Wärmepumpe über 20 Jahre\\n' +\n  '34.464 €\\n' +\n  'Ersparte Betriebs- und CO₂-Kosten über 20 Jahre\\n' +\n  '53.357 €\\n' +\n  'Dein Vorteil (Barzahlung)\\n' +\n  '53.737 €\\n' +\n  'Einzelposten der Hochrechnung'\n\n    at check.width.width (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:290:16)\n    at async check (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:267:5"
+        },
+        {
+          "name": "11 Mehrpreis oel / 0 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / 5120 € / 1280 px, Hauptkarte und offene Details",
+          "status": "rot",
+          "fehler": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n9600 !== 5120\n\n    at check.width.width (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:279:14)\n    at async check (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:267:5"
+        },
+        {
+          "name": "11 Mehrpreis gas / -380 € / 1280 px, Hauptkarte und offene Details",
+          "status": "rot",
+          "fehler": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n4100 !== -380\n\n    at check.width.width (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:279:14)\n    at async check (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:267:5"
+        },
+        {
+          "name": "11 Mehrpreis gas / 0 € / 1280 px, Hauptkarte und offene Details",
+          "status": "rot",
+          "fehler": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n4000 !== 0\n\n    at check.width.width (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:279:14)\n    at async check (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:267:5"
+        },
+        {
+          "name": "11 Mehrpreis oel / 5120 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / -380 € / 1280 px, Hauptkarte und offene Details",
+          "status": "rot",
+          "fehler": "AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /Mehrpreis[^.]*[-−]\\s*\\d|[-−]0 €|0 € günstiger|schon in der Anschaffung günstiger/. Input:\n\n'DEIN RECHENWEG\\n' +\n  'Anschaffung Wärmepumpe (nach Förderung)\\n' +\n  '17.120 €\\n' +\n  'Anschaffung Neue Ölheizung\\n' +\n  '17.500 €\\n' +\n  'Die Wärmepumpe ist nach Förderung 380 € günstiger als die neue Ölheizung.\\n' +\n  'Betriebskosten Wärmepumpe über 20 Jahre\\n' +\n  '34.464 €\\n' +\n  'Ersparte Betriebs- und CO₂-Kosten über 20 Jahre\\n' +\n  '53.357 €\\n' +\n  'Dein Vorteil (Barzahlung)\\n' +\n  '53.737 €\\n' +\n  'Einzelposten der Hochrechnung'\n\n    at check.width.width (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:290:16)\n    at async check (file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:267:5"
+        },
+        {
+          "name": "11 Mehrpreis oel / 0 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: gas",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: oel",
+          "status": "grün"
+        },
+        {
+          "name": "2 Handy-Klapptexte ohne doppeltes Alle",
+          "status": "grün"
+        },
+        {
+          "name": "3a Ölpreis leeren, Gas wählen: verborgener Ölpreis sperrt nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3b Gaspreis/Grundpreis leeren, Öl wählen: verborgene Gasfelder sperren nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3c Abweichende Vergleichsheizung: verwendeter Ölpreis sichtbar und Pflicht",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "5 Euro-Seitenleiste nutzt inputsEcho.bedarf: 15 ct ergeben 16.000 kWh",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: vollständig, sichtbarer bedienbarer Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: wert fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: einheit fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: quelle fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: stand fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Spätes Bootstrap nach echter Tastatureingabe erhält Preise und Herkunft",
+          "status": "grün"
+        },
+        {
+          "name": "Ungültige Euro-Preise sperren Ergebnis und Weiter",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Preisherkunft Gas: je Preis benannt, Marktquelle und Stand nach Übernahme",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 375 px light",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 375 px dark",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 1280 px light",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 1280 px dark",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-dark-375",
+          "status": "grün"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 12",
+      "auswahl": "12 Mehrpreisfälle",
+      "zeit": "2026-11-07T12:25:16.109Z",
+      "green": 0,
+      "red": 1,
+      "images": [],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "2b9f2c3145977b16f76f78084ac17330efe2177c3ecef7c350099919c95dec0a",
+        "api/rechner-kv-adapter.php": "3fa7eb93ef404de1472a6ac000649f9b7e336a3f221ebb5e46362eccb3cadbc0",
+        "reports/t1247/browser-und-bilder.mjs": "2273a8511a47357ca82e37eb2405f04230f82f4538df3fddcb2b3a58b7d2044d"
+      },
+      "rows": [
+        {
+          "name": "Browser-Prüfaufbau",
+          "status": "rot",
+          "fehler": "browserType.launch: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /Users/benjaminbendler/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/fsj259rj7cngdt79dg4zkt2c0000gn/T/playwright_chromiumdev_profile-JGp9SD --remote-debugging-pipe --no-startup-window\n<launched> pid=99083\n[pid=99083][err] [1107/132516.101019:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9\n[pid=99083][err] [1107/132516.104074:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.\n[pid=99083][err] [1107/132516.105055:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.99083: Permission denied (1100)\nCall log:\n\u001b[2m  - <launching> /Users/benjaminbendler/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/fsj259rj7cngdt79dg4zkt2c0000gn/T/playwright_chromiumdev_profile-JGp9SD --remote-debugging-pipe --no-startup-window\u001b[22m\n\u001b[2m  - <launched> pid=99083\u001b[22m\n\u001b[2m  - [pid=99083][err] [1107/132516.101019:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9\u001b[22m\n\u001b[2m  - [pid=99083][err] [1107/132516.104074:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.\u001b[22m\n\u001b[2m  - [pid=99083][err] [1107/132516.105055:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.99083: Permission denied (1100)\u001b[22m\n\u001b[2m  - [pid=99083] <gracefully close start>\u001b[22m\n\u001b[2m  - [pid=99083] <kill>\u001b[22m\n\u001b[2m  - [pid=99083] <will force kill>\u001b[22m\n\u001b[2m  - [pid=99083] exception while trying to kill process: Error: kill EPERM\u001b[22m\n\u001b[2m  - [pid=99083] <process did exit: exitCode=null, signal=SIGTRAP>\u001b[22m\n\u001b[2m  - [pid=99083] starting temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=99083] finished temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=99083] <gracefully close end>\u001b[22m\n\n    at /Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:158:28"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 12",
+      "auswahl": "alle T1247-Fälle",
+      "zeit": "2026-11-07T12:32:15.871Z",
+      "green": 52,
+      "red": 3,
+      "images": [
+        "reports/t1247/bilder/gas-verbrauch-light-375.png",
+        "reports/t1247/bilder/gas-ergebnis-light-375.png",
+        "reports/t1247/bilder/gas-verbrauch-light-1280.png",
+        "reports/t1247/bilder/gas-verbrauch-dark-375.png",
+        "reports/t1247/bilder/gas-ergebnis-dark-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-375.png",
+        "reports/t1247/bilder/oel-ergebnis-light-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-1280.png",
+        "reports/t1247/bilder/oel-ergebnis-light-1280.png",
+        "reports/t1247/bilder/oel-verbrauch-dark-375.png",
+        "reports/t1247/bilder/oel-ergebnis-dark-375.png"
+      ],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "2b9f2c3145977b16f76f78084ac17330efe2177c3ecef7c350099919c95dec0a",
+        "api/rechner-kv-adapter.php": "3fa7eb93ef404de1472a6ac000649f9b7e336a3f221ebb5e46362eccb3cadbc0",
+        "reports/t1247/browser-und-bilder.mjs": "2273a8511a47357ca82e37eb2405f04230f82f4538df3fddcb2b3a58b7d2044d"
+      },
+      "rows": [
+        {
+          "name": "1a Rechnung zu Verbrauch: Brücke null und neue Tastatureingabe führt",
+          "status": "grün"
+        },
+        {
+          "name": "1b Späte Euro-Antwort reaktiviert den Rechnungsmodus nicht",
+          "status": "grün"
+        },
+        {
+          "name": "1c Fokuswechsel nach fertiger Euro-Rechnung lässt Herleitung und Knopf stabil",
+          "status": "grün"
+        },
+        {
+          "name": "Z5 Nutzen-Karten trennen Bezeichnung, Betrag und Spanne im Textinhalt",
+          "status": "grün"
+        },
+        {
+          "name": "9a Dezimalfelder nach Laden und Marktwertklick deutsch, Komma und Punkt rechnen gleich",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: vier gültige Eingaben, Tausenderpunkt und eindeutige API-Zahl",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: unklare Schreibweisen sperren mit Klartext und bleiben bearbeitbar",
+          "status": "grün"
+        },
+        {
+          "name": "Ergebnis Öl: nach Förderung 380 € günstiger, kein negativer Mehrpreis",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / 5120 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / -380 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / 0 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / 5120 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / -380 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / 0 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / 5120 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / -380 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / 0 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / 5120 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / -380 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / 0 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: gas",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: oel",
+          "status": "rot",
+          "fehler": "locator.click: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator('[data-wz-grp=\"vmode\"][data-wz-val=\"bill\"]')\n    - locator resolved to <button type=\"button\" data-wz-val=\"bill\" data-wz-grp=\"vmode\" class=\"wz-optcard wahlkarte\">…</button>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div class=\"wz-nav\">…</div> intercepts pointer events\n    - retrying click action\n    - waiting 20ms\n    - waiting for element to be visible, enabled and stable\n    - element is visible, enabled and stable\n    - scrolling into view if needed\n    - done scrolling\n    - <div class=\"wz-nav\">…</div> intercepts pointer events\n  - retrying click action\n    - waiting 100ms\n\n    at bill (/Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:73:67)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:316:26\n    at async check (/Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:315:38"
+        },
+        {
+          "name": "2 Handy-Klapptexte ohne doppeltes Alle",
+          "status": "grün"
+        },
+        {
+          "name": "3a Ölpreis leeren, Gas wählen: verborgener Ölpreis sperrt nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3b Gaspreis/Grundpreis leeren, Öl wählen: verborgene Gasfelder sperren nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3c Abweichende Vergleichsheizung: verwendeter Ölpreis sichtbar und Pflicht",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "5 Euro-Seitenleiste nutzt inputsEcho.bedarf: 15 ct ergeben 16.000 kWh",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: vollständig, sichtbarer bedienbarer Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: wert fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: einheit fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: quelle fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: stand fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Spätes Bootstrap nach echter Tastatureingabe erhält Preise und Herkunft",
+          "status": "grün"
+        },
+        {
+          "name": "Ungültige Euro-Preise sperren Ergebnis und Weiter",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Preisherkunft Gas: je Preis benannt, Marktquelle und Stand nach Übernahme",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 375 px light",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 375 px dark",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 1280 px light",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 1280 px dark",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-1280",
+          "status": "rot",
+          "fehler": "locator.screenshot: Timeout 9977.606ms exceeded.\nCall log:\n  - taking element screenshot\n  - waiting for fonts to load...\n  - fonts loaded\n  - attempting scroll into view action\n    2 × waiting for element to be stable\n      - element is not stable\n    - retrying scroll into view action\n    - waiting 20ms\n    - waiting for element to be stable\n\n    at /Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:498:38\n    at async check (/Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:495:5"
+        },
+        {
+          "name": "Bild Verbrauch gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-1280",
+          "status": "rot",
+          "fehler": "locator.click: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator('#wzNext')\n    - locator resolved to <button id=\"wzNext\" type=\"button\" class=\"wz-next\">Weiter</button>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is not stable\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled and stable\n      - element is not stable\n    - retrying click action\n      - waiting 100ms\n    - waiting for element to be visible, enabled and stable\n    - element is not stable\n  - retrying click action\n    - waiting 500ms\n    - waiting for element to be visible, enabled and stable\n    - element is visible, enabled and stable\n    - scrolling into view if needed\n    - done scrolling\n    - element is outside of the viewport\n  - retrying click action\n    - waiting 500ms\n\n    at /Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:512:76\n    at async check (/Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:495:5"
+        },
+        {
+          "name": "Bild Verbrauch oel-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-dark-375",
+          "status": "grün"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 12",
+      "auswahl": "alle T1247-Fälle",
+      "zeit": "2026-11-07T12:37:46.873Z",
+      "green": 54,
+      "red": 1,
+      "images": [
+        "reports/t1247/bilder/gas-verbrauch-light-375.png",
+        "reports/t1247/bilder/gas-ergebnis-light-375.png",
+        "reports/t1247/bilder/gas-verbrauch-light-1280.png",
+        "reports/t1247/bilder/gas-ergebnis-light-1280.png",
+        "reports/t1247/bilder/gas-verbrauch-dark-375.png",
+        "reports/t1247/bilder/gas-ergebnis-dark-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-375.png",
+        "reports/t1247/bilder/oel-ergebnis-light-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-1280.png",
+        "reports/t1247/bilder/oel-ergebnis-light-1280.png",
+        "reports/t1247/bilder/oel-verbrauch-dark-375.png",
+        "reports/t1247/bilder/oel-ergebnis-dark-375.png"
+      ],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "2b9f2c3145977b16f76f78084ac17330efe2177c3ecef7c350099919c95dec0a",
+        "api/rechner-kv-adapter.php": "3fa7eb93ef404de1472a6ac000649f9b7e336a3f221ebb5e46362eccb3cadbc0",
+        "reports/t1247/browser-und-bilder.mjs": "2273a8511a47357ca82e37eb2405f04230f82f4538df3fddcb2b3a58b7d2044d"
+      },
+      "rows": [
+        {
+          "name": "1a Rechnung zu Verbrauch: Brücke null und neue Tastatureingabe führt",
+          "status": "grün"
+        },
+        {
+          "name": "1b Späte Euro-Antwort reaktiviert den Rechnungsmodus nicht",
+          "status": "grün"
+        },
+        {
+          "name": "1c Fokuswechsel nach fertiger Euro-Rechnung lässt Herleitung und Knopf stabil",
+          "status": "grün"
+        },
+        {
+          "name": "Z5 Nutzen-Karten trennen Bezeichnung, Betrag und Spanne im Textinhalt",
+          "status": "grün"
+        },
+        {
+          "name": "9a Dezimalfelder nach Laden und Marktwertklick deutsch, Komma und Punkt rechnen gleich",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: vier gültige Eingaben, Tausenderpunkt und eindeutige API-Zahl",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: unklare Schreibweisen sperren mit Klartext und bleiben bearbeitbar",
+          "status": "grün"
+        },
+        {
+          "name": "Ergebnis Öl: nach Förderung 380 € günstiger, kein negativer Mehrpreis",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / 5120 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / -380 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / 0 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / 5120 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / -380 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / 0 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / 5120 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / -380 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / 0 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / 5120 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / -380 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / 0 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: gas",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: oel",
+          "status": "grün"
+        },
+        {
+          "name": "2 Handy-Klapptexte ohne doppeltes Alle",
+          "status": "grün"
+        },
+        {
+          "name": "3a Ölpreis leeren, Gas wählen: verborgener Ölpreis sperrt nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3b Gaspreis/Grundpreis leeren, Öl wählen: verborgene Gasfelder sperren nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3c Abweichende Vergleichsheizung: verwendeter Ölpreis sichtbar und Pflicht",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "5 Euro-Seitenleiste nutzt inputsEcho.bedarf: 15 ct ergeben 16.000 kWh",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: vollständig, sichtbarer bedienbarer Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: wert fehlt, kein Knopf",
+          "status": "rot",
+          "fehler": "page.waitForFunction: Timeout 10000ms exceeded.\n    at settled (/Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:70:30)\n    at known (/Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:79:83)\n    at async check.marktListe.gaspreis (/Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:399:28)\n    at async check (/Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:398:5"
+        },
+        {
+          "name": "7 Prüf-Eintrag: einheit fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: quelle fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: stand fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Spätes Bootstrap nach echter Tastatureingabe erhält Preise und Herkunft",
+          "status": "grün"
+        },
+        {
+          "name": "Ungültige Euro-Preise sperren Ergebnis und Weiter",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Preisherkunft Gas: je Preis benannt, Marktquelle und Stand nach Übernahme",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 375 px light",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 375 px dark",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 1280 px light",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 1280 px dark",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-dark-375",
+          "status": "grün"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 12",
+      "auswahl": "alle T1247-Fälle",
+      "zeit": "2026-11-07T12:45:23.337Z",
+      "green": 51,
+      "red": 4,
+      "images": [
+        "reports/t1247/bilder/gas-verbrauch-light-375.png",
+        "reports/t1247/bilder/gas-ergebnis-light-375.png",
+        "reports/t1247/bilder/gas-verbrauch-light-1280.png",
+        "reports/t1247/bilder/gas-ergebnis-light-1280.png",
+        "reports/t1247/bilder/gas-ergebnis-dark-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-375.png",
+        "reports/t1247/bilder/oel-ergebnis-light-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-1280.png",
+        "reports/t1247/bilder/oel-ergebnis-light-1280.png",
+        "reports/t1247/bilder/oel-verbrauch-dark-375.png",
+        "reports/t1247/bilder/oel-ergebnis-dark-375.png"
+      ],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "2b9f2c3145977b16f76f78084ac17330efe2177c3ecef7c350099919c95dec0a",
+        "api/rechner-kv-adapter.php": "3fa7eb93ef404de1472a6ac000649f9b7e336a3f221ebb5e46362eccb3cadbc0",
+        "reports/t1247/browser-und-bilder.mjs": "2273a8511a47357ca82e37eb2405f04230f82f4538df3fddcb2b3a58b7d2044d"
+      },
+      "rows": [
+        {
+          "name": "1a Rechnung zu Verbrauch: Brücke null und neue Tastatureingabe führt",
+          "status": "grün"
+        },
+        {
+          "name": "1b Späte Euro-Antwort reaktiviert den Rechnungsmodus nicht",
+          "status": "grün"
+        },
+        {
+          "name": "1c Fokuswechsel nach fertiger Euro-Rechnung lässt Herleitung und Knopf stabil",
+          "status": "grün"
+        },
+        {
+          "name": "Z5 Nutzen-Karten trennen Bezeichnung, Betrag und Spanne im Textinhalt",
+          "status": "grün"
+        },
+        {
+          "name": "9a Dezimalfelder nach Laden und Marktwertklick deutsch, Komma und Punkt rechnen gleich",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: vier gültige Eingaben, Tausenderpunkt und eindeutige API-Zahl",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: unklare Schreibweisen sperren mit Klartext und bleiben bearbeitbar",
+          "status": "rot",
+          "fehler": "locator.fill: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator('#wzJahreskosten')\n    - locator resolved to <input type=\"text\" id=\"wzJahreskosten\" inputmode=\"decimal\"/>\n    - fill(\"2.650,38\")\n  - attempting fill action\n    - waiting for element to be visible, enabled and editable\n\n    at /Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:270:17\n    at async check (/Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:260:3"
+        },
+        {
+          "name": "Ergebnis Öl: nach Förderung 380 € günstiger, kein negativer Mehrpreis",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / 5120 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / -380 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / 0 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / 5120 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / -380 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / 0 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / 5120 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / -380 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / 0 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / 5120 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / -380 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / 0 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: gas",
+          "status": "rot",
+          "fehler": "page.waitForFunction: Timeout 10000ms exceeded.\n    at bill (/Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:75:14)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:316:26\n    at async check (/Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:315:38"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: oel",
+          "status": "grün"
+        },
+        {
+          "name": "2 Handy-Klapptexte ohne doppeltes Alle",
+          "status": "grün"
+        },
+        {
+          "name": "3a Ölpreis leeren, Gas wählen: verborgener Ölpreis sperrt nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3b Gaspreis/Grundpreis leeren, Öl wählen: verborgene Gasfelder sperren nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3c Abweichende Vergleichsheizung: verwendeter Ölpreis sichtbar und Pflicht",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Bestand",
+          "status": "rot",
+          "fehler": "locator.click: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator('#wzNext')\n\n    at /Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:363:35\n    at async check (/Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:358:36"
+        },
+        {
+          "name": "5 Euro-Seitenleiste nutzt inputsEcho.bedarf: 15 ct ergeben 16.000 kWh",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: vollständig, sichtbarer bedienbarer Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: wert fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: einheit fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: quelle fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: stand fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Spätes Bootstrap nach echter Tastatureingabe erhält Preise und Herkunft",
+          "status": "grün"
+        },
+        {
+          "name": "Ungültige Euro-Preise sperren Ergebnis und Weiter",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Preisherkunft Gas: je Preis benannt, Marktquelle und Stand nach Übernahme",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 375 px light",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 375 px dark",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 1280 px light",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 1280 px dark",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-dark-375",
+          "status": "rot",
+          "fehler": "locator.click: Timeout 10000ms exceeded.\nCall log:\n  - waiting for locator('[data-wz-grp=\"vmode\"][data-wz-val=\"bill\"]')\n    - locator resolved to <button type=\"button\" data-wz-val=\"bill\" data-wz-grp=\"vmode\" class=\"wz-optcard wahlkarte\">…</button>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <div class=\"wz-nav\">…</div> intercepts pointer events\n    - retrying click action\n    - waiting 20ms\n    - waiting for element to be visible, enabled and stable\n    - element is visible, enabled and stable\n    - scrolling into view if needed\n    - done scrolling\n    - <div class=\"wz-nav\">…</div> intercepts pointer events\n  2 × retrying click action\n      - waiting 100ms\n      - waiting for element to be visible, enabled and stable\n      - element is not stable\n  - retrying click action\n    - waiting 500ms\n\n    at bill (/Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:73:67)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:482:28\n    at async check (/Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:64:35)\n    at async file:///Users/benjaminbendler/code/_t1247_website/reports/t1247/browser-und-bilder.mjs:481:5"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-dark-375",
+          "status": "grün"
+        }
+      ]
+    },
+    {
+      "stand": "T1247 Auftrag 12",
+      "auswahl": "alle T1247-Fälle",
+      "zeit": "2026-11-07T13:31:24.946Z",
+      "green": 55,
+      "red": 0,
+      "images": [
+        "reports/t1247/bilder/gas-verbrauch-light-375.png",
+        "reports/t1247/bilder/gas-ergebnis-light-375.png",
+        "reports/t1247/bilder/gas-verbrauch-light-1280.png",
+        "reports/t1247/bilder/gas-ergebnis-light-1280.png",
+        "reports/t1247/bilder/gas-verbrauch-dark-375.png",
+        "reports/t1247/bilder/gas-ergebnis-dark-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-375.png",
+        "reports/t1247/bilder/oel-ergebnis-light-375.png",
+        "reports/t1247/bilder/oel-verbrauch-light-1280.png",
+        "reports/t1247/bilder/oel-ergebnis-light-1280.png",
+        "reports/t1247/bilder/oel-verbrauch-dark-375.png",
+        "reports/t1247/bilder/oel-ergebnis-dark-375.png"
+      ],
+      "sourceHashes": {
+        "kostenvergleich-waermepumpe.html": "2b9f2c3145977b16f76f78084ac17330efe2177c3ecef7c350099919c95dec0a",
+        "api/rechner-kv-adapter.php": "3fa7eb93ef404de1472a6ac000649f9b7e336a3f221ebb5e46362eccb3cadbc0",
+        "reports/t1247/browser-und-bilder.mjs": "2273a8511a47357ca82e37eb2405f04230f82f4538df3fddcb2b3a58b7d2044d"
+      },
+      "rows": [
+        {
+          "name": "1a Rechnung zu Verbrauch: Brücke null und neue Tastatureingabe führt",
+          "status": "grün"
+        },
+        {
+          "name": "1b Späte Euro-Antwort reaktiviert den Rechnungsmodus nicht",
+          "status": "grün"
+        },
+        {
+          "name": "1c Fokuswechsel nach fertiger Euro-Rechnung lässt Herleitung und Knopf stabil",
+          "status": "grün"
+        },
+        {
+          "name": "Z5 Nutzen-Karten trennen Bezeichnung, Betrag und Spanne im Textinhalt",
+          "status": "grün"
+        },
+        {
+          "name": "9a Dezimalfelder nach Laden und Marktwertklick deutsch, Komma und Punkt rechnen gleich",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: vier gültige Eingaben, Tausenderpunkt und eindeutige API-Zahl",
+          "status": "grün"
+        },
+        {
+          "name": "9a Jahreskosten: unklare Schreibweisen sperren mit Klartext und bleiben bearbeitbar",
+          "status": "grün"
+        },
+        {
+          "name": "Ergebnis Öl: nach Förderung 380 € günstiger, kein negativer Mehrpreis",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / 5120 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / -380 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / 0 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / 5120 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / -380 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / 0 € / 375 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / 5120 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / -380 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis gas / 0 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / 5120 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / -380 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "11 Mehrpreis oel / 0 € / 1280 px, Hauptkarte und offene Details",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: gas",
+          "status": "grün"
+        },
+        {
+          "name": "9b Herleitung ohne erzwungene Mengennachkommastellen: oel",
+          "status": "grün"
+        },
+        {
+          "name": "2 Handy-Klapptexte ohne doppeltes Alle",
+          "status": "grün"
+        },
+        {
+          "name": "3a Ölpreis leeren, Gas wählen: verborgener Ölpreis sperrt nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3b Gaspreis/Grundpreis leeren, Öl wählen: verborgene Gasfelder sperren nicht",
+          "status": "grün"
+        },
+        {
+          "name": "3c Abweichende Vergleichsheizung: verwendeter Ölpreis sichtbar und Pflicht",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "4 Geld und Mengen deutsch, Finanzierung Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "5 Euro-Seitenleiste nutzt inputsEcho.bedarf: 15 ct ergeben 16.000 kWh",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Neuanlage",
+          "status": "grün"
+        },
+        {
+          "name": "6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Bestand",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: vollständig, sichtbarer bedienbarer Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: wert fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: einheit fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: quelle fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Prüf-Eintrag: stand fehlt, kein Knopf",
+          "status": "grün"
+        },
+        {
+          "name": "7 Spätes Bootstrap nach echter Tastatureingabe erhält Preise und Herkunft",
+          "status": "grün"
+        },
+        {
+          "name": "Ungültige Euro-Preise sperren Ergebnis und Weiter",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Preisherkunft Gas: je Preis benannt, Marktquelle und Stand nach Übernahme",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 375 px light",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 375 px dark",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 1280 px light",
+          "status": "grün"
+        },
+        {
+          "name": "A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 1280 px dark",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen gas-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-light-1280",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Verbrauch oel-dark-375",
+          "status": "grün"
+        },
+        {
+          "name": "Bild Ergebnis und Vertragskontrollen oel-dark-375",
+          "status": "grün"
+        }
+      ]
+    }
+  ]
+}

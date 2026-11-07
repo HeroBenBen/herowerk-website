@@ -53,6 +53,7 @@ const RECHNER_GOOGLE_FORWARD_TIMEOUT_SECONDS = 15;
 
 require_once __DIR__ . '/rechner-values.php';
 require_once __DIR__ . '/rechner-engine.php';
+require_once __DIR__ . '/rechner-kv-adapter.php';
 
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
@@ -590,7 +591,7 @@ try {
 
 $action = strtolower((string) ($_GET['action'] ?? 'health'));
 try {
-    $result = hw_rechner_route($action, $_GET, $snapshot['sheets'], $snapshot['schemaVersion']);
+    $result = hw_kv_adapter_route($action, $_GET, $snapshot['sheets'], $snapshot['schemaVersion']);
     if ($action === 'preise') {
         $result = hw_oeffentliche_preistexte($result);
     }

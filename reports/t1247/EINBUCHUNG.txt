@@ -1,0 +1,185 @@
+T1247-NUTZEN-20261107-01
+
+Vorgesehene Einbuchungsbotschaft:
+T1247: Kostenvergleich an Nutzen-Blatt angleichen, Euro-Jahresrechnung und belegte Marktwerte ergänzen
+
+Zweig: codex/t1247-kostenvergleich-nutzen
+Basis: 6fdf74e7d205af1ae51a7ae72668bcc1797957ff
+Keine Einbuchung durch Codex vorgenommen. Die Kennung oben ist eine Übergabekennung, kein Commit-Hash.
+
+Geändert:
+- kostenvergleich-waermepumpe.html
+- api/rechner.php
+- apps-script/rechner-backend/kv_contract.md (nur Adapterdokumentation)
+- package.json (gezielter Prüfbefehl verify:kv-t1247)
+- tests/kv-thin-client.spec.js (Kostenlinien-Mock und Diagramm-Erwartungen)
+- tests/t1245-kv-website.mjs (Kostenlinien-Mock)
+
+Neu:
+- api/rechner-kv-adapter.php
+- data/kv-marktwerte.php
+- tests/t1247-kostenvergleich.mjs
+- tests/t1247-kv-fixture.mjs
+- tests/t1247-kv-runner.php
+- reports/t1247/BERICHT.md
+- reports/t1247/EINBUCHUNG.txt
+- reports/t1247/pruefen.mjs
+- reports/t1247/browser-und-bilder.mjs
+- reports/t1247/rot_alt.log
+- reports/t1247/gruen_neu.log
+- reports/t1247/pruefergebnisse.json
+- reports/t1247/zusatzpruefungen.log
+- reports/t1247/asset-fingerabdruecke.log
+
+Die bereits vorhandenen reports/t1247/entwurf/-Dateien bleiben unverändert liegen.
+.rot-alt/ nicht einbuchen. Die temporären neuen Prüfdateien sind dort wieder entfernt.
+
+Prüfstand:
+- 25 neue Prüfgruppen grün / 0 rot.
+- Identische Prüfung auf 6fdf74e: 21 fachlich rot, 4 unveränderte Kontrollgruppen grün.
+- 6 ausgewählte Prüfscripte erfolgreich, darunter 625 PHP/JS-Paritätsfälle mit Float-Delta 0 und 7 Schnittstellenprüfungen.
+- 11 Syntax-/Diffprüfungen grün. Asset-Fingerabdrücke der betroffenen Seite aktuell.
+- Browser, visuelle Abnahme und Bildschirmfotos noch offen; Durchführung ausschließlich durch die Steuerung gemäß BERICHT.md.
+
+Kein Push, kein Antrag, keine Auslieferung und kein Serverzugriff. Keine Änderungen an den Konfigurator-/Portal-Klonen.
+
+
+Fortschreibung Auftrag 5, 07.11.2026:
+Botschaft ergänzen um: Sieben Prüfbefunde nachbessern und echte Browserfälle ergänzen.
+
+In diesem Nachauftrag geändert:
+- kostenvergleich-waermepumpe.html
+- api/rechner-kv-adapter.php
+- tests/t1247-kostenvergleich.mjs
+- tests/t1245-kv-website-dom.mjs
+- reports/t1247/browser-und-bilder.mjs
+- reports/t1247/pruefen.mjs
+- reports/t1247/BERICHT.md
+- reports/t1247/EINBUCHUNG.txt
+- reports/t1247/gruen_neu.log
+- reports/t1247/rot_alt.log
+- reports/t1247/pruefergebnisse.json
+- reports/t1247/zusatzpruefungen.log
+- reports/t1247/browser.log
+- reports/t1247/browser-ergebnisse.json
+
+Prüfstand Auftrag 5:
+- node reports/t1247/pruefen.mjs: 29 grün / 0 rot.
+- Identische Prüfung auf 6fdf74e: 25 fachlich rot / 4 Kontrollgruppen grün.
+- Alle 6 gezielten Prüfscripte erfolgreich, 625 PHP/JS-Paritätsfälle (Float-Delta 0), 7 Schnittstellenprüfungen grün.
+- Syntax, Diff und isolierte Fortsetzung nach erzwungenem roten Browserfall grün.
+- Browserstart im Sandkasten gesperrt (bootstrap_check_in, Permission denied 1100): 0 Fachfälle ausgeführt, 0 Bilder. Startfehler dokumentiert, keine Freigabe.
+- 30 Browserfälle vorbereitet, darunter 12 unabhängige Bildfälle. Ausführung durch Steuerung ohne Server: node reports/t1247/browser-und-bilder.mjs
+- Protokolle werden angehängt; JSON-Ergebnisse historisiert.
+
+Alle bisherigen Sperren gelten unverändert. Kein Commit, Push, Server oder Auslieferung. Keine Änderung an Kern, KV_DEFAULTS, Code.gs, kv_engine.gs oder amortisation-waermepumpe.html.
+
+
+Fortschreibung Auftrag 6, 07.11.2026:
+Botschaft ergänzen um: Redundante Neuberechnung beim Fokuswechsel verhindern, Nutzen-Karten trennen, deutsche Dezimalfelder und Mengenanzeige korrigieren.
+
+In diesem Nachauftrag geändert:
+- kostenvergleich-waermepumpe.html
+- api/rechner-kv-adapter.php
+- tests/t1247-kostenvergleich.mjs
+- tests/t1245-kv-website-dom.mjs
+- reports/t1247/browser-und-bilder.mjs
+- reports/t1247/pruefen.mjs
+- reports/t1247/BERICHT.md
+- reports/t1247/EINBUCHUNG.txt
+- reports/t1247/gruen_neu.log
+- reports/t1247/rot_alt.log
+- reports/t1247/pruefergebnisse.json
+- reports/t1247/zusatzpruefungen.log
+- reports/t1247/browser.log
+- reports/t1247/browser-ergebnisse.json
+
+Prüfstand Auftrag 6:
+- node reports/t1247/pruefen.mjs: 33 grün / 0 rot.
+- Identische Prüfung auf 6fdf74e: 29 fachlich rot / 4 Kontrollgruppen grün.
+- Zusätzlicher Rot-Nachweis auf vor Bearbeitung gesichertem Auftrag-5-Arbeitsstand: 27 grün / 6 fachlich rot, darunter alle 4 neuen Wächter.
+- Alle 6 gezielten Prüfscripte erfolgreich; 625 PHP/JS-Paritätsfälle, Float-Delta 0; 7 Schnittstellenprüfungen grün.
+- Browserstart im Sandkasten gesperrt (bootstrap_check_in, Permission denied 1100): 0 Fachfälle ausgeführt, 0 neue Bilder. Erneute Browserabnahme offen.
+- 35 Browserfälle vorbereitet, davon 12 unabhängige Bildfälle. Unveränderten O3 zusätzlich gezielt durch Steuerung prüfen.
+- Bisherige Browserläufe und Protokolle historisiert/angehängt. Z5-Wächter nicht verändert.
+
+Alle bisherigen Sperren gelten unverändert. Keine Änderungen an Kern, KV_DEFAULTS oder amortisation-waermepumpe.html. Kein Git-Schreibbefehl, Push, Server oder Auslieferung.
+
+
+Fortschreibung Auftrag 7, 07.11.2026:
+Botschaft ergänzen um: Jahreskosten mit Tausenderpunkt eindeutig lesen und anzeigen, negativen Mehrpreis als Preisvorteil benennen, Euro-Grenzen gegen Bestand belegen.
+
+In diesem Nachauftrag geändert (13 Dateien):
+- kostenvergleich-waermepumpe.html
+- api/rechner-kv-adapter.php
+- tests/t1247-kostenvergleich.mjs
+- reports/t1247/browser-und-bilder.mjs
+- reports/t1247/pruefen.mjs
+- reports/t1247/BERICHT.md
+- reports/t1247/EINBUCHUNG.txt
+- reports/t1247/gruen_neu.log
+- reports/t1247/rot_alt.log
+- reports/t1247/pruefergebnisse.json
+- reports/t1247/zusatzpruefungen.log
+- reports/t1247/browser.log
+- reports/t1247/browser-ergebnisse.json
+
+Prüfstand Auftrag 7:
+- node reports/t1247/pruefen.mjs: 36 grün / 0 rot.
+- Identische Prüfung auf 6fdf74e: 32 fachlich rot / 4 Kontrollgruppen grün.
+- Zusätzlicher Rot-Nachweis vor Produktänderung auf gesichertem Auftrag-6-Stand: 33 grün / 3 fachlich rot.
+- Alle 6 gezielten Prüfscripte erfolgreich; 625 PHP/JS-Paritätsfälle, Float-Delta 0; 7 Schnittstellenprüfungen grün.
+- 5 Syntax-/Diffprüfungen grün; 5 geschützte Dateien seit Auftragsbeginn bytegleich, zusätzlich Schutzprüfung gegen 6fdf74e grün.
+- 5.000 bis 80.000 kWh entspricht Bestandsregler (6fdf74e:kostenvergleich-waermepumpe.html:754, :1670) und Kern-Schätzgrenzen (api/rechner-engine.php:762–763, :2152). Direkte kWh-Anfragen an den Kern haben keine solche Obergrenze (:2096, :675); Euro folgt bewusst dem bestehenden Kundenregler. Keine Änderung der Grenze oder des Kerns.
+- Browserstart im Sandkasten gesperrt (bootstrap_check_in, Permission denied 1100): 0 ausgeführte Fachfälle, 1 roter Prüfaufbau, 0 neue Bilder. Erneute Abnahme durch Steuerung offen.
+- 38 Browserfälle vorbereitet, davon 12 bestehende Bildziele; neue Fälle: Jahreskosten gültig, Jahreskosten unklar/Sperre/Korrektur, Öl 380 € günstiger. Bisherige Browserresultate historisiert, Bilder unverändert.
+
+Alle bisherigen Sperren gelten unverändert. Kern, KV_DEFAULTS und amortisation-waermepumpe.html unberührt. Kein Git-Schreibbefehl, Push, Server oder Auslieferung.
+
+
+Fortschreibung Auftrag 8, 07.11.2026:
+Botschaft ergänzen um: Fall 1c auf Dokumentkoordinaten und exakte Elementhöhen umstellen.
+
+Geändert: reports/t1247/browser-und-bilder.mjs, reports/t1247/pruefen.mjs (nur Nachweis-Metadaten), reports/t1247/BERICHT.md, reports/t1247/EINBUCHUNG.txt, reports/t1247/gruen_neu.log, reports/t1247/rot_alt.log, reports/t1247/pruefergebnisse.json, reports/t1247/zusatzpruefungen.log.
+Produktseite und 5 geschützte Dateien seit Auftragsbeginn bytegleich.
+Bereich: 36 grün / 0 rot; Alt 4 grün / 32 fachlich rot. Alle 6 ausgewählten Prüfscripte grün, 625 Paritätsfälle (Delta 0), 7/7 Schnittstellenprüfungen.
+Isolierte Messkontrollen: 6 grün / 0 rot; 2 px Scrollen akzeptiert, echte Änderungen um 1 px abgewiesen. Kein neuer Browsernachweis. Browserabnahme durch Steuerung ausstehend; alte Browserresultate und Bilder unverändert.
+Alle bisherigen Sperren unverändert. Kein voller Testlauf, keine Git-Schreibbefehle, kein Push, Server oder Auslieferung.
+
+
+Fortschreibung Auftrag 9, 07.11.2026:
+Botschaft ergänzen um: Amortisationsbeschriftung innerhalb der Diagrammfläche halten und Preisherkunft je Arbeits-/Grundpreis samt Marktquelle und Stand benennen.
+
+Geändert (11 Dateien):
+- kostenvergleich-waermepumpe.html
+- api/rechner-kv-adapter.php
+- tests/t1247-kostenvergleich.mjs
+- reports/t1247/browser-und-bilder.mjs
+- reports/t1247/pruefen.mjs
+- reports/t1247/BERICHT.md
+- reports/t1247/EINBUCHUNG.txt
+- reports/t1247/gruen_neu.log
+- reports/t1247/rot_alt.log
+- reports/t1247/pruefergebnisse.json
+- reports/t1247/zusatzpruefungen.log
+
+Bereich: 38 grün / 0 rot; Altbasis 4 grün / 34 fachlich rot. Vor Produktänderung Auftrag-8-Stand mit neuen Wächtern: 36 grün / 2 rot. Alle 6 ausgewählten Prüfscripte grün, 625 Paritätsfälle (Float-Delta 0), 7/7 Schnittstellenprüfungen. Syntax/Diff grün, 5 geschützte Dateien seit Auftragsbeginn bytegleich und gegen 6fdf74e geprüft.
+52 isolierte Zeichenfälle für Jahre 0 bis 25 bei 375/1280 px grün. 5 neue Browserfälle vorbereitet, insgesamt 43: Diagrammgrenzen Jahr 0/7/25 bei beiden Breiten und hell/dunkel, Gas-Preisherkunft vor/nach Marktübernahme und eigener Eingabe. Kein eigener Browserlauf; vorhandene Bilder und Browserprotokolle unverändert. Erneuter Lauf und Bilder durch Steuerung offen.
+Alle Sperren unverändert: kein voller Testlauf; npm test ohne Zusatz und playwright test ohne Dateiauswahl verboten. Kein Git-Schreibbefehl, Push, Server oder Auslieferung. Kern, KV_DEFAULTS und amortisation-waermepumpe.html unberührt.
+
+
+Fortschreibung Auftrag 11, 07.11.2026:
+Botschaft ergänzen um: Mehrpreis, Preisvorteil und gerundeten Gleichstand über eine Textfunktion an Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis einheitlich benennen; negative Null verhindern.
+
+Bereich: 42 grün / 0 rot; Altbasis 4 grün / 38 fachlich rot. Gesicherter Auftrag-9-Stand mit vier neuen Wächtern: 38 grün / 4 rot. Alle 6 ausgewählten Prüfscripte grün, 625 Paritätsfälle (Float-Delta 0), 7/7 Schnittstellenprüfungen. Fünf Syntaxprüfungen und Diff grün; fünf geschützte Dateien sowie Adapter bytegleich. Jahreskosten-Funktionen unverändert; 2.650 und 2650,3 bleiben wie beauftragt.
+12 neue Browserfälle für Gas/Öl, positiv/negativ/null bei 375/1280 px einschließlich offener Details vorbereitet (gesamt 55). Gezielter Start mit --mehrpreis am Chromium-Start gesperrt: Permission denied 1100; 0 Fachfälle, 1 roter Prüfaufbau, 0 Bilder. Browserabnahme durch Steuerung offen. Historie erhalten, keine Freigabe behauptet.
+Geändert: Produktseite, drei Bereichs-/Bestandsprüfdateien, Browserprüfscript, Bereichssteuerung und acht Berichts-/Nachweisdateien; Einzelaufstellung in BERICHT.md.
+Alle Sperren unverändert. Testregel [20261106m] wörtlich: kein voller Testlauf; npm test ohne Zusatz und playwright test ohne Dateiauswahl sind verboten. Kein Git-Schreibbefehl, Commit, Push, Server oder Auslieferung. Kerndateien, KV_DEFAULTS und amortisation-waermepumpe.html unberührt.
+
+
+Fortschreibung Auftrag 12, 07.11.2026:
+Gas-Prüfszenarien: Altersbonus ausdrücklich setzen, Reglergrenzen aus DOM lesen, Zielwert und Ist-Mehrpreis vor Texten prüfen. Null-Euro-Muster trifft 380 € günstiger nicht mehr. Gesamtkosten-Handyliste und Ergebnissatz unterscheiden günstiger/teurer/Gleichstand mit korrekter Vergleichsheizung und Euro-Rundung.
+Bereich: 44 grün / 0 rot; Altbasis 4 grün / 40 fachlich rot. Gesicherter Auftrag-11-Stand: 42 grün / 2 rot. Alle 6 ausgewählten Prüfscripte grün, 625 Paritätsfälle (Delta 0), 7/7 Schnittstellenprüfungen. Syntax/Diff grün; 5 geschützte Dateien sowie Adapter bytegleich.
+Gezielter Browserstart --mehrpreis an Permission denied 1100 gesperrt: 0 Fachfälle, 1 roter Prüfaufbau, 0 Bilder. Erneuter Browserlauf durch Steuerung offen. Historie erhalten.
+Geändert: kostenvergleich-waermepumpe.html, tests/t1247-kostenvergleich.mjs, reports/t1247/browser-und-bilder.mjs, reports/t1247/pruefen.mjs und acht Berichts-/Nachweisdateien (Einzelaufstellung BERICHT.md).
+Alle Sperren unverändert. Testregel [20261106m] wörtlich: kein voller Testlauf; npm test ohne Zusatz und playwright test ohne Dateiauswahl sind verboten. Kein Git-Schreibbefehl, Commit, Push, Server oder Auslieferung. Kern, KV_DEFAULTS und amortisation-waermepumpe.html unberührt.

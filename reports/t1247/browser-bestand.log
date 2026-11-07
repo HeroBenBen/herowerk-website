@@ -1,0 +1,21 @@
+(node:48378) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 10 tests using 2 workers
+
+(node:48383) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:48382) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  ✓   2 tests/kv-thin-client.spec.js:315:1 › O3 Contract: Source, Bootstrap und serverseitige Periodeneigenschaft (21ms)
+  ✓   1 tests/kv-lead-reader.spec.js:85:1 › O4 Reader: gültiger v1-Key übernimmt technische Angaben und löscht den Key (236ms)
+  ✓   4 tests/kv-lead-reader.spec.js:136:1 › O4 Reader: Angaben ändern verwirft den Handoff und stellt den vollständigen Funnel her (173ms)
+  ✓   5 tests/kv-lead-reader.spec.js:148:1 › O4 Reader: ungültiger oder unbekannter Key wird nicht übernommen (108ms)
+  ✓   6 tests/kv-lead-reader.spec.js:156:1 › O4 Reader: ohne Key bleibt der bestehende Light-Funnel unverändert (105ms)
+  ✓   3 tests/kv-thin-client.spec.js:554:1 › O3 Kunde Light 375: lokaler Consent, Alt-/EU-Text, sechs Förderanker und Vollflow (4.1s)
+  ✓   7 tests/kv-thin-client.spec.js:717:1 › O8 Bootstrap markiert eta nicht als Nutzerangabe und die Kesselmatrix greift (5.6s)
+  ✓   8 tests/kv-thin-client.spec.js:781:1 › O4 Writer: jeder Anfrage-CTA schreibt ausschließlich das v1-Contract-Schema (6.4s)
+  ✓   9 tests/kv-thin-client.spec.js:908:1 › O4 Writer fail-safe: setItem-Fehler löscht gültigen stale Key vor der Navigation (339ms)
+  ✓  10 tests/kv-thin-client.spec.js:987:1 › G16 Wohnflächen-Regler schreibt den Schätzwert der letzten Antwort (11.2s)
+
+  10 passed (28.2s)

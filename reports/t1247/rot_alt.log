@@ -1,0 +1,902 @@
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T10:45:37.961Z
+STAND ALT: 6fdf74e, Originalverhalten ohne Adapter
+ROT  Euro Gas: 2.650,38 Euro ergeben 20.000 kWh: Server liefert keine Euro-Herleitung
+ROT  Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh: Server liefert keine Öl-Euro-Herleitung
+ROT  Preisänderung im Euro-Modus ohne 500-kWh-Rundung: Expected values to be strictly equal:  20000 !== 16000 
+ROT  Euro-Verbrauch bleibt ungerundet: Expected values to be strictly equal: + actual - expected  + 20000 - 20175.916666666664
+ROT  Gas-Grundpreis 0 bleibt gültig: Server liefert keine Euro-Herleitung bei Grundpreis 0
+ROT  Heutige Heizungsart führt trotz anderer Vergleichsheizung: Server liefert keine Ableitung nach heutiger Heizungsart
+ROT  Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig: Server liefert keine Euro-Ableitung an den Grenzen
+ROT  Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors: Server verwendet den Öl-Einheitenfaktor nicht zur Euro-Ableitung
+ROT  13 ungültige Euro-Eingaben sperren mit Klartext: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  6 belegte Marktwerte, Defaults unverändert: Bootstrap liefert keine Marktwerte
+ROT  Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben: Expected values to be strictly deep-equal: + actual - expected  + undefined - {
+ROT  Marktherkunft nur bei tatsächlich verwendetem Marktwert: Server liefert keine verwendeten Preise mit Herkunft
+ROT  Kostenlinien ab Jahr 0 einschließlich Investition: Server liefert keine Kostenlinien ab Jahr 0
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+ROT  Adapter ist an der öffentlichen Ausgabestelle eingebunden: The input did not match the regular expression /require_once __DIR__ \. '\/rechner-kv-adapter\.php'/. Input:  '<?php\n' +   '/**\n' +   ' * HeroWerk-Rechner: Herkunft, Ratenbegrenzung, PHP-Rechenkern und Google-Rückfall.\n' +
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+ROT  Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung: The input did not match the regular expression /Dein Nutzen mit der Wärmepumpe.*Heizkosten im ersten Jahr.*Bezahlt gemacht nach.*Vorteil nach 20 Jahren/s. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jed
+ROT  Amortisation Jahr 0 heißt Bezahlt gemacht: sofort: The input did not match the regular expression /Bezahlt gemacht: sofort/. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.</div><h3>Dein Vortei
+ROT  Spätes Bootstrap überschreibt keine eigenen Preise: Expected values to be strictly equal:  12 !== '19.7' 
+ROT  Anfrage v1 überträgt nur serverseitige kWh mit Herkunft: Expected values to be strictly equal:  0 !== 20000 
+ROT  Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung: Expected values to be strictly equal: + actual - expected  + 'Preis – Stand — Test' - 'Preis ,  Stand ,  Test'
+ROT  Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder: The input did not match the regular expression /place\(\$\('wzPreiseCard'\)\)/. Input:  '<!DOCTYPE html>\n' +   '<html lang="de">\n' +   '<head>\n' +
+ROT  Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück: Gemeinsamer Moduswechsel fehlt + actual - expected  + 'undefined' - 'function'
+ROT  Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus: Bitte grundpreisGas angeben.
+ROT  Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers: Expected values to be strictly equal:  null !== '' 
+ROT  Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung: The input did not match the regular expression /<span class="chart-summary-mobile">Jahr 0 bis 20 im Detail<\/span>/. Input:  '<div class="mobile-year-answer"><strong>Innerhalb von 20 Jahren noch nicht im Plus</strong><span>Gesamtersparnis ü
+ROT  Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000: The input did not match the regular expression /Gas, 16\.000 kWh/. Input:  `<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accen
+T1247 ERGEBNIS: 4 grün / 25 rot
+EXIT 1
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T10:48:29.766Z
+STAND ALT: 6fdf74e, Originalverhalten ohne Adapter
+ROT  Euro Gas: 2.650,38 Euro ergeben 20.000 kWh: Server liefert keine Euro-Herleitung
+ROT  Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh: Server liefert keine Öl-Euro-Herleitung
+ROT  Preisänderung im Euro-Modus ohne 500-kWh-Rundung: Expected values to be strictly equal:  20000 !== 16000 
+ROT  Euro-Verbrauch bleibt ungerundet: Expected values to be strictly equal: + actual - expected  + 20000 - 20175.916666666664
+ROT  Gas-Grundpreis 0 bleibt gültig: Server liefert keine Euro-Herleitung bei Grundpreis 0
+ROT  Heutige Heizungsart führt trotz anderer Vergleichsheizung: Server liefert keine Ableitung nach heutiger Heizungsart
+ROT  Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig: Server liefert keine Euro-Ableitung an den Grenzen
+ROT  Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors: Server verwendet den Öl-Einheitenfaktor nicht zur Euro-Ableitung
+ROT  13 ungültige Euro-Eingaben sperren mit Klartext: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  6 belegte Marktwerte, Defaults unverändert: Bootstrap liefert keine Marktwerte
+ROT  Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben: Expected values to be strictly deep-equal: + actual - expected  + undefined - {
+ROT  Marktherkunft nur bei tatsächlich verwendetem Marktwert: Server liefert keine verwendeten Preise mit Herkunft
+ROT  Kostenlinien ab Jahr 0 einschließlich Investition: Server liefert keine Kostenlinien ab Jahr 0
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+ROT  Adapter ist an der öffentlichen Ausgabestelle eingebunden: The input did not match the regular expression /require_once __DIR__ \. '\/rechner-kv-adapter\.php'/. Input:  '<?php\n' +   '/**\n' +   ' * HeroWerk-Rechner: Herkunft, Ratenbegrenzung, PHP-Rechenkern und Google-Rückfall.\n' +
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+ROT  Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung: The input did not match the regular expression /Dein Nutzen mit der Wärmepumpe.*Heizkosten im ersten Jahr.*Bezahlt gemacht nach.*Vorteil nach 20 Jahren/s. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jed
+ROT  Amortisation Jahr 0 heißt Bezahlt gemacht: sofort: The input did not match the regular expression /Bezahlt gemacht: sofort/. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.</div><h3>Dein Vortei
+ROT  Spätes Bootstrap überschreibt keine eigenen Preise: Expected values to be strictly equal:  12 !== '19.7' 
+ROT  Anfrage v1 überträgt nur serverseitige kWh mit Herkunft: Expected values to be strictly equal:  0 !== 20000 
+ROT  Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung: Expected values to be strictly equal: + actual - expected  + 'Preis – Stand — Test' - 'Preis ,  Stand ,  Test'
+ROT  Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder: The input did not match the regular expression /place\(\$\('wzPreiseCard'\)\)/. Input:  '<!DOCTYPE html>\n' +   '<html lang="de">\n' +   '<head>\n' +
+ROT  Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück: Gemeinsamer Moduswechsel fehlt + actual - expected  + 'undefined' - 'function'
+ROT  Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus: Bitte grundpreisGas angeben.
+ROT  Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers: Expected values to be strictly equal:  null !== '' 
+ROT  Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung: The input did not match the regular expression /<span class="chart-summary-mobile">Jahr 0 bis 20 im Detail<\/span>/. Input:  '<div class="mobile-year-answer"><strong>Innerhalb von 20 Jahren noch nicht im Plus</strong><span>Gesamtersparnis ü
+ROT  Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000: The input did not match the regular expression /Gas, 16\.000 kWh/. Input:  `<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accen
+T1247 ERGEBNIS: 4 grün / 25 rot
+EXIT 1
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T10:49:19.133Z
+STAND ALT: 6fdf74e, Originalverhalten ohne Adapter
+ROT  Euro Gas: 2.650,38 Euro ergeben 20.000 kWh: Server liefert keine Euro-Herleitung
+ROT  Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh: Server liefert keine Öl-Euro-Herleitung
+ROT  Preisänderung im Euro-Modus ohne 500-kWh-Rundung: Expected values to be strictly equal:  20000 !== 16000 
+ROT  Euro-Verbrauch bleibt ungerundet: Expected values to be strictly equal: + actual - expected  + 20000 - 20175.916666666664
+ROT  Gas-Grundpreis 0 bleibt gültig: Server liefert keine Euro-Herleitung bei Grundpreis 0
+ROT  Heutige Heizungsart führt trotz anderer Vergleichsheizung: Server liefert keine Ableitung nach heutiger Heizungsart
+ROT  Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig: Server liefert keine Euro-Ableitung an den Grenzen
+ROT  Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors: Server verwendet den Öl-Einheitenfaktor nicht zur Euro-Ableitung
+ROT  13 ungültige Euro-Eingaben sperren mit Klartext: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  6 belegte Marktwerte, Defaults unverändert: Bootstrap liefert keine Marktwerte
+ROT  Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben: Expected values to be strictly deep-equal: + actual - expected  + undefined - {
+ROT  Marktherkunft nur bei tatsächlich verwendetem Marktwert: Server liefert keine verwendeten Preise mit Herkunft
+ROT  Kostenlinien ab Jahr 0 einschließlich Investition: Server liefert keine Kostenlinien ab Jahr 0
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+ROT  Adapter ist an der öffentlichen Ausgabestelle eingebunden: The input did not match the regular expression /require_once __DIR__ \. '\/rechner-kv-adapter\.php'/. Input:  '<?php\n' +   '/**\n' +   ' * HeroWerk-Rechner: Herkunft, Ratenbegrenzung, PHP-Rechenkern und Google-Rückfall.\n' +
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+ROT  Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung: The input did not match the regular expression /Dein Nutzen mit der Wärmepumpe.*Heizkosten im ersten Jahr.*Bezahlt gemacht nach.*Vorteil nach 20 Jahren/s. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jed
+ROT  Amortisation Jahr 0 heißt Bezahlt gemacht: sofort: The input did not match the regular expression /Bezahlt gemacht: sofort/. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.</div><h3>Dein Vortei
+ROT  Spätes Bootstrap überschreibt keine eigenen Preise: Expected values to be strictly equal:  12 !== '19.7' 
+ROT  Anfrage v1 überträgt nur serverseitige kWh mit Herkunft: Expected values to be strictly equal:  0 !== 20000 
+ROT  Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung: Expected values to be strictly equal: + actual - expected  + 'Preis – Stand — Test' - 'Preis ,  Stand ,  Test'
+ROT  Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder: The input did not match the regular expression /place\(\$\('wzPreiseCard'\)\)/. Input:  '<!DOCTYPE html>\n' +   '<html lang="de">\n' +   '<head>\n' +
+ROT  Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück: Gemeinsamer Moduswechsel fehlt + actual - expected  + 'undefined' - 'function'
+ROT  Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus: Bitte grundpreisGas angeben.
+ROT  Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers: Expected values to be strictly equal:  null !== '' 
+ROT  Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung: The input did not match the regular expression /<span class="chart-summary-mobile">Jahr 0 bis 20 im Detail<\/span>/. Input:  '<div class="mobile-year-answer"><strong>Innerhalb von 20 Jahren noch nicht im Plus</strong><span>Gesamtersparnis ü
+ROT  Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000: The input did not match the regular expression /Gas, 16\.000 kWh/. Input:  `<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accen
+T1247 ERGEBNIS: 4 grün / 25 rot
+EXIT 1
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T10:59:17.387Z
+STAND ALT: 6fdf74e, Originalverhalten ohne Adapter
+ROT  Euro Gas: 2.650,38 Euro ergeben 20.000 kWh: Server liefert keine Euro-Herleitung
+ROT  Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh: Server liefert keine Öl-Euro-Herleitung
+ROT  Preisänderung im Euro-Modus ohne 500-kWh-Rundung: Expected values to be strictly equal:  20000 !== 16000 
+ROT  Euro-Verbrauch bleibt ungerundet: Expected values to be strictly equal: + actual - expected  + 20000 - 20175.916666666664
+ROT  Gas-Grundpreis 0 bleibt gültig: Server liefert keine Euro-Herleitung bei Grundpreis 0
+ROT  Heutige Heizungsart führt trotz anderer Vergleichsheizung: Server liefert keine Ableitung nach heutiger Heizungsart
+ROT  Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig: Server liefert keine Euro-Ableitung an den Grenzen
+ROT  Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors: Server verwendet den Öl-Einheitenfaktor nicht zur Euro-Ableitung
+ROT  13 ungültige Euro-Eingaben sperren mit Klartext: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  6 belegte Marktwerte, Defaults unverändert: Bootstrap liefert keine Marktwerte
+ROT  Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben: Expected values to be strictly deep-equal: + actual - expected  + undefined - {
+ROT  Marktherkunft nur bei tatsächlich verwendetem Marktwert: Server liefert keine verwendeten Preise mit Herkunft
+ROT  Kostenlinien ab Jahr 0 einschließlich Investition: Server liefert keine Kostenlinien ab Jahr 0
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+ROT  Adapter ist an der öffentlichen Ausgabestelle eingebunden: The input did not match the regular expression /require_once __DIR__ \. '\/rechner-kv-adapter\.php'/. Input:  '<?php\n' +   '/**\n' +   ' * HeroWerk-Rechner: Herkunft, Ratenbegrenzung, PHP-Rechenkern und Google-Rückfall.\n' +
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+ROT  Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung: The input did not match the regular expression /Dein Nutzen mit der Wärmepumpe.*Heizkosten im ersten Jahr.*Bezahlt gemacht nach.*Vorteil nach 20 Jahren/s. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jed
+ROT  Amortisation Jahr 0 heißt Bezahlt gemacht: sofort: The input did not match the regular expression /Bezahlt gemacht: sofort/. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.</div><h3>Dein Vortei
+ROT  Spätes Bootstrap überschreibt keine eigenen Preise: Expected values to be strictly equal:  12 !== '19.7' 
+ROT  Anfrage v1 überträgt nur serverseitige kWh mit Herkunft: Expected values to be strictly equal:  0 !== 20000 
+ROT  Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung: Expected values to be strictly equal: + actual - expected  + 'Preis – Stand — Test' - 'Preis ,  Stand ,  Test'
+ROT  Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder: The input did not match the regular expression /place\(\$\('wzPreiseCard'\)\)/. Input:  '<!DOCTYPE html>\n' +   '<html lang="de">\n' +   '<head>\n' +
+ROT  Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück: Gemeinsamer Moduswechsel fehlt + actual - expected  + 'undefined' - 'function'
+ROT  Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus: Bitte grundpreisGas angeben.
+ROT  Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers: Expected values to be strictly equal:  null !== '' 
+ROT  Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung: The input did not match the regular expression /<span class="chart-summary-mobile">Jahr 0 bis 20 im Detail<\/span>/. Input:  '<div class="mobile-year-answer"><strong>Innerhalb von 20 Jahren noch nicht im Plus</strong><span>Gesamtersparnis ü
+ROT  Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000: The input did not match the regular expression /Gas, 16\.000 kWh/. Input:  `<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accen
+ROT  Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht: Geänderte Eingabe muss weiterhin neu rechnen + actual - expected  + { +   annahmen: {
+ROT  Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert): Expected values to be strictly equal:  0 !== 3 
+ROT  Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API: gaspreis: Komma verlangt Textfeld  'range' !== 'text' 
+ROT  Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent: Cannot read properties of undefined (reading 'text')
+T1247 ERGEBNIS: 4 grün / 29 rot
+EXIT 1
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T10:59:35.219Z
+STAND ALT: 6fdf74e, Originalverhalten ohne Adapter
+ROT  Euro Gas: 2.650,38 Euro ergeben 20.000 kWh: Server liefert keine Euro-Herleitung
+ROT  Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh: Server liefert keine Öl-Euro-Herleitung
+ROT  Preisänderung im Euro-Modus ohne 500-kWh-Rundung: Expected values to be strictly equal:  20000 !== 16000 
+ROT  Euro-Verbrauch bleibt ungerundet: Expected values to be strictly equal: + actual - expected  + 20000 - 20175.916666666664
+ROT  Gas-Grundpreis 0 bleibt gültig: Server liefert keine Euro-Herleitung bei Grundpreis 0
+ROT  Heutige Heizungsart führt trotz anderer Vergleichsheizung: Server liefert keine Ableitung nach heutiger Heizungsart
+ROT  Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig: Server liefert keine Euro-Ableitung an den Grenzen
+ROT  Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors: Server verwendet den Öl-Einheitenfaktor nicht zur Euro-Ableitung
+ROT  13 ungültige Euro-Eingaben sperren mit Klartext: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  6 belegte Marktwerte, Defaults unverändert: Bootstrap liefert keine Marktwerte
+ROT  Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben: Expected values to be strictly deep-equal: + actual - expected  + undefined - {
+ROT  Marktherkunft nur bei tatsächlich verwendetem Marktwert: Server liefert keine verwendeten Preise mit Herkunft
+ROT  Kostenlinien ab Jahr 0 einschließlich Investition: Server liefert keine Kostenlinien ab Jahr 0
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+ROT  Adapter ist an der öffentlichen Ausgabestelle eingebunden: The input did not match the regular expression /require_once __DIR__ \. '\/rechner-kv-adapter\.php'/. Input:  '<?php\n' +   '/**\n' +   ' * HeroWerk-Rechner: Herkunft, Ratenbegrenzung, PHP-Rechenkern und Google-Rückfall.\n' +
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+ROT  Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung: The input did not match the regular expression /Dein Nutzen mit der Wärmepumpe.*Heizkosten im ersten Jahr.*Bezahlt gemacht nach.*Vorteil nach 20 Jahren/s. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jed
+ROT  Amortisation Jahr 0 heißt Bezahlt gemacht: sofort: The input did not match the regular expression /Bezahlt gemacht: sofort/. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.</div><h3>Dein Vortei
+ROT  Spätes Bootstrap überschreibt keine eigenen Preise: Expected values to be strictly equal:  12 !== '19.7' 
+ROT  Anfrage v1 überträgt nur serverseitige kWh mit Herkunft: Expected values to be strictly equal:  0 !== 20000 
+ROT  Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung: Expected values to be strictly equal: + actual - expected  + 'Preis – Stand — Test' - 'Preis ,  Stand ,  Test'
+ROT  Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder: The input did not match the regular expression /place\(\$\('wzPreiseCard'\)\)/. Input:  '<!DOCTYPE html>\n' +   '<html lang="de">\n' +   '<head>\n' +
+ROT  Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück: Gemeinsamer Moduswechsel fehlt + actual - expected  + 'undefined' - 'function'
+ROT  Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus: Bitte grundpreisGas angeben.
+ROT  Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers: Expected values to be strictly equal:  null !== '' 
+ROT  Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung: The input did not match the regular expression /<span class="chart-summary-mobile">Jahr 0 bis 20 im Detail<\/span>/. Input:  '<div class="mobile-year-answer"><strong>Innerhalb von 20 Jahren noch nicht im Plus</strong><span>Gesamtersparnis ü
+ROT  Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000: The input did not match the regular expression /Gas, 16\.000 kWh/. Input:  `<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accen
+ROT  Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht: Geänderte Eingabe muss weiterhin neu rechnen + actual - expected  + { +   annahmen: {
+ROT  Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert): Expected values to be strictly equal:  0 !== 3 
+ROT  Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API: gaspreis: Komma verlangt Textfeld  'range' !== 'text' 
+ROT  Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent: Cannot read properties of undefined (reading 'text')
+T1247 ERGEBNIS: 4 grün / 29 rot
+EXIT 1
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T11:00:00.341Z
+STAND ALT: 6fdf74e, Originalverhalten ohne Adapter
+ROT  Euro Gas: 2.650,38 Euro ergeben 20.000 kWh: Server liefert keine Euro-Herleitung
+ROT  Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh: Server liefert keine Öl-Euro-Herleitung
+ROT  Preisänderung im Euro-Modus ohne 500-kWh-Rundung: Expected values to be strictly equal:  20000 !== 16000 
+ROT  Euro-Verbrauch bleibt ungerundet: Expected values to be strictly equal: + actual - expected  + 20000 - 20175.916666666664
+ROT  Gas-Grundpreis 0 bleibt gültig: Server liefert keine Euro-Herleitung bei Grundpreis 0
+ROT  Heutige Heizungsart führt trotz anderer Vergleichsheizung: Server liefert keine Ableitung nach heutiger Heizungsart
+ROT  Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig: Server liefert keine Euro-Ableitung an den Grenzen
+ROT  Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors: Server verwendet den Öl-Einheitenfaktor nicht zur Euro-Ableitung
+ROT  13 ungültige Euro-Eingaben sperren mit Klartext: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  6 belegte Marktwerte, Defaults unverändert: Bootstrap liefert keine Marktwerte
+ROT  Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben: Expected values to be strictly deep-equal: + actual - expected  + undefined - {
+ROT  Marktherkunft nur bei tatsächlich verwendetem Marktwert: Server liefert keine verwendeten Preise mit Herkunft
+ROT  Kostenlinien ab Jahr 0 einschließlich Investition: Server liefert keine Kostenlinien ab Jahr 0
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+ROT  Adapter ist an der öffentlichen Ausgabestelle eingebunden: The input did not match the regular expression /require_once __DIR__ \. '\/rechner-kv-adapter\.php'/. Input:  '<?php\n' +   '/**\n' +   ' * HeroWerk-Rechner: Herkunft, Ratenbegrenzung, PHP-Rechenkern und Google-Rückfall.\n' +
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+ROT  Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung: The input did not match the regular expression /Dein Nutzen mit der Wärmepumpe.*Heizkosten im ersten Jahr.*Bezahlt gemacht nach.*Vorteil nach 20 Jahren/s. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jed
+ROT  Amortisation Jahr 0 heißt Bezahlt gemacht: sofort: The input did not match the regular expression /Bezahlt gemacht: sofort/. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.</div><h3>Dein Vortei
+ROT  Spätes Bootstrap überschreibt keine eigenen Preise: Expected values to be strictly equal:  12 !== '19.7' 
+ROT  Anfrage v1 überträgt nur serverseitige kWh mit Herkunft: Expected values to be strictly equal:  0 !== 20000 
+ROT  Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung: Expected values to be strictly equal: + actual - expected  + 'Preis – Stand — Test' - 'Preis ,  Stand ,  Test'
+ROT  Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder: The input did not match the regular expression /place\(\$\('wzPreiseCard'\)\)/. Input:  '<!DOCTYPE html>\n' +   '<html lang="de">\n' +   '<head>\n' +
+ROT  Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück: Gemeinsamer Moduswechsel fehlt + actual - expected  + 'undefined' - 'function'
+ROT  Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus: Bitte grundpreisGas angeben.
+ROT  Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers: Expected values to be strictly equal:  null !== '' 
+ROT  Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung: The input did not match the regular expression /<span class="chart-summary-mobile">Jahr 0 bis 20 im Detail<\/span>/. Input:  '<div class="mobile-year-answer"><strong>Innerhalb von 20 Jahren noch nicht im Plus</strong><span>Gesamtersparnis ü
+ROT  Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000: The input did not match the regular expression /Gas, 16\.000 kWh/. Input:  `<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accen
+ROT  Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht: Expected values to be strictly equal:  123 !== null 
+ROT  Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert): Expected values to be strictly equal:  0 !== 3 
+ROT  Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API: gaspreis: Komma verlangt Textfeld  'range' !== 'text' 
+ROT  Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent: Cannot read properties of undefined (reading 'text')
+T1247 ERGEBNIS: 4 grün / 29 rot
+EXIT 1
+
+Auftrag 6: zusätzlicher Rot-Nachweis auf gesichertem Auftrag-5-Arbeitsstand, identische Prüfungen; nur zwei Dateipfade auf /tmp-Sicherung umgeleitet.
+ROT  Euro Gas: 2.650,38 Euro ergeben 20.000 kWh: The input did not match the regular expression /20\.000 kWh.*250,38 Euro\/Jahr.*12,00 ct\/kWh/. Input:  'Aus deiner Jahresrechnung ergibt sich ein Verbrauch von 20.000,00 kWh. Deine Jahreskosten: 2.650,38 Euro. Davon Gas-Grundpreis: 250,38 
+ROT  Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh: The input did not match the regular expression /2\.000 Litern.*10 kWh je Liter/. Input:  'Aus deiner Jahresrechnung ergibt sich ein Verbrauch von 20.000,00 kWh. Deine Jahreskosten: 2.200,00 Euro. Verwendeter Arbeitspreis: 1,10 Euro/Liter. D
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+ROT  Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht: Fokuswechsel hat fertiges Ergebnis entwertet + actual - expected  + null - {
+ROT  Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert): The input was expected to not match the regular expression /[A-Za-zÄÖÜäöüß)]\d/. Input:  'Bezahlt gemacht nach4 JahrenMehrpreis gegenüber der neuen fossilen Heizung: 5.120 €. Dann haben die Einsparungen diesen Betrag eingeholt.' 
+ROT  Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API: gaspreis: Komma verlangt Textfeld  'number' !== 'text' 
+ROT  Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent: The input did not match the regular expression /20\.000 kWh.*2\.200,00 Euro.*1,10 Euro\/Liter.*2\.000 Litern bei 10 kWh je Liter/. Input:  'Aus deiner Jahresrechnung ergibt sich ein Verbrauch von 20.000,00 kWh. Deine Jahreskosten: 2.200,00 
+T1247 ERGEBNIS: 27 grün / 6 rot
+EXIT 1
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T11:01:44.672Z
+STAND ALT: 6fdf74e, Originalverhalten ohne Adapter
+ROT  Euro Gas: 2.650,38 Euro ergeben 20.000 kWh: Server liefert keine Euro-Herleitung
+ROT  Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh: Server liefert keine Öl-Euro-Herleitung
+ROT  Preisänderung im Euro-Modus ohne 500-kWh-Rundung: Expected values to be strictly equal:  20000 !== 16000 
+ROT  Euro-Verbrauch bleibt ungerundet: Expected values to be strictly equal: + actual - expected  + 20000 - 20175.916666666664
+ROT  Gas-Grundpreis 0 bleibt gültig: Server liefert keine Euro-Herleitung bei Grundpreis 0
+ROT  Heutige Heizungsart führt trotz anderer Vergleichsheizung: Server liefert keine Ableitung nach heutiger Heizungsart
+ROT  Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig: Server liefert keine Euro-Ableitung an den Grenzen
+ROT  Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors: Server verwendet den Öl-Einheitenfaktor nicht zur Euro-Ableitung
+ROT  13 ungültige Euro-Eingaben sperren mit Klartext: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  6 belegte Marktwerte, Defaults unverändert: Bootstrap liefert keine Marktwerte
+ROT  Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben: Expected values to be strictly deep-equal: + actual - expected  + undefined - {
+ROT  Marktherkunft nur bei tatsächlich verwendetem Marktwert: Server liefert keine verwendeten Preise mit Herkunft
+ROT  Kostenlinien ab Jahr 0 einschließlich Investition: Server liefert keine Kostenlinien ab Jahr 0
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+ROT  Adapter ist an der öffentlichen Ausgabestelle eingebunden: The input did not match the regular expression /require_once __DIR__ \. '\/rechner-kv-adapter\.php'/. Input:  '<?php\n' +   '/**\n' +   ' * HeroWerk-Rechner: Herkunft, Ratenbegrenzung, PHP-Rechenkern und Google-Rückfall.\n' +
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+ROT  Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung: The input did not match the regular expression /Dein Nutzen mit der Wärmepumpe.*Heizkosten im ersten Jahr.*Bezahlt gemacht nach.*Vorteil nach 20 Jahren/s. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jed
+ROT  Amortisation Jahr 0 heißt Bezahlt gemacht: sofort: The input did not match the regular expression /Bezahlt gemacht: sofort/. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.</div><h3>Dein Vortei
+ROT  Spätes Bootstrap überschreibt keine eigenen Preise: Expected values to be strictly equal:  12 !== '19.7' 
+ROT  Anfrage v1 überträgt nur serverseitige kWh mit Herkunft: Expected values to be strictly equal:  0 !== 20000 
+ROT  Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung: Expected values to be strictly equal: + actual - expected  + 'Preis – Stand — Test' - 'Preis ,  Stand ,  Test'
+ROT  Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder: The input did not match the regular expression /place\(\$\('wzPreiseCard'\)\)/. Input:  '<!DOCTYPE html>\n' +   '<html lang="de">\n' +   '<head>\n' +
+ROT  Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück: Gemeinsamer Moduswechsel fehlt + actual - expected  + 'undefined' - 'function'
+ROT  Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus: Bitte grundpreisGas angeben.
+ROT  Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers: Expected values to be strictly equal:  null !== '' 
+ROT  Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung: The input did not match the regular expression /<span class="chart-summary-mobile">Jahr 0 bis 20 im Detail<\/span>/. Input:  '<div class="mobile-year-answer"><strong>Innerhalb von 20 Jahren noch nicht im Plus</strong><span>Gesamtersparnis ü
+ROT  Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000: The input did not match the regular expression /Gas, 16\.000 kWh/. Input:  `<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accen
+ROT  Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht: Expected values to be strictly equal:  123 !== null 
+ROT  Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert): Expected values to be strictly equal:  0 !== 3 
+ROT  Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API: gaspreis: Komma verlangt Textfeld  'range' !== 'text' 
+ROT  Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent: Cannot read properties of undefined (reading 'text')
+T1247 ERGEBNIS: 4 grün / 29 rot
+EXIT 1
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T11:02:56.875Z
+STAND ALT: 6fdf74e, Originalverhalten ohne Adapter
+ROT  Euro Gas: 2.650,38 Euro ergeben 20.000 kWh: Server liefert keine Euro-Herleitung
+ROT  Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh: Server liefert keine Öl-Euro-Herleitung
+ROT  Preisänderung im Euro-Modus ohne 500-kWh-Rundung: Expected values to be strictly equal:  20000 !== 16000 
+ROT  Euro-Verbrauch bleibt ungerundet: Expected values to be strictly equal: + actual - expected  + 20000 - 20175.916666666664
+ROT  Gas-Grundpreis 0 bleibt gültig: Server liefert keine Euro-Herleitung bei Grundpreis 0
+ROT  Heutige Heizungsart führt trotz anderer Vergleichsheizung: Server liefert keine Ableitung nach heutiger Heizungsart
+ROT  Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig: Server liefert keine Euro-Ableitung an den Grenzen
+ROT  Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors: Server verwendet den Öl-Einheitenfaktor nicht zur Euro-Ableitung
+ROT  13 ungültige Euro-Eingaben sperren mit Klartext: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  6 belegte Marktwerte, Defaults unverändert: Bootstrap liefert keine Marktwerte
+ROT  Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben: Expected values to be strictly deep-equal: + actual - expected  + undefined - {
+ROT  Marktherkunft nur bei tatsächlich verwendetem Marktwert: Server liefert keine verwendeten Preise mit Herkunft
+ROT  Kostenlinien ab Jahr 0 einschließlich Investition: Server liefert keine Kostenlinien ab Jahr 0
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+ROT  Adapter ist an der öffentlichen Ausgabestelle eingebunden: The input did not match the regular expression /require_once __DIR__ \. '\/rechner-kv-adapter\.php'/. Input:  '<?php\n' +   '/**\n' +   ' * HeroWerk-Rechner: Herkunft, Ratenbegrenzung, PHP-Rechenkern und Google-Rückfall.\n' +
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+ROT  Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung: The input did not match the regular expression /Dein Nutzen mit der Wärmepumpe.*Heizkosten im ersten Jahr.*Bezahlt gemacht nach.*Vorteil nach 20 Jahren/s. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jed
+ROT  Amortisation Jahr 0 heißt Bezahlt gemacht: sofort: The input did not match the regular expression /Bezahlt gemacht: sofort/. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.</div><h3>Dein Vortei
+ROT  Spätes Bootstrap überschreibt keine eigenen Preise: Expected values to be strictly equal:  12 !== '19.7' 
+ROT  Anfrage v1 überträgt nur serverseitige kWh mit Herkunft: Expected values to be strictly equal:  0 !== 20000 
+ROT  Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung: Expected values to be strictly equal: + actual - expected  + 'Preis – Stand — Test' - 'Preis ,  Stand ,  Test'
+ROT  Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder: The input did not match the regular expression /place\(\$\('wzPreiseCard'\)\)/. Input:  '<!DOCTYPE html>\n' +   '<html lang="de">\n' +   '<head>\n' +
+ROT  Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück: Gemeinsamer Moduswechsel fehlt + actual - expected  + 'undefined' - 'function'
+ROT  Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus: Bitte grundpreisGas angeben.
+ROT  Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers: Expected values to be strictly equal:  null !== '' 
+ROT  Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung: The input did not match the regular expression /<span class="chart-summary-mobile">Jahr 0 bis 20 im Detail<\/span>/. Input:  '<div class="mobile-year-answer"><strong>Innerhalb von 20 Jahren noch nicht im Plus</strong><span>Gesamtersparnis ü
+ROT  Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000: The input did not match the regular expression /Gas, 16\.000 kWh/. Input:  `<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accen
+ROT  Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht: Expected values to be strictly equal:  123 !== null 
+ROT  Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert): Expected values to be strictly equal:  0 !== 3 
+ROT  Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API: gaspreis: Komma verlangt Textfeld  'range' !== 'text' 
+ROT  Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent: Cannot read properties of undefined (reading 'text')
+T1247 ERGEBNIS: 4 grün / 29 rot
+EXIT 1
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T11:18:34.837Z
+STAND ALT: 6fdf74e, Originalverhalten ohne Adapter
+ROT  Euro Gas: 2.650,38 Euro ergeben 20.000 kWh: Server liefert keine Euro-Herleitung
+ROT  Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh: Server liefert keine Öl-Euro-Herleitung
+ROT  Preisänderung im Euro-Modus ohne 500-kWh-Rundung: Expected values to be strictly equal:  20000 !== 16000 
+ROT  Euro-Verbrauch bleibt ungerundet: Expected values to be strictly equal: + actual - expected  + 20000 - 20175.916666666664
+ROT  Gas-Grundpreis 0 bleibt gültig: Server liefert keine Euro-Herleitung bei Grundpreis 0
+ROT  Heutige Heizungsart führt trotz anderer Vergleichsheizung: Server liefert keine Ableitung nach heutiger Heizungsart
+ROT  Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig: Server liefert keine Euro-Ableitung an den Grenzen
+ROT  Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors: Server verwendet den Öl-Einheitenfaktor nicht zur Euro-Ableitung
+ROT  13 ungültige Euro-Eingaben sperren mit Klartext: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  6 belegte Marktwerte, Defaults unverändert: Bootstrap liefert keine Marktwerte
+ROT  Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben: Expected values to be strictly deep-equal: + actual - expected  + undefined - {
+ROT  Marktherkunft nur bei tatsächlich verwendetem Marktwert: Server liefert keine verwendeten Preise mit Herkunft
+ROT  Kostenlinien ab Jahr 0 einschließlich Investition: Server liefert keine Kostenlinien ab Jahr 0
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+ROT  Adapter ist an der öffentlichen Ausgabestelle eingebunden: The input did not match the regular expression /require_once __DIR__ \. '\/rechner-kv-adapter\.php'/. Input:  '<?php\n' +   '/**\n' +   ' * HeroWerk-Rechner: Herkunft, Ratenbegrenzung, PHP-Rechenkern und Google-Rückfall.\n' +
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+ROT  Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung: The input did not match the regular expression /Dein Nutzen mit der Wärmepumpe.*Heizkosten im ersten Jahr.*Bezahlt gemacht nach.*Vorteil nach 20 Jahren/s. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jed
+ROT  Amortisation Jahr 0 heißt Bezahlt gemacht: sofort: The input did not match the regular expression /Bezahlt gemacht: sofort/. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.</div><h3>Dein Vortei
+ROT  Spätes Bootstrap überschreibt keine eigenen Preise: Expected values to be strictly equal:  12 !== '19.7' 
+ROT  Anfrage v1 überträgt nur serverseitige kWh mit Herkunft: Expected values to be strictly equal:  0 !== 20000 
+ROT  Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung: Expected values to be strictly equal: + actual - expected  + 'Preis – Stand — Test' - 'Preis ,  Stand ,  Test'
+ROT  Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder: The input did not match the regular expression /place\(\$\('wzPreiseCard'\)\)/. Input:  '<!DOCTYPE html>\n' +   '<html lang="de">\n' +   '<head>\n' +
+ROT  Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück: Gemeinsamer Moduswechsel fehlt + actual - expected  + 'undefined' - 'function'
+ROT  Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus: Bitte grundpreisGas angeben.
+ROT  Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers: Expected values to be strictly equal:  null !== '' 
+ROT  Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung: The input did not match the regular expression /<span class="chart-summary-mobile">Jahr 0 bis 20 im Detail<\/span>/. Input:  '<div class="mobile-year-answer"><strong>Innerhalb von 20 Jahren noch nicht im Plus</strong><span>Gesamtersparnis ü
+ROT  Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000: The input did not match the regular expression /Gas, 16\.000 kWh/. Input:  `<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accen
+ROT  Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht: Expected values to be strictly equal:  123 !== null 
+ROT  Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert): Expected values to be strictly equal:  0 !== 3 
+ROT  Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API: gaspreis: Komma verlangt Textfeld  'range' !== 'text' 
+ROT  Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext: ctx.wzBillStart is not a function
+ROT  Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis: The input did not match the regular expression /Die Wärmepumpe ist nach Förderung 380 € günstiger als die neue Gasheizung\./. Input:  'Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche A
+ROT  Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent: Cannot read properties of undefined (reading 'text')
+T1247 ERGEBNIS: 4 grün / 32 rot
+EXIT 1
+
+AUFTRAG 7: vor Produktänderung gesicherter Auftrag-6-Arbeitsstand, neue Prüfungen unverändert
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+GRÜN Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht
+GRÜN Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert)
+ROT  Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API: Expected values to be strictly equal: + actual - expected  + '2650,38' - '2.650,38'
+ROT  Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext: 2.650,38 + actual - expected  + '2.650,38' - '2650.38'
+ROT  Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis: The input did not match the regular expression /Die Wärmepumpe ist nach Förderung 380 € günstiger als die neue Gasheizung\./. Input:  'Dein Nutzen mit der WärmepumpeVergleichsbasis: neue Gasheizung. Nominal, ohne Finanzierungskosten.\n' +  
+GRÜN Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt
+GRÜN Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent
+T1247 ERGEBNIS: 33 grün / 3 rot
+EXIT 1
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T11:19:27.497Z
+STAND ALT: 6fdf74e, Originalverhalten ohne Adapter
+ROT  Euro Gas: 2.650,38 Euro ergeben 20.000 kWh: Server liefert keine Euro-Herleitung
+ROT  Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh: Server liefert keine Öl-Euro-Herleitung
+ROT  Preisänderung im Euro-Modus ohne 500-kWh-Rundung: Expected values to be strictly equal:  20000 !== 16000 
+ROT  Euro-Verbrauch bleibt ungerundet: Expected values to be strictly equal: + actual - expected  + 20000 - 20175.916666666664
+ROT  Gas-Grundpreis 0 bleibt gültig: Server liefert keine Euro-Herleitung bei Grundpreis 0
+ROT  Heutige Heizungsart führt trotz anderer Vergleichsheizung: Server liefert keine Ableitung nach heutiger Heizungsart
+ROT  Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig: Server liefert keine Euro-Ableitung an den Grenzen
+ROT  Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors: Server verwendet den Öl-Einheitenfaktor nicht zur Euro-Ableitung
+ROT  13 ungültige Euro-Eingaben sperren mit Klartext: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  6 belegte Marktwerte, Defaults unverändert: Bootstrap liefert keine Marktwerte
+ROT  Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben: Expected values to be strictly deep-equal: + actual - expected  + undefined - {
+ROT  Marktherkunft nur bei tatsächlich verwendetem Marktwert: Server liefert keine verwendeten Preise mit Herkunft
+ROT  Kostenlinien ab Jahr 0 einschließlich Investition: Server liefert keine Kostenlinien ab Jahr 0
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+ROT  Adapter ist an der öffentlichen Ausgabestelle eingebunden: The input did not match the regular expression /require_once __DIR__ \. '\/rechner-kv-adapter\.php'/. Input:  '<?php\n' +   '/**\n' +   ' * HeroWerk-Rechner: Herkunft, Ratenbegrenzung, PHP-Rechenkern und Google-Rückfall.\n' +
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+ROT  Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung: The input did not match the regular expression /Dein Nutzen mit der Wärmepumpe.*Heizkosten im ersten Jahr.*Bezahlt gemacht nach.*Vorteil nach 20 Jahren/s. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jed
+ROT  Amortisation Jahr 0 heißt Bezahlt gemacht: sofort: The input did not match the regular expression /Bezahlt gemacht: sofort/. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.</div><h3>Dein Vortei
+ROT  Spätes Bootstrap überschreibt keine eigenen Preise: Expected values to be strictly equal:  12 !== '19.7' 
+ROT  Anfrage v1 überträgt nur serverseitige kWh mit Herkunft: Expected values to be strictly equal:  0 !== 20000 
+ROT  Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung: Expected values to be strictly equal: + actual - expected  + 'Preis – Stand — Test' - 'Preis ,  Stand ,  Test'
+ROT  Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder: The input did not match the regular expression /place\(\$\('wzPreiseCard'\)\)/. Input:  '<!DOCTYPE html>\n' +   '<html lang="de">\n' +   '<head>\n' +
+ROT  Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück: Gemeinsamer Moduswechsel fehlt + actual - expected  + 'undefined' - 'function'
+ROT  Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus: Bitte grundpreisGas angeben.
+ROT  Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers: Expected values to be strictly equal:  null !== '' 
+ROT  Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung: The input did not match the regular expression /<span class="chart-summary-mobile">Jahr 0 bis 20 im Detail<\/span>/. Input:  '<div class="mobile-year-answer"><strong>Innerhalb von 20 Jahren noch nicht im Plus</strong><span>Gesamtersparnis ü
+ROT  Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000: The input did not match the regular expression /Gas, 16\.000 kWh/. Input:  `<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accen
+ROT  Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht: Expected values to be strictly equal:  123 !== null 
+ROT  Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert): Expected values to be strictly equal:  0 !== 3 
+ROT  Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API: gaspreis: Komma verlangt Textfeld  'range' !== 'text' 
+ROT  Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext: ctx.wzBillStart is not a function
+ROT  Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis: The input did not match the regular expression /Die Wärmepumpe ist nach Förderung 380 € günstiger als die neue Gasheizung\./. Input:  'Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche A
+ROT  Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent: Cannot read properties of undefined (reading 'text')
+T1247 ERGEBNIS: 4 grün / 32 rot
+EXIT 1
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T11:38:18.013Z
+STAND ALT: 6fdf74e, Originalverhalten ohne Adapter
+ROT  Euro Gas: 2.650,38 Euro ergeben 20.000 kWh: Server liefert keine Euro-Herleitung
+ROT  Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh: Server liefert keine Öl-Euro-Herleitung
+ROT  Preisänderung im Euro-Modus ohne 500-kWh-Rundung: Expected values to be strictly equal:  20000 !== 16000 
+ROT  Euro-Verbrauch bleibt ungerundet: Expected values to be strictly equal: + actual - expected  + 20000 - 20175.916666666664
+ROT  Gas-Grundpreis 0 bleibt gültig: Server liefert keine Euro-Herleitung bei Grundpreis 0
+ROT  Heutige Heizungsart führt trotz anderer Vergleichsheizung: Server liefert keine Ableitung nach heutiger Heizungsart
+ROT  Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig: Server liefert keine Euro-Ableitung an den Grenzen
+ROT  Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors: Server verwendet den Öl-Einheitenfaktor nicht zur Euro-Ableitung
+ROT  13 ungültige Euro-Eingaben sperren mit Klartext: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  6 belegte Marktwerte, Defaults unverändert: Bootstrap liefert keine Marktwerte
+ROT  Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben: Expected values to be strictly deep-equal: + actual - expected  + undefined - {
+ROT  Marktherkunft nur bei tatsächlich verwendetem Marktwert: Server liefert keine verwendeten Preise mit Herkunft
+ROT  Kostenlinien ab Jahr 0 einschließlich Investition: Server liefert keine Kostenlinien ab Jahr 0
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+ROT  Adapter ist an der öffentlichen Ausgabestelle eingebunden: The input did not match the regular expression /require_once __DIR__ \. '\/rechner-kv-adapter\.php'/. Input:  '<?php\n' +   '/**\n' +   ' * HeroWerk-Rechner: Herkunft, Ratenbegrenzung, PHP-Rechenkern und Google-Rückfall.\n' +
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+ROT  Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung: The input did not match the regular expression /Dein Nutzen mit der Wärmepumpe.*Heizkosten im ersten Jahr.*Bezahlt gemacht nach.*Vorteil nach 20 Jahren/s. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jed
+ROT  Amortisation Jahr 0 heißt Bezahlt gemacht: sofort: The input did not match the regular expression /Bezahlt gemacht: sofort/. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.</div><h3>Dein Vortei
+ROT  Spätes Bootstrap überschreibt keine eigenen Preise: Expected values to be strictly equal:  12 !== '19.7' 
+ROT  Anfrage v1 überträgt nur serverseitige kWh mit Herkunft: Expected values to be strictly equal:  0 !== 20000 
+ROT  Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung: Expected values to be strictly equal: + actual - expected  + 'Preis – Stand — Test' - 'Preis ,  Stand ,  Test'
+ROT  Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder: The input did not match the regular expression /place\(\$\('wzPreiseCard'\)\)/. Input:  '<!DOCTYPE html>\n' +   '<html lang="de">\n' +   '<head>\n' +
+ROT  Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück: Gemeinsamer Moduswechsel fehlt + actual - expected  + 'undefined' - 'function'
+ROT  Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus: Bitte grundpreisGas angeben.
+ROT  Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers: Expected values to be strictly equal:  null !== '' 
+ROT  Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung: The input did not match the regular expression /<span class="chart-summary-mobile">Jahr 0 bis 20 im Detail<\/span>/. Input:  '<div class="mobile-year-answer"><strong>Innerhalb von 20 Jahren noch nicht im Plus</strong><span>Gesamtersparnis ü
+ROT  Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000: The input did not match the regular expression /Gas, 16\.000 kWh/. Input:  `<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accen
+ROT  Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht: Expected values to be strictly equal:  123 !== null 
+ROT  Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert): Expected values to be strictly equal:  0 !== 3 
+ROT  Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API: gaspreis: Komma verlangt Textfeld  'range' !== 'text' 
+ROT  Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext: ctx.wzBillStart is not a function
+ROT  Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis: The input did not match the regular expression /Die Wärmepumpe ist nach Förderung 380 € günstiger als die neue Gasheizung\./. Input:  'Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche A
+ROT  Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent: Cannot read properties of undefined (reading 'text')
+T1247 ERGEBNIS: 4 grün / 32 rot
+EXIT 1
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T11:40:13.647Z
+STAND ALT: 6fdf74e, Originalverhalten ohne Adapter
+ROT  Euro Gas: 2.650,38 Euro ergeben 20.000 kWh: Server liefert keine Euro-Herleitung
+ROT  Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh: Server liefert keine Öl-Euro-Herleitung
+ROT  Preisänderung im Euro-Modus ohne 500-kWh-Rundung: Expected values to be strictly equal:  20000 !== 16000 
+ROT  Euro-Verbrauch bleibt ungerundet: Expected values to be strictly equal: + actual - expected  + 20000 - 20175.916666666664
+ROT  Gas-Grundpreis 0 bleibt gültig: Server liefert keine Euro-Herleitung bei Grundpreis 0
+ROT  Heutige Heizungsart führt trotz anderer Vergleichsheizung: Server liefert keine Ableitung nach heutiger Heizungsart
+ROT  Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig: Server liefert keine Euro-Ableitung an den Grenzen
+ROT  Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors: Server verwendet den Öl-Einheitenfaktor nicht zur Euro-Ableitung
+ROT  13 ungültige Euro-Eingaben sperren mit Klartext: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  6 belegte Marktwerte, Defaults unverändert: Bootstrap liefert keine Marktwerte
+ROT  Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben: Expected values to be strictly deep-equal: + actual - expected  + undefined - {
+ROT  Marktherkunft nur bei tatsächlich verwendetem Marktwert: Server liefert keine verwendeten Preise mit Herkunft
+ROT  Kostenlinien ab Jahr 0 einschließlich Investition: Server liefert keine Kostenlinien ab Jahr 0
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+ROT  Adapter ist an der öffentlichen Ausgabestelle eingebunden: The input did not match the regular expression /require_once __DIR__ \. '\/rechner-kv-adapter\.php'/. Input:  '<?php\n' +   '/**\n' +   ' * HeroWerk-Rechner: Herkunft, Ratenbegrenzung, PHP-Rechenkern und Google-Rückfall.\n' +
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+ROT  Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung: The input did not match the regular expression /Dein Nutzen mit der Wärmepumpe.*Heizkosten im ersten Jahr.*Bezahlt gemacht nach.*Vorteil nach 20 Jahren/s. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jed
+ROT  Amortisation Jahr 0 heißt Bezahlt gemacht: sofort: The input did not match the regular expression /Bezahlt gemacht: sofort/. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.</div><h3>Dein Vortei
+ROT  Spätes Bootstrap überschreibt keine eigenen Preise: Expected values to be strictly equal:  12 !== '19.7' 
+ROT  Anfrage v1 überträgt nur serverseitige kWh mit Herkunft: Expected values to be strictly equal:  0 !== 20000 
+ROT  Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung: Expected values to be strictly equal: + actual - expected  + 'Preis – Stand — Test' - 'Preis ,  Stand ,  Test'
+ROT  Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder: The input did not match the regular expression /place\(\$\('wzPreiseCard'\)\)/. Input:  '<!DOCTYPE html>\n' +   '<html lang="de">\n' +   '<head>\n' +
+ROT  Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück: Gemeinsamer Moduswechsel fehlt + actual - expected  + 'undefined' - 'function'
+ROT  Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus: Bitte grundpreisGas angeben.
+ROT  Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers: Expected values to be strictly equal:  null !== '' 
+ROT  Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung: The input did not match the regular expression /<span class="chart-summary-mobile">Jahr 0 bis 20 im Detail<\/span>/. Input:  '<div class="mobile-year-answer"><strong>Innerhalb von 20 Jahren noch nicht im Plus</strong><span>Gesamtersparnis ü
+ROT  Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000: The input did not match the regular expression /Gas, 16\.000 kWh/. Input:  `<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accen
+ROT  Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht: Expected values to be strictly equal:  123 !== null 
+ROT  Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert): Expected values to be strictly equal:  0 !== 3 
+ROT  Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API: gaspreis: Komma verlangt Textfeld  'range' !== 'text' 
+ROT  Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext: ctx.wzBillStart is not a function
+ROT  Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis: The input did not match the regular expression /Die Wärmepumpe ist nach Förderung 380 € günstiger als die neue Gasheizung\./. Input:  'Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche A
+ROT  Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent: Cannot read properties of undefined (reading 'text')
+T1247 ERGEBNIS: 4 grün / 32 rot
+EXIT 1
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T11:52:27.320Z
+STAND ALT: 6fdf74e, Originalverhalten ohne Adapter
+ROT  Euro Gas: 2.650,38 Euro ergeben 20.000 kWh: Server liefert keine Euro-Herleitung
+ROT  Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh: Server liefert keine Öl-Euro-Herleitung
+ROT  Preisänderung im Euro-Modus ohne 500-kWh-Rundung: Expected values to be strictly equal:  20000 !== 16000 
+ROT  Euro-Verbrauch bleibt ungerundet: Expected values to be strictly equal: + actual - expected  + 20000 - 20175.916666666664
+ROT  Gas-Grundpreis 0 bleibt gültig: Server liefert keine Euro-Herleitung bei Grundpreis 0
+ROT  Heutige Heizungsart führt trotz anderer Vergleichsheizung: Server liefert keine Ableitung nach heutiger Heizungsart
+ROT  Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig: Server liefert keine Euro-Ableitung an den Grenzen
+ROT  Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors: Server verwendet den Öl-Einheitenfaktor nicht zur Euro-Ableitung
+ROT  13 ungültige Euro-Eingaben sperren mit Klartext: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  6 belegte Marktwerte, Defaults unverändert: Bootstrap liefert keine Marktwerte
+ROT  Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben: Expected values to be strictly deep-equal: + actual - expected  + undefined - {
+ROT  Marktherkunft nur bei tatsächlich verwendetem Marktwert: Server liefert keine verwendeten Preise mit Herkunft
+ROT  Preisherkunft nennt je Preis Annahme, eigene Angabe oder Marktquelle mit Stand: The input did not match the regular expression /Preisherkunft: Arbeitspreis HeroWerk-Annahme, Grundpreis HeroWerk-Annahme\./. Input:  '' 
+ROT  Kostenlinien ab Jahr 0 einschließlich Investition: Server liefert keine Kostenlinien ab Jahr 0
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+ROT  Adapter ist an der öffentlichen Ausgabestelle eingebunden: The input did not match the regular expression /require_once __DIR__ \. '\/rechner-kv-adapter\.php'/. Input:  '<?php\n' +   '/**\n' +   ' * HeroWerk-Rechner: Herkunft, Ratenbegrenzung, PHP-Rechenkern und Google-Rückfall.\n' +
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+ROT  Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung: The input did not match the regular expression /Dein Nutzen mit der Wärmepumpe.*Heizkosten im ersten Jahr.*Bezahlt gemacht nach.*Vorteil nach 20 Jahren/s. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jed
+ROT  Amortisation Jahr 0 heißt Bezahlt gemacht: sofort: The input did not match the regular expression /Bezahlt gemacht: sofort/. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.</div><h3>Dein Vortei
+ROT  Diagrammbeschriftung vollständig innerhalb der Fläche, Jahre 0 bis 25, schmal und breit: Cannot read properties of undefined (reading 'length')
+ROT  Spätes Bootstrap überschreibt keine eigenen Preise: Expected values to be strictly equal:  12 !== '19.7' 
+ROT  Anfrage v1 überträgt nur serverseitige kWh mit Herkunft: Expected values to be strictly equal:  0 !== 20000 
+ROT  Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung: Expected values to be strictly equal: + actual - expected  + 'Preis – Stand — Test' - 'Preis ,  Stand ,  Test'
+ROT  Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder: The input did not match the regular expression /place\(\$\('wzPreiseCard'\)\)/. Input:  '<!DOCTYPE html>\n' +   '<html lang="de">\n' +   '<head>\n' +
+ROT  Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück: Gemeinsamer Moduswechsel fehlt + actual - expected  + 'undefined' - 'function'
+ROT  Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus: Bitte grundpreisGas angeben.
+ROT  Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers: Expected values to be strictly equal:  null !== '' 
+ROT  Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung: The input did not match the regular expression /<span class="chart-summary-mobile">Jahr 0 bis 20 im Detail<\/span>/. Input:  '<div class="mobile-year-answer"><strong>Innerhalb von 20 Jahren noch nicht im Plus</strong><span>Gesamtersparnis ü
+ROT  Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000: The input did not match the regular expression /Gas, 16\.000 kWh/. Input:  `<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accen
+ROT  Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht: Expected values to be strictly equal:  123 !== null 
+ROT  Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert): Expected values to be strictly equal:  0 !== 3 
+ROT  Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API: gaspreis: Komma verlangt Textfeld  'range' !== 'text' 
+ROT  Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext: ctx.wzBillStart is not a function
+ROT  Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis: The input did not match the regular expression /Die Wärmepumpe ist nach Förderung 380 € günstiger als die neue Gasheizung\./. Input:  'Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche A
+ROT  Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent: Cannot read properties of undefined (reading 'text')
+T1247 ERGEBNIS: 4 grün / 34 rot
+EXIT 1
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T11:53:09.213Z
+STAND ALT: 6fdf74e, Originalverhalten ohne Adapter
+ROT  Euro Gas: 2.650,38 Euro ergeben 20.000 kWh: Server liefert keine Euro-Herleitung
+ROT  Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh: Server liefert keine Öl-Euro-Herleitung
+ROT  Preisänderung im Euro-Modus ohne 500-kWh-Rundung: Expected values to be strictly equal:  20000 !== 16000 
+ROT  Euro-Verbrauch bleibt ungerundet: Expected values to be strictly equal: + actual - expected  + 20000 - 20175.916666666664
+ROT  Gas-Grundpreis 0 bleibt gültig: Server liefert keine Euro-Herleitung bei Grundpreis 0
+ROT  Heutige Heizungsart führt trotz anderer Vergleichsheizung: Server liefert keine Ableitung nach heutiger Heizungsart
+ROT  Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig: Server liefert keine Euro-Ableitung an den Grenzen
+ROT  Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors: Server verwendet den Öl-Einheitenfaktor nicht zur Euro-Ableitung
+ROT  13 ungültige Euro-Eingaben sperren mit Klartext: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  6 belegte Marktwerte, Defaults unverändert: Bootstrap liefert keine Marktwerte
+ROT  Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben: Expected values to be strictly deep-equal: + actual - expected  + undefined - {
+ROT  Marktherkunft nur bei tatsächlich verwendetem Marktwert: Server liefert keine verwendeten Preise mit Herkunft
+ROT  Preisherkunft nennt je Preis Annahme, eigene Angabe oder Marktquelle mit Stand: The input did not match the regular expression /Preisherkunft: Arbeitspreis HeroWerk-Annahme, Grundpreis HeroWerk-Annahme\./. Input:  '' 
+ROT  Kostenlinien ab Jahr 0 einschließlich Investition: Server liefert keine Kostenlinien ab Jahr 0
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+ROT  Adapter ist an der öffentlichen Ausgabestelle eingebunden: The input did not match the regular expression /require_once __DIR__ \. '\/rechner-kv-adapter\.php'/. Input:  '<?php\n' +   '/**\n' +   ' * HeroWerk-Rechner: Herkunft, Ratenbegrenzung, PHP-Rechenkern und Google-Rückfall.\n' +
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+ROT  Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung: The input did not match the regular expression /Dein Nutzen mit der Wärmepumpe.*Heizkosten im ersten Jahr.*Bezahlt gemacht nach.*Vorteil nach 20 Jahren/s. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jed
+ROT  Amortisation Jahr 0 heißt Bezahlt gemacht: sofort: The input did not match the regular expression /Bezahlt gemacht: sofort/. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.</div><h3>Dein Vortei
+ROT  Diagrammbeschriftung vollständig innerhalb der Fläche, Jahre 0 bis 25, schmal und breit: Cannot read properties of undefined (reading 'length')
+ROT  Spätes Bootstrap überschreibt keine eigenen Preise: Expected values to be strictly equal:  12 !== '19.7' 
+ROT  Anfrage v1 überträgt nur serverseitige kWh mit Herkunft: Expected values to be strictly equal:  0 !== 20000 
+ROT  Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung: Expected values to be strictly equal: + actual - expected  + 'Preis – Stand — Test' - 'Preis ,  Stand ,  Test'
+ROT  Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder: The input did not match the regular expression /place\(\$\('wzPreiseCard'\)\)/. Input:  '<!DOCTYPE html>\n' +   '<html lang="de">\n' +   '<head>\n' +
+ROT  Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück: Gemeinsamer Moduswechsel fehlt + actual - expected  + 'undefined' - 'function'
+ROT  Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus: Bitte grundpreisGas angeben.
+ROT  Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers: Expected values to be strictly equal:  null !== '' 
+ROT  Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung: The input did not match the regular expression /<span class="chart-summary-mobile">Jahr 0 bis 20 im Detail<\/span>/. Input:  '<div class="mobile-year-answer"><strong>Innerhalb von 20 Jahren noch nicht im Plus</strong><span>Gesamtersparnis ü
+ROT  Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000: The input did not match the regular expression /Gas, 16\.000 kWh/. Input:  `<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accen
+ROT  Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht: Expected values to be strictly equal:  123 !== null 
+ROT  Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert): Expected values to be strictly equal:  0 !== 3 
+ROT  Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API: gaspreis: Komma verlangt Textfeld  'range' !== 'text' 
+ROT  Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext: ctx.wzBillStart is not a function
+ROT  Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis: The input did not match the regular expression /Die Wärmepumpe ist nach Förderung 380 € günstiger als die neue Gasheizung\./. Input:  'Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche A
+ROT  Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent: Cannot read properties of undefined (reading 'text')
+T1247 ERGEBNIS: 4 grün / 34 rot
+EXIT 1
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T12:11:36.334Z
+STAND ALT: 6fdf74e, Originalverhalten ohne Adapter
+ROT  Euro Gas: 2.650,38 Euro ergeben 20.000 kWh: Server liefert keine Euro-Herleitung
+ROT  Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh: Server liefert keine Öl-Euro-Herleitung
+ROT  Preisänderung im Euro-Modus ohne 500-kWh-Rundung: Expected values to be strictly equal:  20000 !== 16000 
+ROT  Euro-Verbrauch bleibt ungerundet: Expected values to be strictly equal: + actual - expected  + 20000 - 20175.916666666664
+ROT  Gas-Grundpreis 0 bleibt gültig: Server liefert keine Euro-Herleitung bei Grundpreis 0
+ROT  Heutige Heizungsart führt trotz anderer Vergleichsheizung: Server liefert keine Ableitung nach heutiger Heizungsart
+ROT  Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig: Server liefert keine Euro-Ableitung an den Grenzen
+ROT  Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors: Server verwendet den Öl-Einheitenfaktor nicht zur Euro-Ableitung
+ROT  13 ungültige Euro-Eingaben sperren mit Klartext: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  6 belegte Marktwerte, Defaults unverändert: Bootstrap liefert keine Marktwerte
+ROT  Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben: Expected values to be strictly deep-equal: + actual - expected  + undefined - {
+ROT  Marktherkunft nur bei tatsächlich verwendetem Marktwert: Server liefert keine verwendeten Preise mit Herkunft
+ROT  Preisherkunft nennt je Preis Annahme, eigene Angabe oder Marktquelle mit Stand: The input did not match the regular expression /Preisherkunft: Arbeitspreis HeroWerk-Annahme, Grundpreis HeroWerk-Annahme\./. Input:  '' 
+ROT  Kostenlinien ab Jahr 0 einschließlich Investition: Server liefert keine Kostenlinien ab Jahr 0
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+ROT  Adapter ist an der öffentlichen Ausgabestelle eingebunden: The input did not match the regular expression /require_once __DIR__ \. '\/rechner-kv-adapter\.php'/. Input:  '<?php\n' +   '/**\n' +   ' * HeroWerk-Rechner: Herkunft, Ratenbegrenzung, PHP-Rechenkern und Google-Rückfall.\n' +
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+ROT  Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung: The input did not match the regular expression /Dein Nutzen mit der Wärmepumpe.*Heizkosten im ersten Jahr.*Bezahlt gemacht nach.*Vorteil nach 20 Jahren/s. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jed
+ROT  Amortisation Jahr 0 heißt Bezahlt gemacht: sofort: The input did not match the regular expression /Bezahlt gemacht: sofort/. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.</div><h3>Dein Vortei
+ROT  Diagrammbeschriftung vollständig innerhalb der Fläche, Jahre 0 bis 25, schmal und breit: Cannot read properties of undefined (reading 'length')
+ROT  Spätes Bootstrap überschreibt keine eigenen Preise: Expected values to be strictly equal:  12 !== '19.7' 
+ROT  Anfrage v1 überträgt nur serverseitige kWh mit Herkunft: Expected values to be strictly equal:  0 !== 20000 
+ROT  Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung: Expected values to be strictly equal: + actual - expected  + 'Preis – Stand — Test' - 'Preis ,  Stand ,  Test'
+ROT  Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder: The input did not match the regular expression /place\(\$\('wzPreiseCard'\)\)/. Input:  '<!DOCTYPE html>\n' +   '<html lang="de">\n' +   '<head>\n' +
+ROT  Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück: Gemeinsamer Moduswechsel fehlt + actual - expected  + 'undefined' - 'function'
+ROT  Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus: Bitte grundpreisGas angeben.
+ROT  Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers: Expected values to be strictly equal:  null !== '' 
+ROT  Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung: The input did not match the regular expression /<span class="chart-summary-mobile">Jahr 0 bis 20 im Detail<\/span>/. Input:  '<div class="mobile-year-answer"><strong>Innerhalb von 20 Jahren noch nicht im Plus</strong><span>Gesamtersparnis ü
+ROT  Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000: The input did not match the regular expression /Gas, 16\.000 kWh/. Input:  `<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accen
+ROT  Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht: Expected values to be strictly equal:  123 !== null 
+ROT  Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert): Expected values to be strictly equal:  0 !== 3 
+ROT  Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API: gaspreis: Komma verlangt Textfeld  'range' !== 'text' 
+ROT  Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext: ctx.wzBillStart is not a function
+ROT  Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis: The input did not match the regular expression /Die Wärmepumpe ist nach Förderung 380 € günstiger als die neue Gasheizung\./. Input:  'Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche A
+ROT  Mehrpreis überall positiv: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis: wzHero: Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.Dein Vorteil mit der Wärmepumpe über 20 Jahre56.981 €So kommen wir auf diese Zahl:         Gesamtkosten für eine neue G
+ROT  Mehrpreis überall negativ: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis: wzHero: Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.Dein Vorteil mit der Wärmepumpe über 20 Jahre62.481 €So kommen wir auf diese Zahl:         Gesamtkosten für eine neue G
+ROT  Mehrpreis überall null: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis: wzHero: Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.Dein Vorteil mit der Wärmepumpe über 20 Jahre62.101 €So kommen wir auf diese Zahl:         Gesamtkosten für eine neue G
+ROT  Mehrpreis rundet vor Textwahl: ±0,49 und ±0,50 Euro, keine Null als Preisvorteil: -1.49 / wzHero: Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.Dein Vorteil mit der Wärmepumpe über 20 Jahre51.974 €So kommen wir auf diese Zahl:         Gesamtkosten für ein
+ROT  Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent: Cannot read properties of undefined (reading 'text')
+T1247 ERGEBNIS: 4 grün / 38 rot
+EXIT 1
+
+AUFTRAG 11: gesicherter Auftrag-9-Stand vor Produktänderung, identische aktuelle Bereichsbehauptungen; nur HTML-Lesepfad auf Sicherung umgeleitet
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Preisherkunft nennt je Preis Annahme, eigene Angabe oder Marktquelle mit Stand
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Diagrammbeschriftung vollständig innerhalb der Fläche, Jahre 0 bis 25, schmal und breit
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+GRÜN Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht
+GRÜN Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert)
+GRÜN Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API
+GRÜN Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext
+GRÜN Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis
+ROT  Mehrpreis überall positiv: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis: wzHero: Dein Nutzen mit der WärmepumpeVergleichsbasis: neue Gasheizung. Nominal, ohne Finanzierungskosten.                Heizkosten im ersten Jahr Neue Gasheizung 2.687 € Wärmepumpe 1.489 € Du sparst rund 1.198 € im Jahr         Bezahlt ge
+ROT  Mehrpreis überall negativ: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis: pathSummary: Dein RechenwegAnschaffung Wärmepumpe (nach Förderung) 17.120 €Anschaffung Neue Gasheizung 17.500 €Echter Mehrpreis Wärmepumpe −380 €Betriebskosten Wärmepumpe über 20 Jahre 34.130 €Ersparte Betriebs- und CO₂-Kosten über 20 Jahre
+ROT  Mehrpreis überall null: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis: wzHero: Dein Nutzen mit der WärmepumpeVergleichsbasis: neue Gasheizung. Nominal, ohne Finanzierungskosten.                Heizkosten im ersten Jahr Neue Gasheizung 2.687 € Wärmepumpe 1.489 € Du sparst rund 1.198 € im Jahr         Bezahlt ge
+ROT  Mehrpreis rundet vor Textwahl: ±0,49 und ±0,50 Euro, keine Null als Preisvorteil: Expected values to be strictly equal:  '−0 €' !== '0 €' 
+GRÜN Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt
+GRÜN Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent
+T1247 ERGEBNIS: 38 grün / 4 rot
+EXIT 1
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T12:12:11.279Z
+STAND ALT: 6fdf74e, Originalverhalten ohne Adapter
+ROT  Euro Gas: 2.650,38 Euro ergeben 20.000 kWh: Server liefert keine Euro-Herleitung
+ROT  Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh: Server liefert keine Öl-Euro-Herleitung
+ROT  Preisänderung im Euro-Modus ohne 500-kWh-Rundung: Expected values to be strictly equal:  20000 !== 16000 
+ROT  Euro-Verbrauch bleibt ungerundet: Expected values to be strictly equal: + actual - expected  + 20000 - 20175.916666666664
+ROT  Gas-Grundpreis 0 bleibt gültig: Server liefert keine Euro-Herleitung bei Grundpreis 0
+ROT  Heutige Heizungsart führt trotz anderer Vergleichsheizung: Server liefert keine Ableitung nach heutiger Heizungsart
+ROT  Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig: Server liefert keine Euro-Ableitung an den Grenzen
+ROT  Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors: Server verwendet den Öl-Einheitenfaktor nicht zur Euro-Ableitung
+ROT  13 ungültige Euro-Eingaben sperren mit Klartext: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  6 belegte Marktwerte, Defaults unverändert: Bootstrap liefert keine Marktwerte
+ROT  Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben: Expected values to be strictly deep-equal: + actual - expected  + undefined - {
+ROT  Marktherkunft nur bei tatsächlich verwendetem Marktwert: Server liefert keine verwendeten Preise mit Herkunft
+ROT  Preisherkunft nennt je Preis Annahme, eigene Angabe oder Marktquelle mit Stand: The input did not match the regular expression /Preisherkunft: Arbeitspreis HeroWerk-Annahme, Grundpreis HeroWerk-Annahme\./. Input:  '' 
+ROT  Kostenlinien ab Jahr 0 einschließlich Investition: Server liefert keine Kostenlinien ab Jahr 0
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+ROT  Adapter ist an der öffentlichen Ausgabestelle eingebunden: The input did not match the regular expression /require_once __DIR__ \. '\/rechner-kv-adapter\.php'/. Input:  '<?php\n' +   '/**\n' +   ' * HeroWerk-Rechner: Herkunft, Ratenbegrenzung, PHP-Rechenkern und Google-Rückfall.\n' +
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+ROT  Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung: The input did not match the regular expression /Dein Nutzen mit der Wärmepumpe.*Heizkosten im ersten Jahr.*Bezahlt gemacht nach.*Vorteil nach 20 Jahren/s. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jed
+ROT  Amortisation Jahr 0 heißt Bezahlt gemacht: sofort: The input did not match the regular expression /Bezahlt gemacht: sofort/. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.</div><h3>Dein Vortei
+ROT  Diagrammbeschriftung vollständig innerhalb der Fläche, Jahre 0 bis 25, schmal und breit: Cannot read properties of undefined (reading 'length')
+ROT  Spätes Bootstrap überschreibt keine eigenen Preise: Expected values to be strictly equal:  12 !== '19.7' 
+ROT  Anfrage v1 überträgt nur serverseitige kWh mit Herkunft: Expected values to be strictly equal:  0 !== 20000 
+ROT  Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung: Expected values to be strictly equal: + actual - expected  + 'Preis – Stand — Test' - 'Preis ,  Stand ,  Test'
+ROT  Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder: The input did not match the regular expression /place\(\$\('wzPreiseCard'\)\)/. Input:  '<!DOCTYPE html>\n' +   '<html lang="de">\n' +   '<head>\n' +
+ROT  Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück: Gemeinsamer Moduswechsel fehlt + actual - expected  + 'undefined' - 'function'
+ROT  Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus: Bitte grundpreisGas angeben.
+ROT  Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers: Expected values to be strictly equal:  null !== '' 
+ROT  Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung: The input did not match the regular expression /<span class="chart-summary-mobile">Jahr 0 bis 20 im Detail<\/span>/. Input:  '<div class="mobile-year-answer"><strong>Innerhalb von 20 Jahren noch nicht im Plus</strong><span>Gesamtersparnis ü
+ROT  Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000: The input did not match the regular expression /Gas, 16\.000 kWh/. Input:  `<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accen
+ROT  Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht: Expected values to be strictly equal:  123 !== null 
+ROT  Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert): Expected values to be strictly equal:  0 !== 3 
+ROT  Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API: gaspreis: Komma verlangt Textfeld  'range' !== 'text' 
+ROT  Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext: ctx.wzBillStart is not a function
+ROT  Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis: The input did not match the regular expression /Die Wärmepumpe ist nach Förderung 380 € günstiger als die neue Gasheizung\./. Input:  'Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche A
+ROT  Mehrpreis überall positiv: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis: wzHero: Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.Dein Vorteil mit der Wärmepumpe über 20 Jahre56.981 €So kommen wir auf diese Zahl:         Gesamtkosten für eine neue G
+ROT  Mehrpreis überall negativ: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis: wzHero: Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.Dein Vorteil mit der Wärmepumpe über 20 Jahre62.481 €So kommen wir auf diese Zahl:         Gesamtkosten für eine neue G
+ROT  Mehrpreis überall null: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis: wzHero: Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.Dein Vorteil mit der Wärmepumpe über 20 Jahre62.101 €So kommen wir auf diese Zahl:         Gesamtkosten für eine neue G
+ROT  Mehrpreis rundet vor Textwahl: ±0,49 und ±0,50 Euro, keine Null als Preisvorteil: Expected values to be strictly equal:  '−0 €' !== '0 €' 
+ROT  Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent: Cannot read properties of undefined (reading 'text')
+T1247 ERGEBNIS: 4 grün / 38 rot
+EXIT 1
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T12:12:45.198Z
+STAND ALT: 6fdf74e, Originalverhalten ohne Adapter
+ROT  Euro Gas: 2.650,38 Euro ergeben 20.000 kWh: Server liefert keine Euro-Herleitung
+ROT  Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh: Server liefert keine Öl-Euro-Herleitung
+ROT  Preisänderung im Euro-Modus ohne 500-kWh-Rundung: Expected values to be strictly equal:  20000 !== 16000 
+ROT  Euro-Verbrauch bleibt ungerundet: Expected values to be strictly equal: + actual - expected  + 20000 - 20175.916666666664
+ROT  Gas-Grundpreis 0 bleibt gültig: Server liefert keine Euro-Herleitung bei Grundpreis 0
+ROT  Heutige Heizungsart führt trotz anderer Vergleichsheizung: Server liefert keine Ableitung nach heutiger Heizungsart
+ROT  Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig: Server liefert keine Euro-Ableitung an den Grenzen
+ROT  Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors: Server verwendet den Öl-Einheitenfaktor nicht zur Euro-Ableitung
+ROT  13 ungültige Euro-Eingaben sperren mit Klartext: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  6 belegte Marktwerte, Defaults unverändert: Bootstrap liefert keine Marktwerte
+ROT  Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben: Expected values to be strictly deep-equal: + actual - expected  + undefined - {
+ROT  Marktherkunft nur bei tatsächlich verwendetem Marktwert: Server liefert keine verwendeten Preise mit Herkunft
+ROT  Preisherkunft nennt je Preis Annahme, eigene Angabe oder Marktquelle mit Stand: The input did not match the regular expression /Preisherkunft: Arbeitspreis HeroWerk-Annahme, Grundpreis HeroWerk-Annahme\./. Input:  '' 
+ROT  Kostenlinien ab Jahr 0 einschließlich Investition: Server liefert keine Kostenlinien ab Jahr 0
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+ROT  Adapter ist an der öffentlichen Ausgabestelle eingebunden: The input did not match the regular expression /require_once __DIR__ \. '\/rechner-kv-adapter\.php'/. Input:  '<?php\n' +   '/**\n' +   ' * HeroWerk-Rechner: Herkunft, Ratenbegrenzung, PHP-Rechenkern und Google-Rückfall.\n' +
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+ROT  Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung: The input did not match the regular expression /Dein Nutzen mit der Wärmepumpe.*Heizkosten im ersten Jahr.*Bezahlt gemacht nach.*Vorteil nach 20 Jahren/s. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jed
+ROT  Amortisation Jahr 0 heißt Bezahlt gemacht: sofort: The input did not match the regular expression /Bezahlt gemacht: sofort/. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.</div><h3>Dein Vortei
+ROT  Diagrammbeschriftung vollständig innerhalb der Fläche, Jahre 0 bis 25, schmal und breit: Cannot read properties of undefined (reading 'length')
+ROT  Spätes Bootstrap überschreibt keine eigenen Preise: Expected values to be strictly equal:  12 !== '19.7' 
+ROT  Anfrage v1 überträgt nur serverseitige kWh mit Herkunft: Expected values to be strictly equal:  0 !== 20000 
+ROT  Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung: Expected values to be strictly equal: + actual - expected  + 'Preis – Stand — Test' - 'Preis ,  Stand ,  Test'
+ROT  Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder: The input did not match the regular expression /place\(\$\('wzPreiseCard'\)\)/. Input:  '<!DOCTYPE html>\n' +   '<html lang="de">\n' +   '<head>\n' +
+ROT  Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück: Gemeinsamer Moduswechsel fehlt + actual - expected  + 'undefined' - 'function'
+ROT  Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus: Bitte grundpreisGas angeben.
+ROT  Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers: Expected values to be strictly equal:  null !== '' 
+ROT  Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung: The input did not match the regular expression /<span class="chart-summary-mobile">Jahr 0 bis 20 im Detail<\/span>/. Input:  '<div class="mobile-year-answer"><strong>Innerhalb von 20 Jahren noch nicht im Plus</strong><span>Gesamtersparnis ü
+ROT  Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000: The input did not match the regular expression /Gas, 16\.000 kWh/. Input:  `<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accen
+ROT  Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht: Expected values to be strictly equal:  123 !== null 
+ROT  Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert): Expected values to be strictly equal:  0 !== 3 
+ROT  Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API: gaspreis: Komma verlangt Textfeld  'range' !== 'text' 
+ROT  Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext: ctx.wzBillStart is not a function
+ROT  Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis: The input did not match the regular expression /Die Wärmepumpe ist nach Förderung 380 € günstiger als die neue Gasheizung\./. Input:  'Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche A
+ROT  Mehrpreis überall positiv: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis: wzHero: Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.Dein Vorteil mit der Wärmepumpe über 20 Jahre56.981 €So kommen wir auf diese Zahl:         Gesamtkosten für eine neue G
+ROT  Mehrpreis überall negativ: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis: wzHero: Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.Dein Vorteil mit der Wärmepumpe über 20 Jahre62.481 €So kommen wir auf diese Zahl:         Gesamtkosten für eine neue G
+ROT  Mehrpreis überall null: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis: wzHero: Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.Dein Vorteil mit der Wärmepumpe über 20 Jahre62.101 €So kommen wir auf diese Zahl:         Gesamtkosten für eine neue G
+ROT  Mehrpreis rundet vor Textwahl: ±0,49 und ±0,50 Euro, keine Null als Preisvorteil: Expected values to be strictly equal:  '−0 €' !== '0 €' 
+ROT  Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent: Cannot read properties of undefined (reading 'text')
+T1247 ERGEBNIS: 4 grün / 38 rot
+EXIT 1
+
+Auftrag 12: gesicherter Auftrag-11-Arbeitsstand vor Produktänderung, identische neue Bereichsprüfungen
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Preisherkunft nennt je Preis Annahme, eigene Angabe oder Marktquelle mit Stand
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Diagrammbeschriftung vollständig innerhalb der Fläche, Jahre 0 bis 25, schmal und breit
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+GRÜN Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht
+GRÜN Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert)
+GRÜN Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API
+GRÜN Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext
+GRÜN Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis
+GRÜN Mehrpreis überall positiv: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis
+GRÜN Mehrpreis überall negativ: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis
+GRÜN Mehrpreis überall null: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis
+GRÜN Mehrpreis rundet vor Textwahl: ±0,49 und ±0,50 Euro, keine Null als Preisvorteil
+ROT  Dreiwege-Handyliste: günstiger, teurer und Gleichstand ohne doppelte Vorzeichen: Neue Gasheizung 98.000 €Anschaffung 12.000 €Betrieb 20 J. 91.224 €Mehrkosten gegenüber Wärmepumpe +-2.000 €
+ROT  Dreiwege-Ergebnissatz: tatsächliche günstigste Neuanlage, teurer/günstiger/gleich: Expected values to be strictly equal: + actual - expected  + '2.000 € unter der Wärmepumpe' - 'Über 20 Jahre 2.000 € teurer als die neue Gasheizung.'
+GRÜN Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt
+GRÜN Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent
+T1247 ERGEBNIS: 42 grün / 2 rot
+EXIT 1
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T12:24:46.366Z
+STAND ALT: 6fdf74e, Originalverhalten ohne Adapter
+ROT  Euro Gas: 2.650,38 Euro ergeben 20.000 kWh: Server liefert keine Euro-Herleitung
+ROT  Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh: Server liefert keine Öl-Euro-Herleitung
+ROT  Preisänderung im Euro-Modus ohne 500-kWh-Rundung: Expected values to be strictly equal:  20000 !== 16000 
+ROT  Euro-Verbrauch bleibt ungerundet: Expected values to be strictly equal: + actual - expected  + 20000 - 20175.916666666664
+ROT  Gas-Grundpreis 0 bleibt gültig: Server liefert keine Euro-Herleitung bei Grundpreis 0
+ROT  Heutige Heizungsart führt trotz anderer Vergleichsheizung: Server liefert keine Ableitung nach heutiger Heizungsart
+ROT  Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig: Server liefert keine Euro-Ableitung an den Grenzen
+ROT  Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors: Server verwendet den Öl-Einheitenfaktor nicht zur Euro-Ableitung
+ROT  13 ungültige Euro-Eingaben sperren mit Klartext: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  6 belegte Marktwerte, Defaults unverändert: Bootstrap liefert keine Marktwerte
+ROT  Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben: Expected values to be strictly deep-equal: + actual - expected  + undefined - {
+ROT  Marktherkunft nur bei tatsächlich verwendetem Marktwert: Server liefert keine verwendeten Preise mit Herkunft
+ROT  Preisherkunft nennt je Preis Annahme, eigene Angabe oder Marktquelle mit Stand: The input did not match the regular expression /Preisherkunft: Arbeitspreis HeroWerk-Annahme, Grundpreis HeroWerk-Annahme\./. Input:  '' 
+ROT  Kostenlinien ab Jahr 0 einschließlich Investition: Server liefert keine Kostenlinien ab Jahr 0
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+ROT  Adapter ist an der öffentlichen Ausgabestelle eingebunden: The input did not match the regular expression /require_once __DIR__ \. '\/rechner-kv-adapter\.php'/. Input:  '<?php\n' +   '/**\n' +   ' * HeroWerk-Rechner: Herkunft, Ratenbegrenzung, PHP-Rechenkern und Google-Rückfall.\n' +
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+ROT  Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung: The input did not match the regular expression /Dein Nutzen mit der Wärmepumpe.*Heizkosten im ersten Jahr.*Bezahlt gemacht nach.*Vorteil nach 20 Jahren/s. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jed
+ROT  Amortisation Jahr 0 heißt Bezahlt gemacht: sofort: The input did not match the regular expression /Bezahlt gemacht: sofort/. Input:  '<div class="wz-legend">Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.</div><h3>Dein Vortei
+ROT  Diagrammbeschriftung vollständig innerhalb der Fläche, Jahre 0 bis 25, schmal und breit: Cannot read properties of undefined (reading 'length')
+ROT  Spätes Bootstrap überschreibt keine eigenen Preise: Expected values to be strictly equal:  12 !== '19.7' 
+ROT  Anfrage v1 überträgt nur serverseitige kWh mit Herkunft: Expected values to be strictly equal:  0 !== 20000 
+ROT  Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung: Expected values to be strictly equal: + actual - expected  + 'Preis – Stand — Test' - 'Preis ,  Stand ,  Test'
+ROT  Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder: The input did not match the regular expression /place\(\$\('wzPreiseCard'\)\)/. Input:  '<!DOCTYPE html>\n' +   '<html lang="de">\n' +   '<head>\n' +
+ROT  Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück: Gemeinsamer Moduswechsel fehlt + actual - expected  + 'undefined' - 'function'
+ROT  Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus: Bitte grundpreisGas angeben.
+ROT  Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers: Expected values to be strictly equal:  null !== '' 
+ROT  Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung: The input did not match the regular expression /<span class="chart-summary-mobile">Jahr 0 bis 20 im Detail<\/span>/. Input:  '<div class="mobile-year-answer"><strong>Innerhalb von 20 Jahren noch nicht im Plus</strong><span>Gesamtersparnis ü
+ROT  Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000: The input did not match the regular expression /Gas, 16\.000 kWh/. Input:  `<div style="text-align:center;margin-bottom:10px;"><div style="font-family:'Barlow',sans-serif;font-weight:800;font-size:2.6rem;line-height:1;color:var(--hero-accen
+ROT  Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht: Expected values to be strictly equal:  123 !== null 
+ROT  Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert): Expected values to be strictly equal:  0 !== 3 
+ROT  Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API: gaspreis: Komma verlangt Textfeld  'range' !== 'text' 
+ROT  Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext: ctx.wzBillStart is not a function
+ROT  Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis: The input did not match the regular expression /Die Wärmepumpe ist nach Förderung 380 € günstiger als die neue Gasheizung\./. Input:  'Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche A
+ROT  Mehrpreis überall positiv: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis: wzHero: Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.Dein Vorteil mit der Wärmepumpe über 20 Jahre56.981 €So kommen wir auf diese Zahl:         Gesamtkosten für eine neue G
+ROT  Mehrpreis überall negativ: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis: wzHero: Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.Dein Vorteil mit der Wärmepumpe über 20 Jahre62.481 €So kommen wir auf diese Zahl:         Gesamtkosten für eine neue G
+ROT  Mehrpreis überall null: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis: wzHero: Grün = deine Angabe. Grau = marktübliche Annahme, jederzeit anpassbar. 0 eigene Angaben, 0 marktübliche Annahmen.Dein Vorteil mit der Wärmepumpe über 20 Jahre62.101 €So kommen wir auf diese Zahl:         Gesamtkosten für eine neue G
+ROT  Mehrpreis rundet vor Textwahl: ±0,49 und ±0,50 Euro, keine Null als Preisvorteil: Expected values to be strictly equal:  '−0 €' !== '0 €' 
+ROT  Dreiwege-Handyliste: günstiger, teurer und Gleichstand ohne doppelte Vorzeichen: Neue Gasheizung 98.000 €Anschaffung 12.000 €Betrieb 20 J. 91.224 €Mehrkosten gegenüber Wärmepumpe +-2.000 €
+ROT  Dreiwege-Ergebnissatz: tatsächliche günstigste Neuanlage, teurer/günstiger/gleich: Expected values to be strictly equal: + actual - expected  + '2.000 € unter der Wärmepumpe' - 'Über 20 Jahre 2.000 € teurer als die neue Gasheizung.'
+ROT  Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt: Expected values to be strictly equal: + actual - expected  + undefined - true
+ROT  Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent: Cannot read properties of undefined (reading 'text')
+T1247 ERGEBNIS: 4 grün / 40 rot
+EXIT 1

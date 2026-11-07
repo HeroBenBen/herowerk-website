@@ -544,3 +544,17 @@ Bio gilt ausschließlich im Neuanlagenvergleich. Gesetzliche Stufen: 2029/10 %, 
 migriert und sichtbar gekennzeichnet. Teilstände und unbekannte Treppen sperren. Faktor 2,5 ist
 BDEW-Preisannahme Januar 2026, keine Rechtsfolge. Der gerundete Bio-Nettoeffekt im Referenzfall
 ist 19.581 Euro; es wird der ungerundete Rohwert gerundet, keine Differenz gerundeter Summen.
+
+## T1247: öffentlicher Website-Adapter (07.11.2026)
+
+Der PHP-Adapter `api/rechner-kv-adapter.php` normalisiert Eingaben vor `hw_rechner_route` und ergänzt ausschließlich Anzeigedaten danach. Kern, KV_DEFAULTS und Apps-Script-Verarbeitung bleiben unverändert. Bestehende Requests ohne neue Adapterfelder behalten ihre vollständige Antwort.
+
+- `kvAnsicht=nutzen` ergänzt bei `kv_bootstrap` die vollständigen Referenzeinträge aus `data/kv-marktwerte.php` sowie `preisAnzeige.n01_preis_oel`. Ein Eintrag benötigt `wert`, `einheit`, `quelle`, `stand`. Marktwerte ersetzen keine Vorbelegung; Übernahme ausschließlich per Klick. Unvollständige Einträge werden herausgefiltert. Eigenangaben und bewusst übernommene Marktwerte sind vor späterem Bootstrap geschützt.
+- `n01_preis_oel` ist Euro je Liter, Vorbelegung 1,10. Der Adapter verwendet `schaetzung.einheitFaktor` aus den bestehenden KV-Parametern (Vorbelegung 10 kWh je Liter), um das bisherige Kernfeld `oelpreis` in ct/kWh zu setzen. Bestehende Anfragen mit `oelpreis` bleiben gültig. Gas bleibt in ct/kWh. Die serverseitige Nebenangabe steht unter `preisAnzeige.oelNebenangabe`.
+- `bedarfModus=jahreskosten` führt über `jahreskosten` und die Arbeitspreise der heutigen `heizart`. Gas: Jahresbetrag abzüglich `grundpreisGas`, dividiert durch `gaspreis / 100`. Öl: Jahresbetrag multipliziert mit dem vorhandenen Einheitenfaktor, dividiert durch den Euro-Literpreis. Kein Runden auf Reglerstufen. Fehlende oder nicht positive Arbeitspreise, ungültige Beträge, negative Grundpreise, Gasbetrag höchstens Grundpreis sowie Verbrauch außerhalb 5.000 bis 80.000 kWh sperren mit Klartext. Grundpreis 0 ist gültig.
+- `verbrauchAbleitung` enthält Betrag, heutige Heizungsart, verwendete Preise mit Herkunft, normalisierten `bedarfKwh` und den fertigen deutschen Erklärungstext. `preisHerkunft` ist eine JSON-Zuordnung mit `own`/`market`; eine Marktbehauptung wird nur für den tatsächlichen Referenzwert akzeptiert, sonst `annahme`. Das Rechenmodell bleibt vollständig serverseitig.
+- `nutzenKosten` enthält `labels` ab 0 sowie `fossil` und `wp` als aufsummierte Kosten inklusive Investition nach Förderung. Finanzierungskosten sind darin nicht enthalten. Die Markierung folgt `ergebnis.breakEven`/`breakEvenSofort`; Jahr 0 wird als „Bezahlt gemacht: sofort“ bezeichnet. Die führenden Heizkosten stammen aus `jahre[0]` desselben gewählten Vergleichs, nicht aus einem zweiten Szenario mit Weiterbetrieb.
+
+Im Euro-Modus führen Rechnung und Preise. Jede Änderung entwertet das bisherige Ergebnis bis zur neuen Antwort. Bearbeiten des Verbrauchs führt zurück zur Verbrauchseingabe. Wechsel zur Schätzung verwirft den Rechnungsmodus und umgekehrt. Der bestehende Verbrauchsregler behält seine Stufe; ein aus Euro normalisierter Verbrauch wird getrennt gehalten.
+
+Die Anfrageübergabe bleibt **v1**: ausschließlich `inputsEcho.bedarf` als kWh, `eingabeWert` ebenfalls in kWh, `einheit=kwh`, Herkunft `own` bzw. bei Gebäudeschätzung `market`. Eurobetrag und genaue Ableitung werden nicht an CRM übergeben. Eine spätere Übertragung benötigt einen gesondert vereinbarten versionierten Vertrag.

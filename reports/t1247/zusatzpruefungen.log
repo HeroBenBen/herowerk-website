@@ -1,0 +1,206 @@
+php -l api/rechner.php
+No syntax errors detected in api/rechner.php
+EXIT 0
+
+php -l api/rechner-kv-adapter.php
+No syntax errors detected in api/rechner-kv-adapter.php
+EXIT 0
+
+php -l data/kv-marktwerte.php
+No syntax errors detected in data/kv-marktwerte.php
+EXIT 0
+
+php -l tests/t1247-kv-runner.php
+No syntax errors detected in tests/t1247-kv-runner.php
+EXIT 0
+
+node --check reports/t1247/browser-und-bilder.mjs
+EXIT 0
+
+node --check reports/t1247/pruefen.mjs
+EXIT 0
+
+node --check tests/t1247-kostenvergleich.mjs
+EXIT 0
+
+node --check tests/t1247-kv-fixture.mjs
+EXIT 0
+
+node --check tests/kv-thin-client.spec.js
+EXIT 0
+
+node --check tests/t1245-kv-website.mjs
+EXIT 0
+
+git diff --check
+EXIT 0
+
+Auftrag 5: isolierte Ausführung der echten Browser-Fallsteuerung
+GRÜN Erzwungener roter Fall wird protokolliert; nachfolgender Bildfall läuft; beide Kontexte werden geschlossen. Keine Browser- oder Bildabnahme.
+
+Auftrag 5, Syntax und Diff, 2026-11-07T10:48:31.066Z
+php -l api/rechner-kv-adapter.php
+No syntax errors detected in api/rechner-kv-adapter.php
+EXIT 0
+node --check reports/t1247/browser-und-bilder.mjs
+EXIT 0
+node --check reports/t1247/pruefen.mjs
+EXIT 0
+node --check tests/t1247-kostenvergleich.mjs
+EXIT 0
+node --check tests/t1245-kv-website-dom.mjs
+EXIT 0
+git diff --check
+EXIT 0
+GRÜN Alle Inline-Skripte der Kundenseite mit Acorn geparst.
+
+Auftrag 5 Abschluss: 2026-11-07T10:51:05.680Z
+GRÜN Bereichsnachweis passt zu allen 7 gespeicherten SHA-256-Fingerabdrücken.
+GRÜN Inline-Skripte, beide Prüfscripte und git diff --check.
+
+Auftrag 6: Syntax, Schutzgrenzen und Diff | 2026-11-07T11:03:16.444Z
+php -l api/rechner-kv-adapter.php
+No syntax errors detected in api/rechner-kv-adapter.php
+EXIT 0
+node --check reports/t1247/browser-und-bilder.mjs
+EXIT 0
+node --check reports/t1247/pruefen.mjs
+EXIT 0
+node --check tests/t1247-kostenvergleich.mjs
+EXIT 0
+node --check tests/t1245-kv-website-dom.mjs
+EXIT 0
+git diff --check
+EXIT 0
+GRÜN Alle Inline-Skripte der Kundenseite mit Acorn geparst.
+GRÜN Alle 7 gespeicherten Quell-Fingerabdrücke stimmen mit dem Arbeitsbaum überein.
+
+AUFTRAG 7, 2026-11-07T11:19:52.805108+00:00
+node --check tests/t1247-kostenvergleich.mjs
+EXIT 0
+node --check reports/t1247/browser-und-bilder.mjs
+EXIT 0
+node --check reports/t1247/pruefen.mjs
+EXIT 0
+php -l api/rechner-kv-adapter.php
+No syntax errors detected in api/rechner-kv-adapter.php
+EXIT 0
+git diff --check
+EXIT 0
+GRÜN: 5 geschützte Dateien seit Beginn Auftrag 7 bytegleich; zusätzlich Schutzprüfung gegen 6fdf74e im Bereichslauf.
+
+AUFTRAG 8 | 2026-11-07T11:40:29.672238+00:00
+node --check reports/t1247/browser-und-bilder.mjs
+EXIT 0
+node --check reports/t1247/pruefen.mjs
+EXIT 0
+git diff --check
+EXIT 0
+node /tmp/t1247-auftrag8-messkontrolle.cjs
+GRÜN unveränderte Geometrie
+GRÜN reines Scrollen um 2 px: Fenster-y 68,296875 → 66,296875; Dokument-y unverändert
+GRÜN Rot-Nachweis: echte Verschiebung um 1 px trotz kompensierendem Scrollen erkannt
+GRÜN Rot-Nachweis: 1 px mehr Hinweis-Höhe bei unveränderter Knopfposition erkannt
+GRÜN Rot-Nachweis: 1 px mehr Knopfhöhe erkannt
+GRÜN Rot-Nachweis: entferntes Element erkannt
+MESSKONTROLLE: 6 grün / 0 rot (isolierte Originalfunktionen, kein Browsernachweis)
+EXIT 0
+GRÜN 6/6 Fingerabdrücke bytegleich seit Beginn Auftrag 8 (Produktseite und 5 geschützte Dateien).
+GRÜN 7/7 Quell-Fingerabdrücke des Bereichslaufs passen zum endgültigen Arbeitsstand.
+Kein Browserlauf; bestehende Browserprotokolle und Bilder unverändert. Kein Volltest.
+
+AUFTRAG 9 | 2026-11-07T11:51:13.270897+00:00
+ROT-NACHWEIS: gesicherter Auftrag-8-Produktstand, neue Wächter vor Produktänderung
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+ROT  Preisherkunft nennt je Preis Annahme, eigene Angabe oder Marktquelle mit Stand: The input did not match the regular expression /Preisherkunft: Arbeitspreis HeroWerk-Annahme, Grundpreis HeroWerk-Annahme\./. Input:  'Aus deiner Jahresrechnung ergibt sich ein Verbrauch von 20.000 kWh. Deine Jahreskosten: 2.650,38 Euro. Da
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+ROT  Diagrammbeschriftung vollständig innerhalb der Fläche, Jahre 0 bis 25, schmal und breit: 375 px, Jahr 6: {"text":"Bezahlt gemacht: nach 6 Jahren","left":132,"right":342,"y":250}
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+GRÜN Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht
+GRÜN Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert)
+GRÜN Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API
+GRÜN Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext
+GRÜN Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis
+GRÜN Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt
+GRÜN Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent
+T1247 ERGEBNIS: 36 grün / 2 rot
+EXIT 1
+
+AUFTRAG 9 Abschluss | 2026-11-07T11:53:17.259029+00:00
+node --check reports/t1247/browser-und-bilder.mjs
+
+EXIT 0
+node --check reports/t1247/pruefen.mjs
+
+EXIT 0
+node --check tests/t1247-kostenvergleich.mjs
+
+EXIT 0
+php -l api/rechner-kv-adapter.php
+No syntax errors detected in api/rechner-kv-adapter.php
+
+EXIT 0
+git diff --check
+
+EXIT 0
+GRÜN 5/5 geschützte Dateien seit Beginn Auftrag 9 bytegleich; zusätzlich Schutzprüfung gegen 6fdf74e grün.
+GRÜN 7/7 Quell-Fingerabdrücke des Bereichslaufs passen zum Arbeitsstand.
+Kein Browserlauf; 5 neue Browserfälle vorbereitet (43 insgesamt). Bilder und Browserprotokolle bleiben zur Neuerzeugung durch Steuerung unverändert. Kein Volltest.
+
+AUFTRAG 11, 2026-11-07T12:12:46.313885+00:00
+GRÜN: 5/5 geschützte Dateien und Adapter seit Auftragsbeginn bytegleich.
+GRÜN: Jahreskosten-Leseregel und Eingabe-/Anzeige-Funktionen bytegleich; 2.650 = 2650, 2650,3 = 2650.30 bleiben geprüft.
+GRÜN Syntax: reports/t1247/browser-und-bilder.mjs
+GRÜN Syntax: reports/t1247/pruefen.mjs
+GRÜN Syntax: tests/t1247-kostenvergleich.mjs
+GRÜN Syntax: tests/t1245-kv-website-dom.mjs
+GRÜN Syntax: tests/kv-thin-client.spec.js
+GRÜN git diff --check (nur lesend).
+GRÜN Browser-Nullfall gegen echten PHP-Adapter vorgeprüft: 25.000 brutto, 11.500 Förderung, 13.500 netto und 13.500 neue Gas-/Ölheizung => Differenz 0 (2 Fälle). Kein Browsernachweis.
+
+Auftrag 12, isolierte Prüfaufbaukontrollen 2026-11-07T12:25:16.629Z
+GRÜN Original-Reglerfunktionen: 9 erreichbare Ziele (einschließlich geänderter Grenzen), 3 unerreichbare Ziele abgewiesen
+GRÜN Original-Null-Euro-Muster: 4 gültige Preisvorteile akzeptiert, 4 falsche Texte abgewiesen
+GRÜN Echte PHP-Szenarien Gas/Öl: jeweils 5.120 / −380 / 0 €
+Kein Browsernachweis.
+
+Auftrag 12, Syntax/Diff/Schutz 2026-11-07T12:25:51.724Z
+GRÜN Syntax tests/t1247-kostenvergleich.mjs
+GRÜN Syntax reports/t1247/browser-und-bilder.mjs
+GRÜN Syntax reports/t1247/pruefen.mjs
+GRÜN Syntax aller Inline-Scripte der Produktseite
+GRÜN git diff --check
+GRÜN 5 geschützte Dateien sowie Adapter seit Beginn Auftrag 12 bytegleich
+GRÜN Jahreskosten-/Anzeige-/Mehrpreisfunktionen seit Beginn Auftrag 12 bytegleich
+
+Auftrag 12, Ursachenbeleg Gas / Fördervoraussetzung 2026-11-07T12:26:12.667Z
+GRÜN Reproduziert: fAlt20=0, invWP=30000, gasInvest=12000, netto=21600, mehrInvest=9600
+GRÜN Reproduziert: fAlt20=0, invWP=30000, gasInvest=17500, netto=21600, mehrInvest=4100
+GRÜN Reproduziert: fAlt20=0, invWP=25000, gasInvest=13500, netto=17500, mehrInvest=4000
+GRÜN Rotursache altes Null-Euro-Muster reproduziert: trifft korrekte 380 € günstiger

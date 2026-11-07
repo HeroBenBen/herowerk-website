@@ -86,6 +86,15 @@ test.beforeAll(async () => {
         }
         const result = engine.kvCalculate(mapInputs(url.searchParams), engine.KV_PARAMS_SEED);
         result.periodeAutomatik = !url.searchParams.has('fHalbjahr');
+        if (url.searchParams.get('kvAnsicht') === 'nutzen') {
+          const fossil = result.system.neuFossilOn ? result.invest.fossilInvest : 0;
+          result.nutzenKosten = {
+            labels: [0, ...result.jahre.map(j => j.j)],
+            fossil: [fossil, ...result.jahre.map(j => fossil + j.cumFossil)],
+            wp: [result.invest.netto, ...result.jahre.map(j => result.invest.netto + j.cumWPKosten)],
+            breakEven: result.ergebnis.breakEven,
+          };
+        }
         return sendJson(response, result);
       }
       if (action === 'preise') return sendJson(response, { wolf: [], vaillant: [] });
@@ -223,7 +232,8 @@ async function expectOneMobileYearDeck(page) {
       ),
       mobileYearDetailDecks: document.querySelectorAll('details.mobile-year-details').length,
       mobileYearContainers: document.querySelectorAll('div.mobile-year-details').length,
-      mainRows: document.querySelectorAll('#cMainDaten .year-bar-row').length,
+      nutzen: !!KV_STATE.last?.nutzenKosten,
+      mainRows: document.querySelectorAll('#cMainDaten .year-bar-row,#cMainDaten .mobile-year-card').length,
       breakCards: document.querySelectorAll('#cBreakDaten .mobile-year-card').length,
       heatCards: document.querySelectorAll('#cHeatDaten .mobile-year-card').length,
       mobileSummaries: chartIds.map((id) => {
@@ -243,13 +253,13 @@ async function expectOneMobileYearDeck(page) {
   expect(counts.chartMobileDetails).toEqual([0, 0, 0]);
   expect(counts.mobileYearDetailDecks).toBe(1);
   expect(counts.mobileYearContainers).toBe(4);
-  expect(counts.mainRows).toBe(20);
+  expect(counts.mainRows).toBe(counts.nutzen ? 21 : 20);
   expect(counts.breakCards).toBe(20);
   expect(counts.heatCards).toBe(20);
   expect(counts.mobileSummaries).toEqual([
     {
-      desktopText: 'Kumulative Ersparnis als Tabelle anzeigen',
-      mobileText: 'Alle 20 Jahre im Detail',
+      desktopText: counts.nutzen ? 'Aufsummierte Kosten einschließlich Investition ab Jahr 0 als Tabelle anzeigen' : 'Kumulative Ersparnis als Tabelle anzeigen',
+      mobileText: counts.nutzen ? 'Jahr 0 bis 20 im Detail' : 'Alle 20 Jahre im Detail',
       desktopVisible: false,
       mobileVisible: true,
     },
@@ -397,7 +407,7 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
   expect(await page.evaluate(() => Math.round(KV_STATE.last.ergebnis.wpNG))).toBe(56647);
   expect(await page.locator('#kpiGrid .ml').allTextContents()).toEqual([
     'Anschaffung nach Förderung',
-    'Mehrpreis gegenüber neuer Gasheizung',
+    'Anschaffungsvergleich',
     'Ausgeglichen ab',
     'Einsparung 20 J.',
     'CO₂ eingespart',
@@ -500,10 +510,10 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.inputsEcho.invWP === 12000);
   await expect(
     page
-      .locator('#kpiGrid .ml', { hasText: 'Mehrpreis gegenüber neuer Gasheizung' })
+      .locator('#kpiGrid .ml', { hasText: 'Anschaffungsvergleich' })
       .locator('..')
       .locator('.mv')
-  ).toHaveText('−5.520 €');
+  ).toHaveText('5.520 €');
 
   await rangeToEnd(page, 'invWP');
   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.inputsEcho.invWP === 65000);
@@ -513,7 +523,7 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
   await expect(page.locator('#pathSummary')).toContainText('Ihr Vorteil (Barzahlung)');
   await expect(page.locator('#pathSummary')).not.toContainText('Anschaffung Neue Gasheizung');
   await expect(page.locator('#pathSummary')).not.toContainText('Echter Mehrpreis');
-  await expect(page.locator('#kpiGrid .ml', { hasText: 'Mehrpreis gegenüber' })).toHaveCount(0);
+  await expect(page.locator('#kpiGrid .ml', { hasText: 'Anschaffungsvergleich' })).toHaveCount(0);
   // T1245, Kern 0269f63, Herleitung T1245_SCHRITT1_ABSCHLUSS.md Anpassung 13
   await expect(
     page
@@ -572,9 +582,9 @@ test('O3 Kunde Light 375: lokaler Consent, Alt-/EU-Text, sechs Förderanker und 
   );
   const busyProof = await page.evaluate(() => {
     const answer = document.querySelector('#cMainDaten .mobile-year-answer');
-    const row = document.querySelector('#cMainDaten .year-bar-row');
+    const row = document.querySelector('#cMainDaten .year-bar-row,#cMainDaten .mobile-year-card');
     const answerStrong = answer && answer.querySelector('strong');
-    const rowValue = row && row.querySelector('.year-value');
+    const rowValue = row && row.querySelector('.year-value,.vv');
     const announcement = document.querySelector('#g9-kopfbalken-ansage');
     const announcementStyle = announcement && window.getComputedStyle(announcement);
     return {
