@@ -65,8 +65,11 @@ const ctx = vm.createContext({
 for (const n of functions)
   if (
     [
+      'deNumber',
+      'kvInputValue',
       'eur',
       'eurSigned',
+      'kvMehrpreisText',
       'fix',
       'pct',
       'kvText',

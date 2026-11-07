@@ -1,0 +1,1027 @@
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T10:45:37.961Z
+STAND NEU: Arbeitsbaum, keine Einbuchung
+
+> verify:kv-t1247
+> node tests/t1247-kostenvergleich.mjs && node tests/t1245-kv-website-dom.mjs && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/schnittstelle-innenfelder-gesperrt.mjs
+
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+T1247 ERGEBNIS: 29 grün / 0 rot
+GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme
+GRÜN T1245: Referenzen, Summen, Spanne, alle Geräte und Randfälle
+GRÜN PHP/JS: 625 feste Fälle, 30 Geräte-/Heizsystempaare plus Kaskaden und Fehler; größtes Float-Delta 0
+GRÜN T1245 Parameter: Seed, vier Bio-Stufen, Alt-/Teilstand, Cachewechsel, Startjahr 2027 und JAZ-Sperren in JS/PHP
+GRÜN H2 Website: ungültige Bio-/Netz-/JAZ-Daten sperren nur Kostenvergleich/Bootstrap; Förderung und Perioden exakt gleich, keine Rückfallwarnung in GS/PHP
+PASS Innenfelder sind aus der Antwort entfernt: 14 vorher, 0 nachher
+PASS Anzeigefelder bleiben vollstaendig: 8 von 8
+PASS Variantenliste ist mitgefiltert: Variantenfelder: modell, brutto
+PASS Rot-Nachweis: abgeschaltet liefert die Funktion alle Felder: 14 Felder bei ausgeschalteter Sperre
+PASS Filter ist vor der einzigen Ausgabestelle eingehaengt: Beide Schema-Ausgabewege verwenden ausschließlich das gefilterte Ergebnis
+PASS Sperre der Innenfelder ist eingeschaltet: RECHNER_INNENFELDER_SPERREN
+PASS Ratenbremse ist scharf geschaltet: RECHNER_RATE_LIMIT_ENFORCED
+
+7 von 7 Pruefungen gruen.
+EXIT 0
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T10:48:29.766Z
+STAND NEU: Arbeitsbaum, keine Einbuchung
+
+> verify:kv-t1247
+> node tests/t1247-kostenvergleich.mjs && node tests/t1245-kv-website-dom.mjs && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/schnittstelle-innenfelder-gesperrt.mjs
+
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+T1247 ERGEBNIS: 29 grün / 0 rot
+GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme
+GRÜN T1245: Referenzen, Summen, Spanne, alle Geräte und Randfälle
+GRÜN PHP/JS: 625 feste Fälle, 30 Geräte-/Heizsystempaare plus Kaskaden und Fehler; größtes Float-Delta 0
+GRÜN T1245 Parameter: Seed, vier Bio-Stufen, Alt-/Teilstand, Cachewechsel, Startjahr 2027 und JAZ-Sperren in JS/PHP
+GRÜN H2 Website: ungültige Bio-/Netz-/JAZ-Daten sperren nur Kostenvergleich/Bootstrap; Förderung und Perioden exakt gleich, keine Rückfallwarnung in GS/PHP
+PASS Innenfelder sind aus der Antwort entfernt: 14 vorher, 0 nachher
+PASS Anzeigefelder bleiben vollstaendig: 8 von 8
+PASS Variantenliste ist mitgefiltert: Variantenfelder: modell, brutto
+PASS Rot-Nachweis: abgeschaltet liefert die Funktion alle Felder: 14 Felder bei ausgeschalteter Sperre
+PASS Filter ist vor der einzigen Ausgabestelle eingehaengt: Beide Schema-Ausgabewege verwenden ausschließlich das gefilterte Ergebnis
+PASS Sperre der Innenfelder ist eingeschaltet: RECHNER_INNENFELDER_SPERREN
+PASS Ratenbremse ist scharf geschaltet: RECHNER_RATE_LIMIT_ENFORCED
+
+7 von 7 Pruefungen gruen.
+EXIT 0
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T10:49:19.133Z
+STAND NEU: Arbeitsbaum, keine Einbuchung
+
+> verify:kv-t1247
+> node tests/t1247-kostenvergleich.mjs && node tests/t1245-kv-website-dom.mjs && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/schnittstelle-innenfelder-gesperrt.mjs
+
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+T1247 ERGEBNIS: 29 grün / 0 rot
+GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme
+GRÜN T1245: Referenzen, Summen, Spanne, alle Geräte und Randfälle
+GRÜN PHP/JS: 625 feste Fälle, 30 Geräte-/Heizsystempaare plus Kaskaden und Fehler; größtes Float-Delta 0
+GRÜN T1245 Parameter: Seed, vier Bio-Stufen, Alt-/Teilstand, Cachewechsel, Startjahr 2027 und JAZ-Sperren in JS/PHP
+GRÜN H2 Website: ungültige Bio-/Netz-/JAZ-Daten sperren nur Kostenvergleich/Bootstrap; Förderung und Perioden exakt gleich, keine Rückfallwarnung in GS/PHP
+PASS Innenfelder sind aus der Antwort entfernt: 14 vorher, 0 nachher
+PASS Anzeigefelder bleiben vollstaendig: 8 von 8
+PASS Variantenliste ist mitgefiltert: Variantenfelder: modell, brutto
+PASS Rot-Nachweis: abgeschaltet liefert die Funktion alle Felder: 14 Felder bei ausgeschalteter Sperre
+PASS Filter ist vor der einzigen Ausgabestelle eingehaengt: Beide Schema-Ausgabewege verwenden ausschließlich das gefilterte Ergebnis
+PASS Sperre der Innenfelder ist eingeschaltet: RECHNER_INNENFELDER_SPERREN
+PASS Ratenbremse ist scharf geschaltet: RECHNER_RATE_LIMIT_ENFORCED
+
+7 von 7 Pruefungen gruen.
+EXIT 0
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T10:59:17.387Z
+STAND NEU: Arbeitsbaum, keine Einbuchung
+
+> verify:kv-t1247
+> node tests/t1247-kostenvergleich.mjs && node tests/t1245-kv-website-dom.mjs && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/schnittstelle-innenfelder-gesperrt.mjs
+
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+ROT  Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht: Geänderte Eingabe muss weiterhin neu rechnen + actual - expected  + { +   annahmen: {
+GRÜN Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert)
+ROT  Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API: wzJahreskosten: Komma verlangt Textfeld + actual - expected  + undefined - 'text'
+GRÜN Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent
+T1247 ERGEBNIS: 31 grün / 2 rot
+EXIT 1
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T10:59:35.219Z
+STAND NEU: Arbeitsbaum, keine Einbuchung
+
+> verify:kv-t1247
+> node tests/t1247-kostenvergleich.mjs && node tests/t1245-kv-website-dom.mjs && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/schnittstelle-innenfelder-gesperrt.mjs
+
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+ROT  Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht: Geänderte Eingabe muss weiterhin neu rechnen + actual - expected  + { +   annahmen: {
+GRÜN Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert)
+ROT  Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API: Expected values to be strictly equal:  null !== '1.5' 
+GRÜN Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent
+T1247 ERGEBNIS: 31 grün / 2 rot
+EXIT 1
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T11:00:00.341Z
+STAND NEU: Arbeitsbaum, keine Einbuchung
+
+> verify:kv-t1247
+> node tests/t1247-kostenvergleich.mjs && node tests/t1245-kv-website-dom.mjs && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/schnittstelle-innenfelder-gesperrt.mjs
+
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+GRÜN Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht
+GRÜN Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert)
+GRÜN Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API
+GRÜN Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent
+T1247 ERGEBNIS: 33 grün / 0 rot
+GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme
+GRÜN T1245: Referenzen, Summen, Spanne, alle Geräte und Randfälle
+GRÜN PHP/JS: 625 feste Fälle, 30 Geräte-/Heizsystempaare plus Kaskaden und Fehler; größtes Float-Delta 0
+GRÜN T1245 Parameter: Seed, vier Bio-Stufen, Alt-/Teilstand, Cachewechsel, Startjahr 2027 und JAZ-Sperren in JS/PHP
+GRÜN H2 Website: ungültige Bio-/Netz-/JAZ-Daten sperren nur Kostenvergleich/Bootstrap; Förderung und Perioden exakt gleich, keine Rückfallwarnung in GS/PHP
+PASS Innenfelder sind aus der Antwort entfernt: 14 vorher, 0 nachher
+PASS Anzeigefelder bleiben vollstaendig: 8 von 8
+PASS Variantenliste ist mitgefiltert: Variantenfelder: modell, brutto
+PASS Rot-Nachweis: abgeschaltet liefert die Funktion alle Felder: 14 Felder bei ausgeschalteter Sperre
+PASS Filter ist vor der einzigen Ausgabestelle eingehaengt: Beide Schema-Ausgabewege verwenden ausschließlich das gefilterte Ergebnis
+PASS Sperre der Innenfelder ist eingeschaltet: RECHNER_INNENFELDER_SPERREN
+PASS Ratenbremse ist scharf geschaltet: RECHNER_RATE_LIMIT_ENFORCED
+
+7 von 7 Pruefungen gruen.
+EXIT 0
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T11:01:44.672Z
+STAND NEU: Arbeitsbaum, keine Einbuchung
+
+> verify:kv-t1247
+> node tests/t1247-kostenvergleich.mjs && node tests/t1245-kv-website-dom.mjs && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/schnittstelle-innenfelder-gesperrt.mjs
+
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+GRÜN Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht
+GRÜN Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert)
+GRÜN Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API
+GRÜN Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent
+T1247 ERGEBNIS: 33 grün / 0 rot
+GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme
+GRÜN T1245: Referenzen, Summen, Spanne, alle Geräte und Randfälle
+GRÜN PHP/JS: 625 feste Fälle, 30 Geräte-/Heizsystempaare plus Kaskaden und Fehler; größtes Float-Delta 0
+GRÜN T1245 Parameter: Seed, vier Bio-Stufen, Alt-/Teilstand, Cachewechsel, Startjahr 2027 und JAZ-Sperren in JS/PHP
+GRÜN H2 Website: ungültige Bio-/Netz-/JAZ-Daten sperren nur Kostenvergleich/Bootstrap; Förderung und Perioden exakt gleich, keine Rückfallwarnung in GS/PHP
+PASS Innenfelder sind aus der Antwort entfernt: 14 vorher, 0 nachher
+PASS Anzeigefelder bleiben vollstaendig: 8 von 8
+PASS Variantenliste ist mitgefiltert: Variantenfelder: modell, brutto
+PASS Rot-Nachweis: abgeschaltet liefert die Funktion alle Felder: 14 Felder bei ausgeschalteter Sperre
+PASS Filter ist vor der einzigen Ausgabestelle eingehaengt: Beide Schema-Ausgabewege verwenden ausschließlich das gefilterte Ergebnis
+PASS Sperre der Innenfelder ist eingeschaltet: RECHNER_INNENFELDER_SPERREN
+PASS Ratenbremse ist scharf geschaltet: RECHNER_RATE_LIMIT_ENFORCED
+
+7 von 7 Pruefungen gruen.
+EXIT 0
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T11:02:56.875Z
+STAND NEU: Arbeitsbaum, keine Einbuchung
+
+> verify:kv-t1247
+> node tests/t1247-kostenvergleich.mjs && node tests/t1245-kv-website-dom.mjs && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/schnittstelle-innenfelder-gesperrt.mjs
+
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+GRÜN Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht
+GRÜN Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert)
+GRÜN Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API
+GRÜN Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent
+T1247 ERGEBNIS: 33 grün / 0 rot
+GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme
+GRÜN T1245: Referenzen, Summen, Spanne, alle Geräte und Randfälle
+GRÜN PHP/JS: 625 feste Fälle, 30 Geräte-/Heizsystempaare plus Kaskaden und Fehler; größtes Float-Delta 0
+GRÜN T1245 Parameter: Seed, vier Bio-Stufen, Alt-/Teilstand, Cachewechsel, Startjahr 2027 und JAZ-Sperren in JS/PHP
+GRÜN H2 Website: ungültige Bio-/Netz-/JAZ-Daten sperren nur Kostenvergleich/Bootstrap; Förderung und Perioden exakt gleich, keine Rückfallwarnung in GS/PHP
+PASS Innenfelder sind aus der Antwort entfernt: 14 vorher, 0 nachher
+PASS Anzeigefelder bleiben vollstaendig: 8 von 8
+PASS Variantenliste ist mitgefiltert: Variantenfelder: modell, brutto
+PASS Rot-Nachweis: abgeschaltet liefert die Funktion alle Felder: 14 Felder bei ausgeschalteter Sperre
+PASS Filter ist vor der einzigen Ausgabestelle eingehaengt: Beide Schema-Ausgabewege verwenden ausschließlich das gefilterte Ergebnis
+PASS Sperre der Innenfelder ist eingeschaltet: RECHNER_INNENFELDER_SPERREN
+PASS Ratenbremse ist scharf geschaltet: RECHNER_RATE_LIMIT_ENFORCED
+
+7 von 7 Pruefungen gruen.
+EXIT 0
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T11:18:34.837Z
+STAND NEU: Arbeitsbaum, keine Einbuchung
+
+> verify:kv-t1247
+> node tests/t1247-kostenvergleich.mjs && node tests/t1245-kv-website-dom.mjs && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/schnittstelle-innenfelder-gesperrt.mjs
+
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+GRÜN Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht
+GRÜN Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert)
+GRÜN Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API
+GRÜN Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext
+GRÜN Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis
+GRÜN Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt
+GRÜN Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent
+T1247 ERGEBNIS: 36 grün / 0 rot
+GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme
+GRÜN T1245: Referenzen, Summen, Spanne, alle Geräte und Randfälle
+GRÜN PHP/JS: 625 feste Fälle, 30 Geräte-/Heizsystempaare plus Kaskaden und Fehler; größtes Float-Delta 0
+GRÜN T1245 Parameter: Seed, vier Bio-Stufen, Alt-/Teilstand, Cachewechsel, Startjahr 2027 und JAZ-Sperren in JS/PHP
+GRÜN H2 Website: ungültige Bio-/Netz-/JAZ-Daten sperren nur Kostenvergleich/Bootstrap; Förderung und Perioden exakt gleich, keine Rückfallwarnung in GS/PHP
+PASS Innenfelder sind aus der Antwort entfernt: 14 vorher, 0 nachher
+PASS Anzeigefelder bleiben vollstaendig: 8 von 8
+PASS Variantenliste ist mitgefiltert: Variantenfelder: modell, brutto
+PASS Rot-Nachweis: abgeschaltet liefert die Funktion alle Felder: 14 Felder bei ausgeschalteter Sperre
+PASS Filter ist vor der einzigen Ausgabestelle eingehaengt: Beide Schema-Ausgabewege verwenden ausschließlich das gefilterte Ergebnis
+PASS Sperre der Innenfelder ist eingeschaltet: RECHNER_INNENFELDER_SPERREN
+PASS Ratenbremse ist scharf geschaltet: RECHNER_RATE_LIMIT_ENFORCED
+
+7 von 7 Pruefungen gruen.
+EXIT 0
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T11:19:27.497Z
+STAND NEU: Arbeitsbaum, keine Einbuchung
+
+> verify:kv-t1247
+> node tests/t1247-kostenvergleich.mjs && node tests/t1245-kv-website-dom.mjs && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/schnittstelle-innenfelder-gesperrt.mjs
+
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+GRÜN Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht
+GRÜN Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert)
+GRÜN Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API
+GRÜN Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext
+GRÜN Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis
+GRÜN Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt
+GRÜN Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent
+T1247 ERGEBNIS: 36 grün / 0 rot
+GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme
+GRÜN T1245: Referenzen, Summen, Spanne, alle Geräte und Randfälle
+GRÜN PHP/JS: 625 feste Fälle, 30 Geräte-/Heizsystempaare plus Kaskaden und Fehler; größtes Float-Delta 0
+GRÜN T1245 Parameter: Seed, vier Bio-Stufen, Alt-/Teilstand, Cachewechsel, Startjahr 2027 und JAZ-Sperren in JS/PHP
+GRÜN H2 Website: ungültige Bio-/Netz-/JAZ-Daten sperren nur Kostenvergleich/Bootstrap; Förderung und Perioden exakt gleich, keine Rückfallwarnung in GS/PHP
+PASS Innenfelder sind aus der Antwort entfernt: 14 vorher, 0 nachher
+PASS Anzeigefelder bleiben vollstaendig: 8 von 8
+PASS Variantenliste ist mitgefiltert: Variantenfelder: modell, brutto
+PASS Rot-Nachweis: abgeschaltet liefert die Funktion alle Felder: 14 Felder bei ausgeschalteter Sperre
+PASS Filter ist vor der einzigen Ausgabestelle eingehaengt: Beide Schema-Ausgabewege verwenden ausschließlich das gefilterte Ergebnis
+PASS Sperre der Innenfelder ist eingeschaltet: RECHNER_INNENFELDER_SPERREN
+PASS Ratenbremse ist scharf geschaltet: RECHNER_RATE_LIMIT_ENFORCED
+
+7 von 7 Pruefungen gruen.
+EXIT 0
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T11:38:18.013Z
+STAND NEU: Arbeitsbaum, keine Einbuchung
+
+> verify:kv-t1247
+> node tests/t1247-kostenvergleich.mjs && node tests/t1245-kv-website-dom.mjs && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/schnittstelle-innenfelder-gesperrt.mjs
+
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+GRÜN Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht
+GRÜN Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert)
+GRÜN Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API
+GRÜN Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext
+GRÜN Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis
+GRÜN Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt
+GRÜN Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent
+T1247 ERGEBNIS: 36 grün / 0 rot
+GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme
+GRÜN T1245: Referenzen, Summen, Spanne, alle Geräte und Randfälle
+GRÜN PHP/JS: 625 feste Fälle, 30 Geräte-/Heizsystempaare plus Kaskaden und Fehler; größtes Float-Delta 0
+GRÜN T1245 Parameter: Seed, vier Bio-Stufen, Alt-/Teilstand, Cachewechsel, Startjahr 2027 und JAZ-Sperren in JS/PHP
+GRÜN H2 Website: ungültige Bio-/Netz-/JAZ-Daten sperren nur Kostenvergleich/Bootstrap; Förderung und Perioden exakt gleich, keine Rückfallwarnung in GS/PHP
+PASS Innenfelder sind aus der Antwort entfernt: 14 vorher, 0 nachher
+PASS Anzeigefelder bleiben vollstaendig: 8 von 8
+PASS Variantenliste ist mitgefiltert: Variantenfelder: modell, brutto
+PASS Rot-Nachweis: abgeschaltet liefert die Funktion alle Felder: 14 Felder bei ausgeschalteter Sperre
+PASS Filter ist vor der einzigen Ausgabestelle eingehaengt: Beide Schema-Ausgabewege verwenden ausschließlich das gefilterte Ergebnis
+PASS Sperre der Innenfelder ist eingeschaltet: RECHNER_INNENFELDER_SPERREN
+PASS Ratenbremse ist scharf geschaltet: RECHNER_RATE_LIMIT_ENFORCED
+
+7 von 7 Pruefungen gruen.
+EXIT 0
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T11:40:13.647Z
+STAND NEU: Arbeitsbaum, keine Einbuchung
+
+> verify:kv-t1247
+> node tests/t1247-kostenvergleich.mjs && node tests/t1245-kv-website-dom.mjs && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/schnittstelle-innenfelder-gesperrt.mjs
+
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+GRÜN Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht
+GRÜN Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert)
+GRÜN Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API
+GRÜN Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext
+GRÜN Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis
+GRÜN Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt
+GRÜN Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent
+T1247 ERGEBNIS: 36 grün / 0 rot
+GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme
+GRÜN T1245: Referenzen, Summen, Spanne, alle Geräte und Randfälle
+GRÜN PHP/JS: 625 feste Fälle, 30 Geräte-/Heizsystempaare plus Kaskaden und Fehler; größtes Float-Delta 0
+GRÜN T1245 Parameter: Seed, vier Bio-Stufen, Alt-/Teilstand, Cachewechsel, Startjahr 2027 und JAZ-Sperren in JS/PHP
+GRÜN H2 Website: ungültige Bio-/Netz-/JAZ-Daten sperren nur Kostenvergleich/Bootstrap; Förderung und Perioden exakt gleich, keine Rückfallwarnung in GS/PHP
+PASS Innenfelder sind aus der Antwort entfernt: 14 vorher, 0 nachher
+PASS Anzeigefelder bleiben vollstaendig: 8 von 8
+PASS Variantenliste ist mitgefiltert: Variantenfelder: modell, brutto
+PASS Rot-Nachweis: abgeschaltet liefert die Funktion alle Felder: 14 Felder bei ausgeschalteter Sperre
+PASS Filter ist vor der einzigen Ausgabestelle eingehaengt: Beide Schema-Ausgabewege verwenden ausschließlich das gefilterte Ergebnis
+PASS Sperre der Innenfelder ist eingeschaltet: RECHNER_INNENFELDER_SPERREN
+PASS Ratenbremse ist scharf geschaltet: RECHNER_RATE_LIMIT_ENFORCED
+
+7 von 7 Pruefungen gruen.
+EXIT 0
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T11:52:27.320Z
+STAND NEU: Arbeitsbaum, keine Einbuchung
+
+> verify:kv-t1247
+> node tests/t1247-kostenvergleich.mjs && node tests/t1245-kv-website-dom.mjs && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/schnittstelle-innenfelder-gesperrt.mjs
+
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Preisherkunft nennt je Preis Annahme, eigene Angabe oder Marktquelle mit Stand
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Diagrammbeschriftung vollständig innerhalb der Fläche, Jahre 0 bis 25, schmal und breit
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+GRÜN Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht
+GRÜN Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert)
+GRÜN Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API
+GRÜN Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext
+GRÜN Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis
+GRÜN Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt
+GRÜN Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent
+T1247 ERGEBNIS: 38 grün / 0 rot
+GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme
+GRÜN T1245: Referenzen, Summen, Spanne, alle Geräte und Randfälle
+GRÜN PHP/JS: 625 feste Fälle, 30 Geräte-/Heizsystempaare plus Kaskaden und Fehler; größtes Float-Delta 0
+GRÜN T1245 Parameter: Seed, vier Bio-Stufen, Alt-/Teilstand, Cachewechsel, Startjahr 2027 und JAZ-Sperren in JS/PHP
+GRÜN H2 Website: ungültige Bio-/Netz-/JAZ-Daten sperren nur Kostenvergleich/Bootstrap; Förderung und Perioden exakt gleich, keine Rückfallwarnung in GS/PHP
+PASS Innenfelder sind aus der Antwort entfernt: 14 vorher, 0 nachher
+PASS Anzeigefelder bleiben vollstaendig: 8 von 8
+PASS Variantenliste ist mitgefiltert: Variantenfelder: modell, brutto
+PASS Rot-Nachweis: abgeschaltet liefert die Funktion alle Felder: 14 Felder bei ausgeschalteter Sperre
+PASS Filter ist vor der einzigen Ausgabestelle eingehaengt: Beide Schema-Ausgabewege verwenden ausschließlich das gefilterte Ergebnis
+PASS Sperre der Innenfelder ist eingeschaltet: RECHNER_INNENFELDER_SPERREN
+PASS Ratenbremse ist scharf geschaltet: RECHNER_RATE_LIMIT_ENFORCED
+
+7 von 7 Pruefungen gruen.
+EXIT 0
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T11:53:09.213Z
+STAND NEU: Arbeitsbaum, keine Einbuchung
+
+> verify:kv-t1247
+> node tests/t1247-kostenvergleich.mjs && node tests/t1245-kv-website-dom.mjs && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/schnittstelle-innenfelder-gesperrt.mjs
+
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Preisherkunft nennt je Preis Annahme, eigene Angabe oder Marktquelle mit Stand
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Diagrammbeschriftung vollständig innerhalb der Fläche, Jahre 0 bis 25, schmal und breit
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+GRÜN Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht
+GRÜN Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert)
+GRÜN Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API
+GRÜN Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext
+GRÜN Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis
+GRÜN Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt
+GRÜN Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent
+T1247 ERGEBNIS: 38 grün / 0 rot
+GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme
+GRÜN T1245: Referenzen, Summen, Spanne, alle Geräte und Randfälle
+GRÜN PHP/JS: 625 feste Fälle, 30 Geräte-/Heizsystempaare plus Kaskaden und Fehler; größtes Float-Delta 0
+GRÜN T1245 Parameter: Seed, vier Bio-Stufen, Alt-/Teilstand, Cachewechsel, Startjahr 2027 und JAZ-Sperren in JS/PHP
+GRÜN H2 Website: ungültige Bio-/Netz-/JAZ-Daten sperren nur Kostenvergleich/Bootstrap; Förderung und Perioden exakt gleich, keine Rückfallwarnung in GS/PHP
+PASS Innenfelder sind aus der Antwort entfernt: 14 vorher, 0 nachher
+PASS Anzeigefelder bleiben vollstaendig: 8 von 8
+PASS Variantenliste ist mitgefiltert: Variantenfelder: modell, brutto
+PASS Rot-Nachweis: abgeschaltet liefert die Funktion alle Felder: 14 Felder bei ausgeschalteter Sperre
+PASS Filter ist vor der einzigen Ausgabestelle eingehaengt: Beide Schema-Ausgabewege verwenden ausschließlich das gefilterte Ergebnis
+PASS Sperre der Innenfelder ist eingeschaltet: RECHNER_INNENFELDER_SPERREN
+PASS Ratenbremse ist scharf geschaltet: RECHNER_RATE_LIMIT_ENFORCED
+
+7 von 7 Pruefungen gruen.
+EXIT 0
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T12:11:36.334Z
+STAND NEU: Arbeitsbaum, keine Einbuchung
+
+> verify:kv-t1247
+> node tests/t1247-kostenvergleich.mjs && node tests/t1245-kv-website-dom.mjs && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/schnittstelle-innenfelder-gesperrt.mjs
+
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Preisherkunft nennt je Preis Annahme, eigene Angabe oder Marktquelle mit Stand
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Diagrammbeschriftung vollständig innerhalb der Fläche, Jahre 0 bis 25, schmal und breit
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+GRÜN Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht
+GRÜN Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert)
+GRÜN Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API
+GRÜN Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext
+GRÜN Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis
+GRÜN Mehrpreis überall positiv: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis
+GRÜN Mehrpreis überall negativ: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis
+GRÜN Mehrpreis überall null: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis
+GRÜN Mehrpreis rundet vor Textwahl: ±0,49 und ±0,50 Euro, keine Null als Preisvorteil
+GRÜN Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt
+GRÜN Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent
+T1247 ERGEBNIS: 42 grün / 0 rot
+GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme
+GRÜN T1245: Referenzen, Summen, Spanne, alle Geräte und Randfälle
+GRÜN PHP/JS: 625 feste Fälle, 30 Geräte-/Heizsystempaare plus Kaskaden und Fehler; größtes Float-Delta 0
+GRÜN T1245 Parameter: Seed, vier Bio-Stufen, Alt-/Teilstand, Cachewechsel, Startjahr 2027 und JAZ-Sperren in JS/PHP
+GRÜN H2 Website: ungültige Bio-/Netz-/JAZ-Daten sperren nur Kostenvergleich/Bootstrap; Förderung und Perioden exakt gleich, keine Rückfallwarnung in GS/PHP
+PASS Innenfelder sind aus der Antwort entfernt: 14 vorher, 0 nachher
+PASS Anzeigefelder bleiben vollstaendig: 8 von 8
+PASS Variantenliste ist mitgefiltert: Variantenfelder: modell, brutto
+PASS Rot-Nachweis: abgeschaltet liefert die Funktion alle Felder: 14 Felder bei ausgeschalteter Sperre
+PASS Filter ist vor der einzigen Ausgabestelle eingehaengt: Beide Schema-Ausgabewege verwenden ausschließlich das gefilterte Ergebnis
+PASS Sperre der Innenfelder ist eingeschaltet: RECHNER_INNENFELDER_SPERREN
+PASS Ratenbremse ist scharf geschaltet: RECHNER_RATE_LIMIT_ENFORCED
+
+7 von 7 Pruefungen gruen.
+EXIT 0
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T12:12:11.279Z
+STAND NEU: Arbeitsbaum, keine Einbuchung
+
+> verify:kv-t1247
+> node tests/t1247-kostenvergleich.mjs && node tests/t1245-kv-website-dom.mjs && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/schnittstelle-innenfelder-gesperrt.mjs
+
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Preisherkunft nennt je Preis Annahme, eigene Angabe oder Marktquelle mit Stand
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Diagrammbeschriftung vollständig innerhalb der Fläche, Jahre 0 bis 25, schmal und breit
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+GRÜN Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht
+GRÜN Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert)
+GRÜN Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API
+GRÜN Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext
+GRÜN Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis
+GRÜN Mehrpreis überall positiv: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis
+GRÜN Mehrpreis überall negativ: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis
+GRÜN Mehrpreis überall null: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis
+GRÜN Mehrpreis rundet vor Textwahl: ±0,49 und ±0,50 Euro, keine Null als Preisvorteil
+GRÜN Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt
+GRÜN Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent
+T1247 ERGEBNIS: 42 grün / 0 rot
+GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme
+GRÜN T1245: Referenzen, Summen, Spanne, alle Geräte und Randfälle
+GRÜN PHP/JS: 625 feste Fälle, 30 Geräte-/Heizsystempaare plus Kaskaden und Fehler; größtes Float-Delta 0
+GRÜN T1245 Parameter: Seed, vier Bio-Stufen, Alt-/Teilstand, Cachewechsel, Startjahr 2027 und JAZ-Sperren in JS/PHP
+GRÜN H2 Website: ungültige Bio-/Netz-/JAZ-Daten sperren nur Kostenvergleich/Bootstrap; Förderung und Perioden exakt gleich, keine Rückfallwarnung in GS/PHP
+PASS Innenfelder sind aus der Antwort entfernt: 14 vorher, 0 nachher
+PASS Anzeigefelder bleiben vollstaendig: 8 von 8
+PASS Variantenliste ist mitgefiltert: Variantenfelder: modell, brutto
+PASS Rot-Nachweis: abgeschaltet liefert die Funktion alle Felder: 14 Felder bei ausgeschalteter Sperre
+PASS Filter ist vor der einzigen Ausgabestelle eingehaengt: Beide Schema-Ausgabewege verwenden ausschließlich das gefilterte Ergebnis
+PASS Sperre der Innenfelder ist eingeschaltet: RECHNER_INNENFELDER_SPERREN
+PASS Ratenbremse ist scharf geschaltet: RECHNER_RATE_LIMIT_ENFORCED
+
+7 von 7 Pruefungen gruen.
+EXIT 0
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T12:12:45.198Z
+STAND NEU: Arbeitsbaum, keine Einbuchung
+
+> verify:kv-t1247
+> node tests/t1247-kostenvergleich.mjs && node tests/t1245-kv-website-dom.mjs && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/schnittstelle-innenfelder-gesperrt.mjs
+
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Preisherkunft nennt je Preis Annahme, eigene Angabe oder Marktquelle mit Stand
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Diagrammbeschriftung vollständig innerhalb der Fläche, Jahre 0 bis 25, schmal und breit
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+GRÜN Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht
+GRÜN Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert)
+GRÜN Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API
+GRÜN Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext
+GRÜN Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis
+GRÜN Mehrpreis überall positiv: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis
+GRÜN Mehrpreis überall negativ: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis
+GRÜN Mehrpreis überall null: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis
+GRÜN Mehrpreis rundet vor Textwahl: ±0,49 und ±0,50 Euro, keine Null als Preisvorteil
+GRÜN Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt
+GRÜN Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent
+T1247 ERGEBNIS: 42 grün / 0 rot
+GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme
+GRÜN T1245: Referenzen, Summen, Spanne, alle Geräte und Randfälle
+GRÜN PHP/JS: 625 feste Fälle, 30 Geräte-/Heizsystempaare plus Kaskaden und Fehler; größtes Float-Delta 0
+GRÜN T1245 Parameter: Seed, vier Bio-Stufen, Alt-/Teilstand, Cachewechsel, Startjahr 2027 und JAZ-Sperren in JS/PHP
+GRÜN H2 Website: ungültige Bio-/Netz-/JAZ-Daten sperren nur Kostenvergleich/Bootstrap; Förderung und Perioden exakt gleich, keine Rückfallwarnung in GS/PHP
+PASS Innenfelder sind aus der Antwort entfernt: 14 vorher, 0 nachher
+PASS Anzeigefelder bleiben vollstaendig: 8 von 8
+PASS Variantenliste ist mitgefiltert: Variantenfelder: modell, brutto
+PASS Rot-Nachweis: abgeschaltet liefert die Funktion alle Felder: 14 Felder bei ausgeschalteter Sperre
+PASS Filter ist vor der einzigen Ausgabestelle eingehaengt: Beide Schema-Ausgabewege verwenden ausschließlich das gefilterte Ergebnis
+PASS Sperre der Innenfelder ist eingeschaltet: RECHNER_INNENFELDER_SPERREN
+PASS Ratenbremse ist scharf geschaltet: RECHNER_RATE_LIMIT_ENFORCED
+
+7 von 7 Pruefungen gruen.
+EXIT 0
+
+T1247-NUTZEN-20261107-01 | Basis 6fdf74e7d205af1ae51a7ae72668bcc1797957ff | 2026-11-07T12:24:46.366Z
+STAND NEU: Arbeitsbaum, keine Einbuchung
+
+> verify:kv-t1247
+> node tests/t1247-kostenvergleich.mjs && node tests/t1245-kv-website-dom.mjs && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/schnittstelle-innenfelder-gesperrt.mjs
+
+GRÜN Euro Gas: 2.650,38 Euro ergeben 20.000 kWh
+GRÜN Euro Öl: Euro/Liter wird serverseitig zu kWh und ct/kWh
+GRÜN Preisänderung im Euro-Modus ohne 500-kWh-Rundung
+GRÜN Euro-Verbrauch bleibt ungerundet
+GRÜN Gas-Grundpreis 0 bleibt gültig
+GRÜN Heutige Heizungsart führt trotz anderer Vergleichsheizung
+GRÜN Euro-Grenzen 5.000 und 80.000 kWh bleiben gültig
+GRÜN Öl-Umrechnung verwendet den bestehenden Parameter statt eines Browserfaktors
+GRÜN 13 ungültige Euro-Eingaben sperren mit Klartext
+GRÜN 6 belegte Marktwerte, Defaults unverändert
+GRÜN Prüf-Eintrag Gas schaltet ohne Codeänderung frei, 4 Pflichtangaben
+GRÜN Marktherkunft nur bei tatsächlich verwendetem Marktwert
+GRÜN Preisherkunft nennt je Preis Annahme, eigene Angabe oder Marktquelle mit Stand
+GRÜN Kostenlinien ab Jahr 0 einschließlich Investition
+GRÜN Bitgleiche bisherige Kernantworten bei gleichem normalisiertem Verbrauch
+GRÜN Alte Berater-Anfragen bleiben vollständig bitgleich
+GRÜN Euro und Literpreis führen in denselben unveränderten Kern
+GRÜN Adapter ist an der öffentlichen Ausgabestelle eingebunden
+GRÜN Schutzgrenzen exakt auf 6fdf74e
+GRÜN Nutzen-Begriffe und Reihenfolge, negative Werte ohne Sparbehauptung
+GRÜN Amortisation Jahr 0 heißt Bezahlt gemacht: sofort
+GRÜN Diagrammbeschriftung vollständig innerhalb der Fläche, Jahre 0 bis 25, schmal und breit
+GRÜN Spätes Bootstrap überschreibt keine eigenen Preise
+GRÜN Anfrage v1 überträgt nur serverseitige kWh mit Herkunft
+GRÜN Sichttexte ohne Gedankenstriche und deutsche Zahlenformatierung
+GRÜN Verbrauchsschritt: Szenariopreise, Herkunft und bedingte WP-Felder
+GRÜN Moduswechsel entwertet Altlauf, Verbrauchsbearbeitung führt zurück
+GRÜN Ungenutzte Brennstoffpreise sperren weder Verbrauch noch Euro-Modus
+GRÜN Client überträgt nur Preise verwendeter Brennstoffe und des aktiven Zählers
+GRÜN Echte Renderer: Handy-Klapptexte, vierstellige Rate, negative Finanzierung ohne Sparbehauptung
+GRÜN Seitenleiste liest normalisierte 16.000 kWh statt Reglerwert 20.000
+GRÜN Fertige Euro-Rechnung: echte change/focusout-Handler entwerten Ergebnis und Herleitung nicht
+GRÜN Alle drei Nutzen-Karten trennen Bezeichnung, Betrag und Spanne (Z5 unverändert)
+GRÜN Dezimalfelder: deutsche Vorbelegung und Marktwert, Komma/Punkt nur als Punktzahl an API
+GRÜN Jahreskosten: eindeutige Schreibweisen normalisieren, unklare Eingaben sperren mit Klartext
+GRÜN Negativer Investitionsunterschied: günstiger als neue Gas- oder Ölheizung, kein negativer Mehrpreis
+GRÜN Mehrpreis überall positiv: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis
+GRÜN Mehrpreis überall negativ: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis
+GRÜN Mehrpreis überall null: Hauptkarte, Rechenweg, Detailkarte und Tabellenhinweis
+GRÜN Mehrpreis rundet vor Textwahl: ±0,49 und ±0,50 Euro, keine Null als Preisvorteil
+GRÜN Dreiwege-Handyliste: günstiger, teurer und Gleichstand ohne doppelte Vorzeichen
+GRÜN Dreiwege-Ergebnissatz: tatsächliche günstigste Neuanlage, teurer/günstiger/gleich
+GRÜN Euro-Grenzen belegt durch Verbrauchsfeld und Kern auf 6fdf74e, außerhalb gesperrt
+GRÜN Herleitung: Mengen und Faktoren ohne erzwungene Stellen, Geld und Einheitspreise mit Cent
+T1247 ERGEBNIS: 44 grün / 0 rot
+GRÜN DOM T1245: echte Renderfunktionen, Einzelposten, JAZ-Randbedingungen, Requestwerte und Klartext-Sperre; keine visuelle Abnahme
+GRÜN T1245: Referenzen, Summen, Spanne, alle Geräte und Randfälle
+GRÜN PHP/JS: 625 feste Fälle, 30 Geräte-/Heizsystempaare plus Kaskaden und Fehler; größtes Float-Delta 0
+GRÜN T1245 Parameter: Seed, vier Bio-Stufen, Alt-/Teilstand, Cachewechsel, Startjahr 2027 und JAZ-Sperren in JS/PHP
+GRÜN H2 Website: ungültige Bio-/Netz-/JAZ-Daten sperren nur Kostenvergleich/Bootstrap; Förderung und Perioden exakt gleich, keine Rückfallwarnung in GS/PHP
+PASS Innenfelder sind aus der Antwort entfernt: 14 vorher, 0 nachher
+PASS Anzeigefelder bleiben vollstaendig: 8 von 8
+PASS Variantenliste ist mitgefiltert: Variantenfelder: modell, brutto
+PASS Rot-Nachweis: abgeschaltet liefert die Funktion alle Felder: 14 Felder bei ausgeschalteter Sperre
+PASS Filter ist vor der einzigen Ausgabestelle eingehaengt: Beide Schema-Ausgabewege verwenden ausschließlich das gefilterte Ergebnis
+PASS Sperre der Innenfelder ist eingeschaltet: RECHNER_INNENFELDER_SPERREN
+PASS Ratenbremse ist scharf geschaltet: RECHNER_RATE_LIMIT_ENFORCED
+
+7 von 7 Pruefungen gruen.
+EXIT 0

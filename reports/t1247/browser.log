@@ -1,0 +1,56 @@
+GRÜN 1a Rechnung zu Verbrauch: Brücke null und neue Tastatureingabe führt
+GRÜN 1b Späte Euro-Antwort reaktiviert den Rechnungsmodus nicht
+GRÜN 1c Fokuswechsel nach fertiger Euro-Rechnung lässt Herleitung und Knopf stabil
+GRÜN Z5 Nutzen-Karten trennen Bezeichnung, Betrag und Spanne im Textinhalt
+GRÜN 9a Dezimalfelder nach Laden und Marktwertklick deutsch, Komma und Punkt rechnen gleich
+GRÜN 9a Jahreskosten: vier gültige Eingaben, Tausenderpunkt und eindeutige API-Zahl
+GRÜN 9a Jahreskosten: unklare Schreibweisen sperren mit Klartext und bleiben bearbeitbar
+GRÜN Ergebnis Öl: nach Förderung 380 € günstiger, kein negativer Mehrpreis
+GRÜN 11 Mehrpreis gas / 5120 € / 375 px, Hauptkarte und offene Details
+GRÜN 11 Mehrpreis gas / -380 € / 375 px, Hauptkarte und offene Details
+GRÜN 11 Mehrpreis gas / 0 € / 375 px, Hauptkarte und offene Details
+GRÜN 11 Mehrpreis oel / 5120 € / 375 px, Hauptkarte und offene Details
+GRÜN 11 Mehrpreis oel / -380 € / 375 px, Hauptkarte und offene Details
+GRÜN 11 Mehrpreis oel / 0 € / 375 px, Hauptkarte und offene Details
+GRÜN 11 Mehrpreis gas / 5120 € / 1280 px, Hauptkarte und offene Details
+GRÜN 11 Mehrpreis gas / -380 € / 1280 px, Hauptkarte und offene Details
+GRÜN 11 Mehrpreis gas / 0 € / 1280 px, Hauptkarte und offene Details
+GRÜN 11 Mehrpreis oel / 5120 € / 1280 px, Hauptkarte und offene Details
+GRÜN 11 Mehrpreis oel / -380 € / 1280 px, Hauptkarte und offene Details
+GRÜN 11 Mehrpreis oel / 0 € / 1280 px, Hauptkarte und offene Details
+GRÜN 9b Herleitung ohne erzwungene Mengennachkommastellen: gas
+GRÜN 9b Herleitung ohne erzwungene Mengennachkommastellen: oel
+GRÜN 2 Handy-Klapptexte ohne doppeltes Alle
+GRÜN 3a Ölpreis leeren, Gas wählen: verborgener Ölpreis sperrt nicht
+GRÜN 3b Gaspreis/Grundpreis leeren, Öl wählen: verborgene Gasfelder sperren nicht
+GRÜN 3c Abweichende Vergleichsheizung: verwendeter Ölpreis sichtbar und Pflicht
+GRÜN 4 Geld und Mengen deutsch, Finanzierung Neuanlage
+GRÜN 4 Geld und Mengen deutsch, Finanzierung Bestand
+GRÜN 5 Euro-Seitenleiste nutzt inputsEcho.bedarf: 15 ct ergeben 16.000 kWh
+GRÜN 6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Neuanlage
+GRÜN 6 Negatives Ergebnis ohne Spar-/Amortisationsbehauptung, Bestand
+GRÜN 7 Prüf-Eintrag: vollständig, sichtbarer bedienbarer Knopf
+GRÜN 7 Prüf-Eintrag: wert fehlt, kein Knopf
+GRÜN 7 Prüf-Eintrag: einheit fehlt, kein Knopf
+GRÜN 7 Prüf-Eintrag: quelle fehlt, kein Knopf
+GRÜN 7 Prüf-Eintrag: stand fehlt, kein Knopf
+GRÜN 7 Spätes Bootstrap nach echter Tastatureingabe erhält Preise und Herkunft
+GRÜN Ungültige Euro-Preise sperren Ergebnis und Weiter
+GRÜN A9 Preisherkunft Gas: je Preis benannt, Marktquelle und Stand nach Übernahme
+GRÜN A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 375 px light
+GRÜN A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 375 px dark
+GRÜN A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 1280 px light
+GRÜN A9 Diagrammbeschriftung im Diagramm: Jahr 0, 7 und Laufzeitende, 1280 px dark
+GRÜN Bild Verbrauch gas-light-375
+GRÜN Bild Ergebnis und Vertragskontrollen gas-light-375
+GRÜN Bild Verbrauch gas-light-1280
+GRÜN Bild Ergebnis und Vertragskontrollen gas-light-1280
+GRÜN Bild Verbrauch gas-dark-375
+GRÜN Bild Ergebnis und Vertragskontrollen gas-dark-375
+GRÜN Bild Verbrauch oel-light-375
+GRÜN Bild Ergebnis und Vertragskontrollen oel-light-375
+GRÜN Bild Verbrauch oel-light-1280
+GRÜN Bild Ergebnis und Vertragskontrollen oel-light-1280
+GRÜN Bild Verbrauch oel-dark-375
+GRÜN Bild Ergebnis und Vertragskontrollen oel-dark-375
+T1247 BROWSER: 55 grün / 0 rot, 12 Bildschirmfotos
