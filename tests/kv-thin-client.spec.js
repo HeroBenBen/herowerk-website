@@ -413,7 +413,7 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
   expect(await page.evaluate(() => Math.round(KV_STATE.last.ergebnis.wpNG))).toBe(56647);
   expect(await page.locator('#kpiGrid .ml').allTextContents()).toEqual([
     'Anschaffung nach Förderung',
-    'Anschaffungsvergleich',
+    'Mehrpreis gegenüber neuer Gasheizung',
     'Ausgeglichen ab',
     'Einsparung 20 J.',
     'CO₂ eingespart',
@@ -515,8 +515,11 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
   await rangeFromStart(page, 'invWP', 8);
   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.inputsEcho.invWP === 12000);
   await expect(
-    page.locator('#kpiGrid .ml', { hasText: 'Anschaffungsvergleich' }).locator('..').locator('.mv')
-  ).toHaveText('5.520 €');
+    page
+      .locator('#kpiGrid .ml', { hasText: 'Mehrpreis gegenüber neuer Gasheizung' })
+      .locator('..')
+      .locator('.mv')
+  ).toHaveText('−5.520 €');
 
   await rangeToEnd(page, 'invWP');
   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.inputsEcho.invWP === 65000);
@@ -526,7 +529,7 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
   await expect(page.locator('#pathSummary')).toContainText('Ihr Vorteil (Barzahlung)');
   await expect(page.locator('#pathSummary')).not.toContainText('Anschaffung Neue Gasheizung');
   await expect(page.locator('#pathSummary')).not.toContainText('Echter Mehrpreis');
-  await expect(page.locator('#kpiGrid .ml', { hasText: 'Anschaffungsvergleich' })).toHaveCount(0);
+  await expect(page.locator('#kpiGrid .ml', { hasText: 'Mehrpreis gegenüber' })).toHaveCount(0);
   // T1245, Kern 0269f63, Herleitung T1245_SCHRITT1_ABSCHLUSS.md Anpassung 13
   await expect(
     page
