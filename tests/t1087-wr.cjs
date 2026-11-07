@@ -119,7 +119,11 @@ function unchanged() {
     'apps-script/rechner-backend/kv_contract.md',
     'apps-script/rechner-backend/kv_sheet_spec.md',
   ]);
-  for (const file of files.filter((f) => !t1245.has(f)))
+  // T1247: Benjamins Zusammenführung von Antrag 154 bindet in api/rechner.php
+  // den rechner-kv-adapter.php ein. Das Verhalten ist durch die T1247-
+  // Bereichsprüfungen, A11 und den Snapshot-Nachlauf gesichert.
+  const t1247 = new Set(['api/rechner.php']);
+  for (const file of files.filter((f) => !t1245.has(f) && !t1247.has(f)))
     assert.deepEqual(
       fs.readFileSync(path.join(root, file)),
       cp.execFileSync('git', ['show', base + ':' + file], {
@@ -378,6 +382,9 @@ function costTextContracts() {
     'chipFor',
     'eur',
     'eurSigned',
+    // Nur dort extrahieren, wo vorhanden: T1247-eur benötigt deNumber;
+    // die Basis und die Beraterseite verwenden weiterhin ihr eigenes eur.
+    'deNumber',
   ];
   for (const file of [
     'kostenvergleich-waermepumpe.html',
@@ -408,10 +415,10 @@ function costTextContracts() {
         const ctx = vm.createContext({ WZ: { touched: new Set() }, marketLabel: () => value });
         vm.runInContext(functions.join('\n'), ctx);
         const outputs = [
-          ctx.kvLine(value, value),
-          ctx.kvCard(value, value, value),
-          ctx.kvMobileCard(value, value, [[value, value]]),
-          ctx.kvMobileYearAnswer({ breakEven: value, cumSav: 1 }, { laufzeit: value }),
+          ctx.kvLine(value, value, value),
+          ctx.kvCard(value, value, value, value),
+          ctx.kvMobileCard(value, value, [[value, value, value]], value),
+          ctx.kvMobileYearAnswer({ breakEven: value, cumSav: 1, wpNG: 1 }, { laufzeit: value }),
           ctx.kvMobileYearContent([value], [{ label: value, data: [1] }]),
           ctx.kvMobileYearDetails(value, [value], [{ label: value, data: [1] }]),
           ctx.chipFor('kredZins'),
@@ -433,6 +440,31 @@ function costTextContracts() {
               0,
               'Kein injiziertes Attribut'
             );
+        }
+        // Mehrreihen-Zweig: Beschriftungen stammen unabhängig von Jahreslabels
+        // aus den Datensätzen. Auch Titel und Attribute getrennt absichern.
+        const datasets = [
+          { label: value, data: [1] },
+          { label: value, data: [2] },
+        ];
+        for (const html of [
+          ctx.kvMobileYearContent(['Jahr 1'], datasets),
+          ctx.kvMobileYearDetails(value, ['Jahr 1'], datasets),
+        ]) {
+          const doc = parseDocument(html);
+          assert.equal(DomUtils.textContent(doc).includes(value), !ref, file + ' Mehrreihen');
+          if (!ref) {
+            assert.equal(
+              DomUtils.findAll(
+                (node) => Object.hasOwn(node.attribs || {}, 'data-wr-injected'),
+                doc.children
+              ).length,
+              0,
+              file + ' Mehrreihen: kein injiziertes Attribut'
+            );
+            const details = DomUtils.findAll((node) => node.name === 'details', doc.children);
+            if (details.length) assert.equal(details[0].attribs['aria-label'], value);
+          }
         }
       }
     }

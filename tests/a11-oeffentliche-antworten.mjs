@@ -176,32 +176,31 @@ function seal(s) {
 }
 async function start(mode) {
   const apiStand = mode.replace(/-kv$/, '');
+  const apiRef = {
+    basis,
+    prior: nachauftragBasis,
+    prior2: nachauftrag2Basis,
+    prior3: nachauftrag3Basis,
+    prior4: nachauftrag4Basis,
+  }[apiStand];
   const dir = path.join(root, mode),
     api = path.join(dir, 'website/api'),
     runtime = path.join(dir, 'rechner-runtime');
   await fs.mkdir(api, { recursive: true });
   await fs.mkdir(runtime, { recursive: true });
-  for (const file of await fs.readdir(path.join(repo, 'api'))) {
+  // Historische Sandkästen enthalten genau ihren Stand, auch wenn die heutige API neue Module hat.
+  const files = apiRef
+    ? execFileSync('git', ['ls-tree', '--name-only', apiRef + ':api'], {
+        cwd: repo,
+        encoding: 'utf8',
+      })
+        .trim()
+        .split('\n')
+    : await fs.readdir(path.join(repo, 'api'));
+  for (const file of files) {
     if (!file.endsWith('.php')) continue;
-    let source = ['basis', 'prior', 'prior2', 'prior3', 'prior4'].includes(apiStand)
-      ? execFileSync(
-          'git',
-          [
-            'show',
-            (apiStand === 'prior4'
-              ? nachauftrag4Basis
-              : apiStand === 'prior3'
-                ? nachauftrag3Basis
-                : apiStand === 'prior2'
-                  ? nachauftrag2Basis
-                  : apiStand === 'prior'
-                    ? nachauftragBasis
-                    : basis) +
-              ':api/' +
-              file,
-          ],
-          { cwd: repo, encoding: 'utf8' }
-        )
+    let source = apiRef
+      ? execFileSync('git', ['show', apiRef + ':api/' + file], { cwd: repo, encoding: 'utf8' })
       : await fs.readFile(path.join(repo, 'api', file), 'utf8');
     // T1245: historische A11-Hülle, neuer freigegebener Kostenkern. Die Byteprüfung bleibt exakt.
     if (mode.endsWith('-kv') && file === 'rechner-engine.php')
@@ -271,9 +270,10 @@ async function start(mode) {
           'const RECHNER_INNENFELDER_SPERREN = true;',
           'const RECHNER_INNENFELDER_SPERREN = false;'
         );
-      const needle =
-        "$result = hw_rechner_route($action, $_GET, $snapshot['sheets'], $snapshot['schemaVersion']);";
-      assert(source.includes(needle));
+      // Die Einschleusung bleibt unmittelbar nach der echten Route, vor jeder Ausgabebereinigung.
+      const route = apiRef ? 'hw_rechner_route' : 'hw_kv_adapter_route';
+      const needle = `$result = ${route}($action, $_GET, $snapshot['sheets'], $snapshot['schemaVersion']);`;
+      assert.equal(source.split(needle).length - 1, 1);
       source = source.replace(
         needle,
         needle +
