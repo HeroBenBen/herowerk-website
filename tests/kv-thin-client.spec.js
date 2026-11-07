@@ -89,9 +89,12 @@ test.beforeAll(async () => {
         if (url.searchParams.get('kvAnsicht') === 'nutzen') {
           const fossil = result.system.neuFossilOn ? result.invest.fossilInvest : 0;
           result.nutzenKosten = {
-            labels: [0, ...result.jahre.map(j => j.j)],
-            fossil: [fossil, ...result.jahre.map(j => fossil + j.cumFossil)],
-            wp: [result.invest.netto, ...result.jahre.map(j => result.invest.netto + j.cumWPKosten)],
+            labels: [0, ...result.jahre.map((j) => j.j)],
+            fossil: [fossil, ...result.jahre.map((j) => fossil + j.cumFossil)],
+            wp: [
+              result.invest.netto,
+              ...result.jahre.map((j) => result.invest.netto + j.cumWPKosten),
+            ],
             breakEven: result.ergebnis.breakEven,
           };
         }
@@ -233,7 +236,8 @@ async function expectOneMobileYearDeck(page) {
       mobileYearDetailDecks: document.querySelectorAll('details.mobile-year-details').length,
       mobileYearContainers: document.querySelectorAll('div.mobile-year-details').length,
       nutzen: !!KV_STATE.last?.nutzenKosten,
-      mainRows: document.querySelectorAll('#cMainDaten .year-bar-row,#cMainDaten .mobile-year-card').length,
+      mainRows: document.querySelectorAll('#cMainDaten .year-bar-row,#cMainDaten .mobile-year-card')
+        .length,
       breakCards: document.querySelectorAll('#cBreakDaten .mobile-year-card').length,
       heatCards: document.querySelectorAll('#cHeatDaten .mobile-year-card').length,
       mobileSummaries: chartIds.map((id) => {
@@ -258,7 +262,9 @@ async function expectOneMobileYearDeck(page) {
   expect(counts.heatCards).toBe(20);
   expect(counts.mobileSummaries).toEqual([
     {
-      desktopText: counts.nutzen ? 'Aufsummierte Kosten einschließlich Investition ab Jahr 0 als Tabelle anzeigen' : 'Kumulative Ersparnis als Tabelle anzeigen',
+      desktopText: counts.nutzen
+        ? 'Aufsummierte Kosten einschließlich Investition ab Jahr 0 als Tabelle anzeigen'
+        : 'Kumulative Ersparnis als Tabelle anzeigen',
       mobileText: counts.nutzen ? 'Jahr 0 bis 20 im Detail' : 'Alle 20 Jahre im Detail',
       desktopVisible: false,
       mobileVisible: true,
@@ -509,10 +515,7 @@ test('O3 Berater Dark 375: Render-Contract, Schalterpfade, Vorzeichen und Retry'
   await rangeFromStart(page, 'invWP', 8);
   await page.waitForFunction(() => KV_STATE.last && KV_STATE.last.inputsEcho.invWP === 12000);
   await expect(
-    page
-      .locator('#kpiGrid .ml', { hasText: 'Anschaffungsvergleich' })
-      .locator('..')
-      .locator('.mv')
+    page.locator('#kpiGrid .ml', { hasText: 'Anschaffungsvergleich' }).locator('..').locator('.mv')
   ).toHaveText('5.520 €');
 
   await rangeToEnd(page, 'invWP');
