@@ -358,6 +358,7 @@ function buildFailureFixture(
 ) {
   const directory = temporary('bau');
   write(directory, '.htaccess', 'Require all granted\n');
+  write(directory, 'js/.htaccess', 'ExpiresActive On\n');
   write(directory, file, content);
   for (const script of [
     'make-ionos-bundle.sh',
@@ -528,6 +529,21 @@ function additionalSharpnessCases() {
     linkedModules.result.status === 0 &&
       fs.existsSync(linkedModules.target) &&
       !fs.existsSync(path.join(linkedModules.target, 'node_modules'))
+  );
+
+  fs.rmSync(path.join(linkedModules.directory, 'js/.htaccess'));
+  const missingJsHtaccess = run(
+    'bash',
+    [path.join(linkedModules.directory, 'scripts/make-ionos-bundle.sh'), linkedModules.target],
+    { cwd: linkedModules.directory }
+  );
+  record(
+    68,
+    'Quelle ohne js/.htaccess bricht beim Bündelbau mit eigener Meldung ab',
+    linkedModules.result.status === 0 &&
+      missingJsHtaccess.status === 1 &&
+      hasOwnMessage(missingJsHtaccess, 'js/.htaccess fehlt im Bundle'),
+    output(missingJsHtaccess)
   );
   fs.rmSync(linkedModules.directory, { recursive: true, force: true });
   fs.rmSync(linkedModules.target, { recursive: true, force: true });
@@ -885,4 +901,4 @@ if (failures > 0) {
   console.error(`Schärfeprüfung: ROT, ${failures} Fall/Faelle fehlgeschlagen.`);
   process.exit(1);
 }
-console.log('Schärfeprüfung: GRÜN, 67 Fälle bestanden.');
+console.log('Schärfeprüfung: GRÜN, 68 Fälle bestanden.');
