@@ -35,7 +35,8 @@ async function expectMarke(page, brand, mode) {
 
 for (const mode of ['erfolg', 'ausfall']) {
   test('@smoke Markenwahl während des Preisladens bleibt erhalten: ' + mode, async ({ page }) => {
-    let freigeben;
+    /** @type {(value?: unknown) => void} */
+    let freigeben = () => {};
     const freigabe = new Promise((resolve) => {
       freigeben = resolve;
     });
@@ -63,9 +64,10 @@ for (const mode of ['erfolg', 'ausfall']) {
 
     freigeben();
     if (mode === 'erfolg') {
-      await page.waitForFunction(
-        () => window.HW_PREISE_BRUTTO && Object.keys(window.HW_PREISE_BRUTTO).length > 0
-      );
+      await page.waitForFunction(() => {
+        const brutto = /** @type {any} */ (window).HW_PREISE_BRUTTO;
+        return Boolean(brutto) && Object.keys(brutto).length > 0;
+      });
     } else {
       await ladeende;
       // Alle drei Versuche (0, 1, 3 s) sind gelaufen, erst dann gilt der Ausfall.
