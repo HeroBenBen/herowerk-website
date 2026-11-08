@@ -1,7 +1,12 @@
 #!/usr/bin/env node
 // ============================================================
-// Job "csp-headers" — Sicherheitskopfzeilen-Pruefung.
-// Aufruf: node scripts/header-check.js <basis-adresse>
+// Job "csp-headers" — Sicherheitskopfzeilen-, JavaScript- und JSON-Prüfung.
+// Aufruf: node scripts/header-check.js <basis-adresse> [--intern-api]
+// JSON: zuerst Preis-API; nur bei HTTP 404 oder PHP-Quelltext auf
+// /produkte_HERO.json ausweichen. HTTP 200, application/json, gzip und gültiges
+// JSON sind Pflicht. --intern-api prüft zusätzlich nach der Live-Auslieferung
+// zwei interne APIs ohne Anmeldung auf HTTP 403, JSON und no-store ohne Jahrescache.
+// Ohne diesen Schalter werden keine internen APIs angefragt.
 //
 // WARUM DIESE PRUEFUNG DEN MOZILLA-OBSERVATORY-AUFRUF ERSETZT (07.08.2026)
 // Die bisherige Fassung (scripts/observatory-check.js) gab die Adresse an einen
@@ -145,19 +150,34 @@ async function jsonPruefen(basis, fehler) {
   const abrufen = (pfad) =>
     fetch(new URL(pfad, basis), {
       redirect: 'manual',
-      headers: { 'Accept-Encoding': 'gzip' },
+      headers: {
+        'Accept-Encoding': 'gzip',
+        ...(pfad === api ? { Origin: new URL(basis).origin } : {}),
+      },
     });
   let pfad = api;
   let antwort = await abrufen(pfad);
-  if (antwort.status !== 200) {
-    console.log(`  HINWEIS  ${api}: HTTP ${antwort.status}; JSON-Probe mit /version.json`);
-    await antwort.body?.cancel();
-    pfad = '/version.json';
+  let inhalt;
+  if (antwort.status !== 404) {
+    try {
+      inhalt = await antwort.text();
+    } catch (error) {
+      fehler.push(`${pfad}: JSON-Antwort nicht entpackbar oder lesbar: ${error.message}`);
+      return;
+    }
+  }
+  if (antwort.status === 404 || inhalt?.startsWith('<?php')) {
+    const grund =
+      antwort.status === 404 ? 'HTTP 404' : 'PHP-Quelltext (Prüfserver ohne Interpreter)';
+    console.log(`  HINWEIS  ${api}: ${grund}; JSON-Probe mit /produkte_HERO.json`);
+    if (!antwort.bodyUsed) await antwort.body?.cancel();
+    pfad = '/produkte_HERO.json';
     antwort = await abrufen(pfad);
+    inhalt = undefined;
   }
   if (antwort.status !== 200) {
     fehler.push(`${pfad}: JSON-Probe erwartet HTTP 200, geliefert HTTP ${antwort.status}`);
-    await antwort.body?.cancel();
+    if (!antwort.bodyUsed) await antwort.body?.cancel();
     return;
   }
   const typ = antwort.headers.get('content-type')?.split(';')[0].trim().toLowerCase();
@@ -171,7 +191,7 @@ async function jsonPruefen(basis, fehler) {
     );
   }
   try {
-    JSON.parse(await antwort.text());
+    JSON.parse(inhalt ?? (await antwort.text()));
     if (typ === 'application/json' && encoding?.trim().toLowerCase() === 'gzip') {
       console.log(
         `  OK  ${pfad}: application/json, JSON.parse erfolgreich (Encoding: ${encoding})`
@@ -182,10 +202,45 @@ async function jsonPruefen(basis, fehler) {
   }
 }
 
+async function internApiPruefen(basis, fehler) {
+  for (const pfad of [
+    '/intern/api/aufnahme-vorgaenge.php',
+    '/intern/api/aufnahme-vorbelegung.php',
+  ]) {
+    const vorher = fehler.length;
+    const antwort = await fetch(new URL(pfad, basis), { redirect: 'manual' });
+    if (antwort.status !== 403) {
+      fehler.push(`${pfad}: erwartet HTTP 403 ohne Anmeldung, geliefert HTTP ${antwort.status}`);
+    }
+    const typ = antwort.headers.get('content-type')?.split(';')[0].trim().toLowerCase();
+    if (typ !== 'application/json') {
+      fehler.push(`${pfad}: content-type erwartet application/json, geliefert ${typ ?? 'fehlt'}`);
+    }
+    const cache = antwort.headers.get('cache-control');
+    if (!/(?:^|,)\s*no-store\s*(?:,|$)/i.test(cache ?? '')) {
+      fehler.push(`${pfad}: Cache-Control erwartet no-store, geliefert ${cache ?? 'fehlt'}`);
+    }
+    if (hatJahrescache(cache)) {
+      fehler.push(`${pfad}: Cache-Control darf kein max-age=31536000 enthalten`);
+    }
+    try {
+      JSON.parse(await antwort.text());
+    } catch (error) {
+      fehler.push(`${pfad}: JSON-Antwort nicht entpackbar oder ungültig: ${error.message}`);
+    }
+    if (fehler.length === vorher) {
+      console.log(
+        `  OK  ${pfad}: HTTP 403, application/json, gültiges JSON, no-store ohne Jahrescache`
+      );
+    }
+  }
+}
+
 async function main() {
-  const basis = process.argv[2];
+  const argumente = process.argv.slice(2);
+  const basis = argumente.find((argument) => argument !== '--intern-api');
   if (!basis) {
-    console.error('Aufruf: header-check.js <basis-adresse>');
+    console.error('Aufruf: node scripts/header-check.js <basis-adresse> [--intern-api]');
     process.exit(2);
   }
 
@@ -229,6 +284,9 @@ async function main() {
 
   await javascriptPruefen(await antwort.text(), basis, fehler);
   await jsonPruefen(basis, fehler);
+  if (argumente.includes('--intern-api')) {
+    await internApiPruefen(basis, fehler);
+  }
 
   if (fehler.length) {
     fehler.forEach((e) => console.error(`FAIL: ${e}`));
