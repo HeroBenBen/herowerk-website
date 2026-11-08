@@ -62,7 +62,10 @@ function references(source, file) {
   const visible = source.replace(/<!--[\s\S]*?-->/g, (comment) => comment.replace(/[^\n]/g, ' '));
   const found = new Map();
   const add = (raw, offset, context = false) => {
-    const value = raw.replace(/&amp;|&#38;|&#x26;/gi, '&').replace(/\\\//g, '/');
+    const value = raw
+      .replace(/^[ \t\n\r\f]+|[ \t\n\r\f]+$/g, '')
+      .replace(/&amp;|&#38;|&#x26;/gi, '&')
+      .replace(/\\\//g, '/');
     // In js/ ist nicht jeder String mit Schrägstrich ein Dateipfad (z. B.
     // application/json). Implizite relative Pfade nur als Skript oder im URL-Kontext.
     if (!context && !/(?:^|\/)js\//.test(value) && !/\.m?js(?:[?#]|$)/i.test(value)) return;
@@ -87,7 +90,8 @@ function references(source, file) {
   };
   // Nur ganze pfadartige Literale suchen, damit Prosa mit Apostrophen keine
   // echten Attribute verschluckt. Backticks mit ${...} werden nicht grün gewertet.
-  const literal = /(["'`])((?:(?:https?:)?\/\/|\.{0,2}\/|[\w-]+[/.])[^"'`<>\r\n]*)\1/g;
+  const literal =
+    /(["'`])([ \t\n\r\f]*(?:(?:https?:)?\/\/|\.{0,2}\/|[\w-]+[/.])[^"'`<>\r\n]*[ \t\n\r\f]*)\1/g;
   for (const match of visible.matchAll(literal)) add(match[2], match.index + 1);
   // HTML erlaubt auch unquoted src/href. Dieselbe Fundstelle nicht doppelt zählen.
   const attribute = /\b(?:src|href)\s*=\s*([^\s"'`=<>][^\s<>]*)/gi;
