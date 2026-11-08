@@ -366,6 +366,7 @@ jobs:
       - uses: actions/setup-node@v5
         with: { node-version: '20' }
       - run: npm ci
+      - run: npm run verify:js-versionsanhang
       - name: Pruefserver starten
         run: scripts/start-pruefserver.sh
       - run: node scripts/header-check.js ${{ env.PRUEFSERVER_URL }}

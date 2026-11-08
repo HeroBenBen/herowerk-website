@@ -77,6 +77,10 @@ if [ ! -f "$OUT/.htaccess" ]; then
   echo "FEHLER: .htaccess fehlt im Bundle." >&2
   exit 1
 fi
+if [ ! -f "$OUT/js/.htaccess" ]; then
+  echo "FEHLER: js/.htaccess fehlt im Bundle (T1184: Jahrescache für /js/)." >&2
+  exit 1
+fi
 
 # Nur .htaccess und .well-known sind in der obersten Bündel-Ebene erlaubt.
 FREMDE_PUNKTDATEIEN=()

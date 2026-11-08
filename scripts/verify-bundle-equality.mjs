@@ -74,9 +74,12 @@ function excluded(relative, patterns) {
 function sourceFiles(sourceRoot, patterns) {
   let files;
   try {
-    const result = childProcess.execFileSync('git', ['-C', sourceRoot, 'ls-files', '-z'], {
-      encoding: 'utf8',
-    });
+    // Auch neue Laufzeitdateien wie js/.htaccess vor der Einbuchung vergleichen.
+    const result = childProcess.execFileSync(
+      'git',
+      ['-C', sourceRoot, 'ls-files', '--cached', '--others', '--exclude-standard', '-z'],
+      { encoding: 'utf8' }
+    );
     files = result.split('\0').filter(Boolean);
   } catch {
     files = allFiles(sourceRoot);
@@ -328,6 +331,7 @@ function compareFile(sourceRoot, bundleRoot, relative) {
   const extension = path.extname(relative).toLowerCase();
   if (
     relative === '.htaccess' ||
+    relative === 'js/.htaccess' ||
     relative === 'llms.txt' ||
     relative.startsWith('api/') ||
     relative.endsWith('.json') ||

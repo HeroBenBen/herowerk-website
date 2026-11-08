@@ -26,6 +26,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { Parser } = require('htmlparser2');
 
 // Ohne diese sechs Kopfzeilen geht die Website nicht live. Sie stehen hier fest,
 // damit niemand eine Regel aus der .htaccess entfernen und dabei gruen bleiben
@@ -51,6 +52,134 @@ function zusagenAusHtaccess(datei) {
     if (treffer) zusagen.set(treffer[1].toLowerCase(), treffer[2]);
   }
   return zusagen;
+}
+
+// 08.11.2026 T1184: Versionen aus dem ausgelieferten Bündel lesen, denn dessen
+// Kommentarentfernung kann andere Inhalts-Hashes als im Arbeitsbaum erzeugen.
+async function javascriptPruefen(startseite, basis, fehler) {
+  const pfade = ['/js/site.js', '/js/theme.js', '/js/consent.js'];
+  /** @type {Map<string, URL>} */
+  const skripte = new Map();
+  const parser = new Parser({
+    onopentag(name, attribute) {
+      if (name !== 'script' || !attribute.src) return;
+      const adresse = new URL(attribute.src, new URL('/', basis));
+      if (adresse.origin === new URL(basis).origin && pfade.includes(adresse.pathname)) {
+        skripte.set(adresse.pathname, adresse);
+      }
+    },
+  });
+  parser.end(startseite);
+
+  for (const pfad of pfade) {
+    const version = skripte.get(pfad)?.searchParams.get('v');
+    if (!version) {
+      fehler.push(`${pfad}: Startseite enthält keine Einbindung mit ?v=<Version>`);
+      continue;
+    }
+    const adresse = new URL(pfad, basis);
+    adresse.searchParams.set('v', version);
+    const antwort = await fetch(adresse, {
+      redirect: 'manual',
+      headers: { 'Accept-Encoding': 'gzip' },
+    });
+    const kennung = adresse.pathname + adresse.search;
+    if (antwort.status !== 200) {
+      fehler.push(`${kennung}: erwartet HTTP 200, geliefert HTTP ${antwort.status}`);
+      await antwort.body?.cancel();
+      continue;
+    }
+    const kompression = antwort.headers.get('content-encoding');
+    const cache = antwort.headers.get('cache-control');
+    if (kompression?.trim().toLowerCase() !== 'gzip') {
+      fehler.push(
+        `${kennung}: content-encoding erwartet gzip, geliefert ${kompression ?? 'fehlt'}`
+      );
+    }
+    if (!hatJahrescache(cache)) {
+      fehler.push(
+        `${kennung}: Cache-Control erwartet max-age=31536000, geliefert ${cache ?? 'fehlt'}`
+      );
+    }
+    if (kompression?.trim().toLowerCase() === 'gzip' && hatJahrescache(cache)) {
+      console.log(`  OK  ${kennung}: gzip und max-age=31536000`);
+    }
+    await antwort.body?.cancel();
+  }
+
+  // Optionale Gegenprobe außerhalb von /js/. Lokal NACH dem Bündelbau auslösen:
+  // mkdir -p /tmp/pruefserver-buendel/t1184-cache-probe
+  // printf 'void 0;\n' > /tmp/pruefserver-buendel/t1184-cache-probe/probe.js
+  // printf 'ForceType text/javascript\n' > /tmp/pruefserver-buendel/t1184-cache-probe/.htaccess
+  // Bei PRUEFSERVER_BUNDLE den Pfad anpassen. Nur im lokalen Bündel anlegen.
+  const probe = '/t1184-cache-probe/probe.js';
+  const antwort = await fetch(new URL(probe, basis), { redirect: 'manual' });
+  const typ = antwort.headers.get('content-type')?.split(';')[0].trim().toLowerCase();
+  const cache = antwort.headers.get('cache-control');
+  if (antwort.status === 404 || antwort.status === 410) {
+    console.log(
+      `  HINWEIS  ${probe}: fehlt; Gegenprobe für text/javascript außerhalb von /js/ entfällt`
+    );
+  } else if (antwort.status !== 200) {
+    fehler.push(
+      `${probe}: Gegenprobe erwartet HTTP 200 oder fehlende Datei, geliefert HTTP ${antwort.status}`
+    );
+  } else if (typ !== 'text/javascript') {
+    fehler.push(`${probe}: Gegenprobe erwartet text/javascript, geliefert ${typ ?? 'fehlt'}`);
+  } else if (hatJahrescache(cache)) {
+    fehler.push(`${probe}: text/javascript außerhalb von /js/ darf kein max-age=31536000 tragen`);
+  } else {
+    console.log(`  OK  ${probe}: text/javascript außerhalb von /js/ ohne Jahrescache`);
+  }
+  await antwort.body?.cancel();
+}
+
+function hatJahrescache(cache) {
+  return /(?:^|,)\s*max-age\s*=\s*"?31536000"?\s*(?:,|$)/i.test(cache ?? '');
+}
+
+// fetch entpackt gzip automatisch. JSON.parse prüft deshalb den entpackten
+// Inhalt; Content-Encoding darf am Antwortkopf trotzdem noch gzip heißen.
+async function jsonPruefen(basis, fehler) {
+  const api = '/api/rechner?action=preise&origin=https://herowerk.de';
+  const abrufen = (pfad) =>
+    fetch(new URL(pfad, basis), {
+      redirect: 'manual',
+      headers: { 'Accept-Encoding': 'gzip' },
+    });
+  let pfad = api;
+  let antwort = await abrufen(pfad);
+  if (antwort.status !== 200) {
+    console.log(`  HINWEIS  ${api}: HTTP ${antwort.status}; JSON-Probe mit /version.json`);
+    await antwort.body?.cancel();
+    pfad = '/version.json';
+    antwort = await abrufen(pfad);
+  }
+  if (antwort.status !== 200) {
+    fehler.push(`${pfad}: JSON-Probe erwartet HTTP 200, geliefert HTTP ${antwort.status}`);
+    await antwort.body?.cancel();
+    return;
+  }
+  const typ = antwort.headers.get('content-type')?.split(';')[0].trim().toLowerCase();
+  if (typ !== 'application/json') {
+    fehler.push(`${pfad}: content-type erwartet application/json, geliefert ${typ ?? 'fehlt'}`);
+  }
+  const encoding = antwort.headers.get('content-encoding');
+  if (encoding?.trim().toLowerCase() !== 'gzip') {
+    fehler.push(
+      `${pfad}: JSON-Probe erwartet content-encoding gzip, geliefert ${encoding ?? 'fehlt'}`
+    );
+  }
+  try {
+    JSON.parse(await antwort.text());
+    if (typ === 'application/json' && encoding?.trim().toLowerCase() === 'gzip') {
+      console.log(
+        `  OK  ${pfad}: application/json, JSON.parse erfolgreich (Encoding: ${encoding})`
+      );
+    }
+  } catch (error) {
+    fehler.push(`${pfad}: JSON-Antwort nicht entpackbar oder ungültig: ${error.message}`);
+  }
 }
 
 async function main() {
@@ -97,6 +226,9 @@ async function main() {
     }
     console.log(`  OK  ${name}`);
   }
+
+  await javascriptPruefen(await antwort.text(), basis, fehler);
+  await jsonPruefen(basis, fehler);
 
   if (fehler.length) {
     fehler.forEach((e) => console.error(`FAIL: ${e}`));
