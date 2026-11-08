@@ -1542,7 +1542,7 @@ function paApplyBrand(brand) {
 }
 
 function paGetActiveBrand() {
-  return document.querySelector('.manufacturer-tab.active')?.dataset.manufacturer === 'vaillant'
+  return document.getElementById('manufacturerVaillant')?.classList.contains('active')
     ? 'vaillant'
     : 'wolf';
 }
