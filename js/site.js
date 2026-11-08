@@ -1541,11 +1541,22 @@ function paApplyBrand(brand) {
   paUpdateMinimum(selectedBrand);
 }
 
+function paGetActiveBrand() {
+  return document.getElementById('manufacturerVaillant')?.classList.contains('active')
+    ? 'vaillant'
+    : 'wolf';
+}
+
+function paApplyBrands() {
+  // Beide Marken-Labels (wolfMinEigen/vaillantMinEigen) beim Laden füllen, nicht
+  // erst beim Tab-Klick. Aktive Marke zuletzt -> paData bleibt zur Ansicht passend.
+  const activeBrand = paGetActiveBrand();
+  paApplyBrand(activeBrand === 'vaillant' ? 'wolf' : 'vaillant');
+  paApplyBrand(activeBrand);
+}
+
 async function paLoadData() {
-  // Beide Marken-Labels (wolfMinEigen/vaillantMinEigen) beim Laden fuellen, nicht
-  // erst beim Tab-Klick. Wolf zuletzt -> aktive Ansicht + paData bleiben Wolf.
-  paApplyBrand('vaillant');
-  paApplyBrand('wolf');
+  paApplyBrands();
   foerderRefreshPackageOptions();
   try {
     const response = await rechnerFetch(RECHNER_API + '?action=preise&origin=https://herowerk.de');
@@ -1564,13 +1575,11 @@ async function paLoadData() {
     });
     if (typeof window !== 'undefined') window.HW_PREISE_BRUTTO = bruttoMap;
     foerderRefreshPackageOptions();
-    paApplyBrand('vaillant');
-    paApplyBrand('wolf');
+    paApplyBrands();
   } catch (e) {
     paPrices = { wolf: [], vaillant: [] };
     if (typeof window !== 'undefined') window.HW_PREISE_BRUTTO = {};
-    paApplyBrand('vaillant');
-    paApplyBrand('wolf');
+    paApplyBrands();
     console.info('Live-Preise nicht verfügbar, zeige "auf Anfrage"', e);
     foerderRefreshPackageOptions();
   }
@@ -2470,7 +2479,7 @@ window.addEventListener('resize', () => {
 // Initial: Daten laden, dann rendern
 paInitManufacturerTabs();
 paLoadData().then(() => {
-  paApplyBrand('wolf');
+  paApplyBrand(paGetActiveBrand());
   paRenderCards();
   // Standardkarte offen (GF-Befund 26.07.2026). Der Erstaufruf laeuft NICHT
   // ueber paSelectManufacturer, deshalb steht der Aufruf hier zusaetzlich.
