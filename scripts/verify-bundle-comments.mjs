@@ -250,7 +250,8 @@ function allFiles(root) {
 }
 
 function classification(relative) {
-  if (relative === '.htaccess') return ['ausgenommen', '.htaccess wird nicht ausgeliefert'];
+  if (relative === '.htaccess' || relative === 'js/.htaccess')
+    return ['ausgenommen', '.htaccess wird nicht ausgeliefert'];
   if (relative.startsWith('api/')) return ['ausgenommen', 'api wird serverseitig ausgefuehrt'];
   if (relative.endsWith('.json')) return ['ausgenommen', 'JSON ist kein Kommentarscope'];
   if (relative === 'llms.txt') return ['ausgenommen', 'Rautenzeilen sind Ueberschriften'];

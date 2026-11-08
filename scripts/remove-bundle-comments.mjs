@@ -342,7 +342,12 @@ function allFiles(root) {
 
 function classify(relative) {
   const normalized = relative.split(path.sep).join('/');
-  if (normalized === '.htaccess' || normalized === 'llms.txt' || normalized.endsWith('.json'))
+  if (
+    normalized === '.htaccess' ||
+    normalized === 'js/.htaccess' ||
+    normalized === 'llms.txt' ||
+    normalized.endsWith('.json')
+  )
     return 'skip';
   if (normalized === 'robots.txt') return 'robots';
   if (normalized.startsWith('api/')) return 'skip';

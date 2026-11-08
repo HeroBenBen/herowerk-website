@@ -1,0 +1,6 @@
+# 08.11.2026 T1184: Jahrescache nur für /js/, da hier alle Einbindungen ?v= tragen.
+# Andere Bereiche können unversioniert sein. Wache: scripts/verify-js-versionsanhang.mjs.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/javascript "access plus 1 year"
+</IfModule>
