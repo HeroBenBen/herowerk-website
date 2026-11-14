@@ -67,6 +67,15 @@ for (const [base, counts] of Object.entries(cascades))
         ],
       });
     }
+// T1276: zwei CHA-20/24 ohne Heizstab, Quelle 5559. Die Arbeitszahl des
+// Einzelgeräts bleibt ausdrücklich eine Kaskaden-Annahme (kvJazAuswahl).
+for (const r of rows.filter((r) => r.geraet === '5559'))
+  rows.push({
+    ...r,
+    geraet: '2x:5559',
+    kaskade: true,
+    alias: ['2× Wolf CHA-20/24', '2× Wolf CHA-20/24 (Kaskade)', '2x Wolf CHA-20/24'],
+  });
 if (rows.filter((r) => !r.kaskade).length !== 30)
   throw new Error('Portfolio-Auswahl muss 30 Originalwerte enthalten.');
 for (const r of rows)
