@@ -1038,5 +1038,49 @@
       "gesamtlast": 11
     },
     "kaskade": true
+  },
+  {
+    "geraet": "2x:5559",
+    "heizsystem": "heizkoerper",
+    "wert": 4.34,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha2024-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:54:17.600629+00:00",
+    "alias": [
+      "2× Wolf CHA-20/24",
+      "2× Wolf CHA-20/24 (Kaskade)",
+      "2x Wolf CHA-20/24"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 20
+    },
+    "kaskade": true
+  },
+  {
+    "geraet": "2x:5559",
+    "heizsystem": "fbh",
+    "wert": 5.03,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha2024-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:54:31.533734+00:00",
+    "alias": [
+      "2× Wolf CHA-20/24",
+      "2× Wolf CHA-20/24 (Kaskade)",
+      "2x Wolf CHA-20/24"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 20
+    },
+    "kaskade": true
   }
 ]

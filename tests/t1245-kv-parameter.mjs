@@ -88,7 +88,7 @@ const p = read(neu);
 assert.equal(p.bioStufen.length, 4);
 assert.equal(p.wartungWp, 250);
 c.kvJazParameterLaden_(p);
-assert.equal(p.jazTabelle.length, 48);
+assert.equal(p.jazTabelle.length, neu.KV_JAZ.length - 1);
 assert.equal(c.kvMapRequest_({}, p).startJahr, 2027);
 assert.equal(c.kvMapRequest_({ foerderBetragExtern: '0' }, p).foerderBetragExtern, '0');
 assert.equal(c.kvMapRequest_({}, p).pvTog, undefined);
@@ -128,7 +128,7 @@ const out = spawnSync('php', ['tests/t1245-kv-runner.php'], {
 assert.equal(out.status, 0, out.stderr);
 const php = JSON.parse(out.stdout);
 assert.equal(php[0].value.bioStufen.length, 4);
-assert.equal(php[0].value.jazTabelle.length, 48);
+assert.equal(php[0].value.jazTabelle.length, neu.KV_JAZ.length - 1);
 assert.match(php[1].value.bioHinweis, /Altes Bio/);
 assert.match(php[2].error, /Bio-Parameter/);
 // Fehlende Veröffentlichung darf auch PHP nicht still durch einen Seed ersetzen.

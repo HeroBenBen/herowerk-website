@@ -2266,6 +2266,9 @@ const PA_JAZ_GRUNDLAGEN = {
     kaskade: true,
   },
   '4x Vaillant VWL 115/7.1 A': { gesamtlast: 11, abrufdatum: '2026-10-26', kaskade: true },
+  '2× Wolf CHA-20/24': { gesamtlast: 20, abrufdatum: '2026-10-26', kaskade: true },
+  '2× Wolf CHA-20/24 (Kaskade)': { gesamtlast: 20, abrufdatum: '2026-10-26', kaskade: true },
+  '2x Wolf CHA-20/24': { gesamtlast: 20, abrufdatum: '2026-10-26', kaskade: true },
 };
 // END PA_JAZ_GENERATED
 
