@@ -63,7 +63,7 @@ env:
 jobs:
   # Job 1: Lint + Type-Check
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       # Vollständige Historie ist Pflicht: das Testlisten-Gate unterscheidet über
       # origin/main zwischen neu angelegten Seiten und dem gemeldeten Altbestand.
@@ -192,7 +192,7 @@ jobs:
   #   3. den TypeError auf der Live-Seite beheben.
   lighthouse-bericht:
     name: lighthouse-bericht (${{ matrix.theme }}, kein Hard-Gate)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [lint]
     continue-on-error: true
     strategy:
@@ -218,7 +218,7 @@ jobs:
 
   # Job 3: Playwright Smoke-Tests
   playwright-smoke:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [lint]
     steps:
       - uses: actions/checkout@v5
@@ -272,7 +272,7 @@ jobs:
   # und ein Eintrag, der nicht mehr auftritt, macht ebenfalls rot, damit die Liste
   # nicht still veraltet. Begruendung im Detail: tests/helpers/axe.js.
   axe-accessibility:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [lint]
     steps:
       - uses: actions/checkout@v5
@@ -306,7 +306,7 @@ jobs:
   # ACHTUNG: dieser Job ist eine Compliance-Warnung, kein Schoenheitsfehler.
   consent-live-bericht:
     name: consent-live-bericht (www.herowerk.de, kein Hard-Gate)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: lint
     continue-on-error: true
     steps:
@@ -319,7 +319,7 @@ jobs:
 
   # Job 5: Secret-Scanner (Gitleaks)
   secret-scan:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read       # checkout (fetch-depth 0)
       pull-requests: read  # gitleaks: PR-Commit-Listing via GITHUB_TOKEN (Portal-403-Fix)
@@ -331,7 +331,7 @@ jobs:
 
   # Job 6: Content-Fidelity-Check gegen v4-Baseline
   content-fidelity:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: lint
     steps:
       - uses: actions/checkout@v5
@@ -359,7 +359,7 @@ jobs:
   # gegen die Live-Seite Rueckgabewert 0, gegen die abweichende Vercel-Vorschau
   # Rueckgabewert 1.
   csp-headers:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [lint]
     steps:
       - uses: actions/checkout@v5
@@ -374,7 +374,7 @@ jobs:
 
   # Job 8: HubSpot-Property-Mapping-Test (Schema-Validierung)
   hubspot-mapping:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: lint
     steps:
       - uses: actions/checkout@v5
@@ -391,7 +391,7 @@ jobs:
     # Beim Kennzeichen-Ereignis erzeugt der separate Job erst die Grundlinie.
     if: github.event.action != 'labeled'
     name: visual-regression
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [lint]
     strategy:
       matrix: { theme: [dark, light] }
@@ -410,7 +410,7 @@ jobs:
   visual-baseline-update:
     name: visual-baseline-update
     if: github.event.action == 'labeled' && github.event.label.name == '/baseline-update'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
     concurrency:
@@ -496,7 +496,7 @@ jobs:
   # Vorschau meldet "SEO-Basics-Check OK". Es gibt auch keinen fachlichen Grund fuer
   # die Abhaengigkeit, die Pruefung braucht nur eine erreichbare Vorschau.
   seo-basics:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [lint]
     steps:
       - uses: actions/checkout@v5
@@ -514,7 +514,7 @@ jobs:
   # auf lighthouse zeigte. Lauf vom 29.07. gegen die Vorschau meldet
   # "Rich-Results-Check OK (1 JSON-LD-Block/Bloecke)".
   schema-validation:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [lint]
     steps:
       - uses: actions/checkout@v5
@@ -528,7 +528,7 @@ jobs:
   # Job 12: Lead-only-Negativ-Gate (verhindert Vertragsabschluss-CTA)
   # Codex-Iteration-3-Finding 6 : Pattern erweitert
   lead-only-gate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: lint
     steps:
       - uses: actions/checkout@v5
