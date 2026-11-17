@@ -78,12 +78,15 @@ for (const r of rows.filter((r) => r.geraet === '5559'))
   });
 // T1287: eigene Aliase zur tatsächlich bestellten Ausführung mit Heizstab.
 // Die Kaskaden-JAZ bleibt ausdrücklich als Annahme des Einzelgeräts markiert.
-for (const [id, base] of [['5540','Wolf CHA-16/20'], ['5558','Wolf CHA-20/24']])
+for (const [id, base] of [
+  ['5540', 'Wolf CHA-16/20'],
+  ['5558', 'Wolf CHA-20/24'],
+])
   for (const r of rows.filter((r) => r.geraet === id)) {
-    const alias=['2× '+base+' mit Heizstab (Kaskade)', '2× '+base+' mit Heizstab'];
-    const vorhanden=rows.find(x=>x.geraet==='2x:'+id && x.heizsystem===r.heizsystem);
-    if(vorhanden) vorhanden.alias=[...new Set([...vorhanden.alias,...alias])];
-    else rows.push({...r, geraet:'2x:'+id, kaskade:true, alias});
+    const alias = ['2× ' + base + ' mit Heizstab (Kaskade)', '2× ' + base + ' mit Heizstab'];
+    const vorhanden = rows.find((x) => x.geraet === '2x:' + id && x.heizsystem === r.heizsystem);
+    if (vorhanden) vorhanden.alias = [...new Set([...vorhanden.alias, ...alias])];
+    else rows.push({ ...r, geraet: '2x:' + id, kaskade: true, alias });
   }
 if (rows.filter((r) => !r.kaskade).length !== 30)
   throw new Error('Portfolio-Auswahl muss 30 Originalwerte enthalten.');
