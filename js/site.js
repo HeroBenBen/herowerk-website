@@ -2218,6 +2218,12 @@ const PA_JAZ_GRUNDLAGEN = {
   '2× Wolf CHA-16/20 (Kaskade)': { gesamtlast: 16, abrufdatum: '2026-10-26', kaskade: true },
   '2x Wolf CHA-16/20': { gesamtlast: 16, abrufdatum: '2026-10-26', kaskade: true },
   '2× Wolf CHA-16': { gesamtlast: 16, abrufdatum: '2026-10-26', kaskade: true },
+  '2× Wolf CHA-16/20 mit Heizstab (Kaskade)': {
+    gesamtlast: 16,
+    abrufdatum: '2026-10-26',
+    kaskade: true,
+  },
+  '2× Wolf CHA-16/20 mit Heizstab': { gesamtlast: 16, abrufdatum: '2026-10-26', kaskade: true },
   '2× Vaillant VWL 75/8.1 A': { gesamtlast: 7, abrufdatum: '2026-10-26', kaskade: true },
   '2× Vaillant VWL 75/8.1 A (Kaskade)': { gesamtlast: 7, abrufdatum: '2026-10-26', kaskade: true },
   '2x Vaillant VWL 75/8.1 A': { gesamtlast: 7, abrufdatum: '2026-10-26', kaskade: true },
@@ -2269,6 +2275,12 @@ const PA_JAZ_GRUNDLAGEN = {
   '2× Wolf CHA-20/24': { gesamtlast: 20, abrufdatum: '2026-10-26', kaskade: true },
   '2× Wolf CHA-20/24 (Kaskade)': { gesamtlast: 20, abrufdatum: '2026-10-26', kaskade: true },
   '2x Wolf CHA-20/24': { gesamtlast: 20, abrufdatum: '2026-10-26', kaskade: true },
+  '2× Wolf CHA-20/24 mit Heizstab (Kaskade)': {
+    gesamtlast: 20,
+    abrufdatum: '2026-10-26',
+    kaskade: true,
+  },
+  '2× Wolf CHA-20/24 mit Heizstab': { gesamtlast: 20, abrufdatum: '2026-10-26', kaskade: true },
 };
 // END PA_JAZ_GENERATED
 

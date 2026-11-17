@@ -452,7 +452,7 @@ function matchCatalogVarianten_(marke, auslegung, heizsystem, nat, markenHeizsta
   items.forEach(function (item) {
     if (item.sonderplanung === true) return; // T901: als Sonderplanung gekennzeichnete Zeile ist kein Kandidat des Rechners
     const leistung = leistungAmAuslegungspunkt_(item, heizsystem, nat);
-    const heizstab = item.mindestAnteil >= 1 ? 0 : markenHeizstab;
+    const heizstab = item.mindestAnteil >= 1 ? 0 : markenHeizstab * (item.marke === 'wolf' && item.kaskade ? geraeteAnzahl_(item.modell) : 1);
     const empfehlungsgrenze = heizsystem === 'heizkoerper' ? item.empfehlungW55 : item.empfehlungW35;
     const anteilErfuellt = (leistung >= item.mindestAnteil * auslegung
       || (empfehlungsgrenze !== null && auslegung <= empfehlungsgrenze))
@@ -464,7 +464,10 @@ function matchCatalogVarianten_(marke, auslegung, heizsystem, nat, markenHeizsta
       if (einzelgrenze === undefined || auslegung <= einzelgrenze + kaskadenToleranz) return;
     }
     const current = picks[item.baureihe];
-    if (!current || leistung < current.leistungAuslegung) {
+    const wolfPaar = current && marke === 'wolf' && item.kaskade && current.kaskade;
+    const monoVorrang = wolfPaar && (item.mindestAnteil >= 1) !== (current.mindestAnteil >= 1);
+    if (!current || (monoVorrang ? item.mindestAnteil >= 1
+        : wolfPaar && item.mindestAnteil < 1 ? leistung > current.leistungAuslegung : leistung < current.leistungAuslegung)) {
       picks[item.baureihe] = Object.assign({}, item, { leistungAuslegung: leistung });
     }
   });
@@ -508,6 +511,7 @@ function kennlinienKey_(modell) {
   return String(modell || '')
     .replace(/^\s*\d+\s*[×x]\s*/i, '')
     .replace(/\s*\(Kaskade\)\s*$/i, '')
+    .replace(/\s+mit Heizstab\s*$/i, '')
     .replace(/^\s*(?:Vaillant|Wolf)\s+/i, '')
     .trim()
     .toLowerCase();

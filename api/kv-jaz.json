@@ -651,7 +651,9 @@
       "2× Wolf CHA-16/20",
       "2× Wolf CHA-16/20 (Kaskade)",
       "2x Wolf CHA-16/20",
-      "2× Wolf CHA-16"
+      "2× Wolf CHA-16",
+      "2× Wolf CHA-16/20 mit Heizstab (Kaskade)",
+      "2× Wolf CHA-16/20 mit Heizstab"
     ],
     "randbedingungen": {
       "standort": "Hannover, PLZ 30159",
@@ -674,7 +676,9 @@
       "2× Wolf CHA-16/20",
       "2× Wolf CHA-16/20 (Kaskade)",
       "2x Wolf CHA-16/20",
-      "2× Wolf CHA-16"
+      "2× Wolf CHA-16",
+      "2× Wolf CHA-16/20 mit Heizstab (Kaskade)",
+      "2× Wolf CHA-16/20 mit Heizstab"
     ],
     "randbedingungen": {
       "standort": "Hannover, PLZ 30159",
@@ -1071,6 +1075,48 @@
       "2× Wolf CHA-20/24",
       "2× Wolf CHA-20/24 (Kaskade)",
       "2x Wolf CHA-20/24"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 35,
+      "ruecklauf": 28,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 20
+    },
+    "kaskade": true
+  },
+  {
+    "geraet": "2x:5558",
+    "heizsystem": "heizkoerper",
+    "wert": 4.34,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha2024-e9-A-hk/response.json",
+    "abrufdatum": "2026-10-26T12:53:58.913774+00:00",
+    "alias": [
+      "2× Wolf CHA-20/24 mit Heizstab (Kaskade)",
+      "2× Wolf CHA-20/24 mit Heizstab"
+    ],
+    "randbedingungen": {
+      "standort": "Hannover, PLZ 30159",
+      "norm": "VDI 4650 Blatt 1: 2024-02",
+      "vorlauf": 55,
+      "ruecklauf": 45,
+      "warmwasserAnteil": 18,
+      "speicher": 50,
+      "gesamtlast": 20
+    },
+    "kaskade": true
+  },
+  {
+    "geraet": "2x:5558",
+    "heizsystem": "fbh",
+    "wert": 5.03,
+    "quelle": "BWP-JAZ-Rechner https://www.waermepumpe.de/werkzeuge/jaz-rechner/; VDI 4650 Blatt 1: 2024-02; laeufe/cha2024-e9-B-fbh/response.json",
+    "abrufdatum": "2026-10-26T12:54:13.002790+00:00",
+    "alias": [
+      "2× Wolf CHA-20/24 mit Heizstab (Kaskade)",
+      "2× Wolf CHA-20/24 mit Heizstab"
     ],
     "randbedingungen": {
       "standort": "Hannover, PLZ 30159",
