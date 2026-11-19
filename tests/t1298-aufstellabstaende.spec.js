@@ -129,14 +129,21 @@ for (const breite of [390, 768, 1440]) {
       }
 
       await page.evaluate(() => window.scrollTo(0, 0));
+      // Auf schmalen Breiten liegt der Umschalter im Klappmenue, wie in website-additive.spec.js.
+      const menueNoetig = (await page.locator('[data-theme-toggle]:visible').count()) === 0;
+      if (menueNoetig) await page.locator('#hamburger').click();
       const umschalter = page.locator('[data-theme-toggle]:visible').first();
-      await umschalter.click();
+      // Zwei-Feld-Schalter: ein Tipp auf das aktive Feld bleibt mit Absicht folgenlos
+      // (js/theme.js), deshalb immer das inaktive Feld waehlen.
+      const inaktiv = umschalter.locator('.tt-feld[data-aktiv="false"]');
+      await inaktiv.click();
       await expect(page.locator('html')).toHaveAttribute(
         'data-theme',
         theme === 'light' ? 'dark' : 'light'
       );
-      await umschalter.click();
+      await inaktiv.click();
       await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
+      if (menueNoetig) await page.locator('#hamburger').click();
       if (breite <= 768) {
         await page.locator('#hamburger').click();
         await expect(page.locator('#mobileMenu')).toHaveClass(/open/);
