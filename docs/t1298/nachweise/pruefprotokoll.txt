@@ -1,0 +1,713 @@
+T1298 Prüfprotokoll, 19. November 2026
+Basis: 2cfa58955d7df40e75b30061e6939d41b54700f2
+Vollständige Rohprotokolle: /tmp/t1298-pruefung/logs
+
+basis-rein-lint.log
+
+> lint
+> eslint . && prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+
+basis-0.log
+
+> lint
+> eslint . && prettier --check .
+
+Checking formatting...
+[warn] docs/t1298/letzte_nachricht_plan.md
+[warn] docs/t1298/plan.md
+[warn] Code style issues found in 2 files. Run Prettier with --write to fix.
+
+basis-1.log
+
+> verify:website-gates
+> python3 -m unittest discover -s tests -p 'test_website_gates.py' && python3 scripts/website_gates.py --repo . --basis origin/main
+
+RECHENLOGIK im ausgelieferten Quelltext: 0 Befund(e)
+   (Altbestand, blockt nicht: 29 Seite(n) fehlen in mindestens einer Liste: amortisation-waermepumpe, anfrage, barrierefreiheit, baubarkeitspruefung, bewerbung, datenschutz, dimensionierung, dimensionierung-verstehen ...)
+SEITEN OHNE EINTRAG IN DEN TESTLISTEN: 0 Befund(e)
+
+>>> SAUBER, geprüft wurde: Rechenlogik und Testlisten.
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.190s
+
+OK
+
+basis-2.log
+
+> verify:assets
+> scripts/version-assets.sh --check
+
+Asset-Versionierung aktuell: 97 Assets, 33 Seiten, 0 Abweichungen.
+
+basis-3.log
+
+> verify:js-versionsanhang
+> node scripts/verify-js-versionsanhang.mjs
+
+  Seite amortisation-waermepumpe.html: 3 Referenzen
+  Seite anfrage.html: 2 Referenzen
+  Seite api/jobs.php: 0 Referenzen
+  Seite api/kv-marktwerte.php: 0 Referenzen
+  Seite api/rechner-engine.php: 0 Referenzen
+  Seite api/rechner-kv-adapter.php: 0 Referenzen
+  Seite api/rechner-snapshot-integritaet.php: 0 Referenzen
+  Seite api/rechner-snapshot-meldung.php: 0 Referenzen
+  Seite api/rechner-snapshot-tabellen.php: 0 Referenzen
+  Seite api/rechner-values.php: 0 Referenzen
+  Seite api/rechner.php: 0 Referenzen
+  Seite api/werte-auffrischen.php: 0 Referenzen
+  Seite barrierefreiheit.html: 3 Referenzen
+  Seite baubarkeitspruefung.html: 3 Referenzen
+  Seite bewerbung.html: 4 Referenzen
+  Seite datenschutz.html: 2 Referenzen
+  Seite dimensionierung-verstehen.html: 3 Referenzen
+  Seite dimensionierung.html: 3 Referenzen
+  Seite foerderung-hannover.html: 3 Referenzen
+  Seite foerderung-jetzt-mitnehmen.html: 3 Referenzen
+  Seite foerderung.html: 3 Referenzen
+  Seite foerdervorschuss.html: 3 Referenzen
+  Seite gasheizung-tauschen-oder-reparieren.html: 3 Referenzen
+  Seite hinweise.html: 3 Referenzen
+  Seite impressum.html: 2 Referenzen
+  Seite index.html: 3 Referenzen
+  JS-Datei js/.htaccess: 0 Referenzen
+  JS-Datei js/chart-4.4.1.umd.min.js: 0 Referenzen
+  JS-Datei js/consent.js: 0 Referenzen
+  JS-Datei js/kurzbewerbung.js: 0 Referenzen
+  JS-Datei js/site.js: 0 Referenzen
+  JS-Datei js/theme.js: 0 Referenzen
+  Seite karriere.html: 3 Referenzen
+  Seite kontakt.html: 3 Referenzen
+  Seite kostenvergleich-waermepumpe.html: 4 Referenzen
+  Seite preise.html: 3 Referenzen
+  Seite propan-waermepumpe.html: 3 Referenzen
+  Seite prozess.html: 3 Referenzen
+  Seite ratgeber.html: 3 Referenzen
+  Seite rechner.html: 3 Referenzen
+  Seite stelle.html: 3 Referenzen
+  Seite waermepumpe-altbau.html: 3 Referenzen
+  Seite waermepumpe-hannover.html: 3 Referenzen
+  Seite waermepumpe-laerm.html: 3 Referenzen
+  Seite waermepumpenstrom-hannover.html: 3 Referenzen
+  Seite wertsteigerung-waermepumpe.html: 3 Referenzen
+  Seite wp-kosten-hannover.html: 3 Referenzen
+41 Seiten, 6 Dateien unter js/, 92 Referenzen gesamt.
+JS-Versionsanhang: GRÜN, alle Referenzen tragen ?v=<Hash>.
+
+basis-4.log
+
+> verify:consent
+> node scripts/consent-integration-check.js
+
+Consent-Zählprobe: 31 öffentliche Stammseiten.
+Consent-Integration OK: 31 öffentliche Stammseiten mit Wächter, keine ungeschützte Einbindung, 1 CSP-Quelle (.htaccess).
+
+basis-5.log
+
+> verify:seo
+> node scripts/build-structured-data.mjs --check
+
+Strukturdaten aktuell: 19 Seiten mit Auto-Block, 55 Knoten, 31 Seiten geprueft, 0 Abweichungen.
+
+basis-6.log
+
+> verify:bausteine
+> node scripts/build-bausteine.mjs --check
+
+Bausteine aktuell: 12 Pfadzeilen, 12 Fakt-Saetze, 41 Begriffe, 34 gepruefte Zahlen auf 12 Seiten, 0 Abweichungen.
+
+basis-7.log
+Content-Fidelity-Check OK (9 Seite(n), Schwelle 30%).
+
+bau-0.log
+
+> lint
+> eslint . && prettier --check .
+
+Checking formatting...
+[warn] docs/t1298/letzte_nachricht_plan.md
+[warn] docs/t1298/plan.md
+[warn] Code style issues found in 2 files. Run Prettier with --write to fix.
+
+bau-1.log
+
+> verify:website-gates
+> python3 -m unittest discover -s tests -p 'test_website_gates.py' && python3 scripts/website_gates.py --repo . --basis origin/main
+
+RECHENLOGIK im ausgelieferten Quelltext: 0 Befund(e)
+   (Altbestand, blockt nicht: 29 Seite(n) fehlen in mindestens einer Liste: amortisation-waermepumpe, anfrage, barrierefreiheit, baubarkeitspruefung, bewerbung, datenschutz, dimensionierung, dimensionierung-verstehen ...)
+SEITEN OHNE EINTRAG IN DEN TESTLISTEN: 0 Befund(e)
+
+>>> SAUBER, geprüft wurde: Rechenlogik und Testlisten.
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.160s
+
+OK
+
+bau-2.log
+
+> verify:assets
+> scripts/version-assets.sh --check
+
+Asset-Versionierung aktuell: 97 Assets, 34 Seiten, 0 Abweichungen.
+
+bau-3.log
+
+> verify:js-versionsanhang
+> node scripts/verify-js-versionsanhang.mjs
+
+  Seite amortisation-waermepumpe.html: 3 Referenzen
+  Seite anfrage.html: 2 Referenzen
+  Seite api/jobs.php: 0 Referenzen
+  Seite api/kv-marktwerte.php: 0 Referenzen
+  Seite api/rechner-engine.php: 0 Referenzen
+  Seite api/rechner-kv-adapter.php: 0 Referenzen
+  Seite api/rechner-snapshot-integritaet.php: 0 Referenzen
+  Seite api/rechner-snapshot-meldung.php: 0 Referenzen
+  Seite api/rechner-snapshot-tabellen.php: 0 Referenzen
+  Seite api/rechner-values.php: 0 Referenzen
+  Seite api/rechner.php: 0 Referenzen
+  Seite api/werte-auffrischen.php: 0 Referenzen
+  Seite barrierefreiheit.html: 3 Referenzen
+  Seite baubarkeitspruefung.html: 3 Referenzen
+  Seite bewerbung.html: 4 Referenzen
+  Seite datenschutz.html: 2 Referenzen
+  Seite dimensionierung-verstehen.html: 3 Referenzen
+  Seite dimensionierung.html: 3 Referenzen
+  Seite foerderung-hannover.html: 3 Referenzen
+  Seite foerderung-jetzt-mitnehmen.html: 3 Referenzen
+  Seite foerderung.html: 3 Referenzen
+  Seite foerdervorschuss.html: 3 Referenzen
+  Seite gasheizung-tauschen-oder-reparieren.html: 3 Referenzen
+  Seite hinweise.html: 3 Referenzen
+  Seite impressum.html: 2 Referenzen
+  Seite index.html: 3 Referenzen
+  JS-Datei js/.htaccess: 0 Referenzen
+  JS-Datei js/chart-4.4.1.umd.min.js: 0 Referenzen
+  JS-Datei js/consent.js: 0 Referenzen
+  JS-Datei js/kurzbewerbung.js: 0 Referenzen
+  JS-Datei js/site.js: 0 Referenzen
+  JS-Datei js/theme.js: 0 Referenzen
+  Seite karriere.html: 3 Referenzen
+  Seite kontakt.html: 3 Referenzen
+  Seite kostenvergleich-waermepumpe.html: 4 Referenzen
+  Seite preise.html: 3 Referenzen
+  Seite propan-waermepumpe.html: 3 Referenzen
+  Seite prozess.html: 3 Referenzen
+  Seite ratgeber.html: 3 Referenzen
+  Seite rechner.html: 3 Referenzen
+  Seite stelle.html: 3 Referenzen
+  Seite waermepumpe-abstand.html: 3 Referenzen
+  Seite waermepumpe-altbau.html: 3 Referenzen
+  Seite waermepumpe-hannover.html: 3 Referenzen
+  Seite waermepumpe-laerm.html: 3 Referenzen
+  Seite waermepumpenstrom-hannover.html: 3 Referenzen
+  Seite wertsteigerung-waermepumpe.html: 3 Referenzen
+  Seite wp-kosten-hannover.html: 3 Referenzen
+42 Seiten, 6 Dateien unter js/, 95 Referenzen gesamt.
+JS-Versionsanhang: GRÜN, alle Referenzen tragen ?v=<Hash>.
+
+bau-4.log
+
+> verify:consent
+> node scripts/consent-integration-check.js
+
+Consent-Zählprobe: 32 öffentliche Stammseiten.
+Consent-Integration OK: 32 öffentliche Stammseiten mit Wächter, keine ungeschützte Einbindung, 1 CSP-Quelle (.htaccess).
+
+bau-5.log
+
+> verify:seo
+> node scripts/build-structured-data.mjs --check
+
+Sollwert der strukturierten Daten verletzt:
+  Article: 12, erwartet 13
+Wer die Zahl bewusst aendert, zieht SOLL in diesem Skript mit.
+
+bau-6.log
+
+> verify:seo
+> node scripts/build-structured-data.mjs --check
+
+Strukturdaten aktuell: 20 Seiten mit Auto-Block, 56 Knoten, 32 Seiten geprueft, 0 Abweichungen.
+
+bau-7.log
+
+> verify:bausteine
+> node scripts/build-bausteine.mjs --check
+
+Bausteine aktuell: 12 Pfadzeilen, 12 Fakt-Saetze, 41 Begriffe, 34 gepruefte Zahlen auf 12 Seiten, 0 Abweichungen.
+
+bau-8.log
+WARN: ratgeber.html → Section "blog": 1 neue Card(s) erlaubt (/waermepumpe-abstand)
+Content-Fidelity-Check OK (10 Seite(n), Schwelle 30%).
+
+bau-9.log
+
+> verify:mobile
+> node scripts/verify-mobile.mjs
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+browserType.launch: Target page, context or browser has been closed
+Browser logs:
+
+<launching> /Users/benjaminbendler/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/fsj259rj7cngdt79dg4zkt2c0000gn/T/playwright_chromiumdev_profile-GlH3P9 --remote-debugging-pipe --no-startup-window
+<launched> pid=83702
+[pid=83702][err] [1119/015714.413010:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9
+[pid=83702][err] [1119/015714.433774:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.
+[pid=83702][err] [1119/015714.435475:WARNING:net/dns/dns_config_service_posix.cc:197] Failed to read DnsConfig.
+[pid=83702][err] [1119/015714.444255:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.83702: Permission denied (1100)
+[pid=83702] <process did exit: exitCode=null, signal=SIGTRAP>
+[pid=83702] starting temporary directories cleanup
+Call log:
+  - <launching> /Users/benjaminbendler/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/fsj259rj7cngdt79dg4zkt2c0000gn/T/playwright_chromiumdev_profile-GlH3P9 --remote-debugging-pipe --no-startup-window
+  - <launched> pid=83702
+  - [pid=83702][err] [1119/015714.413010:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9
+  - [pid=83702][err] [1119/015714.433774:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.
+  - [pid=83702][err] [1119/015714.435475:WARNING:net/dns/dns_config_service_posix.cc:197] Failed to read DnsConfig.
+  - [pid=83702][err] [1119/015714.444255:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.83702: Permission denied (1100)
+  - [pid=83702] <process did exit: exitCode=null, signal=SIGTRAP>
+  - [pid=83702] starting temporary directories cleanup
+  - [pid=83702] <gracefully close start>
+  - [pid=83702] <kill>
+  - [pid=83702] <skipped force kill spawnedProcess.killed=false processClosed=true>
+  - [pid=83702] finished temporary directories cleanup
+  - [pid=83702] <gracefully close end>
+
+    at /Users/benjaminbendler/code/_t1298_website/scripts/verify-mobile.mjs:253:32
+    at async node:internal/modules/esm/loader:650:26
+
+Node.js v26.8.1
+
+bau-10.log
+
+> test:a11y
+> playwright test --grep @a11y
+
+
+Running 39 tests using 4 workers
+
+  ✘   1 tests/cmp-integration.spec.js:9:1 › @a11y @cmp CMP-Dialog führt Fokus, Tab-Zyklus und Anbieterlink (0ms)
+  ✘   4 tests/stelle.spec.js:307:3 › @a11y axe-core ohne neue Befunde auf /stelle.html?role=anlagenmechaniker&theme=dark (0ms)
+  ✘   3 tests/website-additive.spec.js:205:3 › @a11y axe-core ohne neue Befunde auf /?theme=dark (0ms)
+  ✘   2 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /?theme=dark (0ms)
+  ✘   6 tests/website-additive.spec.js:205:3 › @a11y axe-core ohne neue Befunde auf /?theme=light (0ms)
+  ✘   5 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /?theme=light (0ms)
+  ✘   7 tests/stelle.spec.js:307:3 › @a11y axe-core ohne neue Befunde auf /stelle.html?role=anlagenmechaniker&theme=light (0ms)
+  ✘   8 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /preise.html?theme=dark (0ms)
+  ✘   9 tests/website-additive.spec.js:205:3 › @a11y axe-core ohne neue Befunde auf /preise.html?theme=dark (0ms)
+  ✘  10 tests/website-additive.spec.js:205:3 › @a11y axe-core ohne neue Befunde auf /dimensionierung.html?theme=light (0ms)
+  ✘  11 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /preise.html?theme=light (0ms)
+  ✘  12 tests/website-additive.spec.js:205:3 › @a11y axe-core ohne neue Befunde auf /foerderung.html?theme=dark (0ms)
+  ✘  13 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /rechner.html?theme=dark (0ms)
+  ✘  14 tests/website-additive.spec.js:205:3 › @a11y axe-core ohne neue Befunde auf /prozess.html?theme=light (0ms)
+  ✘  15 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /rechner.html?theme=light (0ms)
+  ✘  16 tests/website-additive.spec.js:205:3 › @a11y axe-core ohne neue Befunde auf /ratgeber.html?theme=dark (0ms)
+  ✘  17 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /dimensionierung.html?theme=dark (0ms)
+  ✘  18 tests/website-additive.spec.js:205:3 › @a11y axe-core ohne neue Befunde auf /kontakt.html?theme=light (0ms)
+  ✘  19 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /dimensionierung.html?theme=light (0ms)
+  ✘  20 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /foerderung.html?theme=dark (0ms)
+  ✘  21 tests/website-additive.spec.js:205:3 › @a11y axe-core ohne neue Befunde auf /impressum.html?theme=light (0ms)
+  ✘  23 tests/website-additive.spec.js:205:3 › @a11y axe-core ohne neue Befunde auf /datenschutz.html?theme=light (0ms)
+  ✘  22 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /foerderung.html?theme=light (0ms)
+  ✘  24 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /prozess.html?theme=dark (0ms)
+  ✘  25 tests/website-additive.spec.js:205:3 › @a11y axe-core ohne neue Befunde auf /datenschutz.html?theme=dark (0ms)
+  ✘  27 tests/website-additive.spec.js:205:3 › @a11y axe-core ohne neue Befunde auf /hinweise.html?theme=light (0ms)
+  ✘  26 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /prozess.html?theme=light (0ms)
+  ✘  28 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /ratgeber.html?theme=dark (0ms)
+  ✘  29 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /ratgeber.html?theme=light (0ms)
+  ✘  30 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /waermepumpe-abstand?theme=dark (0ms)
+  ✘  31 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /waermepumpe-abstand?theme=light (0ms)
+  ✘  32 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /kontakt.html?theme=dark (0ms)
+  ✘  33 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /kontakt.html?theme=light (0ms)
+  ✘  34 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /anfrage.html?theme=dark (0ms)
+  ✘  35 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /anfrage.html?theme=light (0ms)
+  ✘  36 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /karriere.html?theme=dark (0ms)
+  ✘  37 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /karriere.html?theme=light (0ms)
+  ✘  38 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /stelle.html?theme=dark (0ms)
+  ✘  39 tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /stelle.html?theme=light (0ms)
+
+
+  1) tests/a11y.spec.js:30:5 › @a11y axe-core ohne neue Befunde auf /?theme=dark ───────────────────
+
+    Error: browserType.launch: Target page, context or browser has been closed
+    Browser logs:
+
+    <launching> /Users/benjaminbendler/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/fsj259rj7cngdt79dg4zkt2c0000gn/T/playwright_chromiumdev_profile-2tQhSr --remote-debugging-pipe --no-startup-window
+    <launched> pid=83903
+    [pid=83903][err] [1119/015715.626731:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9
+    [pid=83903][err] [1119/015715.628017:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.
+    [pid=83903][err] [1119/015715.628615:WARNING:net/dns/dns_config_service_posix.cc:197] Failed to read DnsConfig.
+    [pid=83903][err] [1119/015715.628663:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.83903: Permission denied (1100)
+    Call log:
+      - <launching> /Users/benjaminbendler/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/fsj259rj7cngdt79dg4zkt2c0000gn/T/playwright_chromiumdev_profile-2tQhSr --remote-debugging-pipe --no-startup-window
+      - <launched> pid=83903
+      - [pid=83903][err] [1119/015715.626731:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9
+      - [pid=83903][err] [1119/015715.628017:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.
+      - [pid=83903][err] [1119/015715.628615:WARNING:net/dns/dns_config_service_posix.cc:197] Failed to read DnsConfig.
+      - [pid=83903][err] [1119/015715.628663:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.83903: Permission denied (1100)
+      - [pid=83903] <gracefully close start>
+      - [pid=83903] <kill>
+      - [pid=83903] <will force kill>
+      - [pid=83903] exception while trying to kill process: Error: kill EPERM
+
+Auszug. Vollständiges Rohprotokoll: /tmp/t1298-pruefung/logs/bau-10.log
+
+(node:84416) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84434) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84434) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:84434) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84445) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84445) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:84445) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84448) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84448) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:84448) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84454) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84454) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:84454) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+bau-11.log
+
+> test:smoke
+> playwright test --grep @smoke
+
+
+Running 112 tests using 8 workers
+
+  ✘    2 tests/datenschutz-wortlaut.spec.js:187:1 › @smoke Datenschutz 1: Überschriftenfolge ist vollständig und exakt (0ms)
+  ✘    1 tests/kurzbewerbung.spec.js:38:5 › @smoke T1161 Nutzlast anlagenmechaniker Ausland=false (1ms)
+  ✘    5 tests/kurzbewerbung.spec.js:38:5 › @smoke T1161 Nutzlast anlagenmechaniker Ausland=true (1ms)
+  ✘    4 tests/kurzbewerbung.spec.js:38:5 › @smoke T1161 Nutzlast vad Ausland=false (0ms)
+  ✘    3 tests/a11-oeffentliche-antworten.spec.js:38:3 › @smoke A11 Tafel und Förderauswahl bleiben gleich: Herstellerwerte (0ms)
+  ✘    6 tests/consent.spec.js:44:1 › @smoke Einwilligungs-Wächter lehnt Nicht-Produktion ab und Tracking bleibt aus (0ms)
+  ✘    7 tests/kurzbewerbung.spec.js:38:5 › @smoke T1161 Nutzlast vad Ausland=true (0ms)
+  ✘    8 tests/einwilligung-speicher.spec.js:335:1 › @smoke A1 Kostenvergleich schreibt ohne Einwilligung keine Messkennung (0ms)
+  ✓   16 tests/einwilligung-speicher.spec.js:357:1 › @smoke A2 Quelltext enthält die gestrichene Messkennung nicht (13ms)
+  ✘   10 tests/kurzbewerbung.spec.js:38:5 › @smoke T1161 Nutzlast hr Ausland=false (0ms)
+  ✘   11 tests/kurzbewerbung.spec.js:87:1 › @smoke T1161 Anerkennung Pflicht und Werterhalt beim Zurückgehen (0ms)
+  ✘   13 tests/kurzbewerbung.spec.js:79:1 › @smoke T1161 Familie und keine Auswahlentscheidung (0ms)
+  ✘    9 tests/kurzbewerbung.spec.js:38:5 › @smoke T1161 Nutzlast hr Ausland=true (1ms)
+  ✘   12 tests/datenschutz-wortlaut.spec.js:193:1 › @smoke Datenschutz 2: alte Formulierungen fehlen (0ms)
+  ✘   15 tests/a11-oeffentliche-antworten.spec.js:38:3 › @smoke A11 Tafel und Förderauswahl bleiben gleich: unbekannt ohne kw (1ms)
+  ✘   14 tests/kurzbewerbung.spec.js:59:1 › @smoke T1161 Pflicht und PLZ (1ms)
+  ✘   17 tests/einwilligung-speicher.spec.js:381:1 › @smoke A3 Anfrage nach Übernahme misst beide Ereignisse ohne Sitzungsparameter (0ms)
+  ✘   21 tests/stelle-qualifizierung.spec.js:39:5 › @smoke T1161 Nutzlast vad Ausland=false (0ms)
+  ✘   18 tests/stelle-qualifizierung.spec.js:39:5 › @smoke T1161 Nutzlast anlagenmechaniker Ausland=false (1ms)
+  ✘   22 tests/smoke.spec.js:37:1 › @smoke Startseite lädt mit Hero und Navigation (0ms)
+  ✘   23 tests/rechner-schema3-fehlpreis.spec.js:12:1 › @smoke Schema-3-Leerpreise zeigen auf Anfrage (0ms)
+  ✘   19 tests/stelle-qualifizierung.spec.js:39:5 › @smoke T1161 Nutzlast anlagenmechaniker Ausland=true (1ms)
+  ✘   20 tests/a11-oeffentliche-antworten.spec.js:82:1 › @smoke A11 tragender Modelltext verwendet vorhandenen Preisfehler (1ms)
+  ✘   24 tests/datenschutz-wortlaut.spec.js:198:1 › @smoke Datenschutz 3: neue Schlüsselstellen stehen je genau einmal (0ms)
+  ✘   25 tests/einwilligung-speicher.spec.js:409:1 › @smoke A4 Anfrage ohne Übernahme misst keines der beiden Ereignisse (1ms)
+  ✘   28 tests/stelle-qualifizierung.spec.js:88:1 › @smoke T1161 Anerkennung Pflicht und Werterhalt beim Zurückgehen (0ms)
+  ✘   26 tests/stelle-qualifizierung.spec.js:60:1 › @smoke T1161 Pflicht und PLZ (1ms)
+  ✘   29 tests/smoke.spec.js:44:1 › @smoke FAQ-Sektion auf Ratgeber vorhanden (7 Fragen) (1ms)
+  ✘   27 tests/stelle-qualifizierung.spec.js:80:1 › @smoke T1161 Familie und keine Auswahlentscheidung (1ms)
+  ✘   30 tests/stelle-qualifizierung.spec.js:39:5 › @smoke T1161 Nutzlast vad Ausland=true (0ms)
+  ✘   31 tests/datenschutz-wortlaut.spec.js:205:1 › @smoke Datenschutz 4: Anbieternamen und Interna fehlen (1ms)
+  ✘   32 tests/a11-oeffentliche-antworten.spec.js:98:1 › @smoke A11 Dimensionierung: Leistung fehlt, Hinweis entfällt einzeln, tragender Fehler neutral (2ms)
+  ✘   33 tests/einwilligung-speicher.spec.js:421:1 › @smoke B1 Bewerbungsseiten zeigen nur im letzten Schritt den festen Hinweis (0ms)
+  ✘   38 tests/t1087-wr.spec.js:469:5 › @smoke WR 1–6 chromium-375 (0ms)
+  -   41 tests/t1087-wr.spec.js:659:5 › @smoke WR 7 Antworttexte chromium-375
+  -   42 tests/t1087-wr.spec.js:469:5 › @smoke WR 1–6 chromium-1440
+  -   43 tests/t1087-wr.spec.js:659:5 › @smoke WR 7 Antworttexte chromium-1440
+  -   44 tests/t1087-wr.spec.js:469:5 › @smoke WR 1–6 webkit-375
+  -   45 tests/t1087-wr.spec.js:659:5 › @smoke WR 7 Antworttexte webkit-375
+  -   46 tests/t1087-wr.spec.js:469:5 › @smoke WR 1–6 webkit-1440
+  -   47 tests/t1087-wr.spec.js:659:5 › @smoke WR 7 Antworttexte webkit-1440
+  -   48 tests/t1087-wr.spec.js:791:5 › @smoke WR Regelfall und rote Browserbasis chromium-375
+  -   49 tests/t1087-wr.spec.js:791:5 › @smoke WR Regelfall und rote Browserbasis chromium-1440
+  -   50 tests/t1087-wr.spec.js:791:5 › @smoke WR Regelfall und rote Browserbasis webkit-375
+  -   51 tests/t1087-wr.spec.js:791:5 › @smoke WR Regelfall und rote Browserbasis webkit-1440
+  -   52 tests/t1087-wr.spec.js:1091:3 › @smoke WR Nachauftrag 1 Themen chromium
+  -   53 tests/t1087-wr.spec.js:1091:3 › @smoke WR Nachauftrag 1 Themen webkit
+  -   54 tests/t1087-wr.spec.js:1211:3 › @smoke WR Nachauftrag 1 WebKit 375 Schritt 5 Wiederholung 1
+  -   55 tests/t1087-wr.spec.js:1211:3 › @smoke WR Nachauftrag 1 WebKit 375 Schritt 5 Wiederholung 2
+  -   56 tests/t1087-wr.spec.js:1211:3 › @smoke WR Nachauftrag 1 WebKit 375 Schritt 5 Wiederholung 3
+  -   57 tests/t1087-wr.spec.js:1211:3 › @smoke WR Nachauftrag 1 WebKit 375 Schritt 5 Wiederholung 4
+  -   58 tests/t1087-wr.spec.js:1211:3 › @smoke WR Nachauftrag 1 WebKit 375 Schritt 5 Wiederholung 5
+  -   59 tests/t1087-wr.spec.js:1211:3 › @smoke WR Nachauftrag 1 WebKit 375 Schritt 5 Wiederholung 6
+  -   60 tests/t1087-wr.spec.js:1211:3 › @smoke WR Nachauftrag 1 WebKit 375 Schritt 5 Wiederholung 7
+  -   61 tests/t1087-wr.spec.js:1211:3 › @smoke WR Nachauftrag 1 WebKit 375 Schritt 5 Wiederholung 8
+  -   62 tests/t1087-wr.spec.js:1211:3 › @smoke WR Nachauftrag 1 WebKit 375 Schritt 5 Wiederholung 9
+  -   63 tests/t1087-wr.spec.js:1211:3 › @smoke WR Nachauftrag 1 WebKit 375 Schritt 5 Wiederholung 10
+  ✘   35 tests/t1087-markenwechsel.spec.js:37:3 › @smoke Markenwahl während des Preisladens bleibt erhalten: erfolg (0ms)
+  ✘   34 tests/smoke.spec.js:49:1 › @smoke Aufstellabstände laden über die Ratgeberkarte (1ms)
+  ✘   36 tests/datenschutz-wortlaut.spec.js:210:1 › @smoke Datenschutz 5: sichtbarer Text ist frei von Gedankenstrichen (1ms)
+  ✘   37 tests/t1087-geraetetyp.spec.js:63:3 › @smoke Förderoptionen nur Gerätetyp und Preis: marker (0ms)
+  ✘   39 tests/stelle.spec.js:153:3 › @smoke /stelle anlagenmechaniker: Rolle, Gehalt, Ort und Knopf ohne Scrollen (1ms)
+  ✘   40 tests/a11-oeffentliche-antworten.spec.js:138:3 › @smoke A11 Nachauftrag: vier Seiten ohne Puffer wortgleich, 375px (0ms)
+
+Auszug. Vollständiges Rohprotokoll: /tmp/t1298-pruefung/logs/bau-11.log
+
+(node:84860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84863) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84863) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:84863) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84870) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84870) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:84870) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84874) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84874) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:84874) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84879) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:84879) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:84879) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+bau-12.log
+
+Running 9 tests using 1 worker
+
+  ✘  1 tests/t1298-aufstellabstaende.spec.js:74:5 › T1298 vier Klickfälle, Bedienung und Layout 390 light (0ms)
+  ✘  2 tests/t1298-aufstellabstaende.spec.js:74:5 › T1298 vier Klickfälle, Bedienung und Layout 390 dark (0ms)
+  ✘  3 tests/t1298-aufstellabstaende.spec.js:74:5 › T1298 vier Klickfälle, Bedienung und Layout 768 light (0ms)
+  ✘  4 tests/t1298-aufstellabstaende.spec.js:74:5 › T1298 vier Klickfälle, Bedienung und Layout 768 dark (0ms)
+  ✘  5 tests/t1298-aufstellabstaende.spec.js:74:5 › T1298 vier Klickfälle, Bedienung und Layout 1440 light (0ms)
+  ✘  6 tests/t1298-aufstellabstaende.spec.js:74:5 › T1298 vier Klickfälle, Bedienung und Layout 1440 dark (0ms)
+  ✘  7 tests/t1298-aufstellabstaende.spec.js:189:3 › T1298 Ratgeberkarte sichtbar light (0ms)
+  ✘  8 tests/t1298-aufstellabstaende.spec.js:189:3 › T1298 Ratgeberkarte sichtbar dark (0ms)
+  ✘  9 tests/t1298-aufstellabstaende.spec.js:203:1 › T1298 sichtbarer Haupttext und vier Urteile entsprechen dem Originalentwurf (0ms)
+
+
+  1) tests/t1298-aufstellabstaende.spec.js:74:5 › T1298 vier Klickfälle, Bedienung und Layout 390 light 
+
+    Error: browserType.launch: Target page, context or browser has been closed
+    Browser logs:
+
+    <launching> /Users/benjaminbendler/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/fsj259rj7cngdt79dg4zkt2c0000gn/T/playwright_chromiumdev_profile-hKpfWd --remote-debugging-pipe --no-startup-window
+    <launched> pid=84921
+    [pid=84921][err] [1119/015730.020610:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9
+    [pid=84921][err] [1119/015730.021735:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.
+    [pid=84921][err] [1119/015730.022166:WARNING:net/dns/dns_config_service_posix.cc:197] Failed to read DnsConfig.
+    [pid=84921][err] [1119/015730.022190:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.84921: Permission denied (1100)
+    Call log:
+      - <launching> /Users/benjaminbendler/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/fsj259rj7cngdt79dg4zkt2c0000gn/T/playwright_chromiumdev_profile-hKpfWd --remote-debugging-pipe --no-startup-window
+      - <launched> pid=84921
+      - [pid=84921][err] [1119/015730.020610:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9
+      - [pid=84921][err] [1119/015730.021735:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.
+      - [pid=84921][err] [1119/015730.022166:WARNING:net/dns/dns_config_service_posix.cc:197] Failed to read DnsConfig.
+      - [pid=84921][err] [1119/015730.022190:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.84921: Permission denied (1100)
+      - [pid=84921] <gracefully close start>
+      - [pid=84921] <kill>
+      - [pid=84921] <will force kill>
+      - [pid=84921] exception while trying to kill process: Error: kill EPERM
+      - [pid=84921] <process did exit: exitCode=null, signal=SIGTRAP>
+      - [pid=84921] starting temporary directories cleanup
+      - [pid=84921] finished temporary directories cleanup
+      - [pid=84921] <gracefully close end>
+
+
+    Error Context: test-results/t1298-aufstellabstaende-T1-56a09-ienung-und-Layout-390-light/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/t1298-aufstellabstaende-T1-56a09-ienung-und-Layout-390-light/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/t1298-aufstellabstaende-T1-56a09-ienung-und-Layout-390-light/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) tests/t1298-aufstellabstaende.spec.js:74:5 › T1298 vier Klickfälle, Bedienung und Layout 390 dark 
+
+    Error: browserType.launch: Target page, context or browser has been closed
+    Browser logs:
+
+    <launching> /Users/benjaminbendler/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/fsj259rj7cngdt79dg4zkt2c0000gn/T/playwright_chromiumdev_profile-YJx3Sr --remote-debugging-pipe --no-startup-window
+    <launched> pid=84933
+    [pid=84933][err] [1119/015730.338340:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9
+    [pid=84933][err] [1119/015730.339561:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.
+    [pid=84933][err] [1119/015730.339928:WARNING:net/dns/dns_config_service_posix.cc:197] Failed to read DnsConfig.
+    [pid=84933][err] [1119/015730.339992:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.84933: Permission denied (1100)
+    Call log:
+      - <launching> /Users/benjaminbendler/Library/Caches/ms-playwright/chromium_headless_shell-1223/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/fsj259rj7cngdt79dg4zkt2c0000gn/T/playwright_chromiumdev_profile-YJx3Sr --remote-debugging-pipe --no-startup-window
+      - <launched> pid=84933
+      - [pid=84933][err] [1119/015730.338340:ERROR:base/power_monitor/thermal_state_observer_mac.mm:140] ThermalStateObserverMac unable to register to power notifications. Result: 9
+      - [pid=84933][err] [1119/015730.339561:ERROR:net/dns/dns_config_service_posix.cc:138] DNS config watch failed to start.
+      - [pid=84933][err] [1119/015730.339928:WARNING:net/dns/dns_config_service_posix.cc:197] Failed to read DnsConfig.
+      - [pid=84933][err] [1119/015730.339992:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.84933: Permission denied (1100)
+
+Auszug. Vollständiges Rohprotokoll: /tmp/t1298-pruefung/logs/bau-12.log
+
+(node:85116) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:85174) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:85174) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:85174) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:85182) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:85182) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:85182) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:85186) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:85186) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:85186) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:85195) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:85195) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:85195) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+bau-13.log
+[TypeError: fetch failed] {
+  [cause]: Error: connect EPERM 127.0.0.1:8080 - Local (0.0.0.0:0)
+      at internalConnect (node:net:1406:16)
+      at defaultTriggerAsyncIdScope (node:internal/async_hooks:474:12)
+      at node:net:1729:9
+      at process.processTicksAndRejections (node:internal/process/task_queues:85:11) {
+    errno: -1,
+    code: 'EPERM',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 8080
+  }
+}
+
+bau-14.log
+[TypeError: fetch failed] {
+  [cause]: Error: connect EPERM 127.0.0.1:8080 - Local (0.0.0.0:0)
+      at internalConnect (node:net:1406:16)
+      at defaultTriggerAsyncIdScope (node:internal/async_hooks:474:12)
+      at node:net:1729:9
+      at process.processTicksAndRejections (node:internal/process/task_queues:85:11) {
+    errno: -1,
+    code: 'EPERM',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 8080
+  }
+}
+
+bau-15.log
+[TypeError: fetch failed] {
+  [cause]: Error: connect EPERM 127.0.0.1:8080 - Local (0.0.0.0:0)
+      at internalConnect (node:net:1406:16)
+      at defaultTriggerAsyncIdScope (node:internal/async_hooks:474:12)
+      at node:net:1729:9
+      at process.processTicksAndRejections (node:internal/process/task_queues:85:11) {
+    errno: -1,
+    code: 'EPERM',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 8080
+  }
+}
+
+bau-16.log
+npm error code ENOTCACHED
+npm error request to https://registry.npmjs.org/lhci failed: cache mode is 'only-if-cached' but no cached response is available.
+npm error Log files were not written due to an error writing to the directory: /Users/benjaminbendler/.hermes/npm-cache/_logs
+npm error You can rerun the command with `--loglevel=verbose` to see the logs in your terminal
+
+bau-17.log
+Listing tests:
+  t1298-aufstellabstaende.spec.js:74:5 › T1298 vier Klickfälle, Bedienung und Layout 390 light
+  t1298-aufstellabstaende.spec.js:74:5 › T1298 vier Klickfälle, Bedienung und Layout 390 dark
+  t1298-aufstellabstaende.spec.js:74:5 › T1298 vier Klickfälle, Bedienung und Layout 768 light
+  t1298-aufstellabstaende.spec.js:74:5 › T1298 vier Klickfälle, Bedienung und Layout 768 dark
+  t1298-aufstellabstaende.spec.js:74:5 › T1298 vier Klickfälle, Bedienung und Layout 1440 light
+  t1298-aufstellabstaende.spec.js:74:5 › T1298 vier Klickfälle, Bedienung und Layout 1440 dark
+  t1298-aufstellabstaende.spec.js:189:3 › T1298 Ratgeberkarte sichtbar light
+  t1298-aufstellabstaende.spec.js:189:3 › T1298 Ratgeberkarte sichtbar dark
+  t1298-aufstellabstaende.spec.js:203:1 › T1298 sichtbarer Haupttext und vier Urteile entsprechen dem Originalentwurf
+Total: 9 tests in 1 file
+(node:85229) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+bau-18.log
+
+bau-19.log
+Checking formatting...
+All matched files use Prettier code style!
+
+server.log
+Error: listen EPERM: operation not permitted 127.0.0.1:8080
+    at Server.setupListenHandle [as _listen2] (node:net:2306:21)
+    at listenInCluster (node:net:2437:12)
+    at node:net:2666:7
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  code: 'EPERM',
+  errno: -1,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 8080
+}
+
+quellvergleich.log
+{
+  "ergebnis": "gleich",
+  "art": "Exakter Quellvergleich, keine Browserabnahme",
+  "quelle": "/Users/benjaminbendler/Library/CloudStorage/GoogleDrive-b.bendler@herowerk.de/Meine Ablage/HeroPlan/_Agent-Work/2026-11-19_T1298_Aufstellabstaende/Inhalt_Aufstellabstaende_Freigabefassung_HERO.html",
+  "entwurf": "/Users/benjaminbendler/Library/CloudStorage/GoogleDrive-b.bendler@herowerk.de/Meine Ablage/HeroPlan/_Agent-Drafts/2026-11-18_Aufstellabstaende_Entwurf3/index.html",
+  "seite": "waermepumpe-abstand.html",
+  "iconErsetzung": true,
+  "fragmentSha256": "4206b315f785e6d4d3e6a583fae33535aede6638c55b92f21c8147b5d908765d",
+  "fragmentBytes": 106762,
+  "originalentwurfFragmentGleich": true,
+  "originalentwurfFragmentSha256": "4206b315f785e6d4d3e6a583fae33535aede6638c55b92f21c8147b5d908765d",
+  "css": [
+    "e2304d586be17ec1d479fc7369484dc4560601428be1cece193ad414ec059b94"
+  ],
+  "skript": [
+    "80e76bb145631c3aba1894b78f2edfb2527138f9751d2c0c84c4dcafe19a1aff"
+  ],
+  "skriptSyntax": "gültig",
+  "huelle": "Navigation, Consent und Fuß bytegleich zur Vorlage",
+  "interneZiele": [
+    "/anfrage",
+    "/dimensionierung",
+    "/foerderung",
+    "/kostenvergleich-waermepumpe"
+  ],
+  "anker": 37,
+  "ids": 41,
+  "metadaten": "Article, Veröffentlichungsdatum, Überschrift und URL geprüft",
+  "baseline": "Nur die neue Seite ergänzt, alle Bestandswerte unverändert",
+  "bausteine": "Beide Dateien unverändert, 12 Seiten",
+  "browserTextvergleich": "nicht gelaufen, Sandbox"
+}
+
+Abschließendes Staging aller 18 ausdrücklichen Auftragspfade einschließlich Bericht und Nachweisen: Exit 128.
+git add -- waermepumpe-abstand.html ratgeber.html sitemap.xml scripts/structured-data.config.json scripts/structured-data.state.json scripts/build-structured-data.mjs scripts/fidelity-pages.json baseline/v4-sections.json tests/a11y.spec.js tests/smoke.spec.js lighthouserc.json scripts/verify-mobile.mjs tests/t1298-aufstellabstaende.spec.js docs/t1298/bericht.md docs/t1298/nachweise/quellvergleich.json docs/t1298/nachweise/quellvergleich.mjs docs/t1298/nachweise/prueflauf.json docs/t1298/nachweise/pruefprotokoll.txt
+fatal: Unable to create .git/index.lock: Operation not permitted
+Commit wurde wegen des vorgeschalteten fehlgeschlagenen Stagings nicht ausgeführt.
+
+Abschließender Lint nach Berichtserstellung:
+
+> lint
+> eslint . && prettier --check .
+
+Checking formatting...
+[warn] docs/t1298/letzte_nachricht_plan.md
+[warn] docs/t1298/plan.md
+[warn] Code style issues found in 2 files. Run Prettier with --write to fix.

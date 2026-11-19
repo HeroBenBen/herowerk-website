@@ -210,7 +210,9 @@
       "numberOfRuns": 3,
       "url": [
         "http://127.0.0.1:8080/stelle.html?role=anlagenmechaniker&theme=dark",
-        "http://127.0.0.1:8080/stelle.html?role=anlagenmechaniker&theme=light"
+        "http://127.0.0.1:8080/stelle.html?role=anlagenmechaniker&theme=light",
+        "http://127.0.0.1:8080/waermepumpe-abstand?theme=dark",
+        "http://127.0.0.1:8080/waermepumpe-abstand?theme=light"
       ],
       "urlComment": "T1157: lokale Laeufe (npx lhci autorun) messen die Kampagnen-Zielseite. In der CI setzt der lighthouse-bericht-Job seine Adressen selbst, dort steht /stelle.html ebenfalls in der Liste."
     }

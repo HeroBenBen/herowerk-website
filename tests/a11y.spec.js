@@ -15,6 +15,7 @@ const PAGES = [
   '/foerderung.html',
   '/prozess.html',
   '/ratgeber.html',
+  '/waermepumpe-abstand',
   '/kontakt.html',
   '/anfrage.html',
   '/karriere.html',

@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <!-- ConsentManager nur auf den beiden oeffentlichen HeroWerk-Domains -->
+  <script>
+    (function () {
+      var host = window.location.hostname.toLowerCase().replace(/\.$/, '');
+      var productionHosts = ['herowerk.de', 'www.herowerk.de'];
+
+      if (productionHosts.indexOf(host) === -1) return;
+
+      document.write(
+        '<script type="text/javascript" data-cmp-ab="1"' +
+          ' src="https://cdn.consentmanager.net/delivery/autoblocking/d94854dc5273c.js"' +
+          ' data-cmp-host="a.delivery.consentmanager.net"' +
+          ' data-cmp-cdn="cdn.consentmanager.net"' +
+          ' data-cmp-codesrc="0"></' + 'script>'
+      );
+    }());
+  </script>
+  <meta charset="UTF-8">
+  <!-- ============================================================== -->
+  <!-- HeroWerk Consent + Analytics (Opt-in, Google Consent Mode v2)   -->
+  <!-- Reihenfolge: CMP, Consent-Mode-Default, Opt-in-Loader.       -->
+  <!-- GA4 + Meta werden erst NACH Einwilligung aus               -->
+  <!-- js/consent.js injiziert.                                   -->
+  <!-- ============================================================== -->
+  <!-- (b) Google Consent Mode v2 — Default: alles verweigert -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+      functionality_storage: 'denied',
+      personalization_storage: 'denied',
+      security_storage: 'granted',
+      wait_for_update: 500
+    });
+    gtag('set', 'ads_data_redaction', true);
+    gtag('set', 'url_passthrough', true);
+  </script>
+  <!-- (c) Opt-in-Loader: injiziert GA4 (G-1XT9BLBDW8) + Meta-Pixel (1348888427192043) ERST nach Consent -->
+  <script src="js/consent.js?v=99d7e92283"></script>
+  <!-- ============================================================== -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/fonts.css?v=d3f3999a2f">
+  <link rel="icon" href="/favicon.ico" sizes="any" type="image/x-icon">
+  <meta name="theme-color" content="#0A0A0A">
+  <title>Wo darf die Wärmepumpe stehen? Abstände einfach erklärt | HeroWerk</title>
+  <meta name="description" content="Kältemittel-Schutzbereich, Grenzabstand und Schallabstand: die drei Auflagen für das Außengerät von Vaillant und WOLF, mit Klick-Prüfung und Quellen. Stand November 2026, Niedersachsen.">
+  <link rel="canonical" href="https://www.herowerk.de/waermepumpe-abstand">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Wo darf die Wärmepumpe stehen? Abstände einfach erklärt | HeroWerk">
+  <meta property="og:description" content="Kältemittel-Schutzbereich, Grenzabstand und Schallabstand: die drei Auflagen für das Außengerät von Vaillant und WOLF, mit Klick-Prüfung und Quellen. Stand November 2026, Niedersachsen.">
+  <meta property="og:url" content="https://www.herowerk.de/waermepumpe-abstand">
+  <meta property="og:image" content="https://www.herowerk.de/hero-paar-terrasse.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Wo darf die Wärmepumpe stehen? Abstände einfach erklärt | HeroWerk">
+  <meta name="twitter:description" content="Kältemittel-Schutzbereich, Grenzabstand und Schallabstand: die drei Auflagen für das Außengerät von Vaillant und WOLF, mit Klick-Prüfung und Quellen. Stand November 2026, Niedersachsen.">
+  <meta name="twitter:image" content="https://www.herowerk.de/hero-paar-terrasse.png">
+  <script src="js/theme.js?v=9b163705e9"></script>
+  <link rel="stylesheet" href="css/site.css?v=bcc0e299bb">
+  <link rel="stylesheet" href="css/ratgeber.css?v=e8a2391026">
+  <link rel="preload" href="tokens.css?v=bb2619605a" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="tokens.css?v=bb2619605a"></noscript>
+  <!-- STRUKTURDATEN:AUTO ANFANG (erzeugt von scripts/build-structured-data.mjs, nicht von Hand aendern) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": "https://www.herowerk.de/waermepumpe-abstand#article",
+    "headline": "Wo darf die Wärmepumpe stehen?",
+    "inLanguage": "de",
+    "url": "https://www.herowerk.de/waermepumpe-abstand",
+    "mainEntityOfPage": "https://www.herowerk.de/waermepumpe-abstand",
+    "datePublished": "2026-11-19",
+    "dateModified": "2026-11-19",
+    "author": {
+      "@type": "Organization",
+      "@id": "https://www.herowerk.de/#organisation",
+      "name": "HeroWerk GmbH",
+      "url": "https://www.herowerk.de/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "@id": "https://www.herowerk.de/#organisation",
+      "name": "HeroWerk GmbH",
+      "url": "https://www.herowerk.de/"
+    },
+    "description": "Kältemittel-Schutzbereich, Grenzabstand und Schallabstand: die drei Auflagen für das Außengerät von Vaillant und WOLF, mit Klick-Prüfung und Quellen. Stand November 2026, Niedersachsen."
+  }
+  </script>
+  <!-- STRUKTURDATEN:AUTO ENDE -->
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="nav-inner">
+      <a href="/" style="display:inline-block;" aria-label="HeroWerk, zur Startseite"><img src="herowerk-logo-stacked.png?v=3805a3a2a6" alt="HeroWerk, Meisterbetrieb für Wärmepumpen" class="nav-logo logo-dark" width="607" height="337" decoding="async"><img src="herowerk-logo-stacked-light.png?v=8c40e63d7e" alt="" aria-hidden="true" class="nav-logo logo-light" width="607" height="337" decoding="async"></a>
+      <div class="nav-links">
+        <a href="/preise">Preise</a>
+        <a href="/rechner">Rechner</a>
+        <a href="/foerderung">Förderung</a>
+        <a href="/ratgeber">Ratgeber</a>
+        <a href="/kontakt">Kontakt</a>
+        <a href="/karriere">Jobs</a>
+        <button type="button" class="theme-toggle" data-theme-toggle data-theme-switch>Light-Mode</button>
+        <a href="tel:+4951315059750" class="nav-cta-call"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:4px;"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg> Anrufen</a>
+        <a href="/anfrage" class="nav-cta">Termin vereinbaren</a>
+      </div>
+      <button type="button" class="theme-toggle nav-theme-standalone" data-theme-toggle data-theme-switch>Light-Mode</button>
+      <a href="tel:+4951315059750" class="mobile-phone-cta" aria-label="Anrufen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg><span class="mobile-phone-label">Anrufen</span></a>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mm-kopf">
+        <span class="mm-kopf-label">Ansicht</span>
+        <button type="button" class="theme-toggle" data-theme-toggle data-theme-switch>Light-Mode</button>
+      </div>
+      <div class="mm-nav">
+        <a href="/preise" onclick="toggleMenu()">Preise<svg class="mm-pfeil" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"/></svg></a>
+        <a href="/rechner" onclick="toggleMenu()">Rechner<svg class="mm-pfeil" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"/></svg></a>
+        <a href="/foerderung" onclick="toggleMenu()">Förderung<svg class="mm-pfeil" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"/></svg></a>
+        <a href="/ratgeber" onclick="toggleMenu()">Ratgeber<svg class="mm-pfeil" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"/></svg></a>
+        <a href="/kontakt" onclick="toggleMenu()">Kontakt<svg class="mm-pfeil" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"/></svg></a>
+        <a href="/karriere" onclick="toggleMenu()">Jobs<svg class="mm-pfeil" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"/></svg></a>
+      </div>
+      <div class="mm-aktionen">
+        <a href="/anfrage" class="nav-cta" onclick="toggleMenu()">Termin vereinbaren</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content" tabindex="-1">
+    <style>
+      /* Aufstellabstände: baut auf tokens.css und site.css auf. Dunkel ist Standard, Hell über data-theme. */
+      .aa{--aa-card:rgba(255,255,255,.04);--aa-line:rgba(255,255,255,.12);--aa-ink:var(--white);--aa-sub:var(--g400);--aa-kicker:var(--green);
+          --aa-vis:#20323e;--aa-haus:rgba(255,255,255,.07);--aa-zone:#e8a838;--aa-rot:#ff8a80;--aa-wp:#b7d900;--aa-merke:rgba(183,217,0,.08);--aa-merke-line:rgba(183,217,0,.3);--aa-th:rgba(255,255,255,.06);--aa-zebra:rgba(255,255,255,.025)}
+      [data-theme='light'] .aa{--aa-card:#fff;--aa-line:rgba(28,43,54,.12);--aa-ink:#1c2b36;--aa-sub:#4b5866;--aa-kicker:#4f6000;
+          --aa-vis:#f4f6ef;--aa-haus:rgba(28,43,54,.07);--aa-zone:#c27c0e;--aa-rot:#c62828;--aa-wp:#4f6000;--aa-merke:rgba(183,217,0,.14);--aa-merke-line:rgba(79,96,0,.28);--aa-th:#ebe7dc;--aa-zebra:#faf8f3}
+      [data-theme='light'] .aa-hub{background:var(--sand)}
+      .aa{color:var(--aa-ink)}
+      .aa [id]{scroll-margin-top:96px}
+      .aa .section-inner{max-width:1240px}
+      .aa-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:32px;align-items:start}
+      .aa-main{display:grid;gap:20px;min-width:0}
+      .aa-side{display:flex;flex-direction:column;gap:16px;align-self:stretch}
+      .aa-mit{position:sticky;top:96px;display:grid;gap:16px;max-height:calc(100vh - 112px);overflow:auto;scrollbar-width:thin}
+      .aa-cta-box{margin-top:14px;padding-top:16px;border-top:1px solid var(--aa-line)}
+      .aa-cta-box h2{font-size:20px;line-height:1.25;margin:0 0 6px}
+      .aa-cta-box p{font-size:14.5px;line-height:1.5;margin:0 0 14px;color:var(--aa-sub)}
+      .aa-cta-knopf{display:flex!important;justify-content:center;width:100%;text-align:center;box-sizing:border-box}
+      .aa-tel{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px;font-size:14px;font-weight:700;color:var(--aa-ink);text-decoration:none}
+      .aa-tel:hover{color:var(--aa-kicker)}
+      .aa-tel svg,.aa-ico svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+      .aa-rechner a{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--aa-line);text-decoration:none;color:var(--aa-ink)}
+      .aa-rechner .aa-kicker+a{border-top:0}
+      .aa-rechner b{display:block;font-size:15px}.aa-rechner small{display:block;font-size:13px;color:var(--aa-sub);line-height:1.4}
+      .aa-rechner a:hover b{color:var(--aa-kicker)}
+      .aa-ico{display:grid;place-items:center;width:40px;height:40px;border-radius:10px;background:rgba(183,217,0,.12);color:var(--aa-kicker)}
+      .aa-ico svg{width:22px;height:22px}
+      @media(max-width:1020px){.aa-layout{grid-template-columns:minmax(0,1fr)}.aa-mit{position:static;max-height:none;overflow:visible}}
+      .aa-card{border:1px solid var(--aa-line);border-radius:10px;background:var(--aa-card);box-shadow:0 14px 36px rgba(0,0,0,.18);padding:28px;min-width:0}
+      [data-theme='light'] .aa-card{box-shadow:0 12px 30px rgba(28,43,54,.08)}
+      .aa-card--primary{border-color:rgba(183,217,0,.34);background:rgba(183,217,0,.07)}
+      [data-theme='light'] .aa-card--primary{background:rgba(183,217,0,.12);border-color:rgba(79,96,0,.28)}
+      @media(max-width:600px){.aa-card{padding:18px}}
+      .aa-kicker{color:var(--aa-kicker);font-size:13px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;margin-bottom:8px}
+      .aa h2{font-size:clamp(22px,2.6vw,28px);margin:0 0 12px;color:var(--aa-ink)}
+      .aa h3{font-size:19px;margin:22px 0 8px;color:var(--aa-ink)}
+      .aa p,.aa li,.aa dd{color:var(--aa-sub);font-size:16px;line-height:1.65}
+      .aa p+p{margin-top:10px}
+      .aa strong,.aa b{color:var(--aa-ink)}
+      .aa ul{margin:8px 0;padding-left:20px}.aa li+li{margin-top:6px}
+      .aa a{color:var(--aa-kicker)}
+      .aa a.btn-primary{color:#1c2b36;text-decoration:none}
+      .aa .section-lead{margin-bottom:28px}
+      .aa-merke{margin-top:14px;padding:12px 16px;border:1px solid var(--aa-merke-line);background:var(--aa-merke);border-radius:8px;color:var(--aa-ink)!important}
+      .aa-mass{font-family:'Barlow',sans-serif;font-weight:800;color:var(--aa-ink);white-space:nowrap}
+      .aa-kurz{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-top:6px}
+      .aa-kurz div,.aa-kurz a{display:block;border:1px solid var(--aa-line);border-radius:8px;padding:14px;background:var(--aa-th);text-decoration:none;color:inherit}
+      .aa-kurz a:hover{border-color:#b7d900}
+      .aa-kurz .aa-teil{display:block;font-size:13px;font-weight:800;letter-spacing:.3px;text-transform:uppercase;color:var(--aa-ink)}
+      .aa-kurz .aa-zahl{display:block;font-family:'Barlow',sans-serif;font-weight:800;font-size:30px;line-height:1.1;color:var(--aa-kicker)}
+      .aa-kurz span:last-child:not(.aa-zahl){display:block;margin-top:4px;font-size:14.5px;line-height:1.5;color:var(--aa-sub)}
+      /* Skizzen */
+      .aa-vis{background:var(--aa-vis);border-radius:8px;overflow-x:auto;color:var(--aa-ink)}
+      .aa-vis svg{display:block;width:100%;height:auto}
+      .aa-vis.gross svg{min-width:920px}
+      .aa-zoom{display:none;font:inherit;font-size:14px;font-weight:700;color:var(--aa-kicker);background:transparent;border:1px solid var(--aa-line);border-radius:8px;padding:8px 12px;margin-bottom:10px;cursor:pointer}
+      @media(max-width:760px){.aa-zoom{display:inline-block}}
+      .v-line{stroke:currentColor;fill:none}
+      .v-haus{fill:var(--aa-haus);stroke:currentColor}
+      .v-zone{fill:var(--aa-zone);fill-opacity:.2;stroke:var(--aa-zone);stroke-width:2.5;stroke-dasharray:9 6}
+      .v-zone-t{fill:var(--aa-zone)}
+      .v-rot{stroke:var(--aa-rot);fill:none}.v-rot-t{fill:var(--aa-rot)}
+      .v-wp{color:var(--aa-wp)}
+      .v-t{fill:currentColor}.v-sub{fill:currentColor;opacity:.72}
+      .v-weg{fill:currentColor;fill-opacity:.07;stroke:currentColor}
+      .v-strasse{fill:currentColor;fill-opacity:.14}
+      .v-frost{fill:url(#aa-schraffur);stroke:currentColor;stroke-opacity:.6;stroke-width:2;stroke-dasharray:4 5}
+      .v-nr circle{fill:#b7d900}.v-nr text{fill:#1c2b36;font-weight:800;font-family:'Barlow',sans-serif}
+      .aa-legende{list-style:none;padding:0!important;margin:14px 0 0!important;display:grid;gap:8px 20px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+      .aa-legende li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;margin:0!important;font-size:15px}
+      .aa-nr{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#b7d900;color:#1c2b36;font-family:'Barlow',sans-serif;font-weight:800;font-size:14px}
+      .aa-hinweis{font-size:14px!important;color:var(--aa-sub)}
+      /* Prüfpunkte */
+      .aa-raster{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin-top:6px}
+      .aa-punkt{border:1px solid var(--aa-line);border-radius:8px;padding:18px;background:var(--aa-th)}
+      .aa-punkt h3{margin:0 0 6px;display:flex;gap:10px;align-items:center;font-size:18px}
+      /* Karten mit Skizze (Aufstellung, Sicht, Flexible Space) */
+      .aa-bilder{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:12px 0 4px}
+      .aa-bild{border:1px solid var(--aa-line);border-radius:8px;overflow:hidden;background:var(--aa-th)}
+      .aa-bild .aa-vis{border-radius:0}
+      button.aa-bild{position:relative;display:block;width:100%;padding:0;font:inherit;text-align:left;color:inherit;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+      button.aa-bild:hover{border-color:#b7d900}
+      button.aa-bild[aria-pressed='true']{border-color:#b7d900;background:rgba(183,217,0,.1)}
+      button.aa-bild[aria-pressed='true']::after{content:'';position:absolute;inset:0;border-radius:7px;box-shadow:inset 0 0 0 2px #b7d900;pointer-events:none;z-index:1}
+      button.aa-bild:focus-visible{outline:2px solid #b7d900;outline-offset:2px}
+      .aa-bild span.aa-vis{display:block;padding:12px 10px 8px}
+      .aa-bild span.aa-text,.aa-bild .aa-text b{display:block}
+      .aa-wahlhinweis{font-size:14px!important;margin:4px 0 0!important}
+      .aa-lesen{margin:14px 0 4px;padding:14px 16px;border-left:4px solid #b7d900;background:var(--aa-th);border-radius:0 8px 8px 0;color:var(--aa-ink)!important}
+      .aa td.aa-m.aa-sel,.aa th.aa-sel{background:rgba(183,217,0,.14)}
+      .sz-q{margin-top:14px}.sz-q p{font-weight:700;color:var(--aa-ink);font-size:15px;margin:0 0 6px}
+      .sz-q .sz-hinweis{font-weight:400;font-size:14px;color:var(--aa-sub);margin:6px 0 0}
+      .sz-teil{margin-top:22px;padding-top:6px;border-top:1px solid var(--aa-line)}
+      .aa-ergebnis{margin-top:20px;padding:18px 20px;border-radius:10px;border:2px solid var(--aa-line);background:var(--aa-th)}
+      .aa-ergebnis h3{margin:0 0 6px!important;font-size:20px}
+      .aa-ergebnis.ja{border-color:#b7d900}.aa-ergebnis.mittel{border-color:var(--aa-zone)}.aa-ergebnis.nein{border-color:var(--aa-rot)}
+      .aa-ergebnis.ja h3{color:var(--aa-kicker)}.aa-ergebnis.mittel h3{color:var(--aa-zone)}.aa-ergebnis.nein h3{color:var(--aa-rot)}
+      .aa-bild .aa-text{padding:10px 12px 12px;font-size:14px;line-height:1.45;color:var(--aa-sub)}
+      .aa-bild b{display:block;font-size:15px}
+      .aa-bild .aa-db{display:block;margin-top:6px;font-family:'Barlow',sans-serif;font-weight:800;color:var(--aa-kicker)}
+      /* Filter wie Auswahlknöpfe der Rechner */
+      .aa-filter{display:grid;gap:14px;margin:18px 0 6px}
+      .aa-filter p{font-weight:700;color:var(--aa-ink);font-size:15px;margin:0 0 6px}
+      .aa-chips{display:flex;flex-wrap:wrap;gap:8px}
+      .aa-chips button{font:inherit;font-size:14px;font-weight:600;min-height:42px;padding:8px 14px;border-radius:8px;border:1px solid var(--aa-line);background:var(--aa-th);color:var(--aa-ink);cursor:pointer}
+      .aa-chips button[aria-pressed='true']{background:#b7d900;border-color:#b7d900;color:#1c2b36}
+      .aa-chips button:focus-visible,.aa-zoom:focus-visible{outline:2px solid #b7d900;outline-offset:2px}
+      /* Tabellen */
+      .aa-tabelle{overflow-x:auto;border:1px solid var(--aa-line);border-radius:8px;margin:14px 0 8px}
+      .aa table{width:100%;border-collapse:collapse;font-size:15px}
+      .aa th,.aa td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--aa-line);color:var(--aa-ink)}
+      .aa thead th{background:var(--aa-th);font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.3px}
+      .aa tbody tr:nth-child(even){background:var(--aa-zebra)}
+      .aa tbody tr:last-child th,.aa tbody tr:last-child td{border-bottom:0}
+      .aa tbody th{font-weight:700;min-width:170px}
+      .aa tbody th small{display:block;font-weight:500;color:var(--aa-sub);font-size:12.5px}
+      .aa td.aa-m{font-family:'Barlow',sans-serif;font-weight:800;font-size:17px;white-space:nowrap;font-variant-numeric:tabular-nums}
+      .aa .aa-schutz td{color:var(--aa-sub)}
+      @media(max-width:600px){.aa table{font-size:13.5px}.aa th,.aa td{padding:8px}.aa tbody th{min-width:120px}}
+      .aa dl{margin:0}.aa dt{font-weight:700;margin-top:12px;color:var(--aa-ink)}.aa dd{margin:0}
+      .aa-quellen li{font-size:14px}
+      .aa-side .aa-card{padding:22px}
+      .aa-toc a{display:block;padding:9px 0;border-top:1px solid var(--aa-line);color:var(--aa-ink);text-decoration:none;font-weight:600;font-size:15px}
+      .aa-toc a:first-of-type{border-top:0}
+      /* Drei Auflagen: je eine feste Farbe, durchgehend auf der ganzen Seite */
+      .aa{--a1:#e8a838;--a2:#7cc4ff;--a3:#b7d900}
+      [data-theme='light'] .aa{--a1:#9a5b00;--a2:#1f5f99;--a3:#4f6000}
+      .aa-badge{display:inline-grid;place-items:center;min-width:26px;height:26px;padding:0 7px;border-radius:13px;font-family:'Barlow',sans-serif;font-weight:800;font-size:14px;line-height:1;color:#1c2b36;vertical-align:middle}
+      .aa-badge.a1{background:#e8a838}.aa-badge.a2{background:#7cc4ff}.aa-badge.a3{background:#b7d900}.aa-badge.a0{background:#c9d1d9}
+      .aa-card.aa-a1{border-left:6px solid var(--a1)}.aa-card.aa-a2{border-left:6px solid var(--a2)}.aa-card.aa-a3{border-left:6px solid var(--a3)}
+      .aa-a1 .aa-kicker{color:var(--a1)}.aa-a2 .aa-kicker{color:var(--a2)}.aa-a3 .aa-kicker{color:var(--a3)}
+      .aa-kurz a.a1{border-top:5px solid var(--a1)}.aa-kurz a.a2{border-top:5px solid var(--a2)}.aa-kurz a.a3{border-top:5px solid var(--a3)}
+      .aa-kurz a.a1 .aa-zahl{color:var(--a1)}.aa-kurz a.a2 .aa-zahl{color:var(--a2)}.aa-kurz a.a3 .aa-zahl{color:var(--a3)}
+      .aa-kurz .aa-teil{display:flex!important;gap:8px;align-items:center;margin-bottom:6px}
+      .aa-kurz span.aa-badge{display:inline-grid!important;margin:0!important;font-size:14px!important;color:#1c2b36!important}
+      .aa-kurz em.aa-wer{display:block;margin-top:10px;font-style:normal;font-size:13px;font-weight:700;color:var(--aa-ink)}
+      .aa-stand3 a{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;padding:10px 0;border-top:1px solid var(--aa-line);text-decoration:none;color:var(--aa-ink)}
+      .aa-stand3 a:first-child{border-top:0}
+      .aa-stand3 b{display:block;font-size:15px}
+      .aa-stand3 .st{display:block;font-size:13.5px;line-height:1.45;color:var(--aa-sub);font-weight:600}
+      .aa-stand3 .st.ja{color:var(--aa-kicker)}.aa-stand3 .st.mittel{color:var(--aa-zone)}.aa-stand3 .st.nein{color:var(--aa-rot)}
+      .aa-zeich{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(340px,100%),1fr));margin:16px 0 4px}
+      .aa-zeich figure{margin:0;border:1px solid var(--aa-line);border-radius:8px;overflow:hidden;background:var(--aa-vis)}
+      .aa-zeich svg{display:block;width:100%;height:auto;color:var(--aa-ink)}
+      .aa-zeich figcaption{padding:8px 12px;font-size:13.5px;color:var(--aa-sub);background:var(--aa-th)}
+      .aa-masse{margin-top:12px;padding:14px 16px;border-left:4px solid var(--a1);background:var(--aa-th);border-radius:0 8px 8px 0}
+      .aa-masse p{color:var(--aa-ink)}
+      .aa-schritt{margin-top:18px}.aa-schritt>p{font-weight:700;color:var(--aa-ink);font-size:15px;margin:0 0 4px}
+      .aa-bilder.drei{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+      .aa-tool{margin-top:10px;padding:18px;border:1px dashed var(--aa-line);border-radius:10px}
+      @media(max-width:600px){.aa-tool{padding:12px}}
+      .sz-matrix table{min-width:540px;table-layout:fixed}
+      .sz-matrix thead th:first-child{width:34%}
+      .sz-matrix th,.sz-matrix td{padding:8px 4px!important}
+      .sz-matrix tbody th{min-width:0!important;font-size:14px;padding-left:12px!important}
+      .sz-matrix thead th:first-child{padding-left:12px!important}
+      .sz-matrix thead th{font-size:12px!important;text-transform:none!important;letter-spacing:0!important;text-align:center;vertical-align:bottom}
+      .sz-matrix thead th:first-child{text-align:left}
+      .sz-matrix td{text-align:center;vertical-align:middle;padding:8px 6px}
+      .sz-matrix tbody th small{font-size:12px}
+      .sz-matrix .sz-leer{color:var(--aa-sub);opacity:.5}
+      .sz-punkt{width:26px;height:26px;border-radius:50%;border:2px solid var(--aa-line);background:transparent;cursor:pointer;padding:0;position:relative}
+      .sz-punkt:hover{border-color:#b7d900}
+      .sz-punkt[aria-pressed='true']{border-color:#b7d900;background:radial-gradient(circle,#b7d900 0 45%,transparent 50%)}
+      .sz-punkt:focus-visible{outline:2px solid #b7d900;outline-offset:2px}
+      @media print{.aa-side,.aa-zoom,.aa-chips{display:none}.aa-layout{grid-template-columns:1fr}.aa-card{box-shadow:none;break-inside:avoid}.aa-vis svg{min-width:0!important}}
+      /* Bilder bleiben in ihrer Karte, auch in Safari und bei schmalem Fenster */
+      .aa-bilder>*,.aa-zeich>*,.aa-main>*{min-width:0}
+      .aa-vis:not(.gross) svg,.aa-zeich svg{max-width:100%}
+      .aa-bild,.aa-zeich figure{max-width:100%}
+      .aa-vis svg.aa-ds{max-width:360px;margin:0 auto}
+      /* Einheitliche Strichstärken in allen Bildern (Bildschirm-Pixel, unabhängig vom Maßstab) */
+      .v-line,.v-haus,.v-zone,.v-rot,.v-weg,.v-frost,.v-mass,.v-geraet,.v-luefter,.v-sicht,.v-sicht-aus,.v-auge,.v-konsole,.v-grenze{vector-effect:non-scaling-stroke}
+      .v-line,.v-haus,.v-weg{stroke-width:1.75px}
+      .v-frost{stroke-width:1.5px}
+      .v-zone{stroke-width:2px;stroke-dasharray:7 5}
+      .v-rot{stroke-width:2.5px}
+      .v-mass{stroke:currentColor;fill:none;stroke-width:1.5px}
+      .v-konsole{stroke-width:3px}
+      .v-grenze{stroke-width:2.25px}
+      .v-sicht{stroke:#b7d900;stroke-width:2px;stroke-dasharray:5 5;fill:none}
+      .v-sicht-aus{stroke:currentColor;stroke-opacity:.35;stroke-width:1.5px;stroke-dasharray:2 5;fill:none}
+      .v-auge{fill:var(--aa-vis);stroke:#b7d900;stroke-width:1.5px}
+      .v-geraet{fill:var(--aa-wp);fill-opacity:.28;stroke:var(--aa-wp);stroke-width:2px}
+      .v-luefter{fill:none;stroke:var(--aa-wp);stroke-width:1.5px}
+    </style>
+
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <symbol id="aa-wp" viewBox="0 0 24 24"><g transform="matrix(0.023592,0.000000,0.000000,-0.023592,-18.668141,68.794766)">
+    <path vector-effect="non-scaling-stroke" d="M 1692.8125 2133.671875 L 907.03125 2133.671875 C 889.921875 2133.671875 876.054688 2147.578125 876.054688 2164.6875 L 876.054688 2720.039062 C 876.054688 2737.148438 889.921875 2751.015625 907.03125 2751.015625 L 1692.8125 2751.015625 C 1709.921875 2751.015625 1723.789062 2737.148438 1723.789062 2720.039062 L 1723.789062 2164.6875 C 1723.789062 2147.578125 1709.921875 2133.671875 1692.8125 2133.671875 Z M 1692.8125 2133.671875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 960.078125 2442.34375 C 960.078125 2561.679688 1056.796875 2658.398438 1176.132812 2658.398438 C 1295.429688 2658.398438 1392.1875 2561.679688 1392.1875 2442.34375 C 1392.1875 2323.046875 1295.429688 2226.289062 1176.132812 2226.289062 C 1056.796875 2226.289062 960.078125 2323.046875 960.078125 2442.34375 Z M 960.078125 2442.34375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1177.34375 2483.984375 C 1185.703125 2533.90625 1207.5 2607.539062 1262.265625 2579.648438 C 1362.1875 2528.789062 1350.117188 2363.710938 1311.054688 2400.507812 C 1279.609375 2430.117188 1265.039062 2464.21875 1215.429688 2456.210938 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1211.5625 2420.46875 C 1250.625 2388.28125 1303.515625 2332.578125 1251.953125 2299.0625 C 1157.929688 2237.96875 1021.015625 2330.976562 1072.421875 2346.40625 C 1113.789062 2358.828125 1150.585938 2354.414062 1168.476562 2401.367188 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1139.414062 2422.578125 C 1092.03125 2404.84375 1017.34375 2386.914062 1014.140625 2448.28125 C 1008.242188 2560.273438 1157.1875 2632.34375 1144.882812 2580.117188 C 1134.960938 2538.085938 1112.734375 2508.4375 1144.453125 2469.453125 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1134.453125 2442.34375 C 1134.453125 2465.351562 1153.125 2484.023438 1176.132812 2484.023438 C 1199.140625 2484.023438 1217.773438 2465.351562 1217.773438 2442.34375 C 1217.773438 2419.335938 1199.140625 2400.664062 1176.132812 2400.664062 C 1153.125 2400.664062 1134.453125 2419.335938 1134.453125 2442.34375 Z M 1134.453125 2442.34375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1618.125 2633.632812 L 1468.515625 2633.632812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1618.125 2564.882812 L 1468.515625 2564.882812 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1618.125 2496.09375 L 1468.515625 2496.09375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1618.125 2427.34375 L 1468.515625 2427.34375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1618.125 2358.59375 L 1468.515625 2358.59375 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1468.515625 2226.289062 L 1504.648438 2226.289062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1581.992188 2226.289062 L 1618.125 2226.289062 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1064.882812 2133.671875 L 1064.882812 2063.671875 L 994.882812 2063.671875 L 994.882812 2133.671875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 945.3125 2063.671875 L 1111.015625 2063.671875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1608.398438 2133.671875 L 1608.398438 2063.671875 L 1538.398438 2063.671875 L 1538.398438 2133.671875 "/>
+    <path vector-effect="non-scaling-stroke" d="M 1488.828125 2063.671875 L 1654.53125 2063.671875 "/>
+  </g></symbol>
+        <pattern id="aa-schraffur" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12" stroke="currentColor" stroke-width="2" stroke-opacity=".35"/></pattern>
+        <marker id="aa-pfs" viewBox="0 0 10 8" markerWidth="7" markerHeight="5.6" refX="9.6" refY="4" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0 0L10 4L0 8Z" fill="currentColor"/></marker>
+        <marker id="aa-pfm" viewBox="0 0 10 8" markerWidth="8" markerHeight="6.4" refX="9.6" refY="4" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0 0L10 4L0 8Z" fill="currentColor"/></marker>
+        <marker id="aa-pfl" viewBox="0 0 10 8" markerWidth="12" markerHeight="9.6" refX="9.6" refY="4" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0 0L10 4L0 8Z" fill="currentColor"/></marker>
+        <symbol id="aa-top" viewBox="0 0 110 45"><rect x="1" y="1" width="108" height="43" rx="4" class="v-geraet"/><circle cx="38" cy="22.5" r="15" class="v-luefter"/><path d="M38 9.5V35.5M25 22.5H51" class="v-luefter"/></symbol>
+      </defs>
+    </svg>
+
+    <section class="aa-hub section aa">
+      <div class="section-inner">
+        <div class="rechner-intro">
+          <div class="section-tag">Ratgeber</div>
+          <h1 class="section-title" style="color:var(--aa-ink);">Wo darf die Wärmepumpe stehen?</h1>
+          <p class="section-lead">Für das Außengerät gelten drei Auflagen: der Kältemittel-Schutzbereich nach Vorgabe des Herstellers, der Grenzabstand nach Bauordnung und der Schallabstand zum Nachbarfenster. Zu jeder Auflage gibt es eine Klick-Prüfung. Gilt für Niedersachsen, Stand 18.&nbsp;November&nbsp;2026.</p>
+        </div>
+
+        <div class="aa-layout">
+          <div class="aa-main">
+
+            <article class="aa-card aa-card--primary" id="kurz">
+              <div class="aa-kicker">Auf einen Blick</div>
+              <h2>Drei Auflagen, alle drei müssen passen</h2>
+              <p>Jede Auflage hat einen anderen Zweck, kommt von einer anderen Stelle und wird einzeln geprüft. Ein Platz passt erst, wenn alle drei erfüllt sind. Die Farbe jeder Auflage findest du auf der ganzen Seite wieder.</p>
+              <div class="aa-kurz">
+                <a class="a1" href="#schutzbereich"><span class="aa-teil"><span class="aa-badge a1">1</span>Kältemittel-Schutzbereich</span><span class="aa-zahl">meist 1&nbsp;m</span><span>rund um das Gerät, wegen des Kältemittels Propan. In diesem Bereich dürfen sich keine Fenster, Schächte oder Steckdosen befinden. Durch einen Sockel, Flexible Space oder eine Trennwand lässt sich der Abstand oft verkleinern.<em class="aa-wer">Vorgabe: Anleitung des Herstellers</em></span></a>
+                <a class="a2" href="#grenzabstand"><span class="aa-teil"><span class="aa-badge a2">2</span>Grenzabstand</span><span class="aa-zahl">meist 3&nbsp;m</span><span>zur Grundstücksgrenze. Gibt es keinen anderen Platz, darf die Wärmepumpe näher heran: bis auf 1&nbsp;m oder direkt an die Grenze.<em class="aa-wer">Vorgabe: Niedersächsische Bauordnung</em></span></a>
+                <a class="a3" href="#schall"><span class="aa-teil"><span class="aa-badge a3">3</span>Schallabstand</span><span class="aa-zahl">2 bis über 20&nbsp;m</span><span>bis zum Schlaf- oder Wohnraumfenster beim Nachbarn, das am stärksten betroffen ist, je nach Gerät und Aufstellung.<em class="aa-wer">Vorgabe: Richtwerte für Schall nachts</em></span></a>
+              </div>
+              <p class="aa-merke">Jeder Garten ist anders. Wir schauen uns deinen Platz vor Ort an und sagen dir, wo das Gerät am besten steht.</p>
+            </article>
+
+            <article class="aa-card" id="lageplan">
+              <div class="aa-kicker">Lageplan</div>
+              <h2>So sieht das auf dem Grundstück aus</h2>
+              <button class="aa-zoom" type="button" aria-controls="aa-plan" aria-pressed="false">Skizze vergrößern</button>
+              <div class="aa-vis" id="aa-plan" tabindex="0" role="region" aria-label="Lageplan, vergrößert seitlich verschiebbar">
+                <svg viewBox="0 0 1100 780" role="img" aria-labelledby="aa-plan-t aa-plan-d" font-family="Inter,system-ui,sans-serif">
+                  <title id="aa-plan-t">Lageplan von oben, ungefähr maßstabsgetreu</title>
+                  <desc id="aa-plan-d">Das Außengerät steht an der Hauswand. Um das Gerät liegt der Kältemittel-Schutzbereich mit 1 Meter, davor schraffiert die Ausblasseite. Regenfallrohr, Steckdose und Kellerfenster sitzen an der Hauswand außerhalb des Schutzbereichs. Rechts verläuft die Grenze zum Nachbarn. Am Nachbarhaus liegt der Messpunkt für den Schall, 0,5 Meter vor dem Schlafzimmerfenster. Unten liegen Stellplatz, Einfahrt und der öffentliche Gehweg. Ein Meter entspricht 50 Bildpunkten.</desc>
+                  <!-- eigenes Haus -->
+                  <rect x="30" y="30" width="690" height="100" class="v-haus" stroke-width="2.5"/>
+                  <text x="56" y="76" class="v-t" font-size="28" font-weight="800" font-family="Barlow,Inter,sans-serif">Dein Haus</text>
+                  <!-- Regenfallrohr an der Wand -->
+                  <circle cx="150" cy="138" r="9" class="v-rot" stroke-width="3.5"/>
+                  <text x="150" y="112" text-anchor="middle" class="v-rot-t" font-size="19" font-weight="700">Regenfallrohr</text>
+                  <!-- Steckdose -->
+                  <rect x="468" y="132" width="20" height="20" rx="4" class="v-rot" stroke-width="3"/>
+                  <text x="478" y="112" text-anchor="middle" class="v-rot-t" font-size="19" font-weight="700">Steckdose</text>
+                  <!-- Kellerfenster -->
+                  <rect x="560" y="130" width="96" height="30" class="v-rot" stroke-width="3"/>
+                  <path d="M584 131V159M608 131V159M632 131V159" class="v-rot" stroke-width="2"/>
+                  <text x="608" y="112" text-anchor="middle" class="v-rot-t" font-size="19" font-weight="700">Kellerfenster</text>
+                  <!-- Frostzone -->
+                  <path d="M300 160H357L394 312H263Z" class="v-frost"/>
+                  <text x="328" y="276" text-anchor="middle" class="v-t" font-size="18" font-weight="700">Ausblasseite</text>
+                  <!-- Schutzzone -->
+                  <path d="M250 130H407V196Q407 212 391 212H266Q250 212 250 196Z" class="v-zone"/>
+                  <text x="240" y="200" text-anchor="end" class="v-zone-t" font-size="19" font-weight="800">Schutzbereich 1 m</text>
+                  <!-- Waermepumpe: Grundriss und Symbol -->
+                  <use href="#aa-top" x="301" y="134" width="55" height="22.5"/>
+                  <path d="M196 282L298 158" class="v-line" stroke-width="1.8" stroke-dasharray="2 4"/><rect x="104" y="244" width="96" height="96" rx="10" fill="var(--aa-vis)" stroke="var(--aa-wp)" stroke-width="1.75" vector-effect="non-scaling-stroke"/><g class="v-wp"><use href="#aa-wp" x="112" y="248" width="80" height="80" stroke="currentColor" stroke-width="2.4" fill="none"/></g><text x="152" y="366" text-anchor="middle" class="v-t" font-size="19" font-weight="800">Außengerät</text>
+                  <path d="M316 162v30M328.5 162v30M341 162v30" class="v-mass" marker-end="url(#aa-pfl)"/>
+                  <!-- Grenze Nachbar -->
+                  <path d="M820 20V660" class="v-line v-grenze" stroke-dasharray="14 9"/>
+                  <text x="836" y="52" class="v-t" font-size="19" font-weight="700">Grenze zum</text>
+                  <text x="836" y="76" class="v-t" font-size="19" font-weight="700">Nachbarn</text>
+                  <path d="M410 196H818" class="v-mass" marker-start="url(#aa-pfl)" marker-end="url(#aa-pfl)"/>
+                  <!-- Nachbarhaus -->
+                  <rect x="870" y="150" width="200" height="330" class="v-haus" stroke-width="2.5"/>
+                  <rect x="862" y="290" width="16" height="64" fill="var(--aa-vis)" stroke="currentColor" stroke-width="1.75" vector-effect="non-scaling-stroke"/>
+                  <text x="970" y="222" text-anchor="middle" class="v-t" font-size="22" font-weight="800" font-family="Barlow,Inter,sans-serif">Nachbarhaus</text>
+                  <text x="970" y="328" text-anchor="middle" class="v-sub" font-size="18">Schlafzimmer</text>
+                  <!-- Messpunkt mit Schallweg -->
+                  <path d="M362 160L828 318" class="v-line" stroke-width="2.5" stroke-dasharray="3 7" stroke-linecap="round"/>
+                  <circle cx="844" cy="322" r="13" fill="var(--aa-vis)" stroke="#b7d900" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+                  <circle cx="844" cy="322" r="4.5" fill="#b7d900"/>
+                  <!-- Stellplatz 2,5 x 5 m mit Auto, Einfahrt -->
+                  <rect x="620" y="330" width="125" height="250" class="v-weg" stroke-width="2.5"/>
+                  <rect x="638" y="354" width="89" height="200" rx="24" class="v-line" stroke-width="2.5"/>
+                  <path d="M648 404H717M648 504H717" class="v-line" stroke-width="2"/>
+                  <rect x="620" y="580" width="125" height="80" class="v-weg" stroke-width="2.5" stroke-dasharray="6 5"/>
+                  <text x="682" y="460" text-anchor="middle" class="v-t" font-size="19" font-weight="700">Stellplatz</text>
+                  <text x="682" y="626" text-anchor="middle" class="v-sub" font-size="17">Einfahrt</text>
+                  <!-- Gehweg und Strasse -->
+                  <rect x="20" y="660" width="1060" height="60" class="v-weg" stroke-width="2.5"/>
+                  <text x="200" y="698" text-anchor="middle" class="v-t" font-size="21" font-weight="700">Gehweg (öffentlich)</text>
+                  <rect x="20" y="720" width="1060" height="44" class="v-strasse"/>
+                  <text x="200" y="749" text-anchor="middle" class="v-sub" font-size="18">Straße</text>
+                  <path d="M328 320V656" class="v-mass" stroke-dasharray="2 6" stroke-linecap="round" marker-end="url(#aa-pfl)"/>
+                  <!-- Massstab -->
+                  <g transform="translate(880 560)"><path d="M0 0H100M0 -8V8M50 -5V5M100 -8V8" class="v-line" stroke-width="2.5"/><text x="0" y="30" class="v-sub" font-size="16">0</text><text x="100" y="30" text-anchor="middle" class="v-sub" font-size="16">2 m</text></g>
+                  <!-- Nummern -->
+                  <g class="v-nr" font-size="18" text-anchor="middle">
+                    <circle cx="236" cy="160" r="16" style="fill:#e8a838"/><text x="236" y="166">1</text>
+                    <circle cx="720" cy="196" r="16" style="fill:#7cc4ff"/><text x="720" y="202">2</text>
+                    <circle cx="328" cy="470" r="16" style="fill:#e8a838"/><text x="328" y="476">3</text>
+                    <circle cx="682" cy="300" r="16" style="fill:#e8a838"/><text x="682" y="306">4</text>
+                    <circle cx="790" cy="270" r="16" style="fill:#b7d900"/><text x="790" y="276">5</text>
+                    <circle cx="420" cy="276" r="16" style="fill:#c9d1d9"/><text x="420" y="282">6</text>
+                  </g>
+                </svg>
+              </div>
+              <ol class="aa-legende">
+                <li><span class="aa-nr" style="background:#e8a838">1</span><span><b>Auflage 1, Kältemittel-Schutzbereich</b>: meist 1&nbsp;m ab Außenkante Gerät</span></li>
+                <li><span class="aa-nr" style="background:#7cc4ff">2</span><span><b>Auflage 2, Grenzabstand</b> zum Nachbargrundstück nach Bauordnung</span></li>
+                <li><span class="aa-nr" style="background:#e8a838">3</span><span><b>Auflage 1</b>: Der öffentliche Gehweg liegt außerhalb des Schutzbereichs</span></li>
+                <li><span class="aa-nr" style="background:#e8a838">4</span><span><b>Auflage 1</b>: Stellplatz und Einfahrt liegen außerhalb des Schutzbereichs, bei WOLF vorgeschrieben</span></li>
+                <li><span class="aa-nr" style="background:#b7d900">5</span><span><b>Auflage 3, Schallabstand</b>: gemessen bis 0,5&nbsp;m vor dem Schlafzimmerfenster beim Nachbarn</span></li>
+                <li><span class="aa-nr" style="background:#c9d1d9">6</span><span><b>Herstellervorgabe und Empfehlung</b>: Ausblasrichtung, hier kommt die abgekühlte Luft heraus</span></li>
+              </ol>
+              <p class="aa-hinweis" style="margin-top:12px">Skizze von oben, ungefähr maßstabsgetreu: Außengerät rund 1,1&nbsp;m breit, Stellplatz 2,5&nbsp;×&nbsp;5&nbsp;m. Rot: Dinge, die nicht im Schutzbereich liegen dürfen. Die Pfeile am Gerät zeigen, wohin die kühle Luft bläst.</p>
+            </article>
+
+
+            <article class="aa-card aa-a1" id="schutzbereich">
+              <div class="aa-kicker">Auflage 1 von 3 · Vorgabe des Herstellers</div>
+              <h2><span class="aa-badge a1">1</span> Kältemittel-Schutzbereich: Abstand zu Öffnungen und Zündquellen</h2>
+              <p>Im Gerät arbeitet Propan (R290) als Kältemittel. Es ist klimafreundlich und bleibt im geschlossenen Kältekreis. Für den seltenen Fall eines Lecks gibt es den Schutzbereich: Propan ist schwerer als Luft und bleibt am Boden. Deshalb dürfen sich im Schutzbereich keine Zündquellen oder Öffnungen befinden, in die das Gas fließen könnte.</p>
+              <h3>Was nicht im Schutzbereich liegen darf</h3>
+              <ul><li>Fenster, Türen, Kellerzugänge, Dachluken, Licht- und Kellerschächte, Lüftungsöffnungen</li><li>Steckdosen, Lichtschalter, Lampen und andere Zündquellen</li><li>das Nachbargrundstück und öffentliche Flächen wie Gehweg oder Straße</li><li>bei WOLF außerdem Regenfallrohre, offene Schächte und Stellplätze</li></ul>
+              <p>Bei Vaillant sind offene Gullys und Regenabflüsse im Schutzbereich laut Hersteller kein Risiko. Der Platz sollte eben sein, ohne Mulde oder Senke: Darin könnte sich Propan sammeln, das schließen beide Hersteller aus.</p>
+              <p class="aa-merke"><b>Für dich heißt das:</b> Zwischen der Wärmepumpe und dem Nachbargrundstück oder öffentlichen Wegen muss mindestens so viel Platz sein, wie der Schutzbereich reicht, meist 1&nbsp;m ab Außenkante. Bei WOLF gilt das auch zum Stellplatz, mit Trennwand reichen dort 0,5&nbsp;m. Diese Herstellervorgabe gilt zusätzlich zum <a href="#grenzabstand">Grenzabstand nach Bauordnung</a>.</p>
+
+              <h3 id="check">Klick-Prüfung: Wie weit reicht der Schutzbereich bei dir?</h3>
+              <p>Wähle Gerät, Montage und Aufstellung aus. Die Zeichnung zeigt dir dann den Schutzbereich mit Maßen. Danach prüfst du, ob an deinem Wunschplatz etwas im Weg ist. Diese Prüfung gilt nur für Auflage 1.</p>
+              <div class="aa-tool">
+                <div id="sz-fragen"><p class="aa-hinweis">Die Prüfung braucht JavaScript.</p></div>
+                <div id="sz-bild"></div>
+                <div id="sz-platz"></div>
+                <div class="aa-ergebnis" id="sz-ergebnis" aria-live="polite"></div>
+              </div>
+              <p class="aa-hinweis" style="margin-top:12px">Das ist eine Vorprüfung nach den Anleitungen der Hersteller. Verbindlich prüfen wir deinen Platz beim Termin vor Ort an der Herstellerzeichnung für dein Gerät.</p>
+
+              <h3>Alle Maße auf einen Blick</h3>
+              <p><b>Waagerecht</b> wird ab der Außenkante des Geräts gemessen. Die Größe hängt vom Gerät ab, von der Aufstellung (frei, an der Wand, in der Ecke) und von der Höhe: Steht ein Vaillant-Gerät auf einem Sockel ab 40&nbsp;cm, wird der Schutzbereich kleiner. Bei WOLF bleibt er gleich.</p>
+              <p><b>In der Höhe</b> reicht der Schutzbereich bei Vaillant vom Boden bis 10&nbsp;cm über die Unterkante des Geräts. Hängt das Gerät höher als 1&nbsp;m, reicht er von 1&nbsp;m unter der Unterkante bis 10&nbsp;cm darüber. Ein Fenster, dessen Unterkante höher liegt, ist nicht betroffen. Bei WOLF ist der Schutzbereich am Boden 1&nbsp;m breit und wird bis zur Oberkante des Geräts auf 0,5&nbsp;m schmaler.</p>
+              <div class="aa-tabelle" tabindex="0" role="region" aria-label="Tabelle Schutzbereich, seitlich verschiebbar">
+                <table class="aa-schutz"><thead><tr><th scope="col">Gerät</th><th scope="col">Frei oder an der Wand</th><th scope="col">In der Ecke</th><th scope="col">Mit Flexible Space</th></tr></thead><tbody>
+                  <tr><th scope="row">Vaillant aroTHERM plus<small>Unterkante tiefer als 40&nbsp;cm</small></th><td>1,0&nbsp;m an allen freien Seiten</td><td>Seite 1,0&nbsp;m, vorn 1,6&nbsp;m</td><td>Raum unter dem Gerät und bis zur Wand, dazu 0,5&nbsp;m rechts</td></tr>
+                  <tr><th scope="row">Vaillant aroTHERM plus<small>Unterkante ab 40&nbsp;cm hoch</small></th><td>0,5&nbsp;m an allen freien Seiten</td><td>0,5&nbsp;m</td><td>wie oben</td></tr>
+                  <tr><th scope="row">Vaillant aroTHERM pro<small>Unterkante tiefer als 40&nbsp;cm</small></th><td>1,0&nbsp;m an allen freien Seiten</td><td>Seite 1,0&nbsp;m, vorn 1,6&nbsp;m (mit Sockelabdeckung 1,2 und 1,8&nbsp;m)</td><td>nur der Raum unter dem Gerät und bis zur Wand</td></tr>
+                  <tr><th scope="row">Vaillant aroTHERM pro<small>Unterkante ab 40&nbsp;cm hoch</small></th><td>0,5&nbsp;m an allen freien Seiten</td><td>0,5&nbsp;m</td><td>wie oben</td></tr>
+                  <tr><th scope="row">Vaillant aroTHERM perform<small>Unterkante tiefer als 40&nbsp;cm</small></th><td>1,0&nbsp;m, links 0,5&nbsp;m. Mit Sockelabdeckung 1,2&nbsp;m; frei stehend bleibt links 0,5&nbsp;m</td><td>Seite 1,0&nbsp;m, vorn 1,2&nbsp;m (mit Sockelabdeckung 2,0 und 1,6&nbsp;m)</td><td>nur der Raum unter dem Gerät und bis zur Wand</td></tr>
+                  <tr><th scope="row">Vaillant aroTHERM perform<small>Unterkante ab 40&nbsp;cm hoch</small></th><td>0,5&nbsp;m an allen freien Seiten</td><td>0,5&nbsp;m; an der Wand über 1&nbsp;m hoch rechts 1,0&nbsp;m</td><td>wie oben</td></tr>
+                  <tr><th scope="row">WOLF CHA<small>CHA-07 bis CHA-20, am Boden</small></th><td>1&nbsp;m vorn und seitlich am Boden, 0,5&nbsp;m auf Höhe der Oberkante</td><td>prüfen wir an der Herstellerzeichnung</td><td>gibt es bei WOLF nicht, dafür die <a href="#trennwand">Trennwand</a></td></tr>
+                </tbody></table>
+              </div>
+              <p class="aa-hinweis">Rechts und links gelten von vorn auf das Gerät gesehen. Sonderfälle wie Sockelwände, Flachdach oder mehrere Geräte nebeneinander prüfen wir an der Herstellerzeichnung.</p>
+              <h3 id="flexible">Wenig Platz? Die Einstellung „Flexible Space“ bei Vaillant</h3>
+              <p>Flexible Space ist eine Einstellung, die wir bei der Inbetriebnahme am Regler der Inneneinheit einschalten. Dann wird der Schutzbereich deutlich kleiner. Es bleibt nur noch:</p>
+              <ul><li><b>der Raum unter dem Gerät</b>, also zwischen Gerät und Boden. Hängt das Gerät an der Wand höher als 1&nbsp;m, reicht dieser Raum nur 1&nbsp;m nach unten. Ein Kellerfenster weiter unten liegt dann außerhalb, eine Steckdose oder ein Fenster direkt darunter aber nicht.</li><li><b>der Raum zwischen Gerät und Hauswand</b>, wenn es an der Wand steht.</li><li>nur bei aroTHERM plus zusätzlich <b>0,5&nbsp;m auf der rechten Seite</b>.</li></ul>
+              <p>Nach vorn und zur Seite fällt der Schutzbereich weg, beim aroTHERM plus bleiben rechts 0,5&nbsp;m. Für dich heißt das: Direkt unter dem Gerät und dahinter darf kein Kellerfenster, Lichtschacht und keine Lüftungsöffnung liegen. Fenster, Wege und Gehweg dürfen dafür viel näher heran.</p>
+              <div class="aa-bilder" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
+                <div class="aa-bild"><div class="aa-vis" data-ds="nein"></div><div class="aa-text"><b>Ab Werk, von oben gesehen</b>Schutzbereich 1&nbsp;m nach vorn und zu beiden Seiten</div></div>
+                <div class="aa-bild"><div class="aa-vis" data-ds="ja"></div><div class="aa-text"><b>Mit Flexible Space, von oben gesehen</b>nur unter dem Gerät und bis zur Wand, beim aroTHERM plus zusätzlich 0,5&nbsp;m rechts</div></div>
+              </div>
+              <p class="aa-merke"><b>Gut zu wissen:</b> Mit Flexible Space braucht das Außengerät dauerhaft Strom, auch im Urlaub. Ausschalten darf man es nur kurz für Wartung oder Reparatur. Es arbeitet dann etwas weniger effizient und verbraucht in Bereitschaft etwas mehr Strom. Wir erklären dir das bei der Übergabe.</p>
+              <h3 id="trennwand">WOLF: Mit Trennwand reichen seitlich 50&nbsp;cm</h3>
+              <p>Bei WOLF reicht der Schutzbereich 1&nbsp;m nach vorn und 1&nbsp;m zur Seite. Wird es seitlich eng, etwa zum Stellplatz oder zu einem Kellerfenster, hilft eine dichte Trennwand. Dann reichen auf dieser Seite <span class="aa-mass">0,5&nbsp;m</span>. Die Trennwand muss</p>
+              <ul><li><b>hoch genug sein:</b> vom Boden mindestens bis zur Oberkante des Geräts,</li><li><b>lang genug sein:</b> mindestens 1&nbsp;m weiter nach vorn als die Vorderseite des Geräts,</li><li><b>fest und dicht sein:</b> fest eingebaut, ohne Spalten, auch unten am Boden.</li></ul>
+              <p class="aa-hinweis">WOLF schreibt kein bestimmtes Material vor. Bei Acrylglas mit Silikonfugen prüfen wir, ob es auf Dauer dicht bleibt.</p>
+            </article>
+
+            <article class="aa-card aa-a2" id="grenzabstand">
+              <div class="aa-kicker">Auflage 2 von 3 · Vorgabe der Bauordnung</div>
+              <h2><span class="aa-badge a2">2</span> Grenzabstand: Wie nah darf das Gerät an die Grundstücksgrenze?</h2>
+              <p>Üblich sind <span class="aa-mass">3&nbsp;m</span> zur Grenze. Für Wärmepumpen gibt es in Niedersachsen eine Sonderregel: Sie dürfen näher oder sogar <b>direkt an der Grundstücksgrenze</b> stehen, wenn</p>
+              <ul><li>die Wärmepumpe frei steht und mit Fundament, Sockel und Verkleidung höchstens <b>2&nbsp;m hoch</b> ist,</li><li>es auf deinem Grundstück <b>keinen anderen Platz</b> gibt, der die 3&nbsp;m einhält,</li><li>der Nachbar dadurch nicht unzumutbar beeinträchtigt wird, zum Beispiel durch Schall, kalte Luft oder Eis.</li></ul>
+              <p>Näher heißt: <b>direkt an der Grenze oder mindestens 1&nbsp;m</b> davon entfernt. Ein Maß dazwischen nennt die Bauordnung für diese Sonderregel nicht. Wärmepumpen dürfen je Grenze zusammen höchstens 3&nbsp;m lang näher dran stehen. Dabei zählen auch Garage, Carport und andere Bauten ohne vollen Abstand mit: an einer Grenze zusammen höchstens 9&nbsp;m, an allen Grenzen zusammen höchstens 15&nbsp;m. Für ein übliches Außengerät reicht das meist. Gerade bei Reihenhäusern ist das oft der Weg zum passenden Platz.</p>
+              <h3 id="grenz-check">Klick-Prüfung: Passt der Grenzabstand an deinem Wunschplatz?</h3>
+              <p>Wähle aus, was bei dir zutrifft. Diese Prüfung gilt nur für Auflage 2, die Bauordnung.</p>
+              <div class="aa-tool">
+                <div id="gz-fragen"><p class="aa-hinweis">Die Prüfung braucht JavaScript.</p></div>
+                <div class="aa-ergebnis" id="gz-ergebnis" aria-live="polite"></div>
+              </div>
+              <p class="aa-merke"><b>Die anderen Auflagen gelten trotzdem:</b> Auch direkt an der Grenze darf der <a href="#schutzbereich">Kältemittel-Schutzbereich</a> nicht auf das Nachbargrundstück reichen. Bei Vaillant geht das mit Flexible Space, bei aroTHERM plus mit der linken Geräteseite zur Grenze. Bei WOLF bleibt das Gerät mindestens 1&nbsp;m von der Grenze weg: Direkt an der Grenze würde der Schutzbereich hinüberreichen, und ein Maß zwischen 0 und 1&nbsp;m sieht die Sonderregel der Bauordnung nicht vor. Und auch an der Grenze muss der <a href="#schall">Schallabstand</a> zum Nachbarfenster stimmen.</p>
+            </article>
+
+
+            <article class="aa-card aa-a3" id="schall">
+              <div class="aa-kicker">Auflage 3 von 3 · Richtwerte für Schall nachts</div>
+              <h2><span class="aa-badge a3">3</span> Schallabstand: Wie viel Abstand zum Nachbarfenster nötig ist</h2>
+              <p>Der Schallabstand ist die Entfernung vom Gerät bis zu dem Raum beim Nachbarn, den der Schall am stärksten trifft: ein <b>Wohn-, Schlaf-, Kinder- oder Arbeitszimmer</b>. Meist ist das das nächste Fenster, aber nicht immer. Gemessen wird 0,5&nbsp;m vor dem geöffneten Fenster dieses Raums. Nachts gilt dort ein Richtwert, der vom Wohngebiet abhängt. Der Abstand hängt von drei Dingen ab: wie das Gerät steht, ob es das Fenster „sieht“ und welches Gerät es ist.</p>
+
+              <h3>1. Wie steht das Gerät?</h3>
+              <p>Wände in der Nähe werfen den Schall zurück. Dadurch kommt am Nachbarfenster mehr an, und der nötige Abstand wird größer. <b>Wähle deine Aufstellung aus.</b> Die Tabelle unten zeigt dann nur noch deinen Fall.</p>
+              <div class="aa-bilder">
+                <button type="button" class="aa-bild" data-key="aufstellung" data-v="0" aria-pressed="false"><span class="aa-vis"><svg viewBox="0 0 180 120" aria-hidden="true"><circle cx="90" cy="60" r="44" class="v-line" stroke-width="1.5" stroke-dasharray="4 5" opacity=".6"/><g class="v-wp"><use href="#aa-wp" x="66" y="36" width="48" height="48" stroke="currentColor" stroke-width="1.75" fill="none"/></g><text x="90" y="114" text-anchor="middle" class="v-sub" font-size="12">Wände weiter als 3 m</text></svg></span><span class="aa-text"><b>Frei aufgestellt</b>keine Wand näher als 3&nbsp;m<span class="aa-db">+3 dB</span></span></button>
+                <button type="button" class="aa-bild" data-key="aufstellung" data-v="3" aria-pressed="false"><span class="aa-vis"><svg viewBox="0 0 180 120" aria-hidden="true"><rect x="20" y="14" width="140" height="16" class="v-haus" stroke-width="2"/><g class="v-wp"><use href="#aa-wp" x="66" y="34" width="48" height="48" stroke="currentColor" stroke-width="1.75" fill="none"/></g><text x="90" y="104" text-anchor="middle" class="v-sub" font-size="12">Wand bis 3 m</text></svg></span><span class="aa-text"><b>An einer Wand</b>Abstand zur Wand bis 3&nbsp;m<span class="aa-db">+6 dB</span></span></button>
+                <button type="button" class="aa-bild" data-key="aufstellung" data-v="6" aria-pressed="false"><span class="aa-vis"><svg viewBox="0 0 180 120" aria-hidden="true"><path d="M24 14H160V30H40V108H24Z" class="v-haus" stroke-width="2"/><g class="v-wp"><use href="#aa-wp" x="44" y="34" width="48" height="48" stroke="currentColor" stroke-width="1.75" fill="none"/></g><text x="124" y="80" text-anchor="middle" class="v-sub" font-size="12">je bis 3 m</text></svg></span><span class="aa-text"><b>In einer Ecke</b>beide Wände bis 3&nbsp;m entfernt<span class="aa-db">+9 dB</span></span></button>
+                <button type="button" class="aa-bild" data-key="aufstellung" data-v="6" aria-pressed="false"><span class="aa-vis"><svg viewBox="0 0 180 120" aria-hidden="true"><rect x="20" y="12" width="16" height="96" class="v-haus" stroke-width="2"/><rect x="144" y="12" width="16" height="96" class="v-haus" stroke-width="2"/><g class="v-wp"><use href="#aa-wp" x="66" y="30" width="48" height="48" stroke="currentColor" stroke-width="1.75" fill="none"/></g><text x="90" y="100" text-anchor="middle" class="v-sub" font-size="12">bis 5 m breit</text></svg></span><span class="aa-text"><b>Zwischen zwei Wänden</b>Wände bis 5&nbsp;m auseinander<span class="aa-db">+9 dB</span></span></button>
+                <button type="button" class="aa-bild" data-key="aufstellung" data-v="6" aria-pressed="false"><span class="aa-vis"><svg viewBox="0 0 180 120" aria-hidden="true"><rect x="20" y="10" width="16" height="100" class="v-haus" stroke-width="2"/><path d="M36 22H150" class="v-line v-konsole"/><path d="M20 110H164" class="v-line" stroke-width="2"/><g class="v-wp"><use href="#aa-wp" x="56" y="62" width="48" height="48" stroke="currentColor" stroke-width="1.75" fill="none"/></g><text x="130" y="54" text-anchor="middle" class="v-sub" font-size="12">bis 5 m hoch</text></svg></span><span class="aa-text"><b>Unter einem Vordach</b>Vordach bis 5&nbsp;m hoch<span class="aa-db">+9 dB</span></span></button>
+              </div>
+
+              <h3>2. „Sieht“ das Gerät das Fenster?</h3>
+              <p>Steht ein Haus oder eine Mauer zwischen Gerät und Nachbarfenster, ist die Sichtachse unterbrochen und es kommt weniger Schall an. <b>Wähle aus, was bei dir zutrifft.</b></p>
+              <div class="aa-bilder">
+                <button type="button" class="aa-bild" data-key="sicht" data-v="0" aria-pressed="false"><span class="aa-vis"><svg viewBox="0 0 180 120" aria-hidden="true"><g class="v-wp"><use href="#aa-wp" x="10" y="64" width="44" height="44" stroke="currentColor" stroke-width="1.75" fill="none"/></g><rect x="128" y="14" width="40" height="52" class="v-haus" stroke-width="2"/><rect x="126" y="30" width="6" height="18" fill="var(--aa-vis)" stroke="currentColor" stroke-width="1.75" vector-effect="non-scaling-stroke"/><path d="M50 80L100 44" class="v-sicht" stroke-linecap="round"/><g transform="translate(112 38)"><path d="M-9 0Q0 -7 9 0Q0 7 -9 0Z" class="v-auge"/><circle r="2.6" fill="#b7d900"/></g></svg></span><span class="aa-text"><b>Freie Sicht</b>Gerät und Fenster sehen sich<span class="aa-db">0 dB</span></span></button>
+                <button type="button" class="aa-bild" data-key="sicht" data-v="5" aria-pressed="false"><span class="aa-vis"><svg viewBox="0 0 180 120" aria-hidden="true"><g class="v-wp"><use href="#aa-wp" x="10" y="64" width="44" height="44" stroke="currentColor" stroke-width="1.75" fill="none"/></g><rect x="128" y="14" width="40" height="52" class="v-haus" stroke-width="2"/><rect x="126" y="30" width="6" height="18" fill="var(--aa-vis)" stroke="currentColor" stroke-width="1.75" vector-effect="non-scaling-stroke"/><rect x="72" y="34" width="18" height="74" class="v-haus" stroke-width="2"/><text x="81" y="28" text-anchor="middle" class="v-sub" font-size="11">Mauer</text><path d="M50 80L70 66" class="v-sicht" stroke-linecap="round"/><path d="M92 63L100 57" class="v-sicht-aus"/><path d="M59 65l10 10M69 65l-10 10" class="v-rot" stroke-width="3" stroke-linecap="round"/><g transform="translate(112 38)"><path d="M-9 0Q0 -7 9 0Q0 7 -9 0Z" class="v-auge"/><circle r="2.6" fill="#b7d900"/></g></svg></span><span class="aa-text"><b>Keine Sicht</b>Haus oder Mauer dazwischen<span class="aa-db">−5 dB</span></span></button>
+                <button type="button" class="aa-bild" data-key="sicht" data-v="15" aria-pressed="false"><span class="aa-vis"><svg viewBox="0 0 180 120" aria-hidden="true"><g class="v-wp"><use href="#aa-wp" x="14" y="78" width="38" height="38" stroke="currentColor" stroke-width="1.75" fill="none"/></g><rect x="62" y="30" width="62" height="56" class="v-haus" stroke-width="2"/><text x="93" y="62" text-anchor="middle" class="v-sub" font-size="11">Haus</text><path d="M48 90L60 81" class="v-sicht" stroke-linecap="round"/><path d="M126 30L140 20" class="v-sicht-aus"/><path d="M51 77l10 10M61 77l-10 10" class="v-rot" stroke-width="3" stroke-linecap="round"/><g transform="translate(152 16)"><path d="M-9 0Q0 -7 9 0Q0 7 -9 0Z" class="v-auge"/><circle r="2.6" fill="#b7d900"/></g></svg></span><span class="aa-text"><b>Abgewandte Seite</b>Gerät auf der anderen Hausseite<span class="aa-db">−15 dB</span></span></button>
+              </div>
+
+              <p class="aa-hinweis">Die Abschläge für Mauer und Hausseite sind Richtwerte aus dem Schallrechner des Bundesverbands Wärmepumpe. Sie gelten nur, wenn die Mauer die Sichtlinie ganz verdeckt und gegenüber keine Wand den Schall zurückwirft. Das prüfen wir vor Ort.</p>
+              <h3>3. Abstand für dein Gerät</h3>
+              <div class="aa-filter">
+                <div><p id="f-marke">Marke</p><div class="aa-chips" role="group" aria-labelledby="f-marke" data-key="marke">
+                  <button type="button" data-v="alle" aria-pressed="true">Alle</button><button type="button" data-v="Vaillant" aria-pressed="false">Vaillant</button><button type="button" data-v="WOLF" aria-pressed="false">WOLF</button></div></div>
+                <div><p id="f-gebiet">Gebiet</p><div class="aa-chips" role="group" aria-labelledby="f-gebiet" data-key="gebiet">
+                  <button type="button" data-v="35" aria-pressed="false">Reines Wohngebiet · 35 dB</button><button type="button" data-v="40" aria-pressed="true">Allgemeines Wohngebiet · 40 dB</button><button type="button" data-v="45" aria-pressed="false">Dorf- oder Mischgebiet · 45 dB</button></div></div>
+                <div><p id="f-betrieb">Betrieb nachts</p><div class="aa-chips" role="group" aria-labelledby="f-betrieb" data-key="betrieb">
+                  <button type="button" data-v="0" aria-pressed="true">Einstellung ab Werk</button><button type="button" data-v="1" aria-pressed="false">Leisester Nachtbetrieb</button></div></div>
+              </div>
+              <p class="aa-lesen"><b>So liest du die Tabelle:</b> Die Meterzahl ist der <b>Mindestabstand</b> von der Außenkante der Wärmepumpe bis zum Messpunkt, also 0,5&nbsp;m vor dem am stärksten betroffenen Fenster beim Nachbarn. Ist der Abstand bei dir gleich groß oder größer, liegt der berechnete Geräuschbeitrag des Geräts nach dieser überschlägigen Rechnung unter dem Richtwert für die Nacht. Verbindlich prüfen wir das vor Ort, auch andere Geräuschquellen in der Nähe.</p>
+              <p class="aa-wahlhinweis" id="aa-wahl-auf"></p>
+              <div class="aa-tabelle" tabindex="0" role="region" aria-label="Tabelle Schallabstand, seitlich verschiebbar">
+                <table><thead><tr id="aa-kopf"><th scope="col">Gerät</th><th scope="col">Frei</th><th scope="col">An einer Wand</th><th scope="col">Ecke, zwei Wände, Vordach</th></tr></thead>
+                <tbody id="aa-schall"><tr><td colspan="4">Die Tabelle braucht JavaScript.</td></tr></tbody></table>
+              </div>
+              <p class="aa-hinweis" id="aa-stand" aria-live="polite"></p>
+              <p class="aa-hinweis"><b>So rechnen wir:</b> Schallleistung des Geräts laut Hersteller, plus Zuschlag für die Aufstellung, minus Abstand und Abschirmung, wie im Schallrechner des Bundesverbands Wärmepumpe. Die Abstandsstufen von 2 bis 20&nbsp;m stammen aus der Planungsunterlage von WOLF. Der berechnete Geräuschbeitrag am Fenster liegt unter dem Richtwert für die Nacht. „Ab Werk“ heißt bei WOLF die eingestellte Nachtstufe, bei Vaillant die höchste Schallleistung. „Leisester Nachtbetrieb“ heißt bei WOLF die kleinste Nachtstufe, bei Vaillant die leiseste Flüsterstufe; er senkt nachts die Heizleistung. Bei Vaillant gilt der leiseste Wert bei minus 7&nbsp;Grad Außenluft und 35&nbsp;Grad Vorlauf, mit Flüsterstufe 60&nbsp;% (plus, pro) oder 100&nbsp;% (perform); die Stufe stellen wir bei der Inbetriebnahme ein. Zuschläge für Ton- oder Impulshaltigkeit sind nicht eingerechnet; ob sie nötig sind, prüfen wir gesondert. Die Werte gelten überschlägig für ein einzelnes Gerät. Bei mehreren Geräten, engen Innenhöfen oder weiteren Schallquellen rechnen wir genau nach.</p>
+            </article>
+
+            <article class="aa-card" id="ausblas">
+              <div class="aa-kicker">Herstellervorgabe · Empfehlung</div>
+              <h2>Wohin die kühle Luft bläst</h2>
+              <p>Das Gerät holt Wärme aus der Luft und bläst die abgekühlte Luft nach vorn aus. Dadurch kann der Boden davor im Winter feucht oder rutschig werden.</p>
+              <p>Laut Vaillant kann der Boden bis etwa 3&nbsp;m vor dem Gerät stark abkühlen. Deshalb richten wir die Ausblasseite möglichst nicht auf Haustür, Terrasse, Hauptweg oder zum Nachbarn. Das stimmen wir mit dir ab.</p>
+              <p><b>Bei WOLF ist es Vorgabe:</b> Die Ausblasseite muss mindestens 3&nbsp;m von Terrassen und Gehwegen entfernt sein, wegen Eisbildung. Das gilt zusätzlich zum Kältemittel-Schutzbereich.</p>
+              <p class="aa-hinweis">Steht das Gerät näher als 3&nbsp;m an der Grenze, ist die Richtung mehr als eine Empfehlung: Dann dürfen kalte Luft und Eis den Nachbarn nicht unzumutbar treffen, siehe <a href="#grenzabstand">Grenzabstand</a>.</p>
+            </article>
+            <article class="aa-card" id="passt-nicht">
+              <div class="aa-kicker">Lösungen</div>
+              <h2>Was tun, wenn der Wunschplatz nicht passt?</h2>
+              <p>Oft gibt es eine Lösung. Welche, hängt davon ab, welche der drei Auflagen nicht passt:</p>
+              <div class="aa-raster">
+                <div class="aa-punkt" style="border-top:5px solid var(--a1)"><h3><span class="aa-badge a1">1</span> Kältemittel-Schutzbereich</h3><ul><li>Gerät drehen oder versetzen</li><li>bei Vaillant ein höherer Sockel ab 40&nbsp;cm, dann wird der Schutzbereich kleiner</li><li>Flexible Space bei Vaillant</li><li>Trennwand bei WOLF</li><li>Steckdose oder Lampe verlegen</li></ul></div>
+                <div class="aa-punkt" style="border-top:5px solid var(--a2)"><h3><span class="aa-badge a2">2</span> Grenzabstand</h3><p>Gibt es keinen Platz mit 3&nbsp;m, darf die Wärmepumpe näher an die Grenze, bis direkt an die Grenze, wenn die <a href="#grenzabstand">Bedingungen</a> erfüllt sind.</p></div>
+                <div class="aa-punkt" style="border-top:5px solid var(--a3)"><h3><span class="aa-badge a3">3</span> Schallabstand</h3><ul><li>leiserer Nachtbetrieb</li><li>Schallschutzhaube, nur wenn der Hersteller sie für das Gerät freigibt (beim aroTHERM perform keine zusätzliche Verkleidung)</li><li>anderer Aufstellort, weiter weg oder hinter dem Haus</li><li>ein leiseres Außengerät</li></ul></div>
+              </div>
+              <p style="margin-top:14px">Welche Lösung am besten zu deinem Haus passt, besprechen wir gemeinsam beim Termin vor Ort.</p>
+            </article>
+
+            <article class="aa-card" id="woerter">
+              <div class="aa-kicker">Begriffe</div>
+              <h2>Wörter kurz erklärt</h2>
+              <dl>
+                <dt>Außengerät</dt><dd>Der Teil der Wärmepumpe, der draußen steht. Er holt Wärme aus der Luft.</dd>
+                <dt>Propan (R290)</dt><dd>Ein natürliches Kältemittel im Gerät. Es transportiert die Wärme, ist gut fürs Klima, kann aber brennen.</dd>
+                <dt>Auflage</dt><dd>Eine Vorgabe, die der Platz erfüllen muss. Für das Außengerät gibt es drei: Kältemittel-Schutzbereich, Grenzabstand und Schallabstand.</dd>
+                <dt>Kältemittel-Schutzbereich</dt><dd>Der Bereich rund um das Außengerät, wegen des Kältemittels Propan (R290). Er wird ab Außenkante gemessen und liegt unten am Boden. Darin dürfen sich keine Öffnungen oder Zündquellen befinden. Vorgabe des Herstellers.</dd>
+                <dt>Zündquelle</dt><dd>Alles, was einen Funken oder eine Flamme erzeugen kann, etwa Steckdose, Lichtschalter, Lampe oder Grill.</dd>
+                <dt>Flexible Space</dt><dd>Eine Einstellung bei Vaillant, die den Schutzbereich verkleinert. Das Gerät braucht dann dauerhaft Strom.</dd>
+                <dt>Ausblasrichtung</dt><dd>Die Seite, auf der das Gerät die abgekühlte Luft ausbläst. Der Boden davor kann im Winter feucht oder rutschig werden.</dd>
+                <dt>Grenzabstand</dt><dd>Der Abstand zwischen Gerät und Grundstücksgrenze. Vorgabe der Bauordnung.</dd>
+                <dt>Schallabstand</dt><dd>Der Abstand zwischen Gerät und dem Messpunkt vor dem Fenster beim Nachbarn, das der Schall am stärksten trifft.</dd>
+                <dt>Maßgeblicher Immissionsort</dt><dd>Der Messpunkt für den Schall: 0,5&nbsp;m vor dem geöffneten Fenster eines schutzbedürftigen Raums, an dem am meisten Schall ankommt.</dd>
+                <dt>Schutzbedürftiger Raum</dt><dd>Ein Raum, in dem Menschen schlafen, wohnen oder arbeiten, etwa Schlaf-, Wohn- oder Kinderzimmer.</dd>
+                <dt>Dezibel (dB)</dt><dd>Die Maßeinheit für Schall.</dd>
+                <dt>Richtwert</dt><dd>Der Schallwert, der nachts am Messpunkt nicht überschritten werden soll. Er hängt vom Wohngebiet ab.</dd>
+              </dl>
+            </article>
+
+            <article class="aa-card aa-quellen" id="quellen">
+              <div class="aa-kicker">Quellen</div>
+              <h2>Worauf diese Seite beruht</h2>
+              <ul>
+                <li>Niedersächsische Bauordnung: <a href="https://voris.wolterskluwer-online.de/browse/document/e807db8f-7202-30e1-a88b-8f1ff76cf135">§&nbsp;5 Grenzabstände, Abs. 2 und Abs. 8 Satz 4 Nr. 4 und Satz 5</a> (amtliches Vorschriftenportal Niedersachsen) · <a href="https://www.mw.niedersachsen.de/download/216597/FAQ-Katalog_NBauO_Stand_28.03.2025_.pdf">Fragen und Antworten des Landes, Nr. 5.14</a></li>
+                <li>Schall: <a href="https://www.verwaltungsvorschriften-im-internet.de/bsvwvbund_26081998_IG19980826.htm">TA Lärm, Nr. 6.1 und A.1.3</a> (Richtwerte, Messort) · <a href="https://www.waermepumpe.de/werkzeuge/schallrechner/">Schallrechner des Bundesverbands Wärmepumpe</a> (Aufstellung, Abschirmung, Rechenweg)</li>
+                <li>Vaillant aroTHERM plus 3,5 bis 7&nbsp;kW: <a href="https://www.vaillant.de/api/download/product/de/installationsanleitung_arotherm-plus_1522029.pdf">Installationsanleitung 8000041775_04</a>, Kapitel 4 und Technische Daten</li>
+                <li>Vaillant aroTHERM plus 10 und 12&nbsp;kW: <a href="https://kontakt.vaillant.de/produkte/neue-arotherm-plus/8000035176-02-3053958.pdf">Installationsanleitung 8000035176_02</a>. Schallwerte nach der neueren Fassung _05 (58,2&nbsp;dB(A) für beide; _02 nennt für 12&nbsp;kW noch 59,9)</li>
+                <li>Vaillant aroTHERM pro: <a href="https://www.vaillant.de/api/download/product/de/installationsanleitung_arotherm-pro_1531357.pdf">Installationsanleitung 8000026880_03</a>, Kapitel 4.2 und 4.3 (Schutzbereich ohne und mit Flexible Space), 5.6 und Technische Daten</li>
+                <li>Vaillant aroTHERM perform: <a href="https://www.vaillant.de/api/download/document/de/1519550.pdf">Installationsanleitung 8000032825_02</a>, Kapitel 4 und Technische Daten</li>
+                <li>WOLF CHA-07 und CHA-10: Montageanleitung 3066072, Kapitel 4 (erhältlich bei WOLF)</li>
+                <li>WOLF CHA-16/20: Fachkraftanleitung 9148655, Kapitel 4 mit Abstandstabelle (erhältlich bei WOLF)</li>
+                <li>WOLF CHA-20/24: <a href="https://www.wolf.eu/en-de/professional/heating-products/heat-pumps/heat-pump-cha-monoblock_16-20-24">Produktseite WOLF</a>, abgerufen 18.11.2026: 66&nbsp;dB(A) Tag maximal, 58&nbsp;dB(A) reduzierter Nachtbetrieb</li>
+              </ul>
+              <p class="aa-hinweis">Diese Übersicht ersetzt nicht die Prüfung vor Ort. Es gilt immer die Anleitung für dein Gerät und die Lage auf deinem Grundstück.</p>
+            </article>
+          </div>
+
+          <aside class="aa-side" aria-label="Seitennavigation und nächste Schritte">
+            <div class="aa-card">
+              <div class="aa-kicker">Auf dieser Seite</div>
+              <div class="aa-toc">
+                <a href="#kurz">Die drei Auflagen</a><a href="#lageplan">Lageplan</a><a href="#schutzbereich"><span class="aa-badge a1">1</span> Kältemittel-Schutzbereich</a><a href="#grenzabstand"><span class="aa-badge a2">2</span> Grenzabstand</a><a href="#schall"><span class="aa-badge a3">3</span> Schallabstand</a><a href="#ausblas">Ausblasrichtung</a><a href="#passt-nicht">Wenn der Platz nicht passt</a><a href="#quellen">Quellen</a>
+              </div>
+            </div>
+            <div class="aa-mit">
+              <div class="aa-card aa-card--primary aa-cta">
+                <div class="aa-kicker">Deine drei Auflagen</div>
+                <div class="aa-stand3">
+                  <a href="#check"><span class="aa-badge a1">1</span><span><b>Kältemittel-Schutzbereich</b><span class="st" id="st1">noch offen</span></span></a>
+                  <a href="#grenz-check"><span class="aa-badge a2">2</span><span><b>Grenzabstand</b><span class="st" id="st2">noch offen</span></span></a>
+                  <a href="#schall"><span class="aa-badge a3">3</span><span><b>Schallabstand</b><span class="st" id="st3">noch offen</span></span></a>
+                </div>
+                <div class="aa-cta-box">
+                  <h2 id="cta-titel">Unsicher bei einer Auflage?</h2>
+                  <p id="cta-text">Wir prüfen alle drei vor Ort mit dir, an der Zeichnung deines Herstellers.</p>
+                  <a href="/anfrage" class="btn-primary aa-cta-knopf">Kostenfreie Beratung vereinbaren</a>
+                  <a href="tel:+4951315059750" class="aa-tel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Lieber anrufen: 05131 5059750</a>
+                </div>
+              </div>
+              <div class="aa-card aa-rechner">
+                <div class="aa-kicker">Weiter rechnen</div>
+                <a href="/dimensionierung"><span class="aa-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></span><span><b>Dimensionierung rechnen</b><small>Welche Leistung braucht dein Haus?</small></span></a>
+                <a href="/foerderung"><span class="aa-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5a4 4 0 1 0 0 7M7 11h6M7 13.5h6"/></svg></span><span><b>Förderung rechnen</b><small>Wie viel zahlt die KfW dazu?</small></span></a>
+                <a href="/kostenvergleich-waermepumpe"><span class="aa-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V4"/><path d="M4 20h16"/><path d="M7 16l4-4 3 3 5-6"/></svg></span><span><b>Amortisation rechnen</b><small>Ab wann rechnet sich der Umstieg?</small></span></a>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <script>
+    (function(){
+      var z=document.querySelector('.aa-zoom'),plan=document.getElementById('aa-plan');
+      if(z&&plan){z.addEventListener('click',function(){var an=!plan.classList.contains('gross');plan.classList.toggle('gross',an);z.setAttribute('aria-pressed',String(an));z.textContent=an?'Skizze verkleinern':'Skizze vergrößern';if(an)plan.scrollLeft=(plan.scrollWidth-plan.clientWidth)/2;});}
+      /* Abstandsstufen und Korrektur nachts aus WOLF 9148655 Kap. 4, K0=3 dB (frei); Wand +3, Ecke +6 */
+      var stufen=[2,3,4,5,6,7,8,9,10,12,15,20];
+      var korr=[-14.0,-17.5,-20.0,-22.0,-23.6,-24.9,-26.1,-27.1,-28.0,-29.6,-31.5,-34.0];
+      /* Marke, Name, Typ, Schallleistung ab Werk, leisester Nachtbetrieb (dB(A)), Fussnote */
+      var geraete=[
+        ['Vaillant','aroTHERM plus 3,5 kW','VWL 35/8.1',52.7,45.0],
+        ['Vaillant','aroTHERM plus 5 kW','VWL 55/8.1',55.6,46.0],
+        ['Vaillant','aroTHERM plus 7 kW','VWL 75/8.1',57.4,46.2],
+        ['Vaillant','aroTHERM plus 10 kW','VWL 105/8.1',58.2,49.6],
+        ['Vaillant','aroTHERM plus 12 kW','VWL 125/8.1',58.2,49.6],
+        ['Vaillant','aroTHERM pro 5 kW','VWL 55/7.1',57.7,48.2],
+        ['Vaillant','aroTHERM pro 7 kW','VWL 75/7.1',60.9,49.9],
+        ['Vaillant','aroTHERM pro 11 kW','VWL 115/7.1',65.6,55.1],
+        ['Vaillant','aroTHERM perform 20 kW','VWL 205/8.1',62.7,51.7],
+        ['WOLF','CHA-07','',55,49],
+        ['WOLF','CHA-10','',58,51],
+        ['WOLF','CHA-16/20','',61.8,56],
+        ['WOLF','CHA-20/24','ab Werk mit Tageshöchstwert gerechnet',66,58]
+      ];
+      var wahl={marke:'alle',gebiet:40,sicht:0,betrieb:0,aufstellung:'alle'};
+      var aufName={0:'frei aufgestellt',3:'an einer Wand',6:'in einer Ecke, zwischen zwei Wänden oder unter einem Vordach'};
+      function abstand(L,grenze,zuschlag,di){for(var i=0;i<stufen.length;i++){if(Math.round((L+korr[i]+zuschlag-di)*10)/10<grenze)return stufen[i]+' m';}return 'über 20 m';}
+      function fmt(x){return String(x).replace('.',',');}
+      function zeichnen(){
+        var spalten=wahl.aufstellung==='alle'?[0,3,6]:[Number(wahl.aufstellung)];
+        var kopf={0:'Frei',3:'An einer Wand',6:'Ecke, zwei Wände, Vordach'};
+        document.getElementById('aa-kopf').innerHTML='<th scope="col">Gerät</th>'+spalten.map(function(s){return '<th scope="col"'+(spalten.length===1?' class="aa-sel"':'')+'>'+(spalten.length===1?'Mindestabstand':kopf[s])+'</th>';}).join('');
+        var html='';
+        geraete.forEach(function(g){
+          if(wahl.marke!=='alle'&&g[0]!==wahl.marke)return;
+          var L=wahl.betrieb?g[4]:g[3];
+          html+='<tr><th scope="row">'+g[0]+' '+g[1]+'<small>'+(g[2]?g[2]+' · ':'')+'Schallleistung '+fmt(L)+' dB(A)</small></th>'
+            +spalten.map(function(s){return '<td class="aa-m'+(spalten.length===1?' aa-sel':'')+'">'+abstand(L,wahl.gebiet,s,wahl.sicht)+'</td>';}).join('')+'</tr>';
+        });
+        document.getElementById('aa-schall').innerHTML=html;
+        var gebiete={35:'reines Wohngebiet',40:'allgemeines Wohngebiet',45:'Dorf- oder Mischgebiet'},sichten={0:'freie Sicht',5:'keine Sicht',15:'abgewandte Seite'};
+        document.getElementById('aa-stand').textContent='Angezeigt: '+(wahl.marke==='alle'?'alle Marken':wahl.marke)+', '+(wahl.aufstellung==='alle'?'alle Aufstellungen':aufName[wahl.aufstellung])+', '+sichten[wahl.sicht]+', '+gebiete[wahl.gebiet]+' (Richtwert nachts '+wahl.gebiet+' dB(A)), '+(wahl.betrieb?'leisester Nachtbetrieb':'Einstellung ab Werk')+'. Kleinster Tabellenwert: 2 m.';
+        var h=document.getElementById('aa-wahl-auf');
+        h.innerHTML=wahl.aufstellung==='alle'?'Tipp: Wähle oben deine Aufstellung aus, dann zeigt die Tabelle nur deinen Fall.':'Gewählt: <b>'+aufName[wahl.aufstellung]+'</b> · <a href="#" id="aa-alle">alle Aufstellungen zeigen</a>';
+        if(wahl.aufstellung==='alle'){standSetzen(3,'','Aufstellung wählen');}else{var w=[];geraete.forEach(function(g){if(wahl.marke!=='alle'&&g[0]!==wahl.marke)return;var t=abstand(wahl.betrieb?g[4]:g[3],wahl.gebiet,Number(wahl.aufstellung),wahl.sicht);w.push(t.indexOf('über')===0?21:parseFloat(t));});var mn=Math.min.apply(null,w),mx=Math.max.apply(null,w);function m(v){return v>20?'über 20 m':v+' m';}standSetzen(3,'',mn===mx?'Mindestabstand '+m(mn):'Mindestabstand je nach Gerät '+m(mn)+' bis '+m(mx));}
+        var a=document.getElementById('aa-alle'); if(a)a.addEventListener('click',function(e){e.preventDefault();wahl.aufstellung='alle';document.querySelectorAll('button.aa-bild[data-key=aufstellung]').forEach(function(x){x.setAttribute('aria-pressed','false');});zeichnen();});
+      }
+      document.querySelectorAll('.aa-chips[data-key]').forEach(function(gr){var key=gr.getAttribute('data-key');gr.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){var v=b.getAttribute('data-v');wahl[key]=(key==='marke')?v:Number(v);gr.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',String(x===b));});zeichnen();});});});
+      document.querySelectorAll('button.aa-bild[data-key]').forEach(function(b){b.addEventListener('click',function(){var key=b.getAttribute('data-key');wahl[key]=Number(b.getAttribute('data-v'));document.querySelectorAll('button.aa-bild[data-key='+key+']').forEach(function(x){x.setAttribute('aria-pressed',String(x===b));});zeichnen();});});
+      document.querySelector('button.aa-bild[data-key=sicht][data-v="0"]').setAttribute('aria-pressed','true');
+
+      /* Übersicht der drei Auflagen in der Seitenleiste */
+      function standSetzen(n,cls,text){var e=document.getElementById('st'+n);if(!e)return;e.className='st'+(cls?' '+cls:'');e.textContent=text;ctaSetzen();}
+      function ctaSetzen(){
+        var k=[1,2].map(function(n){var e=document.getElementById('st'+n);return e?e.className:'';}),ti=document.getElementById('cta-titel'),tx=document.getElementById('cta-text');if(!ti||!tx)return;
+        var nein=k.some(function(c){return /\bnein\b/.test(c);}),gut=k.every(function(c){return /\bja\b/.test(c);});
+        if(nein){ti.textContent='Hier passt es nicht?';tx.textContent='Meist gibt es einen anderen Platz auf deinem Grundstück. Wir suchen ihn vor Ort gemeinsam mit dir.';}
+        else if(gut){ti.textContent='Dein Platz sieht bisher gut aus.';tx.textContent='Ob er passt, prüfen wir verbindlich vor Ort: an der Zeichnung deines Herstellers und mit dem Schallabstand zum Nachbarn.';}
+        else{ti.textContent='Unsicher bei einer Auflage?';tx.textContent='Wir prüfen alle drei vor Ort mit dir, an der Zeichnung deines Herstellers.';}
+      }
+      function wp(x,y,w){return '<g class="v-wp"><use href="#aa-wp" x="'+x+'" y="'+y+'" width="'+w+'" height="'+w+'" stroke="currentColor" stroke-width="1.75" fill="none"/></g>';}
+      /* Gerät von oben (1,1 m breit, 0,45 m tief), Mitte bei x,y */
+      function oben(x,y,w){var h=w*45/110;return '<use href="#aa-top" x="'+(x-w/2).toFixed(1)+'" y="'+(y-h/2).toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+h.toFixed(1)+'"/>';}
+      function txt(x,y,t,a,cls,fs){return '<text x="'+x+'" y="'+y+'" text-anchor="'+(a||'middle')+'" class="'+(cls||'v-zone-t')+'" font-size="'+(fs||13)+'" font-weight="800">'+t+'</text>';}
+      function bilder(ns,key,liste,aktiv){return '<div class="aa-bilder drei">'+liste.map(function(o){return '<button type="button" class="aa-bild" data-'+ns+'="'+key+'" data-v="'+o[0]+'" aria-pressed="'+(aktiv===o[0])+'"><span class="aa-vis">'+(o[1].indexOf('<svg')===0?o[1]:'<svg viewBox="0 0 180 120" aria-hidden="true">'+o[1]+'</svg>')+'</span><span class="aa-text"><b>'+o[2]+'</b>'+o[3]+'</span></button>';}).join('')+'</div>';}
+      function knoepfe(ns,key,liste,aktiv){return '<div class="aa-chips" role="group">'+liste.map(function(o){return '<button type="button" data-'+ns+'="'+key+'" data-v="'+o[0]+'" aria-pressed="'+(aktiv===o[0])+'">'+o[1]+'</button>';}).join('')+'</div>';}
+      function schritt(titel,inhalt,hinweis){return '<div class="aa-schritt"><p>'+titel+'</p>'+inhalt+(hinweis?'<p class="aa-hinweis" style="margin-top:6px">'+hinweis+'</p>':'')+'</div>';}
+      var BODEN='<path d="M8 104H172" class="v-line" stroke-width="2"/>';
+      /* Gerät aus dem Website-Symbol: Gehäuse waagerecht 2..22, senkrecht 3,9..18,5, Füße bis 20,1 (von 24) */
+      function geraet(xd,yb,wd){var k=wd*1.2;return wp((xd-0.083*k).toFixed(1),(yb-0.838*k).toFixed(1),k.toFixed(1));}
+      function mass(x,y1,y2){return '<path d="M'+x+' '+y1+'V'+y2+'" class="v-mass" marker-start="url(#aa-pfs)" marker-end="url(#aa-pfs)"/>';}
+      var WANDSEITE='<rect x="16" y="6" width="14" height="98" class="v-haus" stroke-width="2"/><path d="M30 56H100" class="v-line v-konsole" stroke-linecap="round"/><path d="M30 88L94 57" class="v-line v-konsole" stroke-linecap="round"/>'+geraet(34,56,64);
+
+      /* Auflage 1: Kältemittel-Schutzbereich. Maße aus den Herstelleranleitungen (Vaillant Kap. 4.2/4.3, WOLF Kap. 4), mit und ohne Sockelabdeckung.
+         In der Höhe: Vaillant vom Boden bis 10 cm über die Unterkante, bei Unterkante über 1 m von 1 m darunter bis 10 cm darüber; WOLF bis zur Oberkante. */
+      var sz={};
+      var SZ_GERAET=[['plus','Vaillant aroTHERM plus'],['pro','Vaillant aroTHERM pro'],['perform','Vaillant aroTHERM perform'],['wolf','WOLF CHA']];
+      var SZ_MONTAGE=[
+        ['boden',BODEN+geraet(28,104,70)+'<text x="170" y="98" text-anchor="end" class="v-sub" font-size="11">unter 40 cm</text>','Am Boden','oder auf niedrigem Sockel, Unterkante unter 40&nbsp;cm'],
+        ['sockel',BODEN+'<rect x="26" y="80" width="74" height="24" class="v-haus" stroke-width="2"/>'+geraet(28,80,70)+mass(116,103,81)+'<text x="122" y="88" class="v-sub" font-size="11">40 cm</text><text x="122" y="101" class="v-sub" font-size="11">bis 1 m</text>','Auf Sockel oder Bodenkonsole','Unterkante 40&nbsp;cm bis 1&nbsp;m'],
+        ['wand',BODEN+WANDSEITE+mass(118,103,58)+'<text x="124" y="84" class="v-sub" font-size="11">über 1 m</text>','An der Hauswand','auf Wandkonsole, Unterkante höher als 1&nbsp;m']
+      ];
+      var SZ_AUFST=[
+        ['frei','<circle cx="90" cy="58" r="42" class="v-line" stroke-dasharray="4 5" opacity=".6"/>'+wp(66,34,48),'Frei','Hauswand weiter als 1&nbsp;m weg'],
+        ['wand','<rect x="20" y="12" width="140" height="16" class="v-haus" stroke-width="2"/>'+wp(66,32,48)+'<text x="90" y="106" text-anchor="middle" class="v-sub" font-size="11">Rückseite zur Wand</text>','Vor einer Hauswand','Wand nur hinter dem Gerät'],
+        ['ecke','<path d="M24 12H160V28H40V108H24Z" class="v-haus" stroke-width="2"/>'+wp(46,32,48),'In einer Hausecke','Wand hinter und links neben dem Gerät, von vorn gesehen']
+      ];
+      /* Karten zu Flexible Space: dieselbe Rechnung wie die große Draufsicht, passend zur Auswahl */
+      function fsKarten(){var k={S:60,W:300};return [['nein',draufsicht(Object.assign({},sz,{fs:'nein'}),k),'Ab Werk','Schutzbereich vorn und seitlich'],['ja',draufsicht(Object.assign({},sz,{fs:'ja'}),k),'Mit Flexible Space','Einstellung am Regler, Schutzbereich deutlich kleiner']];}
+      function seiten(c){
+        var f,l,r,b;
+        if(c.marke==='WOLF'){f=l=r=b=1.0;}
+        else if(c.fs==='ja'){f=0;l=0;r=c.reihe==='plus'?0.5:0;b=0;}
+        else if(c.montage!=='boden'){f=l=r=b=0.5;if(c.reihe==='perform'&&c.montage==='wand'&&c.aufst==='ecke')r=1.0;}
+        else if(c.aufst==='ecke'){var abd=c.abd==='ja';l=0;b=0;
+          if(c.reihe==='perform'){f=abd?1.6:1.2;r=abd?2.0:1.0;}else if(c.reihe==='pro'){f=abd?1.8:1.6;r=abd?1.2:1.0;}else{f=1.6;r=1.0;}}
+        else if(c.reihe==='perform'&&c.abd==='ja'){f=r=b=1.2;l=c.aufst==='wand'?1.2:0.5;}
+        else {f=r=b=1.0;l=c.reihe==='perform'?0.5:1.0;}
+        if(c.aufst!=='frei')b=null;
+        if(c.aufst==='ecke')l=null;
+        return {f:f,l:l,r:r,b:b};
+      }
+      function zone(c){var s=seiten(c);return Math.max(s.f,s.l||0,s.r,s.b||0);}
+      function weitLo(c){return Math.max(1.0,zone(c));}
+      /* Sockelabdeckung ändert die Maße nur bei aroTHERM pro und perform am Boden ohne Flexible Space */
+      function brauchtAbd(c){return c.marke==='Vaillant'&&(c.reihe==='pro'||c.reihe==='perform')&&c.montage==='boden'&&c.fs==='nein';}
+      function hoehe(c){
+        if(c.marke==='WOLF')return 'tiefer als die Oberkante des Geräts';
+        if(c.montage==='boden')return 'tiefer als 50 cm über dem Boden';
+        if(c.montage==='sockel')return 'tiefer als 10 cm über der Unterkante des Geräts (höchstens 1,10 m über dem Boden)';
+        return 'zwischen 1 m unter der Unterkante des Geräts und 10 cm darüber';
+      }
+      function pfeil(x1,y1,x2,y2,m){m=m||'aa-pfm';return '<path d="M'+x1+' '+y1+'L'+x2+' '+y2+'" class="v-mass" marker-start="url(#'+m+')" marker-end="url(#'+m+')"/>';}
+      /* Draufsicht, ein Schema für alle Bilder von oben. o.S = Pixel je Meter, o.W = Breite, o.klein = Karte 180 x 120 ohne Maße */
+      function draufsicht(c,o){
+        o=o||{};var S=o.S||80,W=o.W||360,kl=!!o.klein,m=o.marker||'aa-pfm',s=seiten(c),g='';
+        var w=1.1*S,h=0.45*S,rand=kl?8:14,wd=kl?8:(S>=80?17:14),spalt=0.3*S,fz=S>=80?13:12;
+        var wandO=c.aufst!=='frei',wandL=c.aufst==='ecke',xW=rand+wd,yW=rand+wd;
+        var x0=wandL?xW+spalt:(W-w)/2,y0=wandO?yW+spalt:rand+(s.b||0)*S+4;
+        var x1=s.l===null?xW:x0-s.l*S,y1=s.b===null?yW:y0-s.b*S,x2=x0+w+s.r*S,y2=y0+h+s.f*S;
+        var hv=kl?120:Math.max(y2,y0+h+(s.f?0:(wandO?60:40)))+(kl?0:22);
+        if(wandO)g+='<rect x="'+rand+'" y="'+rand+'" width="'+(W-2*rand)+'" height="'+wd+'" class="v-haus"/>'+(kl?'':txt(W-rand-6,rand+wd-3,'Hauswand','end','v-sub',11));
+        if(wandL)g+='<rect x="'+rand+'" y="'+rand+'" width="'+wd+'" height="'+(hv-2*rand)+'" class="v-haus"/>';
+        g+='<rect x="'+x1+'" y="'+y1+'" width="'+(x2-x1)+'" height="'+(y2-y1)+'" rx="'+(kl?4:6)+'" class="v-zone"/>';
+        g+=oben(x0+w/2,y0+h/2,w);
+        var xm=x0+w/2,ym=y0+h/2;
+        if(!kl){
+          if(s.f>0)g+=pfeil(xm,y0+h,xm,y2,m)+txt(xm+8,(y0+h+y2)/2+5,'vorn '+f1(s.f)+' m','start','v-zone-t',fz);
+          if(s.r>0)g+=pfeil(x0+w,ym,x2,ym,m)+txt((x0+w+x2)/2,y0-6,f1(s.r)+' m','middle','v-zone-t',fz)+txt((x0+w+x2)/2,y0+h+15,'rechts','middle','v-sub',11);
+          if(s.l>0)g+=pfeil(x1,ym,x0,ym,m)+txt((x1+x0)/2,y0-6,f1(s.l)+' m','middle','v-zone-t',fz)+txt((x1+x0)/2,y0+h+15,'links','middle','v-sub',11);
+          if(s.b>0)g+=pfeil(xm,y1,xm,y0,m)+txt(xm+8,(y1+y0)/2+5,'hinten '+f1(s.b)+' m','start','v-zone-t',fz);
+          var xt=wandL?x0:xm,an=wandL?'start':'middle';if(!s.f)g+=txt(xt,y0+h+38,'Schutzbereich nur unter dem Gerät',an,'v-zone-t',fz)+(wandO?txt(xt,y0+h+54,'und bis zur Wand',an,'v-zone-t',fz):'');
+        }
+        if(o.inner)return g;
+        if(kl)return g;
+        return '<svg'+(S<80?' class="aa-ds"':'')+' viewBox="0 0 '+W+' '+hv+'" role="img" aria-label="Schutzbereich von oben">'+g+'</svg>';
+      }
+      function f1(x){return x.toFixed(1).replace('.',',');}
+      function cm(m){return m<1?Math.round(m*100)+' cm':fmt(Math.round(m*100)/100)+' m';}
+      /* Ansicht von vorn: Gerät 1,1 m breit, 0,8 m hoch (Symbol maßstäblich), Schutzbereich gelb */
+      function vorderansicht(c){
+        var S=80,G=252,s=seiten(c),o='',Wd=88,k=Wd*1.2,fuss=(0.838-0.769)*k/S;
+        var a={boden:0.2,sockel:0.6,wand:1.4}[c.montage],u=a+fuss,hg=0.8;
+        var ecke=c.aufst==='ecke',hinten=c.aufst!=='frei'||c.montage==='wand';
+        var xd=ecke?64:136,yA=G-a*S;
+        if(hinten)o+='<rect x="8" y="10" width="344" height="'+(G-10)+'" fill="currentColor" fill-opacity=".06"/>'+txt(ecke?50:16,28,'Hauswand dahinter','start','v-sub',12);
+        if(ecke)o+='<rect x="24" y="10" width="16" height="'+(G-10)+'" class="v-haus" stroke-width="2"/>';
+        var lft=s.l===null?(xd-40)/S:s.l,rgt=s.r,l1,l2;
+        if(c.marke==='WOLF'){
+          var lo=ecke?40:xd-1.0*S,lob=ecke?40:xd-0.5*S,yo=G-(u+hg)*S;
+          o+='<path d="M'+lo+' '+G+'L'+(xd+Wd+1.0*S)+' '+G+'L'+(xd+Wd+0.5*S)+' '+yo+'L'+lob+' '+yo+'Z" class="v-zone"/>';
+          l1='Schutzbereich: am Boden 1,0 m,';l2='auf Höhe der Oberkante 0,5 m';
+        } else {
+          var unten=c.montage==='wand'?Math.max(0,u-1.0):0,oben=u+0.1;
+          o+='<rect x="'+(xd-lft*S)+'" y="'+(G-oben*S)+'" width="'+((lft+1.1+rgt)*S)+'" height="'+((oben-unten)*S)+'" class="v-zone"/>';
+          if(c.montage==='boden'){l1='Schutzbereich: bis 10 cm über Unterkante,';l2='höchstens 50 cm über dem Boden';}
+          else if(c.montage==='sockel'){l1='Schutzbereich: bis 10 cm über Unterkante,';l2='höchstens 1,10 m über dem Boden';}
+          else {l1='Schutzbereich: von 1 m unter der Unterkante';l2='bis 10 cm darüber';}
+        }
+        if(c.montage!=='wand')o+='<rect x="'+(xd-4)+'" y="'+yA+'" width="'+(Wd+8)+'" height="'+(a*S)+'" class="v-haus" stroke-width="2"/>'+txt(xd+Wd/2,yA+a*S/2+5,c.montage==='sockel'?'Sockel':'','middle','v-sub',12);
+        else o+='<path d="M'+(xd-6)+' '+yA+'H'+(xd+Wd+6)+'" class="v-line v-konsole" stroke-linecap="round"/><path d="M'+(xd+10)+' '+yA+'L'+(xd+22)+' '+(yA+34)+'M'+(xd+Wd-10)+' '+yA+'L'+(xd+Wd-22)+' '+(yA+34)+'" class="v-line v-konsole" stroke-linecap="round"/>'+txt(xd+Wd/2,yA+52,'Wandkonsole','middle','v-sub',12);
+        o+=geraet(xd,yA,Wd);
+        o+='<path d="M8 '+G+'H352" class="v-line" stroke-width="2"/>'+txt(348,G-6,'Boden','end','v-sub',11);
+        o+=txt(350,hinten?52:28,l1,'end','v-zone-t',12)+txt(350,hinten?68:44,l2,'end','v-zone-t',12);
+        return '<svg viewBox="0 0 360 262" role="img" aria-label="Schutzbereich von vorn">'+o+'</svg>';
+      }
+      function masseText(c){
+        var s=seiten(c),t=[];
+        if(s.f>0)t.push('vorn <b>'+f1(s.f)+'&nbsp;m</b>');
+        if(s.r>0)t.push('rechts <b>'+f1(s.r)+'&nbsp;m</b>');
+        if(s.l>0)t.push('links <b>'+f1(s.l)+'&nbsp;m</b>');
+        if(s.b>0)t.push('hinten <b>'+f1(s.b)+'&nbsp;m</b>');
+        var w=t.length?t.join(', ')+' ab Außenkante':'nur unter dem Gerät';
+        if(s.b===null)w+=(t.length?', hinten':' und')+' bis zur Hauswand';
+        if(s.l===null)w+=', links bis zur Wand';
+        var h='<p><b>Dein Schutzbereich:</b> '+w+'. Rechts und links gelten von vorn auf das Gerät gesehen.</p>';
+        h+='<p><b>Das heißt für dich:</b> Fenster, Türen, Schächte, Lüftungsöffnungen, Steckdosen und Lampen brauchen diesen Abstand, wenn sie ganz oder teilweise '+hoehe(c)+' liegen. Grundstücksgrenze und Gehweg bleiben in jeder Höhe außerhalb.</p>';
+        if(c.marke==='WOLF')h+='<p class="aa-hinweis">Bei WOLF wird der Schutzbereich nach oben schmaler: am Boden 1&nbsp;m, auf Höhe der Oberkante 0,5&nbsp;m. Mit <a href="#trennwand">Trennwand</a> reichen seitlich 0,5&nbsp;m. Zusätzlich verlangt WOLF 3&nbsp;m von der <a href="#ausblas">Ausblasseite</a> zu Terrassen und Gehwegen.</p>';
+        if(brauchtAbd(c)&&c.abd==='ja')h+='<p class="aa-hinweis">Gerechnet mit Sockelabdeckung. Ohne Abdeckung ist der Schutzbereich kleiner, siehe Tabelle unten.</p>';
+        return h;
+      }
+      /* Gegenstände am Wunschplatz. Art: oeffnung (mit Höhe), boden (immer unten), flaeche (Grenze, Stellplatz: nur waagerecht) */
+      var dinge=[['fenster','Fenster, Tür, Kellerzugang oder Dachluke','beide','oeffnung'],['schacht','Licht- oder Kellerschacht','beide','boden'],['lueftung','Lüftungsöffnung','beide','oeffnung'],['zuend','Steckdose, Lichtschalter oder Lampe','beide','oeffnung'],['fallrohr','Regenfallrohr, Gully oder offener Schacht','WOLF','boden'],['grenze','Grundstücksgrenze zum Nachbarn oder öffentlicher Gehweg','beide','flaeche'],['stellplatz','Stellplatz oder Parkfläche','WOLF','flaeche']];
+      function optionen(c,art){
+        var o=[];
+        if(art!=='flaeche'){o.push(['unter','senkrecht unter dem Gerät']);if(c.aufst!=='frei')o.push(['spalt','zwischen Gerät und Hauswand']);}
+        o.push(['05','bis 0,5 m neben oder vor dem Gerät']);
+        o.push(['1','0,5 bis 1 m']);
+        if(zone(c)>1)o.push(['16','1 bis '+f1(zone(c))+' m']);
+        o.push(['weit','mehr als '+f1(Math.max(1,zone(c)))+' m oder gibt es nicht']);
+        return o;
+      }
+      function lo(c,wert){return {unter:-1,spalt:-1,'05':0,'1':0.5,'16':1.0,weit:weitLo(c)}[wert];}
+      function konflikte(c){var d=zone(c),k=[];dinge.forEach(function(x){if(x[2]==='WOLF'&&c.marke!=='WOLF')return;var a=c[x[0]];if(!a)return;if(a==='unter'||a==='spalt'||lo(c,a)<d)k.push({ding:x[1],a:a,weich:c.montage==='wand'&&(a==='unter'||a==='spalt')&&x[3]==='boden'});});return k;}
+      function sichtbar(x){return !(x[2]==='WOLF'&&sz.marke!=='WOLF');}
+      function bereit(){return sz.marke&&sz.montage&&sz.aufst&&(sz.marke==='WOLF'||sz.fs)&&(!brauchtAbd(sz)||sz.abd);}
+      function wolfOffen(){return sz.marke==='WOLF'&&(sz.montage!=='boden'||sz.aufst==='ecke');}
+      function szZeichnen(){
+        var h=schritt('1. Welches Gerät?',knoepfe('sz','geraet',SZ_GERAET,sz.geraet));
+        if(sz.geraet){var hw='';
+          if(sz.montage==='wand'&&sz.marke==='Vaillant'&&sz.reihe!=='pro')hw='Wandmontage geht, aber nicht mit dem Gerätehalter aus dem Vaillant-Zubehör, sondern nur mit einem anderen Halter, wenn die Wand das Gewicht trägt.';
+          if(sz.montage==='wand'&&sz.marke==='WOLF')hw='Für CHA-07 und CHA-10 gibt es eine Wandkonsole. Den Schutzbereich bei Wandmontage prüfen wir an der Herstellerzeichnung.';
+          h+=schritt('2. Wie wird es montiert?',bilder('sz','montage',SZ_MONTAGE,sz.montage),hw);}
+        if(sz.montage==='wand'&&sz.aufst==='frei')delete sz.aufst;
+        if(sz.montage)h+=schritt('3. Wo steht es?',bilder('sz','aufst',SZ_AUFST.filter(function(o){return !(sz.montage==='wand'&&o[0]==='frei');}),sz.aufst),sz.aufst==='ecke'?'Im Bild steht die Seitenwand links. Steht sie bei dir rechts, gilt das Ergebnis hier nicht: Dann prüfen wir die Maße vor Ort an der Zeichnung deines Herstellers.':'');
+        if(sz.aufst&&sz.marke==='Vaillant')h+=schritt('4. Welche Einstellung?',bilder('sz','fs',fsKarten(),sz.fs));
+        if(brauchtAbd(sz))h+=schritt('5. Bekommt das Gerät eine Sockelabdeckung?',knoepfe('sz','abd',[['nein','nein, unten offen'],['ja','ja, oder weiß ich nicht']],sz.abd),'Die Abdeckung verkleidet den Raum unter dem Gerät. Beim aroTHERM pro und perform wird der Schutzbereich dann größer.');
+        document.getElementById('sz-fragen').innerHTML=h;
+        var bild='',platz='';
+        if(bereit()&&!wolfOffen()){
+          bild='<div class="aa-zeich"><figure>'+draufsicht(sz)+'<figcaption>Von oben: so weit reicht der Schutzbereich ab Außenkante</figcaption></figure><figure>'+vorderansicht(sz)+'<figcaption>Von vorn: so hoch und so breit reicht er</figcaption></figure></div><div class="aa-masse">'+masseText(sz)+'</div>';
+          dinge.forEach(function(x){var v=sz[x[0]];if(v&&!optionen(sz,x[3]).some(function(o){return o[0]===v;}))delete sz[x[0]];});
+          dinge.forEach(function(x){if(sichtbar(x)&&!sz[x[0]])sz[x[0]]='weit';});if(!sz.senke)sz.senke='nein';
+          var spalten=[['unter','senkrecht unter dem Gerät']];if(sz.aufst!=='frei')spalten.push(['spalt','zwischen Gerät und Wand']);spalten.push(['05','bis 0,5&nbsp;m'],['1','0,5 bis 1&nbsp;m']);if(zone(sz)>1)spalten.push(['16','1 bis '+f1(zone(sz))+'&nbsp;m']);spalten.push(['weit','weiter weg oder gibt es nicht']);
+          platz='<div class="sz-teil"><p class="aa-schritt" style="font-weight:700;color:var(--aa-ink);margin-bottom:0">'+(sz.marke==='WOLF'?'4':(brauchtAbd(sz)?'6':'5'))+'. Liegt etwas näher am Gerät?</p><p class="aa-hinweis" style="margin:4px 0 8px">Voreingestellt ist „weiter weg“. Ändere, was bei dir näher liegt, und bestätige die Tabelle unten. Gemessen wird waagerecht ab der Außenkante des Geräts.</p>';
+          platz+='<div class="aa-tabelle sz-matrix" tabindex="0" role="region" aria-label="Abstände am Wunschplatz, seitlich verschiebbar"><table><thead><tr><th scope="col">Was liegt in der Nähe?</th>'+spalten.map(function(c){return '<th scope="col">'+c[1]+'</th>';}).join('')+'</tr></thead><tbody>';
+          dinge.forEach(function(x){if(!sichtbar(x))return;
+            var erlaubt=optionen(sz,x[3]).map(function(o){return o[0];});
+            var klein=x[3]==='oeffnung'?'zählt, wenn '+(x[0]==='zuend'?'sie':'ein Teil davon')+' '+hoehe(sz)+' liegt':(x[3]==='flaeche'?'in jeder Höhe':'liegt am Boden');
+            platz+='<tr><th scope="row">'+x[1]+'<small>'+klein+'</small></th>'+spalten.map(function(c){
+              if(erlaubt.indexOf(c[0])<0)return '<td class="sz-leer" aria-hidden="true">·</td>';
+              return '<td><button type="button" class="sz-punkt" data-sz="'+x[0]+'" data-v="'+c[0]+'" aria-pressed="'+(sz[x[0]]===c[0])+'" aria-label="'+x[1]+': '+c[1].replace('&nbsp;',' ')+'"></button></td>';}).join('')+'</tr>';});
+          platz+='</tbody></table></div>';
+          platz+='<div class="sz-q"><p>Liegt der Platz in einer Mulde oder Senke?</p>'+knoepfe('sz','senke',[['nein','nein, eben oder erhöht'],['ja','ja']],sz.senke)+'</div>';
+          platz+='<div class="sz-q"><p>Stimmt die Tabelle für deinen Wunschplatz?</p>'+knoepfe('sz','ok',[['1','Ja, geprüft']],sz.ok)+'</div>';
+          if(sz.marke==='Vaillant')platz+='<p class="sz-hinweis aa-hinweis">Regenfallrohre und offene Gullys fragen wir bei Vaillant nicht ab: Laut Hersteller sind sie im Schutzbereich kein Risiko.</p>';
+          platz+='</div>';
+        }
+        document.getElementById('sz-bild').innerHTML=bild;
+        document.getElementById('sz-platz').innerHTML=platz;
+        document.querySelectorAll('.aa-tool [data-sz]').forEach(function(b){b.addEventListener('click',function(){var k=b.getAttribute('data-sz'),v=b.getAttribute('data-v');sz[k]=v;
+          if(k==='geraet'){sz.marke=v==='wolf'?'WOLF':'Vaillant';sz.reihe=v==='wolf'?'':v;if(sz.marke==='WOLF')delete sz.fs;}
+          if(['geraet','montage','aufst','fs','abd'].indexOf(k)>=0)delete sz.ok;
+          szZeichnen();});});
+        szErgebnis();
+      }
+      function zeile(cls,titel,text){var e=document.getElementById('sz-ergebnis');e.className='aa-ergebnis '+cls;e.innerHTML='<h3>'+titel+'</h3>'+text;standSetzen(1,cls,titel);}
+      function szErgebnis(){
+        var e=document.getElementById('sz-ergebnis');
+        if(!bereit()){e.className='aa-ergebnis';e.innerHTML='<p class="aa-hinweis" style="margin:0">Beantworte zuerst die Fragen zu Gerät, Montage und Aufstellung.</p>';standSetzen(1,'','noch offen');return;}
+        if(wolfOffen()){zeile('mittel','Prüfen wir vor Ort','<p>Für '+(sz.montage==='wand'?'die Wandmontage':sz.montage==='sockel'?'einen erhöhten Sockel':'die Hausecke')+' zeigt die WOLF-Anleitung keine eigene Zeichnung. Den Schutzbereich klären wir an der Herstellerzeichnung zu deinem Gerät.</p>');return;}
+        var offen=dinge.filter(function(x){return sichtbar(x)&&!sz[x[0]];}).length+(sz.senke?0:1);
+        if(!offen&&!sz.ok){e.className='aa-ergebnis';e.innerHTML='<p class="aa-hinweis" style="margin:0">Schutzbereich steht. Prüfe die Tabelle zu deinem Wunschplatz und bestätige sie.</p>';standSetzen(1,'','Maße stehen, Platz noch prüfen');return;}
+        if(offen){e.className='aa-ergebnis';e.innerHTML='<p class="aa-hinweis" style="margin:0">Schutzbereich steht. Noch '+offen+' Frage'+(offen>1?'n':'')+' zu deinem Wunschplatz offen.</p>';standSetzen(1,'','Maße stehen, Platz noch prüfen');return;}
+        var grenzHinweis=(sz.grenze==='05'||sz.grenze==='1')?'<p class="aa-hinweis">Für Auflage 2 gilt zusätzlich: Näher als 1&nbsp;m an die Grenze planen wir nur direkt an der Grenze. <a href="#grenz-check">Grenzabstand prüfen</a></p>':'';
+        if(sz.senke==='ja'){zeile('nein','In einer Senke nicht möglich','<p>In einer Mulde oder Senke könnte sich Propan sammeln. Das schließen die Hersteller aus. Lösung: ein anderer Platz oder den Platz anheben.</p>');return;}
+        var k=konflikte(sz);
+        var vorOrt='<p class="aa-hinweis">Verbindlich prüfen wir deinen Platz beim Termin an der Zeichnung deines Herstellers.</p>';
+        if(!k.length){zeile('ja','Passt voraussichtlich','<p>Nach deiner Tabelle liegt nichts im Schutzbereich. Auflage 2 und 3 prüfst du weiter unten.</p>'+grenzHinweis+vorOrt);return;}
+        if(k.every(function(x){return x.weich;})){zeile('mittel','Prüfen wir vor Ort','<p>Bei einem Gerät an der Wand reicht der Schutzbereich nur 1&nbsp;m unter die Unterkante. Liegt der Schacht tiefer, ist er außerhalb. Das messen wir vor Ort nach.</p>'+grenzHinweis);return;}
+        var liste='<ul>'+k.map(function(x){return '<li>'+x.ding+'</li>';}).join('')+'</ul>';
+        var fest=k.some(function(x){return (x.a==='unter'||x.a==='spalt')&&!x.weich;});
+        var wege=[];
+        if(!fest&&sz.marke==='Vaillant'){
+          if(sz.montage==='boden'&&!konflikte(Object.assign({},sz,{montage:'sockel'})).length)wege.push('<b>Mit Erhöhung:</b> Sockel oder Bodenkonsole, Unterkante ab 40 cm. Der Schutzbereich schrumpft dann auf 0,5 m. Prüfe dabei, ob eine Öffnung jetzt tiefer als 10 cm über der neuen Unterkante liegt.');
+          if(sz.fs==='nein'&&!konflikte(Object.assign({},sz,{fs:'ja'})).length)wege.push('<b>Mit Flexible Space:</b> Der Schutzbereich bleibt nur unter dem Gerät und bis zur Wand'+(sz.reihe==='plus'?', dazu 0,5 m rechts':'')+'. Das Gerät braucht dann dauerhaft Strom.');
+          if(sz.reihe==='plus'&&sz.fs==='ja'&&k.every(function(x){return x.a==='05';}))wege.push('<b>Vermutlich passend:</b> Bei aroTHERM plus mit Flexible Space zählen die 0,5 m nur auf der rechten Seite. Liegt es links oder vorn, kann es voraussichtlich passen.');
+        }
+        if(!fest&&sz.marke==='WOLF'&&k.every(function(x){return x.a==='1';}))wege.push('<b>Mit Trennwand:</b> wenn alles davon seitlich neben dem Gerät liegt, auf derselben Seite. Eine dichte Trennwand verkürzt diese Seite auf 0,5 m. Nach vorn hilft sie nicht.');
+        var sv=seiten(sz),mx=[sv.f,sv.l,sv.r,sv.b].filter(function(v){return v!==null&&v!==undefined;}),unsicher=!fest&&Math.min.apply(null,mx)<Math.max.apply(null,mx);
+        var kopf=unsicher?'<p>Möglicherweise im Schutzbereich, gerechnet mit dem größten Maß:</p>':'<p>Im Schutzbereich liegt:</p>';
+        var groesst=fest?'':'<p class="aa-hinweis">Wir rechnen hier mit dem größten Maß deines Schutzbereichs. Liegt etwas auf einer Seite mit kleinerem Maß, kann es trotzdem passen.</p>';
+        if(wege.length){zeile('mittel',unsicher?'Möglicher Konflikt, Anpassung möglich':'Passt voraussichtlich mit Anpassung',kopf+liste+'<p>'+wege.join('</p><p>')+'</p>'+groesst+grenzHinweis+vorOrt);return;}
+        zeile(unsicher?'mittel':'nein',unsicher?'Möglicher Konflikt, prüfen wir vor Ort':'Im Schutzbereich liegt etwas',kopf+liste+'<p>Lösung: das Gerät versetzen oder drehen'+(fest?(sz.marke==='Vaillant'?', denn unter dem Gerät und zwischen Gerät und Wand bleibt der Schutzbereich in jeder Einstellung':', denn unter dem Gerät und zwischen Gerät und Wand darf nichts davon liegen'):'')+', oder das Störende verlegen, etwa eine Steckdose. Wir finden das beim Termin gemeinsam heraus.</p>'+groesst);
+      }
+
+      /* Auflage 2: Grenzabstand nach NBauO § 5 Abs. 2 und Abs. 8 Satz 4 Nr. 4, Satz 5 (Stand 25.06.2025) */
+      var gz={};
+      var GRENZE='<path d="M152 6V114" class="v-line v-grenze" stroke-dasharray="8 6"/><text x="148" y="16" text-anchor="end" class="v-sub" font-size="11">Grenze</text>';
+      var GZ_ART=[
+        ['frei2',BODEN+'<rect x="52" y="92" width="76" height="12" class="v-haus" stroke-width="2"/>'+geraet(56,92,66)+mass(146,103,45)+'<text x="152" y="72" class="v-sub" font-size="11">bis</text><text x="152" y="85" class="v-sub" font-size="11">2 m</text>','Freistehend, bis 2&nbsp;m hoch','auf eigenem Fundament oder Gestell, auch direkt vor der Hauswand; Höhe mit Sockel und Verkleidung'],
+        ['hoch',BODEN+'<rect x="56" y="58" width="68" height="46" class="v-haus" stroke-width="2"/>'+geraet(58,58,64)+mass(146,103,9)+'<text x="152" y="56" class="v-sub" font-size="11">über</text><text x="152" y="69" class="v-sub" font-size="11">2 m</text>','Freistehend, höher als 2&nbsp;m','etwa auf einem hohen Gestell'],
+        ['wand',BODEN+WANDSEITE,'Am Haus befestigt','etwa auf einer Wandkonsole']
+      ];
+      function abstBild(x,text){return GRENZE+wp(x,38,44)+(x<100?'<path d="M'+(x+46)+' 60H150" class="v-mass" marker-start="url(#aa-pfs)" marker-end="url(#aa-pfs)"/>':'')+'<text x="90" y="104" text-anchor="middle" class="v-sub" font-size="11">'+text+'</text>';}
+      var GZ_ABST=[['3',abstBild(8,'3 m und mehr'),'3&nbsp;m oder mehr','bis zur Grenze'],['1',abstBild(56,'1 bis 3 m'),'1 bis unter 3&nbsp;m','bis zur Grenze'],['zw',abstBild(84,'unter 1 m'),'Zwischen 0 und 1&nbsp;m','etwa 50&nbsp;cm von der Grenze'],['0',abstBild(108,'0 m'),'Direkt an der Grenze','ohne Abstand']];
+      var GZ_BLAS=[
+        ['weg',GRENZE+wp(70,38,44)+'<path d="M68 60H22M68 72H30" class="v-mass" marker-end="url(#aa-pfs)"/>','Weg vom Nachbarn','oder parallel zur Grenze'],
+        ['hin',GRENZE+wp(40,38,44)+'<path d="M86 60H146M86 72H140" class="v-mass" marker-end="url(#aa-pfs)"/>','Zum Nachbarn hin','die kalte Luft bläst über die Grenze']
+      ];
+      function gzZeichnen(){
+        var h=schritt('1. Wie wird das Gerät aufgestellt?',bilder('gz','art',GZ_ART,gz.art));
+        if(gz.art&&gz.art!=='wand')h+=schritt('2. Wie weit ist dein Wunschplatz von der Grenze entfernt?',bilder('gz','abst',GZ_ABST,gz.abst),'Gemessen ab der Außenkante des Geräts bis zur Grundstücksgrenze.');
+        if(gz.art==='frei2'&&gz.abst&&gz.abst!=='3')h+=schritt('3. Gibt es auf deinem Grundstück einen anderen Platz, der 3&nbsp;m zur Grenze einhält und auch für Schutzbereich und Schall passt?',knoepfe('gz','anders',[['ja','ja, es gibt einen'],['nein','nein, es gibt keinen'],['unklar','weiß ich nicht']],gz.anders),'Zum Beispiel auf der anderen Hausseite.');
+        var weiter=gz.art==='frei2'&&gz.abst&&gz.abst!=='3'&&gz.abst!=='zw'&&gz.anders==='nein';
+        if(weiter)h+=schritt('4. Steht an dieser Grenze schon etwas ohne vollen Abstand?',knoepfe('gz','bebaut',[['nein','nein'],['ja','ja'],['unklar','weiß ich nicht']],gz.bebaut),'Zum Beispiel eine Garage, ein Carport oder eine weitere Wärmepumpe direkt an der Grenze.');
+        if(weiter&&gz.bebaut==='nein')h+=schritt('5. Wohin bläst das Gerät die kalte Luft?',bilder('gz','blas',GZ_BLAS,gz.blas));
+        document.getElementById('gz-fragen').innerHTML=h;
+        document.querySelectorAll('.aa-tool [data-gz]').forEach(function(b){b.addEventListener('click',function(){gz[b.getAttribute('data-gz')]=b.getAttribute('data-v');gzZeichnen();});});
+        gzErgebnis();
+      }
+      function gzErgebnis(){
+        var e=document.getElementById('gz-ergebnis');
+        function z(cls,t,text){e.className='aa-ergebnis '+cls;e.innerHTML='<h3>'+t+'</h3>'+text;standSetzen(2,cls,t);}
+        function offen(t){e.className='aa-ergebnis';e.innerHTML='<p class="aa-hinweis" style="margin:0">'+t+'</p>';standSetzen(2,'','noch offen');}
+        var schall='<p class="aa-hinweis">Auflage 1 und 3 gelten zusätzlich: Der <a href="#check">Kältemittel-Schutzbereich</a> darf nicht über die Grenze reichen, und der <a href="#schall">Schallabstand</a> zum Nachbarfenster muss stimmen.</p>';
+        if(!gz.art)return offen('Wähle zuerst aus, wie das Gerät aufgestellt wird.');
+        if(gz.art==='wand')return z('mittel','Prüfen wir vor Ort','<p>Die Sonderregel der Bauordnung gilt für <b>freistehende</b> Wärmepumpen. Hängt das Gerät an der Hauswand, prüfen wir den Grenzabstand zusammen mit dem Haus.</p>');
+        if(!gz.abst)return offen('Wie weit ist es bis zur Grenze?');
+        if(gz.abst==='3')return z('ja','Grenzabstand voraussichtlich eingehalten','<p>Mit 3&nbsp;m oder mehr zur Grenze hält dein Platz den üblichen Grenzabstand ein.</p>'+schall);
+        if(gz.art==='hoch')return z('nein','Zu nah an der Grenze','<p>Ist die Wärmepumpe mit Fundament, Sockel und Verkleidung höher als 2&nbsp;m, gilt der volle Grenzabstand von 3&nbsp;m. Lösung: niedriger aufstellen oder einen Platz mit 3&nbsp;m wählen.</p>');
+        if(!gz.anders)return offen('Noch eine Frage offen.');
+        if(gz.anders==='ja')return z('nein','Der andere Platz hat Vorrang','<p>Näher an die Grenze darf die Wärmepumpe nur, wenn auf deinem Grundstück kein anderer geeigneter Platz die 3&nbsp;m einhält. Nimm deshalb den anderen Platz.</p>');
+        if(gz.anders==='unklar')return z('mittel','Klären wir vor Ort','<p>Ob es einen anderen Platz mit 3&nbsp;m gibt, der auch für Schutzbereich und Schall passt, sehen wir uns beim Termin gemeinsam an.</p>');
+        if(gz.abst==='zw')return z('mittel','Besser direkt an die Grenze oder ab 1 m','<p>Für diese Sonderregel nennt die Bauordnung zwei Möglichkeiten: ohne Abstand oder mit mindestens 1&nbsp;m. Wir planen deshalb direkt an der Grenze oder ab 1&nbsp;m.</p>'+schall);
+        if(!gz.bebaut)return offen('Noch eine Frage offen.');
+        if(gz.bebaut!=='nein')return z('mittel','Länge an der Grenze prüfen wir','<p>Bauten ohne vollen Abstand dürfen an einer Grenze zusammen höchstens 9&nbsp;m lang sein, an allen Grenzen zusammen höchstens 15&nbsp;m. Wärmepumpen dürfen davon je Grenze höchstens 3&nbsp;m einnehmen. Ob bei dir noch Platz ist, messen wir vor Ort.</p>'+schall);
+        if(!gz.blas)return offen('Noch eine Frage offen.');
+        var titel=gz.abst==='0'?'Voraussichtlich zulässig direkt an der Grenze':'Voraussichtlich zulässig mit verringertem Abstand';
+        var bed='<p>Nach deinen Angaben kommt die Sonderregel in Frage: Die Wärmepumpe darf dann '+(gz.abst==='0'?'ohne Abstand an der Grenze stehen':'bis auf 1&nbsp;m an die Grenze heran')+'. An dieser Grenze dürfen Wärmepumpen zusammen höchstens 3&nbsp;m lang sein. Die Länge deines Geräts und die Bauten an allen Grenzen zusammen (höchstens 15&nbsp;m) prüfen wir vor Ort.</p>';
+        if(gz.abst==='0')bed+='<p class="aa-hinweis">Direkt an der Grenze geht das nur mit Vaillant und Flexible Space, denn der Kältemittel-Schutzbereich darf nicht hinüberreichen. Bei WOLF bleiben wir mindestens 1&nbsp;m von der Grenze weg.</p>';
+        if(gz.blas==='hin')return z('mittel',titel+', aber Gerät drehen',bed+'<p>Die Sonderregel verlangt, dass der Nachbar nicht unzumutbar durch Schall, kalte Luft oder Eis beeinträchtigt wird. Richte die Ausblasseite deshalb vom Nachbarn weg. Ob das reicht, prüfen wir beim Termin.</p>'+schall);
+        return z('ja',titel,bed+'<p class="aa-hinweis">Ob Schall, kalte Luft oder Eis den Nachbarn unzumutbar treffen, prüfen wir beim Termin.</p>'+schall);
+      }
+      document.querySelectorAll('[data-ds]').forEach(function(e){e.innerHTML=draufsicht({marke:'Vaillant',reihe:'plus',montage:'boden',aufst:'wand',fs:e.getAttribute('data-ds')},{S:60,W:300});});
+      szZeichnen();
+      gzZeichnen();
+      /* Pfeilspitzen auf dem Bildschirm überall gleich groß (8 Pixel), egal wie stark ein Bild verkleinert ist */
+      function pfeileAngleichen(){
+        var defs=document.querySelector('svg defs'),NS='http://www.w3.org/2000/svg';
+        document.querySelectorAll('.aa svg[viewBox]').forEach(function(s){
+          var r=s.getBoundingClientRect(),vb=s.viewBox.baseVal;if(vb&&vb.width&&!s.style.aspectRatio)s.style.aspectRatio=vb.width+' / '+vb.height;if(!r.width||!vb||!vb.width)return;
+          var L=Math.round(16*vb.width/r.width)/2,id='aa-pk'+String(L).replace('.','_');
+          if(!document.getElementById(id)){var m=document.createElementNS(NS,'marker');m.setAttribute('id',id);m.setAttribute('viewBox','0 0 10 8');m.setAttribute('markerWidth',L);m.setAttribute('markerHeight',L*0.8);m.setAttribute('refX','9.6');m.setAttribute('refY','4');m.setAttribute('orient','auto-start-reverse');m.setAttribute('markerUnits','userSpaceOnUse');var pa=document.createElementNS(NS,'path');pa.setAttribute('d','M0 0L10 4L0 8Z');pa.setAttribute('fill','currentColor');m.appendChild(pa);defs.appendChild(m);}
+          s.querySelectorAll('[marker-start],[marker-end]').forEach(function(e){['marker-start','marker-end'].forEach(function(a){if(e.hasAttribute(a))e.setAttribute(a,'url(#'+id+')');});});
+        });
+      }
+      var pfWarte=0;function pfPlanen(){if(pfWarte)return;pfWarte=setTimeout(function(){pfWarte=0;pfeileAngleichen();},40);}
+      pfPlanen();window.addEventListener('resize',pfPlanen);
+      new MutationObserver(pfPlanen).observe(document.querySelector('.aa-main'),{childList:true,subtree:true});
+      zeichnen();
+    })();
+    </script>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h2>HeroWerk</h2>
+          <p>Meisterbetrieb für Wärmepumpen in der Region Hannover.</p>
+          <p style="margin-top: 12px;">Wir verbauen:<br><strong style="color: var(--white);">Wolf GmbH &amp; Vaillant Group</strong></p>
+        </div>
+        <div class="footer-col">
+          <h2>Leistungen</h2>
+          <a href="/dimensionierung">Wärmepumpen-Beratung</a>
+          <a href="/foerderung">Förderrechner</a>
+          <a href="/preise">Richtpreise</a>
+          <a href="/ratgeber#friends">HERO FRIENDS</a>
+        </div>
+        <div class="footer-col">
+          <h2>Unternehmen</h2>
+          <a href="/prozess">Unser Prozess</a>
+          <a href="/ratgeber">Ratgeber</a>
+          <a href="/ratgeber#faq">FAQ</a>
+          <a href="/kontakt">Kontakt</a>
+          <a href="/karriere">Jobs</a>
+        </div>
+        <div class="footer-col">
+          <h2>Kontakt</h2>
+          <p>HeroWerk GmbH</p>
+          <p>Region Hannover</p>
+          <p>Tel: 05131 - 50 59 750</p>
+          <p>info@herowerk.de</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-tagline">HeroWerk GmbH &middot; Meisterqualität aus der Region.</div>
+        <div class="footer-legal">
+          <a href="/impressum">Impressum</a>
+          <a href="/datenschutz">Datenschutz</a>
+          <button type="button" class="cookie-settings-button" hidden>Cookie-Einstellungen</button>
+          <a href="/hinweise">Hinweise</a>
+          <a href="/barrierefreiheit">Barrierefreiheit</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/site.js?v=e93cc62c06" defer></script>
+
+  <!-- MOBILE BOTTOM BAR -->
+  <div class="mobile-bottom-bar" role="navigation" aria-label="Mobile Schnellnavigation">
+    <a href="/anfrage" class="mob-bar-cta" onclick="document.getElementById('mobileMenu')?.classList.remove('open');">
+      Kostenlose Beratung
+    </a>
+  </div>
+
+</body>
+</html>
