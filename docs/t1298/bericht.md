@@ -134,3 +134,21 @@ Auch der abschließende Staging-Versuch mit allen 18 ausdrücklichen Pfaden eins
 Es ist kein Commit angelegt. Die vorgesehene Botschaft lautet `T1298 Ratgeberseite Aufstellabstände Wärmepumpe`. Auch der Bericht konnte nicht eingebucht werden. Die vorhandenen Laufprotokolle, die Planfreigabe und sonstigen ungetrackten Planunterlagen gehören nicht zur vorgesehenen Staging-Liste dieses Baus.
 
 Offen bleiben der reguläre SEO-Lauf nach Staging, die vollständigen Browser- und Lighthouse-Prüfungen einschließlich des sichtbaren Textvergleichs, der Gesamtlint-Befund der Planunterlagen sowie die Einbuchung mit anschließendem Website-Gate. Nicht gelaufen ist nicht grün. Es erfolgt keine Freigabe zur Auslieferung.
+
+## Nachtrag Controller, 19. November 2026
+
+Die in der Sandbox gesperrten Prüfungen liefen danach außerhalb der Sandbox gegen den Apache-Prüfserver der Ablage (Bündel aus `scripts/make-ionos-bundle.sh`, Container `t1298-aufstellabstaende`, Port 8937). Der Originalentwurf kam für den Vergleich von einem lokalen Node-Server.
+
+| Prüfung                                                              | Ergebnis                                                                     |
+| -------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `tests/t1298-aufstellabstaende.spec.js`, alle 9 Tests                | grün, einschließlich vier Klickfällen, 6 Kombinationen und Originalvergleich |
+| `tests/a11y.spec.js` für `waermepumpe-abstand`, hell und dunkel      | grün                                                                         |
+| `tests/smoke.spec.js`, neue Route und Ratgeberkarte                  | grün                                                                         |
+| `npm run verify:mobile`                                              | neue Seite ohne Befund; 8 Befunde nur auf `/preise.html` (Bestand)           |
+| `npm run verify:seo`, `npm run verify:website-gates` nach Einbuchung | grün                                                                         |
+| `npm run lint`                                                       | grün                                                                         |
+
+Zwei Korrekturen waren nötig:
+
+1. Test: Der Theme-Umschalter ist ein Zwei-Feld-Schalter; ein Tipp auf das aktive Feld bleibt mit Absicht folgenlos (`js/theme.js`). Der Test wählt jetzt das inaktive Feld und öffnet bei schmalen Breiten zuerst das Klappmenü, wie `tests/website-additive.spec.js`.
+2. Seite: axe meldete im hellen Modus zu wenig Kontrast für den Status „Prüfen wir vor Ort“ in der Seitenleiste (`#st1`, Orange `#c27c0e` auf hellgrüner Karte). Im hellen Modus hat der Status jetzt `#8a5a00`. Text, Zahlen und Logik bleiben unverändert; die Zeichnungsfarbe der Zone bleibt `#c27c0e`.
