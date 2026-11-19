@@ -1,0 +1,175 @@
+{
+  "basisCommit": "2cfa58955d7df40e75b30061e6939d41b54700f2",
+  "zweig": "codex/t1298-aufstellabstaende",
+  "basis": [
+    {
+      "befehl": "npm run lint",
+      "exit": 1,
+      "log": "basis-0.log"
+    },
+    {
+      "befehl": "npm run verify:website-gates",
+      "exit": 0,
+      "log": "basis-1.log"
+    },
+    {
+      "befehl": "npm run verify:assets",
+      "exit": 0,
+      "log": "basis-2.log"
+    },
+    {
+      "befehl": "npm run verify:js-versionsanhang",
+      "exit": 0,
+      "log": "basis-3.log"
+    },
+    {
+      "befehl": "npm run verify:consent",
+      "exit": 0,
+      "log": "basis-4.log"
+    },
+    {
+      "befehl": "npm run verify:seo",
+      "exit": 0,
+      "log": "basis-5.log"
+    },
+    {
+      "befehl": "npm run verify:bausteine",
+      "exit": 0,
+      "log": "basis-6.log"
+    },
+    {
+      "befehl": "node scripts/content-fidelity-check.js",
+      "exit": 0,
+      "log": "basis-7.log"
+    }
+  ],
+  "basisReinLint": {
+    "befehl": "npm run lint",
+    "arbeitsordner": "/tmp/t1298-pruefung/basis",
+    "exit": 0
+  },
+  "bau": [
+    {
+      "befehl": "npm run lint",
+      "exit": 1,
+      "log": "bau-0.log"
+    },
+    {
+      "befehl": "npm run verify:website-gates",
+      "exit": 0,
+      "log": "bau-1.log"
+    },
+    {
+      "befehl": "npm run verify:assets",
+      "exit": 0,
+      "log": "bau-2.log"
+    },
+    {
+      "befehl": "npm run verify:js-versionsanhang",
+      "exit": 0,
+      "log": "bau-3.log"
+    },
+    {
+      "befehl": "npm run verify:consent",
+      "exit": 0,
+      "log": "bau-4.log"
+    },
+    {
+      "befehl": "npm run verify:seo",
+      "exit": 1,
+      "log": "bau-5.log"
+    },
+    {
+      "befehl": "GIT_INDEX_FILE=/tmp/t1298-pruefung/generator.index npm run verify:seo",
+      "exit": 0,
+      "log": "bau-6.log"
+    },
+    {
+      "befehl": "npm run verify:bausteine",
+      "exit": 0,
+      "log": "bau-7.log"
+    },
+    {
+      "befehl": "node scripts/content-fidelity-check.js",
+      "exit": 0,
+      "log": "bau-8.log"
+    },
+    {
+      "befehl": "MOBILE_BASE_URL=http://127.0.0.1:8080 npm run verify:mobile",
+      "exit": 1,
+      "log": "bau-9.log"
+    },
+    {
+      "befehl": "PREVIEW_URL=http://127.0.0.1:8080 npm run test:a11y",
+      "exit": 1,
+      "log": "bau-10.log"
+    },
+    {
+      "befehl": "PREVIEW_URL=http://127.0.0.1:8080 npm run test:smoke",
+      "exit": 1,
+      "log": "bau-11.log"
+    },
+    {
+      "befehl": "T1298_ORIGINAL_URL=http://127.0.0.1:8080/__t1298-original PREVIEW_URL=http://127.0.0.1:8080 npx --no-install playwright test tests/t1298-aufstellabstaende.spec.js",
+      "exit": 1,
+      "log": "bau-12.log"
+    },
+    {
+      "befehl": "node scripts/seo-basics-check.js http://127.0.0.1:8080/waermepumpe-abstand",
+      "exit": 1,
+      "log": "bau-13.log"
+    },
+    {
+      "befehl": "node scripts/rich-results-check.js http://127.0.0.1:8080/waermepumpe-abstand",
+      "exit": 1,
+      "log": "bau-14.log"
+    },
+    {
+      "befehl": "node scripts/header-check.js http://127.0.0.1:8080/waermepumpe-abstand",
+      "exit": 1,
+      "log": "bau-15.log"
+    },
+    {
+      "befehl": "npm_config_offline=true npm exec --no -- lhci autorun --config=lighthouserc.json",
+      "exit": 1,
+      "log": "bau-16.log"
+    },
+    {
+      "befehl": "npx --no-install playwright test tests/t1298-aufstellabstaende.spec.js --list",
+      "exit": 0,
+      "log": "bau-17.log"
+    },
+    {
+      "befehl": "npx --no-install eslint tests/a11y.spec.js tests/smoke.spec.js tests/t1298-aufstellabstaende.spec.js",
+      "exit": 0,
+      "log": "bau-18.log"
+    },
+    {
+      "befehl": "npx --no-install prettier --check tests/a11y.spec.js tests/smoke.spec.js tests/t1298-aufstellabstaende.spec.js scripts/build-structured-data.mjs scripts/verify-mobile.mjs",
+      "exit": 0,
+      "log": "bau-19.log"
+    }
+  ],
+  "hinweis": "Browserbefehle wurden gestartet; Browserabnahmen sind nicht gelaufen, Sandbox. Kein Commit möglich.",
+  "abschluss": {
+    "lint": {
+      "befehl": "npm run lint",
+      "exit": 1,
+      "befund": [
+        "docs/t1298/plan.md",
+        "docs/t1298/letzte_nachricht_plan.md"
+      ]
+    },
+    "staging": {
+      "befehl": "git add -- waermepumpe-abstand.html ratgeber.html sitemap.xml scripts/structured-data.config.json scripts/structured-data.state.json scripts/build-structured-data.mjs scripts/fidelity-pages.json baseline/v4-sections.json tests/a11y.spec.js tests/smoke.spec.js lighthouserc.json scripts/verify-mobile.mjs tests/t1298-aufstellabstaende.spec.js docs/t1298/bericht.md docs/t1298/nachweise/quellvergleich.json docs/t1298/nachweise/quellvergleich.mjs docs/t1298/nachweise/prueflauf.json docs/t1298/nachweise/pruefprotokoll.txt",
+      "exit": 128,
+      "fehler": "Unable to create .git/index.lock: Operation not permitted"
+    },
+    "commit": {
+      "befehl": "git commit -m \"T1298 Ratgeberseite Aufstellabstände Wärmepumpe\"",
+      "status": "Nicht ausgeführt, vorgelagertes Staging gesperrt"
+    },
+    "head": "2cfa58955d7df40e75b30061e6939d41b54700f2",
+    "index": "Keine gestagten Änderungen"
+  }
+}

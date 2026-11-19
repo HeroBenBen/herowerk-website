@@ -1,0 +1,32 @@
+{
+  "ergebnis": "gleich",
+  "art": "Exakter Quellvergleich, keine Browserabnahme",
+  "quelle": "/Users/benjaminbendler/Library/CloudStorage/GoogleDrive-b.bendler@herowerk.de/Meine Ablage/HeroPlan/_Agent-Work/2026-11-19_T1298_Aufstellabstaende/Inhalt_Aufstellabstaende_Freigabefassung_HERO.html",
+  "entwurf": "/Users/benjaminbendler/Library/CloudStorage/GoogleDrive-b.bendler@herowerk.de/Meine Ablage/HeroPlan/_Agent-Drafts/2026-11-18_Aufstellabstaende_Entwurf3/index.html",
+  "seite": "waermepumpe-abstand.html",
+  "iconErsetzung": true,
+  "fragmentSha256": "4206b315f785e6d4d3e6a583fae33535aede6638c55b92f21c8147b5d908765d",
+  "fragmentBytes": 106762,
+  "originalentwurfFragmentGleich": true,
+  "originalentwurfFragmentSha256": "4206b315f785e6d4d3e6a583fae33535aede6638c55b92f21c8147b5d908765d",
+  "css": [
+    "e2304d586be17ec1d479fc7369484dc4560601428be1cece193ad414ec059b94"
+  ],
+  "skript": [
+    "80e76bb145631c3aba1894b78f2edfb2527138f9751d2c0c84c4dcafe19a1aff"
+  ],
+  "skriptSyntax": "gültig",
+  "huelle": "Navigation, Consent und Fuß bytegleich zur Vorlage",
+  "interneZiele": [
+    "/anfrage",
+    "/dimensionierung",
+    "/foerderung",
+    "/kostenvergleich-waermepumpe"
+  ],
+  "anker": 37,
+  "ids": 41,
+  "metadaten": "Article, Veröffentlichungsdatum, Überschrift und URL geprüft",
+  "baseline": "Nur die neue Seite ergänzt, alle Bestandswerte unverändert",
+  "bausteine": "Beide Dateien unverändert, 12 Seiten",
+  "browserTextvergleich": "nicht gelaufen, Sandbox"
+}

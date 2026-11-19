@@ -46,6 +46,22 @@ test('@smoke FAQ-Sektion auf Ratgeber vorhanden (7 Fragen)', async ({ page }) =>
   await expect(page.locator('#faq .faq-item')).toHaveCount(7);
 });
 
+test('@smoke Aufstellabstände laden über die Ratgeberkarte', async ({ page }) => {
+  await gotoWithConsentRejected(page, '/ratgeber');
+  const karte = page.locator('#ratgeber-technik .blog-card').filter({
+    has: page.locator('a[href="/waermepumpe-abstand"]'),
+  });
+  await expect(karte).toHaveCount(1);
+  await expect(karte.locator('h2')).toHaveText('Wo darf die Wärmepumpe stehen?');
+  const antwort = await page.goto('/waermepumpe-abstand');
+  expect(antwort.status()).toBe(200);
+  await expect(page.locator('main h1')).toHaveText('Wo darf die Wärmepumpe stehen?');
+  await page.goBack();
+  await karte.locator('.blog-link').click();
+  await expect(page).toHaveURL(/\/waermepumpe-abstand$/);
+  await expect(page.locator('#sz-fragen [data-sz="geraet"]')).toHaveCount(4);
+});
+
 test('@smoke Funnel anfrage.html lädt, Schritt 1 aktiv', async ({ page }) => {
   const resp = await gotoWithConsentRejected(page, '/anfrage.html');
   expect(resp.status()).toBeLessThan(400);

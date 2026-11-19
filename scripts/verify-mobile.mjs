@@ -51,6 +51,7 @@ const KERNSEITEN = [
   '/foerderung.html',
   '/rechner.html',
   '/ratgeber.html',
+  '/waermepumpe-abstand.html',
   '/karriere.html',
   '/kontakt.html',
   '/anfrage.html',
