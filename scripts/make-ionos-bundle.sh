@@ -53,6 +53,7 @@ rsync -a \
   --exclude 'test-results/' \
   --exclude 'playwright-report/' \
   --exclude 'scripts/' \
+  --exclude 'tools/interne-pruefer/' \
   --exclude 'schemas/' \
   --exclude 'apps-script/' \
   --exclude 'archive/' \
