@@ -27,3 +27,11 @@ Acht Beobachtungen sind bestanden: Lint-Fehler, gebrochenes vorhandenes Prüfskr
 Die erste Browserprobe war durch interne Prüferdateien im Bündel blockiert. Ausschließlich tools/interne-pruefer/ ist deshalb jetzt vom Auslieferungsbündel ausgeschlossen; die vorhandene Gleichheitsprüfung übernimmt diese Liste direkt. Ein breiter Browser-Nachtrag nahm unnötig die gesamte bereits fehlerhafte Smoke-Sammlung mit und wurde ausdrücklich beendet. Die abschließende Wegwerf-Probe beschränkt die Testauswahl allein dort auf den injizierten Browserfall. Der reguläre Vollauf behält die vollständige Sammlung, mit zwei Arbeitern und null Wiederholungen. Bestandene Proben wurden nicht wiederholt. Beide Fehlbelege und die gezielten Nachträge bleiben außerhalb von Git erhalten.
 
 Beleg: /Users/benjaminbendler/.herowerk-pruefung/herowerk-website/rot-nachweis/ergebnis.json. Der frische lesende Prüfer bestätigte sämtliche Einrichtungskorrekturen einschließlich des Bündelausschlusses.
+
+## Vollauf vor dem Antrag
+
+Einbuchung 8fb3d55: genau ein Vollauf, vollständig beendet nach 2593,72 Sekunden (43 Minuten 13,72 Sekunden), kein Zeitabbruch, Bereinigung bestätigt. Rot bleiben vier vorhandene Aufgaben: Zählerdateien, SEO-Inhalte, vollständige Smoke-Sammlung und Bildvergleich. Die Smoke-Sammlung meldete 111 bestandene Tests und einen Fehler in 11,1 Minuten. Die übrigen Fach-, Browser-, Kopfzeilen-, SEO- und Schemaprüfungen sowie beide Lighthouse-Themen und der Consent-Livebericht waren grün; die bekannte Typdiagnose und zwei Gitleaks-Funde wurden einzeln als Altlast erkannt. Keine Schwelle gesenkt und keine Sollbilder ersetzt.
+
+Ergebnis: /Users/benjaminbendler/.herowerk-pruefung/herowerk-website/laeufe/2026-11-19T16-47-48-681Z-48963/ergebnis.json.
+
+Anschließend wurde allein die Meldung über Altlastabbau abgesichert: Unstrukturierte Abbrüche dürfen keinen angeblichen Rückgang melden. Vier isolierte Fälle mit der tatsächlichen gemeinsamen Funktion bestanden. Prüfkommandos, Auswahl und Ausführung blieben dabei gleich; der volle Fachlauf wurde nicht wiederholt. Diese Meldekorrektur wird bytegleich in alle Ablagen übernommen.

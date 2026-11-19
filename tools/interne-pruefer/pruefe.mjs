@@ -240,6 +240,13 @@ export function diagnostics(text, task, root = ROOT) {
       }));
   return []; // Unstrukturierte Abstürze werden niemals als Altlast freigestellt.
 }
+export function removedBaselineEntries(entries, steps, observed) {
+  const measured = new Set(
+    steps.filter((s) => s.exitCode === 0 || s.structuredFailure).map((s) => s.id)
+  );
+  const present = new Set(observed.map((e) => e.fingerprint));
+  return entries.filter((e) => measured.has(e.task) && !present.has(e.fingerprint));
+}
 function jsonDiagnostics(task, dir, sourceRoot) {
   if (!['gitleaks', 'lhci'].includes(task.diagnostics)) return null;
   try {
@@ -1039,13 +1046,7 @@ export async function main(args = process.argv.slice(2)) {
       });
       done.set(task.id, execution.code === 0 || allKnown);
     }
-    const observedIds = new Set(observed.map((e) => e.fingerprint));
-    const executedIds = new Set(
-      result.steps.filter((s) => s.exitCode !== undefined).map((s) => s.id)
-    );
-    result.removedBaseline = oldBaseline.entries.filter(
-      (e) => executedIds.has(e.task) && !observedIds.has(e.fingerprint)
-    );
+    result.removedBaseline = removedBaselineEntries(oldBaseline.entries, result.steps, observed);
     if (baselineWrite && !abort) {
       result.baselineUnresolved = storeBaseline(config, result, dir, work, oldBaseline);
       result.baselineWritten = true;
