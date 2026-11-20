@@ -48,3 +48,8 @@ Bei fehlgeschlagenem Bau werden nur neue, aus seiner Legacy-Bauausgabe belegte Z
 Wache 3 wurde einmal am 20.11.2026 um 19:28:44 Uhr (Europe/Berlin) belegt: 5.835.186.176 Byte frei, entsprechend 5,835 GB, unter der Grenze von 6 GB. Erwartetes Ergebnis rot, Nachweis bestanden, buildStarted=false und buildCalls=0. Gemeinsamer Beleg: /Users/benjaminbendler/.herowerk-pruefung/bau-nachweise/T1302.2/wache-3/ergebnis.json. Es gab keinen Abbildbau und keinen vollen Lauf.
 
 Wachen 1 und 2 sind als getrennte einmalige Aufrufe von tools/interne-pruefer/bau-nachweis.mjs vorbereitet, aber nicht ausgeführt: gleicher mehrstufiger Dockerfile-Inhalt bei unterschiedlichen CLI-Laufkennzeichen muss den Cache verwenden; ein gezielt fehlgeschlagener Bau muss seine neuen Zwischenabbilder entfernen und den vorherigen Abbildbestand erhalten. Die Freigabe dafür erfolgt erst im zugeteilten Rechenfenster. Kein frischer Prüfer des Prüfers gemäß ausdrücklicher Kostenanweisung. Bestehende Fachbelege früherer Kernstände bleiben historische Belege, sie sind kein Vollauf dieses neuen Kernstands.
+
+
+## Ablagenspezifischer Speicheransatz T1302.3
+
+Der gemeinsame Kern liest die Grenze jetzt aus buildStorage der jeweiligen Abdeckungsliste: zusätzliche Byte plus exakt 2 GB Reserve. In dieser Ablage bleibt der bisherige Wert von 6.000.000.000 Byte unverändert; es gab hier keine neue Bedarfsmessung und keine Senkung. Die Portalrechnung steht in dessen docs/interne-pruefer/bericht.md. Kern und bau-nachweis.mjs sind in allen fünf Ablagen bytegleich. Kein Abbildbau, Vollauf oder neuer Rot-Nachweis in diesem Auftrag.

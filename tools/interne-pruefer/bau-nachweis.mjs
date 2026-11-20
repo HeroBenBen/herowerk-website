@@ -4,12 +4,17 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { VERSION, protectedBuild, cleanupBuildImages } from './pruefe.mjs';
 
 const mode = process.argv[2];
 if (!['1', '2', '3'].includes(mode) || process.argv.length !== 3)
   throw new Error('Aufruf: node tools/interne-pruefer/bau-nachweis.mjs 1|2|3');
 const state = '/Users/benjaminbendler/.herowerk-pruefung';
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+const requirement = JSON.parse(
+  fs.readFileSync(path.join(root, 'tools/interne-pruefer/abdeckung.json'))
+).buildStorage?.default;
 const home = path.join(state, 'bau-nachweise', VERSION, `wache-${mode}`);
 const lock = path.join(state, 'sperre');
 const runId = `bau-nachweis-${mode}-${Date.now()}-${process.pid}`;
@@ -63,7 +68,7 @@ function requireTrue(value, message) {
 async function build(dockerfile, suffix) {
   const name = `${runId}-${suffix}`;
   names.push(name);
-  const record = { id: suffix, runId, spaceName: name };
+  const record = { id: suffix, runId, spaceName: name, requirement };
   result.builds.push(record);
   const tag = `herowerk-t1302-bau-nachweis:${runId}-${suffix}`;
   tags.push(tag);
@@ -95,7 +100,7 @@ try {
   fs.closeSync(begun);
   if (mode === '3') {
     let calls = 0;
-    const record = { id: 'speichersperre', runId, spaceName: runId };
+    const record = { id: 'speichersperre', runId, spaceName: runId, requirement };
     names.push(runId);
     result.builds.push(record);
     const r = await protectedBuild(
@@ -115,7 +120,7 @@ try {
         record.storage?.freeBytes < record.storage?.minimumBytes &&
         !record.buildStarted &&
         calls === 0,
-      'Speichersperre unter 6 GB nicht nachgewiesen'
+      'Speichersperre unter der ablagenspezifischen Grenze nicht nachgewiesen'
     );
     result.passed = true;
     process.exitCode = 1; // Erwartetes Rot der tatsächlich gemessenen Speichersperre.

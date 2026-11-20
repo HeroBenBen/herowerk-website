@@ -7,7 +7,7 @@ import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { spawn, execFileSync } from 'node:child_process';
 
-export const VERSION = 'T1302.2';
+export const VERSION = 'T1302.3';
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '../..');
 const STATE = '/Users/benjaminbendler/.herowerk-pruefung';
@@ -193,10 +193,30 @@ function guard(file) {
   }, remaining);
 }
 
-export const MIN_BUILD_FREE_BYTES = 6_000_000_000;
+export const BUILD_RESERVE_BYTES = 2_000_000_000;
 const SPACE_IMAGE = 'node@sha256:c65a31e3c5a9d0c7ab92d2bb91fe74f90d199bfe08b429c1419129e7a5052d99';
 
-export async function measureBuildSpace(docker, name, runId) {
+export function buildSpaceRequirement(profile) {
+  if (
+    !profile ||
+    !Number.isSafeInteger(profile.additionalBytes) ||
+    profile.additionalBytes < 0 ||
+    profile.reserveBytes !== BUILD_RESERVE_BYTES ||
+    !Number.isSafeInteger(profile.additionalBytes + BUILD_RESERVE_BYTES)
+  )
+    throw new Error('Kein gültiger ablagenspezifischer Speicheransatz. Kein Bau.');
+  return profile.additionalBytes + BUILD_RESERVE_BYTES;
+}
+
+export async function measureBuildSpace(docker, name, runId, profile) {
+  const minimumBytes = buildSpaceRequirement(profile);
+  if (profile.requiredCachedImages?.length) {
+    const cached = await docker(['image', 'inspect', ...profile.requiredCachedImages]);
+    if (cached.code)
+      throw new Error(
+        'Grundlagenbestand der Speichermessung verändert. Bedarf neu messen; kein Bau.'
+      );
+  }
   const info = await docker([
     'info',
     '--format',
@@ -244,7 +264,7 @@ export async function measureBuildSpace(docker, name, runId) {
     throw new Error('Behälterspeicher nicht messbar: ungültige df-Ausgabe');
   return {
     freeBytes: Math.min(...free),
-    minimumBytes: MIN_BUILD_FREE_BYTES,
+    minimumBytes,
     measurements: paths.map((p, i) => ({ path: p, freeBytes: free[i] })),
   };
 }
@@ -298,11 +318,17 @@ export function cleanupBuildImages(build) {
 export async function protectedBuild(docker, start, build, persist = () => {}) {
   build.buildStarted = false;
   try {
-    build.storage = await measureBuildSpace(docker, build.spaceName, build.runId);
-    if (build.storage.freeBytes < MIN_BUILD_FREE_BYTES) {
+    build.storage = await measureBuildSpace(
+      docker,
+      build.spaceName,
+      build.runId,
+      build.requirement
+    );
+    if (build.storage.freeBytes < build.storage.minimumBytes) {
       const message =
         `Speichersperre: ${(build.storage.freeBytes / 1e9).toFixed(3)} GB frei ` +
-        `(${build.storage.freeBytes} Byte); mindestens 6 GB erforderlich. Kein Bau.`;
+        `(${build.storage.freeBytes} Byte); mindestens ${(build.storage.minimumBytes / 1e9).toFixed(3)} GB ` +
+        `(${build.storage.minimumBytes} Byte) erforderlich. Kein Bau.`;
       build.refused = message;
       persist();
       return { code: 1, stdout: '', stderr: message };
@@ -787,7 +813,29 @@ export async function main(args = process.argv.slice(2)) {
   }
   const docker = (argv, options) => command('docker', argv, { ...options, env: dockerEnv });
   const buildProtected = async (id, start) => {
-    const build = { id, runId, spaceName: `${network}-speicher-${(result.builds || []).length}` };
+    const requirement = config.buildStorage?.byBuild?.[id] || config.buildStorage?.default;
+    if (
+      id === 'pruefumgebung' &&
+      requirement?.dockerfileSha256 &&
+      requirement.dockerfileSha256 !== hash(config.environment.dockerfile)
+    )
+      throw new Error('Dockerfile der Speichermessung verändert. Bedarf neu messen; kein Bau.');
+    if (
+      id === 'pruefumgebung' &&
+      requirement?.inputs &&
+      Object.entries(requirement.inputs).some(
+        ([file, expected]) =>
+          !fs.existsSync(path.join(work, file)) ||
+          hash(fs.readFileSync(path.join(work, file))) !== expected
+      )
+    )
+      throw new Error('Paketquellen der Speichermessung verändert. Bedarf neu messen; kein Bau.');
+    const build = {
+      id,
+      runId,
+      requirement,
+      spaceName: `${network}-speicher-${(result.builds || []).length}`,
+    };
     register(build.spaceName);
     result.builds ||= [];
     result.builds.push(build);

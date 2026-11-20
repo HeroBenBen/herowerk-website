@@ -6702,5 +6702,12 @@
         "ci.yml:content-fidelity:2"
       ]
     }
-  ]
+  ],
+  "buildStorage": {
+    "default": {
+      "additionalBytes": 4000000000,
+      "reserveBytes": 2000000000,
+      "basis": "Bisheriger 6-GB-Sperrwert unverändert fortgeführt; hier keine neue Bedarfsmessung und keine Senkung."
+    }
+  }
 }
