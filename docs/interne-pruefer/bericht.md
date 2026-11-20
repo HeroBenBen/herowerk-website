@@ -35,3 +35,16 @@ Einbuchung 8fb3d55: genau ein Vollauf, vollständig beendet nach 2593,72 Sekunde
 Ergebnis: /Users/benjaminbendler/.herowerk-pruefung/herowerk-website/laeufe/2026-11-19T16-47-48-681Z-48963/ergebnis.json.
 
 Anschließend wurde allein die Meldung über Altlastabbau abgesichert: Unstrukturierte Abbrüche dürfen keinen angeblichen Rückgang melden. Vier isolierte Fälle mit der tatsächlichen gemeinsamen Funktion bestanden. Prüfkommandos, Auswahl und Ausführung blieben dabei gleich; der volle Fachlauf wurde nicht wiederholt. Diese Meldekorrektur wird bytegleich in alle Ablagen übernommen.
+
+
+## Kernkorrektur T1302.2 vom 20.11.2026
+
+Laufkennzeichen werden ausschließlich mit docker build --label herowerk.lauf=<runId> am Endabbild gesetzt. Der Kern übernimmt den Dockerfile-Inhalt unverändert. Auch der lokale Portal-Druckdienst enthält kein wechselndes Laufkennzeichen mehr im Dockerfile. Damit ist die Ursache der Zwischenspeicherentwertung entfernt; der tatsächliche Cache-Nachweis bleibt bis zum Rechenfenster offen.
+
+Vor jedem vorgesehenen Bau misst der Kern den verfügbaren Speicher über die bestehende Docker-Verbindung. Das vorhandene öffentliche Node-Messabbild läuft ohne Download, ohne Netz und mit schreibgeschütztem Wurzeldateisystem; df misst schreibgeschützt eingebundene Docker-/containerd-Speicherpfade. Unter 6.000.000.000 Byte wird ohne Bau rot gemeldet, einschließlich des Messwerts. Eine nicht mögliche Messung sperrt ebenfalls.
+
+Bei fehlgeschlagenem Bau werden nur neue, aus seiner Legacy-Bauausgabe belegte Zwischenabbilder berücksichtigt. Vorher vorhandene, aus dem Cache verwendete oder inzwischen benannte Abbilder bleiben geschützt. Gelöscht wird ohne force, ohne prune und ohne automatische Elternlöschung. Ein inzwischen anderweitig verwendetes Abbild wird nicht erzwungen entfernt; ein unvollständiger Bereinigungsvorgang steht im Ergebnis. Die Kennungen eigener Zwischencontainer und Abbilder werden auch dem Zeitwächter übergeben; er hält dafür 12 Sekunden Abbruchreserve vor. Vorhandene Zwischenabbilder früherer Läufe wurden nicht gelöscht.
+
+Wache 3 wurde einmal am 20.11.2026 um 19:28:44 Uhr (Europe/Berlin) belegt: 5.835.186.176 Byte frei, entsprechend 5,835 GB, unter der Grenze von 6 GB. Erwartetes Ergebnis rot, Nachweis bestanden, buildStarted=false und buildCalls=0. Gemeinsamer Beleg: /Users/benjaminbendler/.herowerk-pruefung/bau-nachweise/T1302.2/wache-3/ergebnis.json. Es gab keinen Abbildbau und keinen vollen Lauf.
+
+Wachen 1 und 2 sind als getrennte einmalige Aufrufe von tools/interne-pruefer/bau-nachweis.mjs vorbereitet, aber nicht ausgeführt: gleicher mehrstufiger Dockerfile-Inhalt bei unterschiedlichen CLI-Laufkennzeichen muss den Cache verwenden; ein gezielt fehlgeschlagener Bau muss seine neuen Zwischenabbilder entfernen und den vorherigen Abbildbestand erhalten. Die Freigabe dafür erfolgt erst im zugeteilten Rechenfenster. Kein frischer Prüfer des Prüfers gemäß ausdrücklicher Kostenanweisung. Bestehende Fachbelege früherer Kernstände bleiben historische Belege, sie sind kein Vollauf dieses neuen Kernstands.

@@ -7,7 +7,7 @@ import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { spawn, execFileSync } from 'node:child_process';
 
-export const VERSION = 'T1302.1';
+export const VERSION = 'T1302.2';
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '../..');
 const STATE = '/Users/benjaminbendler/.herowerk-pruefung';
@@ -104,7 +104,7 @@ export function checkCoverage(config, inventory) {
 }
 function guard(file) {
   const info = read(file),
-    remaining = Math.max(1, info.deadline - Date.now() - 8500);
+    remaining = Math.max(1, info.deadline - Date.now() - 12000);
   setTimeout(() => {
     const state = read(file),
       result = read(state.output, state.initial);
@@ -135,7 +135,9 @@ function guard(file) {
         .trim()
         .split(/\s+/)
         .filter(Boolean);
-      const names = [...new Set([...state.containers, ...found])];
+      const names = [
+        ...new Set([...state.containers, ...(state.build?.containers || []), ...found]),
+      ];
       if (names.length)
         execFileSync('docker', ['rm', '-f', ...names], {
           env: { ...process.env, DOCKER_HOST: SOCKET },
@@ -157,11 +159,14 @@ function guard(file) {
         .map(JSON.parse);
       cleanupOkay = !running.some(
         (c) =>
-          state.containers.includes(c.Names) || c.Labels?.includes(`herowerk.lauf=${state.runId}`)
+          state.containers.includes(c.Names) ||
+          state.build?.containers?.some((id) => c.ID?.startsWith(id)) ||
+          c.Labels?.includes(`herowerk.lauf=${state.runId}`)
       );
     } catch {
       cleanupOkay = false;
     }
+    if (state.build?.active) result.buildCleanup = cleanupBuildImages(state.build);
     result.status = 'rot';
     result.timeout = true;
     result.complete = false;
@@ -186,6 +191,164 @@ function guard(file) {
     } catch {}
     process.exit(124);
   }, remaining);
+}
+
+export const MIN_BUILD_FREE_BYTES = 6_000_000_000;
+const SPACE_IMAGE = 'node@sha256:c65a31e3c5a9d0c7ab92d2bb91fe74f90d199bfe08b429c1419129e7a5052d99';
+
+export async function measureBuildSpace(docker, name, runId) {
+  const info = await docker([
+    'info',
+    '--format',
+    '{"root":{{json .DockerRootDir}},"driver":{{json .DriverStatus}}}',
+  ]);
+  if (info.code) throw new Error('Behälterspeicher nicht messbar: docker info fehlgeschlagen');
+  const storage = JSON.parse(info.stdout);
+  const roots = [storage.root];
+  if (JSON.stringify(storage.driver).includes('io.containerd.snapshotter'))
+    roots.push('/var/lib/containerd');
+  if (roots.some((p) => typeof p !== 'string' || !p.startsWith('/') || /[,\n\r]/.test(p)))
+    throw new Error('Behälterspeicher nicht messbar: ungültiger Speicherpfad');
+  const paths = [...new Set(roots)];
+  const measurement = await docker([
+    'run',
+    '--pull=never',
+    '--rm',
+    '--read-only',
+    '--network',
+    'none',
+    '--cap-drop',
+    'ALL',
+    '--security-opt',
+    'no-new-privileges',
+    '--name',
+    name,
+    '--label',
+    `herowerk.lauf=${runId}`,
+    '-e',
+    'LC_ALL=C',
+    ...paths.flatMap((p, i) => ['--mount', `type=bind,source=${p},target=/speicher${i},readonly`]),
+    '--entrypoint',
+    'df',
+    SPACE_IMAGE,
+    '-Pk',
+    ...paths.map((_, i) => `/speicher${i}`),
+  ]);
+  if (measurement.code)
+    throw new Error(
+      'Behälterspeicher nicht messbar: lokale df-Probe fehlgeschlagen (kein Download)'
+    );
+  const rows = measurement.stdout.trim().split('\n').slice(1);
+  const free = rows.map((line) => Number(line.trim().split(/\s+/)[3]) * 1024);
+  if (free.length !== paths.length || free.some((n) => !Number.isSafeInteger(n) || n < 0))
+    throw new Error('Behälterspeicher nicht messbar: ungültige df-Ausgabe');
+  return {
+    freeBytes: Math.min(...free),
+    minimumBytes: MIN_BUILD_FREE_BYTES,
+    measurements: paths.map((p, i) => ({ path: p, freeBytes: free[i] })),
+  };
+}
+
+// Nur nachweislich von diesem Legacy-Bau neu erzeugte, weiterhin namenlose
+// Abbilder entfernen. Kein prune, kein force und keine automatische Elternlöschung.
+export function cleanupBuildImages(build) {
+  const deadline = Date.now() + 3000;
+  const call = (args) => {
+    try {
+      return execFileSync('docker', args, {
+        env: { ...process.env, DOCKER_HOST: SOCKET },
+        encoding: 'utf8',
+        timeout: Math.max(1, deadline - Date.now()),
+        maxBuffer: 4 * 1024 * 1024,
+      });
+    } catch (e) {
+      if (e.stdout) return String(e.stdout);
+      throw e;
+    }
+  };
+  try {
+    const ids = [...new Set(build.created || [])].reverse();
+    if (!ids.length) return { complete: true, removed: [], retained: [] };
+    const before = new Set(build.before || []);
+    const rows = JSON.parse(call(['image', 'inspect', ...ids]));
+    const owned = rows.filter(
+      (r) => !before.has(r.Id) && !(r.RepoTags || []).length && !(r.RepoDigests || []).length
+    );
+    const candidates = owned.map((r) => r.Id);
+    if (!candidates.length) return { complete: true, removed: [], retained: [] };
+    // Ohne --force bleiben inzwischen verwendete Abbilder geschützt.
+    call(['image', 'rm', '--no-prune', ...candidates]);
+    const remaining = new Set(call(['image', 'ls', '-aq', '--no-trunc']).trim().split(/\s+/));
+    const retained = candidates.filter((id) => remaining.has(id));
+    return {
+      complete: !retained.length,
+      removed: candidates.filter((id) => !remaining.has(id)),
+      retained,
+    };
+  } catch (e) {
+    return {
+      complete: false,
+      removed: [],
+      retained: build.created || [],
+      error: redact(e.message),
+    };
+  }
+}
+
+export async function protectedBuild(docker, start, build, persist = () => {}) {
+  build.buildStarted = false;
+  try {
+    build.storage = await measureBuildSpace(docker, build.spaceName, build.runId);
+    if (build.storage.freeBytes < MIN_BUILD_FREE_BYTES) {
+      const message =
+        `Speichersperre: ${(build.storage.freeBytes / 1e9).toFixed(3)} GB frei ` +
+        `(${build.storage.freeBytes} Byte); mindestens 6 GB erforderlich. Kein Bau.`;
+      build.refused = message;
+      persist();
+      return { code: 1, stdout: '', stderr: message };
+    }
+    const images = await docker(['image', 'ls', '-aq', '--no-trunc']);
+    if (images.code) throw new Error('Abbildbestand vor dem Bau nicht lesbar. Kein Bau.');
+    build.before = images.stdout.trim().split(/\s+/).filter(Boolean);
+    build.created = [];
+    build.containers = [];
+    build.active = true;
+    build.buildStarted = true;
+    persist();
+    let pending = '',
+      skip = true;
+    const consume = (chunk) => {
+      pending += chunk;
+      const lines = pending.split('\n');
+      pending = lines.pop();
+      for (const line of lines) {
+        const container = line.match(/^\s*---> Running in ([a-f0-9]{12,64})\s*$/)?.[1];
+        if (container && !build.containers.includes(container)) {
+          build.containers.push(container);
+          persist();
+        }
+        if (/^Step \d+\/\d+ : /.test(line)) skip = /^Step \d+\/\d+ : FROM\s/i.test(line);
+        if (/^\s*---> Using cache/.test(line)) skip = true;
+        const id = line.match(/^\s*---> ((?:sha256:)?[a-f0-9]{12,64})\s*$/)?.[1];
+        if (id && !skip && !build.created.includes(id)) {
+          build.created.push(id);
+          persist();
+        }
+      }
+    };
+    const execution = await start(consume);
+    consume('\n');
+    if (execution.code) build.cleanup = cleanupBuildImages(build);
+    build.active = false;
+    persist();
+    return execution;
+  } catch (e) {
+    if (build.active) build.cleanup = cleanupBuildImages(build);
+    build.active = false;
+    build.error = redact(e.message);
+    persist();
+    return { code: 1, stdout: '', stderr: build.error };
+  }
 }
 function matches(file, glob) {
   const expr = glob
@@ -509,7 +672,9 @@ export async function main(args = process.argv.slice(2)) {
         .trim()
         .split(/\s+/)
         .filter(Boolean);
-      const names = [...new Set([...containers, ...intermediate])];
+      const names = [
+        ...new Set([...containers, ...(guardState.build?.containers || []), ...intermediate]),
+      ];
       if (names.length)
         execFileSync('docker', ['rm', '-f', ...names], {
           env: dockerEnv,
@@ -528,7 +693,10 @@ export async function main(args = process.argv.slice(2)) {
         .filter(Boolean)
         .map(JSON.parse);
       return !running.some(
-        (c) => containers.has(c.Names) || c.Labels?.includes(`herowerk.lauf=${runId}`)
+        (c) =>
+          containers.has(c.Names) ||
+          guardState.build?.containers?.some((id) => c.ID?.startsWith(id)) ||
+          c.Labels?.includes(`herowerk.lauf=${runId}`)
       );
     } catch {
       return false;
@@ -590,6 +758,7 @@ export async function main(args = process.argv.slice(2)) {
       const timer = options.timeout ? setTimeout(onSignal, options.timeout) : null;
       child.stdout.on('data', (d) => {
         stdout += d;
+        options.onStdout?.(String(d));
         if (stdout.length > 16 * 1024 * 1024) {
           stderr += '\nAusgabegrenze überschritten';
           try {
@@ -617,6 +786,17 @@ export async function main(args = process.argv.slice(2)) {
     });
   }
   const docker = (argv, options) => command('docker', argv, { ...options, env: dockerEnv });
+  const buildProtected = async (id, start) => {
+    const build = { id, runId, spaceName: `${network}-speicher-${(result.builds || []).length}` };
+    register(build.spaceName);
+    result.builds ||= [];
+    result.builds.push(build);
+    guardState.build = build;
+    return protectedBuild(docker, start, build, () => {
+      save(guardFile, guardState);
+      save(output, result);
+    });
+  };
   const contexts = new Map();
   let work;
   try {
@@ -765,27 +945,32 @@ export async function main(args = process.argv.slice(2)) {
     const imageExists = await docker(['image', 'inspect', imageName]);
     if (imageExists.code) {
       const dockerfile = path.join(dir, 'Dockerfile');
-      fs.writeFileSync(
-        dockerfile,
-        config.environment.dockerfile.replace(/^(FROM .+)$/gm, `$1\nLABEL herowerk.lauf="${runId}"`)
+      fs.writeFileSync(dockerfile, config.environment.dockerfile);
+      const build = await buildProtected('pruefumgebung', (onStdout) =>
+        docker(
+          [
+            'build',
+            '--pull=false',
+            '--force-rm',
+            '--label',
+            'herowerk.pruefung=1',
+            '--label',
+            `herowerk.lauf=${runId}`,
+            '-f',
+            dockerfile,
+            '-t',
+            imageName,
+            work,
+          ],
+          { onStdout }
+        )
       );
-      const build = await docker([
-        'build',
-        '--pull=false',
-        '--force-rm',
-        '--label',
-        'herowerk.pruefung=1',
-        '-f',
-        dockerfile,
-        '-t',
-        imageName,
-        work,
-      ]);
       fs.writeFileSync(path.join(dir, 'einrichtung.log'), redact(build.stdout + build.stderr));
       record({
         id: 'pruefumgebung',
         status: build.code ? 'rot' : 'grün',
         exitCode: build.code,
+        reason: build.code ? result.builds.at(-1).refused || result.builds.at(-1).error : undefined,
       });
       if (build.code) return;
     }
@@ -896,17 +1081,34 @@ export async function main(args = process.argv.slice(2)) {
         };
       } else if (task.kind === 'host') {
         for (const name of task.containers || []) register(expand(name));
-        execution = await command('bash', ['-o', 'pipefail', '-c', expand(task.command)], {
-          cwd: work,
-          env: {
-            ...process.env,
-            DOCKER_HOST: SOCKET,
-            GITHUB_SHA: sha,
-            GITHUB_ENV: path.join(dir, 'umgebung'),
-            HW_OUTPUT: dir,
-            HW_RUN_ID: runId,
-          },
-        });
+        const hostCommand = (onStdout) =>
+          command(
+            'bash',
+            [
+              '-o',
+              'pipefail',
+              '-c',
+              expand(task.command).replace(
+                /\bdocker\s+(?:image\s+)?build(?=\s|$)/g,
+                `docker build --label herowerk.lauf=${runId}`
+              ),
+            ],
+            {
+              cwd: work,
+              onStdout,
+              env: {
+                ...process.env,
+                DOCKER_HOST: SOCKET,
+                GITHUB_SHA: sha,
+                GITHUB_ENV: path.join(dir, 'umgebung'),
+                HW_OUTPUT: dir,
+                HW_RUN_ID: runId,
+              },
+            }
+          );
+        execution = /\bdocker\s+(?:image\s+)?build(?=\s|$)/.test(task.command)
+          ? await buildProtected(task.id, hostCommand)
+          : await hostCommand();
       } else {
         const context = task.context || 'standard';
         if (!contexts.has(context)) {

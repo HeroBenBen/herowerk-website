@@ -1,6 +1,6 @@
 # Vor dem Antrag prüfen
 
-Auftrag T1302, Fassung T1302.1. Die GitHub-Workflows bleiben unverändert.
+Auftrag T1302, Fassung T1302.2. Die GitHub-Workflows bleiben unverändert.
 
 ## Einrichtung
 
@@ -48,3 +48,19 @@ Eine vorhandene Hauptstandmessung lässt sich ausdrücklich mit --bestand-neu --
 ## Berichte und Grundlinien
 
 Lighthouse und Consent sind wie im vorhandenen Workflow ausgewiesene Berichte. Der Consent-Bericht liest ausschließlich Live-Ziele in --voll, ohne Wiederholung, und sperrt nicht. In --geaendert entfällt er mit Vermerk. Die bedingt aktivierte Grundlinien-Aktualisierung wird nicht nachgebildet: kein Erzeugen neuer Sollbilder, kein Einbuchen und kein Hochladen. Ihre vorhandene Prüfung auf genau 16 erwartete PNG bleibt erhalten. Schreib- und Hochladeschritte sind mit Begründung als entfallen zugeordnet.
+
+
+## Bauspeicher und einmalige Nachweise T1302.2
+
+Vor einem Abbildbau sind mindestens 6 GB frei erforderlich, hier ausdrücklich 6.000.000.000 Byte. Der Kern misst die tatsächlichen Docker-/containerd-Speicherpfade über Docker und meldet den Wert. Unterhalb der Grenze oder bei fehlender Messbarkeit findet kein Bau statt. Bereits vorhandene Prüfabbilder benötigen keinen neuen Bau und werden dadurch nicht neu gebaut.
+
+Die Messung benötigt das lokal vorhandene öffentliche Abbild node@sha256:c65a31e3c5a9d0c7ab92d2bb91fe74f90d199bfe08b429c1419129e7a5052d99. Es wird von der Wache niemals heruntergeladen. Ist es bei einer neuen Einrichtung noch nicht vorhanden, muss diese öffentliche Grundlage im freigegebenen Einrichtungsfenster bereitgestellt werden; die Wache sperrt bis dahin.
+
+    node tools/interne-pruefer/bau-nachweis.mjs 3
+
+Dieser einmalige Nachweis misst nur den Speicher und führt grundsätzlich keinen Bau aus. Bei weniger als 6 GB ist der Exitcode 1 das erwartete Rot; passed=true und buildCalls=0 bestätigen den Nachweis. Er wurde am 20.11.2026 bereits ausgeführt und wird nicht wiederholt.
+
+    node tools/interne-pruefer/bau-nachweis.mjs 1
+    node tools/interne-pruefer/bau-nachweis.mjs 2
+
+Diese beiden Aufrufe sind bis zum gesondert freigegebenen Rechenfenster offen. Wache 1 verwendet zwei feste erfolgreiche Cache-Messpunkte mit identischem Dockerfile und verschiedener CLI-Laufkennung; nach einem Fehler erfolgt kein weiterer Bau. Wache 2 erzeugt einen absichtlich fehlschlagenden mehrstufigen Bau und kontrolliert dessen Bereinigung sowie den erhaltenen vorherigen Abbildbestand. Beide Nachweise haben eine rechnerweite Sperre, einen persistenten Beginn und begrenzte Laufzeit; sie gehören nicht in den normalen Prüfbefehl. Die bisherigen einmaligen Fach-Rot-Nachweise werden durch diese Korrektur nicht erneut gestartet.
