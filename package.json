@@ -38,7 +38,8 @@
     "verify:a11": "node tests/a11-oeffentliche-antworten.mjs",
     "verify:kv-nutzen": "node scripts/generate-kv-jaz.mjs --check && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/t1245-kv-website-dom.mjs",
     "verify:kv-browser": "node tests/t1245-kv-website.mjs",
-    "verify:kv-t1247": "node tests/t1247-kostenvergleich.mjs && node tests/t1245-kv-website-dom.mjs && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/schnittstelle-innenfelder-gesperrt.mjs"
+    "verify:kv-t1247": "node tests/t1247-kostenvergleich.mjs && node tests/t1245-kv-website-dom.mjs && node tests/t1245-kv-nutzen.mjs && node tests/t1245-kv-paritaet.mjs && node tests/t1245-kv-parameter.mjs && node tests/schnittstelle-innenfelder-gesperrt.mjs",
+    "pruefe": "node tools/interne-pruefer/pruefe.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",

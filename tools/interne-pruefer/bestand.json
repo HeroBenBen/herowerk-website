@@ -1,0 +1,223 @@
+{
+  "version": "T1302.1",
+  "sha": "a6fcd7db6f8108d53e495fe3a02cdec43c2e6b00",
+  "generated": "2026-11-19T16:37:34.214Z",
+  "sourceResult": "/Users/benjaminbendler/.herowerk-pruefung/herowerk-website/laeufe/2026-11-19T16-22-53-467Z-25179/ergebnis.json",
+  "entries": [
+    {
+      "file": "tests/t1298-aufstellabstaende.spec.js",
+      "rule": "TS2339",
+      "message": "Property 'hash' does not exist on type 'SVGElement | HTMLElement'.",
+      "task": "ci.yml:lint:6",
+      "occurrence": 1,
+      "fingerprint": "dd2eb4fe0ed6f913659aa196cea95750efe8acd2908e74a64a291148c4d5eda4"
+    },
+    {
+      "file": "bewerbung.html",
+      "rule": "dir:hubspot-api-key",
+      "message": "Geheimnisverdacht; Fundstelleninhalt SHA-256 44f5780c94b0e2bac71c3062a14746455d99a5f67903296cf0a196466cd453b9",
+      "task": "ci.yml:secret-scan:2",
+      "occurrence": 1,
+      "fingerprint": "8a145cc641e57d606b1b23d61fad4c5a5399754dc2d30c1855f2455c36c9b1d6"
+    },
+    {
+      "file": "bewerbung.html",
+      "rule": "dir:hubspot-api-key",
+      "message": "Geheimnisverdacht; Fundstelleninhalt SHA-256 477ef6e6111fce93f78cac79417a3cb5a37f12852d8f55d9fa8fa432d45045ef",
+      "task": "ci.yml:secret-scan:2",
+      "occurrence": 1,
+      "fingerprint": "cb16d36ea8d2d9fc8f346781bd7b3e82d99286dd74bc66410b869c38d5929f67"
+    }
+  ],
+  "unresolved": [
+    {
+      "task": "ci.yml:lint:11",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Fehler ohne freigestellten strukturierten Fingerabdruck",
+      "fingerprint": "b4e412d99b29a5c837415033d1bac689ccc6956e73cd7cd2ba1b1f92d09a5c5b"
+    },
+    {
+      "task": "ci.yml:lint:13",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Fehler ohne freigestellten strukturierten Fingerabdruck",
+      "fingerprint": "ef0da0bdf4bac01616cb8377dfe40dc114e54941e3c649d2aeae075cca0f9ae3"
+    },
+    {
+      "task": "ci.yml:lint:15",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Fehler ohne freigestellten strukturierten Fingerabdruck",
+      "fingerprint": "ba12e49cad59fde5f02c38d6aa6657cb9582290289af9f79bca14c88e69b29b5"
+    },
+    {
+      "task": "ci.yml:lint:16",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Fehler ohne freigestellten strukturierten Fingerabdruck",
+      "fingerprint": "b16e647d4becfcb6d0851808949ece3e49d20924bc88c65e75d9f93a1d013fc9"
+    },
+    {
+      "task": "ci.yml:lint:18",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Fehler ohne freigestellten strukturierten Fingerabdruck",
+      "fingerprint": "b8b32b1741f0261cfe227bc72982d88d0c490dc1519fc57ef782bb9383572245"
+    },
+    {
+      "task": "ci.yml:lint:19",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Fehler ohne freigestellten strukturierten Fingerabdruck",
+      "fingerprint": "945d2e689f7c9320c5355adfd8b801afd1fe22d554fb604119bac3d61dada65c"
+    },
+    {
+      "task": "ci.yml:lint:25",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Fehler ohne freigestellten strukturierten Fingerabdruck",
+      "fingerprint": "b78e11684d9addeb5b18ddf8da1a093f2e93c6dc94388bdcee256892eb0d022f"
+    },
+    {
+      "task": "ci.yml:lighthouse-bericht:4",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Fehler ohne freigestellten strukturierten Fingerabdruck",
+      "fingerprint": "d886c9c1808a4cac10a933b3311238aff6434b939166a96b9862cc074f93731c"
+    },
+    {
+      "task": "ci.yml:lighthouse-bericht:5",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Voraussetzung fehlgeschlagen: ci.yml:lighthouse-bericht:4",
+      "fingerprint": "2ba51ed93b82c043b29548f65a941be1f455abd04ce142d51c27640b1bbb12ea"
+    },
+    {
+      "task": "ci.yml:playwright-smoke:5",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Fehler ohne freigestellten strukturierten Fingerabdruck",
+      "fingerprint": "542a170665e54535787a511b97c63a5456a6433b9ad940fe9ffd501669d500d5"
+    },
+    {
+      "task": "ci.yml:playwright-smoke:6",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Voraussetzung fehlgeschlagen: ci.yml:playwright-smoke:5",
+      "fingerprint": "17cffd72d91a8f30a42e105581aac5a95523b7140380a52db592273310882cbd"
+    },
+    {
+      "task": "ci.yml:playwright-smoke:7",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Fehler ohne freigestellten strukturierten Fingerabdruck",
+      "fingerprint": "460464bb3cb222d40f51241726fb751cf03762fcbc8e5d1d16e50824559d1ec2"
+    },
+    {
+      "task": "ci.yml:playwright-smoke:8",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Voraussetzung fehlgeschlagen: ci.yml:playwright-smoke:5",
+      "fingerprint": "2db5056924276576222dc0eb984f147af80fdd3a9d0f0f1f2a4a45f9230cc089"
+    },
+    {
+      "task": "ci.yml:playwright-smoke:9",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Voraussetzung fehlgeschlagen: ci.yml:playwright-smoke:5",
+      "fingerprint": "41c0ffc6192282c8c2ca8742c0b21d52b7947c38b4dc8c90b78183eff086b696"
+    },
+    {
+      "task": "ci.yml:playwright-smoke:10",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Voraussetzung fehlgeschlagen: ci.yml:playwright-smoke:5",
+      "fingerprint": "79c3b08c49d7600ca1e0bad6b922dbc2735dd31b142b7a2afdbad21ff9052d8e"
+    },
+    {
+      "task": "ci.yml:playwright-smoke:11",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Voraussetzung fehlgeschlagen: ci.yml:playwright-smoke:5",
+      "fingerprint": "df69514413f1c8ad8d486c446cd10b67897c4f4acb5d5e9e4eff1245e424fc7a"
+    },
+    {
+      "task": "ci.yml:axe-accessibility:4",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Fehler ohne freigestellten strukturierten Fingerabdruck",
+      "fingerprint": "191c683161e4b64af6fcd0fc3831f72675bbf46a018b5d26c7c81e12bbdd8b0d"
+    },
+    {
+      "task": "ci.yml:axe-accessibility:5",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Voraussetzung fehlgeschlagen: ci.yml:axe-accessibility:4",
+      "fingerprint": "126f022b811bdc51a1368cf1944c09dbbb145dc0a98512977eb507d91591c26d"
+    },
+    {
+      "task": "ci.yml:csp-headers:5",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Fehler ohne freigestellten strukturierten Fingerabdruck",
+      "fingerprint": "0148f5ba1162f7fce76117304862071520964b92b78b3bfa5d883584244e4e0e"
+    },
+    {
+      "task": "ci.yml:csp-headers:6",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Voraussetzung fehlgeschlagen: ci.yml:csp-headers:5",
+      "fingerprint": "6f875b4e412d71c4df4b518bd87fd8b14e60f08473f12d89b8d46e6c158b23fc"
+    },
+    {
+      "task": "ci.yml:csp-headers:7",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Voraussetzung fehlgeschlagen: ci.yml:csp-headers:5",
+      "fingerprint": "c9ad4cac3e27c35f4d37debdad15dfad43becd3dbb97f6f41568a6ca693e6307"
+    },
+    {
+      "task": "ci.yml:visual-regression:4",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Fehler ohne freigestellten strukturierten Fingerabdruck",
+      "fingerprint": "5a4b9c3a49089d3ce7b2e57b135634a6673dd8fd515c5080fb3c7bd1c7034910"
+    },
+    {
+      "task": "ci.yml:visual-regression:5",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Voraussetzung fehlgeschlagen: ci.yml:visual-regression:4",
+      "fingerprint": "75fd2832196a3dae7bfcc9dccdfb1c1982fe4523198b7d280de0a331c76d9336"
+    },
+    {
+      "task": "ci.yml:seo-basics:4",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Fehler ohne freigestellten strukturierten Fingerabdruck",
+      "fingerprint": "673bfe0010d747e344c40fc1ed38fd039c695d53574511ba0dec0ca040500e40"
+    },
+    {
+      "task": "ci.yml:seo-basics:5",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Voraussetzung fehlgeschlagen: ci.yml:seo-basics:4",
+      "fingerprint": "c37d1b9a69944d37fc70c4843dbe45ca77a44801864d68386c2529ad4bd8ba23"
+    },
+    {
+      "task": "ci.yml:schema-validation:4",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Fehler ohne freigestellten strukturierten Fingerabdruck",
+      "fingerprint": "00d90914db4d5ecef254dc6e5f6fb0d1142b8e1164a58cad03ad81b9bdf4c6a6"
+    },
+    {
+      "task": "ci.yml:schema-validation:5",
+      "file": ".github/workflows/ci.yml",
+      "rule": "nicht freigestellter Prüfabbruch",
+      "message": "Voraussetzung fehlgeschlagen: ci.yml:schema-validation:4",
+      "fingerprint": "5ee5ddcb04ea1796bdfd0e8d92721f5c9cbe0ae7d4a718aa8236cc7602d1c551"
+    }
+  ]
+}
