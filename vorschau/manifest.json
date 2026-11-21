@@ -1,0 +1,1090 @@
+{
+  "version": 1,
+  "generator": "T1300-v1",
+  "sourceCommits": {
+    "kunden": "f8fe964975976c45668de158f6f198ad35ec5a7f",
+    "bewerber": "0a40238ce4a660626c10d0b2e8697a6ed2b62989"
+  },
+  "inputs": [
+    {
+      "key": "bewerber:assets/logo-dark.png",
+      "sha256": "5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008"
+    },
+    {
+      "key": "bewerber:assets/logo-light.png",
+      "sha256": "1f2ac753806ddb27a1a0dd2b4f758eaa382911bc4d585cc29cb613432e823dcd"
+    },
+    {
+      "key": "bewerber:assets/logo-schiefer.png",
+      "sha256": "d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4"
+    },
+    {
+      "key": "bewerber:assets/moon.svg",
+      "sha256": "93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b"
+    },
+    {
+      "key": "bewerber:assets/sun.svg",
+      "sha256": "388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c"
+    },
+    {
+      "key": "bewerber:css/portal.css",
+      "sha256": "3e7257af765c004a5cd09c0e96a79ea074a01e79169fe995df53072c74301442"
+    },
+    {
+      "key": "bewerber:dashboard.html",
+      "sha256": "709a5b110522f107063a17ad4895f06090c2b8e1ef864bf943c51c05120556fa"
+    },
+    {
+      "key": "bewerber:index.html",
+      "sha256": "85251419fa8c1b99184e300fd62fcc866bbd8c30da1ce619b05bdb9f92be4bf4"
+    },
+    {
+      "key": "bewerber:js/api.js",
+      "sha256": "df9b35d6071d13118c9a97910de1a901e1840aaccb1116d732839eb7cce6a080"
+    },
+    {
+      "key": "bewerber:js/auth.js",
+      "sha256": "984d4dac1f7ee27eac6f4b04edf110fa1bc743c3c73a944ecf3ea77c82a500fc"
+    },
+    {
+      "key": "bewerber:js/config.js",
+      "sha256": "5d1dcdcf3d797a8992c3a29c2fcad9baca699648e99894408b3c3be928e974b8"
+    },
+    {
+      "key": "bewerber:js/contact.js",
+      "sha256": "b55d73be9183f32607ef465bb9c9459ddd98ecb9129a68ae3ba785ad00552be6"
+    },
+    {
+      "key": "bewerber:js/documents.js",
+      "sha256": "00c77af49a62d09dabbe0c9a508b66d772110cd5e1ba4bf2742863e89985355f"
+    },
+    {
+      "key": "bewerber:js/icons.js",
+      "sha256": "c739f26360c479c48f2868267d4c9ce9b5df6df949de226c7f31a524224f256f"
+    },
+    {
+      "key": "bewerber:js/theme.js",
+      "sha256": "03efcd0135ac6d0c68cdea128993ca9f932625b9884b7af50d146e6176a10552"
+    },
+    {
+      "key": "bewerber:js/timeline.js",
+      "sha256": "923970fae60cc9d338b4a60ffdd44c6fe109c731faed9d1454f30ce4bc6911d4"
+    },
+    {
+      "key": "bewerber:js/upload.js",
+      "sha256": "d74df6c8ecb5bcf16e2a280d2c6765486d39fa799abe30ca4ad1b80adf7b61f7"
+    },
+    {
+      "key": "bewerber:php/api/project-data.php",
+      "sha256": "7cb28f1a6fd04d827a03262847b754453cbffe42e786414dac750c9c95522d77"
+    },
+    {
+      "key": "bewerber:php/config.php",
+      "sha256": "395e92c32a0af27f901a0c2711a4253f91661463ec3e933692f5708008f79abc"
+    },
+    {
+      "key": "generator:scripts/build-t1300-portal-demo.mjs",
+      "sha256": "0cc38b25f7a5fd4321918c3bfb279edfd87a5eb1e2d9b91919569b77c5da2708"
+    },
+    {
+      "key": "generator:scripts/t1300/assets/herowerk-logo-stacked.png",
+      "sha256": "3805a3a2a656bfe79db3a541f258d2250095d86ebd8f8549a29621fbcd58aa3d"
+    },
+    {
+      "key": "generator:scripts/t1300/assets/herowerk-mail-footer.png",
+      "sha256": "164e197a9ca4de301a7500feb25771fa51213bdb34eceaaf0734c3719696364f"
+    },
+    {
+      "key": "generator:scripts/t1300/assets/herowerk-mail-header.png",
+      "sha256": "953cf561dfc4f19514b6e301b5bde48c5a6687bb92fa0aa831a4d7e264064569"
+    },
+    {
+      "key": "generator:scripts/t1300/assets/quellen.json",
+      "sha256": "54c50000421daff8f46e5cbdb73b44ff0b329dc06304601abf4dae81f512f679"
+    },
+    {
+      "key": "generator:scripts/t1300/assets/v4-Primaer-Stacked-B7D900-FFFFFF.svg",
+      "sha256": "c2da02a414155fb5a0079d8f698fd6d66535cb5b3c51fe25a1b6800c19165fd0"
+    },
+    {
+      "key": "generator:scripts/t1300/fixtures.php",
+      "sha256": "6d75a2632485d9c2d9bc305f038ff54d3e29bddd125f9d1576461f06c7a1f00a"
+    },
+    {
+      "key": "generator:scripts/t1300/public-export.mjs",
+      "sha256": "4f5fb5febfde18f15fdf115ab4e9ec1f61443dedc2297156862d2033426ae8cd"
+    },
+    {
+      "key": "generator:scripts/t1300/public-runtime.browser.mjs",
+      "sha256": "61f84b1f993356a174789806ec6266f14735f160f1ef10bfcd23edb560e286d8"
+    },
+    {
+      "key": "generator:scripts/t1300/runtime.browser.mjs",
+      "sha256": "441b76d51c36c085bd6d304b532a2c033599f1baf2eff0cda802e8a82e0760f5"
+    },
+    {
+      "key": "generator:scripts/t1300/shell.css",
+      "sha256": "944ccc37d90b72eddd174cefe40132cffebebd1b3c87ed19a76729b2f4eb487f"
+    },
+    {
+      "key": "generator:scripts/t1300/transform.mjs",
+      "sha256": "b0f000bd8a4f834f425304dc22224c12785eafe6c1de8d3dd4b726ba20679401"
+    },
+    {
+      "key": "kunden:assets/logo-dark.png",
+      "sha256": "5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008"
+    },
+    {
+      "key": "kunden:assets/logo-light.png",
+      "sha256": "1f2ac753806ddb27a1a0dd2b4f758eaa382911bc4d585cc29cb613432e823dcd"
+    },
+    {
+      "key": "kunden:assets/logo-schiefer.png",
+      "sha256": "d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4"
+    },
+    {
+      "key": "kunden:assets/moon.svg",
+      "sha256": "93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b"
+    },
+    {
+      "key": "kunden:assets/sun.svg",
+      "sha256": "388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c"
+    },
+    {
+      "key": "kunden:aufnahme/assets/fonts/barlow-700.woff2",
+      "sha256": "2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289"
+    },
+    {
+      "key": "kunden:aufnahme/assets/fonts/barlow-800.woff2",
+      "sha256": "231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c"
+    },
+    {
+      "key": "kunden:aufnahme/assets/fonts/inter-400.woff2",
+      "sha256": "8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc"
+    },
+    {
+      "key": "kunden:aufnahme/assets/fonts/inter-500.woff2",
+      "sha256": "f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f"
+    },
+    {
+      "key": "kunden:aufnahme/assets/fonts/inter-600.woff2",
+      "sha256": "f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a"
+    },
+    {
+      "key": "kunden:aufnahme/assets/fonts/inter-700.woff2",
+      "sha256": "6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491"
+    },
+    {
+      "key": "kunden:css/portal.css",
+      "sha256": "349eb9e75df72b108a85bafaf320114d45239c62e7b22d5f81736729978b3d92"
+    },
+    {
+      "key": "kunden:css/zahlungswege.css",
+      "sha256": "b196c3041b95ea066ab46394fa08aa3b42ddbf15bbb1c1af2a10c30da92f92b6"
+    },
+    {
+      "key": "kunden:dashboard.html",
+      "sha256": "92eca1aadefa82132eb04544f5478d9dd3bfe6ebd2ca557f8a532389fcee4df1"
+    },
+    {
+      "key": "kunden:docs/t1300/quelle_bewerber_anmeldemail.md",
+      "sha256": "1de6fecff30206d9aa80a900658075c596bb7aaae231d1f989c8d276bdee0839"
+    },
+    {
+      "key": "kunden:index.html",
+      "sha256": "59b04369e73efb0bdd2f50d58063a3df316724e233ae2152fe6d0f803a610af3"
+    },
+    {
+      "key": "kunden:intern/assets/app.css",
+      "sha256": "a377fdf82b0d166024b994f278a4b6271215dfa12f06f761fc0b47ba9816b375"
+    },
+    {
+      "key": "kunden:js/angebot.js",
+      "sha256": "833aa3acea91542a121a68393437955e6139a6784c58ab7c87886b20719833cf"
+    },
+    {
+      "key": "kunden:js/api.js",
+      "sha256": "cc98f9fe39375bed3a19d43330c850f6bf13e16069757e9e8c926d41b3ba418c"
+    },
+    {
+      "key": "kunden:js/auth.js",
+      "sha256": "d12531e387d8ef3e11545ee648c40af8d6685891c2140c3ab820b274f2386466"
+    },
+    {
+      "key": "kunden:js/config.js",
+      "sha256": "a130ec3a9b6b5ed2bd4b6879ddf9702493345258c26ff97e0f6fc2e485835391"
+    },
+    {
+      "key": "kunden:js/contact.js",
+      "sha256": "a94eff139f72d91198bb75b1a9a786f3ad1dfe46b9bc780bf544f8bcb2ae0466"
+    },
+    {
+      "key": "kunden:js/dashboard-withdrawal.js",
+      "sha256": "ad9776f1219df98fe82ed4ec30d9abed3c5054af55679396305ffa0a3a4aa7bb"
+    },
+    {
+      "key": "kunden:js/documents.js",
+      "sha256": "00c77af49a62d09dabbe0c9a508b66d772110cd5e1ba4bf2742863e89985355f"
+    },
+    {
+      "key": "kunden:js/fv-status.js",
+      "sha256": "83bb4a2cb553c7e674eb6bc3dd965a02dea35e5f82d736073d92e1bcf6a2c2f5"
+    },
+    {
+      "key": "kunden:js/gewerke.js",
+      "sha256": "3f8c37885ef6659da5d52e47949998b1e563c3c28a025e4af2f2e052f1213282"
+    },
+    {
+      "key": "kunden:js/hinweise.js",
+      "sha256": "2e547fe3058c801dd57779c3fdffda7eab0cfd648f9bd0c70383bfbef577003c"
+    },
+    {
+      "key": "kunden:js/icons.js",
+      "sha256": "c739f26360c479c48f2868267d4c9ce9b5df6df949de226c7f31a524224f256f"
+    },
+    {
+      "key": "kunden:js/projects.js",
+      "sha256": "857b239552da90f7df5e541851f8cad63c4999b8e3966ce7f54851a220cb0ac5"
+    },
+    {
+      "key": "kunden:js/theme.js",
+      "sha256": "22b991eecd388625a8f31ee5aed33394b80822063fbbba177409c1ccbb9a4a68"
+    },
+    {
+      "key": "kunden:js/timeline.js",
+      "sha256": "923970fae60cc9d338b4a60ffdd44c6fe109c731faed9d1454f30ce4bc6911d4"
+    },
+    {
+      "key": "kunden:js/upload.js",
+      "sha256": "e44eeaf7ae2fd6d94be72f81166d7dc7c9c2577a9aab22f1fbaf46774bdf8832"
+    },
+    {
+      "key": "kunden:js/zahlungsweg.js",
+      "sha256": "1450a5fa1ed9641ede9dec2b7546c2bdee2140ef377475b23dd59564f0afd6ac"
+    },
+    {
+      "key": "kunden:php/api/project-data.php",
+      "sha256": "85002add47f56723c0fe5dc2b66635264afaa2f3ea1d0eb4f9ca21bc4cc5d584"
+    },
+    {
+      "key": "kunden:php/config.php",
+      "sha256": "5856495309e82f253034e0a0c56f8418424bb73c196108b7936eb78472cb39df"
+    },
+    {
+      "key": "kunden:php/lib/angebotsfassungen_lesen.php",
+      "sha256": "ff4915697c64b9ea19deaa6699d65b7ad8f4589c7fced2f683318544ca15557e"
+    },
+    {
+      "key": "kunden:php/lib/contract_execution.php",
+      "sha256": "0cc0855bd56c57e81b16a4da38aeb8a38a1b0a9f7ab6115a55e4659312f29e49"
+    },
+    {
+      "key": "kunden:php/lib/objekt_projektname.php",
+      "sha256": "e9ca3fc5664fc93b86565586284847b00395b7eeaf61e4e6de45eb936906648b"
+    },
+    {
+      "key": "kunden:php/lib/offers.php",
+      "sha256": "f5101c4403dc594232232fb083a312fad4762cfe19ce85ba98876a7583a2ccdb"
+    },
+    {
+      "key": "kunden:php/lib/request_login.php",
+      "sha256": "9606f74209f95905461f60368b7c77cbb43b3b203896d0936c0b1c52a5bf4c53"
+    },
+    {
+      "key": "kunden:php/lib/upload_notifications.php",
+      "sha256": "e0ba3e1ca595e9ecfda1abea58701c852f057ef134eaa296709d4f805adcee45"
+    },
+    {
+      "key": "kunden:php/lib/withdrawal.php",
+      "sha256": "f40fc6fb99b8fdb74b69dab50979b4f8008c30cc8cb49b3cfed4cf7ca7a9dfa0"
+    },
+    {
+      "key": "kunden:php/lib/zahlungswege.php",
+      "sha256": "fdb99981175789afa083a5d463adf000ca6b2ac1e2078666c24310fdc4b1fdbb"
+    }
+  ],
+  "outputs": [
+    {
+      "file": "assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg",
+      "sha256": "388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c",
+      "bytes": 686
+    },
+    {
+      "file": "assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg",
+      "sha256": "93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b",
+      "bytes": 468
+    },
+    {
+      "file": "assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png",
+      "sha256": "5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008",
+      "bytes": 20588
+    },
+    {
+      "file": "assets/1f2ac753806ddb27a1a0dd2b4f758eaa382911bc4d585cc29cb613432e823dcd.png",
+      "sha256": "1f2ac753806ddb27a1a0dd2b4f758eaa382911bc4d585cc29cb613432e823dcd",
+      "bytes": 12017
+    },
+    {
+      "file": "assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png",
+      "sha256": "d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4",
+      "bytes": 11061
+    },
+    {
+      "file": "assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2",
+      "sha256": "8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc",
+      "bytes": 23664
+    },
+    {
+      "file": "assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2",
+      "sha256": "f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f",
+      "bytes": 24272
+    },
+    {
+      "file": "assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2",
+      "sha256": "f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a",
+      "bytes": 24452
+    },
+    {
+      "file": "assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2",
+      "sha256": "6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491",
+      "bytes": 24356
+    },
+    {
+      "file": "assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2",
+      "sha256": "2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289",
+      "bytes": 22788
+    },
+    {
+      "file": "assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2",
+      "sha256": "231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c",
+      "bytes": 22976
+    },
+    {
+      "file": "kunden-login.html",
+      "sha256": "de9274140d9304e2b93c6d38c75a789f6553e34a77e56f5e21398e2820b2bf1d",
+      "bytes": 150882
+    },
+    {
+      "file": "kunden-dashboard.html",
+      "sha256": "da2c3513fac2cdc20ea6f5fc8bcc2dd224082028119e4935cbac35df85558bec",
+      "bytes": 264801
+    },
+    {
+      "file": "assets/953cf561dfc4f19514b6e301b5bde48c5a6687bb92fa0aa831a4d7e264064569.png",
+      "sha256": "953cf561dfc4f19514b6e301b5bde48c5a6687bb92fa0aa831a4d7e264064569",
+      "bytes": 14510
+    },
+    {
+      "file": "assets/164e197a9ca4de301a7500feb25771fa51213bdb34eceaaf0734c3719696364f.png",
+      "sha256": "164e197a9ca4de301a7500feb25771fa51213bdb34eceaaf0734c3719696364f",
+      "bytes": 4946
+    },
+    {
+      "file": "kunden-mail.html",
+      "sha256": "ac160ee059135c798ad37d10765d81f5da5fe1c9a726c8dcfab5497343ae3303",
+      "bytes": 99953
+    },
+    {
+      "file": "bewerber-login.html",
+      "sha256": "b8e8893e14c29f8d07c0e78b1794f4deed63a2ca830574142695ca400c306cc8",
+      "bytes": 117568
+    },
+    {
+      "file": "bewerber-dashboard.html",
+      "sha256": "16d219e969abf58fe44e461d27f06b70aa2ca4bacf55408fd4d0ed566b274cfe",
+      "bytes": 150366
+    },
+    {
+      "file": "assets/3805a3a2a656bfe79db3a541f258d2250095d86ebd8f8549a29621fbcd58aa3d.png",
+      "sha256": "3805a3a2a656bfe79db3a541f258d2250095d86ebd8f8549a29621fbcd58aa3d",
+      "bytes": 15224
+    },
+    {
+      "file": "bewerber-mail.html",
+      "sha256": "1cbf20e3522e38cfeb5c8d0c74d2d3f6e421d737148903beeb09cdca71d22ace",
+      "bytes": 89445
+    }
+  ],
+  "adaptations": [
+    {
+      "portal": "kunden",
+      "file": "index.html#inline-1",
+      "rule": "Virtueller Browserzugriff",
+      "start": 60
+    },
+    {
+      "portal": "kunden",
+      "file": "index.html#inline-1",
+      "rule": "Virtueller Browserzugriff",
+      "start": 102
+    },
+    {
+      "portal": "kunden",
+      "file": "index.html#inline-1",
+      "rule": "Virtueller Browserzugriff",
+      "start": 235
+    },
+    {
+      "portal": "kunden",
+      "file": "js/theme.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 431
+    },
+    {
+      "portal": "kunden",
+      "file": "js/theme.js",
+      "rule": "Eingebettetes Theme-Icon",
+      "start": 734
+    },
+    {
+      "portal": "kunden",
+      "file": "index.html#inline-2",
+      "rule": "Virtueller Browserzugriff",
+      "start": 435
+    },
+    {
+      "portal": "kunden",
+      "file": "index.html#inline-2",
+      "rule": "Virtueller Browserzugriff",
+      "start": 483
+    },
+    {
+      "portal": "kunden",
+      "file": "index.html#inline-2",
+      "rule": "Virtueller Browserzugriff",
+      "start": 766
+    },
+    {
+      "portal": "kunden",
+      "file": "js/api.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 557
+    },
+    {
+      "portal": "kunden",
+      "file": "js/api.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 810
+    },
+    {
+      "portal": "kunden",
+      "file": "js/api.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 1106
+    },
+    {
+      "portal": "kunden",
+      "file": "js/api.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 1244
+    },
+    {
+      "portal": "kunden",
+      "file": "js/api.js",
+      "rule": "Erwarteten Sitzungsablauf ohne Konsolenfehler anzeigen",
+      "start": 3755
+    },
+    {
+      "portal": "kunden",
+      "file": "js/api.js",
+      "rule": "Geschützte Mustervorschau statt Popup oder Download",
+      "start": 11102
+    },
+    {
+      "portal": "kunden",
+      "file": "js/api.js",
+      "rule": "Geschützte Mustervorschau statt Popup oder Download",
+      "start": 12707
+    },
+    {
+      "portal": "kunden",
+      "file": "js/api.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 14495
+    },
+    {
+      "portal": "kunden",
+      "file": "js/zahlungsweg.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 1437
+    },
+    {
+      "portal": "kunden",
+      "file": "js/zahlungsweg.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 2589
+    },
+    {
+      "portal": "kunden",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 4023
+    },
+    {
+      "portal": "kunden",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 4463
+    },
+    {
+      "portal": "kunden",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 4499
+    },
+    {
+      "portal": "kunden",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 5372
+    },
+    {
+      "portal": "kunden",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 5825
+    },
+    {
+      "portal": "kunden",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 6398
+    },
+    {
+      "portal": "kunden",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 6821
+    },
+    {
+      "portal": "kunden",
+      "file": "index.html#inline-3",
+      "rule": "Virtueller Browserzugriff",
+      "start": 552
+    },
+    {
+      "portal": "kunden",
+      "file": "index.html#inline-4",
+      "rule": "DOM-Bereitschaft nach Sandbox-Handshake",
+      "start": 5
+    },
+    {
+      "portal": "kunden",
+      "file": "index.html#inline-4#ready",
+      "rule": "Virtueller Browserzugriff",
+      "start": 551
+    },
+    {
+      "portal": "kunden",
+      "file": "dashboard.html#inline-1",
+      "rule": "Virtueller Browserzugriff",
+      "start": 60
+    },
+    {
+      "portal": "kunden",
+      "file": "dashboard.html#inline-1",
+      "rule": "Virtueller Browserzugriff",
+      "start": 102
+    },
+    {
+      "portal": "kunden",
+      "file": "dashboard.html#inline-1",
+      "rule": "Virtueller Browserzugriff",
+      "start": 235
+    },
+    {
+      "portal": "kunden",
+      "file": "js/theme.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 431
+    },
+    {
+      "portal": "kunden",
+      "file": "js/theme.js",
+      "rule": "Eingebettetes Theme-Icon",
+      "start": 734
+    },
+    {
+      "portal": "kunden",
+      "file": "dashboard.html#inline-2",
+      "rule": "Virtueller Browserzugriff",
+      "start": 435
+    },
+    {
+      "portal": "kunden",
+      "file": "dashboard.html#inline-2",
+      "rule": "Virtueller Browserzugriff",
+      "start": 483
+    },
+    {
+      "portal": "kunden",
+      "file": "dashboard.html#inline-2",
+      "rule": "Virtueller Browserzugriff",
+      "start": 766
+    },
+    {
+      "portal": "kunden",
+      "file": "js/api.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 557
+    },
+    {
+      "portal": "kunden",
+      "file": "js/api.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 810
+    },
+    {
+      "portal": "kunden",
+      "file": "js/api.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 1106
+    },
+    {
+      "portal": "kunden",
+      "file": "js/api.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 1244
+    },
+    {
+      "portal": "kunden",
+      "file": "js/api.js",
+      "rule": "Erwarteten Sitzungsablauf ohne Konsolenfehler anzeigen",
+      "start": 3755
+    },
+    {
+      "portal": "kunden",
+      "file": "js/api.js",
+      "rule": "Geschützte Mustervorschau statt Popup oder Download",
+      "start": 11102
+    },
+    {
+      "portal": "kunden",
+      "file": "js/api.js",
+      "rule": "Geschützte Mustervorschau statt Popup oder Download",
+      "start": 12707
+    },
+    {
+      "portal": "kunden",
+      "file": "js/api.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 14495
+    },
+    {
+      "portal": "kunden",
+      "file": "js/zahlungsweg.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 1437
+    },
+    {
+      "portal": "kunden",
+      "file": "js/zahlungsweg.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 2589
+    },
+    {
+      "portal": "kunden",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 4023
+    },
+    {
+      "portal": "kunden",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 4463
+    },
+    {
+      "portal": "kunden",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 4499
+    },
+    {
+      "portal": "kunden",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 5372
+    },
+    {
+      "portal": "kunden",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 5825
+    },
+    {
+      "portal": "kunden",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 6398
+    },
+    {
+      "portal": "kunden",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 6821
+    },
+    {
+      "portal": "kunden",
+      "file": "js/angebot.js",
+      "rule": "Echte Bestätigungsfrage über die Hülle statt verbotener Sandbox-Modale",
+      "start": 35254
+    },
+    {
+      "portal": "kunden",
+      "file": "dashboard.html#inline-3",
+      "rule": "DOM-Bereitschaft nach Sandbox-Handshake",
+      "start": 158
+    },
+    {
+      "portal": "bewerber",
+      "file": "index.html#inline-1",
+      "rule": "Virtueller Browserzugriff",
+      "start": 60
+    },
+    {
+      "portal": "bewerber",
+      "file": "index.html#inline-1",
+      "rule": "Virtueller Browserzugriff",
+      "start": 102
+    },
+    {
+      "portal": "bewerber",
+      "file": "index.html#inline-1",
+      "rule": "Virtueller Browserzugriff",
+      "start": 235
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/theme.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 387
+    },
+    {
+      "portal": "bewerber",
+      "file": "index.html#inline-2",
+      "rule": "Sentry-Lader durch isolierten Configaufruf ohne SDK ersetzt"
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/config.js",
+      "rule": "Loginplatzhalter auf virtuellen Demo-Pfad abgebildet"
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/api.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 557
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/api.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 810
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/api.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 1106
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/api.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 1244
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/api.js",
+      "rule": "Erwarteten Sitzungsablauf ohne Konsolenfehler anzeigen",
+      "start": 3755
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/api.js",
+      "rule": "Geschützte Mustervorschau statt Popup oder Download",
+      "start": 7772
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/api.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 8969
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 1483
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 2000
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 2077
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 2111
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 2767
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 3220
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 3385
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 3583
+    },
+    {
+      "portal": "bewerber",
+      "file": "index.html#inline-3",
+      "rule": "DOM-Bereitschaft nach Sandbox-Handshake",
+      "start": 5
+    },
+    {
+      "portal": "bewerber",
+      "file": "index.html#inline-3#ready",
+      "rule": "Virtueller Browserzugriff",
+      "start": 369
+    },
+    {
+      "portal": "bewerber",
+      "file": "dashboard.html#inline-1",
+      "rule": "Virtueller Browserzugriff",
+      "start": 60
+    },
+    {
+      "portal": "bewerber",
+      "file": "dashboard.html#inline-1",
+      "rule": "Virtueller Browserzugriff",
+      "start": 102
+    },
+    {
+      "portal": "bewerber",
+      "file": "dashboard.html#inline-1",
+      "rule": "Virtueller Browserzugriff",
+      "start": 235
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/theme.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 387
+    },
+    {
+      "portal": "bewerber",
+      "file": "dashboard.html#inline-2",
+      "rule": "Sentry-Lader durch isolierten Configaufruf ohne SDK ersetzt"
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/config.js",
+      "rule": "Loginplatzhalter auf virtuellen Demo-Pfad abgebildet"
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/api.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 557
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/api.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 810
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/api.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 1106
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/api.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 1244
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/api.js",
+      "rule": "Erwarteten Sitzungsablauf ohne Konsolenfehler anzeigen",
+      "start": 3755
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/api.js",
+      "rule": "Geschützte Mustervorschau statt Popup oder Download",
+      "start": 7772
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/api.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 8969
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 1483
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 2000
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 2077
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 2111
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 2767
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 3220
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 3385
+    },
+    {
+      "portal": "bewerber",
+      "file": "js/auth.js",
+      "rule": "Virtueller Browserzugriff",
+      "start": 3583
+    },
+    {
+      "portal": "bewerber",
+      "file": "dashboard.html#inline-3",
+      "rule": "DOM-Bereitschaft nach Sandbox-Handshake",
+      "start": 210
+    },
+    {
+      "portal": "bewerber",
+      "file": "dashboard.html#inline-3#ready",
+      "rule": "Virtueller Browserzugriff",
+      "start": 537
+    }
+  ],
+  "applicantMail": {
+    "status": "supplied",
+    "path": "docs/t1300/quelle_bewerber_anmeldemail.md",
+    "sha256": "1de6fecff30206d9aa80a900658075c596bb7aaae231d1f989c8d276bdee0839",
+    "source": "Zapier-Ablauf „HERO Bewerber Magic Link + Drive + HR“ (Zap 370894213), veröffentlichte Fassung v4 „v4 Portal-Anrede aus Vorname, auch bei Alt-Kontakten“ vom 02.10.2026. Gelesen wurde ausschließlich die veröffentlichte Fassung, ein vorhandener Entwurf nicht. Linkerzeugung: Schritt 2, Code by Zapier „Run Javascript“ (Schritt-ID 370894214). Anrede: Schritt 4, Code by Zapier „Run Javascript“ (Schritt-ID 382147574). Mail: Schritt 5, Gmail „Send Email“ (Schritt-ID 370894216), Felder Subject und Body. Der Text ist der HTML-Body dieses Schritts, wörtlich übernommen (Body-Typ html, Absender info@herowerk.de, Absendername „HeroWerk Team“). Die Anrede setzt Schritt 4 ein: aus dem ersten Vornamen wird „Hallo <Vorname>,“, ohne Vorname „Hallo,“. Die Demo setzt einen Mustervornamen ein. Logografik https://www.herowerk.de/herowerk-logo-stacked.png, am 2026-11-19 lesend abgerufen, SHA-256 3805a3a2a656bfe79db3a541f258d2250095d86ebd8f8549a29621fbcd58aa3d, unverändert als data:-URI einzubetten.",
+    "readDate": "2026-11-19",
+    "duration": "30 Minuten (Schritt 2: `const expiry = new Date(Date.now() + 30 * 60 * 1000).toISOString();`)",
+    "targetTemplate": "https://bewerbung.herowerk.de/dashboard.html?token={{TOKEN}}&email={{EMAIL}}"
+  },
+  "brandAssets": [
+    {
+      "file": "herowerk-mail-header.png",
+      "source": "/Users/benjaminbendler/Library/CloudStorage/GoogleDrive-b.bendler@herowerk.de/Meine Ablage/HeroPlan/_Agent-Work/2026-11-19_T1300_Demoseiten-Portale/codex_lauf/ist/herowerk-mail-header.png",
+      "sha256": "953cf561dfc4f19514b6e301b5bde48c5a6687bb92fa0aa831a4d7e264064569",
+      "readDate": "2026-11-19",
+      "provenance": "Vom Controller am 19.11.2026 lesend von https://www.herowerk.de/ beschafft; unveränderte lokale Datei übernommen."
+    },
+    {
+      "file": "herowerk-mail-footer.png",
+      "source": "/Users/benjaminbendler/Library/CloudStorage/GoogleDrive-b.bendler@herowerk.de/Meine Ablage/HeroPlan/_Agent-Work/2026-11-19_T1300_Demoseiten-Portale/codex_lauf/ist/herowerk-mail-footer.png",
+      "sha256": "164e197a9ca4de301a7500feb25771fa51213bdb34eceaaf0734c3719696364f",
+      "readDate": "2026-11-19",
+      "provenance": "Vom Controller am 19.11.2026 lesend von https://www.herowerk.de/ beschafft; unveränderte lokale Datei übernommen."
+    },
+    {
+      "file": "v4-Primaer-Stacked-B7D900-FFFFFF.svg",
+      "source": "/Users/benjaminbendler/Library/CloudStorage/GoogleDrive-b.bendler@herowerk.de/Meine Ablage/HeroPlan/03_Marke_IP/Logo-Pack/Angepasste Farben und Formen/v4-Primaer-Stacked-B7D900-FFFFFF.svg",
+      "sha256": "c2da02a414155fb5a0079d8f698fd6d66535cb5b3c51fe25a1b6800c19165fd0",
+      "readDate": "2026-11-19",
+      "provenance": "Vom Auftraggeber benannte lokale Logo-Pack-Datei; unverändert übernommen."
+    },
+    {
+      "file": "herowerk-logo-stacked.png",
+      "source": "/Users/benjaminbendler/Library/CloudStorage/GoogleDrive-b.bendler@herowerk.de/Meine Ablage/HeroPlan/_Agent-Work/2026-11-19_T1300_Demoseiten-Portale/codex_lauf/ist/herowerk-logo-stacked.png",
+      "sha256": "3805a3a2a656bfe79db3a541f258d2250095d86ebd8f8549a29621fbcd58aa3d",
+      "readDate": "2026-11-19",
+      "provenance": "Vom Auftraggeber mit der freigegebenen Bewerber-Mailquelle geliefert; laut Fundstelle am 19.11.2026 lesend von https://www.herowerk.de/herowerk-logo-stacked.png beschafft. Unverändert übernommen."
+    }
+  ],
+  "documents": [
+    {
+      "file": "kunden-login.html",
+      "bytes": 150882,
+      "scriptHash": "ShotU5VNnKh9c3tSqO8Zb6I7DFLHuOP1AYFkl51GfpQ=",
+      "csp": "default-src 'none'; base-uri 'none'; frame-ancestors 'self'; object-src 'none'; form-action 'none'; script-src 'sha256-ShotU5VNnKh9c3tSqO8Zb6I7DFLHuOP1AYFkl51GfpQ='; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'none'; frame-src 'none'; worker-src 'none'; media-src 'none'; manifest-src 'none'; sandbox allow-scripts"
+    },
+    {
+      "file": "kunden-dashboard.html",
+      "bytes": 264801,
+      "scriptHash": "c06c/bbt9BS7hXyabotcQn+aJKCU+PD/jX/qTwO9A/o=",
+      "csp": "default-src 'none'; base-uri 'none'; frame-ancestors 'self'; object-src 'none'; form-action 'none'; script-src 'sha256-c06c/bbt9BS7hXyabotcQn+aJKCU+PD/jX/qTwO9A/o='; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'none'; frame-src 'none'; worker-src 'none'; media-src 'none'; manifest-src 'none'; sandbox allow-scripts"
+    },
+    {
+      "file": "kunden-mail.html",
+      "bytes": 99953,
+      "scriptHash": "A+k6DhBKUPsuedJWkcjNBzXFxu8SZ4Dx4ppKMEOAXUM=",
+      "csp": "default-src 'none'; base-uri 'none'; frame-ancestors 'self'; object-src 'none'; form-action 'none'; script-src 'sha256-A+k6DhBKUPsuedJWkcjNBzXFxu8SZ4Dx4ppKMEOAXUM='; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'none'; frame-src 'none'; worker-src 'none'; media-src 'none'; manifest-src 'none'; sandbox allow-scripts"
+    },
+    {
+      "file": "bewerber-login.html",
+      "bytes": 117568,
+      "scriptHash": "XWrN35CwuL9DSHjLAK158Iq0vzV/ynLaWawnCHHk/Gs=",
+      "csp": "default-src 'none'; base-uri 'none'; frame-ancestors 'self'; object-src 'none'; form-action 'none'; script-src 'sha256-XWrN35CwuL9DSHjLAK158Iq0vzV/ynLaWawnCHHk/Gs='; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'none'; frame-src 'none'; worker-src 'none'; media-src 'none'; manifest-src 'none'; sandbox allow-scripts"
+    },
+    {
+      "file": "bewerber-dashboard.html",
+      "bytes": 150366,
+      "scriptHash": "Yr9JqFeUBl2RMuBKcscTIK3x1uZ9CUfHNQmYhHdh7uU=",
+      "csp": "default-src 'none'; base-uri 'none'; frame-ancestors 'self'; object-src 'none'; form-action 'none'; script-src 'sha256-Yr9JqFeUBl2RMuBKcscTIK3x1uZ9CUfHNQmYhHdh7uU='; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'none'; frame-src 'none'; worker-src 'none'; media-src 'none'; manifest-src 'none'; sandbox allow-scripts"
+    },
+    {
+      "file": "bewerber-mail.html",
+      "bytes": 89445,
+      "scriptHash": "Ox6bTFvhAptXfCvHVv8xGCrh5EKOOmYD+magxc1V8VY=",
+      "csp": "default-src 'none'; base-uri 'none'; frame-ancestors 'self'; object-src 'none'; form-action 'none'; script-src 'sha256-Ox6bTFvhAptXfCvHVv8xGCrh5EKOOmYD+magxc1V8VY='; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'none'; frame-src 'none'; worker-src 'none'; media-src 'none'; manifest-src 'none'; sandbox allow-scripts"
+    }
+  ],
+  "target": "public"
+}

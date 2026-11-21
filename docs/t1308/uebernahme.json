@@ -1,0 +1,11 @@
+{
+  "state": "eingebucht",
+  "producerCommit": "6479c8bce1e967f39d29988198c4ab231b9f46ca",
+  "producerBaseCommit": "6479c8bce1e967f39d29988198c4ab231b9f46ca",
+  "manifestSha256": "f60e90b97322587614d960ba7f0cc610e0ce2e7117477d75db2eff5afac93222",
+  "sourceCommits": {
+    "kunden": "f8fe964975976c45668de158f6f198ad35ec5a7f",
+    "bewerber": "0a40238ce4a660626c10d0b2e8697a6ed2b62989"
+  },
+  "importedAt": "2026-11-21T04:17:00.699Z"
+}

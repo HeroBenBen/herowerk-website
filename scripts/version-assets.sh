@@ -57,6 +57,7 @@ done < <(
     -not -path './tests/*' \
     -not -path './apps-script/*' \
     -not -path './archive/*' \
+    -not -path './vorschau/*' \
     -not -path './dist-ionos/*' \
     -not -path './reports/*' \
     -not -name 'eslint.config.js' \
@@ -72,6 +73,7 @@ done < <(
     -not -path './.git/*' \
     -not -path './node_modules/*' \
     -not -path './archive/*' \
+    -not -path './vorschau/*' \
     -not -path './dist-ionos/*' \
     -print | sed 's|^\./||' | sort
 )

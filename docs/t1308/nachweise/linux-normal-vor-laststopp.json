@@ -1,0 +1,3986 @@
+{
+  "mode": "normales Chromium, mehrere Prozesse",
+  "base": "http://host.docker.internal:8138",
+  "matrix": [
+    {
+      "width": 390,
+      "theme": "dark",
+      "portal": "kunden",
+      "stations": [
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Light-Mode\nDein Projekt-Portal\n\nGib deine E-Mail-Adresse ein, dann senden wir dir einen Zugangslink.\n\nE-Mail-Adresse\nZUGANGSLINK ANFORDERN\n\nNoch kein Projekt bei HeroWerk? Mehr erfahren\n\nDatenschutz · Impressum · © 2026 HeroWerk GmbH",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "678172b6bc3fb5d8dc196eb4e23336ad",
+            "scenario": 0,
+            "state": null,
+            "session": false,
+            "address": "index.html",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "unloaded",
+            "unloaded",
+            "loaded",
+            "unloaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Dein HeroWerk Portal-Zugang\n\n\n\nHallo Mia,\n\nwillkommen in deinem persönlichen HeroWerk-Portal. Hier siehst du jederzeit den Stand deines Wärmepumpen-Projekts, alle Unterlagen und die nächsten Schritte.\n\nKlick auf den Button, um dich sicher einzuloggen. Der Link ist 30 Minuten gültig.\n\nZum Portal\n\nÜbrigens: Für deinen Zugang brauchst du kein Passwort. Aus Sicherheitsgründen ist jeder Login-Link nur 30 Minuten gültig und für eine Anmeldung gedacht. Ist er abgelaufen oder möchtest du das Portal später erneut öffnen, forderst du einfach einen neuen Link an. Das dauert nur einen Moment, und so bleiben deine Daten jederzeit geschützt.\n\nFalls du diesen Zugang nicht angefordert hast, kannst du diese E-Mail einfach ignorieren.\n\nBeste Grüße\nDein HeroWerk-Team\n\n\n",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "ea487566dd0d3e014154f6be5e01d51e",
+            "scenario": 0,
+            "state": null,
+            "session": false,
+            "address": "index.html",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "unloaded",
+            "unloaded",
+            "unloaded",
+            "unloaded",
+            "unloaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Mia Mustermann\nLight-Mode\nAbmelden\nHallo Mia!\n\nProjekt: Musterstraße 1, 30159 Hannover. Hier siehst du den aktuellen Stand.\n\nDEIN PROJEKTFORTSCHRITT\n✓\nErstberatung\nErledigt\nWAS WIR TUN\n\nWir prüfen deine Anfrage, bewerten die grundsätzliche Eignung deines Gebäudes und bereiten ein individuelles Beratungsgespräch vor.\n\nDEINE MITWIRKUNG\n\nErzähl uns von deinem Gebäude und deinen Wünschen. Wir beraten dich ehrlich und unverbindlich.\n\n✓\nBeratungsgespräch\nErledigt\nWAS WIR TUN\n\nWir besprechen vor Ort deine Wünsche, prüfen die grundsätzliche Eignung deines Gebäudes und erklären dir die nächsten Schritte sowie die Fördermöglichkeiten.\n\nDEINE MITWIRKUNG\n\nÜberleg dir vorab, was dir wichtig ist. Energieausweis und letzte Heizkostenabrechnung helfen, sind aber noch kein Muss.\n\nAKTUELL · SEIT 19.11.2026\nAngebot erstellt\nWAS WIR TUN\n\nAuf Basis der Vor-Ort-Daten erstellen wir dein persönliches Festpreis-Angebot inkl. Förderberechnung und Wirtschaftlichkeitsvergleich.\n\nDEINE MITWIRKUNG\n\nPrüfe das Angebo",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "259caa9121c419f3c96f4ef6d557782d",
+            "scenario": 0,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Mia Mustermann\nLight-Mode\nAbmelden\nHallo Mia!\n\nProjekt: Musterstraße 1, 30159 Hannover. Hier siehst du den aktuellen Stand.\n\nDEIN PROJEKTFORTSCHRITT\n✓\nErstberatung\nErledigt\nWAS WIR TUN\n\nWir prüfen deine Anfrage, bewerten die grundsätzliche Eignung deines Gebäudes und bereiten ein individuelles Beratungsgespräch vor.\n\nDEINE MITWIRKUNG\n\nErzähl uns von deinem Gebäude und deinen Wünschen. Wir beraten dich ehrlich und unverbindlich.\n\n✓\nBeratungsgespräch\nErledigt\nWAS WIR TUN\n\nWir besprechen vor Ort deine Wünsche, prüfen die grundsätzliche Eignung deines Gebäudes und erklären dir die nächsten Schritte sowie die Fördermöglichkeiten.\n\nDEINE MITWIRKUNG\n\nÜberleg dir vorab, was dir wichtig ist. Energieausweis und letzte Heizkostenabrechnung helfen, sind aber noch kein Muss.\n\n✓\nAngebot erstellt\nErledigt\nWAS WIR TUN\n\nAuf Basis der Vor-Ort-Daten erstellen wir dein persönliches Festpreis-Angebot inkl. Förderberechnung und Wirtschaftlichkeitsvergleich.\n\nDEINE MITWIRKUNG\n\nPrüfe das Angebot in Ruhe. Wir ",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "9e616b5e52e230829a1e5bea4127a374",
+            "scenario": 1,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Mia Mustermann\nLight-Mode\nAbmelden\nHallo Mia!\n\nProjekt: Musterstraße 1, 30159 Hannover. Hier siehst du den aktuellen Stand.\n\nDEIN PROJEKTFORTSCHRITT\n✓\nErstberatung\nErledigt\nWAS WIR TUN\n\nWir prüfen deine Anfrage, bewerten die grundsätzliche Eignung deines Gebäudes und bereiten ein individuelles Beratungsgespräch vor.\n\nDEINE MITWIRKUNG\n\nErzähl uns von deinem Gebäude und deinen Wünschen. Wir beraten dich ehrlich und unverbindlich.\n\n✓\nBeratungsgespräch\nErledigt\nWAS WIR TUN\n\nWir besprechen vor Ort deine Wünsche, prüfen die grundsätzliche Eignung deines Gebäudes und erklären dir die nächsten Schritte sowie die Fördermöglichkeiten.\n\nDEINE MITWIRKUNG\n\nÜberleg dir vorab, was dir wichtig ist. Energieausweis und letzte Heizkostenabrechnung helfen, sind aber noch kein Muss.\n\n✓\nAngebot erstellt\nErledigt\nWAS WIR TUN\n\nAuf Basis der Vor-Ort-Daten erstellen wir dein persönliches Festpreis-Angebot inkl. Förderberechnung und Wirtschaftlichkeitsvergleich.\n\nDEINE MITWIRKUNG\n\nPrüfe das Angebot in Ruhe. Wir ",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "3be14e3f1c45c411633d4f08911bcfd5",
+            "scenario": 2,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        }
+      ],
+      "overflow": 0,
+      "axe": []
+    },
+    {
+      "width": 390,
+      "theme": "dark",
+      "portal": "bewerber",
+      "stations": [
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Alex Musterperson\nLight-Mode\nAbmelden\nHallo Alex!\n\nHier siehst du den aktuellen Stand deiner Bewerbung als Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in (m/w/d).\n\nDEIN BEWERBUNGSSTATUS\nAKTUELL · SEIT 19.11.2026\nBeworben\nWAS WIR TUN\n\nWir bestätigen deinen Eingang und legen deine Unterlagen für die Sichtung bereit. Du bekommst von uns eine Rückmeldung, versprochen.\n\nDEINE MITWIRKUNG\n\nDu kannst hier jederzeit weitere Unterlagen hochladen (z.B. Lebenslauf, Zeugnisse, Zertifikate). Pflicht ist das nicht, aber es hilft uns, dich besser kennenzulernen.\n\nSichtung\nfolgt\nWAS WIR TUN\n\nUnser Team sichtet deine Unterlagen und gleicht dein Profil mit der ausgeschriebenen Rolle ab. Wir nehmen uns dafür echte Zeit.\n\nDEINE MITWIRKUNG\n\nLehn dich zurück, du musst nichts tun. Wenn dir noch etwas Wichtiges einfällt, lade es gerne hier hoch.\n\nKennenlerngespräch\nfolgt\nWAS WIR TUN\n\nWir laden dich zu einem Gespräch ein, in dem wir uns gegenseitig kennenlernen: deine Erfahrung, deine Wünsche und was HeroWer",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "175f16aa9a219bb380d6415bfaa0a5fe",
+            "scenario": 0,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Alex Musterperson\nLight-Mode\nAbmelden\nHallo Alex!\n\nHier siehst du den aktuellen Stand deiner Bewerbung als Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in (m/w/d).\n\nDEIN BEWERBUNGSSTATUS\n✓\nBeworben\nErledigt\nWAS WIR TUN\n\nWir bestätigen deinen Eingang und legen deine Unterlagen für die Sichtung bereit. Du bekommst von uns eine Rückmeldung, versprochen.\n\nDEINE MITWIRKUNG\n\nDu kannst hier jederzeit weitere Unterlagen hochladen (z.B. Lebenslauf, Zeugnisse, Zertifikate). Pflicht ist das nicht, aber es hilft uns, dich besser kennenzulernen.\n\n✓\nSichtung\nErledigt\nWAS WIR TUN\n\nUnser Team sichtet deine Unterlagen und gleicht dein Profil mit der ausgeschriebenen Rolle ab. Wir nehmen uns dafür echte Zeit.\n\nDEINE MITWIRKUNG\n\nLehn dich zurück, du musst nichts tun. Wenn dir noch etwas Wichtiges einfällt, lade es gerne hier hoch.\n\nAKTUELL · SEIT 19.11.2026\nKennenlerngespräch\nWAS WIR TUN\n\nWir laden dich zu einem Gespräch ein, in dem wir uns gegenseitig kennenlernen: deine Erfahrung, deine Wünsche und w",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "0850e72d256a27aeb5ee75771a9e5a8d",
+            "scenario": 1,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Alex Musterperson\nLight-Mode\nAbmelden\nHallo Alex!\n\nHier siehst du den aktuellen Stand deiner Bewerbung als Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in (m/w/d).\n\nDEIN BEWERBUNGSSTATUS\n✓\nBeworben\nErledigt\nWAS WIR TUN\n\nWir bestätigen deinen Eingang und legen deine Unterlagen für die Sichtung bereit. Du bekommst von uns eine Rückmeldung, versprochen.\n\nDEINE MITWIRKUNG\n\nDu kannst hier jederzeit weitere Unterlagen hochladen (z.B. Lebenslauf, Zeugnisse, Zertifikate). Pflicht ist das nicht, aber es hilft uns, dich besser kennenzulernen.\n\n✓\nSichtung\nErledigt\nWAS WIR TUN\n\nUnser Team sichtet deine Unterlagen und gleicht dein Profil mit der ausgeschriebenen Rolle ab. Wir nehmen uns dafür echte Zeit.\n\nDEINE MITWIRKUNG\n\nLehn dich zurück, du musst nichts tun. Wenn dir noch etwas Wichtiges einfällt, lade es gerne hier hoch.\n\n✓\nKennenlerngespräch\nErledigt\nWAS WIR TUN\n\nWir laden dich zu einem Gespräch ein, in dem wir uns gegenseitig kennenlernen: deine Erfahrung, deine Wünsche und was HeroWerk dir",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "88a67d91352c8b4dcc35b9281272dd7f",
+            "scenario": 2,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        }
+      ],
+      "overflow": 0,
+      "axe": [],
+      "requests": [
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/kundenportal?theme=dark"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/fonts.css?v=d3f3999a2f"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/theme.js?v=9b163705e9"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/site.css?v=bcc0e299bb"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/tokens.css?v=bb2619605a"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalvorschau.css?v=a6f67aee6e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalweg.css?v=40d27099ae"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked.png?v=3805a3a2a6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked-light.png?v=8c40e63d7e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalvorschau.js?v=69e2f2059c"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalweg.js?v=24f4671c0d"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-400.woff2?v=8909904ab6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-700.woff2?v=6f56409fd3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-800.woff2?v=231d487a99"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-700.woff2?v=2d797dd8b3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-500.woff2?v=f3779f1efc"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-600.woff2?v=f9a06e79cd"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-login.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-mail.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/953cf561dfc4f19514b6e301b5bde48c5a6687bb92fa0aa831a4d7e264064569.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/164e197a9ca4de301a7500feb25771fa51213bdb34eceaaf0734c3719696364f.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-400.woff2?v=b0a8ad37ac"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/bewerberportal?theme=dark"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/fonts.css?v=d3f3999a2f"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/theme.js?v=9b163705e9"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/site.css?v=bcc0e299bb"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/tokens.css?v=bb2619605a"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalvorschau.css?v=a6f67aee6e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalweg.css?v=40d27099ae"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked.png?v=3805a3a2a6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked-light.png?v=8c40e63d7e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalvorschau.js?v=69e2f2059c"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalweg.js?v=24f4671c0d"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-400.woff2?v=8909904ab6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-700.woff2?v=6f56409fd3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-800.woff2?v=231d487a99"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-700.woff2?v=2d797dd8b3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/bewerber-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-500.woff2?v=f3779f1efc"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-600.woff2?v=f9a06e79cd"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/bewerber-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/bewerber-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-400.woff2?v=b0a8ad37ac"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 390,
+      "theme": "light",
+      "portal": "kunden",
+      "stations": [
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Dark-Mode\nDein Projekt-Portal\n\nGib deine E-Mail-Adresse ein, dann senden wir dir einen Zugangslink.\n\nE-Mail-Adresse\nZUGANGSLINK ANFORDERN\n\nNoch kein Projekt bei HeroWerk? Mehr erfahren\n\nDatenschutz · Impressum · © 2026 HeroWerk GmbH",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "6704b3b0e2a9771294c91a8247296cc5",
+            "scenario": 0,
+            "state": null,
+            "session": false,
+            "address": "index.html",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "unloaded",
+            "unloaded",
+            "loaded",
+            "unloaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Dein HeroWerk Portal-Zugang\n\n\n\nHallo Mia,\n\nwillkommen in deinem persönlichen HeroWerk-Portal. Hier siehst du jederzeit den Stand deines Wärmepumpen-Projekts, alle Unterlagen und die nächsten Schritte.\n\nKlick auf den Button, um dich sicher einzuloggen. Der Link ist 30 Minuten gültig.\n\nZum Portal\n\nÜbrigens: Für deinen Zugang brauchst du kein Passwort. Aus Sicherheitsgründen ist jeder Login-Link nur 30 Minuten gültig und für eine Anmeldung gedacht. Ist er abgelaufen oder möchtest du das Portal später erneut öffnen, forderst du einfach einen neuen Link an. Das dauert nur einen Moment, und so bleiben deine Daten jederzeit geschützt.\n\nFalls du diesen Zugang nicht angefordert hast, kannst du diese E-Mail einfach ignorieren.\n\nBeste Grüße\nDein HeroWerk-Team\n\n\n",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "bb14a92dc82203170033f7a722736c3d",
+            "scenario": 0,
+            "state": null,
+            "session": false,
+            "address": "index.html",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "unloaded",
+            "unloaded",
+            "unloaded",
+            "unloaded",
+            "unloaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Mia Mustermann\nDark-Mode\nAbmelden\nHallo Mia!\n\nProjekt: Musterstraße 1, 30159 Hannover. Hier siehst du den aktuellen Stand.\n\nDEIN PROJEKTFORTSCHRITT\n✓\nErstberatung\nErledigt\nWAS WIR TUN\n\nWir prüfen deine Anfrage, bewerten die grundsätzliche Eignung deines Gebäudes und bereiten ein individuelles Beratungsgespräch vor.\n\nDEINE MITWIRKUNG\n\nErzähl uns von deinem Gebäude und deinen Wünschen. Wir beraten dich ehrlich und unverbindlich.\n\n✓\nBeratungsgespräch\nErledigt\nWAS WIR TUN\n\nWir besprechen vor Ort deine Wünsche, prüfen die grundsätzliche Eignung deines Gebäudes und erklären dir die nächsten Schritte sowie die Fördermöglichkeiten.\n\nDEINE MITWIRKUNG\n\nÜberleg dir vorab, was dir wichtig ist. Energieausweis und letzte Heizkostenabrechnung helfen, sind aber noch kein Muss.\n\nAKTUELL · SEIT 19.11.2026\nAngebot erstellt\nWAS WIR TUN\n\nAuf Basis der Vor-Ort-Daten erstellen wir dein persönliches Festpreis-Angebot inkl. Förderberechnung und Wirtschaftlichkeitsvergleich.\n\nDEINE MITWIRKUNG\n\nPrüfe das Angebot",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "8fc20d3f8127060fd17f1d70b9ca5351",
+            "scenario": 0,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Mia Mustermann\nDark-Mode\nAbmelden\nHallo Mia!\n\nProjekt: Musterstraße 1, 30159 Hannover. Hier siehst du den aktuellen Stand.\n\nDEIN PROJEKTFORTSCHRITT\n✓\nErstberatung\nErledigt\nWAS WIR TUN\n\nWir prüfen deine Anfrage, bewerten die grundsätzliche Eignung deines Gebäudes und bereiten ein individuelles Beratungsgespräch vor.\n\nDEINE MITWIRKUNG\n\nErzähl uns von deinem Gebäude und deinen Wünschen. Wir beraten dich ehrlich und unverbindlich.\n\n✓\nBeratungsgespräch\nErledigt\nWAS WIR TUN\n\nWir besprechen vor Ort deine Wünsche, prüfen die grundsätzliche Eignung deines Gebäudes und erklären dir die nächsten Schritte sowie die Fördermöglichkeiten.\n\nDEINE MITWIRKUNG\n\nÜberleg dir vorab, was dir wichtig ist. Energieausweis und letzte Heizkostenabrechnung helfen, sind aber noch kein Muss.\n\n✓\nAngebot erstellt\nErledigt\nWAS WIR TUN\n\nAuf Basis der Vor-Ort-Daten erstellen wir dein persönliches Festpreis-Angebot inkl. Förderberechnung und Wirtschaftlichkeitsvergleich.\n\nDEINE MITWIRKUNG\n\nPrüfe das Angebot in Ruhe. Wir e",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "0cb0477b6f089822b9b3c95062a26fee",
+            "scenario": 1,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Mia Mustermann\nDark-Mode\nAbmelden\nHallo Mia!\n\nProjekt: Musterstraße 1, 30159 Hannover. Hier siehst du den aktuellen Stand.\n\nDEIN PROJEKTFORTSCHRITT\n✓\nErstberatung\nErledigt\nWAS WIR TUN\n\nWir prüfen deine Anfrage, bewerten die grundsätzliche Eignung deines Gebäudes und bereiten ein individuelles Beratungsgespräch vor.\n\nDEINE MITWIRKUNG\n\nErzähl uns von deinem Gebäude und deinen Wünschen. Wir beraten dich ehrlich und unverbindlich.\n\n✓\nBeratungsgespräch\nErledigt\nWAS WIR TUN\n\nWir besprechen vor Ort deine Wünsche, prüfen die grundsätzliche Eignung deines Gebäudes und erklären dir die nächsten Schritte sowie die Fördermöglichkeiten.\n\nDEINE MITWIRKUNG\n\nÜberleg dir vorab, was dir wichtig ist. Energieausweis und letzte Heizkostenabrechnung helfen, sind aber noch kein Muss.\n\n✓\nAngebot erstellt\nErledigt\nWAS WIR TUN\n\nAuf Basis der Vor-Ort-Daten erstellen wir dein persönliches Festpreis-Angebot inkl. Förderberechnung und Wirtschaftlichkeitsvergleich.\n\nDEINE MITWIRKUNG\n\nPrüfe das Angebot in Ruhe. Wir e",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "04aaae9d1fde2d7d4db073a084ef418e",
+            "scenario": 2,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        }
+      ],
+      "overflow": 0,
+      "axe": []
+    },
+    {
+      "width": 390,
+      "theme": "light",
+      "portal": "bewerber",
+      "stations": [
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Alex Musterperson\nDark-Mode\nAbmelden\nHallo Alex!\n\nHier siehst du den aktuellen Stand deiner Bewerbung als Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in (m/w/d).\n\nDEIN BEWERBUNGSSTATUS\nAKTUELL · SEIT 19.11.2026\nBeworben\nWAS WIR TUN\n\nWir bestätigen deinen Eingang und legen deine Unterlagen für die Sichtung bereit. Du bekommst von uns eine Rückmeldung, versprochen.\n\nDEINE MITWIRKUNG\n\nDu kannst hier jederzeit weitere Unterlagen hochladen (z.B. Lebenslauf, Zeugnisse, Zertifikate). Pflicht ist das nicht, aber es hilft uns, dich besser kennenzulernen.\n\nSichtung\nfolgt\nWAS WIR TUN\n\nUnser Team sichtet deine Unterlagen und gleicht dein Profil mit der ausgeschriebenen Rolle ab. Wir nehmen uns dafür echte Zeit.\n\nDEINE MITWIRKUNG\n\nLehn dich zurück, du musst nichts tun. Wenn dir noch etwas Wichtiges einfällt, lade es gerne hier hoch.\n\nKennenlerngespräch\nfolgt\nWAS WIR TUN\n\nWir laden dich zu einem Gespräch ein, in dem wir uns gegenseitig kennenlernen: deine Erfahrung, deine Wünsche und was HeroWerk",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "dea56b9c0702b4b41b92ba6c6a771f74",
+            "scenario": 0,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Alex Musterperson\nDark-Mode\nAbmelden\nHallo Alex!\n\nHier siehst du den aktuellen Stand deiner Bewerbung als Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in (m/w/d).\n\nDEIN BEWERBUNGSSTATUS\n✓\nBeworben\nErledigt\nWAS WIR TUN\n\nWir bestätigen deinen Eingang und legen deine Unterlagen für die Sichtung bereit. Du bekommst von uns eine Rückmeldung, versprochen.\n\nDEINE MITWIRKUNG\n\nDu kannst hier jederzeit weitere Unterlagen hochladen (z.B. Lebenslauf, Zeugnisse, Zertifikate). Pflicht ist das nicht, aber es hilft uns, dich besser kennenzulernen.\n\n✓\nSichtung\nErledigt\nWAS WIR TUN\n\nUnser Team sichtet deine Unterlagen und gleicht dein Profil mit der ausgeschriebenen Rolle ab. Wir nehmen uns dafür echte Zeit.\n\nDEINE MITWIRKUNG\n\nLehn dich zurück, du musst nichts tun. Wenn dir noch etwas Wichtiges einfällt, lade es gerne hier hoch.\n\nAKTUELL · SEIT 19.11.2026\nKennenlerngespräch\nWAS WIR TUN\n\nWir laden dich zu einem Gespräch ein, in dem wir uns gegenseitig kennenlernen: deine Erfahrung, deine Wünsche und wa",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "9953efd3a899f88a7d965a844981c400",
+            "scenario": 1,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Alex Musterperson\nDark-Mode\nAbmelden\nHallo Alex!\n\nHier siehst du den aktuellen Stand deiner Bewerbung als Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in (m/w/d).\n\nDEIN BEWERBUNGSSTATUS\n✓\nBeworben\nErledigt\nWAS WIR TUN\n\nWir bestätigen deinen Eingang und legen deine Unterlagen für die Sichtung bereit. Du bekommst von uns eine Rückmeldung, versprochen.\n\nDEINE MITWIRKUNG\n\nDu kannst hier jederzeit weitere Unterlagen hochladen (z.B. Lebenslauf, Zeugnisse, Zertifikate). Pflicht ist das nicht, aber es hilft uns, dich besser kennenzulernen.\n\n✓\nSichtung\nErledigt\nWAS WIR TUN\n\nUnser Team sichtet deine Unterlagen und gleicht dein Profil mit der ausgeschriebenen Rolle ab. Wir nehmen uns dafür echte Zeit.\n\nDEINE MITWIRKUNG\n\nLehn dich zurück, du musst nichts tun. Wenn dir noch etwas Wichtiges einfällt, lade es gerne hier hoch.\n\n✓\nKennenlerngespräch\nErledigt\nWAS WIR TUN\n\nWir laden dich zu einem Gespräch ein, in dem wir uns gegenseitig kennenlernen: deine Erfahrung, deine Wünsche und was HeroWerk dir ",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "2faceac939f883fe0b7d24ccae9e452b",
+            "scenario": 2,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        }
+      ],
+      "overflow": 0,
+      "axe": [],
+      "requests": [
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/kundenportal?theme=light"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/fonts.css?v=d3f3999a2f"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/theme.js?v=9b163705e9"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/site.css?v=bcc0e299bb"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/tokens.css?v=bb2619605a"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalvorschau.css?v=a6f67aee6e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalweg.css?v=40d27099ae"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked.png?v=3805a3a2a6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked-light.png?v=8c40e63d7e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalvorschau.js?v=69e2f2059c"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalweg.js?v=24f4671c0d"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-400.woff2?v=8909904ab6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-700.woff2?v=6f56409fd3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-800.woff2?v=231d487a99"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-700.woff2?v=2d797dd8b3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-login.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-500.woff2?v=f3779f1efc"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-600.woff2?v=f9a06e79cd"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-mail.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/953cf561dfc4f19514b6e301b5bde48c5a6687bb92fa0aa831a4d7e264064569.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/164e197a9ca4de301a7500feb25771fa51213bdb34eceaaf0734c3719696364f.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-400.woff2?v=b0a8ad37ac"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/bewerberportal?theme=light"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/fonts.css?v=d3f3999a2f"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/theme.js?v=9b163705e9"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/site.css?v=bcc0e299bb"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/tokens.css?v=bb2619605a"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalvorschau.css?v=a6f67aee6e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalweg.css?v=40d27099ae"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked.png?v=3805a3a2a6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked-light.png?v=8c40e63d7e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalvorschau.js?v=69e2f2059c"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalweg.js?v=24f4671c0d"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-400.woff2?v=8909904ab6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-700.woff2?v=6f56409fd3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-800.woff2?v=231d487a99"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-700.woff2?v=2d797dd8b3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/bewerber-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-500.woff2?v=f3779f1efc"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-600.woff2?v=f9a06e79cd"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/bewerber-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/bewerber-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-400.woff2?v=b0a8ad37ac"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 1024,
+      "theme": "dark",
+      "portal": "kunden",
+      "stations": [
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Light-Mode\nDein Projekt-Portal\n\nGib deine E-Mail-Adresse ein, dann senden wir dir einen Zugangslink.\n\nE-Mail-Adresse\nZUGANGSLINK ANFORDERN\n\nNoch kein Projekt bei HeroWerk? Mehr erfahren\n\nDatenschutz · Impressum · © 2026 HeroWerk GmbH",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "77f3136d155d15ae939e66461e1cd012",
+            "scenario": 0,
+            "state": null,
+            "session": false,
+            "address": "index.html",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "unloaded",
+            "unloaded",
+            "loaded",
+            "unloaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Dein HeroWerk Portal-Zugang\n\n\n\nHallo Mia,\n\nwillkommen in deinem persönlichen HeroWerk-Portal. Hier siehst du jederzeit den Stand deines Wärmepumpen-Projekts, alle Unterlagen und die nächsten Schritte.\n\nKlick auf den Button, um dich sicher einzuloggen. Der Link ist 30 Minuten gültig.\n\nZum Portal\n\nÜbrigens: Für deinen Zugang brauchst du kein Passwort. Aus Sicherheitsgründen ist jeder Login-Link nur 30 Minuten gültig und für eine Anmeldung gedacht. Ist er abgelaufen oder möchtest du das Portal später erneut öffnen, forderst du einfach einen neuen Link an. Das dauert nur einen Moment, und so bleiben deine Daten jederzeit geschützt.\n\nFalls du diesen Zugang nicht angefordert hast, kannst du diese E-Mail einfach ignorieren.\n\nBeste Grüße\nDein HeroWerk-Team\n\n\n",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "57b1a414fec471b6fab4126b2efd8bbf",
+            "scenario": 0,
+            "state": null,
+            "session": false,
+            "address": "index.html",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "unloaded",
+            "unloaded",
+            "unloaded",
+            "unloaded",
+            "unloaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Mia Mustermann\nLight-Mode\nAbmelden\nHallo Mia!\n\nProjekt: Musterstraße 1, 30159 Hannover. Hier siehst du den aktuellen Stand.\n\nDEIN PROJEKTFORTSCHRITT\n✓\nErstberatung\nErledigt\nWAS WIR TUN\n\nWir prüfen deine Anfrage, bewerten die grundsätzliche Eignung deines Gebäudes und bereiten ein individuelles Beratungsgespräch vor.\n\nDEINE MITWIRKUNG\n\nErzähl uns von deinem Gebäude und deinen Wünschen. Wir beraten dich ehrlich und unverbindlich.\n\n✓\nBeratungsgespräch\nErledigt\nWAS WIR TUN\n\nWir besprechen vor Ort deine Wünsche, prüfen die grundsätzliche Eignung deines Gebäudes und erklären dir die nächsten Schritte sowie die Fördermöglichkeiten.\n\nDEINE MITWIRKUNG\n\nÜberleg dir vorab, was dir wichtig ist. Energieausweis und letzte Heizkostenabrechnung helfen, sind aber noch kein Muss.\n\nAKTUELL · SEIT 19.11.2026\nAngebot erstellt\nWAS WIR TUN\n\nAuf Basis der Vor-Ort-Daten erstellen wir dein persönliches Festpreis-Angebot inkl. Förderberechnung und Wirtschaftlichkeitsvergleich.\n\nDEINE MITWIRKUNG\n\nPrüfe das Angebo",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "b6a19b88d6d34075263f92d78fc28508",
+            "scenario": 0,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Mia Mustermann\nLight-Mode\nAbmelden\nHallo Mia!\n\nProjekt: Musterstraße 1, 30159 Hannover. Hier siehst du den aktuellen Stand.\n\nDEIN PROJEKTFORTSCHRITT\n✓\nErstberatung\nErledigt\nWAS WIR TUN\n\nWir prüfen deine Anfrage, bewerten die grundsätzliche Eignung deines Gebäudes und bereiten ein individuelles Beratungsgespräch vor.\n\nDEINE MITWIRKUNG\n\nErzähl uns von deinem Gebäude und deinen Wünschen. Wir beraten dich ehrlich und unverbindlich.\n\n✓\nBeratungsgespräch\nErledigt\nWAS WIR TUN\n\nWir besprechen vor Ort deine Wünsche, prüfen die grundsätzliche Eignung deines Gebäudes und erklären dir die nächsten Schritte sowie die Fördermöglichkeiten.\n\nDEINE MITWIRKUNG\n\nÜberleg dir vorab, was dir wichtig ist. Energieausweis und letzte Heizkostenabrechnung helfen, sind aber noch kein Muss.\n\n✓\nAngebot erstellt\nErledigt\nWAS WIR TUN\n\nAuf Basis der Vor-Ort-Daten erstellen wir dein persönliches Festpreis-Angebot inkl. Förderberechnung und Wirtschaftlichkeitsvergleich.\n\nDEINE MITWIRKUNG\n\nPrüfe das Angebot in Ruhe. Wir ",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "104ec3b28eeac45c0a5b5ace6f7d41bf",
+            "scenario": 1,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Mia Mustermann\nLight-Mode\nAbmelden\nHallo Mia!\n\nProjekt: Musterstraße 1, 30159 Hannover. Hier siehst du den aktuellen Stand.\n\nDEIN PROJEKTFORTSCHRITT\n✓\nErstberatung\nErledigt\nWAS WIR TUN\n\nWir prüfen deine Anfrage, bewerten die grundsätzliche Eignung deines Gebäudes und bereiten ein individuelles Beratungsgespräch vor.\n\nDEINE MITWIRKUNG\n\nErzähl uns von deinem Gebäude und deinen Wünschen. Wir beraten dich ehrlich und unverbindlich.\n\n✓\nBeratungsgespräch\nErledigt\nWAS WIR TUN\n\nWir besprechen vor Ort deine Wünsche, prüfen die grundsätzliche Eignung deines Gebäudes und erklären dir die nächsten Schritte sowie die Fördermöglichkeiten.\n\nDEINE MITWIRKUNG\n\nÜberleg dir vorab, was dir wichtig ist. Energieausweis und letzte Heizkostenabrechnung helfen, sind aber noch kein Muss.\n\n✓\nAngebot erstellt\nErledigt\nWAS WIR TUN\n\nAuf Basis der Vor-Ort-Daten erstellen wir dein persönliches Festpreis-Angebot inkl. Förderberechnung und Wirtschaftlichkeitsvergleich.\n\nDEINE MITWIRKUNG\n\nPrüfe das Angebot in Ruhe. Wir ",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "476dde1a9384c5b660ef239935b66032",
+            "scenario": 2,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        }
+      ],
+      "overflow": 0,
+      "axe": []
+    },
+    {
+      "width": 1024,
+      "theme": "dark",
+      "portal": "bewerber",
+      "stations": [
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Bewerberportal\nAlex Musterperson\nLight-Mode\nAbmelden\nHallo Alex!\n\nHier siehst du den aktuellen Stand deiner Bewerbung als Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in (m/w/d).\n\nDEIN BEWERBUNGSSTATUS\nAKTUELL · SEIT 19.11.2026\nBeworben\nWAS WIR TUN\n\nWir bestätigen deinen Eingang und legen deine Unterlagen für die Sichtung bereit. Du bekommst von uns eine Rückmeldung, versprochen.\n\nDEINE MITWIRKUNG\n\nDu kannst hier jederzeit weitere Unterlagen hochladen (z.B. Lebenslauf, Zeugnisse, Zertifikate). Pflicht ist das nicht, aber es hilft uns, dich besser kennenzulernen.\n\nSichtung\nfolgt\nWAS WIR TUN\n\nUnser Team sichtet deine Unterlagen und gleicht dein Profil mit der ausgeschriebenen Rolle ab. Wir nehmen uns dafür echte Zeit.\n\nDEINE MITWIRKUNG\n\nLehn dich zurück, du musst nichts tun. Wenn dir noch etwas Wichtiges einfällt, lade es gerne hier hoch.\n\nKennenlerngespräch\nfolgt\nWAS WIR TUN\n\nWir laden dich zu einem Gespräch ein, in dem wir uns gegenseitig kennenlernen: deine Erfahrung, deine Wünsche ",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "067c99dbb151e3be1f1c7cde9de0f0e3",
+            "scenario": 0,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Bewerberportal\nAlex Musterperson\nLight-Mode\nAbmelden\nHallo Alex!\n\nHier siehst du den aktuellen Stand deiner Bewerbung als Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in (m/w/d).\n\nDEIN BEWERBUNGSSTATUS\n✓\nBeworben\nErledigt\nWAS WIR TUN\n\nWir bestätigen deinen Eingang und legen deine Unterlagen für die Sichtung bereit. Du bekommst von uns eine Rückmeldung, versprochen.\n\nDEINE MITWIRKUNG\n\nDu kannst hier jederzeit weitere Unterlagen hochladen (z.B. Lebenslauf, Zeugnisse, Zertifikate). Pflicht ist das nicht, aber es hilft uns, dich besser kennenzulernen.\n\n✓\nSichtung\nErledigt\nWAS WIR TUN\n\nUnser Team sichtet deine Unterlagen und gleicht dein Profil mit der ausgeschriebenen Rolle ab. Wir nehmen uns dafür echte Zeit.\n\nDEINE MITWIRKUNG\n\nLehn dich zurück, du musst nichts tun. Wenn dir noch etwas Wichtiges einfällt, lade es gerne hier hoch.\n\nAKTUELL · SEIT 19.11.2026\nKennenlerngespräch\nWAS WIR TUN\n\nWir laden dich zu einem Gespräch ein, in dem wir uns gegenseitig kennenlernen: deine Erfahrung, dein",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "70696ea3e05ddea1a69c070a9ce1eee9",
+            "scenario": 1,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Bewerberportal\nAlex Musterperson\nLight-Mode\nAbmelden\nHallo Alex!\n\nHier siehst du den aktuellen Stand deiner Bewerbung als Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in (m/w/d).\n\nDEIN BEWERBUNGSSTATUS\n✓\nBeworben\nErledigt\nWAS WIR TUN\n\nWir bestätigen deinen Eingang und legen deine Unterlagen für die Sichtung bereit. Du bekommst von uns eine Rückmeldung, versprochen.\n\nDEINE MITWIRKUNG\n\nDu kannst hier jederzeit weitere Unterlagen hochladen (z.B. Lebenslauf, Zeugnisse, Zertifikate). Pflicht ist das nicht, aber es hilft uns, dich besser kennenzulernen.\n\n✓\nSichtung\nErledigt\nWAS WIR TUN\n\nUnser Team sichtet deine Unterlagen und gleicht dein Profil mit der ausgeschriebenen Rolle ab. Wir nehmen uns dafür echte Zeit.\n\nDEINE MITWIRKUNG\n\nLehn dich zurück, du musst nichts tun. Wenn dir noch etwas Wichtiges einfällt, lade es gerne hier hoch.\n\n✓\nKennenlerngespräch\nErledigt\nWAS WIR TUN\n\nWir laden dich zu einem Gespräch ein, in dem wir uns gegenseitig kennenlernen: deine Erfahrung, deine Wünsche und w",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "9f6629aad3f65b70ba69ab6a157fd04d",
+            "scenario": 2,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        }
+      ],
+      "overflow": 0,
+      "axe": [],
+      "requests": [
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/kundenportal?theme=dark"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/fonts.css?v=d3f3999a2f"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/theme.js?v=9b163705e9"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/site.css?v=bcc0e299bb"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/tokens.css?v=bb2619605a"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalvorschau.css?v=a6f67aee6e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalweg.css?v=40d27099ae"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked.png?v=3805a3a2a6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked-light.png?v=8c40e63d7e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalvorschau.js?v=69e2f2059c"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalweg.js?v=24f4671c0d"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-400.woff2?v=8909904ab6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-500.woff2?v=f3779f1efc"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-600.woff2?v=f9a06e79cd"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-700.woff2?v=6f56409fd3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-800.woff2?v=231d487a99"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-700.woff2?v=2d797dd8b3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-login.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-mail.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/953cf561dfc4f19514b6e301b5bde48c5a6687bb92fa0aa831a4d7e264064569.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/164e197a9ca4de301a7500feb25771fa51213bdb34eceaaf0734c3719696364f.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-400.woff2?v=b0a8ad37ac"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/bewerberportal?theme=dark"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/fonts.css?v=d3f3999a2f"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/theme.js?v=9b163705e9"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/site.css?v=bcc0e299bb"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/tokens.css?v=bb2619605a"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalvorschau.css?v=a6f67aee6e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalweg.css?v=40d27099ae"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked.png?v=3805a3a2a6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked-light.png?v=8c40e63d7e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalvorschau.js?v=69e2f2059c"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalweg.js?v=24f4671c0d"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-400.woff2?v=8909904ab6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-500.woff2?v=f3779f1efc"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-700.woff2?v=6f56409fd3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-600.woff2?v=f9a06e79cd"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-800.woff2?v=231d487a99"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-700.woff2?v=2d797dd8b3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/bewerber-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/bewerber-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/bewerber-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-400.woff2?v=b0a8ad37ac"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 1024,
+      "theme": "light",
+      "portal": "kunden",
+      "stations": [
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Dark-Mode\nDein Projekt-Portal\n\nGib deine E-Mail-Adresse ein, dann senden wir dir einen Zugangslink.\n\nE-Mail-Adresse\nZUGANGSLINK ANFORDERN\n\nNoch kein Projekt bei HeroWerk? Mehr erfahren\n\nDatenschutz · Impressum · © 2026 HeroWerk GmbH",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "7ca25bf3e26ab4fcb5ac46698d8f0f35",
+            "scenario": 0,
+            "state": null,
+            "session": false,
+            "address": "index.html",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "unloaded",
+            "unloaded",
+            "loaded",
+            "unloaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Dein HeroWerk Portal-Zugang\n\n\n\nHallo Mia,\n\nwillkommen in deinem persönlichen HeroWerk-Portal. Hier siehst du jederzeit den Stand deines Wärmepumpen-Projekts, alle Unterlagen und die nächsten Schritte.\n\nKlick auf den Button, um dich sicher einzuloggen. Der Link ist 30 Minuten gültig.\n\nZum Portal\n\nÜbrigens: Für deinen Zugang brauchst du kein Passwort. Aus Sicherheitsgründen ist jeder Login-Link nur 30 Minuten gültig und für eine Anmeldung gedacht. Ist er abgelaufen oder möchtest du das Portal später erneut öffnen, forderst du einfach einen neuen Link an. Das dauert nur einen Moment, und so bleiben deine Daten jederzeit geschützt.\n\nFalls du diesen Zugang nicht angefordert hast, kannst du diese E-Mail einfach ignorieren.\n\nBeste Grüße\nDein HeroWerk-Team\n\n\n",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "04deb3e9ba83770e1d8b74b9c3fea382",
+            "scenario": 0,
+            "state": null,
+            "session": false,
+            "address": "index.html",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "unloaded",
+            "unloaded",
+            "unloaded",
+            "unloaded",
+            "unloaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Mia Mustermann\nDark-Mode\nAbmelden\nHallo Mia!\n\nProjekt: Musterstraße 1, 30159 Hannover. Hier siehst du den aktuellen Stand.\n\nDEIN PROJEKTFORTSCHRITT\n✓\nErstberatung\nErledigt\nWAS WIR TUN\n\nWir prüfen deine Anfrage, bewerten die grundsätzliche Eignung deines Gebäudes und bereiten ein individuelles Beratungsgespräch vor.\n\nDEINE MITWIRKUNG\n\nErzähl uns von deinem Gebäude und deinen Wünschen. Wir beraten dich ehrlich und unverbindlich.\n\n✓\nBeratungsgespräch\nErledigt\nWAS WIR TUN\n\nWir besprechen vor Ort deine Wünsche, prüfen die grundsätzliche Eignung deines Gebäudes und erklären dir die nächsten Schritte sowie die Fördermöglichkeiten.\n\nDEINE MITWIRKUNG\n\nÜberleg dir vorab, was dir wichtig ist. Energieausweis und letzte Heizkostenabrechnung helfen, sind aber noch kein Muss.\n\nAKTUELL · SEIT 19.11.2026\nAngebot erstellt\nWAS WIR TUN\n\nAuf Basis der Vor-Ort-Daten erstellen wir dein persönliches Festpreis-Angebot inkl. Förderberechnung und Wirtschaftlichkeitsvergleich.\n\nDEINE MITWIRKUNG\n\nPrüfe das Angebot",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "94986ff7c370fb5524789c6870fd98c0",
+            "scenario": 0,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Mia Mustermann\nDark-Mode\nAbmelden\nHallo Mia!\n\nProjekt: Musterstraße 1, 30159 Hannover. Hier siehst du den aktuellen Stand.\n\nDEIN PROJEKTFORTSCHRITT\n✓\nErstberatung\nErledigt\nWAS WIR TUN\n\nWir prüfen deine Anfrage, bewerten die grundsätzliche Eignung deines Gebäudes und bereiten ein individuelles Beratungsgespräch vor.\n\nDEINE MITWIRKUNG\n\nErzähl uns von deinem Gebäude und deinen Wünschen. Wir beraten dich ehrlich und unverbindlich.\n\n✓\nBeratungsgespräch\nErledigt\nWAS WIR TUN\n\nWir besprechen vor Ort deine Wünsche, prüfen die grundsätzliche Eignung deines Gebäudes und erklären dir die nächsten Schritte sowie die Fördermöglichkeiten.\n\nDEINE MITWIRKUNG\n\nÜberleg dir vorab, was dir wichtig ist. Energieausweis und letzte Heizkostenabrechnung helfen, sind aber noch kein Muss.\n\n✓\nAngebot erstellt\nErledigt\nWAS WIR TUN\n\nAuf Basis der Vor-Ort-Daten erstellen wir dein persönliches Festpreis-Angebot inkl. Förderberechnung und Wirtschaftlichkeitsvergleich.\n\nDEINE MITWIRKUNG\n\nPrüfe das Angebot in Ruhe. Wir e",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "e604a89d73d00fdb8438f91ff37e4c5f",
+            "scenario": 1,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Mia Mustermann\nDark-Mode\nAbmelden\nHallo Mia!\n\nProjekt: Musterstraße 1, 30159 Hannover. Hier siehst du den aktuellen Stand.\n\nDEIN PROJEKTFORTSCHRITT\n✓\nErstberatung\nErledigt\nWAS WIR TUN\n\nWir prüfen deine Anfrage, bewerten die grundsätzliche Eignung deines Gebäudes und bereiten ein individuelles Beratungsgespräch vor.\n\nDEINE MITWIRKUNG\n\nErzähl uns von deinem Gebäude und deinen Wünschen. Wir beraten dich ehrlich und unverbindlich.\n\n✓\nBeratungsgespräch\nErledigt\nWAS WIR TUN\n\nWir besprechen vor Ort deine Wünsche, prüfen die grundsätzliche Eignung deines Gebäudes und erklären dir die nächsten Schritte sowie die Fördermöglichkeiten.\n\nDEINE MITWIRKUNG\n\nÜberleg dir vorab, was dir wichtig ist. Energieausweis und letzte Heizkostenabrechnung helfen, sind aber noch kein Muss.\n\n✓\nAngebot erstellt\nErledigt\nWAS WIR TUN\n\nAuf Basis der Vor-Ort-Daten erstellen wir dein persönliches Festpreis-Angebot inkl. Förderberechnung und Wirtschaftlichkeitsvergleich.\n\nDEINE MITWIRKUNG\n\nPrüfe das Angebot in Ruhe. Wir e",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "f83afb2edcdfdc9cbcf3262d32a935cf",
+            "scenario": 2,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        }
+      ],
+      "overflow": 0,
+      "axe": []
+    },
+    {
+      "width": 1024,
+      "theme": "light",
+      "portal": "bewerber",
+      "stations": [
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Bewerberportal\nAlex Musterperson\nDark-Mode\nAbmelden\nHallo Alex!\n\nHier siehst du den aktuellen Stand deiner Bewerbung als Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in (m/w/d).\n\nDEIN BEWERBUNGSSTATUS\nAKTUELL · SEIT 19.11.2026\nBeworben\nWAS WIR TUN\n\nWir bestätigen deinen Eingang und legen deine Unterlagen für die Sichtung bereit. Du bekommst von uns eine Rückmeldung, versprochen.\n\nDEINE MITWIRKUNG\n\nDu kannst hier jederzeit weitere Unterlagen hochladen (z.B. Lebenslauf, Zeugnisse, Zertifikate). Pflicht ist das nicht, aber es hilft uns, dich besser kennenzulernen.\n\nSichtung\nfolgt\nWAS WIR TUN\n\nUnser Team sichtet deine Unterlagen und gleicht dein Profil mit der ausgeschriebenen Rolle ab. Wir nehmen uns dafür echte Zeit.\n\nDEINE MITWIRKUNG\n\nLehn dich zurück, du musst nichts tun. Wenn dir noch etwas Wichtiges einfällt, lade es gerne hier hoch.\n\nKennenlerngespräch\nfolgt\nWAS WIR TUN\n\nWir laden dich zu einem Gespräch ein, in dem wir uns gegenseitig kennenlernen: deine Erfahrung, deine Wünsche u",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "6940c289a0f2fd918948be9394ca22a2",
+            "scenario": 0,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Bewerberportal\nAlex Musterperson\nDark-Mode\nAbmelden\nHallo Alex!\n\nHier siehst du den aktuellen Stand deiner Bewerbung als Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in (m/w/d).\n\nDEIN BEWERBUNGSSTATUS\n✓\nBeworben\nErledigt\nWAS WIR TUN\n\nWir bestätigen deinen Eingang und legen deine Unterlagen für die Sichtung bereit. Du bekommst von uns eine Rückmeldung, versprochen.\n\nDEINE MITWIRKUNG\n\nDu kannst hier jederzeit weitere Unterlagen hochladen (z.B. Lebenslauf, Zeugnisse, Zertifikate). Pflicht ist das nicht, aber es hilft uns, dich besser kennenzulernen.\n\n✓\nSichtung\nErledigt\nWAS WIR TUN\n\nUnser Team sichtet deine Unterlagen und gleicht dein Profil mit der ausgeschriebenen Rolle ab. Wir nehmen uns dafür echte Zeit.\n\nDEINE MITWIRKUNG\n\nLehn dich zurück, du musst nichts tun. Wenn dir noch etwas Wichtiges einfällt, lade es gerne hier hoch.\n\nAKTUELL · SEIT 19.11.2026\nKennenlerngespräch\nWAS WIR TUN\n\nWir laden dich zu einem Gespräch ein, in dem wir uns gegenseitig kennenlernen: deine Erfahrung, deine",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "20d4323926b96816e87b7d2c909cf8dc",
+            "scenario": 1,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Bewerberportal\nAlex Musterperson\nDark-Mode\nAbmelden\nHallo Alex!\n\nHier siehst du den aktuellen Stand deiner Bewerbung als Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in (m/w/d).\n\nDEIN BEWERBUNGSSTATUS\n✓\nBeworben\nErledigt\nWAS WIR TUN\n\nWir bestätigen deinen Eingang und legen deine Unterlagen für die Sichtung bereit. Du bekommst von uns eine Rückmeldung, versprochen.\n\nDEINE MITWIRKUNG\n\nDu kannst hier jederzeit weitere Unterlagen hochladen (z.B. Lebenslauf, Zeugnisse, Zertifikate). Pflicht ist das nicht, aber es hilft uns, dich besser kennenzulernen.\n\n✓\nSichtung\nErledigt\nWAS WIR TUN\n\nUnser Team sichtet deine Unterlagen und gleicht dein Profil mit der ausgeschriebenen Rolle ab. Wir nehmen uns dafür echte Zeit.\n\nDEINE MITWIRKUNG\n\nLehn dich zurück, du musst nichts tun. Wenn dir noch etwas Wichtiges einfällt, lade es gerne hier hoch.\n\n✓\nKennenlerngespräch\nErledigt\nWAS WIR TUN\n\nWir laden dich zu einem Gespräch ein, in dem wir uns gegenseitig kennenlernen: deine Erfahrung, deine Wünsche und wa",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "ae4490f7b53592d058d20dd965827e1c",
+            "scenario": 2,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        }
+      ],
+      "overflow": 0,
+      "axe": [],
+      "requests": [
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/kundenportal?theme=light"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/fonts.css?v=d3f3999a2f"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/theme.js?v=9b163705e9"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/site.css?v=bcc0e299bb"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/tokens.css?v=bb2619605a"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalvorschau.css?v=a6f67aee6e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalweg.css?v=40d27099ae"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked.png?v=3805a3a2a6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked-light.png?v=8c40e63d7e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalvorschau.js?v=69e2f2059c"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalweg.js?v=24f4671c0d"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-400.woff2?v=8909904ab6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-500.woff2?v=f3779f1efc"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-700.woff2?v=6f56409fd3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-600.woff2?v=f9a06e79cd"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-800.woff2?v=231d487a99"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-700.woff2?v=2d797dd8b3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-login.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-mail.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/953cf561dfc4f19514b6e301b5bde48c5a6687bb92fa0aa831a4d7e264064569.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/164e197a9ca4de301a7500feb25771fa51213bdb34eceaaf0734c3719696364f.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-400.woff2?v=b0a8ad37ac"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/bewerberportal?theme=light"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/fonts.css?v=d3f3999a2f"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/theme.js?v=9b163705e9"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/site.css?v=bcc0e299bb"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/tokens.css?v=bb2619605a"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalvorschau.css?v=a6f67aee6e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalweg.css?v=40d27099ae"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked.png?v=3805a3a2a6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked-light.png?v=8c40e63d7e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalvorschau.js?v=69e2f2059c"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalweg.js?v=24f4671c0d"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-400.woff2?v=8909904ab6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-500.woff2?v=f3779f1efc"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-600.woff2?v=f9a06e79cd"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-700.woff2?v=6f56409fd3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-800.woff2?v=231d487a99"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-700.woff2?v=2d797dd8b3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/bewerber-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/bewerber-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/bewerber-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-400.woff2?v=b0a8ad37ac"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "theme": "dark",
+      "portal": "kunden",
+      "stations": [
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Light-Mode\nDein Projekt-Portal\n\nGib deine E-Mail-Adresse ein, dann senden wir dir einen Zugangslink.\n\nE-Mail-Adresse\nZUGANGSLINK ANFORDERN\n\nNoch kein Projekt bei HeroWerk? Mehr erfahren\n\nDatenschutz · Impressum · © 2026 HeroWerk GmbH",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "618aa48fc402a4d1eef927ddb4f8ce9b",
+            "scenario": 0,
+            "state": null,
+            "session": false,
+            "address": "index.html",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "unloaded",
+            "unloaded",
+            "loaded",
+            "unloaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Dein HeroWerk Portal-Zugang\n\n\n\nHallo Mia,\n\nwillkommen in deinem persönlichen HeroWerk-Portal. Hier siehst du jederzeit den Stand deines Wärmepumpen-Projekts, alle Unterlagen und die nächsten Schritte.\n\nKlick auf den Button, um dich sicher einzuloggen. Der Link ist 30 Minuten gültig.\n\nZum Portal\n\nÜbrigens: Für deinen Zugang brauchst du kein Passwort. Aus Sicherheitsgründen ist jeder Login-Link nur 30 Minuten gültig und für eine Anmeldung gedacht. Ist er abgelaufen oder möchtest du das Portal später erneut öffnen, forderst du einfach einen neuen Link an. Das dauert nur einen Moment, und so bleiben deine Daten jederzeit geschützt.\n\nFalls du diesen Zugang nicht angefordert hast, kannst du diese E-Mail einfach ignorieren.\n\nBeste Grüße\nDein HeroWerk-Team\n\n\n",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "56824995c95e899bfe3dfe40a5b9c566",
+            "scenario": 0,
+            "state": null,
+            "session": false,
+            "address": "index.html",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "unloaded",
+            "unloaded",
+            "unloaded",
+            "unloaded",
+            "unloaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Mia Mustermann\nLight-Mode\nAbmelden\nHallo Mia!\n\nProjekt: Musterstraße 1, 30159 Hannover. Hier siehst du den aktuellen Stand.\n\nDEIN PROJEKTFORTSCHRITT\n✓\nErstberatung\nErledigt\nWAS WIR TUN\n\nWir prüfen deine Anfrage, bewerten die grundsätzliche Eignung deines Gebäudes und bereiten ein individuelles Beratungsgespräch vor.\n\nDEINE MITWIRKUNG\n\nErzähl uns von deinem Gebäude und deinen Wünschen. Wir beraten dich ehrlich und unverbindlich.\n\n✓\nBeratungsgespräch\nErledigt\nWAS WIR TUN\n\nWir besprechen vor Ort deine Wünsche, prüfen die grundsätzliche Eignung deines Gebäudes und erklären dir die nächsten Schritte sowie die Fördermöglichkeiten.\n\nDEINE MITWIRKUNG\n\nÜberleg dir vorab, was dir wichtig ist. Energieausweis und letzte Heizkostenabrechnung helfen, sind aber noch kein Muss.\n\nAKTUELL · SEIT 19.11.2026\nAngebot erstellt\nWAS WIR TUN\n\nAuf Basis der Vor-Ort-Daten erstellen wir dein persönliches Festpreis-Angebot inkl. Förderberechnung und Wirtschaftlichkeitsvergleich.\n\nDEINE MITWIRKUNG\n\nPrüfe das Angebo",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "79db51a5938a2f014cd183ded35637e3",
+            "scenario": 0,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Mia Mustermann\nLight-Mode\nAbmelden\nHallo Mia!\n\nProjekt: Musterstraße 1, 30159 Hannover. Hier siehst du den aktuellen Stand.\n\nDEIN PROJEKTFORTSCHRITT\n✓\nErstberatung\nErledigt\nWAS WIR TUN\n\nWir prüfen deine Anfrage, bewerten die grundsätzliche Eignung deines Gebäudes und bereiten ein individuelles Beratungsgespräch vor.\n\nDEINE MITWIRKUNG\n\nErzähl uns von deinem Gebäude und deinen Wünschen. Wir beraten dich ehrlich und unverbindlich.\n\n✓\nBeratungsgespräch\nErledigt\nWAS WIR TUN\n\nWir besprechen vor Ort deine Wünsche, prüfen die grundsätzliche Eignung deines Gebäudes und erklären dir die nächsten Schritte sowie die Fördermöglichkeiten.\n\nDEINE MITWIRKUNG\n\nÜberleg dir vorab, was dir wichtig ist. Energieausweis und letzte Heizkostenabrechnung helfen, sind aber noch kein Muss.\n\n✓\nAngebot erstellt\nErledigt\nWAS WIR TUN\n\nAuf Basis der Vor-Ort-Daten erstellen wir dein persönliches Festpreis-Angebot inkl. Förderberechnung und Wirtschaftlichkeitsvergleich.\n\nDEINE MITWIRKUNG\n\nPrüfe das Angebot in Ruhe. Wir ",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "f0b36a43d362efb6cf046ab736cf8329",
+            "scenario": 1,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Mia Mustermann\nLight-Mode\nAbmelden\nHallo Mia!\n\nProjekt: Musterstraße 1, 30159 Hannover. Hier siehst du den aktuellen Stand.\n\nDEIN PROJEKTFORTSCHRITT\n✓\nErstberatung\nErledigt\nWAS WIR TUN\n\nWir prüfen deine Anfrage, bewerten die grundsätzliche Eignung deines Gebäudes und bereiten ein individuelles Beratungsgespräch vor.\n\nDEINE MITWIRKUNG\n\nErzähl uns von deinem Gebäude und deinen Wünschen. Wir beraten dich ehrlich und unverbindlich.\n\n✓\nBeratungsgespräch\nErledigt\nWAS WIR TUN\n\nWir besprechen vor Ort deine Wünsche, prüfen die grundsätzliche Eignung deines Gebäudes und erklären dir die nächsten Schritte sowie die Fördermöglichkeiten.\n\nDEINE MITWIRKUNG\n\nÜberleg dir vorab, was dir wichtig ist. Energieausweis und letzte Heizkostenabrechnung helfen, sind aber noch kein Muss.\n\n✓\nAngebot erstellt\nErledigt\nWAS WIR TUN\n\nAuf Basis der Vor-Ort-Daten erstellen wir dein persönliches Festpreis-Angebot inkl. Förderberechnung und Wirtschaftlichkeitsvergleich.\n\nDEINE MITWIRKUNG\n\nPrüfe das Angebot in Ruhe. Wir ",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "e7d191d108935001d6afacafed6df109",
+            "scenario": 2,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        }
+      ],
+      "overflow": 0,
+      "axe": []
+    },
+    {
+      "width": 1440,
+      "theme": "dark",
+      "portal": "bewerber",
+      "stations": [
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Bewerberportal\nAlex Musterperson\nLight-Mode\nAbmelden\nHallo Alex!\n\nHier siehst du den aktuellen Stand deiner Bewerbung als Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in (m/w/d).\n\nDEIN BEWERBUNGSSTATUS\nAKTUELL · SEIT 19.11.2026\nBeworben\nWAS WIR TUN\n\nWir bestätigen deinen Eingang und legen deine Unterlagen für die Sichtung bereit. Du bekommst von uns eine Rückmeldung, versprochen.\n\nDEINE MITWIRKUNG\n\nDu kannst hier jederzeit weitere Unterlagen hochladen (z.B. Lebenslauf, Zeugnisse, Zertifikate). Pflicht ist das nicht, aber es hilft uns, dich besser kennenzulernen.\n\nSichtung\nfolgt\nWAS WIR TUN\n\nUnser Team sichtet deine Unterlagen und gleicht dein Profil mit der ausgeschriebenen Rolle ab. Wir nehmen uns dafür echte Zeit.\n\nDEINE MITWIRKUNG\n\nLehn dich zurück, du musst nichts tun. Wenn dir noch etwas Wichtiges einfällt, lade es gerne hier hoch.\n\nKennenlerngespräch\nfolgt\nWAS WIR TUN\n\nWir laden dich zu einem Gespräch ein, in dem wir uns gegenseitig kennenlernen: deine Erfahrung, deine Wünsche ",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "e61bab0a3954a7fcf28ed631b83e422f",
+            "scenario": 0,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Bewerberportal\nAlex Musterperson\nLight-Mode\nAbmelden\nHallo Alex!\n\nHier siehst du den aktuellen Stand deiner Bewerbung als Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in (m/w/d).\n\nDEIN BEWERBUNGSSTATUS\n✓\nBeworben\nErledigt\nWAS WIR TUN\n\nWir bestätigen deinen Eingang und legen deine Unterlagen für die Sichtung bereit. Du bekommst von uns eine Rückmeldung, versprochen.\n\nDEINE MITWIRKUNG\n\nDu kannst hier jederzeit weitere Unterlagen hochladen (z.B. Lebenslauf, Zeugnisse, Zertifikate). Pflicht ist das nicht, aber es hilft uns, dich besser kennenzulernen.\n\n✓\nSichtung\nErledigt\nWAS WIR TUN\n\nUnser Team sichtet deine Unterlagen und gleicht dein Profil mit der ausgeschriebenen Rolle ab. Wir nehmen uns dafür echte Zeit.\n\nDEINE MITWIRKUNG\n\nLehn dich zurück, du musst nichts tun. Wenn dir noch etwas Wichtiges einfällt, lade es gerne hier hoch.\n\nAKTUELL · SEIT 19.11.2026\nKennenlerngespräch\nWAS WIR TUN\n\nWir laden dich zu einem Gespräch ein, in dem wir uns gegenseitig kennenlernen: deine Erfahrung, dein",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "936aff1ef903ca20b9a422c7916c6337",
+            "scenario": 1,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "dark",
+          "text": "Bewerberportal\nAlex Musterperson\nLight-Mode\nAbmelden\nHallo Alex!\n\nHier siehst du den aktuellen Stand deiner Bewerbung als Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in (m/w/d).\n\nDEIN BEWERBUNGSSTATUS\n✓\nBeworben\nErledigt\nWAS WIR TUN\n\nWir bestätigen deinen Eingang und legen deine Unterlagen für die Sichtung bereit. Du bekommst von uns eine Rückmeldung, versprochen.\n\nDEINE MITWIRKUNG\n\nDu kannst hier jederzeit weitere Unterlagen hochladen (z.B. Lebenslauf, Zeugnisse, Zertifikate). Pflicht ist das nicht, aber es hilft uns, dich besser kennenzulernen.\n\n✓\nSichtung\nErledigt\nWAS WIR TUN\n\nUnser Team sichtet deine Unterlagen und gleicht dein Profil mit der ausgeschriebenen Rolle ab. Wir nehmen uns dafür echte Zeit.\n\nDEINE MITWIRKUNG\n\nLehn dich zurück, du musst nichts tun. Wenn dir noch etwas Wichtiges einfällt, lade es gerne hier hoch.\n\n✓\nKennenlerngespräch\nErledigt\nWAS WIR TUN\n\nWir laden dich zu einem Gespräch ein, in dem wir uns gegenseitig kennenlernen: deine Erfahrung, deine Wünsche und w",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "61e6f41f62487c86dd3dbf54028546c1",
+            "scenario": 2,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "dark"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        }
+      ],
+      "overflow": 0,
+      "axe": [],
+      "requests": [
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/kundenportal?theme=dark"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/fonts.css?v=d3f3999a2f"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/theme.js?v=9b163705e9"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/site.css?v=bcc0e299bb"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/tokens.css?v=bb2619605a"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalvorschau.css?v=a6f67aee6e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalweg.css?v=40d27099ae"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked.png?v=3805a3a2a6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked-light.png?v=8c40e63d7e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalvorschau.js?v=69e2f2059c"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalweg.js?v=24f4671c0d"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-400.woff2?v=8909904ab6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-500.woff2?v=f3779f1efc"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-600.woff2?v=f9a06e79cd"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-700.woff2?v=6f56409fd3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-800.woff2?v=231d487a99"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-700.woff2?v=2d797dd8b3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-login.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-mail.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/953cf561dfc4f19514b6e301b5bde48c5a6687bb92fa0aa831a4d7e264064569.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/164e197a9ca4de301a7500feb25771fa51213bdb34eceaaf0734c3719696364f.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-400.woff2?v=b0a8ad37ac"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/bewerberportal?theme=dark"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/fonts.css?v=d3f3999a2f"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/theme.js?v=9b163705e9"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/site.css?v=bcc0e299bb"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/tokens.css?v=bb2619605a"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalvorschau.css?v=a6f67aee6e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalweg.css?v=40d27099ae"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked.png?v=3805a3a2a6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked-light.png?v=8c40e63d7e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalvorschau.js?v=69e2f2059c"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalweg.js?v=24f4671c0d"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-400.woff2?v=8909904ab6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-500.woff2?v=f3779f1efc"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-700.woff2?v=6f56409fd3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-600.woff2?v=f9a06e79cd"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-800.woff2?v=231d487a99"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-700.woff2?v=2d797dd8b3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/bewerber-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/bewerber-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/bewerber-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-400.woff2?v=b0a8ad37ac"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-login.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-mail.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/953cf561dfc4f19514b6e301b5bde48c5a6687bb92fa0aa831a4d7e264064569.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/164e197a9ca4de301a7500feb25771fa51213bdb34eceaaf0734c3719696364f.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/bewerber-login.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/bewerber-mail.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/3805a3a2a656bfe79db3a541f258d2250095d86ebd8f8549a29621fbcd58aa3d.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/bewerber-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "width": 1440,
+      "theme": "light",
+      "portal": "kunden",
+      "stations": [
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Dark-Mode\nDein Projekt-Portal\n\nGib deine E-Mail-Adresse ein, dann senden wir dir einen Zugangslink.\n\nE-Mail-Adresse\nZUGANGSLINK ANFORDERN\n\nNoch kein Projekt bei HeroWerk? Mehr erfahren\n\nDatenschutz · Impressum · © 2026 HeroWerk GmbH",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "de7bedf8365cfb4fef2bc73b0ddb48cb",
+            "scenario": 0,
+            "state": null,
+            "session": false,
+            "address": "index.html",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "unloaded",
+            "unloaded",
+            "loaded",
+            "unloaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Dein HeroWerk Portal-Zugang\n\n\n\nHallo Mia,\n\nwillkommen in deinem persönlichen HeroWerk-Portal. Hier siehst du jederzeit den Stand deines Wärmepumpen-Projekts, alle Unterlagen und die nächsten Schritte.\n\nKlick auf den Button, um dich sicher einzuloggen. Der Link ist 30 Minuten gültig.\n\nZum Portal\n\nÜbrigens: Für deinen Zugang brauchst du kein Passwort. Aus Sicherheitsgründen ist jeder Login-Link nur 30 Minuten gültig und für eine Anmeldung gedacht. Ist er abgelaufen oder möchtest du das Portal später erneut öffnen, forderst du einfach einen neuen Link an. Das dauert nur einen Moment, und so bleiben deine Daten jederzeit geschützt.\n\nFalls du diesen Zugang nicht angefordert hast, kannst du diese E-Mail einfach ignorieren.\n\nBeste Grüße\nDein HeroWerk-Team\n\n\n",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "481e74dc9fef09da3797f13ab00c46c6",
+            "scenario": 0,
+            "state": null,
+            "session": false,
+            "address": "index.html",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "unloaded",
+            "unloaded",
+            "unloaded",
+            "unloaded",
+            "unloaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Mia Mustermann\nDark-Mode\nAbmelden\nHallo Mia!\n\nProjekt: Musterstraße 1, 30159 Hannover. Hier siehst du den aktuellen Stand.\n\nDEIN PROJEKTFORTSCHRITT\n✓\nErstberatung\nErledigt\nWAS WIR TUN\n\nWir prüfen deine Anfrage, bewerten die grundsätzliche Eignung deines Gebäudes und bereiten ein individuelles Beratungsgespräch vor.\n\nDEINE MITWIRKUNG\n\nErzähl uns von deinem Gebäude und deinen Wünschen. Wir beraten dich ehrlich und unverbindlich.\n\n✓\nBeratungsgespräch\nErledigt\nWAS WIR TUN\n\nWir besprechen vor Ort deine Wünsche, prüfen die grundsätzliche Eignung deines Gebäudes und erklären dir die nächsten Schritte sowie die Fördermöglichkeiten.\n\nDEINE MITWIRKUNG\n\nÜberleg dir vorab, was dir wichtig ist. Energieausweis und letzte Heizkostenabrechnung helfen, sind aber noch kein Muss.\n\nAKTUELL · SEIT 19.11.2026\nAngebot erstellt\nWAS WIR TUN\n\nAuf Basis der Vor-Ort-Daten erstellen wir dein persönliches Festpreis-Angebot inkl. Förderberechnung und Wirtschaftlichkeitsvergleich.\n\nDEINE MITWIRKUNG\n\nPrüfe das Angebot",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "e2a093c7c3326f5945798452c7fce672",
+            "scenario": 0,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Mia Mustermann\nDark-Mode\nAbmelden\nHallo Mia!\n\nProjekt: Musterstraße 1, 30159 Hannover. Hier siehst du den aktuellen Stand.\n\nDEIN PROJEKTFORTSCHRITT\n✓\nErstberatung\nErledigt\nWAS WIR TUN\n\nWir prüfen deine Anfrage, bewerten die grundsätzliche Eignung deines Gebäudes und bereiten ein individuelles Beratungsgespräch vor.\n\nDEINE MITWIRKUNG\n\nErzähl uns von deinem Gebäude und deinen Wünschen. Wir beraten dich ehrlich und unverbindlich.\n\n✓\nBeratungsgespräch\nErledigt\nWAS WIR TUN\n\nWir besprechen vor Ort deine Wünsche, prüfen die grundsätzliche Eignung deines Gebäudes und erklären dir die nächsten Schritte sowie die Fördermöglichkeiten.\n\nDEINE MITWIRKUNG\n\nÜberleg dir vorab, was dir wichtig ist. Energieausweis und letzte Heizkostenabrechnung helfen, sind aber noch kein Muss.\n\n✓\nAngebot erstellt\nErledigt\nWAS WIR TUN\n\nAuf Basis der Vor-Ort-Daten erstellen wir dein persönliches Festpreis-Angebot inkl. Förderberechnung und Wirtschaftlichkeitsvergleich.\n\nDEINE MITWIRKUNG\n\nPrüfe das Angebot in Ruhe. Wir e",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "ab0fbe1f4e9b10ef446088c501606694",
+            "scenario": 1,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Mia Mustermann\nDark-Mode\nAbmelden\nHallo Mia!\n\nProjekt: Musterstraße 1, 30159 Hannover. Hier siehst du den aktuellen Stand.\n\nDEIN PROJEKTFORTSCHRITT\n✓\nErstberatung\nErledigt\nWAS WIR TUN\n\nWir prüfen deine Anfrage, bewerten die grundsätzliche Eignung deines Gebäudes und bereiten ein individuelles Beratungsgespräch vor.\n\nDEINE MITWIRKUNG\n\nErzähl uns von deinem Gebäude und deinen Wünschen. Wir beraten dich ehrlich und unverbindlich.\n\n✓\nBeratungsgespräch\nErledigt\nWAS WIR TUN\n\nWir besprechen vor Ort deine Wünsche, prüfen die grundsätzliche Eignung deines Gebäudes und erklären dir die nächsten Schritte sowie die Fördermöglichkeiten.\n\nDEINE MITWIRKUNG\n\nÜberleg dir vorab, was dir wichtig ist. Energieausweis und letzte Heizkostenabrechnung helfen, sind aber noch kein Muss.\n\n✓\nAngebot erstellt\nErledigt\nWAS WIR TUN\n\nAuf Basis der Vor-Ort-Daten erstellen wir dein persönliches Festpreis-Angebot inkl. Förderberechnung und Wirtschaftlichkeitsvergleich.\n\nDEINE MITWIRKUNG\n\nPrüfe das Angebot in Ruhe. Wir e",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "a1801330f75773bc50910de0062771dd",
+            "scenario": 2,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        }
+      ],
+      "overflow": 0,
+      "axe": []
+    },
+    {
+      "width": 1440,
+      "theme": "light",
+      "portal": "bewerber",
+      "stations": [
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Bewerberportal\nAlex Musterperson\nDark-Mode\nAbmelden\nHallo Alex!\n\nHier siehst du den aktuellen Stand deiner Bewerbung als Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in (m/w/d).\n\nDEIN BEWERBUNGSSTATUS\nAKTUELL · SEIT 19.11.2026\nBeworben\nWAS WIR TUN\n\nWir bestätigen deinen Eingang und legen deine Unterlagen für die Sichtung bereit. Du bekommst von uns eine Rückmeldung, versprochen.\n\nDEINE MITWIRKUNG\n\nDu kannst hier jederzeit weitere Unterlagen hochladen (z.B. Lebenslauf, Zeugnisse, Zertifikate). Pflicht ist das nicht, aber es hilft uns, dich besser kennenzulernen.\n\nSichtung\nfolgt\nWAS WIR TUN\n\nUnser Team sichtet deine Unterlagen und gleicht dein Profil mit der ausgeschriebenen Rolle ab. Wir nehmen uns dafür echte Zeit.\n\nDEINE MITWIRKUNG\n\nLehn dich zurück, du musst nichts tun. Wenn dir noch etwas Wichtiges einfällt, lade es gerne hier hoch.\n\nKennenlerngespräch\nfolgt\nWAS WIR TUN\n\nWir laden dich zu einem Gespräch ein, in dem wir uns gegenseitig kennenlernen: deine Erfahrung, deine Wünsche u",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "d917b0cbf4135090b4b9e7c8cd164207",
+            "scenario": 0,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Bewerberportal\nAlex Musterperson\nDark-Mode\nAbmelden\nHallo Alex!\n\nHier siehst du den aktuellen Stand deiner Bewerbung als Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in (m/w/d).\n\nDEIN BEWERBUNGSSTATUS\n✓\nBeworben\nErledigt\nWAS WIR TUN\n\nWir bestätigen deinen Eingang und legen deine Unterlagen für die Sichtung bereit. Du bekommst von uns eine Rückmeldung, versprochen.\n\nDEINE MITWIRKUNG\n\nDu kannst hier jederzeit weitere Unterlagen hochladen (z.B. Lebenslauf, Zeugnisse, Zertifikate). Pflicht ist das nicht, aber es hilft uns, dich besser kennenzulernen.\n\n✓\nSichtung\nErledigt\nWAS WIR TUN\n\nUnser Team sichtet deine Unterlagen und gleicht dein Profil mit der ausgeschriebenen Rolle ab. Wir nehmen uns dafür echte Zeit.\n\nDEINE MITWIRKUNG\n\nLehn dich zurück, du musst nichts tun. Wenn dir noch etwas Wichtiges einfällt, lade es gerne hier hoch.\n\nAKTUELL · SEIT 19.11.2026\nKennenlerngespräch\nWAS WIR TUN\n\nWir laden dich zu einem Gespräch ein, in dem wir uns gegenseitig kennenlernen: deine Erfahrung, deine",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "fb54cd6f6bfd334e16dd370c06fff705",
+            "scenario": 1,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        },
+        {
+          "origin": "null",
+          "theme": "light",
+          "text": "Bewerberportal\nAlex Musterperson\nDark-Mode\nAbmelden\nHallo Alex!\n\nHier siehst du den aktuellen Stand deiner Bewerbung als Anlagenmechaniker:in SHK / Wärmepumpen-Monteur:in (m/w/d).\n\nDEIN BEWERBUNGSSTATUS\n✓\nBeworben\nErledigt\nWAS WIR TUN\n\nWir bestätigen deinen Eingang und legen deine Unterlagen für die Sichtung bereit. Du bekommst von uns eine Rückmeldung, versprochen.\n\nDEINE MITWIRKUNG\n\nDu kannst hier jederzeit weitere Unterlagen hochladen (z.B. Lebenslauf, Zeugnisse, Zertifikate). Pflicht ist das nicht, aber es hilft uns, dich besser kennenzulernen.\n\n✓\nSichtung\nErledigt\nWAS WIR TUN\n\nUnser Team sichtet deine Unterlagen und gleicht dein Profil mit der ausgeschriebenen Rolle ab. Wir nehmen uns dafür echte Zeit.\n\nDEINE MITWIRKUNG\n\nLehn dich zurück, du musst nichts tun. Wenn dir noch etwas Wichtiges einfällt, lade es gerne hier hoch.\n\n✓\nKennenlerngespräch\nErledigt\nWAS WIR TUN\n\nWir laden dich zu einem Gespräch ein, in dem wir uns gegenseitig kennenlernen: deine Erfahrung, deine Wünsche und wa",
+          "init": {
+            "type": "t1300-init",
+            "version": 1,
+            "run": "c41bb5514fbd5d26c05269ed9359c6fd",
+            "scenario": 2,
+            "state": null,
+            "session": true,
+            "address": "dashboard.html?token=T1300-musterlink&email=demo%40example.com",
+            "theme": "light"
+          },
+          "storageDenied": true,
+          "parentDenied": true,
+          "fonts": [
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded",
+            "loaded"
+          ]
+        }
+      ],
+      "overflow": 0,
+      "axe": [],
+      "requests": [
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/kundenportal?theme=light"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/fonts.css?v=d3f3999a2f"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/theme.js?v=9b163705e9"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/site.css?v=bcc0e299bb"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/tokens.css?v=bb2619605a"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalvorschau.css?v=a6f67aee6e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalweg.css?v=40d27099ae"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked.png?v=3805a3a2a6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked-light.png?v=8c40e63d7e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalvorschau.js?v=69e2f2059c"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalweg.js?v=24f4671c0d"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-400.woff2?v=8909904ab6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-500.woff2?v=f3779f1efc"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-700.woff2?v=6f56409fd3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-600.woff2?v=f9a06e79cd"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-800.woff2?v=231d487a99"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-700.woff2?v=2d797dd8b3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-login.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-mail.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/953cf561dfc4f19514b6e301b5bde48c5a6687bb92fa0aa831a4d7e264064569.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/164e197a9ca4de301a7500feb25771fa51213bdb34eceaaf0734c3719696364f.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/kunden-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-400.woff2?v=b0a8ad37ac"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/bewerberportal?theme=light"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/fonts.css?v=d3f3999a2f"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/theme.js?v=9b163705e9"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/site.css?v=bcc0e299bb"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/tokens.css?v=bb2619605a"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalvorschau.css?v=a6f67aee6e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/css/portalweg.css?v=40d27099ae"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked.png?v=3805a3a2a6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/herowerk-logo-stacked-light.png?v=8c40e63d7e"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalvorschau.js?v=69e2f2059c"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/js/portalweg.js?v=24f4671c0d"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-400.woff2?v=8909904ab6"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-500.woff2?v=f3779f1efc"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-700.woff2?v=6f56409fd3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/inter-600.woff2?v=f9a06e79cd"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-800.woff2?v=231d487a99"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-700.woff2?v=2d797dd8b3"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/bewerber-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/bewerber-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/bewerber-dashboard.html"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "http://host.docker.internal:8138/fonts/barlow-400.woff2?v=b0a8ad37ac"
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "failures": [],
+  "browser": "148.0.7778.0"
+}

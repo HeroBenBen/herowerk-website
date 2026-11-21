@@ -1,0 +1,208 @@
+/* Entwurf Portalweg und Portalvorschau, nur zum Ansehen (T1300 Folgekonzept). */
+
+/* ---------- Menuepunkt Portal, Desktop ---------- */
+.nav-portal {
+  position: relative;
+}
+.nav-portal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: var(--g300);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 12px;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+.nav-portal-btn:hover,
+.nav-portal-btn[aria-expanded='true'] {
+  border-color: var(--green);
+  color: var(--white);
+}
+.nav-portal-btn .chev {
+  transition: transform 0.2s;
+}
+.nav-portal-btn[aria-expanded='true'] .chev {
+  transform: rotate(180deg);
+}
+.nav-portal-panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  width: 320px;
+  z-index: 300;
+  background: var(--color-bg-elevated, #161616);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+.nav-portal-panel[hidden] {
+  display: none;
+}
+.nav-links .portal-row,
+.portal-row {
+  display: grid;
+  grid-template-columns: 36px 1fr 16px;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--white) !important;
+  white-space: normal;
+}
+.portal-row:hover {
+  background: rgba(183, 217, 0, 0.1);
+}
+.portal-row .ico {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  background: rgba(183, 217, 0, 0.15);
+  color: var(--green);
+}
+.portal-row strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+}
+.portal-row small {
+  display: block;
+  font-size: 12px;
+  color: var(--g300);
+  font-weight: 400;
+  margin-top: 2px;
+}
+.portal-row .pfeil {
+  color: var(--g300);
+}
+.nav-portal-foot {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 6px;
+  padding: 10px 12px 6px;
+  font-size: 12px;
+  color: var(--g300);
+}
+.nav-links .nav-portal-foot a,
+.nav-portal-foot a {
+  color: var(--green) !important;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ---------- Handymenue ---------- */
+.mm-portal {
+  display: none;
+}
+@media (max-width: 960px) {
+  .mobile-menu .mm-portal {
+    display: block;
+    margin: 8px 0 4px;
+    padding: 14px 4px 4px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .mm-portal-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--g300);
+    margin: 0 8px 6px;
+  }
+  .mm-portal .portal-row {
+    background: rgba(255, 255, 255, 0.04);
+    margin-bottom: 8px;
+    min-height: 56px;
+  }
+  .mm-portal .mm-portal-foot {
+    display: block;
+    font-size: 13px;
+    color: var(--green);
+    margin: 4px 8px 6px;
+    text-decoration: none;
+    font-weight: 600;
+  }
+}
+
+/* ---------- Hell-Modus ---------- */
+[data-theme='light'] .nav-portal-btn {
+  border-color: rgba(0, 0, 0, 0.2);
+}
+[data-theme='light'] .nav-portal-panel {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+}
+[data-theme='light'] .nav-portal-foot {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+[data-theme='light'] .mm-portal .portal-row {
+  background: rgba(0, 0, 0, 0.04);
+}
+[data-theme='light'] .portal-row:hover {
+  background: rgba(95, 114, 0, 0.1);
+}
+
+/* Logo darf durch den neuen Punkt nicht schrumpfen (gemessen 1024 px: 79 px ohne, 5 px mit Portal) */
+.nav-inner > a:first-child {
+  flex-shrink: 0;
+}
+@media (min-width: 961px) and (max-width: 1180px) {
+  .nav-links {
+    gap: 10px;
+  }
+  .nav-portal-btn {
+    padding: 7px 9px;
+  }
+  .nav-cta-call {
+    padding: 7px 10px !important;
+  }
+  .nav-cta {
+    padding: 8px 14px !important;
+  }
+}
+
+.mobile-menu .mm-portal a.portal-row {
+  display: grid !important;
+  grid-template-columns: 36px 1fr 16px;
+  justify-content: stretch;
+  justify-items: start;
+  text-align: left;
+}
+.mobile-menu .mm-portal a.portal-row > span:nth-child(2) {
+  justify-self: stretch;
+}
+
+.nav-portal :focus-visible,
+.mm-portal :focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: 3px;
+}
+.nav-portal-panel {
+  max-width: calc(100vw - 32px);
+}
+.mm-portal-foot {
+  min-height: 44px;
+  display: flex !important;
+  align-items: center;
+}
+.portal-footer {
+  margin: 24px auto;
+  max-width: 1200px;
+  padding: 16px 24px;
+}
+.portal-footer a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  margin-right: 20px;
+}

@@ -1,0 +1,273 @@
+/* ---------- Erklaerseite ---------- */
+.pv-hero {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 24px 40px;
+}
+.pv-hero .kicker {
+  color: var(--green);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.pv-hero h1 {
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.1;
+  margin: 12px 0 16px;
+  color: var(--white);
+}
+.pv-hero p {
+  color: var(--g300);
+  max-width: 640px;
+  font-size: 17px;
+  line-height: 1.6;
+}
+.pv-ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+.pv-sprung {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+.pv-sprung a {
+  color: var(--g300);
+  text-decoration: none;
+  font-size: 13px;
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+}
+.pv-sprung a:hover {
+  border-color: var(--green);
+  color: var(--white);
+}
+[data-theme='light'] .pv-sprung a {
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+.pv-station {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 40px;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+[data-theme='light'] .pv-station {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+.pv-text .nr {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--green);
+  color: var(--nacht);
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+.pv-text h2 {
+  color: var(--white);
+  font-size: 28px;
+  margin: 0 0 12px;
+}
+.pv-text p {
+  color: var(--g300);
+  line-height: 1.65;
+  font-size: 16px;
+  margin: 0 0 12px;
+}
+.pv-text ul {
+  color: var(--g300);
+  line-height: 1.7;
+  padding-left: 18px;
+  margin: 0 0 16px;
+}
+.pv-hinweis {
+  font-size: 13px;
+  color: var(--g300);
+  border-left: 3px solid var(--green);
+  padding-left: 10px;
+}
+
+.pv-rahmen {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: #0d0d0d;
+}
+[data-theme='light'] .pv-rahmen {
+  border-color: rgba(0, 0, 0, 0.14);
+  background: #f3f3f3;
+}
+.pv-streifen {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px 12px;
+  background: #ffb000;
+  color: #111;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.pv-streifen a {
+  color: #111;
+}
+.pv-ansicht {
+  display: inline-flex;
+  gap: 4px;
+}
+.pv-ansicht button {
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  background: transparent;
+  color: #111;
+  border-radius: 6px;
+  padding: 3px 8px;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.pv-ansicht button[aria-pressed='true'] {
+  background: #111;
+  color: #ffb000;
+}
+.pv-buehne {
+  position: relative;
+  height: 620px;
+  display: flex;
+  justify-content: center;
+  background: inherit;
+}
+.pv-buehne iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #fff;
+}
+.pv-buehne.handy iframe {
+  width: 390px;
+  max-width: 100%;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+.pv-sperre {
+  position: absolute;
+  inset: 0;
+  cursor: not-allowed;
+}
+.pv-toast {
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  background: #111;
+  color: #fff;
+  border: 1px solid #ffb000;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+.pv-toast a {
+  color: #ffb000;
+}
+.pv-toast[hidden] {
+  display: none;
+}
+
+.pv-mail-hinweis {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  background: rgba(183, 217, 0, 0.1);
+  color: var(--white);
+  border: 1px solid rgba(183, 217, 0, 0.3);
+}
+.pv-schluss {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 56px 24px 96px;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.pv-schluss h2 {
+  color: var(--white);
+  font-size: 30px;
+  margin: 0 0 8px;
+}
+.pv-schluss p {
+  color: var(--g300);
+  margin: 0 0 24px;
+}
+.pv-schluss .pv-ctas {
+  justify-content: center;
+}
+
+@media (max-width: 960px) {
+  .pv-hero {
+    padding-top: 96px;
+  }
+  .pv-station {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 32px 16px;
+  }
+  .pv-station .pv-text {
+    order: -1;
+  }
+  .pv-buehne {
+    height: 560px;
+  }
+  .pv-ansicht {
+    display: none;
+  }
+}
+
+.pv-buehne[data-status='error'] {
+  border: 3px solid #ffb000;
+}
+.pv-ansicht button {
+  min-height: 44px;
+  min-width: 44px;
+}
+.pv-ansicht button:focus-visible {
+  outline: 3px solid #111;
+  outline-offset: 2px;
+}
+@media (max-width: 960px) {
+  .pv-ansicht {
+    display: inline-flex;
+  }
+}
+
+/* Die bestehenden Hell-Regeln sind breit und wichtig markiert. Nur die neuen
+   festen Warnflächen brauchen hier ihre unveränderten Kontrastfarben. */
+#main-content .pv-streifen a {
+  color: #111 !important;
+}
+#main-content .pv-toast {
+  color: #fff !important;
+}
+#main-content .pv-toast a {
+  color: #ffb000 !important;
+}
+#main-content .pv-text .nr {
+  color: #111;
+}
+[data-theme='light'] #main-content .pv-hero .kicker {
+  color: var(--color-accent-on-light);
+}

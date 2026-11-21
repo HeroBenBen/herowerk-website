@@ -1,0 +1,123 @@
+{
+  "startedAt": "2026-11-21T03:20:32.838Z",
+  "out": "/Users/benjaminbendler/code/_t1308/belege/controller-2026-11-21T03-20-32-838Z",
+  "steps": [
+    {
+      "name": "website-regression",
+      "startedAt": "2026-11-21T03:20:33.040Z",
+      "command": [
+        "npm",
+        "run",
+        "verify:t1308"
+      ],
+      "exit": 0,
+      "finishedAt": "2026-11-21T03:20:33.397Z"
+    },
+    {
+      "name": "oeffentliche-quellen",
+      "startedAt": "2026-11-21T03:20:33.397Z",
+      "command": [
+        "npm",
+        "run",
+        "verify:t1308-public"
+      ],
+      "exit": 0,
+      "finishedAt": "2026-11-21T03:20:35.254Z"
+    },
+    {
+      "name": "apache-start",
+      "startedAt": "2026-11-21T03:20:35.254Z",
+      "exit": 0,
+      "finishedAt": "2026-11-21T03:20:36.169Z"
+    },
+    {
+      "name": "apache-headers",
+      "startedAt": "2026-11-21T03:20:36.169Z",
+      "exit": 0,
+      "finishedAt": "2026-11-21T03:20:36.614Z"
+    },
+    {
+      "name": "apache-header-rotproben",
+      "startedAt": "2026-11-21T03:20:36.614Z",
+      "exit": 0,
+      "finishedAt": "2026-11-21T03:20:37.001Z"
+    },
+    {
+      "name": "chromium-normal",
+      "startedAt": "2026-11-21T03:20:37.116Z",
+      "exit": 0,
+      "finishedAt": "2026-11-21T03:21:18.574Z"
+    },
+    {
+      "name": "betroffene-smoke-a11y",
+      "startedAt": "2026-11-21T03:21:18.574Z",
+      "command": [
+        "/usr/local/bin/node",
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "tests/smoke.spec.js",
+        "tests/a11y.spec.js",
+        "--grep",
+        "Erklärseite|Telefon-Menue|kundenportal|bewerberportal",
+        "--workers=1",
+        "--reporter=list",
+        "--output",
+        "/Users/benjaminbendler/code/_t1308/belege/controller-2026-11-21T03-20-32-838Z/smoke-a11y"
+      ],
+      "exit": 0,
+      "finishedAt": "2026-11-21T03:22:14.633Z"
+    },
+    {
+      "name": "header-check",
+      "startedAt": "2026-11-21T03:22:14.633Z",
+      "command": [
+        "node",
+        "scripts/header-check.js",
+        "http://127.0.0.1:32772"
+      ],
+      "exit": 0,
+      "finishedAt": "2026-11-21T03:22:14.786Z"
+    },
+    {
+      "name": "interne-http-regression",
+      "startedAt": "2026-11-21T03:22:14.968Z",
+      "command": [
+        "npm",
+        "run",
+        "verify:t1300"
+      ],
+      "exit": 0,
+      "finishedAt": "2026-11-21T03:22:28.742Z"
+    },
+    {
+      "name": "interne-browser-regression",
+      "startedAt": "2026-11-21T03:22:28.743Z",
+      "command": [
+        "node",
+        "scripts/t1308-intern-browser.mjs",
+        "/Users/benjaminbendler/code/_t1308/belege/controller-2026-11-21T03-20-32-838Z/intern-browser",
+        "--freigegeben"
+      ],
+      "exit": 0,
+      "finishedAt": "2026-11-21T03:24:46.558Z"
+    }
+  ],
+  "failures": [],
+  "commits": {
+    "website": "4d6b36c1b464175406383ebe758aed80035fc365",
+    "portal": "f8fe964975976c45668de158f6f198ad35ec5a7f",
+    "bewerber": "0a40238ce4a660626c10d0b2e8697a6ed2b62989"
+  },
+  "manifests": {
+    "public": "c95268a21370dce7b2adc4fa506c3ac76b4a8244aa20051ed50e42a9f51cda5e",
+    "internal": "f2cd888a940158c642f3f1f7bcc5eb67da49138278c4456f18ccfe3190b87358"
+  },
+  "websiteStatus": "M .htaccess\n M amortisation-waermepumpe.html\n M anfrage.html\n M barrierefreiheit.html\n M baubarkeitspruefung.html\n M bewerbung.html\n M datenschutz.html\n M dimensionierung-verstehen.html\n M dimensionierung.html\n M foerderung-hannover.html\n M foerderung-jetzt-mitnehmen.html\n M foerderung.html\n M foerdervorschuss.html\n M gasheizung-tauschen-oder-reparieren.html\n M hinweise.html\n M impressum.html\n M index.html\n M karriere.html\n M kontakt.html\n M kostenvergleich-waermepumpe.html\n M lighthouserc.json\n M package.json\n M preise.html\n M propan-waermepumpe.html\n M prozess.html\n M ratgeber.html\n M rechner.html\n M scripts/consent-integration-check.js\n M scripts/fidelity-pages.json\n M scripts/header-check.js\n M scripts/remove-bundle-comments.mjs\n M scripts/structured-data.state.json\n M scripts/version-assets.sh\n M sitemap.xml\n M stelle.html\n M tests/a11y.spec.js\n M tests/smoke.spec.js\n M waermepumpe-abstand.html\n M waermepumpe-altbau.html\n M waermepumpe-hannover.html\n M waermepumpe-laerm.html\n M waermepumpenstrom-hannover.html\n M wertsteigerung-waermepumpe.html\n M wp-kosten-hannover.html\n?? bewerberportal.html\n?? css/portalvorschau.css\n?? css/portalweg.css\n?? docs/t1308/\n?? js/portalvorschau.js\n?? js/portalweg.js\n?? kundenportal.html\n?? scripts/import-t1308-preview.mjs\n?? scripts/pruefe-t1308-controller.mjs\n?? scripts/pruefe-t1308-controller.sh\n?? scripts/pruefe-t1308-offline.mjs\n?? scripts/sync-t1308-headers.mjs\n?? scripts/sync-t1308-portalweg.mjs\n?? scripts/t1308-intern-browser.mjs\n?? scripts/t1308-portalweg-vorlage.json\n?? tests/t1308-apache.conf\n?? tests/t1308-browser.mjs\n?? tests/t1308-headers.mjs\n?? tests/t1308-import-processing.mjs\n?? tests/t1308-portalweg-regression.mjs\n?? vorschau/",
+  "portalStatus": "M intern/portal-demo/generated/kunden.generated.php\n M intern/portal-demo/generated/manifest.json\n M package.json\n M scripts/build-t1300-portal-demo.mjs\n M scripts/t1300-local.mjs\n M scripts/t1300/fixtures.php\n M scripts/verify-t1300-portal-demo.mjs\n?? docs/t1308/\n?? scripts/t1300/public-export.mjs\n?? scripts/t1300/public-runtime.browser.mjs\n?? scripts/verify-t1308-public.mjs",
+  "bewerberStatus": "",
+  "node": "v24.14.1",
+  "docker": "29.5.2",
+  "interrupted": false,
+  "finishedAt": "2026-11-21T03:24:46.649Z",
+  "exit": 0
+}

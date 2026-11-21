@@ -113,7 +113,11 @@ if (topLevelHtmlFiles.length === 0) {
   errors.push('Keine öffentliche HTML-Seite im Projektstamm gefunden.');
 }
 for (const relativePath of topLevelHtmlFiles) {
-  checkCmpPage(relativePath, read(relativePath));
+  if (['kundenportal.html', 'bewerberportal.html'].includes(relativePath)) {
+    const source = read(relativePath);
+    if (/consentmanager|gtag\(|js\/consent\.js|js\/site\.js|connect\.facebook/.test(source))
+      errors.push(relativePath + ': Tracking oder Rechnerlaufzeit auf Erklärseite.');
+  } else checkCmpPage(relativePath, read(relativePath));
 }
 
 const htaccess = read('.htaccess');

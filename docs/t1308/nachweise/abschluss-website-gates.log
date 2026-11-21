@@ -1,0 +1,14 @@
+
+> verify:website-gates
+> python3 -m unittest discover -s tests -p 'test_website_gates.py' && python3 scripts/website_gates.py --repo . --basis origin/main
+
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.138s
+
+OK
+RECHENLOGIK im ausgelieferten Quelltext: 0 Befund(e)
+   (Altbestand, blockt nicht: 29 Seite(n) fehlen in mindestens einer Liste: amortisation-waermepumpe, anfrage, barrierefreiheit, baubarkeitspruefung, bewerbung, datenschutz, dimensionierung, dimensionierung-verstehen ...)
+SEITEN OHNE EINTRAG IN DEN TESTLISTEN: 0 Befund(e)
+
+>>> SAUBER, geprüft wurde: Rechenlogik und Testlisten.
