@@ -1,0 +1,5 @@
+
+> verify:assets
+> scripts/version-assets.sh --check
+
+Asset-Versionierung aktuell: 109 Assets, 36 Seiten, 0 Abweichungen.

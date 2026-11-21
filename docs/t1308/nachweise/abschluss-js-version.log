@@ -1,0 +1,64 @@
+
+> verify:js-versionsanhang
+> node scripts/verify-js-versionsanhang.mjs
+
+  Seite amortisation-waermepumpe.html: 3 Referenzen
+  Seite anfrage.html: 2 Referenzen
+  Seite api/jobs.php: 0 Referenzen
+  Seite api/kv-marktwerte.php: 0 Referenzen
+  Seite api/rechner-engine.php: 0 Referenzen
+  Seite api/rechner-kv-adapter.php: 0 Referenzen
+  Seite api/rechner-snapshot-integritaet.php: 0 Referenzen
+  Seite api/rechner-snapshot-meldung.php: 0 Referenzen
+  Seite api/rechner-snapshot-tabellen.php: 0 Referenzen
+  Seite api/rechner-values.php: 0 Referenzen
+  Seite api/rechner.php: 0 Referenzen
+  Seite api/werte-auffrischen.php: 0 Referenzen
+  Seite barrierefreiheit.html: 4 Referenzen
+  Seite baubarkeitspruefung.html: 4 Referenzen
+  Seite bewerberportal.html: 3 Referenzen
+  Seite bewerbung.html: 5 Referenzen
+  Seite datenschutz.html: 2 Referenzen
+  Seite dimensionierung-verstehen.html: 4 Referenzen
+  Seite dimensionierung.html: 4 Referenzen
+  Seite foerderung-hannover.html: 4 Referenzen
+  Seite foerderung-jetzt-mitnehmen.html: 4 Referenzen
+  Seite foerderung.html: 4 Referenzen
+  Seite foerdervorschuss.html: 4 Referenzen
+  Seite gasheizung-tauschen-oder-reparieren.html: 4 Referenzen
+  Seite hinweise.html: 4 Referenzen
+  Seite impressum.html: 2 Referenzen
+  Seite index.html: 4 Referenzen
+  JS-Datei js/.htaccess: 0 Referenzen
+  JS-Datei js/chart-4.4.1.umd.min.js: 0 Referenzen
+  JS-Datei js/consent.js: 0 Referenzen
+  JS-Datei js/kurzbewerbung.js: 0 Referenzen
+  JS-Datei js/portalvorschau.js: 0 Referenzen
+  JS-Datei js/portalweg.js: 0 Referenzen
+  JS-Datei js/site.js: 0 Referenzen
+  JS-Datei js/theme.js: 0 Referenzen
+  Seite karriere.html: 4 Referenzen
+  Seite kontakt.html: 4 Referenzen
+  Seite kostenvergleich-waermepumpe.html: 4 Referenzen
+  Seite kundenportal.html: 3 Referenzen
+  Seite preise.html: 4 Referenzen
+  Seite propan-waermepumpe.html: 4 Referenzen
+  Seite prozess.html: 4 Referenzen
+  Seite ratgeber.html: 4 Referenzen
+  Seite rechner.html: 4 Referenzen
+  Seite stelle.html: 3 Referenzen
+  Seite vorschau/bewerber-dashboard.html: 0 Referenzen
+  Seite vorschau/bewerber-login.html: 0 Referenzen
+  Seite vorschau/bewerber-mail.html: 0 Referenzen
+  Seite vorschau/kunden-dashboard.html: 0 Referenzen
+  Seite vorschau/kunden-login.html: 0 Referenzen
+  Seite vorschau/kunden-mail.html: 0 Referenzen
+  Seite waermepumpe-abstand.html: 3 Referenzen
+  Seite waermepumpe-altbau.html: 4 Referenzen
+  Seite waermepumpe-hannover.html: 3 Referenzen
+  Seite waermepumpe-laerm.html: 3 Referenzen
+  Seite waermepumpenstrom-hannover.html: 4 Referenzen
+  Seite wertsteigerung-waermepumpe.html: 4 Referenzen
+  Seite wp-kosten-hannover.html: 4 Referenzen
+50 Seiten, 8 Dateien unter js/, 124 Referenzen gesamt.
+JS-Versionsanhang: GRÜN, alle Referenzen tragen ?v=<Hash>.

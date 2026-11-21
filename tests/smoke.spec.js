@@ -31,6 +31,9 @@ const MENUE_SOLL = [
   '/ratgeber',
   '/kontakt',
   '/karriere',
+  'https://portal.herowerk.de/',
+  'https://bewerbung.herowerk.de/',
+  '/kundenportal',
   '/anfrage',
 ];
 
@@ -110,3 +113,11 @@ test('@smoke Kampagnen-Zielseite /stelle lädt mit Rolle und Kurzformular', asyn
   await expect(page.locator('#stGehalt')).toHaveText('ab 20,00 € brutto pro Stunde');
   await expect(page.locator('#stForm')).toBeVisible();
 });
+
+for (const path of ['/kundenportal', '/bewerberportal']) {
+  test(`@smoke Erklärseite ${path} lädt`, async ({ page }) => {
+    const response = await page.goto(path);
+    expect(response.status()).toBe(200);
+    await expect(page.locator('.pv-hero')).toBeVisible();
+  });
+}

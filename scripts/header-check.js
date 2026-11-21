@@ -53,8 +53,15 @@ function zusagenAusHtaccess(datei) {
   for (const zeile of text.split('\n')) {
     const roh = zeile.trim();
     if (roh.startsWith('#')) continue;
-    const treffer = roh.match(/^Header\s+always\s+set\s+([A-Za-z0-9-]+)\s+"(.*)"\s*$/);
-    if (treffer) zusagen.set(treffer[1].toLowerCase(), treffer[2]);
+    const treffer = roh.match(
+      /^Header\s+always\s+set\s+([A-Za-z0-9-]+)\s+"([^"\n]*)"(?:\s+"expr=[^"\n]*")?\s*$/
+    );
+    if (
+      treffer &&
+      PFLICHT.includes(treffer[1].toLowerCase()) &&
+      !zusagen.has(treffer[1].toLowerCase())
+    )
+      zusagen.set(treffer[1].toLowerCase(), treffer[2]);
   }
   return zusagen;
 }

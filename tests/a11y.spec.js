@@ -8,6 +8,8 @@ const { gotoWithConsentRejected } = require('./helpers/consent');
 const { axeBefunde, pruefeGegenBekannte } = require('./helpers/axe');
 
 const PAGES = [
+  '/kundenportal',
+  '/bewerberportal',
   '/',
   '/preise.html',
   '/rechner.html',

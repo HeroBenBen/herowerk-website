@@ -1,0 +1,4815 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="utf-8"><meta name="robots" content="noindex"><script>/* Öffentlich: vor der Demo-Laufzeit registrieren, keine wirksame Eingabe. */
+(() => {
+  'use strict';
+  let notify = () => {};
+  window.addEventListener('message', (event) => {
+    if (event.source !== parent || event.data?.type !== 't1300-init' || event.ports.length !== 1)
+      return;
+    const run = event.data.run;
+    const port = event.ports[0];
+    notify = () => port.postMessage({ version: 1, run, type: 'public-notice' });
+  });
+  const stop = (event) => {
+    const control = event.target.closest?.(
+      'a, button, input, select, textarea, form, [role="button"]'
+    );
+    if (!control) return;
+    if (event.type === 'keydown' && !['Enter', ' '].includes(event.key)) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    if (event.isTrusted) notify();
+  };
+  for (const type of ['click', 'auxclick', 'submit', 'beforeinput', 'change', 'drop', 'keydown']) {
+    document.addEventListener(type, stop, true);
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    for (const field of document.querySelectorAll('input, textarea')) {
+      field.readOnly = true;
+      if (field.type === 'file') field.disabled = true;
+    }
+    for (const form of document.forms) form.removeAttribute('action');
+  });
+})();
+
+const T1300_DATA={"portal":"kunden","states":[{"dealId":"1300000001","customerName":"Mia Mustermann","contactEmail":"mia.mustermann@example.com","projectName":"Musterstraße 1, 30159 Hannover","portalStep":3,"portalStepDate":"2026-11-19T12:00:00.000Z","portalPhase":"projekt","portalPhaseReason":null,"sonderstatus":null,"fv":null,"gewerke":{"altanlageTyp":"Gas","fundamentNoetig":true,"dacharbeitNoetig":false,"zaehlerschrankUmbau":false,"kernbohrungNoetig":false,"entsorgungNoetig":false},"meilensteine":[{"key":"beratung","label":"Beratungsgespräch","datum":null,"relevant":true},{"key":"aufmass","label":"Datenaufnahme","datum":"2026-11-20","relevant":true},{"key":"material1","label":"Materiallieferung","datum":null,"relevant":true},{"key":"fundament","label":"Fundament / Garten- & Landschaftsbau","datum":null,"relevant":true},{"key":"elektro","label":"Elektro","datum":"2026-11-27","relevant":true},{"key":"shk","label":"SHK / Heizungsinstallation","datum":"2026-11-30","relevant":true}],"termine":{"datenaufnahme":"2026-11-20","installation":"2026-11-30"},"angebot":{"gueltigBis":"2026-12-03","verlaengerungStatus":null},"angebote":[{"kind":"haupt","label":"Hauptangebot","status":"bereitgestellt","annehmbar":true,"ablehnbar":true,"widerrufSichtbar":false,"fristBeginnUtc":null,"fristEndeUtc":null,"vertragskennung":"T1300-ANGEBOT","fassungskennung":"T1300-ANGEBOT","dateiname":"Musterangebot.svg","dateiId":"T1300-ANGEBOT","betrag":"30000.00","contractEvidenceUnavailable":false,"widerrufErklaert":false,"widerrufEingangUtc":null,"widerrufEingangOrtszeit":null,"widerrufStatus":"Zugang offen","rechtsankerUtc":null,"rechtsfristEndeUtc":null,"hoechstfristEndeUtc":null,"spaetesterZugangUtc":null,"spaetesteAnkergrenzeUtc":null,"betrieblicheSperreBisUtc":null,"zahlungswege":{"hervorgehoben":"vollzahlung","reiter":true,"wege":[{"kennung":"anzahlung","titel":"Anzahlung","zahlbetrag":"30.000,00 €","nachlass":null,"skontoSatz":null,"ersteZahlung":{"art":"anzahlung","betrag":"15.000,00 €"},"zweiteZahlung":{"art":"endrechnung","betrag":"15.000,00 €"},"eigenanteil":"18.000,00 €"},{"kennung":"vollzahlung","titel":"Vollzahlung","zahlbetrag":"29.400,00 €","nachlass":"600,00 €","skontoSatz":"2","ersteZahlung":{"art":"voller_betrag","betrag":"29.400,00 €"},"zweiteZahlung":{"art":"keine","betrag":null},"eigenanteil":"17.400,00 €"},{"kennung":"foerdervorschuss","titel":"Fördervorschuss","zahlbetrag":"30.000,00 €","nachlass":null,"skontoSatz":null,"ersteZahlung":{"art":"eigenanteil","betrag":"18.000,00 €"},"zweiteZahlung":{"art":"foerderanteil","betrag":"12.000,00 €"},"eigenanteil":"18.000,00 €"}]}}],"freigegebeneDokumente":[],"dokumenteDateien":{},"dokumenteNachOrdner":{"Angebote":[{"name":"Musterangebot.svg","fileId":"T1300-ANGEBOT","updated":"2026-11-19T12:00:00.000Z","size":1024}],"Pläne & Zeichnungen":[{"name":"Musterunterlagen.svg","fileId":"T1300-UNTERLAGEN","updated":"2026-11-19T12:00:00.000Z","size":1024}]},"individuelleDokumente":[],"kundenUploads":[],"uploadNotificationsEnabled":true,"uploadNotification":null,"driveFolderMissing":false,"lastMessage":null,"contactPerson":{"name":"Benjamin Bendler","phone":"05131 - 50 59 750","email":"info@herowerk.de","role":"Projektleitung"},"deals":[{"dealId":"1300000001","projectName":"Musterstraße 1, 30159 Hannover","phase":"projekt","typeLabel":"Projekt"}],"tickets":[]},{"dealId":"1300000001","customerName":"Mia Mustermann","contactEmail":"mia.mustermann@example.com","projectName":"Musterstraße 1, 30159 Hannover","portalStep":9,"portalStepDate":"2026-11-19T12:00:00.000Z","portalPhase":"projekt","portalPhaseReason":null,"sonderstatus":null,"fv":null,"gewerke":{"altanlageTyp":"Gas","fundamentNoetig":true,"dacharbeitNoetig":false,"zaehlerschrankUmbau":false,"kernbohrungNoetig":false,"entsorgungNoetig":false},"meilensteine":[{"key":"beratung","label":"Beratungsgespräch","datum":null,"relevant":true},{"key":"aufmass","label":"Datenaufnahme","datum":"2026-11-20","relevant":true},{"key":"material1","label":"Materiallieferung","datum":null,"relevant":true},{"key":"fundament","label":"Fundament / Garten- & Landschaftsbau","datum":null,"relevant":true},{"key":"elektro","label":"Elektro","datum":"2026-11-27","relevant":true},{"key":"shk","label":"SHK / Heizungsinstallation","datum":"2026-11-30","relevant":true}],"termine":{"datenaufnahme":"2026-11-20","installation":"2026-11-30"},"angebot":{"gueltigBis":"2026-12-03","verlaengerungStatus":null},"angebote":[{"kind":"haupt","label":"Hauptangebot","status":"angenommen","annehmbar":false,"ablehnbar":false,"widerrufSichtbar":true,"fristBeginnUtc":null,"fristEndeUtc":null,"vertragskennung":"T1300-ANGEBOT","fassungskennung":"T1300-ANGEBOT","dateiname":"Musterangebot.svg","dateiId":"T1300-ANGEBOT","betrag":"30000.00","contractEvidenceUnavailable":false,"widerrufErklaert":false,"widerrufEingangUtc":null,"widerrufEingangOrtszeit":null,"widerrufStatus":"Zugang offen","rechtsankerUtc":null,"rechtsfristEndeUtc":null,"hoechstfristEndeUtc":null,"spaetesterZugangUtc":null,"spaetesteAnkergrenzeUtc":null,"betrieblicheSperreBisUtc":null}],"freigegebeneDokumente":[],"dokumenteDateien":{},"dokumenteNachOrdner":{"Angebote":[{"name":"Musterangebot.svg","fileId":"T1300-ANGEBOT","updated":"2026-11-19T12:00:00.000Z","size":1024}],"Pläne & Zeichnungen":[{"name":"Musterunterlagen.svg","fileId":"T1300-UNTERLAGEN","updated":"2026-11-19T12:00:00.000Z","size":1024}]},"individuelleDokumente":[],"kundenUploads":[],"uploadNotificationsEnabled":true,"uploadNotification":null,"driveFolderMissing":false,"lastMessage":null,"contactPerson":{"name":"Benjamin Bendler","phone":"05131 - 50 59 750","email":"info@herowerk.de","role":"Projektleitung"},"deals":[{"dealId":"1300000001","projectName":"Musterstraße 1, 30159 Hannover","phase":"projekt","typeLabel":"Projekt"}],"tickets":[]},{"dealId":"1300000001","customerName":"Mia Mustermann","contactEmail":"mia.mustermann@example.com","projectName":"Musterstraße 1, 30159 Hannover","portalStep":13,"portalStepDate":"2026-11-19T12:00:00.000Z","portalPhase":"projekt","portalPhaseReason":null,"sonderstatus":null,"fv":{"status":"zahlungsziel_laeuft","betrag":12000,"foerderquote":40,"servicePauschale":320.11},"gewerke":{"altanlageTyp":"Gas","fundamentNoetig":true,"dacharbeitNoetig":false,"zaehlerschrankUmbau":false,"kernbohrungNoetig":false,"entsorgungNoetig":false},"meilensteine":[{"key":"beratung","label":"Beratungsgespräch","datum":null,"relevant":true},{"key":"aufmass","label":"Datenaufnahme","datum":"2026-11-04","relevant":true},{"key":"material1","label":"Materiallieferung","datum":null,"relevant":true},{"key":"fundament","label":"Fundament / Garten- & Landschaftsbau","datum":null,"relevant":true},{"key":"elektro","label":"Elektro","datum":"2026-11-10","relevant":true},{"key":"shk","label":"SHK / Heizungsinstallation","datum":"2026-11-12","relevant":true}],"termine":{"datenaufnahme":"2026-11-04","installation":"2026-11-12","abnahme":"2026-11-16"},"angebot":{"gueltigBis":"2026-12-03","verlaengerungStatus":null},"angebote":[{"kind":"haupt","label":"Hauptangebot","status":"angenommen","annehmbar":false,"ablehnbar":false,"widerrufSichtbar":true,"fristBeginnUtc":null,"fristEndeUtc":null,"vertragskennung":"T1300-ANGEBOT","fassungskennung":"T1300-ANGEBOT","dateiname":"Musterangebot.svg","dateiId":"T1300-ANGEBOT","betrag":"30000.00","contractEvidenceUnavailable":false,"widerrufErklaert":false,"widerrufEingangUtc":null,"widerrufEingangOrtszeit":null,"widerrufStatus":"Zugang offen","rechtsankerUtc":null,"rechtsfristEndeUtc":null,"hoechstfristEndeUtc":null,"spaetesterZugangUtc":null,"spaetesteAnkergrenzeUtc":null,"betrieblicheSperreBisUtc":null}],"freigegebeneDokumente":[],"dokumenteDateien":{},"dokumenteNachOrdner":{"Angebote":[{"name":"Musterangebot.svg","fileId":"T1300-ANGEBOT","updated":"2026-11-19T12:00:00.000Z","size":1024}],"Pläne & Zeichnungen":[{"name":"Musterunterlagen.svg","fileId":"T1300-UNTERLAGEN","updated":"2026-11-19T12:00:00.000Z","size":1024}]},"individuelleDokumente":[],"kundenUploads":[],"uploadNotificationsEnabled":true,"uploadNotification":null,"driveFolderMissing":false,"lastMessage":null,"contactPerson":{"name":"Benjamin Bendler","phone":"05131 - 50 59 750","email":"info@herowerk.de","role":"Projektleitung"},"deals":[{"dealId":"1300000001","projectName":"Musterstraße 1, 30159 Hannover","phase":"projekt","typeLabel":"Projekt"}],"tickets":[]}],"assets":{"assets/sun.svg":"/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg","assets/moon.svg":"/vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg","assets/logo-dark.png":"/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png","assets/logo-light.png":"/vorschau/assets/1f2ac753806ddb27a1a0dd2b4f758eaa382911bc4d585cc29cb613432e823dcd.png","assets/logo-schiefer.png":"/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png"}};
+/* T1300: läuft als erste Anweisung im opaken Sandbox-Dokument. Kein nativer Transport-Fallback. */
+const T1300NativeDate = Date;
+const t1300ClockStart = performance.now();
+window.Date = class extends T1300NativeDate {
+  constructor(...args) {
+    super(...(args.length ? args : [Date.now()]));
+  }
+  static now() {
+    return 1795089600000 + Math.floor(performance.now() - t1300ClockStart);
+  }
+};
+const Demo = (() => {
+  'use strict';
+  let port = null;
+  let run = null;
+  let state;
+  let session = true;
+  let stopped = false;
+  let sequence = 0;
+  let virtual = new URL('https://t1300.invalid/index.html');
+  const ready = [];
+  const pending = [];
+  const slots = new Map();
+  const confirmations = new Map();
+  const allowedForms = new Set(['loginForm', 'messageForm', 'documentUploadForm']);
+  const emit = (type, data = {}) => {
+    const message = { version: 1, run, type, ...data };
+    if (port) port.postMessage(message);
+    else pending.push(message);
+  };
+  const sync = () => emit('state', { state, session });
+  const block = (transport, input = '') => {
+    stopped = true;
+    let pathname = 'unbekannt';
+    try {
+      pathname = new URL(String(input), 'https://t1300.invalid').pathname
+        .replace(/[^/a-zA-Z0-9_.-]/g, '')
+        .slice(0, 100);
+    } catch {}
+    emit('blocked', { transport, path: pathname });
+    return new Error('T1300: Aufruf gesperrt');
+  };
+  const storage = () => {
+    const values = new Map();
+    return Object.freeze({
+      get length() {
+        return values.size;
+      },
+      key: (n) => [...values.keys()][n] ?? null,
+      getItem: (k) => values.get(String(k)) ?? null,
+      setItem: (k, v) => values.set(String(k), String(v)),
+      removeItem: (k) => values.delete(String(k)),
+      clear: () => values.clear(),
+    });
+  };
+  const location = {
+    get search() {
+      return virtual.search;
+    },
+    get pathname() {
+      return virtual.pathname;
+    },
+    get origin() {
+      return virtual.origin;
+    },
+    get href() {
+      return virtual.href;
+    },
+    set href(value) {
+      navigate(value);
+    },
+    assign: (value) => navigate(value),
+    replace: (value) => navigate(value),
+  };
+  function navigate(input) {
+    const url = new URL(String(input), virtual);
+    if (
+      url.origin !== virtual.origin ||
+      !['/index.html', '/dashboard.html'].includes(url.pathname) ||
+      [...url.searchParams.keys()].some(
+        (k) => !['email', 'token', 'expired', 'anmeldung', 'zahlungsweg', 'deal'].includes(k)
+      )
+    )
+      throw block('Navigation', input);
+    sync();
+    emit('navigate', { pathname: url.pathname, search: url.search });
+  }
+  const response = (data, status = 200) =>
+    new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } });
+  const schema = {
+    '/api/request-login': ['POST', ['email', 'action', 'zahlungsweg']],
+    '/api/t1300-login': ['POST', ['email']],
+    '/api/validate-token': ['POST', ['token', 'email']],
+    '/api/project-data': ['POST', ['selectedDealId']],
+    '/api/send-message': ['POST', ['message', 'idempotencyKey', 'dealId']],
+    '/api/accept-offer': ['POST', ['dealId', 'offerRef', 'zahlungsweg']],
+    '/api/decline-offer': ['POST', ['dealId', 'offerRef']],
+    '/api/revoke-contract': ['POST', ['dealId', 'offerRef', 'email', 'idempotencyKey']],
+    '/api/upload': ['POST', ['dealId', 'filename', 'mimeType', 'dataBase64']],
+    '/api/upload-slot': ['POST', ['dealId', 'filename', 'mimeType', 'size']],
+    '/api/upload-chunk': ['POST', ['uploadToken', 'chunkIndex', 'totalChunks', 'dataBase64']],
+    '/api/register-upload': ['POST', ['dealId', 'uploadProofs']],
+    '/api/notify-upload-now': ['POST', ['dealId']],
+    '/api/download': ['POST', ['dealId', 'fileId']],
+    '/api/logout': ['POST', []],
+    '/api/config': ['GET', []],
+  };
+  const action = () => {
+    sync();
+    emit('action');
+  };
+  function finishUpload() {
+    const id = `T1300-UPLOAD-${++sequence}`;
+    const filename = 'Musterunterlagen.svg';
+    state.kundenUploads.push({
+      name: filename,
+      fileId: id,
+      updated: '2026-11-19T12:00:00.000Z',
+      size: 1024,
+    });
+    action();
+    return {
+      ok: true,
+      fileId: id,
+      filename,
+      subfolder: T1300_DATA.portal === 'kunden' ? '01_Vom-Kunden' : '01_Von-dir-hochgeladen',
+      uploadProof: id,
+    };
+  }
+  async function dispatch(input, options = {}, transport = 'fetch') {
+    let url;
+    try {
+      url = new URL(String(input), virtual);
+    } catch {
+      throw block(transport);
+    }
+    const rule = schema[url.pathname];
+    const method = String(options.method || 'GET').toUpperCase();
+    let body = {};
+    try {
+      body = options.body ? JSON.parse(options.body) : {};
+    } catch {
+      throw block(transport, url.pathname);
+    }
+    if (
+      stopped ||
+      url.origin !== virtual.origin ||
+      !rule ||
+      method !== rule[0] ||
+      !body ||
+      Array.isArray(body) ||
+      typeof body !== 'object' ||
+      Object.keys(body).some((k) => !rule[1].includes(k))
+    )
+      throw block(transport, input);
+    const queryKeys = url.pathname === '/api/t1300-login' ? ['email', 'action'] : [];
+    if ([...url.searchParams.keys()].some((k) => !queryKeys.includes(k)))
+      throw block(transport, input);
+    if (
+      T1300_DATA.portal !== 'kunden' &&
+      [
+        '/api/accept-offer',
+        '/api/decline-offer',
+        '/api/revoke-contract',
+        '/api/register-upload',
+        '/api/notify-upload-now',
+        '/api/request-login',
+      ].includes(url.pathname)
+    )
+      throw block(transport, input);
+    emit('call', { transport, path: url.pathname, method });
+    if (body.dealId && body.dealId !== state.dealId) throw block(transport, input);
+    switch (url.pathname) {
+      case '/api/config':
+        return response({ sentryDsn: '' });
+      case '/api/request-login':
+      case '/api/t1300-login':
+        action();
+        return response({ success: true }, 202);
+      case '/api/validate-token': {
+        if (body.token === 'T1300-abgelaufen')
+          return response({ valid: false, reason: 'token_expired' });
+        if (body.token === 'T1300-benutzt')
+          return response({
+            valid: false,
+            reason: T1300_DATA.portal === 'kunden' ? 'invalid_link' : 'no_token_stored',
+          });
+        if (body.token !== 'T1300-musterlink') throw block(transport, input);
+        session = true;
+        action();
+        return response({
+          valid: true,
+          firstName: T1300_DATA.portal === 'kunden' ? 'Mia' : 'Alex',
+        });
+      }
+      case '/api/project-data':
+        return session ? response(state) : response({ error: 'unauthorized' }, 401);
+      case '/api/logout':
+        session = false;
+        action();
+        return response({ ok: true });
+      case '/api/send-message':
+        state.tickets.push({
+          subject:
+            T1300_DATA.portal === 'kunden' ? 'Anfrage gesendet' : 'Musterfrage zu Unterlagen',
+          text:
+            T1300_DATA.portal === 'kunden'
+              ? undefined
+              : 'Das ist eine erfundene Antwort für die Vorführung.',
+          status: 'Offen',
+          date: '2026-11-19T12:00:00.000Z',
+        });
+        action();
+        return response({ ok: true, ticketId: 'T1300-TICKET', deal: true });
+      case '/api/accept-offer':
+      case '/api/decline-offer': {
+        const slot = state.angebote.find((s) => s.kind === body.offerRef);
+        if (
+          !slot ||
+          !slot.annehmbar ||
+          (body.zahlungsweg &&
+            !['anzahlung', 'vollzahlung', 'foerdervorschuss'].includes(body.zahlungsweg))
+        )
+          throw block(transport, input);
+        const accepting = url.pathname === '/api/accept-offer';
+        slot.status = accepting ? 'angenommen' : 'abgelehnt';
+        slot.annehmbar = false;
+        slot.ablehnbar = false;
+        slot.widerrufSichtbar = accepting;
+        delete slot.zahlungswege;
+        action();
+        return response({
+          ok: true,
+          offerRef: slot.kind,
+          noteId: 'T1300-NOTIZ',
+          ...(accepting
+            ? {
+                acceptedAtUtc: '2026-11-19T12:00:00.000Z',
+                ...(body.zahlungsweg ? { zahlungsweg: body.zahlungsweg } : {}),
+              }
+            : { declinedAtUtc: '2026-11-19T12:00:00.000Z' }),
+        });
+      }
+      case '/api/revoke-contract': {
+        const slot = state.angebote.find((s) => s.kind === body.offerRef);
+        if (!slot || !slot.widerrufSichtbar) throw block(transport, input);
+        slot.widerrufErklaert = true;
+        slot.widerrufSichtbar = false;
+        action();
+        return response({
+          ok: true,
+          accepted: true,
+          alreadyWithdrawn: false,
+          receiptId: 'T1300-WIDERRUF',
+          receivedAtUtc: '2026-11-19T12:00:00.000Z',
+          receivedAtLocal: '19.11.2026, 13:00:00',
+          confirmationEmail: 'mia.mustermann@example.com',
+        });
+      }
+      case '/api/upload':
+        return response(finishUpload());
+      case '/api/upload-slot': {
+        if (!Number.isFinite(body.size) || body.size <= 0 || body.size > 50 * 1024 * 1024)
+          throw block(transport, input);
+        const token = `T1300-SLOT-${++sequence}`;
+        const total = Math.ceil(body.size / (3 * 1024 * 1024));
+        slots.set(token, { next: 0, total });
+        return response({
+          ok: true,
+          uploadToken: token,
+          chunkSize: 3 * 1024 * 1024,
+          totalChunks: total,
+        });
+      }
+      case '/api/upload-chunk': {
+        const slot = slots.get(body.uploadToken);
+        if (!slot || slot.next !== body.chunkIndex || slot.total !== body.totalChunks)
+          throw block(transport, input);
+        slot.next++;
+        if (slot.next < slot.total)
+          return response({ ok: true, done: false, nextChunk: slot.next });
+        slots.delete(body.uploadToken);
+        return response({ ...finishUpload(), done: true });
+      }
+      case '/api/register-upload': {
+        if (
+          !Array.isArray(body.uploadProofs) ||
+          body.uploadProofs.length < 1 ||
+          body.uploadProofs.some((proof) => !/^T1300-UPLOAD-\d+$/.test(proof))
+        )
+          throw block(transport, input);
+        const previous =
+          state.uploadNotification?.status === 'pending' ? state.uploadNotification.fileCount : 0;
+        state.uploadNotification = {
+          batchId: 'T1300-UPLOAD-BATCH',
+          fileCount: previous + body.uploadProofs.length,
+          notifyAfterUtc: null,
+          status: 'pending',
+        };
+        action();
+        return response({ ok: true, deduped: false, batch: state.uploadNotification });
+      }
+      case '/api/notify-upload-now': {
+        const noop = !state.uploadNotification || state.uploadNotification.status === 'queued';
+        if (state.uploadNotification) state.uploadNotification.status = 'queued';
+        action();
+        return response({ ok: true, noop, batch: state.uploadNotification });
+      }
+      case '/api/download':
+        if (!/^T1300-(ANGEBOT|UNTERLAGEN|LEBENSLAUF|UPLOAD-\d+)$/.test(body.fileId || ''))
+          throw block(transport, input);
+        action();
+        emit('preview', {
+          document: body.fileId.includes('LEBENSLAUF')
+            ? 'lebenslauf'
+            : body.fileId.includes('ANGEBOT')
+              ? 'angebot'
+              : 'unterlagen',
+        });
+        return new Response('<svg xmlns="http://www.w3.org/2000/svg"/>', {
+          headers: {
+            'Content-Type': 'image/svg+xml',
+            'Content-Disposition': 'inline; filename="Musterdokument.svg"',
+          },
+        });
+      default:
+        throw block(transport, input);
+    }
+  }
+  Object.defineProperty(window, 'fetch', {
+    value: async (input, options = {}) => {
+      if (input instanceof Request)
+        return dispatch(input.url, { method: input.method, body: await input.text(), ...options });
+      return dispatch(input, options);
+    },
+    writable: false,
+    configurable: false,
+  });
+  class MemoryXHR extends EventTarget {
+    readyState = 0;
+    status = 0;
+    responseText = '';
+    response = null;
+    responseType = '';
+    onload = null;
+    onerror = null;
+    onreadystatechange = null;
+    open(method, url, async = true) {
+      const parsed = new URL(String(url), virtual);
+      if (
+        parsed.origin !== virtual.origin ||
+        !schema[parsed.pathname] ||
+        String(method).toUpperCase() !== schema[parsed.pathname][0]
+      )
+        throw block('XMLHttpRequest', url);
+      if (!async) throw block('XMLHttpRequest', url);
+      this.method = method;
+      this.url = url;
+      this.readyState = 1;
+    }
+    setRequestHeader() {}
+    getResponseHeader(name) {
+      return this.headers?.get(name) ?? null;
+    }
+    getAllResponseHeaders() {
+      return 'content-type: application/json\r\n';
+    }
+    abort() {
+      this.aborted = true;
+    }
+    async send(body) {
+      try {
+        const result = await dispatch(this.url, { method: this.method, body }, 'XMLHttpRequest');
+        if (this.aborted) return;
+        this.status = result.status;
+        this.headers = result.headers;
+        this.responseText = await result.text();
+        this.response =
+          this.responseType === 'json' ? JSON.parse(this.responseText) : this.responseText;
+        this.readyState = 4;
+        this.fire('readystatechange');
+        this.fire('load');
+        this.fire('loadend');
+      } catch {
+        this.status = 0;
+        this.readyState = 4;
+        this.fire('error');
+        this.fire('loadend');
+      }
+    }
+    fire(name) {
+      const event = new Event(name);
+      this.dispatchEvent(event);
+      this[`on${name}`]?.(event);
+    }
+  }
+  Object.defineProperty(window, 'XMLHttpRequest', {
+    value: MemoryXHR,
+    configurable: false,
+    writable: false,
+  });
+  Object.defineProperty(navigator, 'sendBeacon', {
+    value: (url) => {
+      block('sendBeacon', url);
+      return false;
+    },
+    configurable: false,
+  });
+  for (const name of ['WebSocket', 'EventSource', 'Worker', 'SharedWorker'])
+    Object.defineProperty(window, name, {
+      value: function (url) {
+        throw block(name, url);
+      },
+      configurable: false,
+    });
+  Object.defineProperty(window, 'open', {
+    value: (url) => {
+      throw block('window.open', url);
+    },
+    configurable: false,
+  });
+  function validForm(form) {
+    return (
+      !form.getAttribute('action') &&
+      !form.getAttribute('target') &&
+      ((allowedForms.has(form.id) && document.getElementById(form.id) === form) ||
+        !!form.closest('[data-withdraw-panel]'))
+    );
+  }
+  document.addEventListener(
+    'submit',
+    (event) => {
+      event.preventDefault();
+      if (!validForm(event.target)) {
+        block('Formular', event.target.action);
+        event.stopImmediatePropagation();
+      }
+    },
+    true
+  );
+  Object.defineProperty(HTMLFormElement.prototype, 'submit', {
+    value: function () {
+      if (!validForm(this)) throw block('Formular', this.action);
+      this.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+    },
+  });
+  Object.defineProperty(HTMLFormElement.prototype, 'requestSubmit', {
+    value: function (submitter) {
+      if (!validForm(this)) throw block('Formular', this.action);
+      if (this.reportValidity())
+        this.dispatchEvent(
+          new SubmitEvent('submit', { bubbles: true, cancelable: true, submitter })
+        );
+    },
+  });
+  const click = (event) => {
+    const submitter = event.target.closest?.('button, input[type=submit]');
+    if (event.type === 'click' && submitter?.form && submitter.type === 'submit') {
+      event.preventDefault();
+      if (!validForm(submitter.form) || submitter.form.getAttribute('action')) {
+        block('Formular');
+        return;
+      }
+      if (submitter.form.noValidate || submitter.form.reportValidity())
+        submitter.form.dispatchEvent(
+          new SubmitEvent('submit', { bubbles: true, cancelable: true, submitter })
+        );
+      return;
+    }
+    const anchor = event.target.closest?.('a');
+    if (!anchor) return;
+    event.preventDefault();
+    anchor.removeAttribute('ping');
+    const href = anchor.getAttribute('href') || '';
+    if (href.startsWith('#')) {
+      document.getElementById(href.slice(1))?.scrollIntoView();
+      return;
+    }
+    if (href === '{{DEMO_LINK}}') {
+      navigate('dashboard.html?token=T1300-musterlink&email=demo%40example.com');
+      return;
+    }
+    // Auch Mailto/Tel und echte Informationslinks werden ohne Wirkung erklärt.
+    if (
+      !/^(?:https:\/\/(?:www\.)?herowerk\.de(?:\/|$)|mailto:(?:info|bewerbung)@herowerk\.de(?:\?|$)|tel:[+0-9 -]+$|datenschutz\.html$)/.test(
+        href
+      )
+    ) {
+      block('Link', href);
+      return;
+    }
+    emit('link');
+  };
+  document.addEventListener(
+    'keydown',
+    (event) => {
+      if (
+        event.key === 'Enter' &&
+        event.target.matches('input:not([type=file])') &&
+        event.target.form
+      ) {
+        event.preventDefault();
+        event.target.form.requestSubmit();
+      }
+    },
+    true
+  );
+  document.addEventListener('click', click, true);
+  document.addEventListener('auxclick', click, true);
+  document.addEventListener('securitypolicyviolation', () => block('CSP'));
+  window.addEventListener('error', () => block('JavaScript'));
+  window.addEventListener('unhandledrejection', () => block('Promise'));
+  window.addEventListener('message', (event) => {
+    if (
+      port ||
+      event.source !== parent ||
+      event.data?.type !== 't1300-init' ||
+      event.data.version !== 1 ||
+      typeof event.data.run !== 'string' ||
+      event.ports.length !== 1
+    )
+      return;
+    port = event.ports[0];
+    run = event.data.run;
+    state = structuredClone(event.data.state || T1300_DATA.states[event.data.scenario || 0]);
+    session = event.data.session !== false;
+    virtual = new URL(event.data.address || 'index.html', 'https://t1300.invalid');
+    document.documentElement.dataset.theme = event.data.theme === 'light' ? 'light' : 'dark';
+    for (const message of pending) port.postMessage({ ...message, run });
+    pending.length = 0;
+    port.onmessage = (reply) => {
+      const message = reply.data;
+      if (
+        message?.version !== 1 ||
+        message.run !== run ||
+        message.type !== 'confirmation' ||
+        typeof message.value !== 'boolean'
+      ) {
+        block('Protokoll');
+        return;
+      }
+      const resolve = confirmations.get(message.id);
+      if (!resolve) {
+        block('Protokoll');
+        return;
+      }
+      confirmations.delete(message.id);
+      resolve(message.value);
+    };
+    Demo.localStorage.setItem('hero-theme', document.documentElement.dataset.theme);
+    emit('started');
+    Demo.portal();
+  });
+  document.addEventListener(
+    'DOMContentLoaded',
+    () => {
+      if (parent === window) {
+        document.body.textContent = 'Bitte öffne die Demo über das interne Portal.';
+        return;
+      }
+      parent.postMessage({ type: 't1300-ready', version: 1 }, '*');
+    },
+    { once: true }
+  );
+  return Object.freeze({
+    get portal() {
+      return runPortal;
+    },
+    setPortal: (fn) => {
+      runPortal = fn;
+    },
+    localStorage: storage(),
+    sessionStorage: storage(),
+    location,
+    history: {
+      replaceState: (_s, _t, url) => {
+        const next = new URL(url, virtual);
+        if (
+          next.origin !== 'https://t1300.invalid' ||
+          !['/index.html', '/dashboard.html'].includes(next.pathname)
+        )
+          throw block('History', url);
+        virtual = next;
+      },
+    },
+    onReady: (fn) => ready.push(fn),
+    flushReady: () => ready.forEach((fn) => fn()),
+    confirm: (text) =>
+      new Promise((resolve) => {
+        const id = ++sequence;
+        confirmations.set(id, resolve);
+        emit('confirm', { id, text });
+      }),
+    document: async (dealId, fileId) => {
+      const result = await dispatch('/api/download', {
+        method: 'POST',
+        body: JSON.stringify({ dealId, fileId }),
+      });
+      if (!result.ok) throw block('Dokument');
+    },
+    asset: (name) => {
+      const data = T1300_DATA.assets[String(name).split(/[?#]/)[0]];
+      if (!data) throw block('Asset', name);
+      return data;
+    },
+    block,
+  });
+  function runPortal() {}
+})();
+
+Demo.setPortal(() => {
+(()=>{const ok=/^(dark|light)$/;const q=new URLSearchParams(Demo.location.search).get('theme');const saved=Demo.localStorage.getItem('hero-theme');const theme=ok.test(q)?q:ok.test(saved)?saved:'dark';document.documentElement.dataset.theme=theme;Demo.localStorage.setItem('hero-theme',theme);})();
+;
+(function () {
+  'use strict';
+
+  const THEME_ASSET_VERSION = '20260724-4';
+  const VALID_THEME = /^(dark|light)$/;
+
+  function applyTheme(theme, buttons) {
+    const activeTheme = VALID_THEME.test(theme) ? theme : 'dark';
+    const targetTheme = activeTheme === 'dark' ? 'light' : 'dark';
+    const targetLabel = targetTheme === 'light' ? 'Light-Mode' : 'Dark-Mode';
+
+    document.documentElement.dataset.theme = activeTheme;
+    Demo.localStorage.setItem('hero-theme', activeTheme);
+
+    buttons.forEach((button) => {
+      button.dataset.themeTarget = targetTheme;
+      button.setAttribute('aria-label', `Zum ${targetLabel} wechseln`);
+      const icon = button.querySelector('[data-theme-icon]');
+      if (icon) {
+        icon.src = Demo.asset(`assets/${targetTheme === 'light' ? 'sun' : 'moon'}.svg?v=${THEME_ASSET_VERSION}`);
+      }
+      const label = button.querySelector('[data-theme-label]');
+      if (label) label.textContent = targetLabel;
+    });
+  }
+
+  function init() {
+    const buttons = document.querySelectorAll('[data-theme-toggle]');
+    if (!buttons.length) return;
+
+    applyTheme(document.documentElement.dataset.theme || 'dark', buttons);
+    buttons.forEach((button) => {
+      if (button.dataset.themeBound === 'true') return;
+      button.dataset.themeBound = 'true';
+      button.addEventListener('click', () => {
+        const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        applyTheme(nextTheme, buttons);
+      });
+    });
+  }
+
+  window.PortalTheme = { init };
+})();
+
+;
+
+    (() => {
+      const MAX_MELDUNGEN = 5;
+      let anzahl = 0;
+      let gewarnt = false;
+      let imMelder = false;
+      function warnen(status) {
+        if (gewarnt) return;
+        gewarnt = true;
+        console.warn('[Fehlermelder] nicht erreichbar', status);
+      }
+      function skriptpfad(datei) {
+        if (typeof datei !== 'string' || !datei) return 'fremd';
+        const url = new URL(datei.split(/[?#]/, 1)[0], Demo.location.origin);
+        return url.origin === Demo.location.origin ? url.pathname : 'fremd';
+      }
+      function melden(fehler, quelle, zeile, spalte, art) {
+        if (imMelder || anzahl >= MAX_MELDUNGEN) return;
+        anzahl++;
+        imMelder = true;
+        try {
+          const body = JSON.stringify({
+            seite: Demo.location.pathname,
+            fehler: typeof fehler === 'string' ? fehler : 'Unbekannter Browserfehler',
+            quelle: skriptpfad(quelle),
+            zeile: Number.isInteger(zeile) && zeile >= 0 ? zeile : 0,
+            spalte: Number.isInteger(spalte) && spalte >= 0 ? spalte : 0,
+            art,
+          });
+          fetch('/api/fehlermeldung', {
+            method: 'POST', keepalive: true, credentials: 'omit',
+            headers: { 'Content-Type': 'application/json' }, body,
+          }).then((antwort) => {
+            if (!antwort.ok) warnen(antwort.status);
+          }).catch(() => warnen(0));
+        } catch (_) {
+          warnen(0);
+        } finally {
+          imMelder = false;
+        }
+      }
+      window.addEventListener('error', (ereignis) => {
+        melden(ereignis.message, ereignis.filename, ereignis.lineno, ereignis.colno, 'fehler');
+      });
+      window.addEventListener('unhandledrejection', (ereignis) => {
+        const grund = ereignis.reason;
+        const text = typeof grund === 'string' ? grund
+          : grund instanceof Error ? grund.name + ': ' + grund.message : 'Unbehandeltes Versprechen';
+        melden(text, '', 0, 0, 'versprechen');
+      });
+    })();
+  
+;
+/**
+ * HeroWerk Kundenportal — Inline-SVG Icons
+ * Linienstil analog Website: stroke 2, round, currentColor, 24er-Raster.
+ */
+window.HeroIcons = (() => {
+  'use strict';
+
+  const svg = (paths) => `<svg aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>`;
+
+  return {
+    clipboard: svg('<rect x="8" y="3" width="8" height="4" rx="1"/><path d="M9 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3"/><path d="M8 12h8"/><path d="M8 16h6"/>'),
+    home: svg('<path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/>'),
+    fileText: svg('<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8"/><path d="M8 17h6"/>'),
+    pen: svg('<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/>'),
+    ruler: svg('<path d="m16 3 5 5L8 21l-5-5Z"/><path d="m14 5 2 2"/><path d="m11 8 2 2"/><path d="m8 11 2 2"/><path d="m5 14 2 2"/>'),
+    search: svg('<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>'),
+    checkCircle: svg('<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>'),
+    package: svg('<path d="m3 7 9-4 9 4-9 4Z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/>'),
+    calendar: svg('<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M3 11h18"/>'),
+    tool: svg('<path d="M14.7 6.3a4 4 0 0 0-5 5L3 18v3h3l6.7-6.7a4 4 0 0 0 5-5l-2.4 2.4-2.8-2.8Z"/>'),
+    bolt: svg('<path d="M13 2 4 14h7l-1 8 9-12h-7Z"/>'),
+    handshake: svg('<path d="M8 12 5 9l4-4 3 3"/><path d="m16 12 3-3-4-4-6 6 2 2a2 2 0 0 0 3 0l1-1 4 4a2 2 0 0 1-3 3l-1-1"/><path d="m7 14 3 3"/><path d="m5 16 3 3"/>'),
+    sparkles: svg('<path d="M12 3 13.5 8 19 9.5 13.5 11 12 16 10.5 11 5 9.5 10.5 8Z"/><path d="M19 15v4"/><path d="M17 17h4"/><path d="M5 4v3"/><path d="M3.5 5.5h3"/>'),
+    pin: svg('<path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/>'),
+    folder: svg('<path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>'),
+    bank: svg('<path d="m3 10 9-6 9 6"/><path d="M5 10h14"/><path d="M6 10v8"/><path d="M10 10v8"/><path d="M14 10v8"/><path d="M18 10v8"/><path d="M4 18h16"/><path d="M3 21h18"/>'),
+    paperclip: svg('<path d="m21 11-9 9a6 6 0 0 1-8.5-8.5l9.5-9a4 4 0 0 1 5.7 5.7l-9.5 9a2 2 0 1 1-2.8-2.8l8.5-8"/>'),
+    euro: svg('<path d="M18 7a7 7 0 1 0 0 10"/><path d="M4 10h10"/><path d="M4 14h9"/>'),
+    chart: svg('<path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/>'),
+    leaf: svg('<path d="M5 21c8-1 14-7 16-18-9 1-15 5-17 12 0 0 4 0 8-4"/><path d="M4 21c2-5 5-8 9-10"/>'),
+    books: svg('<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/><path d="M8 6h8"/><path d="M8 10h8"/>'),
+    oil: svg('<path d="M8 3h8"/><path d="M9 3v5l-3 4v7a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-7l-3-4V3"/><path d="M9 8h6"/>'),
+    flame: svg('<path d="M12 22a7 7 0 0 0 7-7c0-4-3-6-5-9-.5 3-2.5 4.5-4.5 6.5A5.5 5.5 0 0 0 12 22Z"/><path d="M12 22a3 3 0 0 0 3-3c0-1.5-1-2.5-2-3.5-.5 1.5-2 2-2 3.5a3 3 0 0 0 1 3Z"/>'),
+    brick: svg('<path d="M3 8h18v10H3Z"/><path d="M3 13h18"/><path d="M8 8v5"/><path d="M16 8v5"/><path d="M12 13v5"/>'),
+    screw: svg('<path d="M14 4 4 14"/><path d="m5 13 6 6"/><path d="m11 7 6 6"/><path d="m14 4 6 6"/><path d="m4 14 6 6"/>'),
+    truck: svg('<path d="M3 7h11v10H3Z"/><path d="M14 11h4l3 3v3h-7Z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>'),
+    recycle: svg('<path d="m7 19-3-5 3-5"/><path d="M4 14h11"/><path d="m17 5 3 5-3 5"/><path d="M20 10H9"/>'),
+    chat: svg('<path d="M21 12a8 8 0 0 1-8 8H7l-4 3 1.5-5A8 8 0 1 1 21 12Z"/>'),
+    user: svg('<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'),
+    shield: svg('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-5"/>'),
+  };
+})();
+
+;
+/**
+ * HeroWerk Kundenportal — Konfiguration
+ *
+ * EINZIGE DATEI die ein Dritter ändern muss.
+ * Alle URLs, Konstanten und Texte zentral.
+ *
+ * @version 2.0.0
+ * @date 2026-03-30
+ */
+
+const PORTAL_CONFIG = {
+  // ============================================================
+  // API-Endpunkte
+  // - validate + project: Vercel Serverless Functions (synchron)
+  // - login: eigener Anmeldeweg des Portals auf derselben Herkunft (auf dem Server
+  //   seit dem 09.08.2026; im Repo seit T1150, weil nur er die Vorauswahl des
+  //   Zahlungswegs in den Anmeldelink tragen kann)
+  // ============================================================
+  api: {
+    login:       '/api/request-login',                                    // Magic Link anfordern
+    validate:    '/api/validate-token',                                    // Token prüfen + Sitzung ausstellen (Vercel Function)
+    project:     '/api/project-data',                                      // Projektdaten laden (Vercel Function, sitzungs-authentifiziert)
+    sendMessage: '/api/send-message',                                      // Nachricht → HubSpot-Ticket am Contact (Wave 1, Mechanismus A)
+    acceptOffer: '/api/accept-offer',                                      // Angebot verbindlich annehmen (SES + Beweis-Log, U-1b)
+    declineOffer: '/api/decline-offer',                                    // Angebot unabhängig ablehnen (leichtes Beweis-Log)
+    revokeContract: '/api/revoke-contract',                                // Vertrag nach § 356a BGB widerrufen
+    upload:      '/api/upload',                                            // Kunden-Upload → Google Drive
+    uploadSlot:  '/api/upload-slot',                                       // Chunk-Upload Slot → Google Drive Resumable Session
+    uploadChunk: '/api/upload-chunk',                                      // Chunk-Upload Proxy → Google Drive
+    registerUpload: '/api/register-upload',                                // Erfolgreiche Dateien als gebündelte Benachrichtigung vormerken
+    notifyUploadNow: '/api/notify-upload-now',                              // Offenes Upload-Bündel sofort freigeben
+    download:    '/api/download',                                          // Drive-Datei herunterladen
+    logout:      '/api/logout',                                            // Server-Logout (löscht HttpOnly-Cookie + widerruft Sitzungen)
+    // DEPRECATED (Wave 1): alter Zapier-Flow-9-Nachrichtenweg — NICHT mehr genutzt, durch /api/send-message abgelöst (ADR-05).
+    message:     'https://hooks.zapier.com/hooks/catch/27010902/un5ru4o/',
+  },
+
+  // ============================================================
+  // Upload-Limits
+  // ============================================================
+  upload: {
+    maxFileBytes: 50 * 1024 * 1024,
+    chunkThreshold: 4 * 1024 * 1024,
+    maxFilenameLength: 120,
+  },
+
+  // ============================================================
+  // Session / Auth
+  // ============================================================
+  auth: {
+    cookieName: 'hero_session',
+    cookieDays: 7,          // Session-Dauer in Tagen
+    tokenParam: 'token',    // URL-Parameter für Magic Link
+  },
+
+  // ============================================================
+  // Kontaktdaten (Anzeige im Portal)
+  // ============================================================
+  contact: {
+    name: 'Benjamin Bendler',
+    phone: '05131 - 50 59 750',
+    email: 'info@herowerk.de',
+    role: 'Projektleitung',
+  },
+
+  // ============================================================
+  // Timeline — 13 Schritte (v2, 30.03.2026)
+  // Neu: Step 5 "Datenaufnahme" eingefügt (Pipeline v3 Stage 4)
+  // Jeder Schritt hat: id, label (Kundensprache), info (Infotext)
+  // ============================================================
+  steps: [
+    {
+      id: 1,
+      label: 'Erstberatung',
+      info: 'Wir haben deine Anfrage erhalten und melden uns innerhalb von 4 Stunden.',
+      icon: HeroIcons.clipboard,
+      heroTut: 'Wir prüfen deine Anfrage, bewerten die grundsätzliche Eignung deines Gebäudes und bereiten ein individuelles Beratungsgespräch vor.',
+      kundenAktion: 'Erzähl uns von deinem Gebäude und deinen Wünschen. Wir beraten dich ehrlich und unverbindlich.',
+    },
+    {
+      id: 2,
+      label: 'Beratungsgespräch',
+      info: 'Unser Berater kommt zu dir, schaut sich dein Gebäude an und bespricht mit dir die passende Wärmepumpen-Lösung.',
+      icon: HeroIcons.home,
+      heroTut: 'Wir besprechen vor Ort deine Wünsche, prüfen die grundsätzliche Eignung deines Gebäudes und erklären dir die nächsten Schritte sowie die Fördermöglichkeiten.',
+      kundenAktion: 'Überleg dir vorab, was dir wichtig ist. Energieausweis und letzte Heizkostenabrechnung helfen, sind aber noch kein Muss.',
+    },
+    {
+      id: 3,
+      label: 'Angebot erstellt',
+      info: 'Dein persönliches Festpreis-Angebot auf Basis der Vor-Ort-Daten.',
+      icon: HeroIcons.fileText,
+      heroTut: 'Auf Basis der Vor-Ort-Daten erstellen wir dein persönliches Festpreis-Angebot inkl. Förderberechnung und Wirtschaftlichkeitsvergleich.',
+      kundenAktion: 'Prüfe das Angebot in Ruhe. Wir erklären dir gerne jeden Posten. Ruf uns einfach an.',
+    },
+    {
+      id: 4,
+      label: 'Angebot signiert',
+      info: 'Du hast das Angebot signiert. Jetzt bereiten wir die detaillierte Datenaufnahme vor.',
+      icon: HeroIcons.pen,
+      heroTut: 'Dein Verkaufsberater bereitet alle Daten aus dem Vor-Ort-Termin für die technische Prüfung auf. Parallel planen wir den Datenaufnahme-Termin.',
+      // U-1e (16.07.2026): Der Alt-Text versprach die Signatur "direkt per E-Mail oder
+      // im Portal". Beides war falsch: die Funktion gab es nicht, und einen E-Mail-Weg
+      // wird es nie geben — der Kunde meldet sich IMMER selbst im Portal an, sonst
+      // protokolliert das Beweis-Set nicht ihn (Decision §3a, Zurechenbarkeit).
+      kundenAktion: 'Beauftrage das Angebot hier im Portal verbindlich. Du bist über deinen persönlichen Login angemeldet, dein Auftrag wird mit Zeitpunkt protokolliert.',
+    },
+    {
+      id: 5,
+      label: 'Datenaufnahme',
+      info: 'Unser Techniker nimmt vor Ort alle technischen Daten auf (Heizflächen, Leitungswege, Aufstellort) und fotografiert die relevanten Bereiche.',
+      icon: HeroIcons.ruler,
+      heroTut: 'Wir erfassen vor Ort alle Details für die exakte Planung deiner Wärmepumpe: Heizflächen, Leitungswege und Aufstellort. Anschließend bereiten wir die normgerechte Heizlastberechnung vor.',
+      kundenAktion: 'Halte bitte Energieausweis, letzte Heizkostenabrechnung und ggf. Baupläne bereit. Zeig uns den Heizraum und den geplanten Aufstellort. Lade Unterlagen wie Grundrisse oder Medienpläne gerne vorab hoch.',
+    },
+    {
+      id: 6,
+      label: 'Technische Prüfung',
+      info: 'Heizlastberechnung nach DIN EN 12831, hydraulischer Abgleich und Baubarkeitsprüfung.',
+      icon: HeroIcons.search,
+      heroTut: 'Heizlastberechnung nach DIN EN 12831, hydraulischer Abgleich, SHK-Check und Elektro-Check. Prüfung aller technischen Voraussetzungen.',
+      kundenAktion: 'Wir arbeiten im Hintergrund an deinem Projekt. Bei Rückfragen melden wir uns proaktiv bei dir.',
+    },
+    {
+      id: 7,
+      label: 'Auftragsbestätigung',
+      info: 'Die Baubarkeitsprüfung ist bestanden und dein Auftrag ist bestätigt. Die 1. Teilrechnung (50%) ist unterwegs.',
+      icon: HeroIcons.checkCircle,
+      heroTut: 'Baubarkeitsprüfung bestanden! Wir erstellen die Auftragsbestätigung und die 1. Teilrechnung (50%).',
+      kundenAktion: 'Bitte überweise die 1. Teilrechnung innerhalb von 14 Tagen. Damit sicherst du deinen Installationstermin.',
+    },
+    {
+      id: 8,
+      label: 'Förderantrag & Material',
+      info: 'Wir haben die KfW-Bestätigung zum Antrag (BzA) erstellt und das Material bestellt.',
+      icon: HeroIcons.package,
+      heroTut: 'Wir erstellen die KfW-Bestätigung zum Antrag (BzA), unterstützen beim Förderantrag und bestellen das gesamte Material.',
+      kundenAktion: 'Reiche den KfW-Förderantrag über das KfW-Portal ein. Wir liefern dir alle nötigen Unterlagen dafür.',
+    },
+    {
+      id: 9,
+      label: 'Vorbereitung Installation',
+      info: 'Alle Gewerke sind koordiniert: Fundamentbauer, Elektriker und Montageteam. Dein Installationstermin steht.',
+      icon: HeroIcons.calendar,
+      heroTut: 'Alle Gewerke werden koordiniert: Fundamentbauer, Elektriker, ggf. Zählerschrankumbau. Dein Installationstermin wird festgelegt.',
+      kundenAktion: 'Stelle sicher, dass der Aufstellort am Installationstag frei zugänglich ist. Wir informieren dich rechtzeitig über den genauen Termin.',
+    },
+    {
+      id: 10,
+      label: 'Installation',
+      info: 'Unser Montageteam ist bei dir. Es übernimmt die Demontage des Altgeräts, die Aufstellung, die Verrohrung und die Inbetriebnahme.',
+      icon: HeroIcons.tool,
+      heroTut: 'Unser Montageteam ist vor Ort: Demontage des Altgeräts, Fundament, Aufstellung, Verrohrung und Elektrik. Dauer: 1 bis 3 Tage je nach Umfang.',
+      kundenAktion: 'Bitte sei am Installationstag erreichbar. Bei Fragen kommt unser Teamleiter direkt auf dich zu.',
+    },
+    {
+      id: 11,
+      label: 'Inbetriebnahme & Testlauf',
+      info: 'Deine Wärmepumpe läuft! Hydraulischer Abgleich durchgeführt, Testlauf bestanden.',
+      icon: HeroIcons.bolt,
+      heroTut: 'Hydraulischer Abgleich, Systemtest, Protokollierung aller Werte. Deine Wärmepumpe läuft!',
+      kundenAktion: 'Wir zeigen dir die Bedienung und beantworten alle Fragen zur neuen Anlage.',
+    },
+    {
+      id: 12,
+      label: 'Übergabe & Abnahme',
+      info: 'Komplette Dokumentation übergeben, Einweisung abgeschlossen. Bitte unterschreibe das Abnahmeprotokoll.',
+      icon: HeroIcons.handshake,
+      heroTut: 'Komplette Dokumentation erstellt, Abnahmeprotokoll vorbereitet, Einweisung und Übergabe aller Unterlagen.',
+      kundenAktion: 'Unterschreibe das Abnahmeprotokoll und prüfe, ob alles zu deiner Zufriedenheit ist.',
+    },
+    {
+      id: 13,
+      label: 'Abgeschlossen',
+      info: 'Alles erledigt. Dein KfW-Verwendungsnachweis ist eingereicht. Willkommen bei HERO FRIENDS!',
+      icon: HeroIcons.sparkles,
+      heroTut: 'KfW-Verwendungsnachweis eingereicht, 2. Teilrechnung erstellt. Dein Projekt ist erfolgreich abgeschlossen!',
+      kundenAktion: 'Genieße deine neue Wärmepumpe! Als HERO FRIEND profitierst du von exklusiven Vorteilen.',
+    },
+  ],
+
+  // ============================================================
+  // FV-Status Texte
+  // ============================================================
+  // Schlüssel = die 7 ECHTEN HubSpot-Werte von `fordervorschussstatus` (15.07.2026, GF-freigegeben).
+  // Die alten Schlüssel (reserviert/zugesagt/ausgezahlt/rueckfluss) gab es in HubSpot nicht (mehr)
+  // und sie trugen die FALSCHE Mechanik ("Ausgezahlt an HeroWerk", "KfW-Rückfluss eingegangen").
+  // Richtig: echte Endrechnung + verlängertes Zahlungsziel; die KfW zahlt an den KUNDEN, nie an HeroWerk.
+  fvLabels: {
+    gewuenscht:          'Fördervorschuss gewünscht',
+    in_pruefung:         'In Prüfung',
+    warteliste:          'Warteliste',
+    platz_reserviert:    'Platz reserviert',
+    zahlungsziel_laeuft: 'Zahlungsziel läuft',
+    abgeschlossen:       'Abgeschlossen',
+    kein_platz:          'Kein Platz',
+  },
+
+  // ============================================================
+  // Kunden-sichtbare Download-Unterordner (Drive)
+  // ============================================================
+  kundenOrdner: [
+    { key: 'Angebote', label: 'Angebote' },
+    { key: 'Pläne & Zeichnungen', label: 'Pläne & Zeichnungen' },
+    { key: 'Förderunterlagen', label: 'Förderunterlagen' },
+    { key: 'Rechnungen', label: 'Rechnungen' },
+    { key: 'Anträge & Abmeldungen', label: 'Anträge & Abmeldungen' },
+  ],
+
+  // ============================================================
+  // Dokument-Typen
+  // ============================================================
+  // ============================================================
+  // Dokument-Typen (minStep angepasst an 13-Step-Timeline v2)
+  // ============================================================
+  docTypes: {
+    angebot:            { label: 'Angebot',                     icon: HeroIcons.fileText, minStep: 3 },
+    zusatzangebot:      { label: 'Zusatzangebot',               icon: HeroIcons.fileText, minStep: 6 },
+    auftragsbestaetigung: { label: 'Auftragsbestätigung',       icon: HeroIcons.checkCircle, minStep: 7 },
+    teilrechnung_1:     { label: '1. Teilrechnung (50%)',       icon: HeroIcons.euro, minStep: 7 },
+    heizlast:           { label: 'Heizlastberechnung',          icon: HeroIcons.chart, minStep: 6 },
+    bza:                { label: 'KfW BzA',                     icon: HeroIcons.bank, minStep: 8 },
+    proklima:           { label: 'proKlima-Antrag',             icon: HeroIcons.leaf, minStep: 8 },
+    inbetriebnahme:     { label: 'Inbetriebnahme-Protokoll',   icon: HeroIcons.bolt, minStep: 11 },
+    abgleich:           { label: 'Hydraulischer Abgleich',      icon: HeroIcons.chart, minStep: 11 },
+    abnahme:            { label: 'Abnahmeprotokoll',            icon: HeroIcons.handshake, minStep: 12 },
+    teilrechnung_2:     { label: '2. Teilrechnung (50%)',       icon: HeroIcons.euro, minStep: 12 },
+    dokumentation:      { label: 'Anlagendokumentation',        icon: HeroIcons.books, minStep: 12 },
+    verwendungsnachweis:{ label: 'KfW-Verwendungsnachweis',     icon: HeroIcons.bank, minStep: 13 },
+    sonstiges:          { label: 'Sonstiges Dokument',          icon: HeroIcons.paperclip, minStep: 1 },
+  },
+
+  // ============================================================
+  // Fehler- und Ladezeit-Texte
+  // ============================================================
+  messages: {
+    loading: 'Deine Projektdaten werden geladen...',
+    error: 'Es gab ein Problem beim Laden deiner Daten. Bitte versuche es erneut oder ruf uns an.',
+    tokenExpired: 'Dein Zugangslink ist abgelaufen. Bitte fordere einen neuen an.',
+    noProject: 'Wir konnten kein aktives Projekt für dich finden.',
+    messageSent: 'Deine Nachricht wurde gesendet! Wir melden uns innerhalb von 24 Stunden.',
+    messageFailed: 'Nachricht konnte nicht gesendet werden. Bitte ruf uns an: ',
+    portalInactive: 'Dein Portal ist derzeit nicht aktiv. Kontaktiere uns gerne für ein neues Angebot.',
+    angebotAbgelaufen: 'Dein Angebot ist abgelaufen. Kontaktiere uns gerne. Wir erstellen dir ein aktuelles Angebot.',
+  },
+
+  // ============================================================
+  // Portal-Phasen (v2, 30.03.2026)
+  //
+  // Phase 1 "projekt": Aktives Projekt (Steps 1–13)
+  // Phase 2 "service": Nach Closed Won — Dokumenten-Archiv + HERO FRIENDS
+  // Phase 3 "inaktiv": Nach Closed Lost + 4 Wochen — Portal zeigt Inaktiv-Meldung
+  // ============================================================
+  phases: {
+    projekt: {
+      label: 'Projekt aktiv',
+      showTimeline: true,
+      showMessages: true,
+      showDocuments: true,
+      showUpload: true,       // Dokument-Upload (ab Step 5 Datenaufnahme)
+      showAppointments: true,
+    },
+    service: {
+      label: 'Abgeschlossen: dein Dokumenten-Archiv',
+      showTimeline: false,    // Timeline ausblenden, nur Archiv
+      showMessages: true,     // Service-Anfragen weiterhin möglich
+      showDocuments: true,    // Alle Projekt-Dokumente zum Download
+      showUpload: false,
+      showAppointments: false,
+    },
+    inaktiv: {
+      label: 'Portal nicht aktiv',
+      showTimeline: false,
+      showMessages: false,
+      showDocuments: false,
+      showUpload: false,
+      showAppointments: false,
+    },
+  },
+
+  // Frist nach Closed Lost, bevor Portal deaktiviert wird (Tage)
+  lostGracePeriodDays: 28,
+
+  // ============================================================
+  // Branding
+  // ============================================================
+  brand: {
+    name: 'HeroWerk',
+    tagline: 'Dein Wärmepumpen-Projekt im Blick',
+    logoSrc: 'assets/logo-dark.png',
+    logoAlt: 'HeroWerk Logo',
+  },
+};
+
+;
+/**
+ * HeroWerk Kundenportal — API-Wrapper
+ *
+ * Alle Calls gehen über Zapier Webhooks (als sicherer Proxy).
+ * HubSpot API-Token ist NIE im Frontend.
+ *
+ * Beinhaltet: Rate-Limiting, Caching, Error-Handling.
+ *
+ * @version 1.0.0
+ */
+
+const Api = (() => {
+  'use strict';
+
+  /** Cache (sessionStorage) — verhindert überflüssige API-Calls */
+  const CACHE_KEY = 'hero_portal_cache';
+  const CACHE_TTL = 30000; // 30 Sekunden
+
+  /**
+   * Cache lesen
+   * @param {string} key
+   * @returns {*|null}
+   */
+  function cacheGet(key) {
+    try {
+      const raw = Demo.sessionStorage.getItem(CACHE_KEY);
+      if (!raw) return null;
+      const cache = JSON.parse(raw);
+      const entry = cache[key];
+      if (!entry) return null;
+      if (Date.now() - entry.timestamp > CACHE_TTL) {
+        delete cache[key];
+        Demo.sessionStorage.setItem(CACHE_KEY, JSON.stringify(cache));
+        return null;
+      }
+      return entry.data;
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * Cache schreiben
+   * @param {string} key
+   * @param {*} data
+   */
+  function cacheSet(key, data) {
+    try {
+      const raw = Demo.sessionStorage.getItem(CACHE_KEY) || '{}';
+      const cache = JSON.parse(raw);
+      cache[key] = { data, timestamp: Date.now() };
+      Demo.sessionStorage.setItem(CACHE_KEY, JSON.stringify(cache));
+    } catch {
+      // sessionStorage voll oder deaktiviert — ignorieren
+    }
+  }
+
+  /**
+   * Rate-Limiter — max 1 Request pro 2 Sekunden pro Endpoint
+   */
+  const lastCall = {};
+
+  function canCall(url) {
+    const now = Date.now();
+    if (lastCall[url] && now - lastCall[url] < 2000) {
+      return false;
+    }
+    lastCall[url] = now;
+    return true;
+  }
+
+  /**
+   * POST-Request an Zapier Webhook
+   * @param {string} url — Webhook-URL
+   * @param {object} data — Payload
+   * @param {object} [options] — {cache: boolean, cacheKey: string, noCors: boolean}
+   * @returns {Promise<object>}
+   */
+  async function post(url, data, options = {}) {
+    // Cache prüfen
+    if (options.cache && options.cacheKey) {
+      const cached = cacheGet(options.cacheKey);
+      if (cached) {
+        console.log('[API] Cache hit:', options.cacheKey);
+        return cached;
+      }
+    }
+
+    // Rate-Limit prüfen
+    if (!options.skipRateLimit && !canCall(url)) {
+      console.warn('[API] Rate limited:', url);
+      // Aus Cache holen, falls verfügbar
+      if (options.cacheKey) {
+        const cached = cacheGet(options.cacheKey);
+        if (cached) return cached;
+      }
+      throw new Error('Zu viele Anfragen. Bitte warte kurz.');
+    }
+
+    try {
+      // X-Portal-Request nur fuer eigene (same-origin) /api-Routen setzen — nicht
+      // fuer den cross-origin Zapier-Hook (vermeidet unnoetigen CORS-Preflight).
+      const headers = { 'Content-Type': 'application/json' };
+      if (typeof url === 'string' && url.startsWith('/')) {
+        headers['X-Portal-Request'] = '1';
+      }
+      const fetchOptions = {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(data),
+      };
+      if (options.noCors) {
+        fetchOptions.mode = 'no-cors';
+        delete fetchOptions.headers;
+      }
+
+      const response = await fetch(url, fetchOptions);
+
+      // no-cors liefert eine opake Antwort: Status und Body sind nicht lesbar.
+      // Wenn fetch nicht wirft, wurde der Magic-Link-Request erfolgreich abgesendet.
+      if (options.noCors) return {};
+
+      if (!response.ok) {
+        const err = new Error(`API Error: ${response.status}`);
+        err.status = response.status;
+        throw err;
+      }
+
+      const result = await response.json();
+
+      // Ergebnis cachen
+      if (options.cache && options.cacheKey) {
+        cacheSet(options.cacheKey, result);
+      }
+
+      return result;
+    } catch (err) {
+      if (err.status !== 401) console.error('[API] Request failed:', err);
+      throw err;
+    }
+  }
+
+  /**
+   * Projektdaten laden
+   * @param {string} [selectedDealId] — optionaler Deal-Kontext; Server prueft Zugehoerigkeit
+   * @returns {Promise<object>} — { step, documents, fvStatus, appointments, ... }
+   */
+  async function getProjectData(selectedDealId) {
+    // contactId kommt serverseitig aus der signierten Sitzung. KEIN Client-Cache:
+    // die Antwort enthaelt kurzlebige signierte Datei-Download-URLs (nicht zwischenspeichern).
+    const payload = {};
+    if (selectedDealId) payload.selectedDealId = selectedDealId;
+    return post(PORTAL_CONFIG.api.project, payload);
+  }
+
+  /**
+   * Nachricht senden
+   * Payload-Format für Zapier Flow 9 (HERO Portal-Nachricht):
+   *   dealId, message, senderType, customerName, timestamp
+   *
+   * @param {string} dealId — HubSpot Deal ID
+   * @param {string} message — Nachrichtentext
+   * @param {string} [customerName] — Name des Kunden
+   * @returns {Promise<object>}
+   */
+  // Idempotenz: gleicher Key nur bei Retry DERSELBEN Nachricht (gegen Doppel-Tickets).
+  let lastAttempt = { text: null, key: null };
+
+  function newIdempotencyKey() {
+    if (window.crypto && typeof crypto.randomUUID === 'function') return crypto.randomUUID();
+    return 'k-' + Date.now() + '-' + Math.random().toString(16).slice(2);
+  }
+
+  /**
+   * Nachricht senden → erzeugt serverseitig ein HubSpot-Ticket am Contact.
+   * @param {string} message — Nachrichtentext
+   * @param {string} [dealId] — optionaler Projektbezug (Server prueft Zugehoerigkeit)
+   */
+  async function sendMessage(message, dealId) {
+    const text = (message || '').trim();
+    if (lastAttempt.text !== text || !lastAttempt.key) {
+      lastAttempt = { text, key: newIdempotencyKey() };
+    }
+    const payload = { message: text, idempotencyKey: lastAttempt.key };
+    if (dealId) payload.dealId = dealId;
+    const result = await post(PORTAL_CONFIG.api.sendMessage, payload);
+    lastAttempt = { text: null, key: null }; // Erfolg → Key zuruecksetzen
+    return result;
+  }
+
+
+
+  /**
+   * Angebot verbindlich annehmen (SES, U-1b).
+   *
+   * Der Server leitet die contactId ausschliesslich aus der signierten Sitzung ab
+   * und prueft die Deal-Zugehoerigkeit selbst; der Client kann hier nichts erschleichen.
+   * Das Beweis-Set (Zeitstempel, IP, Angebots-ID, PDF-Referenz, Login-Zeitpunkt)
+   * entsteht serverseitig, nie im Browser.
+   *
+   * @param {string} dealId
+   * @param {string} offerRef — 'haupt' | 'legacy-zusatz' | 'za-<12 hex>'
+   * @param {string} [zahlungsweg] — Kennung des gewählten Zahlungswegs. Nur beim
+   *   Hauptangebot mit Zahlungswegen; der Server prüft sie gegen den Vorgang und
+   *   liest alle Beträge selbst. Ohne Zahlungswege bleibt die Anfrage wie bisher.
+   * @returns {Promise<object>}
+   */
+  async function acceptOffer(dealId, offerRef, zahlungsweg) {
+    if (!dealId) throw new Error('missing_deal_id');
+    if (!offerRef) throw new Error('missing_offer_ref');
+    const payload = { dealId, offerRef };
+    if (zahlungsweg) payload.zahlungsweg = zahlungsweg;
+    // skipRateLimit: die Annahme ist eine bewusste Einzelaktion des Kunden und darf
+    // nicht am 2-Sekunden-Fenster eines vorherigen Requests scheitern.
+    return post(PORTAL_CONFIG.api.acceptOffer, payload, { skipRateLimit: true });
+  }
+
+  /** Zentrale Wortlaute: kein Ersatztext im Client, kein Sitzungscache. */
+  async function getZusatztexte() {
+    const response = await fetch('/shared/zusatztexte.json', { cache: 'no-store', credentials: 'same-origin' });
+    if (!response.ok) throw new Error('zusatztexte_unavailable');
+    const data = await response.json();
+    if (data.format !== 'herowerk.zusatztexte' || data.formatversion !== 1 || !data.textversion || !data.texte) {
+      throw new Error('zusatztexte_invalid');
+    }
+    return data;
+  }
+
+  /** Frischer Vergleich vor dem Schlussklick, ohne das Bestands-Ladelimit. */
+  async function getOfferState(selectedDealId) {
+    return post(PORTAL_CONFIG.api.project, { selectedDealId }, { skipRateLimit: true });
+  }
+
+  async function requestEarlyStart(selectedDealId, evidence) {
+    return post(PORTAL_CONFIG.api.project, { ...evidence, action: 'fruehbeginn', selectedDealId }, { skipRateLimit: true });
+  }
+
+  async function declineOffer(dealId, offerRef) {
+    if (!dealId) throw new Error('missing_deal_id');
+    if (!offerRef) throw new Error('missing_offer_ref');
+    return post(PORTAL_CONFIG.api.declineOffer, { dealId, offerRef }, { skipRateLimit: true });
+  }
+
+  /** Widerruf erst nach der ausdruecklichen zweiten Bestaetigung uebermitteln. */
+  async function revokeContract(dealId, offerRef, email, idempotencyKey) {
+    if (!dealId) throw new Error('missing_deal_id');
+    if (!offerRef) throw new Error('missing_offer_ref');
+    return post(
+      PORTAL_CONFIG.api.revokeContract,
+      { dealId, offerRef, email, idempotencyKey },
+      { skipRateLimit: true }
+    );
+  }
+
+  /**
+   * Unterlage hochladen. Die Datei wird wegen csrfGate als Base64-in-JSON
+   * transportiert; der Server leitet sie an den Google-Drive-Endpunkt weiter.
+   * @param {string} dealId — aktuell ausgewaehlter HubSpot Deal
+   * @param {File} file — einzelne Datei, max. 10 MB
+   * @returns {Promise<object>}
+   */
+  async function uploadDocument(dealId, file) {
+    if (!dealId) throw new Error('missing_deal_id');
+    if (!file) throw new Error('missing_file');
+
+    const dataBase64 = await readFileAsBase64(file);
+    return post(PORTAL_CONFIG.api.upload, {
+      dealId,
+      filename: file.name || 'upload',
+      mimeType: file.type || '',
+      dataBase64,
+    });
+  }
+
+  function readFileAsBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = typeof reader.result === 'string' ? reader.result : '';
+        const comma = result.indexOf(',');
+        resolve(comma >= 0 ? result.slice(comma + 1) : result);
+      };
+      reader.onerror = () => reject(new Error('file_read_failed'));
+      reader.readAsDataURL(file);
+    });
+  }
+
+
+  async function createUploadSlot(dealId, file) {
+    if (!dealId) throw new Error('missing_deal_id');
+    if (!file) throw new Error('missing_file');
+    return post(PORTAL_CONFIG.api.uploadSlot, {
+      dealId,
+      filename: file.name || 'upload',
+      mimeType: file.type || '',
+      size: file.size,
+    });
+  }
+
+  async function uploadChunk(uploadToken, chunkIndex, totalChunks, dataBase64) {
+    return post(PORTAL_CONFIG.api.uploadChunk, {
+      uploadToken,
+      chunkIndex,
+      totalChunks,
+      dataBase64,
+    }, { skipRateLimit: true });
+  }
+
+  async function registerUpload(dealId, uploadProofs) {
+    if (!dealId) throw new Error('missing_deal_id');
+    return post(
+      PORTAL_CONFIG.api.registerUpload,
+      { dealId, uploadProofs },
+      { skipRateLimit: true }
+    );
+  }
+
+  async function notifyUploadNow(dealId) {
+    if (!dealId) throw new Error('missing_deal_id');
+    return post(
+      PORTAL_CONFIG.api.notifyUploadNow,
+      { dealId },
+      { skipRateLimit: true }
+    );
+  }
+
+  /**
+   * Drive-Dokument herunterladen. fileId wird immer zusammen mit dem
+   * serverseitig IDOR-geprueften dealId gesendet; folderId kommt nie vom Client.
+   * @param {string} dealId
+   * @param {string} fileId
+   * @returns {Promise<void>}
+   */
+  async function downloadDocument(dealId, fileId) { return Demo.document(dealId, fileId); }
+
+  /**
+   * Dokument ANSEHEN (nicht herunterladen): oeffnet die Datei in einem neuen Tab,
+   * damit der Kunde das Angebot im Browser-PDF-Viewer wirklich sieht (O-31).
+   * Der Tab wird SYNCHRON im Klick-Kontext geoeffnet, sonst greift der
+   * Popup-Blocker (der Blob liegt erst nach dem await vor). Ist der Popup
+   * blockiert, faellt es auf Herunterladen zurueck, damit der Kunde es trotzdem sieht.
+   *
+   * @param {string} dealId
+   * @param {string} fileId
+   * @returns {Promise<void>}
+   */
+  async function viewDocument(dealId, fileId) { return Demo.document(dealId, fileId); }
+
+  /**
+   * Cache leeren (z.B. nach Aktionen)
+   */
+  function clearCache() {
+    try {
+      Demo.sessionStorage.removeItem(CACHE_KEY);
+    } catch {
+      // Ignorieren
+    }
+  }
+
+  // Public API
+  return {
+    post,
+    getProjectData,
+    sendMessage,
+    acceptOffer,
+    declineOffer,
+    getZusatztexte,
+    getOfferState,
+    requestEarlyStart,
+    revokeContract,
+    uploadDocument,
+    createUploadSlot,
+    uploadChunk,
+    registerUpload,
+    notifyUploadNow,
+    downloadDocument,
+    viewDocument,
+    clearCache,
+  };
+})();
+
+;
+/**
+ * HeroWerk Kundenportal, Vorauswahl des Zahlungswegs aus dem Knopf des Angebots-PDF (T1150).
+ *
+ * Die drei Knöpfe im PDF führen auf `https://portal.herowerk.de/?zahlungsweg=<kennung>`.
+ * Dieser Baustein liest den Wert, lässt genau die drei festen Kennungen durch
+ * und verwirft alles andere ohne Meldung. Der Wert wird nie ungeprüft in die
+ * Seite, in eine Adresse oder in eine Anfrage geschrieben: weitergereicht wird
+ * immer die Kennung aus der festen Liste, nie die Eingabe selbst.
+ *
+ * Die Vorauswahl bestätigt nichts. Bestätigt ist erst der Weg, dessen Knopf der
+ * Kunde im Portal drückt und dessen Rückfrage er bejaht.
+ */
+
+const Zahlungsweg = (() => {
+  'use strict';
+
+  const ERLAUBT = ['anzahlung', 'vollzahlung', 'foerdervorschuss'];
+  const PARAMETER = 'zahlungsweg';
+  /** Gesetzt, wenn das Portal schon festgestellt hat, dass keine Sitzung besteht. */
+  const ANMELDEN = 'anmelden';
+
+  /**
+   * Die Kennung aus der festen Liste oder null.
+   * @param {*} wert
+   * @returns {string|null}
+   */
+  function erlaubt(wert) {
+    const stelle = typeof wert === 'string' ? ERLAUBT.indexOf(wert) : -1;
+    return stelle >= 0 ? ERLAUBT[stelle] : null;
+  }
+
+  /**
+   * Vorauswahl aus einer Adresse lesen.
+   * @param {string} [suchteil] Abfrageteil der Adresse, sonst der der aktuellen Seite
+   * @returns {string|null}
+   */
+  function ausAdresse(suchteil) {
+    const quelle = typeof suchteil === 'string' ? suchteil : Demo.location.search;
+    return erlaubt(new URLSearchParams(quelle).get(PARAMETER));
+  }
+
+  /**
+   * Abfrageteil mit der Vorauswahl. Leer, wenn es keine gültige gibt.
+   * @param {string|null} kennung
+   * @param {{anmelden?: boolean, weitere?: Object<string,string>}} [optionen]
+   * @returns {string}
+   */
+  function abfrage(kennung, optionen = {}) {
+    const params = new URLSearchParams();
+    const weitere = optionen.weitere || {};
+    Object.keys(weitere).forEach((name) => params.set(name, weitere[name]));
+    const gueltig = erlaubt(kennung);
+    if (gueltig) {
+      params.set(PARAMETER, gueltig);
+      if (optionen.anmelden) params.set(ANMELDEN, '1');
+    }
+    const text = params.toString();
+    return text ? `?${text}` : '';
+  }
+
+  /**
+   * Anmeldeseite: gibt die Adresse der Angebotskarte zurück, wenn der Kunde mit
+   * einer gültigen Vorauswahl ankommt und noch nicht feststeht, dass er keine
+   * Sitzung hat. Sonst null, dann bleibt die Anmeldeseite stehen.
+   * @param {string} [suchteil]
+   * @returns {string|null}
+   */
+  function zielNachAnkunft(suchteil) {
+    const quelle = typeof suchteil === 'string' ? suchteil : Demo.location.search;
+    const params = new URLSearchParams(quelle);
+    const kennung = erlaubt(params.get(PARAMETER));
+    if (!kennung) return null;
+    if (params.has(ANMELDEN) || params.has('anmeldung') || params.has('expired')) return null;
+    return `dashboard.html${abfrage(kennung)}`;
+  }
+
+  return { ERLAUBT: ERLAUBT.slice(), erlaubt, ausAdresse, abfrage, zielNachAnkunft };
+})();
+
+;
+/**
+ * HeroWerk Kundenportal — Authentifizierung (Wave 1)
+ *
+ * Magic-Link-Login. Die Sitzung lebt jetzt in einem server-gesetzten,
+ * signierten HttpOnly-Cookie (`hero_session`) — das Frontend kann es NICHT
+ * lesen und braucht das auch nicht: Es reist bei same-origin-Requests
+ * automatisch mit. Die contactId wird NICHT mehr im Browser gehalten.
+ *
+ * @version 2.0.0 (Wave 1)
+ */
+
+const Auth = (() => {
+  'use strict';
+
+  /**
+   * Magic Link anfordern (E-Mail → eigener Anmeldeweg des Portals → E-Mail mit Link).
+   *
+   * Seit T1150 läuft die Anforderung im Repo über den eigenen Anmeldeweg
+   * (`/api/request-login`), wie er auf dem Server seit dem 09.08.2026 läuft. Nur
+   * er kann die Vorauswahl des Zahlungswegs in den Anmeldelink tragen.
+   *
+   * @param {string} email
+   * @param {string|null} [zahlungsweg] Vorauswahl aus dem Knopf des Angebots-PDF.
+   *   Gesendet wird nur eine Kennung aus der festen Liste; der Server prüft erneut.
+   * @returns {Promise<{success: boolean, message?: string}>}
+   */
+  async function requestMagicLink(email, zahlungsweg) {
+    try {
+      const payload = { email, action: 'request_magic_link' };
+      const vorauswahl = Zahlungsweg.erlaubt(zahlungsweg);
+      if (vorauswahl) payload.zahlungsweg = vorauswahl;
+      await Api.post(PORTAL_CONFIG.api.login, payload);
+      return { success: true };
+    } catch (err) {
+      console.error('[Auth] Magic Link request failed');
+      return { success: false, message: PORTAL_CONFIG.messages.error };
+    }
+  }
+
+  /**
+   * Serverseitigen Fehlergrund auf einen Kunden-Hinweis abbilden.
+   *
+   * BEWUSST zusammengefasst: `no_token_stored`, `token_mismatch` und
+   * `contact_not_found` teilen sich EINEN Hinweis. Getrennte Texte wuerden einem
+   * Besucher verraten, ob eine Adresse bei uns hinterlegt ist.
+   *
+   * SEIT 27.07.2026 fasst der Server sie zusaetzlich SELBST zusammen und liefert
+   * nur noch `invalid_link` (portal_public_reason / publicReason in beiden Ports).
+   * Damit ist der Befund O4 geschlossen: der Endpunkt gibt auch bei direktem
+   * Aufruf nicht mehr preis, ob eine Adresse bei uns hinterlegt ist.
+   *
+   * Die drei alten Schluessel bleiben hier ABSICHTLICH stehen. Sie decken GENAU
+   * EINE Rollout-Richtung ab: alter Server, neues Frontend. Der umgekehrte Fall,
+   * neuer Server auf altem gecachtem Frontend, ist dadurch NICHT gedeckt; ein
+   * altes hinweisFuerGrund kennt `invalid_link` nicht und faellt auf den
+   * Stoerungstext, der dem Kunden faelschlich einen zweiten Versuch nahelegt.
+   *
+   * ROLLOUT-REIHENFOLGE, deshalb verbindlich: erst die statischen Dateien
+   * (index.html, dashboard.html, js/auth.js), DANN php/api/validate-token.php.
+   * Der Cache-Marker `?v=` an js/auth.js ist in beiden Seiten mit angehoben,
+   * damit der Browser die neue Fassung wirklich zieht.
+   *
+   * Die Altschluessel duerfen erst entfernt werden, wenn beide Ports
+   * nachweislich ausgerollt sind.
+   *
+   * `stoerung` ist der Auffangfall (Serverfehler, Herkunfts-Gate, Netzwerk). Er darf
+   * NICHT als "abgelaufen" erscheinen: seit der Reihenfolge-Umstellung vom 26.07.2026
+   * ueberlebt der Zugangslink eine Stoerung, ein zweiter Versuch lohnt sich also.
+   *
+   * @param {string} reason Grund aus der Antwort des Anmelde-Endpunkts
+   * @returns {'abgelaufen'|'ungueltig'|'stoerung'}
+   */
+  function hinweisFuerGrund(reason) {
+    if (reason === 'token_expired') return 'abgelaufen';
+    if (
+      reason === 'invalid_link' ||
+      reason === 'no_token_stored' ||
+      reason === 'token_mismatch' ||
+      reason === 'contact_not_found'
+    ) {
+      return 'ungueltig';
+    }
+    return 'stoerung';
+  }
+
+  /**
+   * Token aus URL validieren (Dashboard-Einstieg über Magic Link).
+   * Bei Erfolg setzt der Server das HttpOnly-Sitzungs-Cookie; das Frontend
+   * erhaelt nur noch { valid, firstName } (keine contactId/PII).
+   *
+   * @returns {Promise<{valid: boolean, firstName?: string, hinweis?: string}>}
+   */
+  async function validateToken() {
+    const params = new URLSearchParams(Demo.location.search);
+    const token = params.get(PORTAL_CONFIG.auth.tokenParam);
+    const email = params.get('email');
+
+    if (!token || !email) {
+      return { valid: false, hinweis: 'ungueltig' };
+    }
+
+    try {
+      const response = await Api.post(PORTAL_CONFIG.api.validate, { token, email });
+      if (response && response.valid) {
+        // Token aus URL entfernen (saubere URL); Sitzung liegt im HttpOnly-Cookie
+        Demo.history.replaceState({}, '', Demo.location.pathname);
+        return { valid: true, firstName: response.firstName || '' };
+      }
+      return { valid: false, hinweis: hinweisFuerGrund(response && response.reason) };
+    } catch (err) {
+      // Api.post wirft bei jedem Nicht-2xx und bei Netzwerkfehlern. Beides ist eine
+      // Stoerung auf unserer Seite, kein Problem mit dem Link des Kunden.
+      console.error('[Auth] Token validation failed');
+      return { valid: false, hinweis: 'stoerung' };
+    }
+  }
+
+  /**
+   * Logout — server-seitig (loescht HttpOnly-Cookie + widerruft alle Sitzungen),
+   * dann zurück zur Login-Seite.
+   */
+  async function logout() {
+    try {
+      await Api.post(PORTAL_CONFIG.api.logout, {});
+    } catch (err) {
+      // Selbst bei Fehler zur Login-Seite — das Cookie wird serverseitig geloescht
+      console.warn('[Auth] Logout request failed');
+    }
+    Demo.location.href = 'index.html';
+  }
+
+  /**
+   * Auth-Guard für dashboard.html.
+   * - Magic-Link-Token in der URL → validieren (setzt Sitzung) → weiter oder Login.
+   * - Sonst → optimistisch weiter; der Daten-Load (project-data) antwortet bei
+   *   fehlender/ungueltiger Sitzung mit 401 und leitet dann zur Anmeldung um.
+   * @returns {Promise<boolean>} true = weitermachen
+   */
+  async function guard() {
+    const params = new URLSearchParams(Demo.location.search);
+    if (params.has(PORTAL_CONFIG.auth.tokenParam)) {
+      // Vorauswahl des Zahlungswegs VOR der Prüfung lesen: validateToken räumt
+      // die Adresse nach dem Erfolg auf.
+      const vorauswahl = Zahlungsweg.ausAdresse();
+      const result = await validateToken();
+      if (result.valid) return true;
+      // Der Grund reist als Kennung mit, damit die Anmeldeseite den passenden
+      // Hinweis zeigt. Vorher landete JEDER Fehlschlag auf `expired=1`. Die
+      // Vorauswahl reist ebenfalls mit, damit der neue Link sie wieder trägt.
+      Demo.location.href = `index.html${Zahlungsweg.abfrage(vorauswahl, {
+        anmelden: true,
+        weitere: { anmeldung: result.hinweis || 'stoerung' },
+      })}`;
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * Zur Login-Seite umleiten (z. B. nach 401 beim Daten-Load).
+   * @param {string|null} [zahlungsweg] Vorauswahl, die die Anmeldung mittragen soll
+   */
+  function redirectToLogin(zahlungsweg) {
+    Demo.location.href = `index.html${Zahlungsweg.abfrage(zahlungsweg, { anmelden: true })}`;
+  }
+
+  // Public API
+  return {
+    requestMagicLink,
+    validateToken,
+    logout,
+    guard,
+    redirectToLogin,
+  };
+})();
+
+;
+
+    // Knopf des Angebots-PDF (T1150): `/?zahlungsweg=<kennung>` führt zur
+    // Angebotskarte. Ob eine Sitzung besteht, kann diese Seite nicht lesen (das
+    // Cookie ist HttpOnly). Deshalb geht es zuerst zur Angebotskarte; besteht
+    // keine Sitzung, schickt sie den Kunden mit `anmelden=1` hierher zurück und
+    // die Anmeldung trägt die Vorauswahl weiter. Ein unbekannter Wert wird ohne
+    // Meldung verworfen, die Seite bleibt dann die gewöhnliche Anmeldung.
+    (() => {
+      const ziel = Zahlungsweg.zielNachAnkunft();
+      if (ziel) Demo.location.replace(ziel);
+    })();
+  
+;
+
+    Demo.onReady(() => {
+      PortalTheme.init();
+      // Eine bestehende Sitzung liegt im HttpOnly-Cookie und ist clientseitig
+      // NICHT lesbar — daher kein Auto-Redirect mehr. Der Login-Flow funktioniert
+      // auch bei bestehender Sitzung (es wird einfach ein neuer Magic-Link gesendet).
+
+      // Anmeldeversuch gescheitert? → passenden Hinweis zeigen.
+      // `anmeldung` setzt Auth.guard(); `expired=1` bleibt als Altform akzeptiert,
+      // damit bereits geoeffnete Tabs und Lesezeichen weiter funktionieren.
+      const params = new URLSearchParams(Demo.location.search);
+      // Object.create(null): kein Prototyp, damit `?anmeldung=toString` (ebenso
+      // constructor, __proto__, valueOf) keinen geerbten Treffer liefert. Sonst
+      // liefe getElementById auf null, der TypeError wuerde den restlichen
+      // DOMContentLoaded-Block abbrechen und der Anmelde-Knopf waere tot. Genau
+      // auf der Seite, die den ausgesperrten Kunden retten soll.
+      const HINWEIS_ELEMENTE = Object.create(null);
+      HINWEIS_ELEMENTE.abgelaufen = 'alertAbgelaufen';
+      HINWEIS_ELEMENTE.ungueltig = 'alertUngueltig';
+      HINWEIS_ELEMENTE.stoerung = 'alertStoerung';
+
+      const anmeldeHinweis =
+        params.get('anmeldung') || (params.get('expired') === '1' ? 'abgelaufen' : '');
+      const hinweisEl = HINWEIS_ELEMENTE[anmeldeHinweis]
+        ? document.getElementById(HINWEIS_ELEMENTE[anmeldeHinweis])
+        : null;
+      if (hinweisEl) {
+        hinweisEl.classList.remove('hidden');
+      }
+
+      // Login-Formular
+      const form = document.getElementById('loginForm');
+      const emailInput = document.getElementById('emailInput');
+      const loginBtn = document.getElementById('loginBtn');
+      const successEl = document.getElementById('successMessage');
+      const errorEl = document.getElementById('errorMessage');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const email = emailInput.value.trim().toLowerCase();
+        if (!email) return;
+
+        // UI-Feedback
+        loginBtn.disabled = true;
+        loginBtn.textContent = 'Wird gesendet...';
+        successEl.classList.add('hidden');
+        errorEl.classList.add('hidden');
+
+        try {
+          // Vorauswahl des Zahlungswegs mitgeben: nur eine der drei festen Kennungen.
+          const result = await Auth.requestMagicLink(email, Zahlungsweg.ausAdresse());
+          if (result.success) {
+            form.classList.add('hidden');
+            successEl.classList.remove('hidden');
+          } else {
+            errorEl.textContent = result.message || 'Ein Fehler ist aufgetreten.';
+            errorEl.classList.remove('hidden');
+          }
+        } catch (err) {
+          errorEl.textContent = 'Verbindungsfehler. Bitte versuche es erneut.';
+          errorEl.classList.remove('hidden');
+        } finally {
+          loginBtn.disabled = false;
+          loginBtn.textContent = 'Zugangslink anfordern';
+        }
+      });
+    });
+  
+Demo.flushReady();
+});</script>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HeroWerk Kundenportal · Anmeldung</title>
+  <meta name="description" content="Melde dich an, um den Status deines Wärmepumpen-Projekts zu sehen.">
+  <meta name="robots" content="noindex, nofollow">
+  
+  <meta name="theme-color" content="#1C2B36">
+  <meta property="og:title" content="HeroWerk Kundenportal · Anmeldung">
+  <meta property="og:description" content="Melde dich an, um den Status deines Wärmepumpen-Projekts zu sehen.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://portal.herowerk.de/">
+  <meta property="og:image" content="https://portal.herowerk.de/assets/logo-dark.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="HeroWerk Kundenportal · Anmeldung">
+  <meta name="twitter:description" content="Melde dich an, um den Status deines Wärmepumpen-Projekts zu sehen.">
+  
+
+  <!-- Fonts -->
+  
+  
+  
+
+  
+
+  <!-- Styles -->
+  
+
+  <!-- Favicon -->
+  
+<style>@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(/vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2) format('woff2');}
+@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url(/vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2) format('woff2');}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(/vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2) format('woff2');}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(/vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2) format('woff2');}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:700;font-display:swap;src:url(/vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2) format('woff2');}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:800;font-display:swap;src:url(/vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2) format('woff2');}
+
+/**
+ * HeroWerk Kundenportal — Styles v2
+ *
+ * CI B2 konform: Barlow/Inter, Chartreuse/Schiefer/Sand
+ * Dark-Mode Default — aligned mit Website v4
+ * Glassmorphism, Glow Cards, Shimmer Buttons
+ * Mobile-first, Responsive
+ *
+ * @version 2.0.0
+ * @date 2026-03-30
+ */
+
+/* ============================================================
+   CSS Custom Properties — CI-Farben & Typografie
+   ============================================================ */
+:root {
+  /* Theme-Tokens — Dark Default, Light via html[data-theme="light"] */
+  --color-surface-primary: #1C2B36;
+  --color-surface-secondary: #243847;
+  --color-surface-tertiary: #2D2D2D;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #9A9A9A;
+  --color-text-readable-secondary: #C7CDD2;
+  --color-text-tertiary: #8B949E;
+  --color-accent-primary: #B7D900;
+  --color-accent-primary-text: #0A0A0A;
+  --color-info: #E8A838;
+  --color-success: #27AE60;
+  --color-error: #E74C3C;
+  --color-border-subtle: #2D3A47;
+  --color-border-strong: #5A6470;
+  --color-shadow: rgba(0, 0, 0, 0.3);
+
+  /* Farben — CI B2 (Legacy-Aliase auf Theme-Tokens) */
+  --hero-green: var(--color-accent-primary);
+  --green-dark: #9FBF00;
+  --meister-schiefer: var(--color-surface-primary);
+  --schiefer-light: var(--color-surface-secondary);
+  --bernstein: var(--color-info);
+  --fundament-sand: #F4F1EA;
+  --nacht-schwarz: var(--color-accent-primary-text);
+  --charcoal: var(--color-surface-tertiary);
+  --muted: var(--color-text-secondary);
+  --white: var(--color-text-primary);
+  --error: var(--color-error);
+  --success: var(--color-success);
+  --chartreuse: var(--color-accent-primary);
+
+  /* Graustufen (Website v4) */
+  --g200: #e5e7eb;
+  --g300: #d1d5db;
+  --g400: #9ca3af;
+  --g500: #8B949E;
+  --focus-ring: var(--color-accent-primary);
+  --link-color: var(--color-accent-primary);
+  --link-hover-color: #C8EF00;
+
+  /* Typografie */
+  --font-headline: 'Barlow', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* Abstände */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+
+  /* Radien */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  /* Glassmorphism — verstärkt */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(183, 217, 0, 0.12);
+  --glass-border-hover: rgba(183, 217, 0, 0.25);
+  --glass-glow: 0 0 30px 8px rgba(183, 217, 0, 0.1);
+
+  /* Schatten — mehr Tiefe */
+  --shadow-card: 0 4px 20px var(--color-shadow), 0 0 0 1px rgba(255, 255, 255, 0.02);
+  --shadow-hover: 0 8px 32px rgba(183, 217, 0, 0.1), 0 0 0 1px rgba(183, 217, 0, 0.08);
+
+  /* Übergänge */
+  --transition: 0.2s ease;
+  --transition-slow: 0.3s ease;
+}
+
+:root[data-theme="light"] {
+  --color-surface-primary: #F4F1EA;
+  --color-surface-secondary: #FFFFFF;
+  --color-surface-tertiary: #EBE7DC;
+  --color-text-primary: #1C2B36;
+  --color-text-secondary: #5A6470;
+  --color-text-readable-secondary: #5A6470;
+  --color-text-tertiary: #A0A6AD;
+  --color-success: #3A8C3F;
+  --color-error: #C62828;
+  --color-border-subtle: #DDD8CC;
+  --color-border-strong: #1C2B36;
+  --color-shadow: rgba(28, 43, 54, 0.15);
+  --green-dark: #9FBF00;
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(28, 43, 54, 0.12);
+  --glass-border-hover: rgba(183, 217, 0, 0.35);
+  --glass-glow: 0 0 24px 4px rgba(28, 43, 54, 0.08);
+  --shadow-hover: 0 8px 32px rgba(28, 43, 54, 0.12), 0 0 0 1px rgba(28, 43, 54, 0.08);
+  --g200: #DDD8CC;
+  --g300: #A0A6AD;
+  --g400: #5A6470;
+  --g500: #5A6470;
+  --focus-ring: var(--color-border-strong);
+  --link-color: #5F7200;
+  --link-hover-color: var(--color-border-strong);
+}
+
+:root[data-theme="light"] .portal-header {
+  background: var(--color-surface-primary);
+  border-bottom: 1px solid var(--color-border-subtle);
+  box-shadow: none;
+}
+
+:root[data-theme="light"] .header-title,
+:root[data-theme="light"] .portal-header .theme-toggle,
+:root[data-theme="light"] .btn-logout {
+  color: var(--color-text-primary);
+}
+
+:root[data-theme="light"] .header-logo.logo-mark {
+  background-image: url("/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png");
+}
+
+:root[data-theme="light"] .btn-logout {
+  background: transparent;
+  border-color: var(--color-border-subtle);
+}
+
+:root[data-theme="light"] .btn-logout:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-border-strong);
+}
+
+:root[data-theme="light"] .step-card-pending {
+  opacity: 1;
+}
+
+:root[data-theme="light"] .step-card-pending .step-card-label {
+  color: var(--color-text-secondary);
+}
+
+:root[data-theme="light"] .step-card-detail-row:first-child .step-detail-label {
+  color: var(--link-color);
+}
+
+:root[data-theme="light"] .card {
+  background: var(--color-surface-secondary);
+  border-color: rgba(28, 43, 54, 0.2);
+  box-shadow: 0 12px 28px rgba(28, 43, 54, 0.12), 0 2px 6px rgba(28, 43, 54, 0.08);
+}
+
+:root[data-theme="light"] .card:hover {
+  border-color: rgba(95, 114, 0, 0.42);
+  box-shadow: 0 16px 36px rgba(28, 43, 54, 0.16), 0 0 0 1px rgba(95, 114, 0, 0.18);
+}
+
+:root[data-theme="light"] .step-card {
+  background: var(--color-surface-tertiary);
+  border-color: rgba(28, 43, 54, 0.16);
+  box-shadow: 0 4px 14px rgba(28, 43, 54, 0.10);
+}
+
+:root[data-theme="light"] .step-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(28, 43, 54, 0.14);
+  transition: var(--transition);
+}
+
+:root[data-theme="light"] .doc-folder-group {
+  background: rgba(28, 43, 54, 0.04);
+  border-color: rgba(28, 43, 54, 0.12);
+}
+
+:root[data-theme="light"] .doc-item {
+  background: var(--color-surface-tertiary);
+  border-color: rgba(28, 43, 54, 0.10);
+  box-shadow: 0 2px 8px rgba(28, 43, 54, 0.08);
+}
+
+:root[data-theme="light"] .doc-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(28, 43, 54, 0.14);
+  transition: var(--transition);
+}
+
+:root[data-theme="light"] .doc-folder-title,
+:root[data-theme="light"] .doc-name {
+  color: var(--color-text-primary);
+}
+
+:root[data-theme="light"] .step-card-date,
+:root[data-theme="light"] .step-card-chevron {
+  color: var(--color-text-secondary);
+}
+
+:root[data-theme="light"] .step-card-badge {
+  border: 1px solid rgba(28, 43, 54, 0.16);
+  background: rgba(28, 43, 54, 0.06);
+  color: var(--color-text-primary);
+}
+
+:root[data-theme="light"] .step-card-done {
+  background: rgba(95, 114, 0, 0.08);
+  border-color: rgba(95, 114, 0, 0.28);
+}
+
+:root[data-theme="light"] .step-card-done .step-card-dot {
+  box-shadow: 0 0 0 3px rgba(95, 114, 0, 0.18), 0 4px 10px rgba(28, 43, 54, 0.14);
+}
+
+:root[data-theme="light"] .step-card-done .step-card-label,
+:root[data-theme="light"] .step-card-done .step-card-badge {
+  color: var(--link-color);
+}
+
+:root[data-theme="light"] .step-card-done .step-card-badge {
+  background: rgba(95, 114, 0, 0.12);
+  border-color: rgba(95, 114, 0, 0.3);
+}
+
+:root[data-theme="light"] .step-card-active {
+  background: #FFFFFF;
+  border-color: var(--link-color);
+  box-shadow: 0 14px 34px rgba(28, 43, 54, 0.18), 0 0 0 2px rgba(95, 114, 0, 0.28);
+}
+
+:root[data-theme="light"] .step-card-active .step-card-dot {
+  background: var(--link-color);
+  color: #FFFFFF;
+  box-shadow: 0 0 0 4px rgba(95, 114, 0, 0.2), 0 6px 14px rgba(28, 43, 54, 0.18);
+}
+
+:root[data-theme="light"] .step-card-active .step-card-label {
+  color: var(--color-text-primary);
+}
+
+:root[data-theme="light"] .step-badge-active {
+  background: var(--link-color);
+  border-color: var(--link-color);
+  color: #FFFFFF;
+}
+
+:root[data-theme="light"] .step-card-pending .step-card-dot {
+  background: rgba(28, 43, 54, 0.06);
+  color: var(--color-text-secondary);
+  border-color: rgba(28, 43, 54, 0.22);
+}
+
+:root[data-theme="light"] .connector-done {
+  background: rgba(95, 114, 0, 0.62);
+}
+
+:root[data-theme="light"] .connector-active {
+  background: linear-gradient(180deg, rgba(95, 114, 0, 0.68), rgba(95, 114, 0, 0.24));
+}
+
+:root[data-theme="light"] .connector-pending {
+  background: rgba(28, 43, 54, 0.18);
+}
+
+:root[data-theme="light"] .badge-green {
+  background: rgba(95, 114, 0, 0.12);
+  color: var(--link-color);
+  border-color: rgba(95, 114, 0, 0.32);
+}
+
+/* ============================================================
+   Reset & Basis
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--meister-schiefer);
+  color: var(--white);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.logo-mark {
+  display: block;
+  background-image: url("/vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  flex-shrink: 0;
+}
+
+:root[data-theme="light"] .login-logo.logo-mark {
+  background-image: url("/vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png");
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  transition: color var(--transition), text-decoration-color var(--transition);
+}
+
+a:hover {
+  color: var(--link-hover-color);
+  text-decoration-thickness: 2px;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 132px;
+  min-width: 132px;
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 999px;
+  background: var(--color-surface-secondary);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition), color var(--transition);
+}
+
+.theme-toggle:hover {
+  border-color: var(--hero-green);
+}
+
+.theme-toggle-icon {
+  display: block;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  object-fit: contain;
+}
+
+.theme-toggle[data-theme-target="light"] .theme-toggle-icon {
+  filter: brightness(0) invert(1);
+}
+
+.theme-toggle[data-theme-target="dark"] .theme-toggle-icon {
+  filter: none;
+}
+
+.theme-toggle-floating {
+  position: absolute;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  z-index: 2;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-headline);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+/* ============================================================
+   Shimmer Button Animation (Website v4)
+   ============================================================ */
+@keyframes btnShimmer {
+  0% { left: -100%; opacity: 0; }
+  10% { opacity: 1; }
+  35% { left: 150%; opacity: 1; }
+  36%, 100% { left: 150%; opacity: 0; }
+}
+
+/* ============================================================
+   Login-Seite
+   ============================================================ */
+.login-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--space-lg);
+  text-align: center;
+  background: var(--meister-schiefer);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle radial glow behind login card */
+.login-page::before {
+  content: '';
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(183, 217, 0, 0.06) 0%, rgba(183, 217, 0, 0.02) 35%, transparent 60%);
+  pointer-events: none;
+}
+
+.login-logo {
+  width: 200px;
+  height: 111px;
+  margin-bottom: var(--space-xl);
+  position: relative;
+  z-index: 1;
+}
+
+.login-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl) var(--space-lg);
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  position: relative;
+  z-index: 1;
+}
+
+.login-card h1 {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-sm);
+  color: var(--white);
+}
+
+.login-card p {
+  color: var(--g400);
+  font-size: 0.9rem;
+  margin-bottom: var(--space-lg);
+  line-height: 1.5;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* ============================================================
+   Formular-Elemente
+   ============================================================ */
+.form-input {
+  width: 100%;
+  padding: 14px var(--space-md);
+  background: rgba(10, 10, 10, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.form-input:focus {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-color: var(--hero-green);
+  box-shadow: 0 0 0 3px rgba(183, 217, 0, 0.28);
+}
+
+.form-input::placeholder {
+  color: var(--g500);
+}
+
+:root[data-theme="light"] .form-input {
+  background: #FFFFFF;
+  border-color: var(--color-border-subtle);
+  color: var(--color-text-primary);
+}
+
+:root[data-theme="light"] .form-input::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px var(--space-lg);
+  background: var(--hero-green);
+  color: var(--nacht-schwarz);
+  font-family: var(--font-headline);
+  font-weight: 800;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shimmer effect (Website v4) */
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  animation: btnShimmer 2.5s ease-in-out infinite;
+}
+
+.btn-primary:hover {
+  background: var(--green-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(183, 217, 0, 0.3);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-primary:disabled::after {
+  animation: none;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px var(--space-md);
+  background: transparent;
+  color: var(--g300);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.875rem;
+  border: 1px solid var(--g400);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.btn-secondary:hover {
+  border-color: var(--white);
+  color: var(--white);
+}
+
+:root[data-theme="light"] .btn-secondary {
+  color: var(--color-text-primary);
+  border-color: var(--color-border-strong);
+}
+
+:root[data-theme="light"] .btn-secondary:hover,
+:root[data-theme="light"] .btn-secondary:focus-visible {
+  color: var(--color-accent-primary-text);
+  border-color: var(--hero-green);
+  background: var(--hero-green);
+}
+
+textarea.form-input {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* ============================================================
+   Dashboard Layout
+   ============================================================ */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--meister-schiefer);
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(183, 217, 0, 0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 80% 100%, rgba(183, 217, 0, 0.02) 0%, transparent 60%);
+}
+
+/* Header — solider Schiefer für konsistenten Kontrast */
+.portal-header {
+  background: #1C2B36;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  padding: 0 var(--space-xl);
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(183, 217, 0, 0.08);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.header-logo {
+  width: 72px;
+  height: 40px;
+}
+
+.header-title {
+  font-family: var(--font-headline);
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--g300);
+  letter-spacing: 0.3px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.customer-name {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  max-width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-logout {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--g400);
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition);
+  font-family: var(--font-body);
+}
+
+.btn-logout:hover {
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Header wechselt früh genug auf zwei Zeilen, bevor lange Kundennamen überlaufen. */
+@media (max-width: 900px) {
+  .portal-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+    height: auto;
+    min-height: 94px;
+    padding: 8px var(--space-md);
+  }
+
+  .header-title {
+    display: none;
+  }
+
+  .header-logo {
+    height: 32px;
+  }
+
+  .header-right {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 112px auto;
+    gap: var(--space-sm);
+    width: 100%;
+  }
+
+  .customer-name {
+    min-width: 0;
+  }
+
+  .header-right .theme-toggle {
+    width: 112px;
+    min-width: 0;
+    min-height: 40px;
+    gap: 6px;
+    padding-inline: 8px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .btn-logout {
+    min-height: 40px;
+    padding-inline: 8px;
+    white-space: nowrap;
+  }
+}
+
+/* Main Content */
+.portal-main {
+  flex: 1;
+  padding: var(--space-lg);
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ============================================================
+   Begrüßung
+   ============================================================ */
+.welcome-section {
+  margin-bottom: var(--space-xl);
+  padding: var(--space-xl) 0 var(--space-lg);
+}
+
+.welcome-section h1 {
+  font-size: 2rem;
+  margin-bottom: var(--space-sm);
+  color: var(--white);
+  letter-spacing: -0.3px;
+}
+
+.welcome-section h1 .accent {
+  color: var(--hero-green);
+}
+
+.welcome-section .subtitle {
+  color: var(--g400);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   Projekt-/Kontext-Selektor
+   ============================================================ */
+.project-selector-section {
+  margin: var(--space-lg) 0 0;
+}
+
+.project-selector {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.project-selector[aria-busy="true"],
+.project-selector-section[aria-busy="true"] {
+  opacity: 0.75;
+}
+
+.project-selector-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.project-selector-label {
+  color: var(--white);
+  font-family: var(--font-headline);
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.project-selector-count {
+  color: var(--g400);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.project-selector-control {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 var(--space-md);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border-hover);
+  border-radius: var(--radius-sm);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.project-selector-control:focus-visible {
+  outline: 2px solid var(--hero-green);
+  outline-offset: 2px;
+  border-color: var(--hero-green);
+  box-shadow: var(--shadow-hover);
+}
+
+.project-selector-control:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+
+.project-selector-active {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.project-selector-name {
+  color: var(--g300);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.project-type-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border-hover);
+  color: var(--g300);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.project-type-badge--projekt,
+.project-type-badge--service {
+  background: var(--hero-green);
+  border-color: var(--hero-green);
+  color: var(--nacht-schwarz);
+}
+
+.project-type-badge--angebot_abgelaufen {
+  background: var(--glass-bg);
+  border-color: var(--bernstein);
+  color: var(--bernstein);
+}
+
+@media (min-width: 640px) {
+  .project-selector {
+    padding: var(--space-lg);
+  }
+
+  .project-selector-active {
+    justify-content: space-between;
+  }
+}
+
+/* ============================================================
+   Karten — Glassmorphism (Website v4 Glow-Cards)
+   ============================================================ */
+.card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  transition: all var(--transition-slow);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-card);
+}
+
+.card:hover {
+  border-color: var(--glass-border-hover);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-1px);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: var(--space-md);
+}
+
+.card-header h2 {
+  font-size: 1.1rem;
+  color: var(--white);
+}
+
+.card-header .card-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(183, 217, 0, 0.1);
+  color: var(--hero-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   Timeline — Connected Step-Cards v2
+   ============================================================ */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(183, 217, 0, 0.25); }
+  50% { box-shadow: 0 0 0 8px rgba(183, 217, 0, 0.08); }
+}
+
+/* --- Step Card (Basis) --- */
+.step-card {
+  border-radius: 12px;
+  padding: 14px 18px;
+  transition: all var(--transition-slow);
+  border: 1px solid transparent;
+}
+
+/* --- Step Card Header (immer sichtbar) --- */
+.step-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.step-card-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: all var(--transition-slow);
+}
+
+.step-card-title {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.step-card-titletext {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.step-card-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.step-card-label {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.step-card-date {
+  font-size: 0.75rem;
+  color: var(--g500);
+  flex-shrink: 0;
+}
+
+/* --- Badge --- */
+.step-card-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  flex-shrink: 0;
+  letter-spacing: 0.2px;
+}
+
+/* --- Connector (Verbindungslinie zwischen Cards) --- */
+.step-connector {
+  width: 2px;
+  height: 12px;
+  margin: 0 auto;
+  border-radius: 1px;
+  transition: background var(--transition);
+}
+
+.connector-done {
+  background: rgba(183, 217, 0, 0.4);
+}
+
+.connector-active {
+  background: linear-gradient(180deg, rgba(183, 217, 0, 0.4), rgba(183, 217, 0, 0.1));
+}
+
+.connector-pending {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* === DONE State === */
+.step-card-done {
+  background: rgba(183, 217, 0, 0.03);
+  border-color: rgba(183, 217, 0, 0.06);
+}
+
+.step-card-done .step-card-dot {
+  background: var(--hero-green);
+  color: var(--nacht-schwarz);
+  box-shadow: 0 0 6px rgba(183, 217, 0, 0.15);
+}
+
+.step-card-done .step-card-label {
+  color: var(--hero-green);
+}
+
+.step-card-done .step-card-badge {
+  background: rgba(183, 217, 0, 0.1);
+  color: var(--hero-green);
+}
+
+.step-card-done:hover {
+  background: rgba(183, 217, 0, 0.05);
+  border-color: rgba(183, 217, 0, 0.12);
+}
+
+/* === ACTIVE State === */
+.step-card-active {
+  background: rgba(183, 217, 0, 0.06);
+  border-color: rgba(183, 217, 0, 0.2);
+  box-shadow: 0 0 24px rgba(183, 217, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.2);
+  padding: 18px 20px;
+}
+
+.step-card-active .step-card-dot {
+  background: var(--hero-green);
+  color: var(--nacht-schwarz);
+  width: 36px;
+  height: 36px;
+  font-size: 0.9rem;
+  animation: pulse 2s infinite;
+}
+
+.step-card-active .step-card-label {
+  color: var(--white);
+  font-size: 1.05rem;
+}
+
+.step-badge-active {
+  background: var(--hero-green);
+  color: var(--nacht-schwarz);
+  font-weight: 700;
+}
+
+/* --- Chevron (Klapp-Indikator) --- */
+.step-card-chevron {
+  color: var(--g500);
+  transition: transform var(--transition-slow);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.step-card-open .step-card-chevron {
+  transform: rotate(180deg);
+}
+
+.step-card-expandable .step-card-header {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.step-card-expandable .step-card-header:hover .step-card-chevron {
+  color: var(--g300);
+}
+
+.step-card-expandable.step-card-done .step-card-header:hover {
+  background: rgba(183, 217, 0, 0.03);
+  border-radius: 8px;
+  margin: -4px -6px;
+  padding: 4px 6px;
+}
+
+/* --- Detail Section (Accordion) --- */
+.step-card-details {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease;
+}
+
+.step-card-details.is-open {
+  grid-template-rows: 1fr;
+}
+
+.step-card-details-inner {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 0;
+  margin-top: 0;
+  border-top: 1px solid transparent;
+  transition: padding-top 0.35s ease, margin-top 0.35s ease, border-color 0.35s ease;
+}
+
+.step-card-details.is-open .step-card-details-inner {
+  padding-top: 14px;
+  margin-top: 16px;
+  border-top-color: rgba(183, 217, 0, 0.1);
+}
+
+.step-card-detail-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.step-detail-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.step-card-detail-row:first-child .step-detail-icon {
+  background: rgba(183, 217, 0, 0.1);
+}
+
+.step-card-detail-row:last-child .step-detail-icon {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.step-detail-label {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 3px;
+}
+
+.step-card-detail-row:first-child .step-detail-label {
+  color: var(--hero-green);
+}
+
+.step-card-detail-row:last-child .step-detail-label {
+  color: var(--g400);
+}
+
+.step-detail-text {
+  font-size: 0.875rem;
+  color: var(--g300);
+  line-height: 1.55;
+}
+
+/* === PENDING State === */
+.step-card-pending {
+  opacity: 0.5;
+}
+
+.step-card-pending .step-card-dot {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--g500);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.step-card-pending .step-card-label {
+  color: var(--g500);
+}
+
+.step-card-pending:hover {
+  opacity: 0.65;
+}
+
+/* ============================================================
+   Gewerke-Übersicht (NEU — Prio A)
+   ============================================================ */
+.gewerke-section {
+  border-color: rgba(183, 217, 0, 0.12);
+}
+
+.gewerke-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gewerke-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(183, 217, 0, 0.06);
+  border-radius: 10px;
+  transition: all var(--transition-slow);
+}
+
+.gewerke-item:hover {
+  background: rgba(183, 217, 0, 0.04);
+  border-color: rgba(183, 217, 0, 0.15);
+}
+
+.gewerke-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(183, 217, 0, 0.1);
+  color: var(--hero-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.gewerke-label {
+  font-size: 0.9rem;
+  color: var(--g300);
+  font-weight: 500;
+}
+
+.gewerke-item.always .gewerke-label {
+  color: var(--white);
+  font-weight: 600;
+}
+
+/* ============================================================
+   Konditionale Hinweise — Bernstein-Banner (NEU — Prio A)
+   ============================================================ */
+.hinweis-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, rgba(232, 168, 56, 0.12), rgba(232, 168, 56, 0.04));
+  border: 1px solid rgba(232, 168, 56, 0.2);
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.hinweis-banner:last-child {
+  margin-bottom: 0;
+}
+
+.hinweis-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(232, 168, 56, 0.15);
+  color: var(--bernstein);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.hinweis-text {
+  font-size: 0.875rem;
+  color: var(--g300);
+  line-height: 1.5;
+}
+
+.hinweis-text strong {
+  color: var(--bernstein);
+  font-weight: 600;
+}
+
+/* ============================================================
+   Fördervorschuss-Karte
+   ============================================================ */
+.fv-card {
+  border-color: rgba(183, 217, 0, 0.2);
+  background: linear-gradient(135deg, rgba(183, 217, 0, 0.04), var(--glass-bg));
+}
+
+.fv-card:hover {
+  border-color: rgba(183, 217, 0, 0.3);
+  box-shadow: 0 0 24px 6px rgba(183, 217, 0, 0.06);
+}
+
+.fv-amount {
+  font-family: var(--font-headline);
+  font-weight: 800;
+  font-size: 2rem;
+  color: var(--hero-green);
+  margin: var(--space-md) 0 var(--space-sm);
+}
+
+.fv-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.fv-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition);
+}
+
+.fv-row:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.fv-row .fv-label {
+  color: var(--g400);
+}
+
+.fv-row .fv-value {
+  font-weight: 600;
+  color: var(--white);
+}
+
+/* Status-Badge — Pill-Style (Website v4) */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.badge-green {
+  background: rgba(183, 217, 0, 0.12);
+  color: var(--hero-green);
+  border: 1px solid rgba(183, 217, 0, 0.2);
+}
+
+.badge-amber {
+  background: rgba(232, 168, 56, 0.12);
+  color: var(--bernstein);
+  border: 1px solid rgba(232, 168, 56, 0.2);
+}
+
+.badge-red {
+  background: rgba(231, 76, 60, 0.12);
+  color: var(--error);
+  border: 1px solid rgba(231, 76, 60, 0.2);
+}
+
+/* ============================================================
+   Dokumente
+   ============================================================ */
+.doc-list {
+  list-style: none;
+}
+
+.doc-folder-group {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  margin-bottom: var(--space-md);
+  overflow: hidden;
+}
+
+.doc-folder-group:last-child {
+  margin-bottom: 0;
+}
+
+.doc-folder-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 13px 16px;
+  color: var(--g200);
+  cursor: pointer;
+  user-select: none;
+  transition: background var(--transition), color var(--transition);
+}
+
+.doc-folder-header:hover,
+.doc-folder-header:focus-visible {
+  background: rgba(183, 217, 0, 0.06);
+  outline: none;
+}
+
+.doc-folder-title {
+  flex: 1;
+  font-weight: 700;
+}
+
+.doc-folder-count {
+  min-width: 28px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(183, 217, 0, 0.12);
+  color: var(--hero-green);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.doc-folder-chevron {
+  color: var(--g500);
+  transition: transform var(--transition);
+}
+
+.doc-folder-header[aria-expanded="false"] .doc-folder-chevron {
+  transform: rotate(-90deg);
+}
+
+.doc-folder-group .doc-list {
+  padding: 0 10px 10px;
+}
+
+.doc-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  transition: all var(--transition);
+}
+
+.doc-item:last-child {
+  margin-bottom: 0;
+}
+
+.doc-item:hover {
+  background: rgba(183, 217, 0, 0.03);
+  border-color: rgba(183, 217, 0, 0.1);
+}
+
+.doc-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  min-width: 0;
+}
+
+.doc-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(183, 217, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.doc-name-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.doc-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--g300);
+  overflow-wrap: anywhere;
+}
+
+.doc-date {
+  color: var(--g500);
+  font-size: 0.78rem;
+}
+
+.doc-item.pending .doc-name {
+  color: var(--g500);
+}
+
+.doc-status {
+  font-size: 0.8rem;
+  color: var(--g500);
+}
+
+.doc-status.doc-ready {
+  color: var(--color-accent-primary-text);
+  font-weight: 700;
+}
+
+.doc-download-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 7px 12px;
+  border: 1px solid rgba(183, 217, 0, 0.45);
+  border-radius: 999px;
+  background: var(--hero-green);
+  color: var(--color-accent-primary-text);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+}
+
+.doc-download-link:hover,
+.doc-download-link:focus-visible {
+  background: var(--link-hover-color);
+  border-color: var(--link-hover-color);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.doc-download-link:disabled {
+  cursor: wait;
+  opacity: 0.7;
+  transform: none;
+}
+
+.doc-download-link .doc-status {
+  color: currentColor;
+  font-weight: 700;
+  cursor: inherit;
+}
+
+.btn-download {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 6px 14px;
+  background: rgba(183, 217, 0, 0.08);
+  color: var(--hero-green);
+  border: 1px solid rgba(183, 217, 0, 0.2);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  text-decoration: none;
+}
+
+.btn-download:hover {
+  background: rgba(183, 217, 0, 0.15);
+  border-color: rgba(183, 217, 0, 0.35);
+}
+
+/* ============================================================
+   Kontaktbereich
+   ============================================================ */
+.contact-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  margin-bottom: var(--space-lg);
+}
+
+.contact-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(183, 217, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--hero-green);
+  flex-shrink: 0;
+}
+
+.contact-details {
+  flex: 1;
+}
+
+.contact-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--white);
+}
+
+.contact-role {
+  font-size: 0.8rem;
+  color: var(--g400);
+}
+
+.contact-phone {
+  font-size: 0.85rem;
+  color: var(--link-color);
+  font-weight: 500;
+}
+
+.contact-email {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.85rem;
+  color: var(--link-color);
+  font-weight: 500;
+}
+
+.message-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.last-message {
+  padding: var(--space-md);
+  background: rgba(183, 217, 0, 0.04);
+  border-left: 3px solid var(--hero-green);
+  border-radius: 0 10px 10px 0;
+  margin-bottom: var(--space-md);
+}
+
+.last-message .msg-date {
+  font-size: 0.75rem;
+  color: var(--g500);
+  margin-bottom: var(--space-xs);
+}
+
+.last-message .msg-text {
+  font-size: 0.9rem;
+  color: var(--g300);
+}
+
+/* ============================================================
+   Termine
+   ============================================================ */
+.appointment-item {
+  display: flex;
+  gap: var(--space-md);
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  transition: all var(--transition);
+}
+
+.appointment-item:last-child {
+  margin-bottom: 0;
+}
+
+.appointment-item:hover {
+  background: rgba(183, 217, 0, 0.03);
+  border-color: rgba(183, 217, 0, 0.1);
+}
+
+.appointment-date {
+  text-align: center;
+  min-width: 56px;
+}
+
+.appointment-date .day {
+  font-family: var(--font-headline);
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--hero-green);
+  line-height: 1;
+}
+
+.appointment-date .month {
+  font-size: 0.7rem;
+  color: var(--g400);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.appointment-info h4 {
+  font-size: 0.95rem;
+  margin-bottom: 2px;
+  color: var(--white);
+}
+
+.appointment-info p {
+  font-size: 0.8rem;
+  color: var(--g400);
+}
+
+/* ============================================================
+   Alert / Status-Meldungen
+   ============================================================ */
+.alert {
+  padding: var(--space-md);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  margin-bottom: var(--space-md);
+  line-height: 1.5;
+}
+
+.alert-success {
+  background: rgba(39, 174, 96, 0.1);
+  color: var(--success);
+  border: 1px solid rgba(39, 174, 96, 0.2);
+}
+
+.alert-error {
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--error);
+  border: 1px solid rgba(231, 76, 60, 0.2);
+}
+
+.alert-info {
+  background: rgba(183, 217, 0, 0.08);
+  color: var(--hero-green);
+  border: 1px solid rgba(183, 217, 0, 0.15);
+}
+
+.alert-amber {
+  background: rgba(232, 168, 56, 0.08);
+  color: var(--bernstein);
+  border: 1px solid rgba(232, 168, 56, 0.15);
+}
+
+/*
+  Light-Mode: Limettengruen und Bernstein sind auf hellem Untergrund praktisch
+  unlesbar. Gemessen am 26.07.2026: alert-info 1,52 zu 1, alert-amber 1,91 zu 1.
+  WCAG AA verlangt 4,5 zu 1. Im Dark-Mode stimmen beide (6,48 und 5,20), deshalb
+  wird ausschliesslich die Textfarbe im Light-Mode nachgezogen, Hintergrund und
+  Rahmen bleiben unveraendert. Betrifft unter anderem die Hinweise auf der
+  Anmeldeseite: eine Fehlermeldung, die der Kunde nicht lesen kann, ist keine.
+*/
+:root[data-theme='light'] .alert-info {
+  color: #4a5a00;
+}
+
+:root[data-theme='light'] .alert-amber {
+  color: #7a4f00;
+}
+
+/* ============================================================
+   Ladeanimation
+   ============================================================ */
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xxl);
+  gap: var(--space-md);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(183, 217, 0, 0.1);
+  border-top-color: var(--hero-green);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  color: var(--g400);
+  font-size: 0.9rem;
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.portal-footer {
+  padding: var(--space-lg);
+  text-align: center;
+  color: var(--g500);
+  font-size: 0.8rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.portal-footer a {
+  color: var(--link-color);
+  transition: color var(--transition);
+}
+
+.portal-footer a:hover {
+  color: var(--link-hover-color);
+}
+
+/* ============================================================
+   Responsive — Tablet (>= 768px)
+   ============================================================ */
+@media (min-width: 768px) {
+  .portal-main {
+    padding: var(--space-xl) var(--space-xxl);
+  }
+
+  .welcome-section h1 {
+    font-size: 2.25rem;
+  }
+
+  .fv-amount {
+    font-size: 2.5rem;
+  }
+
+  .card {
+    padding: 28px;
+  }
+
+  .step-card-active {
+    padding: 22px 24px;
+  }
+}
+
+/* ============================================================
+   Responsive — Mobile (<= 480px)
+   ============================================================ */
+@media (max-width: 480px) {
+  .portal-main {
+    padding: var(--space-md);
+  }
+
+  .card {
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+  }
+
+  .fv-amount {
+    font-size: 1.6rem;
+  }
+
+  .doc-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  .contact-info {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .gewerke-item {
+    padding: 10px 12px;
+  }
+
+  .hinweis-banner {
+    padding: 12px 14px;
+  }
+
+  .welcome-section {
+    padding: var(--space-md) 0;
+  }
+
+  .step-card {
+    padding: 12px 14px;
+  }
+
+  .step-card-active {
+    padding: 14px 16px;
+  }
+
+  .step-card-label {
+    font-size: 0.85rem;
+  }
+
+  .step-card-detail-row {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
+/* ============================================================
+   Utility / Hidden
+   ============================================================ */
+.hidden {
+  display: none !important;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================================
+   Empty State
+   ============================================================ */
+.empty-state {
+  color: var(--g500);
+  font-size: 0.9rem;
+  padding: 8px 0;
+}
+
+/* ============================================================
+   Unterlagen-Upload
+   ============================================================ */
+.upload-card {
+  scroll-margin-top: var(--space-lg);
+}
+
+.upload-header {
+  align-items: flex-start;
+}
+
+.upload-subtitle,
+.upload-help {
+  color: var(--g400);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-top: var(--space-xs);
+}
+
+.upload-form {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.upload-notification {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+  padding: var(--space-md);
+  background: var(--color-surface-secondary);
+  border: 1.5px solid var(--color-border-subtle);
+  border-left: 4px solid var(--hero-green);
+  border-radius: 14px;
+}
+
+.upload-notification-copy {
+  display: grid;
+  gap: 3px;
+  color: var(--color-text-primary);
+}
+
+.upload-notification-text {
+  color: var(--color-text-readable-secondary);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.upload-notify-now {
+  flex: 0 0 auto;
+  min-height: 44px;
+}
+
+.upload-field {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.upload-label {
+  color: var(--g300);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.upload-input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px var(--space-md);
+  color: var(--g300);
+  background: rgba(10, 10, 10, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+}
+
+.upload-input:focus-visible,
+.upload-button:focus-visible {
+  outline: 3px solid rgba(183, 217, 0, 0.45);
+  outline-offset: 2px;
+}
+
+.upload-input::file-selector-button {
+  margin-right: var(--space-md);
+  padding: 8px 12px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--hero-green);
+  color: var(--nacht-schwarz);
+  font-family: var(--font-headline);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.upload-input:disabled,
+.upload-input:disabled::file-selector-button {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.upload-status {
+  min-height: 24px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.upload-status--info {
+  color: var(--g300);
+}
+
+.upload-status--success {
+  color: var(--success);
+  font-weight: 700;
+}
+
+.upload-status--error {
+  color: var(--error);
+  font-weight: 700;
+}
+
+@media (min-width: 640px) {
+  .upload-form {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+  }
+
+  .upload-status {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .upload-button {
+    width: 100%;
+  }
+
+  .upload-input::file-selector-button {
+    display: block;
+    margin: 0 0 var(--space-sm) 0;
+    width: 100%;
+  }
+}
+
+/* ============================================================
+   Kontaktbereich: zusätzlicher E-Mail-Button (ADR-08)
+   ============================================================ */
+.contact-email-action {
+  margin-top: var(--space-md);
+}
+
+.ticket-list {
+  display: grid;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.ticket-list-title {
+  font-size: 0.95rem;
+  color: var(--color-text-primary);
+}
+
+.ticket-item {
+  display: grid;
+  gap: 6px;
+  padding: 12px 14px;
+  background: var(--color-surface-secondary);
+  border: 1.5px solid var(--color-border-subtle);
+  border-radius: 12px;
+}
+
+.ticket-head {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.ticket-subject {
+  color: var(--color-text-primary);
+  font-weight: 700;
+}
+
+.ticket-status,
+.ticket-date,
+.ticket-receipt {
+  color: var(--color-text-readable-secondary);
+  font-size: 0.85rem;
+}
+
+.ticket-status {
+  color: var(--hero-green);
+  font-weight: 700;
+}
+
+:root[data-theme="light"] .ticket-status {
+  color: var(--link-color);
+}
+
+.contact-email-button {
+  width: 100%;
+  min-height: 48px;
+  color: var(--color-text-primary);
+  border-color: var(--color-border-strong);
+  background: rgba(255, 255, 255, 0.04);
+  text-decoration: none;
+}
+
+.contact-email-button:hover,
+.contact-email-button:focus-visible {
+  color: var(--color-accent-primary-text);
+  border-color: var(--hero-green);
+  background: var(--hero-green);
+}
+
+.contact-email-button:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+@media (min-width: 640px) {
+  .contact-email-button {
+    width: auto;
+  }
+}
+
+@media (max-width: 639px) {
+  .upload-notification {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .upload-notify-now {
+    width: 100%;
+  }
+}
+
+/* ============================================================
+   Dashboard Light-Mode Vereinheitlichung — Einheits-Kachel
+   ============================================================ */
+.u-card-well {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.u-card {
+  background: var(--color-surface-secondary);
+  border: 1.5px solid var(--color-border-subtle);
+  border-radius: 14px;
+  padding: 13px 14px;
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition), background var(--transition);
+}
+
+.u-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--color-accent-primary);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+}
+
+:root[data-theme="light"] .card {
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 16px;
+  padding: var(--space-lg);
+  box-shadow: 0 8px 28px var(--color-shadow);
+}
+
+:root[data-theme="light"] .card:hover {
+  border-color: var(--color-border-subtle);
+  box-shadow: 0 8px 28px var(--color-shadow);
+  transform: none;
+}
+
+:root[data-theme="light"] .u-card-well {
+  background: var(--color-surface-tertiary);
+}
+
+:root[data-theme="light"] .u-card {
+  background: var(--color-surface-secondary);
+  border-color: var(--color-border-subtle);
+  box-shadow: none;
+}
+
+:root[data-theme="light"] .u-card:hover {
+  border-color: var(--color-accent-primary);
+  box-shadow: 0 8px 22px rgba(28, 43, 54, 0.12);
+}
+
+/* Timeline rows */
+.timeline { gap: 10px; }
+.step-card { padding: 13px 14px; border-radius: 14px; }
+.step-card-header { gap: 12px; }
+.step-card-dot,
+.step-card-icon,
+.gewerke-icon,
+.doc-icon,
+.appointment-date,
+.fv-summary-icon {
+  width: 46px;
+  height: 46px;
+  min-width: 46px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-text-secondary);
+  border: 0;
+  box-shadow: none;
+}
+.step-card-dot,
+.step-card-icon,
+.gewerke-icon,
+.doc-icon,
+.appointment-date,
+.fv-summary-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step-card-icon svg,
+.gewerke-icon svg,
+.doc-icon svg,
+.fv-summary-icon svg { width: 22px; height: 22px; stroke: currentColor; }
+.step-card-icon { font-size: 1.15rem; }
+.step-card-title { align-items: center; gap: 12px; }
+.step-card-label,
+.gewerke-label,
+.doc-name,
+.appointment-info h4 {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--color-text-primary);
+}
+.step-card-date,
+.doc-date,
+.doc-status,
+.appointment-info p,
+.gewerke-item:not(.always) .gewerke-label,
+.fv-row .fv-label {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+.step-card-active {
+  border-color: var(--color-accent-primary);
+  box-shadow: 0 0 0 3px rgba(183, 217, 0, 0.22);
+}
+.step-card-active .step-card-dot,
+.step-card-active .step-card-icon {
+  background: rgba(183, 217, 0, 0.18);
+  color: var(--color-text-primary);
+  animation: none;
+}
+.step-card-done { background: rgba(183, 217, 0, 0.06); }
+.step-card-done .step-card-dot,
+.step-card-done .step-card-icon {
+  background: rgba(183, 217, 0, 0.16);
+  color: var(--color-text-primary);
+}
+.step-card-pending { opacity: 1; }
+.step-card-pending .step-card-dot,
+.step-card-pending .step-card-icon,
+.step-card-pending .step-card-label { color: var(--color-text-secondary); }
+.step-connector { display: none; }
+
+/* Gewerke, documents, appointments and FV rows */
+.gewerke-list,
+.doc-list { gap: 10px; }
+.gewerke-item,
+.doc-item,
+.appointment-item,
+.fv-row,
+.fv-summary-row { margin-bottom: 0; gap: 12px; }
+.gewerke-item { padding: 13px 14px; }
+.doc-left { gap: 12px; }
+.doc-folder-group {
+  margin-bottom: 10px;
+  background: transparent;
+  border: 0;
+  border-radius: 12px;
+}
+.doc-folder-header { padding: 10px 2px; }
+.doc-folder-group .doc-list { padding: 10px; }
+.appointment-item { align-items: center; }
+.appointment-date { flex-direction: column; text-align: center; }
+.appointment-date .day { font-size: 1.25rem; }
+.appointment-date .month { font-size: 0.68rem; }
+.fv-well { margin-top: var(--space-md); }
+.fv-summary-row,
+.fv-row { display: flex; align-items: center; justify-content: space-between; }
+.fv-summary-text { flex: 1; min-width: 0; }
+.fv-amount { display: block; margin: 0; font-size: 1.6rem; }
+.fv-details { gap: 10px; }
+.fv-row:hover { background: var(--color-surface-secondary); }
+
+:root[data-theme="light"] .step-card-dot,
+:root[data-theme="light"] .step-card-icon,
+:root[data-theme="light"] .gewerke-icon,
+:root[data-theme="light"] .doc-icon,
+:root[data-theme="light"] .appointment-date,
+:root[data-theme="light"] .fv-summary-icon {
+  background: var(--color-surface-tertiary);
+  color: var(--color-text-secondary);
+}
+:root[data-theme="light"] .step-card-done,
+:root[data-theme="light"] .gewerke-item.always {
+  background: rgba(183, 217, 0, 0.08);
+  border-color: rgba(183, 217, 0, 0.26);
+}
+:root[data-theme="light"] .step-card-active {
+  background: var(--color-surface-secondary);
+  border-color: var(--color-accent-primary);
+  box-shadow: 0 0 0 3px rgba(183, 217, 0, 0.22);
+}
+:root[data-theme="light"] .step-card-active .step-card-dot,
+:root[data-theme="light"] .step-card-active .step-card-icon,
+:root[data-theme="light"] .gewerke-item.always .gewerke-icon {
+  background: rgba(183, 217, 0, 0.18);
+  color: var(--color-text-primary);
+}
+
+/* ============================================================
+   Step-3 Re-Skin (2026-06-26) — Knoten-Timeline + Section-Pills
+   Ersetzt optisch die alten .step-card-/Akkordeon-Styles. Das
+   Timeline-Markup liegt jetzt in js/timeline.js als .tl-* (eine
+   durchgehende Linie, runde Knoten, saubere Aktiv-Karte). Gilt für
+   Hell- UND Dunkelmodus. Die alten .step-card-Regeln oben sind damit
+   ungenutzt (Markup referenziert sie nicht mehr), bleiben aber stehen,
+   weil einzelne Selektoren mit noch genutzten Elementen gruppiert sind.
+   ============================================================ */
+
+/* --- Section-Header als Pill (alle Karten, beide Themes) --- */
+.card-header {
+  flex-wrap: wrap;
+  row-gap: 8px;
+}
+
+.card-header .card-icon {
+  display: none;
+}
+
+.card-header h2 {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(183, 217, 0, 0.14);
+  color: var(--hero-green);
+}
+
+.card-header > p {
+  flex-basis: 100%;
+  margin-top: 2px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+:root[data-theme="light"] .card-header h2 {
+  background: #E9F0D5;
+  color: #5F7200;
+}
+
+/* --- Knoten-Timeline: Container sitzt direkt auf der Karte (kein Well-Tint) --- */
+:root .timeline.u-card-well,
+:root[data-theme="light"] .timeline.u-card-well {
+  background: transparent;
+  padding: 0;
+}
+
+.tl {
+  position: relative;
+  /* Theme-Variablen — Default = Dunkelmodus */
+  --tl-halo: #1C2B36;
+  --tl-line: rgba(183, 217, 0, 0.22);
+  --tl-accent: #B7D900;
+  --tl-accent-on: #0A0A0A;
+  --tl-pill-bg: rgba(183, 217, 0, 0.14);
+  --tl-pill-text: #B7D900;
+  --tl-detail-bg: rgba(183, 217, 0, 0.07);
+  --tl-detail-border: rgba(183, 217, 0, 0.32);
+  --tl-since-bg: rgba(183, 217, 0, 0.16);
+  --tl-since-text: #B7D900;
+  --tl-pending-node: rgba(255, 255, 255, 0.12);
+  --tl-pending-dot: rgba(255, 255, 255, 0.45);
+  --tl-pending-label: var(--g500);
+  --tl-label: var(--color-text-primary);
+  --tl-detail-text: var(--g300);
+}
+
+:root[data-theme="light"] .tl {
+  --tl-halo: var(--color-surface-secondary);
+  --tl-line: #E2E5D0;
+  --tl-accent: #5F7200;
+  --tl-accent-on: #FFFFFF;
+  --tl-pill-bg: #E9F0D5;
+  --tl-pill-text: #5F7200;
+  --tl-detail-bg: #F3F8E6;
+  --tl-detail-border: #CFE39B;
+  --tl-since-bg: #FFFFFF;
+  --tl-since-text: #5F7200;
+  --tl-pending-node: #D7D8C8;
+  --tl-pending-dot: #AEB09B;
+  --tl-pending-label: #9AA0A6;
+  --tl-label: var(--color-text-primary);
+  --tl-detail-text: var(--color-text-primary);
+}
+
+.tl::before {
+  content: "";
+  position: absolute;
+  left: 17px;
+  top: 18px;
+  bottom: 20px;
+  width: 2px;
+  background: var(--tl-line);
+}
+
+.tl-item {
+  position: relative;
+  display: flex;
+  gap: 14px;
+  padding-bottom: 16px;
+}
+
+.tl-item:last-child {
+  padding-bottom: 0;
+}
+
+.tl-node {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  background: var(--tl-accent);
+  color: var(--tl-accent-on);
+  font-size: 1rem;
+  font-weight: 800;
+  box-shadow: 0 0 0 4px var(--tl-halo);
+}
+
+.tl-node.active {
+  background: var(--tl-halo);
+  border: 3px solid var(--tl-accent);
+}
+
+.tl-node.active i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--tl-accent);
+  display: block;
+}
+
+.tl-node.pending {
+  background: var(--tl-pending-node);
+  box-shadow: 0 0 0 4px var(--tl-halo);
+}
+
+.tl-node.pending i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--tl-pending-dot);
+  display: block;
+}
+
+.tl-body {
+  flex: 1;
+  min-width: 0;
+}
+
+/* --- Klappbare Zeile (done + pending): voll bedienbar, behält Orientierung --- */
+.tl-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 36px;
+  padding: 4px 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+
+.tl-label {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-headline);
+  font-weight: 800;
+  font-size: 1.18rem;
+  line-height: 1.2;
+  color: var(--tl-label);
+}
+
+.tl-item.is-pending .tl-label {
+  color: var(--tl-pending-label);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.tl-badge {
+  flex-shrink: 0;
+  white-space: nowrap;
+  background: var(--tl-pill-bg);
+  color: var(--tl-pill-text);
+  font-weight: 800;
+  font-size: 0.74rem;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+.tl-status {
+  flex-shrink: 0;
+  white-space: nowrap;
+  color: var(--tl-pending-label);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.tl-chevron {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  color: var(--tl-pending-label);
+  transition: transform 0.25s ease;
+}
+
+.tl-item.is-expanded .tl-chevron {
+  transform: rotate(180deg);
+}
+
+.tl-head:hover .tl-chevron {
+  color: var(--tl-label);
+}
+
+/* --- Aktiv-Karte (prominent, immer offen) --- */
+.tl-card {
+  background: var(--tl-detail-bg);
+  border: 1.5px solid var(--tl-detail-border);
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+
+.tl-since {
+  display: inline-block;
+  background: var(--tl-since-bg);
+  border: 1px solid var(--tl-detail-border);
+  color: var(--tl-since-text);
+  font-weight: 800;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+
+.tl-card-title {
+  font-family: var(--font-headline);
+  font-weight: 800;
+  font-size: 1.4rem;
+  margin: 0 0 4px;
+  color: var(--tl-label);
+}
+
+/* --- Aufklappbares Detail: „Was wir tun" + „Deine Mitwirkung" --- */
+.tl-detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.tl-detail.is-open {
+  grid-template-rows: 1fr;
+}
+
+.tl-detail-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.tl-card .tl-detail-inner {
+  padding-top: 8px;
+}
+
+.tl-detail-block + .tl-detail-block {
+  margin-top: 12px;
+}
+
+/* done/pending: Trennlinie auf dem ersten Block (nicht auf dem Klapp-Wrapper),
+   damit das grid-template-rows:0fr im zugeklappten Zustand sauber auf 0 kollabiert */
+.tl-item.is-done .tl-detail-block:first-child,
+.tl-item.is-pending .tl-detail-block:first-child {
+  border-top: 1px solid var(--color-border-subtle);
+  margin-top: 6px;
+  padding-top: 10px;
+}
+
+.tl-detail-label {
+  display: block;
+  font-family: var(--font-headline);
+  font-weight: 800;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 3px;
+}
+
+.tl-detail-label--do {
+  color: var(--tl-pill-text);
+}
+
+.tl-detail-label--you {
+  color: var(--tl-pending-label);
+}
+
+.tl-detail-block p {
+  color: var(--tl-detail-text);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.tl-card .alert {
+  margin-top: 12px;
+  margin-bottom: 0;
+}
+
+/* --- Termine: Datum-Kachel im Grünton (wie Mockup) --- */
+.appointment-item .appointment-date {
+  background: rgba(183, 217, 0, 0.12);
+}
+
+.appointment-item .appointment-date .day {
+  color: var(--hero-green);
+}
+
+.appointment-item .appointment-date .month {
+  color: var(--hero-green);
+  opacity: 0.85;
+}
+
+:root[data-theme="light"] .appointment-item .appointment-date {
+  background: #E9F0D5;
+}
+
+:root[data-theme="light"] .appointment-item .appointment-date .day,
+:root[data-theme="light"] .appointment-item .appointment-date .month {
+  color: #5F7200;
+}
+
+/* --- Mobile --- */
+@media (max-width: 480px) {
+  .tl-label {
+    font-size: 1.05rem;
+  }
+
+  .tl-card-title {
+    font-size: 1.2rem;
+  }
+
+  .tl-card {
+    padding: 14px 16px;
+  }
+}
+
+/* ============================================================
+   Step-3 Re-Skin — übrige Sektionen auf dasselbe Design (2026-06-26)
+   Dokumente / Gewerke / Kontakt: gerahmte Elemente (.u-card existiert
+   schon) + grüne Akzent-Icons statt neutralem Grau, wie die freigegebene
+   Vorschau. Beide Themes. Keine Markup-/Logik-Änderung.
+   ============================================================ */
+
+/* Sektions-Icons grün (Dokumente/Gewerke/FV) */
+.doc-icon,
+.gewerke-icon,
+.fv-summary-icon {
+  background: rgba(183, 217, 0, 0.14);
+  color: var(--hero-green);
+}
+
+:root[data-theme="light"] .doc-icon,
+:root[data-theme="light"] .gewerke-icon,
+:root[data-theme="light"] .fv-summary-icon {
+  background: #E9F0D5;
+  color: #5F7200;
+}
+
+/* Kontakt: gerahmte Karte + grüner Avatar (Grün theme-korrekt) */
+.contact-info {
+  background: var(--color-surface-secondary);
+  border: 1.5px solid var(--color-border-subtle);
+  border-radius: 14px;
+}
+
+.contact-avatar {
+  color: var(--hero-green);
+}
+
+:root[data-theme="light"] .contact-avatar {
+  color: #5F7200;
+}
+
+/* ============================================================
+   Portal-Finish (2026-06-26): Website-Link + Upload-Sektion
+   ============================================================ */
+
+/* Header-Logo ist jetzt ein Link zur Website — kein Link-Underline */
+.header-logo-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+/* Upload-Sektion: Desktop-Layout aufräumen (kein versprungener Button) */
+@media (min-width: 640px) {
+  .upload-form {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+  }
+
+  .upload-button {
+    justify-self: start;
+  }
+}
+
+/* Datei-Auswahl-Feld ins Design einfügen statt grauer Kasten */
+.upload-input {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+:root[data-theme="light"] .upload-input {
+  background: var(--color-surface-primary);
+  border-color: var(--color-border-subtle);
+  color: var(--color-text-primary);
+}
+
+/* ============================================================
+   Angebots-Annahme (U-1b)
+   Badges und Button kommen bewusst aus dem Bestand (.badge-*, .btn-primary):
+   die tragen die geprueften Light-Mode-Kontraste. Hier nur Layout, keine
+   eigenen Farbwerte ausser Theme-Tokens.
+   ============================================================ */
+
+.angebot-slot + .angebot-slot {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.angebot-slot-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.angebot-label {
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.angebot-datei {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  word-break: break-word;
+}
+
+.angebot-status {
+  margin: 10px 0 14px;
+  color: var(--color-text-secondary);
+}
+
+.angebot-aktionen {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.angebot-view,
+.angebot-accept {
+  width: 100%;
+}
+
+.angebot-widerruf {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 2px solid var(--color-border-subtle);
+}
+
+.widerruf-button {
+  width: 100%;
+  min-height: 48px;
+  font-weight: 800;
+  border: 2px solid currentColor;
+}
+
+.widerruf-panel {
+  margin-top: 12px;
+  padding: 16px;
+  border: 2px solid var(--color-border-subtle);
+  border-radius: 10px;
+  background: var(--color-surface-primary);
+  color: var(--color-text-primary);
+}
+
+.widerruf-panel dl { margin: 0 0 14px; }
+.widerruf-panel dt { margin-top: 8px; font-weight: 700; }
+.widerruf-panel dd { margin: 2px 0 0; overflow-wrap: anywhere; }
+.widerruf-panel label { display: block; margin: 12px 0 6px; font-weight: 700; }
+.widerruf-panel input { width: 100%; min-height: 44px; }
+.widerruf-confirm { width: 100%; margin-top: 14px; }
+.widerruf-success { border-color: var(--chartreuse); }
+
+/* AP9 ergänzt die bestehende .bestelldialog-Gestaltung aus zahlungswege.css. */
+.angebot-fruehbeginn { margin-top: 16px; }
+.bestelldialog .fruehbeginn-auswahl {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 16px 0;
+  cursor: pointer;
+}
+.bestelldialog .fruehbeginn-auswahl input {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+}
+.bestelldialog .fruehbeginn-auswahl span { min-width: 0; }
+
+/* O-31: Hinweis, dass zuerst das Angebot zu oeffnen ist. Nur Text-Token, keine
+   eigene Farbe (Kontrast bleibt geprueft). */
+.angebot-hinweis {
+  margin: 10px 0 0;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+@media (min-width: 600px) {
+  .angebot-view,
+  .angebot-accept {
+    width: auto;
+  }
+}
+</style></head>
+<body>
+  <main class="login-page" role="main">
+    <button type="button" class="theme-toggle theme-toggle-floating" data-theme-toggle="" data-theme-target="light" aria-label="Zum Light-Mode wechseln">
+      <img class="theme-toggle-icon" data-theme-icon="" src="/vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg" width="18" height="18" alt="" aria-hidden="true">
+      <span class="theme-toggle-label" data-theme-label="">Light-Mode</span>
+    </button>
+    <span class="login-logo logo-mark" role="img" aria-label="HeroWerk Logo"></span>
+
+    <div class="login-card">
+      <h1>Dein Projekt-Portal</h1>
+      <p>Gib deine E-Mail-Adresse ein, dann senden wir dir einen Zugangslink.</p>
+
+      <!--
+        Hinweise nach einem gescheiterten Anmeldeversuch. Bis 26.07.2026 gab es hier
+        genau EINEN Text ("abgelaufen") fuer jeden denkbaren Fehlschlag. Das hat an
+        einem Tag zweimal in die falsche Richtung gefuehrt, weil der reale Fall eine
+        Serverstoerung war. Wortlaut vom Geschaeftsfuehrer freigegeben 26.07.2026.
+        BEWUSST zusammengefasst: "bereits verwendet", "durch einen neueren ersetzt"
+        und "Adresse unbekannt" teilen sich EINEN Text. Getrennte Texte wuerden
+        verraten, ob eine Adresse bei uns existiert.
+      -->
+      <div id="alertAbgelaufen" class="alert alert-amber hidden">
+        Dieser Zugangslink ist abgelaufen. Fordere unten einfach einen neuen an, das
+        dauert nur einen Moment.
+      </div>
+      <div id="alertUngueltig" class="alert alert-amber hidden">
+        Dieser Zugangslink ist nicht mehr gültig. Meistens wurde er schon einmal
+        verwendet oder es wurde inzwischen ein neuerer angefordert. Fordere unten einen
+        neuen an.
+      </div>
+      <div id="alertStoerung" class="alert alert-info hidden">
+        Die Anmeldung ist gerade gestört. Bitte versuche es in ein paar Minuten noch
+        einmal. Dein Zugangslink wurde dabei nicht verbraucht.
+      </div>
+
+      <form class="login-form" id="loginForm">
+        <label for="emailInput" class="sr-only">E-Mail-Adresse</label>
+        <input type="email" id="emailInput" class="form-input" placeholder="deine@email.de" required="" autocomplete="email" inputmode="email" aria-label="E-Mail-Adresse">
+        <button type="submit" class="btn-primary" id="loginBtn">
+          Zugangslink anfordern
+        </button>
+      </form>
+
+      <!-- Erfolgs-Meldung -->
+      <div id="successMessage" class="hidden" style="margin-top: 16px;">
+        <div class="alert alert-success">
+          Wir haben dir einen Link per E-Mail gesendet. Bitte prüfe dein Postfach (auch Spam).
+        </div>
+      </div>
+
+      <!-- Fehler-Meldung -->
+      <div id="errorMessage" class="alert alert-error hidden" style="margin-top: 16px;"></div>
+    </div>
+
+    <p style="margin-top: 24px; text-align: center; color: var(--g500); font-size: 0.8rem; position: relative; z-index: 1;">
+      Noch kein Projekt bei HeroWerk?
+      <a href="https://herowerk.de" target="_blank" rel="noopener">Mehr erfahren</a>
+    </p>
+  </main>
+
+  <!-- Datenschutz-Hinweis -->
+  <footer class="portal-footer">
+    <a href="datenschutz.html">Datenschutz</a>
+    ·
+    <a href="https://herowerk.de/impressum" target="_blank" rel="noopener">Impressum</a>
+    ·
+    © 2026 HeroWerk GmbH
+  </footer>
+
+  <!-- Scripts -->
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+</body></html><!-- git deploy trigger -->

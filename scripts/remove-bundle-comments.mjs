@@ -351,6 +351,8 @@ function classify(relative) {
     return 'skip';
   if (normalized === 'robots.txt') return 'robots';
   if (normalized.startsWith('api/')) return 'skip';
+  // T1308: Importbytes einschließlich Skript-Hashes niemals verändern.
+  if (normalized.startsWith('vorschau/')) return 'skip';
   const extension = path.extname(normalized).toLowerCase();
   if (binaryExtensions.has(extension)) return 'binary';
   if (['.html', '.js', '.css', '.svg', '.xml'].includes(extension)) return extension.slice(1);

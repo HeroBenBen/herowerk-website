@@ -1,0 +1,542 @@
+{
+  "startedAt": "2026-11-21T04:17:00.806Z",
+  "mode": "Nur Erzeuger und Node, ohne Container/Browser/Server",
+  "steps": [
+    {
+      "name": "intern-quellen",
+      "command": [
+        "/usr/local/bin/node",
+        "scripts/build-t1300-portal-demo.mjs",
+        "--check",
+        "--bewerberportal",
+        "/Users/benjaminbendler/code/_t1308/bewerberportal_lesend"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 385
+    },
+    {
+      "name": "public-quellen-und-rotproben",
+      "command": [
+        "/usr/local/bin/node",
+        "scripts/verify-t1308-public.mjs",
+        "/Users/benjaminbendler/code/_t1308/bewerberportal_lesend"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 1749
+    },
+    {
+      "name": "website-regression",
+      "command": [
+        "/usr/local/bin/node",
+        "tests/t1308-portalweg-regression.mjs"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 368
+    },
+    {
+      "name": "import-verarbeitung",
+      "command": [
+        "/usr/local/bin/node",
+        "tests/t1308-import-processing.mjs"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 316
+    },
+    {
+      "name": "expliziter-portalvergleich",
+      "command": [
+        "/usr/local/bin/node",
+        "scripts/import-t1308-preview.mjs",
+        "--check",
+        "--quelle",
+        "/Users/benjaminbendler/code/_t1308/portal"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 72
+    },
+    {
+      "name": "consent-abgrenzung",
+      "command": [
+        "/usr/local/bin/node",
+        "scripts/consent-integration-check.js"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 33
+    },
+    {
+      "name": "seo",
+      "command": [
+        "/usr/local/bin/node",
+        "scripts/build-structured-data.mjs",
+        "--check"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 66
+    },
+    {
+      "name": "bausteine",
+      "command": [
+        "/usr/local/bin/node",
+        "scripts/build-bausteine.mjs",
+        "--check"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 41
+    },
+    {
+      "name": "freigabesperre",
+      "command": [
+        "bash",
+        "scripts/pruefe-t1308-controller.sh"
+      ],
+      "expected": 64,
+      "actual": 64,
+      "milliseconds": 4
+    },
+    {
+      "name": "website-syntax-scripts_consent-integration-check.js",
+      "command": [
+        "/usr/local/bin/node",
+        "--check",
+        "scripts/consent-integration-check.js"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 25
+    },
+    {
+      "name": "website-syntax-scripts_header-check.js",
+      "command": [
+        "/usr/local/bin/node",
+        "--check",
+        "scripts/header-check.js"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 25
+    },
+    {
+      "name": "website-syntax-scripts_remove-bundle-comments.mjs",
+      "command": [
+        "/usr/local/bin/node",
+        "--check",
+        "scripts/remove-bundle-comments.mjs"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 26
+    },
+    {
+      "name": "website-syntax-tests_a11y.spec.js",
+      "command": [
+        "/usr/local/bin/node",
+        "--check",
+        "tests/a11y.spec.js"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 28
+    },
+    {
+      "name": "website-syntax-tests_smoke.spec.js",
+      "command": [
+        "/usr/local/bin/node",
+        "--check",
+        "tests/smoke.spec.js"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 26
+    },
+    {
+      "name": "website-syntax-js_portalvorschau.js",
+      "command": [
+        "/usr/local/bin/node",
+        "--check",
+        "js/portalvorschau.js"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 24
+    },
+    {
+      "name": "website-syntax-js_portalweg.js",
+      "command": [
+        "/usr/local/bin/node",
+        "--check",
+        "js/portalweg.js"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 22
+    },
+    {
+      "name": "website-syntax-scripts_import-t1308-preview.mjs",
+      "command": [
+        "/usr/local/bin/node",
+        "--check",
+        "scripts/import-t1308-preview.mjs"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 24
+    },
+    {
+      "name": "website-syntax-scripts_pruefe-t1308-controller.mjs",
+      "command": [
+        "/usr/local/bin/node",
+        "--check",
+        "scripts/pruefe-t1308-controller.mjs"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 27
+    },
+    {
+      "name": "website-syntax-scripts_pruefe-t1308-offline.mjs",
+      "command": [
+        "/usr/local/bin/node",
+        "--check",
+        "scripts/pruefe-t1308-offline.mjs"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 28
+    },
+    {
+      "name": "website-syntax-scripts_sync-t1308-headers.mjs",
+      "command": [
+        "/usr/local/bin/node",
+        "--check",
+        "scripts/sync-t1308-headers.mjs"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 27
+    },
+    {
+      "name": "website-syntax-scripts_sync-t1308-portalweg.mjs",
+      "command": [
+        "/usr/local/bin/node",
+        "--check",
+        "scripts/sync-t1308-portalweg.mjs"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 26
+    },
+    {
+      "name": "website-syntax-scripts_t1308-intern-browser.mjs",
+      "command": [
+        "/usr/local/bin/node",
+        "--check",
+        "scripts/t1308-intern-browser.mjs"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 29
+    },
+    {
+      "name": "website-syntax-tests_t1308-bedienung-node.mjs",
+      "command": [
+        "/usr/local/bin/node",
+        "--check",
+        "tests/t1308-bedienung-node.mjs"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 26
+    },
+    {
+      "name": "website-syntax-tests_t1308-browser.mjs",
+      "command": [
+        "/usr/local/bin/node",
+        "--check",
+        "tests/t1308-browser.mjs"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 25
+    },
+    {
+      "name": "website-syntax-tests_t1308-dom-double.mjs",
+      "command": [
+        "/usr/local/bin/node",
+        "--check",
+        "tests/t1308-dom-double.mjs"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 30
+    },
+    {
+      "name": "website-syntax-tests_t1308-headers.mjs",
+      "command": [
+        "/usr/local/bin/node",
+        "--check",
+        "tests/t1308-headers.mjs"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 26
+    },
+    {
+      "name": "website-syntax-tests_t1308-import-processing.mjs",
+      "command": [
+        "/usr/local/bin/node",
+        "--check",
+        "tests/t1308-import-processing.mjs"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 26
+    },
+    {
+      "name": "website-syntax-tests_t1308-portalweg-regression.mjs",
+      "command": [
+        "/usr/local/bin/node",
+        "--check",
+        "tests/t1308-portalweg-regression.mjs"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 25
+    },
+    {
+      "name": "website-format-geaendert",
+      "command": [
+        "/usr/local/bin/node",
+        "/Users/benjaminbendler/code/_t1308/website/node_modules/prettier/bin/prettier.cjs",
+        "--check",
+        "scripts/consent-integration-check.js",
+        "scripts/header-check.js",
+        "scripts/remove-bundle-comments.mjs",
+        "tests/a11y.spec.js",
+        "tests/smoke.spec.js",
+        "css/portalvorschau.css",
+        "css/portalweg.css",
+        "js/portalvorschau.js",
+        "js/portalweg.js",
+        "scripts/import-t1308-preview.mjs",
+        "scripts/pruefe-t1308-controller.mjs",
+        "scripts/pruefe-t1308-offline.mjs",
+        "scripts/sync-t1308-headers.mjs",
+        "scripts/sync-t1308-portalweg.mjs",
+        "scripts/t1308-intern-browser.mjs",
+        "tests/t1308-bedienung-node.mjs",
+        "tests/t1308-browser.mjs",
+        "tests/t1308-dom-double.mjs",
+        "tests/t1308-headers.mjs",
+        "tests/t1308-import-processing.mjs",
+        "tests/t1308-portalweg-regression.mjs"
+      ],
+      "expected": 0,
+      "actual": 0,
+      "milliseconds": 260
+    }
+  ],
+  "portalChangedFiles": [],
+  "websiteChangedFiles": [
+    ".htaccess",
+    "amortisation-waermepumpe.html",
+    "anfrage.html",
+    "barrierefreiheit.html",
+    "baubarkeitspruefung.html",
+    "bewerberportal.html",
+    "bewerbung.html",
+    "css/portalvorschau.css",
+    "css/portalweg.css",
+    "datenschutz.html",
+    "dimensionierung-verstehen.html",
+    "dimensionierung.html",
+    "docs/t1308/bilder/bewerber-station-1440-light.png",
+    "docs/t1308/bilder/bewerberstation-hell-vor-laststopp.png",
+    "docs/t1308/bilder/kunden-station-1440-light.png",
+    "docs/t1308/bilder/kundenstation-hell-vor-laststopp.png",
+    "docs/t1308/bilder/menue-1440-dark-kunden.png",
+    "docs/t1308/bilder/menue-1440-dunkel-vor-laststopp.png",
+    "docs/t1308/bilder/menue-390-dark-kunden.png",
+    "docs/t1308/bilder/menue-390-dunkel-vor-laststopp.png",
+    "docs/t1308/nachweise/apache-vor-laststopp.json",
+    "docs/t1308/nachweise/controller-browser.json",
+    "docs/t1308/nachweise/controller-gruen.json",
+    "docs/t1308/nachweise/controller-header.json",
+    "docs/t1308/nachweise/linux-normal-vor-laststopp.json",
+    "docs/t1308/nachweise/offline-letzter-stand.json",
+    "docs/t1308/nachweise/sondermodus-vor-laststopp.json",
+    "docs/t1308/pruefstatus.md",
+    "docs/t1308/uebernahme.json",
+    "foerderung-hannover.html",
+    "foerderung-jetzt-mitnehmen.html",
+    "foerderung.html",
+    "foerdervorschuss.html",
+    "gasheizung-tauschen-oder-reparieren.html",
+    "hinweise.html",
+    "impressum.html",
+    "index.html",
+    "js/portalvorschau.js",
+    "js/portalweg.js",
+    "karriere.html",
+    "kontakt.html",
+    "kostenvergleich-waermepumpe.html",
+    "kundenportal.html",
+    "lighthouserc.json",
+    "package.json",
+    "preise.html",
+    "propan-waermepumpe.html",
+    "prozess.html",
+    "ratgeber.html",
+    "rechner.html",
+    "scripts/consent-integration-check.js",
+    "scripts/fidelity-pages.json",
+    "scripts/header-check.js",
+    "scripts/import-t1308-preview.mjs",
+    "scripts/pruefe-t1308-controller.mjs",
+    "scripts/pruefe-t1308-controller.sh",
+    "scripts/pruefe-t1308-offline.mjs",
+    "scripts/remove-bundle-comments.mjs",
+    "scripts/structured-data.state.json",
+    "scripts/sync-t1308-headers.mjs",
+    "scripts/sync-t1308-portalweg.mjs",
+    "scripts/t1308-intern-browser.mjs",
+    "scripts/t1308-portalweg-vorlage.json",
+    "scripts/version-assets.sh",
+    "sitemap.xml",
+    "stelle.html",
+    "tests/a11y.spec.js",
+    "tests/smoke.spec.js",
+    "tests/t1308-apache.conf",
+    "tests/t1308-bedienung-node.mjs",
+    "tests/t1308-browser.mjs",
+    "tests/t1308-dom-double.mjs",
+    "tests/t1308-headers.mjs",
+    "tests/t1308-import-processing.mjs",
+    "tests/t1308-portalweg-regression.mjs",
+    "vorschau/assets/164e197a9ca4de301a7500feb25771fa51213bdb34eceaaf0734c3719696364f.png",
+    "vorschau/assets/1f2ac753806ddb27a1a0dd2b4f758eaa382911bc4d585cc29cb613432e823dcd.png",
+    "vorschau/assets/231d487a993e28bc5567c2be8da48acd8e0a209891c11448491eab45db0f8d7c.woff2",
+    "vorschau/assets/2d797dd8b35dcb3413e1af9d7052b3f4f8c341a147cdcb01f4f06af80db53289.woff2",
+    "vorschau/assets/3805a3a2a656bfe79db3a541f258d2250095d86ebd8f8549a29621fbcd58aa3d.png",
+    "vorschau/assets/388e12b52b1f75c059f6812726cab9287500712671c7facf310c4f15f8c9222c.svg",
+    "vorschau/assets/5559d45633badec6a9f00ff9e462c2c76640f0d8cd0c094b29bfcc1a852a8008.png",
+    "vorschau/assets/6f56409fd3d64bb85f7d070bce20749db2d66b6d63cec586cc22d1c761be2491.woff2",
+    "vorschau/assets/8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc.woff2",
+    "vorschau/assets/93d0379587fa9baf3f5078d87bfc9915e61e1a0e601350e45fd74c9f809d7d0b.svg",
+    "vorschau/assets/953cf561dfc4f19514b6e301b5bde48c5a6687bb92fa0aa831a4d7e264064569.png",
+    "vorschau/assets/d5757457c3a0b9e0f452cd281c56783d083de0b385d768055c43931f75d786c4.png",
+    "vorschau/assets/f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f.woff2",
+    "vorschau/assets/f9a06e79cd3a2a20951c0f0e28f66dd0e6d3fda73911d640a2125c8fcb78f21a.woff2",
+    "vorschau/bewerber-dashboard.html",
+    "vorschau/bewerber-login.html",
+    "vorschau/bewerber-mail.html",
+    "vorschau/kunden-dashboard.html",
+    "vorschau/kunden-login.html",
+    "vorschau/kunden-mail.html",
+    "vorschau/manifest.json",
+    "waermepumpe-abstand.html",
+    "waermepumpe-altbau.html",
+    "waermepumpe-hannover.html",
+    "waermepumpe-laerm.html",
+    "waermepumpenstrom-hannover.html",
+    "wertsteigerung-waermepumpe.html",
+    "wp-kosten-hannover.html"
+  ],
+  "drift": [
+    {
+      "key": "kunden:css/portal.css",
+      "before": "rot",
+      "after": "grün",
+      "oldExpected": "046eddbff289addafbacff110e1b793196d59539f9c210d0cd8738ea52b839bf",
+      "expected": "349eb9e75df72b108a85bafaf320114d45239c62e7b22d5f81736729978b3d92",
+      "actual": "349eb9e75df72b108a85bafaf320114d45239c62e7b22d5f81736729978b3d92"
+    },
+    {
+      "key": "kunden:js/angebot.js",
+      "before": "rot",
+      "after": "grün",
+      "oldExpected": "95d29b3df4870a57abc8f35a2dd119321f799c224de18baf8cca69f1e40eb1cf",
+      "expected": "833aa3acea91542a121a68393437955e6139a6784c58ab7c87886b20719833cf",
+      "actual": "833aa3acea91542a121a68393437955e6139a6784c58ab7c87886b20719833cf"
+    },
+    {
+      "key": "kunden:js/api.js",
+      "before": "rot",
+      "after": "grün",
+      "oldExpected": "60ba59ed702bbbcd2d0602668057bdc0b5b52f323448764b3453bb33593e1048",
+      "expected": "cc98f9fe39375bed3a19d43330c850f6bf13e16069757e9e8c926d41b3ba418c",
+      "actual": "cc98f9fe39375bed3a19d43330c850f6bf13e16069757e9e8c926d41b3ba418c"
+    },
+    {
+      "key": "kunden:php/api/project-data.php",
+      "before": "rot",
+      "after": "grün",
+      "oldExpected": "b4019ab986081a279931378c4079b2cbc7e9710282e18d811a14be1d2f3da5c2",
+      "expected": "85002add47f56723c0fe5dc2b66635264afaa2f3ea1d0eb4f9ca21bc4cc5d584",
+      "actual": "85002add47f56723c0fe5dc2b66635264afaa2f3ea1d0eb4f9ca21bc4cc5d584"
+    },
+    {
+      "key": "kunden:php/lib/offers.php",
+      "before": "rot",
+      "after": "grün",
+      "oldExpected": "894b763802a129a7fc529eee418c1ad09480ffcff61b6b5efbc96b3f2edb81b2",
+      "expected": "f5101c4403dc594232232fb083a312fad4762cfe19ce85ba98876a7583a2ccdb",
+      "actual": "f5101c4403dc594232232fb083a312fad4762cfe19ce85ba98876a7583a2ccdb"
+    },
+    {
+      "key": "kunden:php/lib/upload_notifications.php",
+      "before": "rot",
+      "after": "grün",
+      "oldExpected": "35235994e58dda7cc7c1360b60ab3df3943d639f8bf90eba596a20db429a0855",
+      "expected": "e0ba3e1ca595e9ecfda1abea58701c852f057ef134eaa296709d4f805adcee45",
+      "actual": "e0ba3e1ca595e9ecfda1abea58701c852f057ef134eaa296709d4f805adcee45"
+    },
+    {
+      "key": "kunden:php/lib/withdrawal.php",
+      "before": "rot",
+      "after": "grün",
+      "oldExpected": "a0383cc0619d963af14b73e149ad9474f8d0bc4fd92f93c16d91c3289a074d93",
+      "expected": "f40fc6fb99b8fdb74b69dab50979b4f8008c30cc8cb49b3cfed4cf7ca7a9dfa0",
+      "actual": "f40fc6fb99b8fdb74b69dab50979b4f8008c30cc8cb49b3cfed4cf7ca7a9dfa0"
+    }
+  ],
+  "documents": [
+    {
+      "file": "kunden-login.html",
+      "bytes": 150882
+    },
+    {
+      "file": "kunden-dashboard.html",
+      "bytes": 264801
+    },
+    {
+      "file": "kunden-mail.html",
+      "bytes": 99953
+    },
+    {
+      "file": "bewerber-login.html",
+      "bytes": 117568
+    },
+    {
+      "file": "bewerber-dashboard.html",
+      "bytes": 150366
+    },
+    {
+      "file": "bewerber-mail.html",
+      "bytes": 89445
+    }
+  ],
+  "sourceCommits": {
+    "kunden": "f8fe964975976c45668de158f6f198ad35ec5a7f",
+    "bewerber": "0a40238ce4a660626c10d0b2e8697a6ed2b62989"
+  },
+  "exit": 0,
+  "finishedAt": "2026-11-21T04:17:04.672Z"
+}
